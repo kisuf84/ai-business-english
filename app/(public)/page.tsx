@@ -25,14 +25,19 @@ export default function LandingPage() {
               practical English for real work.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/lesson/new">
+              <Link href="/dashboard">
                 <Button className="rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-6 py-3 text-xs font-semibold text-[#0c0b0a] shadow-[0_4px_12px_rgba(201,162,74,0.3)] hover:bg-[#d4ad55]">
-                  Create Lesson
+                  Enter Workspace
                 </Button>
               </Link>
-              <Link href="/lessons">
+              <Link href="/auth">
                 <Button className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface-card)] px-6 py-3 text-xs font-semibold text-[var(--ink)] hover:bg-[var(--surface-raised)]">
-                  View Lessons
+                  Sign In
+                </Button>
+              </Link>
+              <Link href="/lesson/new">
+                <Button className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface-card)] px-6 py-3 text-xs font-semibold text-[var(--ink)] hover:bg-[var(--surface-raised)]">
+                  Create Lesson
                 </Button>
               </Link>
             </div>
@@ -62,6 +67,51 @@ export default function LandingPage() {
               </p>
             </div>
           </Card>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-14">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--ink-faint)]">
+              Workspace Shortcuts
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold text-[var(--ink)]">
+              Jump straight into the product
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm text-[var(--ink-muted)]">
+              Open the main workspace areas directly to explore lessons,
+              generators, simulations, and teaching tools without extra steps.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+          <ShortcutCard
+            href="/dashboard"
+            title="Dashboard"
+            description="Start in the main workspace and access your core tools."
+          />
+          <ShortcutCard
+            href="/generator"
+            title="Generator"
+            description="Create structured business English content quickly."
+          />
+          <ShortcutCard
+            href="/simulation"
+            title="AI Simulation"
+            description="Practice workplace conversations with AI feedback."
+          />
+          <ShortcutCard
+            href="/for-teachers"
+            title="For Teachers"
+            description="Open teaching-focused workflows and classroom support."
+          />
+          <ShortcutCard
+            href="/library"
+            title="Lesson Library"
+            description="Browse saved lessons and revisit existing material."
+          />
         </div>
       </section>
 
@@ -155,5 +205,27 @@ function FeatureIcon() {
         <path d="M2 12h20" />
       </svg>
     </span>
+  );
+}
+
+function ShortcutCard({
+  href,
+  title,
+  description,
+}: {
+  href: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <Link href={href} className="block">
+      <Card className="h-full rounded-2xl transition-all hover:-translate-y-0.5 hover:border-[var(--border-strong)] hover:bg-[var(--surface-raised)]">
+        <p className="text-base font-semibold text-[var(--ink)]">{title}</p>
+        <p className="mt-2 text-sm text-[var(--ink-muted)]">{description}</p>
+        <span className="mt-4 inline-flex text-xs font-semibold uppercase tracking-[0.12em] text-[var(--accent-gold)]">
+          Open
+        </span>
+      </Card>
+    </Link>
   );
 }
