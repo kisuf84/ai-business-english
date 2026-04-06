@@ -7,6 +7,7 @@ import Card from "../../../components/shared/Card";
 import Select from "../../../components/shared/Select";
 import Textarea from "../../../components/shared/Textarea";
 import { useTheme } from "../../../context/ThemeContext";
+import { simulationCatalog } from "../../../lib/simulationCatalog";
 import type {
   SimulationMessageOutput,
   SimulationSessionFeedback,
@@ -444,6 +445,17 @@ function getScenarioTypeLabel(value: SimulationScenarioType): string {
   return labels[value] ?? "Conversation";
 }
 
+function getLevelBadgeClass(level: string): string {
+  const normalized = level.toUpperCase();
+  if (normalized === "A2") {
+    return "border-[rgba(73,122,98,0.18)] bg-[rgba(73,122,98,0.1)] text-[var(--accent)]";
+  }
+  if (normalized === "B1" || normalized === "B2") {
+    return "border-[rgba(201,162,74,0.24)] bg-[var(--accent-gold-soft)] text-[var(--accent-gold)]";
+  }
+  return "border-[rgba(166,93,46,0.18)] bg-[rgba(166,93,46,0.1)] text-[var(--accent-warm)]";
+}
+
 export default function SimulationPage() {
   const { theme } = useTheme();
   const [selectedScenarioId, setSelectedScenarioId] = useState<string>("sales_meeting");
@@ -506,6 +518,10 @@ export default function SimulationPage() {
     text: string;
     includeUserInHistory: boolean;
     historySeed?: ChatMessage[];
+    scenarioId?: string;
+    level?: string;
+    industry?: string;
+    role?: string;
   }): Promise<boolean> => {
     setIsLoading(true);
     setError(null);
@@ -518,8 +534,12 @@ export default function SimulationPage() {
           { role: "user", content: params.text.trim(), suggestions: [] },
         ]
       : sourceHistory;
+    const messageScenarioId = params.scenarioId ?? selectedScenarioId;
+    const messageLevel = params.level ?? level;
+    const messageIndustry = params.industry ?? industry;
+    const messageRole = params.role ?? role;
     const selectedScenario = scenarioOptions.find(
-      (option) => option.id === selectedScenarioId
+      (option) => option.id === messageScenarioId
     );
     const scenarioType = selectedScenario?.scenarioType ?? "meeting";
 
@@ -530,9 +550,9 @@ export default function SimulationPage() {
         body: JSON.stringify({
           simulation_id: simulationId,
           scenario_type: scenarioType,
-          level,
-          industry: industry.trim() || undefined,
-          profession: role.trim() || undefined,
+          level: messageLevel,
+          industry: messageIndustry.trim() || undefined,
+          profession: messageRole.trim() || undefined,
           user_input: params.text.trim(),
           history: nextHistory.map(({ role, content }) => ({ role, content })),
         }),
@@ -599,32 +619,51 @@ export default function SimulationPage() {
     }
   };
 
-  const handleStartSimulation = async () => {
+  const handleStartSimulation = async (overrides?: {
+    scenarioId?: string;
+    level?: string;
+    industry?: string;
+    role?: string;
+  }) => {
     if (isLoading || simulationStarted) return;
-    if (!level.trim()) {
+    const nextScenarioId = overrides?.scenarioId ?? selectedScenarioId;
+    const nextLevel = overrides?.level ?? level;
+    const nextIndustry = overrides?.industry ?? industry;
+    const nextRole = overrides?.role ?? role;
+
+    if (!nextLevel.trim()) {
       setError("Please select a level before starting.");
       return;
     }
 
     setSimulationEnded(false);
     const selectedScenario = scenarioOptions.find(
-      (option) => option.id === selectedScenarioId
+      (option) => option.id === nextScenarioId
     );
     const scenarioLabel = selectedScenario?.label ?? "Business conversation";
     const starterPrompt = [
       "[START_SIMULATION]",
       `Start the simulation as the conversation counterpart in a ${scenarioLabel}.`,
-      `Level: ${level}`,
-      `Industry: ${industry || "General business"}`,
-      `Role: ${role || "Business professional"}`,
+      `Level: ${nextLevel}`,
+      `Industry: ${nextIndustry || "General business"}`,
+      `Role: ${nextRole || "Business professional"}`,
       "Open naturally in-character.",
       "Do not thank the user for a prior message.",
       "Do not act like a writing assistant.",
     ].join(" ");
+
+    setSelectedScenarioId(nextScenarioId);
+    setLevel(nextLevel);
+    setIndustry(nextIndustry);
+    setRole(nextRole);
     const started = await sendSimulationMessage({
       text: starterPrompt,
       includeUserInHistory: false,
       historySeed: [],
+      scenarioId: nextScenarioId,
+      level: nextLevel,
+      industry: nextIndustry,
+      role: nextRole,
     });
     if (started) {
       setSimulationStarted(true);
@@ -682,6 +721,16 @@ export default function SimulationPage() {
     setActiveTab("conversation");
   };
 
+  const handleStartCatalogScenario = async (scenario: (typeof simulationCatalog)[number]) => {
+    if (simulationStarted || isLoading) return;
+    await handleStartSimulation({
+      scenarioId: scenario.id,
+      level: scenario.level,
+      industry: scenario.industry,
+      role: scenario.role,
+    });
+  };
+
   const selectedScenario = scenarioOptions.find(
     (option) => option.id === selectedScenarioId
   );
@@ -709,11 +758,68 @@ export default function SimulationPage() {
             Workplace Simulation
           </p>
           <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">
-            Simulation
+            Simulation Hub
           </h1>
           <p className="mt-3 text-sm text-[var(--ink-muted)]">
-            Practice real workplace communication and get instant AI feedback.
+            Start a guided workplace scenario instantly or build a custom simulation below.
           </p>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {simulationCatalog.map((scenario) => (
+            <Card key={scenario.id} className="flex h-full flex-col gap-4 p-6">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-lg font-semibold text-[var(--ink)]">
+                    {scenario.title}
+                  </p>
+                  <p className="mt-2 text-sm text-[var(--ink-muted)]">
+                    {scenario.description}
+                  </p>
+                </div>
+                <span
+                  className={`inline-flex rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${getLevelBadgeClass(
+                    scenario.level
+                  )}`}
+                >
+                  {scenario.level}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-2 text-xs text-[var(--ink-faint)]">
+                <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
+                  {scenario.duration}
+                </span>
+                <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
+                  {scenario.role}
+                </span>
+                <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
+                  {scenario.industry}
+                </span>
+              </div>
+
+              <div className="mt-auto flex items-center justify-between gap-3">
+                <p className="text-xs text-[var(--ink-faint)]">Ready-to-start scenario</p>
+                <Button
+                  type="button"
+                  onClick={() => void handleStartCatalogScenario(scenario)}
+                  disabled={isLoading || simulationStarted}
+                  className="rounded-lg border px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-90"
+                  style={accentButtonStyle}
+                >
+                  {isLoading ? "Starting..." : "Start"}
+                </Button>
+              </div>
+            </Card>
+          ))}
+        </div>
+
+        <div className="my-8 flex items-center gap-4">
+          <div className="h-px flex-1 bg-[var(--border)]" />
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+            Custom Simulation Generator
+          </p>
+          <div className="h-px flex-1 bg-[var(--border)]" />
         </div>
 
         <Card className="p-7">
