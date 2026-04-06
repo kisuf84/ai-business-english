@@ -148,6 +148,7 @@ export default function AppShell({ children }: AppShellProps) {
     .slice(0, 2)
     .map((part) => part[0]?.toUpperCase() || "")
     .join("");
+  const isLight = mode === "light";
 
   return (
     <div
@@ -193,7 +194,11 @@ export default function AppShell({ children }: AppShellProps) {
               <button
                 type="button"
                 onClick={() => void handleSignOut()}
-                className="mt-4 w-full rounded-xl border border-white/10 bg-transparent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/[0.05]"
+                className={`mt-4 w-full rounded-xl border px-4 py-2.5 text-sm font-semibold transition ${
+                  isLight
+                    ? "border-[var(--border)] bg-white/40 text-[var(--ink)] hover:bg-white/70"
+                    : "border-white/10 bg-transparent text-white hover:bg-white/[0.05]"
+                }`}
               >
                 Sign out
               </button>
@@ -215,8 +220,12 @@ export default function AppShell({ children }: AppShellProps) {
                         key={item.href}
                         className={`flex items-center rounded-[14px] px-[14px] py-3 text-[15px] transition ${
                           isActive
-                            ? "bg-white/[0.06] font-semibold text-white"
-                            : "text-[var(--ink-muted)] hover:bg-white/[0.05] hover:text-white"
+                            ? isLight
+                              ? "bg-[rgba(11,31,59,0.08)] font-semibold text-[var(--ink)]"
+                              : "bg-white/[0.06] font-semibold text-white"
+                            : isLight
+                              ? "text-[var(--ink-muted)] hover:bg-[rgba(11,31,59,0.05)] hover:text-[var(--ink)]"
+                              : "text-[var(--ink-muted)] hover:bg-white/[0.05] hover:text-white"
                         }`}
                         href={item.href}
                       >
@@ -270,13 +279,19 @@ export default function AppShell({ children }: AppShellProps) {
         </aside>
 
         <main className="min-w-0 flex-1">
-          <header className="flex min-h-[72px] flex-wrap items-center justify-between gap-3 border-b border-[var(--sidebar-border)] bg-[color:var(--surface-card)] px-4 py-3 backdrop-blur-[10px] sm:px-5 lg:flex-nowrap lg:px-7">
+          <header
+            className={`flex min-h-[72px] flex-wrap items-center justify-between gap-3 px-4 py-3 backdrop-blur-[10px] sm:px-5 lg:flex-nowrap lg:px-7 ${
+              isLight
+                ? "border-b border-[var(--sidebar-border)] bg-[rgba(255,250,242,0.92)]"
+                : "border-b border-white/[0.04] bg-[rgba(7,11,22,0.92)]"
+            }`}
+          >
             <div className="flex min-w-0 items-center gap-3">
               <div className="grid h-[34px] w-[34px] place-items-center rounded-[10px] bg-[linear-gradient(135deg,#2e55ff_0%,#5f7cff_100%)] text-base font-extrabold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]">
                 A
               </div>
               <div className="min-w-0 text-sm lg:text-[18px]">
-                <span className="font-extrabold tracking-[-0.02em] text-[var(--ink)]">
+                <span className={`font-extrabold tracking-[-0.02em] ${isLight ? "text-[var(--ink)]" : "text-white"}`}>
                   LangslateAI
                 </span>
                 <span className="ml-1.5 break-words text-[13px] text-[var(--ink-muted)] sm:text-[15px]">
@@ -291,7 +306,11 @@ export default function AppShell({ children }: AppShellProps) {
                 onClick={toggleTheme}
                 aria-label={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
                 title={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
-                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-transparent text-[var(--ink)] transition hover:bg-[var(--surface-hover)]"
+                className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition ${
+                  isLight
+                    ? "border border-[var(--border)] bg-transparent text-[var(--ink)] hover:bg-[var(--surface-hover)]"
+                    : "border border-white/10 bg-transparent text-white hover:bg-white/[0.05]"
+                }`}
               >
                 {mode === "dark" ? (
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -306,7 +325,11 @@ export default function AppShell({ children }: AppShellProps) {
               </button>
               <Link
                 href="/simulation"
-                className="flex-1 rounded-xl border border-[var(--border)] px-4 py-3 text-center text-sm font-bold text-[var(--ink)] transition hover:bg-[var(--surface-hover)] sm:flex-none sm:px-[18px] sm:text-[15px]"
+                className={`flex-1 rounded-xl px-4 py-3 text-center text-sm font-bold transition sm:flex-none sm:px-[18px] sm:text-[15px] ${
+                  isLight
+                    ? "border border-[var(--border)] text-[var(--ink)] hover:bg-[var(--surface-hover)]"
+                    : "border border-white/10 text-white hover:bg-white/[0.05]"
+                }`}
               >
                 Start simulation
               </Link>

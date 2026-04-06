@@ -41,6 +41,18 @@ function isSupabaseEnabled() {
   return Boolean(getSupabaseAdminConfig());
 }
 
+function shouldFallbackToLocalStorage(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error);
+  return (
+    message.includes("row-level security") ||
+    message.includes("permission denied") ||
+    message.includes("JWT") ||
+    message.includes("401") ||
+    message.includes("403") ||
+    message.includes("Unauthorized")
+  );
+}
+
 export async function createSimulation(
   input: SimulationStartInput
 ): Promise<SimulationRecord> {
@@ -56,18 +68,28 @@ export async function createSimulation(
   };
 
   if (isSupabaseEnabled()) {
-    const [created] = await supabaseRest<SimulationRecord[]>("simulations", {
-      method: "POST",
-      headers: { Prefer: "return=representation" },
-      body: JSON.stringify({
-        user_id: payload.user_id,
-        scenario_type: payload.scenario_type,
-        level: payload.level,
-        industry: payload.industry,
-        profession: payload.profession,
-      }),
-    });
-    return created;
+    try {
+      const [created] = await supabaseRest<SimulationRecord[]>("simulations", {
+        method: "POST",
+        headers: { Prefer: "return=representation" },
+        body: JSON.stringify({
+          user_id: payload.user_id,
+          scenario_type: payload.scenario_type,
+          level: payload.level,
+          industry: payload.industry,
+          profession: payload.profession,
+        }),
+      });
+      return created;
+    } catch (error) {
+      if (!shouldFallbackToLocalStorage(error)) {
+        throw error;
+      }
+      console.warn(
+        "Falling back to local simulation storage because Supabase write failed:",
+        error
+      );
+    }
   }
 
   const simulations = readAll<StoredSimulation>(DATA_PATH);
@@ -94,20 +116,30 @@ export async function createSimulationAttempt(params: {
   };
 
   if (isSupabaseEnabled()) {
-    const [created] = await supabaseRest<SimulationAttemptRecord[]>(
-      "simulation_attempts",
-      {
-        method: "POST",
-        headers: { Prefer: "return=representation" },
-        body: JSON.stringify({
-          simulation_id: payload.simulation_id,
-          user_input: payload.user_input,
-          ai_response: payload.ai_response,
-          feedback_json: payload.feedback_json,
-        }),
+    try {
+      const [created] = await supabaseRest<SimulationAttemptRecord[]>(
+        "simulation_attempts",
+        {
+          method: "POST",
+          headers: { Prefer: "return=representation" },
+          body: JSON.stringify({
+            simulation_id: payload.simulation_id,
+            user_input: payload.user_input,
+            ai_response: payload.ai_response,
+            feedback_json: payload.feedback_json,
+          }),
+        }
+      );
+      return created;
+    } catch (error) {
+      if (!shouldFallbackToLocalStorage(error)) {
+        throw error;
       }
-    );
-    return created;
+      console.warn(
+        "Falling back to local simulation attempt storage because Supabase write failed:",
+        error
+      );
+    }
   }
 
   const attempts = readAll<StoredAttempt>(ATTEMPTS_PATH);

@@ -841,15 +841,15 @@ export default function SimulationPage() {
     color: theme.colors.accentInk,
   };
   const sectionCardStyle: React.CSSProperties = {
-    background: theme.colors.surface,
+    background: "var(--surface-card)",
     borderColor: theme.colors.border,
   };
   const subtlePanelStyle: React.CSSProperties = {
-    background: theme.colors.surfaceHover,
+    background: "var(--surface-raised)",
     borderColor: theme.colors.borderLight,
   };
   const feedbackBlockStyle: React.CSSProperties = {
-    background: theme.colors.surfaceHover,
+    background: "var(--surface-card)",
     borderColor: theme.colors.border,
   };
   const errorStyle: React.CSSProperties = {
@@ -859,9 +859,9 @@ export default function SimulationPage() {
   const isAnyRequestLoading = isMessageLoading || isAnyStartLoading;
 
   return (
-    <section className="overflow-x-hidden py-4 sm:py-6 lg:py-8">
+    <section className="overflow-x-hidden py-6 sm:py-8 lg:py-10">
       <div className="mx-auto max-w-[960px]">
-        <div className="mb-6 sm:mb-8">
+        <div className="mb-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Workplace Simulation
           </p>
@@ -873,7 +873,7 @@ export default function SimulationPage() {
           </p>
         </div>
 
-        <div className="my-6 flex items-center gap-3 sm:my-8 sm:gap-4">
+        <div className="my-8 flex items-center gap-4">
           <div className="h-px flex-1 bg-[var(--border)]" />
           <p className="shrink-0 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Custom Simulation Generator
@@ -881,7 +881,7 @@ export default function SimulationPage() {
           <div className="h-px flex-1 bg-[var(--border)]" />
         </div>
 
-        <Card className="p-4 sm:p-6 lg:p-7" style={sectionCardStyle}>
+        <Card className="p-6 sm:p-7" style={sectionCardStyle}>
           <form onSubmit={handleSend}>
             <div className="grid gap-4">
               <div className="grid gap-2">
@@ -998,7 +998,7 @@ export default function SimulationPage() {
           </form>
         </Card>
 
-        <div className="my-6 flex items-center gap-3 sm:my-8 sm:gap-4">
+        <div className="my-8 flex items-center gap-4">
           <div className="h-px flex-1 bg-[var(--border)]" />
           <p className="shrink-0 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Quick Start Scenarios
@@ -1006,7 +1006,7 @@ export default function SimulationPage() {
           <div className="h-px flex-1 bg-[var(--border)]" />
         </div>
 
-        <div className="mb-4">
+        <div className="mb-5">
           <p className="max-w-2xl text-sm leading-6 text-[var(--ink-muted)]">
             Try a ready-made scenario with the role, industry, and level already filled in.
           </p>
@@ -1029,7 +1029,7 @@ export default function SimulationPage() {
             return (
               <Card
                 key={scenario.id}
-                className="flex h-full min-w-0 flex-col gap-4 p-4 sm:p-5 lg:p-6"
+                className="flex h-full min-w-0 flex-col gap-4 p-6"
                 style={sectionCardStyle}
               >
                 <div className="flex flex-col items-start justify-between gap-3 sm:flex-row">
@@ -1109,7 +1109,7 @@ export default function SimulationPage() {
           {activeTab === "conversation" ? (
             simulationStarted ? (
               <>
-                <Card className="mb-4 p-4 sm:p-5" style={subtlePanelStyle}>
+                <Card className="mb-4 p-4" style={subtlePanelStyle}>
                   <p className="text-xs leading-5 text-[var(--ink-muted)] sm:text-sm">
                     Scenario: {selectedScenario?.label || "Business Conversation"}
                     {" • "}
@@ -1134,7 +1134,7 @@ export default function SimulationPage() {
                 ) : null}
 
                 {history.length === 0 ? (
-                  <Card className="mt-4 p-4 sm:p-6" style={sectionCardStyle}>
+                  <Card className="mt-4 p-6" style={sectionCardStyle}>
                     <p className="text-sm text-[var(--ink-muted)]">
                       No messages yet. Start by sending your first response.
                     </p>
@@ -1170,7 +1170,7 @@ export default function SimulationPage() {
                               </span>
                             </div>
                             <div
-                              className="overflow-hidden rounded-2xl border px-3 py-3 sm:px-4"
+                              className="overflow-hidden rounded-2xl border px-4 py-3"
                               style={
                                 isUser
                                   ? {
@@ -1179,7 +1179,7 @@ export default function SimulationPage() {
                                       color: theme.colors.ink,
                                     }
                                   : {
-                                      background: theme.colors.surface,
+                                      background: "var(--surface-card)",
                                       borderColor: theme.colors.border,
                                       color: theme.colors.ink,
                                     }
@@ -1197,7 +1197,7 @@ export default function SimulationPage() {
                 )}
 
                 {simulationEnded ? (
-                  <Card className="mt-6 p-4 sm:p-6" style={sectionCardStyle}>
+                  <Card className="mt-6 p-6" style={sectionCardStyle}>
                     <h3 className="text-lg font-semibold text-[var(--ink)]">Overall Feedback</h3>
                     <ul className="mt-3 list-disc pl-5 text-sm leading-6 text-[var(--ink)]">
                       <li>Sentence structure: {conversationCoaching.overall.sentenceStructure}</li>
@@ -1243,7 +1243,7 @@ export default function SimulationPage() {
                 ) : null}
 
                 {!simulationEnded ? (
-                  <Card className="mt-6 p-4 sm:p-6" style={sectionCardStyle}>
+                  <Card className="mt-6 p-6" style={sectionCardStyle}>
                     <form onSubmit={handleSend}>
                       <div className="grid gap-3">
                         <label htmlFor="user_input" className="text-sm font-medium">
@@ -1291,14 +1291,14 @@ export default function SimulationPage() {
                 ) : null}
               </>
             ) : (
-              <Card className="p-4 sm:p-6" style={sectionCardStyle}>
+              <Card className="p-6" style={sectionCardStyle}>
                 <p className="text-sm text-[var(--ink-muted)]">
                   Configure your scenario and click Start Conversation to open the live chat with Mara.
                 </p>
               </Card>
             )
           ) : (
-            <Card className="p-4 sm:p-6" style={sectionCardStyle}>
+            <Card className="p-6" style={sectionCardStyle}>
               <div className="mb-4 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
                 <h2 className="font-serif text-xl text-[var(--ink)] sm:text-2xl">History</h2>
                 <Button

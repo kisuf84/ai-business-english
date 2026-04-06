@@ -57,6 +57,14 @@ function normalizeText(value: string | null | undefined): string {
   return (value || "").trim();
 }
 
+function sanitizeApiKey(value: string | null | undefined): string {
+  if (!value) return "";
+  return value
+    .trim()
+    .replace(/['"]\s*>>\s*.+$/, "")
+    .replace(/^['"]|['"]$/g, "");
+}
+
 function detectScenarioKey(input: SimulationMessageInput): ScenarioKey {
   const raw = `${normalizeText(input.user_input)} ${input.history
     .map((item) => item.content)
@@ -570,7 +578,7 @@ async function generateConversationResponse(
   }
 
   try {
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = sanitizeApiKey(process.env.OPENAI_API_KEY);
     if (!apiKey) {
       throw new Error("OPENAI_API_KEY_MISSING");
     }
