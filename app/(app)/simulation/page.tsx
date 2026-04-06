@@ -445,19 +445,25 @@ function getScenarioTypeLabel(value: SimulationScenarioType): string {
   return labels[value] ?? "Conversation";
 }
 
-function getLevelBadgeClass(level: string): string {
+function getLevelBadgeClass(level: string, mode: "light" | "dark"): string {
   const normalized = level.toUpperCase();
   if (normalized === "A2") {
-    return "border-[rgba(73,122,98,0.18)] bg-[rgba(73,122,98,0.1)] text-[var(--accent)]";
+    return mode === "light"
+      ? "border-[rgba(63,104,86,0.18)] bg-[rgba(63,104,86,0.08)] text-[#315b4a]"
+      : "border-[rgba(73,122,98,0.18)] bg-[rgba(73,122,98,0.1)] text-[var(--accent)]";
   }
   if (normalized === "B1" || normalized === "B2") {
-    return "border-[rgba(201,162,74,0.24)] bg-[var(--accent-gold-soft)] text-[var(--accent-gold)]";
+    return mode === "light"
+      ? "border-[rgba(179,131,34,0.24)] bg-[rgba(179,131,34,0.1)] text-[#8b6516]"
+      : "border-[rgba(201,162,74,0.24)] bg-[var(--accent-gold-soft)] text-[var(--accent-gold)]";
   }
-  return "border-[rgba(166,93,46,0.18)] bg-[rgba(166,93,46,0.1)] text-[var(--accent-warm)]";
+  return mode === "light"
+    ? "border-[rgba(181,109,52,0.22)] bg-[rgba(181,109,52,0.1)] text-[var(--accent-warm)]"
+    : "border-[rgba(166,93,46,0.18)] bg-[rgba(166,93,46,0.1)] text-[var(--accent-warm)]";
 }
 
 export default function SimulationPage() {
-  const { theme } = useTheme();
+  const { mode, theme } = useTheme();
   const [selectedScenarioId, setSelectedScenarioId] = useState<string>("sales_meeting");
   const [level, setLevel] = useState("");
   const [industry, setIndustry] = useState("");
@@ -472,9 +478,15 @@ export default function SimulationPage() {
   const [simulationId, setSimulationId] = useState<string | null>(null);
   const [simulationStarted, setSimulationStarted] = useState(false);
   const [simulationEnded, setSimulationEnded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [errorDetails, setErrorDetails] = useState<string | null>(null);
+  const [isMessageLoading, setIsMessageLoading] = useState(false);
+  const [isStartingCustom, setIsStartingCustom] = useState(false);
+  const [activeQuickStartId, setActiveQuickStartId] = useState<string | null>(null);
+  const [conversationError, setConversationError] = useState<string | null>(null);
+  const [customStartError, setCustomStartError] = useState<string | null>(null);
+  const [quickStartError, setQuickStartError] = useState<string | null>(null);
+  const [conversationErrorDetails, setConversationErrorDetails] = useState<string | null>(null);
+  const [customStartErrorDetails, setCustomStartErrorDetails] = useState<string | null>(null);
+  const [quickStartErrorDetails, setQuickStartErrorDetails] = useState<string | null>(null);
 
   const loadHistory = async () => {
     setIsHistoryLoading(true);
@@ -522,11 +534,10 @@ export default function SimulationPage() {
     level?: string;
     industry?: string;
     role?: string;
-  }): Promise<boolean> => {
-    setIsLoading(true);
-    setError(null);
-    setErrorDetails(null);
-
+  }): Promise<
+    | { ok: true }
+    | { ok: false; message: string; details: string | null }
+  > => {
     const sourceHistory = params.historySeed ?? history;
     const nextHistory: ChatMessage[] = params.includeUserInHistory
       ? [
@@ -599,48 +610,98 @@ export default function SimulationPage() {
       if (params.includeUserInHistory) {
         setUserInput("");
       }
-      return true;
+      return { ok: true };
     } catch (err) {
       const rawMessage = err instanceof Error ? err.message : "send_failed";
       const [publicMessage, details] = rawMessage.split("|");
-      if (process.env.NODE_ENV !== "production" && details) {
-        setErrorDetails(details);
-      }
-      setError(
-        process.env.NODE_ENV !== "production" &&
+      return {
+        ok: false,
+        message:
+          process.env.NODE_ENV !== "production" &&
           publicMessage &&
           publicMessage !== "send_failed"
-          ? publicMessage
-          : "We could not send that message."
-      );
-      return false;
-    } finally {
-      setIsLoading(false);
+            ? publicMessage
+            : "We could not send that message.",
+        details:
+          process.env.NODE_ENV !== "production" && details ? details : null,
+      };
     }
   };
 
-  const handleStartSimulation = async (overrides?: {
-    scenarioId?: string;
-    level?: string;
-    industry?: string;
-    role?: string;
-  }) => {
-    if (isLoading || simulationStarted) return;
+  const handleStartSimulation = async (
+    overrides?: {
+      scenarioId?: string;
+      level?: string;
+      industry?: string;
+      role?: string;
+    },
+    source: "custom" | "quick-start" = "custom",
+    quickStartId?: string
+  ) => {
+    if (
+      isMessageLoading ||
+      isStartingCustom ||
+      activeQuickStartId !== null ||
+      simulationStarted
+    ) {
+      return;
+    }
+
+    const setStartError = (message: string, details?: string | null) => {
+      if (source === "quick-start") {
+        setQuickStartError(message);
+        setQuickStartErrorDetails(details ?? null);
+        return;
+      }
+
+      setCustomStartError(message);
+      setCustomStartErrorDetails(details ?? null);
+    };
+
+    setCustomStartError(null);
+    setCustomStartErrorDetails(null);
+    setQuickStartError(null);
+    setQuickStartErrorDetails(null);
+    setConversationError(null);
+    setConversationErrorDetails(null);
+
+    if (source === "quick-start") {
+      setActiveQuickStartId(quickStartId ?? null);
+    } else {
+      setIsStartingCustom(true);
+    }
+
     const nextScenarioId = overrides?.scenarioId ?? selectedScenarioId;
     const nextLevel = overrides?.level ?? level;
     const nextIndustry = overrides?.industry ?? industry;
     const nextRole = overrides?.role ?? role;
 
     if (!nextLevel.trim()) {
-      setError("Please select a level before starting.");
+      setStartError("Please select a level before starting.");
+      if (source === "quick-start") {
+        setActiveQuickStartId(null);
+      } else {
+        setIsStartingCustom(false);
+      }
+      return;
+    }
+
+    const selectedScenario = scenarioOptions.find(
+      (option) => option.id === nextScenarioId
+    );
+
+    if (!selectedScenario) {
+      setStartError("This scenario is not configured correctly.");
+      if (source === "quick-start") {
+        setActiveQuickStartId(null);
+      } else {
+        setIsStartingCustom(false);
+      }
       return;
     }
 
     setSimulationEnded(false);
-    const selectedScenario = scenarioOptions.find(
-      (option) => option.id === nextScenarioId
-    );
-    const scenarioLabel = selectedScenario?.label ?? "Business conversation";
+    const scenarioLabel = selectedScenario.label ?? "Business conversation";
     const starterPrompt = [
       "[START_SIMULATION]",
       `Start the simulation as the conversation counterpart in a ${scenarioLabel}.`,
@@ -656,7 +717,7 @@ export default function SimulationPage() {
     setLevel(nextLevel);
     setIndustry(nextIndustry);
     setRole(nextRole);
-    const started = await sendSimulationMessage({
+    const result = await sendSimulationMessage({
       text: starterPrompt,
       includeUserInHistory: false,
       historySeed: [],
@@ -665,19 +726,40 @@ export default function SimulationPage() {
       industry: nextIndustry,
       role: nextRole,
     });
-    if (started) {
+
+    if (result.ok) {
       setSimulationStarted(true);
       setActiveTab("conversation");
+    } else {
+      setStartError(result.message, result.details);
+    }
+
+    if (source === "quick-start") {
+      setActiveQuickStartId(null);
+    } else {
+      setIsStartingCustom(false);
     }
   };
 
   const handleSend = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!simulationStarted || simulationEnded || !userInput.trim() || isLoading) return;
-    await sendSimulationMessage({
+    if (!simulationStarted || simulationEnded || !userInput.trim() || isMessageLoading) return;
+
+    setIsMessageLoading(true);
+    setConversationError(null);
+    setConversationErrorDetails(null);
+
+    const result = await sendSimulationMessage({
       text: userInput,
       includeUserInHistory: true,
     });
+
+    if (!result.ok) {
+      setConversationError(result.message);
+      setConversationErrorDetails(result.details);
+    }
+
+    setIsMessageLoading(false);
   };
 
   const persistSessionFeedback = async () => {
@@ -715,20 +797,29 @@ export default function SimulationPage() {
     setSimulationStarted(false);
     setSimulationEnded(false);
     setUserInput("");
-    setError(null);
-    setErrorDetails(null);
-    setIsLoading(false);
+    setConversationError(null);
+    setConversationErrorDetails(null);
+    setCustomStartError(null);
+    setCustomStartErrorDetails(null);
+    setQuickStartError(null);
+    setQuickStartErrorDetails(null);
+    setIsMessageLoading(false);
+    setIsStartingCustom(false);
+    setActiveQuickStartId(null);
     setActiveTab("conversation");
   };
 
   const handleStartCatalogScenario = async (scenario: (typeof simulationCatalog)[number]) => {
-    if (simulationStarted || isLoading) return;
-    await handleStartSimulation({
-      scenarioId: scenario.id,
-      level: scenario.level,
-      industry: scenario.industry,
-      role: scenario.role,
-    });
+    await handleStartSimulation(
+      {
+        scenarioId: scenario.id,
+        level: scenario.level,
+        industry: scenario.industry,
+        role: scenario.role,
+      },
+      "quick-start",
+      scenario.id
+    );
   };
 
   const selectedScenario = scenarioOptions.find(
@@ -749,80 +840,48 @@ export default function SimulationPage() {
     background: theme.colors.accent,
     color: theme.colors.accentInk,
   };
+  const sectionCardStyle: React.CSSProperties = {
+    background: theme.colors.surface,
+    borderColor: theme.colors.border,
+  };
+  const subtlePanelStyle: React.CSSProperties = {
+    background: theme.colors.surfaceHover,
+    borderColor: theme.colors.borderLight,
+  };
+  const feedbackBlockStyle: React.CSSProperties = {
+    background: theme.colors.surfaceHover,
+    borderColor: theme.colors.border,
+  };
+  const errorStyle: React.CSSProperties = {
+    color: theme.colors.danger,
+  };
+  const isAnyStartLoading = isStartingCustom || activeQuickStartId !== null;
+  const isAnyRequestLoading = isMessageLoading || isAnyStartLoading;
 
   return (
-    <section className="py-10">
+    <section className="overflow-x-hidden py-4 sm:py-6 lg:py-8">
       <div className="mx-auto max-w-[960px]">
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Workplace Simulation
           </p>
-          <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">
+          <h1 className="mt-2 text-balance font-serif text-2xl font-normal text-[var(--ink)] sm:text-3xl md:text-[2.15rem]">
             Simulation Hub
           </h1>
-          <p className="mt-3 text-sm text-[var(--ink-muted)]">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--ink-muted)] sm:text-[15px]">
             Start a guided workplace scenario instantly or build a custom simulation below.
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {simulationCatalog.map((scenario) => (
-            <Card key={scenario.id} className="flex h-full flex-col gap-4 p-6">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-lg font-semibold text-[var(--ink)]">
-                    {scenario.title}
-                  </p>
-                  <p className="mt-2 text-sm text-[var(--ink-muted)]">
-                    {scenario.description}
-                  </p>
-                </div>
-                <span
-                  className={`inline-flex rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${getLevelBadgeClass(
-                    scenario.level
-                  )}`}
-                >
-                  {scenario.level}
-                </span>
-              </div>
-
-              <div className="flex flex-wrap gap-2 text-xs text-[var(--ink-faint)]">
-                <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
-                  {scenario.duration}
-                </span>
-                <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
-                  {scenario.role}
-                </span>
-                <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
-                  {scenario.industry}
-                </span>
-              </div>
-
-              <div className="mt-auto flex items-center justify-between gap-3">
-                <p className="text-xs text-[var(--ink-faint)]">Ready-to-start scenario</p>
-                <Button
-                  type="button"
-                  onClick={() => void handleStartCatalogScenario(scenario)}
-                  disabled={isLoading || simulationStarted}
-                  className="rounded-lg border px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-90"
-                  style={accentButtonStyle}
-                >
-                  {isLoading ? "Starting..." : "Start"}
-                </Button>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        <div className="my-8 flex items-center gap-4">
+        <div className="my-6 flex items-center gap-3 sm:my-8 sm:gap-4">
           <div className="h-px flex-1 bg-[var(--border)]" />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+          <p className="shrink-0 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Custom Simulation Generator
           </p>
           <div className="h-px flex-1 bg-[var(--border)]" />
         </div>
 
-        <Card className="p-7">
+        <Card className="p-4 sm:p-6 lg:p-7" style={sectionCardStyle}>
           <form onSubmit={handleSend}>
             <div className="grid gap-4">
               <div className="grid gap-2">
@@ -907,29 +966,31 @@ export default function SimulationPage() {
                   <Button
                     type="button"
                     onClick={() => void handleStartSimulation()}
-                    disabled={isLoading}
-                    className="rounded-lg border px-5 py-2 text-xs font-semibold transition-opacity hover:opacity-90"
+                    disabled={isAnyRequestLoading}
+                    className="w-full rounded-lg border px-5 py-2 text-xs font-semibold transition-opacity hover:opacity-90 sm:w-auto"
                     style={accentButtonStyle}
                   >
-                    {isLoading ? "Starting..." : "Start Conversation"}
+                    {isStartingCustom ? "Starting..." : "Start Conversation"}
                   </Button>
                 ) : null}
                 {simulationStarted || simulationEnded ? (
                   <Button
                     type="button"
                     onClick={handleReset}
-                    disabled={isLoading}
-                    className="rounded-lg px-4 py-2 text-xs"
+                    disabled={isAnyRequestLoading}
+                    className="w-full rounded-lg px-4 py-2 text-xs sm:w-auto"
                   >
                     Start New Conversation
                   </Button>
                 ) : null}
-                {error ? (
-                  <p className="text-xs text-[var(--accent-warm)]">{error}</p>
+                {customStartError ? (
+                  <p className="min-w-0 text-xs" style={errorStyle}>
+                    {customStartError}
+                  </p>
                 ) : null}
-                {process.env.NODE_ENV !== "production" && errorDetails ? (
-                  <p className="text-xs text-[var(--ink-faint)]">
-                    Debug: {errorDetails}
+                {process.env.NODE_ENV !== "production" && customStartErrorDetails ? (
+                  <p className="min-w-0 break-words text-xs text-[var(--ink-faint)]">
+                    Debug: {customStartErrorDetails}
                   </p>
                 ) : null}
               </div>
@@ -937,14 +998,96 @@ export default function SimulationPage() {
           </form>
         </Card>
 
+        <div className="my-6 flex items-center gap-3 sm:my-8 sm:gap-4">
+          <div className="h-px flex-1 bg-[var(--border)]" />
+          <p className="shrink-0 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+            Quick Start Scenarios
+          </p>
+          <div className="h-px flex-1 bg-[var(--border)]" />
+        </div>
+
+        <div className="mb-4">
+          <p className="max-w-2xl text-sm leading-6 text-[var(--ink-muted)]">
+            Try a ready-made scenario with the role, industry, and level already filled in.
+          </p>
+          {quickStartError ? (
+            <p className="mt-3 text-sm" style={errorStyle}>
+              {quickStartError}
+            </p>
+          ) : null}
+          {process.env.NODE_ENV !== "production" && quickStartErrorDetails ? (
+            <p className="mt-2 break-words text-xs text-[var(--ink-faint)]">
+              Debug: {quickStartErrorDetails}
+            </p>
+          ) : null}
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {simulationCatalog.map((scenario) => {
+            const isCardStarting = activeQuickStartId === scenario.id;
+
+            return (
+              <Card
+                key={scenario.id}
+                className="flex h-full min-w-0 flex-col gap-4 p-4 sm:p-5 lg:p-6"
+                style={sectionCardStyle}
+              >
+                <div className="flex flex-col items-start justify-between gap-3 sm:flex-row">
+                  <div className="min-w-0">
+                    <p className="text-base font-semibold leading-6 text-[var(--ink)] sm:text-lg">
+                      {scenario.title}
+                    </p>
+                    <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">
+                      {scenario.description}
+                    </p>
+                  </div>
+                  <span
+                    className={`inline-flex shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${getLevelBadgeClass(
+                      scenario.level,
+                      mode
+                    )}`}
+                  >
+                    {scenario.level}
+                  </span>
+                </div>
+
+                <div className="flex flex-wrap gap-2 text-xs text-[var(--ink-faint)]">
+                  <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
+                    {scenario.duration}
+                  </span>
+                  <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
+                    {scenario.role}
+                  </span>
+                  <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
+                    {scenario.industry}
+                  </span>
+                </div>
+
+                <div className="mt-auto flex flex-col items-stretch justify-between gap-3 sm:flex-row sm:items-center">
+                  <p className="text-xs text-[var(--ink-faint)]">Ready-to-start scenario</p>
+                  <Button
+                    type="button"
+                    onClick={() => void handleStartCatalogScenario(scenario)}
+                    disabled={simulationStarted || isAnyRequestLoading}
+                    className="w-full rounded-lg border px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-90 sm:w-auto"
+                    style={accentButtonStyle}
+                  >
+                    {isCardStarting ? "Starting..." : "Start"}
+                  </Button>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+
         <div className="mt-8">
-          <div className="mb-4 flex items-center gap-2">
+          <div className="mb-4 flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={() => setActiveTab("conversation")}
-              className={`rounded-lg border px-4 py-2 text-xs font-semibold transition ${
+              className={`flex-1 rounded-lg border px-4 py-2 text-xs font-semibold transition sm:flex-none ${
                 activeTab === "conversation"
-                  ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--surface)]"
+                  ? "border-[var(--accent)] bg-[var(--accent)] text-white"
                   : "border-[var(--border)] text-[var(--ink-muted)] hover:bg-[var(--surface-hover)]"
               }`}
             >
@@ -953,9 +1096,9 @@ export default function SimulationPage() {
             <button
               type="button"
               onClick={() => setActiveTab("history")}
-              className={`rounded-lg border px-4 py-2 text-xs font-semibold transition ${
+              className={`flex-1 rounded-lg border px-4 py-2 text-xs font-semibold transition sm:flex-none ${
                 activeTab === "history"
-                  ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--surface)]"
+                  ? "border-[var(--accent)] bg-[var(--accent)] text-white"
                   : "border-[var(--border)] text-[var(--ink-muted)] hover:bg-[var(--surface-hover)]"
               }`}
             >
@@ -966,8 +1109,8 @@ export default function SimulationPage() {
           {activeTab === "conversation" ? (
             simulationStarted ? (
               <>
-                <Card className="mb-4 p-4">
-                  <p className="text-xs text-[var(--ink-muted)]">
+                <Card className="mb-4 p-4 sm:p-5" style={subtlePanelStyle}>
+                  <p className="text-xs leading-5 text-[var(--ink-muted)] sm:text-sm">
                     Scenario: {selectedScenario?.label || "Business Conversation"}
                     {" • "}
                     Role: {role || "Business Professional"}
@@ -980,16 +1123,18 @@ export default function SimulationPage() {
                     Goal: {contextMeta.goal}
                   </p>
                 </Card>
-                <h2 className="font-serif text-2xl text-[var(--ink)]">Conversation</h2>
+                <h2 className="font-serif text-xl text-[var(--ink)] sm:text-2xl">
+                  Conversation
+                </h2>
 
-                {isLoading ? (
+                {isMessageLoading ? (
                   <p className="mt-2 text-sm text-[var(--ink-muted)]">
                     Loading response...
                   </p>
                 ) : null}
 
                 {history.length === 0 ? (
-                  <Card className="mt-4 p-6">
+                  <Card className="mt-4 p-4 sm:p-6" style={sectionCardStyle}>
                     <p className="text-sm text-[var(--ink-muted)]">
                       No messages yet. Start by sending your first response.
                     </p>
@@ -1003,7 +1148,7 @@ export default function SimulationPage() {
                           key={`${message.role}-${index}`}
                           className={`flex ${isUser ? "justify-end" : "justify-start"}`}
                         >
-                          <div className="max-w-[80%]">
+                          <div className="w-full max-w-full sm:max-w-[88%] lg:max-w-[80%]">
                             <div
                               className={`mb-1 flex items-center gap-2 ${
                                 isUser ? "justify-end" : "justify-start"
@@ -1025,7 +1170,7 @@ export default function SimulationPage() {
                               </span>
                             </div>
                             <div
-                              className="rounded-2xl border px-4 py-3"
+                              className="overflow-hidden rounded-2xl border px-3 py-3 sm:px-4"
                               style={
                                 isUser
                                   ? {
@@ -1040,7 +1185,7 @@ export default function SimulationPage() {
                                     }
                               }
                             >
-                              <p className="whitespace-pre-wrap text-sm leading-6">
+                              <p className="whitespace-pre-wrap break-words text-sm leading-6">
                                 {message.content || "No message content"}
                               </p>
                             </div>
@@ -1052,9 +1197,9 @@ export default function SimulationPage() {
                 )}
 
                 {simulationEnded ? (
-                  <Card className="mt-6 p-6">
+                  <Card className="mt-6 p-4 sm:p-6" style={sectionCardStyle}>
                     <h3 className="text-lg font-semibold text-[var(--ink)]">Overall Feedback</h3>
-                    <ul className="mt-3 list-disc pl-5 text-sm text-[var(--ink)]">
+                    <ul className="mt-3 list-disc pl-5 text-sm leading-6 text-[var(--ink)]">
                       <li>Sentence structure: {conversationCoaching.overall.sentenceStructure}</li>
                       <li>Grammar: {conversationCoaching.overall.grammar}</li>
                       <li>Vocabulary: {conversationCoaching.overall.vocabulary}</li>
@@ -1074,7 +1219,8 @@ export default function SimulationPage() {
                         conversationCoaching.callouts.map((callout, index) => (
                           <div
                             key={`${callout.response.slice(0, 32)}-${index}`}
-                            className="rounded-2xl border border-[var(--border)] bg-[var(--surface-card)] p-4"
+                            className="rounded-2xl border p-4"
+                            style={feedbackBlockStyle}
                           >
                             <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                               Response {index + 1}
@@ -1097,7 +1243,7 @@ export default function SimulationPage() {
                 ) : null}
 
                 {!simulationEnded ? (
-                  <Card className="mt-6 p-6">
+                  <Card className="mt-6 p-4 sm:p-6" style={sectionCardStyle}>
                     <form onSubmit={handleSend}>
                       <div className="grid gap-3">
                         <label htmlFor="user_input" className="text-sm font-medium">
@@ -1108,23 +1254,33 @@ export default function SimulationPage() {
                           value={userInput}
                           onChange={(event) => setUserInput(event.target.value)}
                           placeholder="Type your response..."
-                          disabled={isLoading}
+                          disabled={isMessageLoading}
                           required
                         />
+                        {conversationError ? (
+                          <p className="text-sm" style={errorStyle}>
+                            {conversationError}
+                          </p>
+                        ) : null}
+                        {process.env.NODE_ENV !== "production" && conversationErrorDetails ? (
+                          <p className="break-words text-xs text-[var(--ink-faint)]">
+                            Debug: {conversationErrorDetails}
+                          </p>
+                        ) : null}
                         <div className="flex flex-wrap items-center gap-3">
                           <Button
                             type="submit"
-                            disabled={isLoading}
-                            className="rounded-lg border px-5 py-2 text-xs font-semibold transition-opacity hover:opacity-90"
+                            disabled={isMessageLoading}
+                            className="w-full rounded-lg border px-5 py-2 text-xs font-semibold transition-opacity hover:opacity-90 sm:w-auto"
                             style={accentButtonStyle}
                           >
-                            {isLoading ? "Sending..." : "Send"}
+                            {isMessageLoading ? "Sending..." : "Send"}
                           </Button>
                           <Button
                             type="button"
                             onClick={handleEndConversation}
-                            disabled={isLoading}
-                            className="rounded-lg px-4 py-2 text-xs"
+                            disabled={isMessageLoading}
+                            className="w-full rounded-lg px-4 py-2 text-xs sm:w-auto"
                           >
                             End Conversation
                           </Button>
@@ -1135,28 +1291,30 @@ export default function SimulationPage() {
                 ) : null}
               </>
             ) : (
-              <Card className="p-6">
+              <Card className="p-4 sm:p-6" style={sectionCardStyle}>
                 <p className="text-sm text-[var(--ink-muted)]">
                   Configure your scenario and click Start Conversation to open the live chat with Mara.
                 </p>
               </Card>
             )
           ) : (
-            <Card className="p-6">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <h2 className="font-serif text-2xl text-[var(--ink)]">History</h2>
+            <Card className="p-4 sm:p-6" style={sectionCardStyle}>
+              <div className="mb-4 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+                <h2 className="font-serif text-xl text-[var(--ink)] sm:text-2xl">History</h2>
                 <Button
                   type="button"
                   onClick={() => void loadHistory()}
                   disabled={isHistoryLoading}
-                  className="rounded-lg px-4 py-2 text-xs"
+                  className="w-full rounded-lg px-4 py-2 text-xs sm:w-auto"
                 >
                   {isHistoryLoading ? "Refreshing..." : "Refresh"}
                 </Button>
               </div>
 
               {historyError ? (
-                <p className="mb-4 text-sm text-[var(--accent-warm)]">{historyError}</p>
+                <p className="mb-4 text-sm" style={errorStyle}>
+                  {historyError}
+                </p>
               ) : null}
 
               {isHistoryLoading ? (
@@ -1170,9 +1328,10 @@ export default function SimulationPage() {
                   {historySessions.map((session) => (
                     <div
                       key={session.simulation_id}
-                      className="rounded-2xl border border-[var(--border)] bg-[var(--surface-card)] p-4"
+                      className="rounded-2xl border p-4"
+                      style={subtlePanelStyle}
                     >
-                      <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                         <p className="text-sm font-semibold text-[var(--ink)]">
                           {getScenarioTypeLabel(session.scenario_type)} • {session.level}
                         </p>
@@ -1180,7 +1339,7 @@ export default function SimulationPage() {
                           {formatDateTime(session.created_at)}
                         </p>
                       </div>
-                      <p className="mt-1 text-xs text-[var(--ink-muted)]">
+                      <p className="mt-1 break-words text-xs leading-5 text-[var(--ink-muted)]">
                         Role: {session.profession || "Business Professional"} • Industry:{" "}
                         {session.industry || "General Business"} • Messages:{" "}
                         {session.message_count}
@@ -1217,21 +1376,29 @@ export default function SimulationPage() {
                       {expandedHistoryId === session.simulation_id ? (
                         <div className="mt-3 space-y-2">
                           {session.attempts.map((attempt) => (
-                            <div key={attempt.id} className="space-y-2 rounded-xl border border-[var(--border)] p-3">
+                            <div
+                              key={attempt.id}
+                              className="space-y-2 rounded-xl border p-3"
+                              style={feedbackBlockStyle}
+                            >
                               <p className="text-xs font-semibold text-[var(--ink-faint)]">You</p>
-                              <p className="text-sm text-[var(--ink)]">{attempt.user_input}</p>
+                              <p className="break-words text-sm text-[var(--ink)]">
+                                {attempt.user_input}
+                              </p>
                               <p className="text-xs font-semibold text-[var(--ink-faint)]">Mara</p>
-                              <p className="text-sm text-[var(--ink)]">{attempt.ai_response}</p>
+                              <p className="break-words text-sm text-[var(--ink)]">
+                                {attempt.ai_response}
+                              </p>
                             </div>
                           ))}
 
-                          <div className="rounded-xl border border-[var(--border)] p-4">
+                          <div className="rounded-xl border p-4" style={feedbackBlockStyle}>
                             <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                               Session Feedback
                             </p>
                             {session.session_feedback?.overall ? (
                               <>
-                                <ul className="mt-2 list-disc pl-5 text-sm text-[var(--ink)]">
+                                <ul className="mt-2 list-disc pl-5 text-sm leading-6 text-[var(--ink)]">
                                   <li>
                                     Sentence structure:{" "}
                                     {session.session_feedback.overall.sentenceStructure}
@@ -1255,7 +1422,8 @@ export default function SimulationPage() {
                                     session.session_feedback.callouts.map((callout, index) => (
                                       <div
                                         key={`${callout.response.slice(0, 28)}-${index}`}
-                                        className="rounded-xl border border-[var(--border)] p-3"
+                                        className="rounded-xl border p-3"
+                                        style={sectionCardStyle}
                                       >
                                         <p className="text-xs font-semibold text-[var(--ink-faint)]">
                                           Response {index + 1}

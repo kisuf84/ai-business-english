@@ -270,28 +270,28 @@ export default function AppShell({ children }: AppShellProps) {
         </aside>
 
         <main className="min-w-0 flex-1">
-          <header className="flex h-[72px] items-center justify-between border-b border-white/[0.04] bg-[rgba(7,11,22,0.92)] px-5 backdrop-blur-[10px] lg:px-7">
-            <div className="flex items-center gap-3">
+          <header className="flex min-h-[72px] flex-wrap items-center justify-between gap-3 border-b border-[var(--sidebar-border)] bg-[color:var(--surface-card)] px-4 py-3 backdrop-blur-[10px] sm:px-5 lg:flex-nowrap lg:px-7">
+            <div className="flex min-w-0 items-center gap-3">
               <div className="grid h-[34px] w-[34px] place-items-center rounded-[10px] bg-[linear-gradient(135deg,#2e55ff_0%,#5f7cff_100%)] text-base font-extrabold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]">
                 A
               </div>
-              <div className="text-sm lg:text-[18px]">
-                <span className="font-extrabold tracking-[-0.02em] text-white">
+              <div className="min-w-0 text-sm lg:text-[18px]">
+                <span className="font-extrabold tracking-[-0.02em] text-[var(--ink)]">
                   LangslateAI
                 </span>
-                <span className="ml-1.5 text-[15px] text-[var(--ink-muted)]">
+                <span className="ml-1.5 break-words text-[13px] text-[var(--ink-muted)] sm:text-[15px]">
                   | {pageTitle}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-[10px]">
+            <div className="flex w-full flex-wrap items-center justify-end gap-2 sm:w-auto sm:gap-[10px]">
               <button
                 type="button"
                 onClick={toggleTheme}
                 aria-label={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
                 title={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-transparent text-white transition hover:bg-white/[0.05]"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-transparent text-[var(--ink)] transition hover:bg-[var(--surface-hover)]"
               >
                 {mode === "dark" ? (
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -306,20 +306,20 @@ export default function AppShell({ children }: AppShellProps) {
               </button>
               <Link
                 href="/simulation"
-                className="rounded-xl border border-white/10 px-[18px] py-3 text-[15px] font-bold text-white transition hover:bg-white/[0.05]"
+                className="flex-1 rounded-xl border border-[var(--border)] px-4 py-3 text-center text-sm font-bold text-[var(--ink)] transition hover:bg-[var(--surface-hover)] sm:flex-none sm:px-[18px] sm:text-[15px]"
               >
                 Start simulation
               </Link>
               <Link
                 href="/generator"
-                className="rounded-xl bg-[var(--accent)] px-[18px] py-3 text-[15px] font-bold text-white transition hover:bg-[#5a78ff]"
+                className="flex-1 rounded-xl bg-[var(--accent)] px-4 py-3 text-center text-sm font-bold text-white transition hover:opacity-90 sm:flex-none sm:px-[18px] sm:text-[15px]"
               >
                 Open generator
               </Link>
             </div>
           </header>
 
-          <div className="px-5 py-7 lg:px-7">{children}</div>
+          <div className="px-4 py-5 sm:px-5 sm:py-6 lg:px-7 lg:py-7">{children}</div>
         </main>
       </div>
     </div>
