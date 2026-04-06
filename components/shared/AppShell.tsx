@@ -1,0 +1,327 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  getSupabaseBrowserClient,
+  hasSupabaseBrowserConfig,
+} from "../../lib/supabase/client";
+import { useTheme } from "../../context/ThemeContext";
+
+type AppShellProps = {
+  children: React.ReactNode;
+};
+
+export default function AppShell({ children }: AppShellProps) {
+  const { mode, toggleTheme } = useTheme();
+  const [user, setUser] = useState<{
+    name: string;
+    role: string;
+    email: string;
+    avatarUrl: string | null;
+  }>({
+    name: "Workspace User",
+    role: "Member",
+    email: "",
+    avatarUrl: null,
+  });
+  const [isAuthReady, setIsAuthReady] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const navGroups = [
+    {
+      label: "Workspace",
+      items: [
+        { href: "/dashboard", label: "Dashboard" },
+        { href: "/simulation", label: "AI simulation" },
+        { href: "/generator", label: "Generator" },
+      ],
+    },
+    {
+      label: "Library",
+      items: [
+        { href: "/my-courses", label: "My courses" },
+        { href: "/library", label: "Lesson library" },
+        { href: "/for-teachers", label: "For Teachers" },
+      ],
+    },
+    {
+      label: "Account",
+      items: [
+        { href: "/pricing", label: "Pricing" },
+        { href: "/settings", label: "Settings" },
+      ],
+    },
+  ];
+  const legacyPageTitles: Record<string, string> = {
+    "/lesson/new": "Generator",
+    "/courses": "Generator",
+  };
+  const pageTitle =
+    navGroups.flatMap((group) => group.items).find((item) => item.href === pathname)
+      ?.label ??
+    (pathname ? legacyPageTitles[pathname] : undefined) ??
+    "Dashboard";
+
+  useEffect(() => {
+    let active = true;
+
+    const mapAuthUser = (authUser: {
+      email?: string;
+      user_metadata?: Record<string, unknown>;
+    } | null) => {
+      const metadata = authUser?.user_metadata ?? {};
+      const fullName =
+        (typeof metadata.full_name === "string" && metadata.full_name) ||
+        (typeof metadata.name === "string" && metadata.name) ||
+        "Workspace User";
+      const avatar =
+        (typeof metadata.avatar_url === "string" && metadata.avatar_url) ||
+        (typeof metadata.picture === "string" && metadata.picture) ||
+        null;
+
+      return {
+        name: fullName,
+        role: "Member",
+        email: authUser?.email || "",
+        avatarUrl: avatar,
+      };
+    };
+
+    const syncAuth = async () => {
+      if (!hasSupabaseBrowserConfig()) {
+        if (!active) return;
+        setUser({
+          name: "Workspace User",
+          role: "Member",
+          email: "",
+          avatarUrl: null,
+        });
+        setIsAuthReady(true);
+        return;
+      }
+
+      const supabase = getSupabaseBrowserClient();
+      if (!supabase) {
+        if (!active) return;
+        setIsAuthReady(true);
+        return;
+      }
+
+      const { data } = await supabase.auth.getUser();
+      if (!active) return;
+      setUser(mapAuthUser(data.user ?? null));
+      setIsAuthReady(true);
+
+      const { data: authState } = supabase.auth.onAuthStateChange((_, session) => {
+        setUser(mapAuthUser(session?.user ?? null));
+      });
+
+      return () => {
+        authState.subscription.unsubscribe();
+      };
+    };
+
+    let unsubscribe: (() => void) | undefined;
+    void syncAuth().then((cleanup) => {
+      unsubscribe = cleanup;
+    });
+
+    return () => {
+      active = false;
+      if (unsubscribe) unsubscribe();
+    };
+  }, []);
+
+  const handleSignOut = async () => {
+    const supabase = getSupabaseBrowserClient();
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
+    router.replace("/auth");
+  };
+
+  const initials = user.name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() || "")
+    .join("");
+
+  return (
+    <div
+      className="font-ui min-h-screen bg-[var(--surface)] text-[var(--ink)]"
+      style={{ fontFamily: '"Inter", system-ui, sans-serif' }}
+    >
+      <div className="flex min-h-screen w-full">
+        <aside className="hidden w-[280px] shrink-0 flex-col border-r border-[var(--sidebar-border)] bg-[image:var(--sidebar-bg)] px-[14px] py-[18px] lg:flex">
+          <div className="rounded-[18px] border border-white/5 bg-white/[0.05] p-4">
+            <div className="flex items-center gap-3">
+              {user.avatarUrl ? (
+                <img
+                  src={user.avatarUrl}
+                  alt={user.name}
+                  className="h-14 w-14 rounded-full border-2 border-white/10 object-cover"
+                />
+              ) : (
+                <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/10 bg-[radial-gradient(circle_at_30%_30%,#f0a46b,#7d3f2a_70%)] text-sm font-bold text-white">
+                  {initials || "U"}
+                </div>
+              )}
+              <div>
+                <div className="text-[17px] font-bold leading-[1.2] text-[var(--ink)]">
+                  {user.name}
+                </div>
+                <div className="mt-1 text-sm text-[var(--ink-muted)]">
+                  {user.email || user.role}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-[14px] inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-[14px] py-[10px] text-sm font-bold text-white">
+              <span className="inline-block h-[18px] w-[18px] rounded-full border-2 border-white" />
+              B2
+            </div>
+
+            <div className="mt-[14px] flex items-center gap-[10px] text-sm text-[var(--ink-muted)]">
+              <span className="h-[18px] w-[18px] border-b-2 border-l-2 border-[var(--ink-muted)] opacity-80 [transform:skewX(-12deg)]" />
+              Focus: Tech workspace
+            </div>
+
+            {isAuthReady ? (
+              <button
+                type="button"
+                onClick={() => void handleSignOut()}
+                className="mt-4 w-full rounded-xl border border-white/10 bg-transparent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/[0.05]"
+              >
+                Sign out
+              </button>
+            ) : null}
+          </div>
+
+          <div className="flex-1 px-1 pb-1 pt-2">
+            {navGroups.map((group) => (
+              <div key={group.label} className="mt-4 first:mt-0">
+                <p className="px-3 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--ink-faint)]">
+                  {group.label}
+                </p>
+                <nav className="mt-2 space-y-1.5">
+                  {group.items.map((item) => {
+                    const isActive = pathname === item.href;
+
+                    return (
+                      <Link
+                        key={item.href}
+                        className={`flex items-center rounded-[14px] px-[14px] py-3 text-[15px] transition ${
+                          isActive
+                            ? "bg-white/[0.06] font-semibold text-white"
+                            : "text-[var(--ink-muted)] hover:bg-white/[0.05] hover:text-white"
+                        }`}
+                        href={item.href}
+                      >
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+            ))}
+
+            <div className="mt-4">
+              <p className="px-3 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--ink-faint)]">
+                Coming soon
+              </p>
+              <div className="mt-2 space-y-1.5">
+                {[
+                  "Session history",
+                  "Team management",
+                  "Subscription",
+                  "Speaking Coach",
+                ].map(
+                  (label) => (
+                    <div
+                      key={label}
+                      className="flex items-center justify-between rounded-[14px] px-[14px] py-3 text-[15px] text-[#7c89a4]"
+                    >
+                      <span>{label}</span>
+                      <span className="rounded-full border border-white/5 bg-white/[0.04] px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-[#7c89a4]">
+                        Soon
+                      </span>
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-auto rounded-[18px] border border-white/5 bg-white/[0.05] p-4">
+            <div className="inline-flex items-center gap-[10px] rounded-full bg-[#1ccaf1] px-4 py-2.5 text-sm font-extrabold text-[#06121b]">
+              <span className="inline-block h-4 w-4 border-b-[3px] border-l-[3px] border-current [transform:skew(-20deg)_rotate(-45deg)]" />
+              {mode === "dark" ? "Dark workspace" : "Light workspace"}
+            </div>
+            <div className="mt-3 text-sm text-[var(--ink-muted)]">
+              Generator and simulations stay pinned here for fast access.
+            </div>
+            <div className="mt-[10px] h-2 overflow-hidden rounded-full bg-white/[0.05]">
+              <span className="block h-full w-[42%] rounded-full bg-[var(--accent)]" />
+            </div>
+          </div>
+        </aside>
+
+        <main className="min-w-0 flex-1">
+          <header className="flex h-[72px] items-center justify-between border-b border-white/[0.04] bg-[rgba(7,11,22,0.92)] px-5 backdrop-blur-[10px] lg:px-7">
+            <div className="flex items-center gap-3">
+              <div className="grid h-[34px] w-[34px] place-items-center rounded-[10px] bg-[linear-gradient(135deg,#2e55ff_0%,#5f7cff_100%)] text-base font-extrabold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]">
+                A
+              </div>
+              <div className="text-sm lg:text-[18px]">
+                <span className="font-extrabold tracking-[-0.02em] text-white">
+                  LangslateAI
+                </span>
+                <span className="ml-1.5 text-[15px] text-[var(--ink-muted)]">
+                  | {pageTitle}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-[10px]">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                aria-label={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
+                title={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-transparent text-white transition hover:bg-white/[0.05]"
+              >
+                {mode === "dark" ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4.5" stroke="currentColor" strokeWidth="1.8" />
+                    <path d="M12 2.25V4.5M12 19.5v2.25M4.76 4.76l1.59 1.59M17.65 17.65l1.59 1.59M2.25 12H4.5M19.5 12h2.25M4.76 19.24l1.59-1.59M17.65 6.35l1.59-1.59" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  </svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M20.25 14.31A8.25 8.25 0 1 1 9.69 3.75a6.75 6.75 0 1 0 10.56 10.56Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+              </button>
+              <Link
+                href="/simulation"
+                className="rounded-xl border border-white/10 px-[18px] py-3 text-[15px] font-bold text-white transition hover:bg-white/[0.05]"
+              >
+                Start simulation
+              </Link>
+              <Link
+                href="/generator"
+                className="rounded-xl bg-[var(--accent)] px-[18px] py-3 text-[15px] font-bold text-white transition hover:bg-[#5a78ff]"
+              >
+                Open generator
+              </Link>
+            </div>
+          </header>
+
+          <div className="px-5 py-7 lg:px-7">{children}</div>
+        </main>
+      </div>
+    </div>
+  );
+}
