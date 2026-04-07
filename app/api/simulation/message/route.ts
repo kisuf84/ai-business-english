@@ -65,6 +65,11 @@ function sanitizeApiKey(value: string | null | undefined): string {
     .replace(/^['"]|['"]$/g, "");
 }
 
+function debugLog(stage: string, details: Record<string, unknown>) {
+  if (process.env.NODE_ENV === "production") return;
+  console.log(`[simulation.message] ${stage}`, details);
+}
+
 function detectScenarioKey(input: SimulationMessageInput): ScenarioKey {
   const raw = `${normalizeText(input.user_input)} ${input.history
     .map((item) => item.content)
@@ -548,6 +553,16 @@ async function generateConversationResponse(
     input.history.length === 0 ||
     normalizeText(input.user_input).toLowerCase().includes("[start_simulation]");
 
+  debugLog("conversation.resolve", {
+    scenarioKey,
+    scenarioType: input.scenario_type,
+    level,
+    industry,
+    role,
+    historyLength: input.history.length,
+    isStartTurn,
+  });
+
   const buildSafeFollowUpFallback = () => {
     if (scenarioKey === "job_interview") {
       return "Thanks for sharing that. Your product management background sounds strong. Could you tell me about one product you worked on that you're especially proud of, and what your role was in its success?";
@@ -574,6 +589,10 @@ async function generateConversationResponse(
       role,
       scenarioLabel: scenarioLabelFromKey(scenarioKey),
     };
+    debugLog("conversation.opener", {
+      scenarioKey,
+      counterpart: profile.counterpart,
+    });
     return profile.opener(ctx);
   }
 
@@ -622,9 +641,14 @@ async function generateConversationResponse(
     if (!text) {
       throw new Error("OPENAI_EMPTY_RESPONSE");
     }
+    debugLog("conversation.provider_success", {
+      scenarioKey,
+      messageCount: messages.length,
+      responseLength: text.length,
+    });
     return text;
   } catch (error) {
-    console.error("OpenAI API call failed:", error);
+    console.error("[simulation/message] Full error:", error);
     throw error;
   }
 }
@@ -668,6 +692,7 @@ function buildSuggestions(input: SimulationMessageInput): string[] {
 
 export async function POST(request: Request) {
   let payload: SimulationMessageInput;
+  let stage = "parse";
   try {
     payload = (await request.json()) as SimulationMessageInput;
   } catch {
@@ -675,9 +700,24 @@ export async function POST(request: Request) {
   }
 
   try {
+    debugLog("request.received", {
+      simulation_id: payload.simulation_id ?? null,
+      scenario_type: payload.scenario_type,
+      level: payload.level,
+      industry: payload.industry ?? null,
+      profession: payload.profession ?? null,
+      user_input_preview: normalizeText(payload.user_input).slice(0, 120),
+      history_length: Array.isArray(payload.history) ? payload.history.length : null,
+    });
+
+    stage = "validate_message";
     const validation = validateSimulationMessage(payload);
 
     if (!validation.ok) {
+      debugLog("request.invalid", {
+        stage,
+        errors: validation.errors,
+      });
       return NextResponse.json(
         { error: "Invalid payload", details: validation.errors },
         { status: 400 }
@@ -687,37 +727,72 @@ export async function POST(request: Request) {
     let simulationId = payload.simulation_id ?? null;
 
     if (!simulationId) {
+      stage = "validate_start";
       const startValidation = validateSimulationStart(payload);
       if (!startValidation.ok) {
+        debugLog("request.invalid", {
+          stage,
+          errors: startValidation.errors,
+        });
         return NextResponse.json(
           { error: "Invalid payload", details: startValidation.errors },
           { status: 400 }
         );
       }
 
+      stage = "create_simulation";
       const simulation = await createSimulation(payload);
       simulationId = simulation.id;
+      debugLog("persistence.simulation_created", {
+        simulationId,
+        scenario_type: simulation.scenario_type,
+      });
     }
 
+    stage = "generate_response";
     const response = await generateConversationResponse(payload);
+    debugLog("response.generated", {
+      simulationId,
+      responseLength: response.length,
+    });
+
+    stage = "build_feedback";
     const feedback = buildFeedback(payload);
     const suggestions = buildSuggestions(payload);
 
     const output: SimulationMessageOutput = { response, feedback, suggestions };
 
+    stage = "create_attempt";
     await createSimulationAttempt({
       simulation_id: simulationId,
       user_input: payload.user_input,
       ai_response: output.response,
       feedback_json: { ...output.feedback, suggestions: output.suggestions },
     });
+    debugLog("persistence.attempt_created", {
+      simulationId,
+      suggestionCount: output.suggestions.length,
+    });
 
+    stage = "respond";
+    debugLog("response.success", {
+      simulationId,
+      hasFeedback: Boolean(output.feedback),
+      suggestionCount: output.suggestions.length,
+    });
     return NextResponse.json({ simulation_id: simulationId, ...output });
   } catch (err) {
-    console.error("Simulation message route failed:", err);
+    console.error("[simulation/message] Full error:", err);
 
     const details =
-      err instanceof Error ? err.message : "unknown_simulation_error";
+      err instanceof Error
+        ? `${stage}: ${err.message}${err.stack ? `\n${err.stack}` : ""}`
+        : `unknown_simulation_error at ${stage}`;
+
+    debugLog("response.failure", {
+      stage,
+      details,
+    });
 
     return NextResponse.json(
       {

@@ -41,18 +41,6 @@ function isSupabaseEnabled() {
   return Boolean(getSupabaseAdminConfig());
 }
 
-function shouldFallbackToLocalStorage(error: unknown): boolean {
-  const message = error instanceof Error ? error.message : String(error);
-  return (
-    message.includes("row-level security") ||
-    message.includes("permission denied") ||
-    message.includes("JWT") ||
-    message.includes("401") ||
-    message.includes("403") ||
-    message.includes("Unauthorized")
-  );
-}
-
 export async function createSimulation(
   input: SimulationStartInput
 ): Promise<SimulationRecord> {
@@ -82,9 +70,6 @@ export async function createSimulation(
       });
       return created;
     } catch (error) {
-      if (!shouldFallbackToLocalStorage(error)) {
-        throw error;
-      }
       console.warn(
         "Falling back to local simulation storage because Supabase write failed:",
         error
@@ -132,9 +117,6 @@ export async function createSimulationAttempt(params: {
       );
       return created;
     } catch (error) {
-      if (!shouldFallbackToLocalStorage(error)) {
-        throw error;
-      }
       console.warn(
         "Falling back to local simulation attempt storage because Supabase write failed:",
         error

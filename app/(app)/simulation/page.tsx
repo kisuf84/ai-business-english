@@ -553,34 +553,63 @@ export default function SimulationPage() {
       (option) => option.id === messageScenarioId
     );
     const scenarioType = selectedScenario?.scenarioType ?? "meeting";
+    const requestPayload = {
+      simulation_id: simulationId,
+      scenario_type: scenarioType,
+      level: messageLevel,
+      industry: messageIndustry.trim() || undefined,
+      profession: messageRole.trim() || undefined,
+      user_input: params.text.trim(),
+      history: nextHistory.map(({ role, content }) => ({ role, content })),
+    };
+
+    if (process.env.NODE_ENV !== "production") {
+      console.log("[simulation.page] sendSimulationMessage.request", {
+        source: params.includeUserInHistory ? "conversation" : "start",
+        scenarioId: messageScenarioId,
+        scenarioType,
+        level: messageLevel,
+        industry: requestPayload.industry ?? null,
+        profession: requestPayload.profession ?? null,
+        historyLength: requestPayload.history.length,
+        simulationId: requestPayload.simulation_id ?? null,
+        userInputPreview: requestPayload.user_input.slice(0, 120),
+      });
+    }
 
     try {
       const response = await fetch("/api/simulation/message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          simulation_id: simulationId,
-          scenario_type: scenarioType,
-          level: messageLevel,
-          industry: messageIndustry.trim() || undefined,
-          profession: messageRole.trim() || undefined,
-          user_input: params.text.trim(),
-          history: nextHistory.map(({ role, content }) => ({ role, content })),
-        }),
+        body: JSON.stringify(requestPayload),
       });
 
       if (!response.ok) {
         const payload = (await response.json().catch(() => null)) as
-          | { error?: string; details?: string }
+          | { error?: string; details?: string | string[] }
           | null;
         const details =
-          typeof payload?.details === "string" ? payload.details : undefined;
+          typeof payload?.details === "string"
+            ? payload.details
+            : Array.isArray(payload?.details)
+              ? payload.details.join(" | ")
+              : undefined;
+
+        if (process.env.NODE_ENV !== "production") {
+          console.error("[simulation.page] sendSimulationMessage.http_error", {
+            status: response.status,
+            payload,
+          });
+        }
         throw new Error(
           `${payload?.error || "send_failed"}${details ? `|${details}` : ""}`
         );
       }
 
       const raw = (await response.json()) as unknown;
+      if (process.env.NODE_ENV !== "production") {
+        console.log("[simulation.page] sendSimulationMessage.response", raw);
+      }
       if (!raw || typeof raw !== "object") {
         throw new Error("invalid_response");
       }
@@ -614,6 +643,13 @@ export default function SimulationPage() {
     } catch (err) {
       const rawMessage = err instanceof Error ? err.message : "send_failed";
       const [publicMessage, details] = rawMessage.split("|");
+      if (process.env.NODE_ENV !== "production") {
+        console.error("[simulation.page] sendSimulationMessage.failure", {
+          publicMessage,
+          details: details ?? null,
+          error: err,
+        });
+      }
       return {
         ok: false,
         message:
