@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance Module 10: Communicating with Financial Stakeholders</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1c2d4a;--navy-dark:#0f1d35;--navy-mid:#243a5e;--navy-light:#2e4875;--navy-glow:#3a5a8a;
+  --gold:#f0a830;--gold-light:#f5c55a;--gold-pale:#fef3d0;--gold-dim:rgba(240,168,48,.18);
+  --cream:#faf8f4;--cream-dark:#efe9de;
+  --white:#fff;--text-dark:#0f1d35;--text-mid:#2c3e5a;--text-light:#5a7090;
+  --success:#1e7a4a;--error:#c0392b;
+  --sidebar-w:260px;--radius:12px;
+  --shadow-card:0 4px 20px rgba(15,29,53,.10);
+  --shadow-hover:0 8px 32px rgba(15,29,53,.16);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;
+  background:linear-gradient(175deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-mid) 100%);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto;
+  box-shadow:4px 0 24px rgba(15,29,53,.35);
+}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--navy-light);border-radius:2px}
+.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,.07)}
+.brand-title{font-family:'Fraunces',serif;font-size:13px;font-weight:600;color:var(--gold);line-height:1.3;letter-spacing:.01em}
+.brand-sub{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-top:4px}
+.level-badge{display:inline-block;background:var(--gold);color:var(--navy-dark);font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:20px;margin-top:11px}
+.sidebar-module-label{padding:20px 20px 8px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:600}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;
+  color:rgba(255,255,255,.6);font-size:13px;font-weight:400;transition:all .2s;
+  border-left:3px solid transparent;position:relative;
+}
+.nav-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.95)}
+.nav-item.active{
+  background:linear-gradient(90deg,rgba(240,168,48,.16),rgba(240,168,48,.04));
+  color:#fff;border-left-color:var(--gold);
+}
+.nav-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.nav-label{flex:1}
+.nav-badge{background:var(--gold);color:var(--navy-dark);font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;flex-shrink:0}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.section{display:none}.section.active{display:block}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 50%,var(--navy-mid) 100%);
+  padding:32px 52px 40px;position:relative;overflow:hidden;min-height:290px;
+}
+.hero::before{
+  content:'';position:absolute;right:-40px;top:-30px;width:460px;height:460px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='10' y='320' font-size='280' opacity='.035' fill='%23fff' font-family='serif'%3E10%3C/text%3E%3C/svg%3E") center/contain no-repeat;
+}
+.hero::after{
+  content:'';position:absolute;left:-80px;bottom:-80px;
+  width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(240,168,48,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.section-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+  padding:6px 14px;border-radius:20px;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:22px;
+  font-family:'DM Mono',monospace;backdrop-filter:blur(4px);
+}
+.hero-title{font-family:'Fraunces',serif;font-size:54px;font-weight:700;line-height:1.05;color:#fff;margin-bottom:16px}
+.hero-title span{color:var(--gold)}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.62);max-width:620px;line-height:1.68;margin-bottom:28px}
+.stats-row{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:24px}
+.stat-num{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.stat-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38)}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.48);margin-bottom:7px}
+.progress-track{height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;transition:width .7s ease;width:0%}
+
+/* ── CONTENT ── */
+.content-area{background:var(--cream);padding:40px 52px}
+.card{
+  background:#fff;border-radius:var(--radius);padding:32px;margin-bottom:24px;
+  border:1px solid rgba(28,45,74,.07);box-shadow:var(--shadow-card);
+  transition:box-shadow .2s;
+}
+.card:hover{box-shadow:var(--shadow-hover)}
+.card-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--text-dark);margin-bottom:6px}
+.card-title-bar{width:40px;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;margin-bottom:18px}
+.prose{font-size:15px;line-height:1.75;color:var(--text-mid)}
+.prose strong{color:var(--text-dark);font-weight:600}
+.prose p+p{margin-top:12px}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.outcome-item{display:flex;align-items:flex-start;gap:10px;padding:13px 15px;background:var(--cream);border-radius:9px;border:1px solid var(--cream-dark)}
+.outcome-icon{color:var(--gold);flex-shrink:0;margin-top:1px}
+.outcome-text{font-size:13.5px;color:var(--text-mid);line-height:1.5}
+
+/* ── SPEAKING ── */
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.q-card{
+  background:#fff;border:1px solid rgba(28,45,74,.09);border-radius:9px;
+  padding:16px;display:flex;gap:12px;align-items:flex-start;transition:all .2s;
+}
+.q-card:hover{box-shadow:var(--shadow-hover);border-color:rgba(240,168,48,.3);transform:translateY(-1px)}
+.q-num{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--gold-light);flex-shrink:0;min-width:28px;line-height:1}
+.q-text{font-size:14px;color:var(--text-mid);line-height:1.55}
+
+/* ── WORD BANK ── */
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.wb-card{
+  background:#fff;border:1px solid rgba(28,45,74,.09);border-radius:11px;
+  padding:18px 16px;display:flex;flex-direction:column;gap:6px;transition:all .2s;
+}
+.wb-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:rgba(240,168,48,.25)}
+.wb-emoji{font-size:24px}
+.wb-term{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--text-dark)}
+.wb-pos{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.wb-def{font-size:13px;color:var(--text-mid);line-height:1.5}
+
+/* ── READING ── */
+.reading-text{
+  background:linear-gradient(135deg,var(--cream) 0%,rgba(239,233,222,.5) 100%);
+  border-left:4px solid var(--gold);padding:24px 28px;border-radius:0 10px 10px 0;margin-bottom:28px;
+}
+.reading-text h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--text-dark);margin-bottom:14px}
+.reading-text p{font-size:14.5px;line-height:1.78;color:var(--text-mid);margin-bottom:10px}
+.reading-text strong{color:var(--text-dark);font-weight:600}
+
+/* ── MCQ ── */
+.mcq-section{margin-top:24px}
+.mcq-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--text-dark);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--cream-dark)}
+.mcq-item{margin-bottom:20px}
+.mcq-q{font-size:14.5px;font-weight:600;color:var(--text-dark);margin-bottom:10px;line-height:1.5}
+.mcq-options{display:grid;gap:7px}
+.mcq-option{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:9px;
+  border:1.5px solid rgba(28,45,74,.13);cursor:pointer;transition:all .18s;
+  font-size:13.5px;color:var(--text-mid);background:#fff;
+}
+.mcq-option:hover{border-color:var(--gold);background:var(--gold-pale);color:var(--text-dark)}
+.mcq-option.selected{border-color:var(--navy);background:rgba(28,45,74,.06);color:var(--text-dark)}
+.mcq-option.correct{border-color:var(--success)!important;background:rgba(30,122,74,.08)!important;color:var(--success)!important}
+.mcq-option.wrong{border-color:var(--error)!important;background:rgba(192,57,43,.07)!important;color:var(--error)!important}
+.opt-letter{
+  width:22px;height:22px;border-radius:50%;background:rgba(28,45,74,.09);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+  flex-shrink:0;font-family:'DM Mono',monospace;
+}
+.check-btn{
+  display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 22px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  color:#fff;border:none;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;
+  font-family:'DM Sans',sans-serif;transition:all .2s;box-shadow:0 2px 8px rgba(28,45,74,.2);
+}
+.check-btn:hover{background:linear-gradient(135deg,var(--navy-mid) 0%,var(--navy-light) 100%);box-shadow:0 4px 14px rgba(28,45,74,.3);transform:translateY(-1px)}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:9px;font-size:13px;font-weight:500;display:none}
+.feedback.show{display:block}
+.feedback.good{background:rgba(30,122,74,.09);color:var(--success);border:1px solid rgba(30,122,74,.2)}
+.feedback.bad{background:rgba(192,57,43,.08);color:var(--error);border:1px solid rgba(192,57,43,.2)}
+.score-display{background:var(--cream);border-radius:9px;padding:14px 18px;margin-top:16px;display:none}
+.score-display.show{display:flex;align-items:center;justify-content:space-between}
+.score-val{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--text-dark)}
+.score-label{font-size:13px;color:var(--text-light)}
+
+/* ── VOCAB EXERCISES ── */
+.ex-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ex-badge{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  color:#fff;font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px;letter-spacing:.06em;
+}
+.ex-type{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.ex-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--text-dark);margin-bottom:4px}
+.ex-instruction{font-size:13.5px;color:var(--text-light);margin-bottom:20px;font-style:italic}
+.word-box{
+  background:linear-gradient(135deg,var(--cream) 0%,var(--cream-dark) 100%);
+  border-radius:9px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:20px;
+  border:1px solid var(--cream-dark);
+}
+.word-chip{background:#fff;border:1px solid rgba(28,45,74,.13);border-radius:6px;padding:3px 10px;font-size:13px;color:var(--text-mid)}
+.gap-sentence{font-size:14.5px;color:var(--text-dark);line-height:2.5;margin-bottom:6px}
+.gap-input{
+  border:none;border-bottom:2px solid var(--gold);background:transparent;
+  font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);
+  padding:2px 6px;width:170px;outline:none;text-align:center;transition:border-color .18s;
+}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.tf-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--cream-dark)}
+.tf-stmt{flex:1;font-size:14.5px;color:var(--text-mid);line-height:1.55}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+.tf-btn{
+  padding:5px 14px;border-radius:7px;border:1.5px solid rgba(28,45,74,.18);cursor:pointer;
+  font-size:12px;font-weight:600;background:#fff;color:var(--text-mid);transition:all .18s;
+  font-family:'DM Sans',sans-serif;
+}
+.tf-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-pale)}
+.tf-btn.sel-t{background:#dcfce7;border-color:var(--success);color:var(--success)}
+.tf-btn.sel-f{background:#fee2e2;border-color:var(--error);color:var(--error)}
+
+/* ── GRAMMAR REVIEW ── */
+.gr-box{
+  background:linear-gradient(150deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-mid) 100%);
+  color:#fff;border-radius:12px;padding:30px;margin-bottom:24px;
+  box-shadow:0 6px 28px rgba(15,29,53,.25);
+}
+.gr-box-title{font-family:'Fraunces',serif;font-size:21px;font-weight:600;color:var(--gold);margin-bottom:6px}
+.gr-box-sub{font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.12em;margin-bottom:20px}
+.gr-rule{background:rgba(255,255,255,.07);border-radius:9px;padding:16px;margin-bottom:12px;border:1px solid rgba(255,255,255,.05)}
+.gr-rule-title{font-size:13px;font-weight:600;color:var(--gold-light);margin-bottom:6px}
+.gr-rule-text{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.6}
+.gr-example{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--gold-pale);background:rgba(255,255,255,.05);padding:9px 13px;border-radius:7px;margin-top:8px;line-height:1.6;border-left:2px solid rgba(240,168,48,.3)}
+.gr-table{width:100%;border-collapse:collapse;margin-top:14px}
+.gr-table th{background:rgba(255,255,255,.09);padding:9px 13px;font-size:12px;text-align:left;color:var(--gold-light);letter-spacing:.06em;text-transform:uppercase}
+.gr-table td{padding:9px 13px;font-size:13px;color:rgba(255,255,255,.75);border-top:1px solid rgba(255,255,255,.07)}
+.gr-table tr:hover td{background:rgba(255,255,255,.04)}
+
+/* ── WRITING ── */
+.writing-prompt{background:rgba(240,168,48,.07);border:1px solid rgba(240,168,48,.28);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.writing-prompt h4{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--text-dark);margin-bottom:8px}
+.writing-prompt p{font-size:13.5px;color:var(--text-mid);line-height:1.6}
+.writing-focus{background:rgba(28,45,74,.04);border:1px solid rgba(28,45,74,.1);border-radius:9px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--text-light)}
+.writing-focus strong{color:var(--text-mid)}
+.writing-textarea{width:100%;min-height:180px;border:1.5px solid rgba(28,45,74,.18);border-radius:9px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);resize:vertical;outline:none;background:#fff;line-height:1.65;transition:border-color .2s}
+.writing-textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,168,48,.1)}
+.writing-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.word-count{font-size:12px;color:var(--text-light);font-family:'DM Mono',monospace}
+.submit-btn{padding:10px 24px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--navy-dark);border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;box-shadow:0 2px 8px rgba(240,168,48,.3)}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(240,168,48,.4)}
+.submit-success{display:none;padding:12px 16px;background:rgba(30,122,74,.09);border:1px solid rgba(30,122,74,.22);border-radius:9px;color:var(--success);font-size:13.5px;font-weight:500;margin-top:12px}
+
+/* ── AUDIO CARDS ── */
+.audio-card{
+  background:linear-gradient(150deg,var(--navy-dark) 0%,var(--navy) 70%,var(--navy-mid) 100%);
+  border-radius:14px;padding:26px;margin-bottom:28px;
+  box-shadow:0 6px 28px rgba(15,29,53,.28);
+}
+.audio-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
+.audio-emoji{font-size:30px;background:rgba(255,255,255,.09);border-radius:10px;padding:10px;flex-shrink:0;line-height:1;border:1px solid rgba(255,255,255,.07)}
+.audio-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#fff;margin-bottom:4px}
+.audio-sub{font-size:12px;color:rgba(255,255,255,.48)}
+.audio-tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.audio-tag{font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 9px;border-radius:10px;text-transform:uppercase}
+.tag-level{background:rgba(240,168,48,.28);color:var(--gold-light)}
+.tag-type{background:rgba(255,255,255,.1);color:rgba(255,255,255,.72)}
+.tag-focus{color:rgba(255,255,255,.42);font-size:10px}
+.player-box{background:rgba(15,29,53,.55);border-radius:11px;padding:16px 18px;margin-bottom:12px;border:1px solid rgba(255,255,255,.06)}
+.player-row{display:flex;align-items:center;gap:14px}
+.play-btn{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;transition:all .2s;color:var(--navy-dark);
+  box-shadow:0 2px 10px rgba(240,168,48,.3);
+}
+.play-btn:hover{transform:scale(1.08);box-shadow:0 4px 16px rgba(240,168,48,.45)}
+.player-info{flex:1}
+.player-title-sm{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px}
+.player-sub-sm{font-size:11px;color:rgba(255,255,255,.4)}
+.player-time{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.48);white-space:nowrap}
+.player-progress{width:100%;height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:11px;overflow:hidden}
+.player-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;transition:width .5s linear}
+.speed-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.38);letter-spacing:.08em;text-transform:uppercase}
+.speed-btn{padding:3px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:transparent;color:rgba(255,255,255,.58);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:all .18s}
+.speed-btn.active,.speed-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-dark);font-weight:700}
+.replay-btn{padding:3px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:transparent;color:rgba(255,255,255,.58);font-size:11px;cursor:pointer;transition:all .18s}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light)}
+.tts-note{font-size:11px;color:rgba(255,255,255,.28);font-style:italic;margin-top:6px}
+.transcript-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;color:rgba(255,255,255,.55);font-size:12.5px;padding:8px 0;border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:color .18s}
+.transcript-toggle:hover{color:var(--gold-light)}
+.transcript-box{display:none;background:rgba(255,255,255,.05);border-radius:9px;padding:16px;margin-top:6px;margin-bottom:14px;border:1px solid rgba(255,255,255,.06)}
+.transcript-box.open{display:block}
+.transcript-box p{font-size:13px;color:rgba(255,255,255,.68);line-height:1.78;margin-bottom:8px}
+
+/* ── LISTENING MCQs — all WHITE ── */
+.listen-instruction{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.07);border-radius:9px;font-size:13px;color:#fff;margin-bottom:18px;font-weight:500;border:1px solid rgba(255,255,255,.06)}
+.listen-mcq-wrap .mcq-title{color:#fff;border-bottom-color:rgba(255,255,255,.18)}
+.listen-mcq-wrap .mcq-q{color:#fff}
+.listen-mcq-wrap .mcq-option{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18);color:#fff}
+.listen-mcq-wrap .mcq-option:hover{border-color:var(--gold);background:rgba(240,168,48,.14);color:#fff}
+.listen-mcq-wrap .mcq-option.selected{border-color:var(--gold);background:rgba(240,168,48,.2);color:#fff}
+.listen-mcq-wrap .mcq-option.correct{border-color:#4ade80!important;background:rgba(74,222,128,.14)!important;color:#4ade80!important}
+.listen-mcq-wrap .mcq-option.wrong{border-color:#f87171!important;background:rgba(248,113,113,.12)!important;color:#f87171!important}
+.listen-mcq-wrap .opt-letter{background:rgba(255,255,255,.13);color:#fff}
+.listen-mcq-wrap .check-btn{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--navy-dark);box-shadow:0 2px 8px rgba(240,168,48,.25)}
+.listen-mcq-wrap .check-btn:hover{background:var(--gold-light);transform:translateY(-1px)}
+.listen-mcq-wrap .feedback.good{background:rgba(74,222,128,.13);color:#4ade80;border-color:rgba(74,222,128,.28)}
+.listen-mcq-wrap .feedback.bad{background:rgba(248,113,113,.1);color:#f87171;border-color:rgba(248,113,113,.24)}
+.listen-mcq-wrap .score-display{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.06)}
+.listen-mcq-wrap .score-val{color:#fff}
+.listen-mcq-wrap .score-label{color:rgba(255,255,255,.58)}
+
+/* ── CASE STUDIES ── */
+.case-header{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy-mid) 100%);
+  border-radius:12px 12px 0 0;padding:22px 28px;
+}
+.case-header h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#fff;margin-bottom:4px}
+.case-header p{font-size:13px;color:rgba(255,255,255,.48)}
+.case-body{background:#fff;border:1px solid rgba(28,45,74,.09);border-top:none;border-radius:0 0 12px 12px;padding:24px 28px;margin-bottom:28px}
+.case-section-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.case-text{font-size:14.5px;color:var(--text-mid);line-height:1.78;margin-bottom:20px}
+.case-text strong{color:var(--text-dark)}
+
+/* ── ASSESSMENT ── */
+.assessment-header{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 50%,var(--navy-mid) 100%);
+  border-radius:14px;padding:30px 32px;margin-bottom:28px;text-align:center;
+  box-shadow:0 6px 28px rgba(15,29,53,.28);
+}
+.assessment-header h2{font-family:'Fraunces',serif;font-size:28px;color:#fff;margin-bottom:8px}
+.assessment-header p{color:rgba(255,255,255,.58);font-size:14px}
+.assessment-meta{display:flex;justify-content:center;gap:28px;margin-top:18px;flex-wrap:wrap}
+.assessment-meta-item{text-align:center}
+.assessment-meta-num{font-family:'Fraunces',serif;font-size:24px;color:var(--gold);font-weight:700}
+.assessment-meta-label{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em}
+.attempt-badge{display:inline-block;padding:4px 13px;border-radius:12px;font-size:11px;font-weight:600;background:rgba(240,168,48,.18);color:var(--gold-light);margin-top:10px;border:1px solid rgba(240,168,48,.2)}
+.assessment-result{display:none;text-align:center;padding:30px;background:#fff;border-radius:12px;border:2px solid var(--cream-dark);margin-bottom:24px;box-shadow:var(--shadow-card)}
+.result-score{font-family:'Fraunces',serif;font-size:56px;font-weight:700}
+.result-score.pass{color:var(--success)}.result-score.fail{color:var(--error)}
+.result-msg{font-size:16px;color:var(--text-mid);margin-top:8px}
+.retake-btn{padding:10px 24px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;margin-top:16px;font-family:'DM Sans',sans-serif;box-shadow:0 2px 8px rgba(28,45,74,.2)}
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:768px){
+  .sidebar{position:relative;width:100%;height:auto;flex-direction:column;overflow-y:visible;border-bottom:2px solid var(--gold);box-shadow:none}
+  .sidebar-brand{padding:16px 16px 12px}
+  .brand-title{font-size:12px}
+  .sidebar-module-label{padding:10px 16px 4px}
+  .nav-item{padding:8px 16px}
+  .main{margin-left:0}
+  .hero{padding:22px 20px 28px;min-height:auto}
+  .hero-title{font-size:34px}
+  .hero-desc{font-size:14px}
+  .stats-row{gap:20px}
+  .stat-num{font-size:22px}
+  .content-area{padding:20px 16px}
+  .card{padding:20px 16px}
+  .q-grid,.outcomes-grid,.wb-grid{grid-template-columns:1fr}
+  .gr-table{display:block;overflow-x:auto;white-space:nowrap}
+  .writing-textarea{min-height:160px;font-size:13px}
+  .mcq-option{font-size:13px;padding:9px 12px}
+  .audio-card{padding:18px}
+  .player-row{flex-wrap:wrap;gap:10px}
+  .speed-row{gap:6px}
+  .speed-btn{padding:3px 8px;font-size:10px}
+  .case-body{padding:16px}
+  .assessment-header{padding:22px 16px}
+  .assessment-meta{gap:18px}
+  .result-score{font-size:40px}
+  .tf-item{flex-direction:column;gap:8px}
+  .tf-btns{align-self:flex-start}
+  .word-box{padding:10px 12px;gap:6px}
+  .word-chip{font-size:12px;padding:2px 8px}
+  .gap-input{width:130px;font-size:13px}
+  .card-title{font-size:19px}
+  .ex-title{font-size:16px}
+  .section-tag{font-size:10px;padding:5px 10px}
+  .listen-instruction{font-size:12px;padding:8px 12px}
+  .check-btn{padding:9px 18px;font-size:12px}
+  .submit-btn{padding:9px 18px;font-size:12px}
+  .progress-label{font-size:11px}
+  .gr-box{padding:20px 16px}
+}
+@media(max-width:480px){
+  .hero-title{font-size:26px;line-height:1.1}
+  .stats-row{gap:14px}
+  .stat-num{font-size:20px}
+  .stat-label{font-size:9px}
+  .card{padding:16px 14px}
+  .mcq-q{font-size:13.5px}
+  .mcq-option{font-size:12.5px;gap:8px;padding:9px 10px}
+  .opt-letter{width:20px;height:20px;font-size:10px}
+  .audio-header{flex-direction:column;gap:10px}
+  .audio-emoji{font-size:24px;padding:8px}
+  .play-btn{width:40px;height:40px;font-size:16px}
+  .nav-badge{font-size:8px;padding:2px 5px}
+  .gr-rule{padding:12px}
+}
+
+
+
+
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-title">Finance &amp; Accounting English</div>
+    <div class="brand-sub">Professional Development</div>
+    <div class="level-badge">B1&ndash;B2 LEVEL</div>
+  </div>
+  <div class="sidebar-module-label">Module 10</div>
+  <div class="nav-item active" onclick="showSection('overview')"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  <div class="nav-item" onclick="showSection('speaking')"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span><span class="nav-badge">21Q</span></div>
+  <div class="nav-item" onclick="showSection('wordbank')"><span class="nav-icon">🟩</span><span class="nav-label">Word Bank</span><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="showSection('reading')"><span class="nav-icon">📄</span><span class="nav-label">Reading</span><span class="nav-badge">2T</span></div>
+  <div class="nav-item" onclick="showSection('vocabulary')"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar')"><span class="nav-icon">📘</span><span class="nav-label">Grammar</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar-review')"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  <div class="nav-item" onclick="showSection('writing')"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span><span class="nav-badge">2W</span></div>
+  <div class="nav-item" onclick="showSection('listening')"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span><span class="nav-badge">4Ex</span></div>
+  <div class="nav-item" onclick="showSection('casestudies')"><span class="nav-icon">📊</span><span class="nav-label">Case Studies</span><span class="nav-badge">2CS</span></div>
+  <div class="nav-item" onclick="showSection('assessment')"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span><span class="nav-badge">20Q</span></div>
+</nav>
+<div class="main">
+
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="section-tag">🏛️ Module 10 &middot; Finance &amp; Accounting English</div>
+    <div class="hero-title">Communicating with<br><span>Financial Stakeholders</span></div>
+    <p class="hero-desc">Develop the professional English skills to present financial data, write investor communications, lead board discussions, and handle challenging questions from analysts, investors, and senior executives with clarity and confidence.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+    <div>
+      <div class="progress-label"><span>Module Progress</span><span id="progress-pct">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div><div class="card-title-bar"></div>
+      <div class="prose">
+        <p><strong>Welcome to Module 10: Communicating with Financial Stakeholders.</strong> In finance and accounting, technical expertise alone is not sufficient. The ability to communicate complex financial information clearly, accurately, and persuasively to a range of stakeholders &mdash; from board members and investors to analysts, auditors, and regulators &mdash; is one of the most valuable and most demanding professional skills in the field.</p>
+        <p>This module focuses on the English language skills required for high-stakes financial communication. You will learn the vocabulary of stakeholder reporting, investor relations, and board-level financial presentations. You will study the grammar structures used in formal financial documents and oral presentations, including how to express uncertainty, hedge financial forecasts, and present both positive and negative results with appropriate professional register. You will also practise the specific communication challenges that arise in financial contexts: presenting earnings results, handling analyst questions, writing investor letters, and communicating during periods of financial difficulty.</p>
+        <p>By the end of this module, you will be able to present financial results to a mixed audience, write a professional investor letter and earnings commentary, handle challenging stakeholder questions with composure, and apply the appropriate formal register and hedging language required in regulated financial communication.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div><div class="card-title-bar"></div>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use 21+ financial stakeholder communication terms accurately in professional contexts</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Present financial results to boards, investors, and analysts using appropriate English</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Write professional investor letters, earnings commentary, and board reports</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use hedging and qualifying language correctly when discussing financial forecasts</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Apply reported speech and indirect questions in financial briefings</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use formal register and passive constructions in financial documents</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Handle analyst questions and board challenges professionally in English</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Communicate difficult financial news with clarity, honesty, and professional composure</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="speaking" class="section">
+  <div class="hero">
+    <div class="section-tag">🎙️ Speaking Activities</div>
+    <div class="hero-title">Speaking <span>Discussion</span></div>
+    <p class="hero-desc">21 discussion questions on financial stakeholder communication, investor relations, earnings presentations, and professional financial reporting &mdash; build fluency in high-stakes financial English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Discussion Questions</div><div class="card-title-bar"></div>
+      <div class="q-grid"><div class="q-card"><div class="q-num">1</div><div class="q-text">What are the main types of financial stakeholders a public company must communicate with, and what are their primary information needs?</div></div><div class="q-card"><div class="q-num">2</div><div class="q-text">What is investor relations (IR) and what does an investor relations team typically do throughout the year?</div></div><div class="q-card"><div class="q-num">3</div><div class="q-text">What is an earnings call and how is it typically structured? Who speaks, who listens, and what happens in the Q&A?</div></div><div class="q-card"><div class="q-num">4</div><div class="q-text">How does the language you use when presenting financial results to the board of directors differ from the language used in a press release to the market?</div></div><div class="q-card"><div class="q-num">5</div><div class="q-text">What does it mean to 'guide the market'? Why is forward guidance so important, and what are the risks of getting it wrong?</div></div><div class="q-card"><div class="q-num">6</div><div class="q-text">What is an annual report and what are its main sections? Who writes each section?</div></div><div class="q-card"><div class="q-num">7</div><div class="q-text">What is the difference between a buy-side analyst and a sell-side analyst, and why does it matter for investor relations?</div></div><div class="q-card"><div class="q-num">8</div><div class="q-text">What is material non-public information (MNPI) and why must it be handled so carefully in investor communications?</div></div><div class="q-card"><div class="q-num">9</div><div class="q-text">How should a CFO communicate a significant profit warning to the market? What language, tone, and structure would you recommend?</div></div><div class="q-card"><div class="q-num">10</div><div class="q-text">What is a road show in an investment banking context? Who participates and what is its purpose?</div></div><div class="q-card"><div class="q-num">11</div><div class="q-text">What is earnings per share (EPS) and why is it one of the most closely watched metrics by equity investors?</div></div><div class="q-card"><div class="q-num">12</div><div class="q-text">What is EBITDA and why do many companies present it alongside statutory profit figures in their results communications?</div></div><div class="q-card"><div class="q-num">13</div><div class="q-text">What is the difference between organic growth and inorganic growth in a company's financial results commentary?</div></div><div class="q-card"><div class="q-num">14</div><div class="q-text">What is a going concern qualification and what impact does it have on how a company communicates with its financial stakeholders?</div></div><div class="q-card"><div class="q-num">15</div><div class="q-text">What is the role of auditors in the financial reporting process, and how do they communicate their findings to the board and to shareholders?</div></div><div class="q-card"><div class="q-num">16</div><div class="q-text">What is a shareholder letter and what distinguishes a great one from a generic one? Can you give any examples?</div></div><div class="q-card"><div class="q-num">17</div><div class="q-text">How do you present negative financial results honestly while maintaining investor and stakeholder confidence in the management team?</div></div><div class="q-card"><div class="q-num">18</div><div class="q-text">What is ESG reporting and why has it become increasingly important for financial stakeholder communication in recent years?</div></div><div class="q-card"><div class="q-num">19</div><div class="q-text">What is the role of the company secretary in board financial communications?</div></div><div class="q-card"><div class="q-num">20</div><div class="q-text">How has digital technology changed the way companies communicate with financial stakeholders &mdash; for example through webcasts, interactive data, and social media?</div></div><div class="q-card"><div class="q-num">21</div><div class="q-text">If you were the CFO of a company reporting a 30% decline in profit, how would you structure your communication to the board, the market, and your employees?</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="wordbank" class="section">
+  <div class="hero">
+    <div class="section-tag">🟩 Word Bank</div>
+    <div class="hero-title">Word <span>Bank</span></div>
+    <p class="hero-desc">21 essential terms for communicating with financial stakeholders &mdash; covering investor relations, earnings reporting, analyst communication, and regulatory disclosure.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Key Vocabulary &mdash; 21 Terms</div><div class="card-title-bar"></div>
+      <div class="wb-grid"><div class="wb-card"><div class="wb-emoji">📞</div><div class="wb-term">Earnings call</div><div class="wb-pos">noun phrase</div><div class="wb-def">A scheduled conference call in which senior management presents the company's financial results for a given period to analysts and investors, followed by a live question-and-answer session.</div></div><div class="wb-card"><div class="wb-emoji">💹</div><div class="wb-term">Investor relations (IR)</div><div class="wb-pos">noun phrase</div><div class="wb-def">The strategic function responsible for managing communication between a company and its financial stakeholders, including institutional investors, retail shareholders, analysts, and the financial media.</div></div><div class="wb-card"><div class="wb-emoji">📋</div><div class="wb-term">Forward guidance</div><div class="wb-pos">noun phrase</div><div class="wb-def">Statements made by company management about expected future financial performance, including projected revenue, earnings, or margins, used by investors and analysts to form expectations.</div></div><div class="wb-card"><div class="wb-emoji">📊</div><div class="wb-term">EBITDA</div><div class="wb-pos">noun phrase</div><div class="wb-def">Earnings Before Interest, Taxes, Depreciation, and Amortisation; a widely used measure of a company's core operating profitability, adjusted to remove the effects of financing and accounting decisions.</div></div><div class="wb-card"><div class="wb-emoji">📈</div><div class="wb-term">Earnings per share (EPS)</div><div class="wb-pos">noun phrase</div><div class="wb-def">The portion of a company's profit allocated to each outstanding share of common stock, calculated by dividing net profit by the number of shares; a key metric for equity investors.</div></div><div class="wb-card"><div class="wb-emoji">⚠️</div><div class="wb-term">Profit warning</div><div class="wb-pos">noun phrase</div><div class="wb-def">A public announcement by a company that its earnings will be significantly below market expectations, required under stock exchange disclosure rules when material adverse information is known.</div></div><div class="wb-card"><div class="wb-emoji">🏦</div><div class="wb-term">Road show</div><div class="wb-pos">noun phrase</div><div class="wb-def">A series of presentations given by senior management to potential or existing investors, typically conducted in multiple financial centres around a capital-raising event or major corporate announcement.</div></div><div class="wb-card"><div class="wb-emoji">📝</div><div class="wb-term">Annual report</div><div class="wb-pos">noun phrase</div><div class="wb-def">A comprehensive document produced by a company at the end of each financial year, containing audited financial statements, a directors' report, a strategic review, and governance information.</div></div><div class="wb-card"><div class="wb-emoji">🔍</div><div class="wb-term">Material non-public information (MNPI)</div><div class="wb-pos">noun phrase</div><div class="wb-def">Information that has not been disclosed to the market and would, if disclosed, be likely to have a significant effect on the price of a company's securities; sharing MNPI is illegal in most jurisdictions.</div></div><div class="wb-card"><div class="wb-emoji">📉</div><div class="wb-term">Going concern</div><div class="wb-pos">noun phrase</div><div class="wb-def">The assumption that a company will continue to operate for the foreseeable future, without the need or intention to liquidate its operations; auditors flag a going concern qualification when this assumption is in doubt.</div></div><div class="wb-card"><div class="wb-emoji">👔</div><div class="wb-term">Sell-side analyst</div><div class="wb-pos">noun phrase</div><div class="wb-def">A financial analyst employed by a brokerage or investment bank who produces research reports and financial models on publicly listed companies, making buy, sell, or hold recommendations to institutional investor clients.</div></div><div class="wb-card"><div class="wb-emoji">💼</div><div class="wb-term">Buy-side analyst</div><div class="wb-pos">noun phrase</div><div class="wb-def">A financial analyst employed by an investment fund, such as a pension fund, hedge fund, or asset manager, who evaluates securities to inform the fund's own investment decisions.</div></div><div class="wb-card"><div class="wb-emoji">🌱</div><div class="wb-term">Organic growth</div><div class="wb-pos">noun phrase</div><div class="wb-def">Revenue or profit growth generated by the company's existing operations, excluding the impact of acquisitions, disposals, or foreign exchange movements; used to assess underlying business performance.</div></div><div class="wb-card"><div class="wb-emoji">🔗</div><div class="wb-term">Inorganic growth</div><div class="wb-pos">noun phrase</div><div class="wb-def">Growth achieved through mergers, acquisitions, or joint ventures rather than through the expansion of the company's existing business activities.</div></div><div class="wb-card"><div class="wb-emoji">✅</div><div class="wb-term">ESG reporting</div><div class="wb-pos">noun phrase</div><div class="wb-def">Disclosure of a company's performance on Environmental, Social, and Governance criteria; increasingly required by investors, regulators, and other stakeholders as part of the broader financial reporting package.</div></div><div class="wb-card"><div class="wb-emoji">📣</div><div class="wb-term">Shareholder letter</div><div class="wb-pos">noun phrase</div><div class="wb-def">A formal letter from the chairman or CEO to shareholders, typically included in the annual report, communicating the company's strategic direction, performance review, and outlook for the coming year.</div></div><div class="wb-card"><div class="wb-emoji">⚡</div><div class="wb-term">Capital markets day</div><div class="wb-pos">noun phrase</div><div class="wb-def">An event hosted by a company at which senior management presents its long-term strategy and financial targets to institutional investors and analysts, typically held once every two or three years.</div></div><div class="wb-card"><div class="wb-emoji">🔔</div><div class="wb-term">Selective disclosure</div><div class="wb-pos">noun phrase</div><div class="wb-def">The practice of sharing material financial information with specific investors or analysts before disclosing it to the broader market, which is prohibited under fair disclosure regulations in most jurisdictions.</div></div><div class="wb-card"><div class="wb-emoji">🏛️</div><div class="wb-term">Audit committee</div><div class="wb-pos">noun phrase</div><div class="wb-def">A committee of the board of directors responsible for overseeing the financial reporting process, including the relationship with external auditors, the integrity of financial statements, and internal controls.</div></div><div class="wb-card"><div class="wb-emoji">📐</div><div class="wb-term">Net debt</div><div class="wb-pos">noun phrase</div><div class="wb-def">The total borrowings of a company minus its cash and cash equivalents; a key measure of a company's financial leverage and its capacity to service or repay its debt obligations.</div></div><div class="wb-card"><div class="wb-emoji">🎯</div><div class="wb-term">Guidance</div><div class="wb-pos">noun phrase</div><div class="wb-def">Short form of forward guidance; the management's published expectations for future financial performance, which the market uses as a benchmark against which actual results are compared.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="reading" class="section">
+  <div class="hero">
+    <div class="section-tag">📄 Reading Activities</div>
+    <div class="hero-title">Reading <span>Texts</span></div>
+    <p class="hero-desc">Two professional texts on financial stakeholder communication and earnings presentation. Read carefully, then answer the comprehension questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Text 1: The Language of Financial Reporting &mdash; Principles and Pitfalls</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; Who Are Financial Stakeholders?</h3>
+        <p>Financial stakeholders are the individuals and institutions with a direct financial interest in a company's performance and financial health. For a publicly listed company, this group is extensive and heterogeneous. It includes <strong>institutional investors</strong> &mdash; pension funds, insurance companies, asset managers, and hedge funds &mdash; who hold significant positions in the company's shares and expect regular, detailed financial communication. It includes <strong>retail investors</strong>, who own shares individually and typically receive less detailed engagement. It includes <strong>sell-side analysts</strong>, who publish research reports and financial models that influence the investment decisions of their institutional clients. It includes <strong>debt holders</strong> &mdash; banks and bondholders &mdash; who are primarily concerned with the company's ability to service and repay its borrowings. And it includes <strong>regulators</strong>, who require accurate and timely disclosure under the rules of the relevant stock exchange and securities law.</p>
+        <p>Each of these stakeholder groups has different information needs, different levels of financial sophistication, and different expectations about the format, frequency, and depth of financial communication they receive. A sophisticated institutional investor expects granular financial analysis and access to senior management through investor meetings and earnings calls. A retail investor expects a clear annual report and understandable dividend information. A regulator expects timely, accurate, and complete disclosure under the applicable rules. The challenge for the finance and investor relations team is to communicate appropriately with all of these audiences simultaneously, using the right language, the right format, and the right level of detail for each.</p>
+        <h3>Paragraph 2 &mdash; The Earnings Announcement</h3>
+        <p>The earnings announcement is the most important regular communication event in the financial calendar for any publicly listed company. It occurs quarterly for US-listed companies and typically semi-annually or annually for UK and European-listed companies. The earnings announcement typically comprises three elements. First, a <strong>regulatory announcement</strong> (in the UK, a Regulatory News Service or RNS release) containing the statutory financial results in a form required by the stock exchange. Second, a <strong>results presentation</strong> &mdash; a set of slides used by the CFO and CEO to walk analysts and investors through the key financial and operational highlights. Third, an <strong>earnings call</strong> &mdash; a live audio or video conference at which management presents the results and then takes questions from analysts and institutional investors.</p>
+        <p>The language used across these three components varies significantly. The regulatory announcement must be precise, factual, and legally compliant &mdash; every statement must be supportable, and material information must be disclosed completely and without ambiguity. The results presentation can be more narrative in style, using charts, comparisons, and selective emphasis to highlight the most important messages. The earnings call requires the most sophisticated communication skills: the ability to explain complex financial information clearly to a technically literate audience, to handle challenging or hostile questions without becoming defensive, and to convey confidence in the company's strategy and performance without overstating the outlook in a way that creates unrealistic expectations.</p>
+        <h3>Paragraph 3 &mdash; Forward Guidance and Its Risks</h3>
+        <p>One of the most delicate areas of financial stakeholder communication is <strong>forward guidance</strong>: the practice of providing the market with management's expectations for future financial performance. Guidance creates a benchmark against which actual results will be measured &mdash; and against which management credibility will be assessed. Consistently delivering results in line with or above guidance builds trust and credibility over time. Consistently missing guidance destroys trust, depresses the company's valuation, and can lead to activist shareholder pressure or board changes.</p>
+        <p>The language of forward guidance must therefore strike a careful balance. It must be informative enough to help the market form realistic expectations, but sufficiently hedged to reflect genuine uncertainty about future outcomes. Professional financial communicators use a consistent set of hedging expressions: "we anticipate," "we expect," "we are targeting," "subject to market conditions," "assuming the current trading environment continues." These expressions signal management's best current expectations while protecting against accusations of misleading the market if results fall short. Understanding and using these expressions correctly is an essential skill for any finance professional working with English-speaking stakeholders.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 1 (10 Questions)</div>
+        <div id="r1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r1')">Check Answers</button>
+        <div id="r1-feedback" class="feedback"></div>
+        <div id="r1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Text 2: Presenting Difficult Financial News &mdash; Honesty, Structure, and Composure</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; Why Difficult Communication Is the Hardest Test</h3>
+        <p>Presenting positive financial results to stakeholders is a relatively straightforward communication exercise. Presenting negative results &mdash; a profit warning, a significant earnings miss, a write-down, a covenant breach, or a going concern qualification &mdash; is one of the most demanding communication challenges in professional life. The stakes are high: financial markets are unforgiving, reputational damage can be permanent, and regulatory consequences for poor disclosure practice can be severe. At the same time, the temptation to soften, delay, or obscure bad news is powerful &mdash; and consistently yields worse long-term outcomes than prompt, honest, clear disclosure.</p>
+        <p>The research on financial communication during periods of distress consistently shows the same pattern: companies that communicate problems early, clearly, and with a credible plan for addressing them fare significantly better in terms of market reaction, stakeholder trust, and eventual recovery than those that delay, understate, or obscure the difficulty. Investors can tolerate problems that are explained; what they cannot tolerate is management that appears to have been caught off guard or that has been less than honest with the market. The phrase that experienced investor relations professionals use is: "bad news does not get better with time." The obligation to disclose material adverse information promptly is both a legal requirement and a strategic imperative.</p>
+        <h3>Paragraph 2 &mdash; Structure and Language for Negative Financial Communication</h3>
+        <p>When communicating negative financial results or a profit warning, structure and language both matter enormously. The most effective approach follows a consistent pattern. First: state the news directly and immediately, without burying it in positive context. Audiences that sense they are being led to bad news through a long positive preamble lose trust immediately. Second: provide the factual context that explains what happened and why, using precise financial language without jargon that non-specialist board members or investors may not understand. Third: present the management response &mdash; the specific actions being taken to address the situation. Fourth: provide a realistic but measured outlook &mdash; neither catastrophising nor minimising the likely trajectory.</p>
+        <p>The language of negative financial communication must be honest without being alarming, specific without being speculative, and confident without being complacent. Common errors include the use of <strong>euphemistic language</strong> that obscures the severity of the situation ("we are experiencing some near-term headwinds" when the reality is a 30% profit shortfall), <strong>passive constructions that deflect accountability</strong> ("revenues were impacted" rather than "we failed to convert the pipeline we guided for"), and <strong>premature positive signalling</strong> that creates expectations the company cannot yet substantiate. Each of these errors, though they may seem to soften the immediate impact of bad news, invariably creates larger credibility problems when the full picture becomes clear.</p>
+        <h3>Paragraph 3 &mdash; The Analyst Q&amp;A: Where Credibility Is Built or Lost</h3>
+        <p>For listed companies, the analyst question-and-answer session that follows an earnings presentation is the moment of greatest scrutiny and greatest risk in the financial communication calendar. Experienced sell-side analysts are highly skilled at identifying inconsistencies in management commentary, pressing on assumptions that appear optimistic, and using their questions to surface information that the company might prefer to keep general. They prepare extensively for earnings calls &mdash; modelling the results, comparing them against guidance, and identifying the specific areas where they need more clarity.</p>
+        <p>The CFO's performance in the Q&amp;A is therefore critical to the company's relationship with the analyst community and, through them, to its share price. The most effective CFOs approach the Q&amp;A with three principles. First: prepare exhaustively for the questions you expect, but remain calm and composed when questions arrive that you did not anticipate. Second: be honest about uncertainty. Attempting to project confidence where none genuinely exists is almost always detected by experienced analysts and reduces rather than builds trust. Third: control the scope of your answers. An imprecise or over-expansive answer to an analyst question can create a new problem. Answer the question asked, completely and honestly, and then stop.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 2 (10 Questions)</div>
+        <div id="r2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r2')">Check Answers</button>
+        <div id="r2-feedback" class="feedback"></div>
+        <div id="r2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="vocabulary" class="section">
+  <div class="hero">
+    <div class="section-tag">✏️ Vocabulary Exercises</div>
+    <div class="hero-title">Vocabulary <span>Practice</span></div>
+    <p class="hero-desc">Three vocabulary exercises to consolidate your command of financial stakeholder communication English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Multiple Choice</div></div>
+      <div class="ex-title">Choosing the Right Term</div>
+      <p class="ex-instruction">Select the best word or phrase to complete each sentence in a professional financial stakeholder communication context.</p>
+      <div id="v1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('v1')">Check Answers</button>
+      <div id="v1-feedback" class="feedback"></div>
+      <div id="v1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Gap-Fill</div></div>
+      <div class="ex-title">Complete the Sentences</div>
+      <p class="ex-instruction">Type the correct word from the box to complete each sentence. Check your spelling carefully.</p>
+      <div class="word-box">
+        <strong style="color:var(--text-dark);margin-right:6px">Word Box:</strong>
+        <span class="word-chip">guidance</span><span class="word-chip">organic</span><span class="word-chip">EBITDA</span>
+        <span class="word-chip">covenant</span><span class="word-chip">disclosure</span><span class="word-chip">audit</span>
+        <span class="word-chip">road</span><span class="word-chip">warrant</span><span class="word-chip">net</span>
+        <span class="word-chip">material</span>
+      </div>
+      <div id="v2-gaps"></div>
+      <button class="check-btn" onclick="checkGaps()">Check Answers</button>
+      <div id="v2-feedback" class="feedback"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">True / False</div></div>
+      <div class="ex-title">True or False?</div>
+      <p class="ex-instruction">Read each statement about financial stakeholder communication vocabulary. Decide whether it is TRUE or FALSE.</p>
+      <div id="v3-tf"></div>
+      <button class="check-btn" onclick="checkTF()">Check Answers</button>
+      <div id="v3-feedback" class="feedback"></div>
+    </div>
+  </div>
+</div>
+
+<div id="grammar" class="section">
+  <div class="hero">
+    <div class="section-tag">📘 Grammar Exercises</div>
+    <div class="hero-title">Grammar <span>Practice</span></div>
+    <p class="hero-desc">Three grammar exercises covering hedging language in financial forecasts, reported speech and indirect questions in briefings, and formal passive structures in financial documents.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Hedging Language</div></div>
+      <div class="ex-title">Hedging Financial Forecasts and Guidance</div>
+      <p class="ex-instruction">Choose the correct hedging expression or structure to complete each sentence from a financial results presentation, earnings call, or investor communication.</p>
+      <div id="g1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g1')">Check Answers</button>
+      <div id="g1-feedback" class="feedback"></div>
+      <div id="g1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Reported Speech</div></div>
+      <div class="ex-title">Reported Speech &amp; Indirect Questions in Financial Briefings</div>
+      <p class="ex-instruction">Select the correct reported speech or indirect question form for each sentence from a financial briefing, analyst call, or board meeting context.</p>
+      <div id="g2-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g2')">Check Answers</button>
+      <div id="g2-feedback" class="feedback"></div>
+      <div id="g2-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">Formal Passive</div></div>
+      <div class="ex-title">Formal Passive Structures in Financial Documents</div>
+      <p class="ex-instruction">Choose the most appropriate formal passive structure for each sentence from a financial report, regulatory announcement, or board paper.</p>
+      <div id="g3-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g3')">Check Answers</button>
+      <div id="g3-feedback" class="feedback"></div>
+      <div id="g3-score" class="score-display"></div>
+    </div>
+  </div>
+</div>
+
+<div id="grammar-review" class="section">
+  <div class="hero">
+    <div class="section-tag">🔍 Grammar Reference</div>
+    <div class="hero-title">Grammar <span>Review</span></div>
+    <p class="hero-desc">Three detailed reference boxes covering hedging language for financial guidance, reported speech in financial contexts, and formal passive structures in financial documents.</p>
+  </div>
+  <div class="content-area">
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 1</div>
+      <div class="gr-box-title">Hedging Language in Financial Guidance and Forecasts</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why hedging is essential in financial communication</div>
+        <div class="gr-rule-text">Financial forecasts involve genuine uncertainty. Using appropriately hedged language signals analytical honesty, protects the company legally if actual results differ from expectations, and aligns with regulatory requirements for fair and accurate disclosure. Overclaiming certainty in financial forecasts is both professionally inappropriate and potentially illegal.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Hedging Device</th><th>Strength</th><th>Financial Communication Example</th></tr>
+        <tr><td>We anticipate / expect / project</td><td>Moderate confidence</td><td>We anticipate full-year revenue to be in the range of GBP420m to GBP440m.</td></tr>
+        <tr><td>We are targeting / aiming for</td><td>Aspiration, not promise</td><td>We are targeting an EBITDA margin improvement of 100 basis points by year end.</td></tr>
+        <tr><td>Subject to / assuming</td><td>Conditional qualifier</td><td>Subject to market conditions, we expect to resume the dividend in H2.</td></tr>
+        <tr><td>We believe / are confident that</td><td>Management opinion</td><td>We believe the cost reduction programme will deliver annualised savings of GBP30m.</td></tr>
+        <tr><td>Could / may / might</td><td>Weak possibility</td><td>Inflationary pressures could impact margins in the second half.</td></tr>
+        <tr><td>At this stage / at the current time</td><td>Temporal qualifier</td><td>At this stage, we are not in a position to provide specific guidance for FY2026.</td></tr>
+        <tr><td>In line with / broadly consistent with</td><td>Approximate comparison</td><td>Performance was broadly consistent with the guidance we issued in November.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Standard forward guidance phrasing in earnings calls</div>
+        <div class="gr-example">We are guiding for full-year revenue of GBP850m to GBP880m, assuming no material deterioration in the macroeconomic environment.</div>
+        <div class="gr-example">At this point in the year, we expect adjusted EPS to be in the range of 42p to 46p, subject to the usual caveats around currency movements and exceptional items.</div>
+        <div class="gr-example">It would be premature at this stage to provide specific guidance for the next financial year, but we remain confident in the medium-term growth trajectory of the business.</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 2</div>
+      <div class="gr-box-title">Reported Speech &amp; Indirect Questions in Financial Briefings</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">When reported speech is used in financial communication</div>
+        <div class="gr-rule-text">Reported speech is used frequently in financial contexts: when summarising what management said on an earnings call, when reporting analyst questions in a briefing document, when documenting board discussions in minutes, and when relaying investor feedback to the executive team. Understanding the grammar shifts in reported speech is essential for accurate financial communication.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Direct Speech</th><th>Reported Speech</th><th>Context</th></tr>
+        <tr><td>"Revenue grew 8% in Q1."</td><td>The CFO stated that revenue had grown 8% in Q1.</td><td>Earnings call summary</td></tr>
+        <tr><td>"We expect margins to recover."</td><td>Management indicated that they expected margins to recover.</td><td>Analyst note</td></tr>
+        <tr><td>"What is driving the cost increase?"</td><td>The analyst asked what was driving the cost increase.</td><td>Q&A transcript</td></tr>
+        <tr><td>"Will you restore the dividend?"</td><td>An investor asked whether the company planned to restore the dividend.</td><td>IR meeting note</td></tr>
+        <tr><td>"We cannot comment on that."</td><td>The CEO declined to comment on that matter at that time.</td><td>Board minutes</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Key grammar rules in financial reported speech</div>
+        <div class="gr-rule-text">Present tense shifts to past. "Will" becomes "would." "Can" becomes "could." Direct questions become indirect, using statement word order: "What is driving costs?" becomes "She asked what was driving costs." Yes/no questions use "whether" or "if": "Are you on track?" becomes "He asked whether the company was on track."</div>
+        <div class="gr-example">The analyst asked whether the cost reduction programme was on track to deliver the targeted savings. The CFO confirmed that it was, adding that she expected to see the full benefit reflected in the H2 results. She declined to speculate on whether additional measures might be required.</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 3</div>
+      <div class="gr-box-title">Formal Passive Structures in Financial Documents</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why the passive is used in financial reporting</div>
+        <div class="gr-rule-text">Financial documents &mdash; annual reports, regulatory announcements, audit reports, and board papers &mdash; use the passive voice extensively to create an objective, authoritative tone; to focus on outcomes rather than actors; to distribute responsibility across the organisation rather than naming individuals; and to comply with the formal register expected in regulated financial communication.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Active (informal)</th><th>Passive (formal/financial)</th></tr>
+        <tr><td>We adjusted revenue for one-off items.</td><td>Revenue has been adjusted to exclude one-off items.</td></tr>
+        <tr><td>The auditors reviewed the accounts.</td><td>The financial statements have been reviewed and approved by the external auditors.</td></tr>
+        <tr><td>We will restate the prior year figures.</td><td>The prior year comparative figures will be restated to reflect the change in accounting policy.</td></tr>
+        <tr><td>Management decided to write down the asset.</td><td>An impairment charge of GBP45m has been recognised in respect of the North American business.</td></tr>
+        <tr><td>We expect the acquisition to close in Q3.</td><td>The acquisition is expected to complete in Q3, subject to regulatory approval.</td></tr>
+        <tr><td>We cannot predict this with certainty.</td><td>It is not possible at this stage to predict the outcome with certainty.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Common impersonal passive constructions in financial English</div>
+        <div class="gr-example">It is expected that... / It is anticipated that... / It should be noted that... / It has been determined that...</div>
+        <div class="gr-example">It is not possible to provide guidance at this stage. / It would be inappropriate to speculate on the outcome of ongoing discussions.</div>
+        <div class="gr-example">The board has been advised that... / Shareholders are reminded that... / It is recommended that...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="writing" class="section">
+  <div class="hero">
+    <div class="section-tag">✍️ Writing Activities</div>
+    <div class="hero-title">Writing <span>Tasks</span></div>
+    <p class="hero-desc">Two professional writing tasks &mdash; practise producing a shareholder letter and a profit warning announcement in precise, formal financial English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Writing Activity 1 &mdash; Shareholder Letter</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a shareholder letter (190&ndash;230 words) from the CEO of a fictional UK-listed logistics company called <em>Meridian Freight plc</em> to its shareholders following a full-year results announcement. Key data: Revenue &pound;1.84bn (up 7% year-on-year); adjusted EBITDA &pound;210m (up 12%); net debt &pound;380m (reduced from &pound;450m); full-year dividend of 18p per share reinstated after a two-year suspension; organic revenue growth 5%; one acquisition completed in H2. Use hedging language for the outlook, at least one passive construction, and formal financial register throughout.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Formal financial register &middot; Accurate metric presentation &middot; Hedging language for outlook &middot; Passive construction &middot; Professional shareholder communication tone
+      </div>
+      <textarea class="writing-textarea" id="w1-text" placeholder="Dear Shareholders,&#10;&#10;I am pleased to report the results for the financial year ended 31 December 2024.&#10;&#10;Financial Performance:&#10;...&#10;&#10;Strategic Progress:&#10;...&#10;&#10;Dividend:&#10;...&#10;&#10;Outlook:&#10;...&#10;&#10;Yours faithfully,&#10;[CEO Name]&#10;Chief Executive Officer, Meridian Freight plc" oninput="updateWordCount('w1',230)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w1-wc">0 / 230 words</span>
+        <button class="submit-btn" onclick="submitWriting('w1')">Submit ✓</button>
+      </div>
+      <div id="w1-success" class="submit-success">✅ Letter submitted! Excellent work applying formal financial register and hedging language in a professional shareholder communication.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Writing Activity 2 &mdash; Profit Warning Announcement</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a profit warning regulatory announcement (180&ndash;220 words) for a fictional UK-listed retail technology company called <em>Vantage Systems plc</em>. The company guided for adjusted EBITDA of &pound;85m &ndash; &pound;90m at the beginning of the year but now expects &pound;62m &ndash; &pound;66m due to: a major customer contract ending unexpectedly in Q2 (revenue impact &pound;18m), higher-than-expected restructuring costs (&pound;8m), and currency headwinds on international revenues (&pound;4m adverse). The company has already identified cost mitigation actions of &pound;6m. Use formal passive constructions, appropriate hedging language, and the required structure for a profit warning announcement.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Direct disclosure of bad news without delay &middot; Precise financial data &middot; Clear explanation of drivers &middot; Passive constructions &middot; Hedging for outlook &middot; Formal regulated document register
+      </div>
+      <textarea class="writing-textarea" id="w2-text" placeholder="REGULATORY ANNOUNCEMENT&#10;Vantage Systems plc&#10;Trading Update and Profit Warning&#10;&#10;Vantage Systems plc (the &quot;Company&quot;) today issues the following update on trading and current year financial expectations.&#10;&#10;Current Year Performance:&#10;...&#10;&#10;Key Drivers of Shortfall:&#10;...&#10;&#10;Management Response:&#10;...&#10;&#10;Outlook:&#10;..." oninput="updateWordCount('w2',220)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w2-wc">0 / 220 words</span>
+        <button class="submit-btn" onclick="submitWriting('w2')">Submit ✓</button>
+      </div>
+      <div id="w2-success" class="submit-success">✅ Announcement submitted! Great work applying formal passive structures and precise financial language in a regulated disclosure context.</div>
+    </div>
+  </div>
+</div>
+
+<div id="listening" class="section">
+  <div class="hero">
+    <div class="section-tag">🎧 Listening Activities</div>
+    <div class="hero-title">Listening <span>Activities</span></div>
+    <p class="hero-desc">4 audio activities with built-in speech players &mdash; press &#9654; Play, listen, then answer the questions in white below.</p>
+  </div>
+  <div class="content-area"><div id="listening-cards"></div></div>
+</div>
+
+<div id="casestudies" class="section">
+  <div class="hero">
+    <div class="section-tag">📊 Case Studies</div>
+    <div class="hero-title">Case <span>Studies</span></div>
+    <p class="hero-desc">Two real-world inspired financial stakeholder communication case studies. Read carefully and answer the analysis questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="case-header">
+      <h3>Case Study 1: Clarendon Capital &mdash; How Transparent Communication Through a Crisis Built Long-Term Investor Trust</h3>
+      <p>Investor Relations &middot; Crisis Communication &middot; Forward Guidance &middot; Earnings Call Management</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Clarendon Capital is a mid-cap UK asset management firm that manages approximately &pound;28bn in assets. In the second quarter of 2022, the firm experienced a significant period of performance difficulty: three of its largest flagship funds underperformed their benchmarks by 8&ndash;12 percentage points, driven by concentrated positions in a technology sector that corrected sharply. Client outflows accelerated, and assets under management fell 18% over the quarter. The share price dropped 34% between March and June. Institutional shareholders, several of whom had held large positions for over five years, were concerned and demanding answers.</p>
+        <p>The CFO and Head of Investor Relations faced a choice that many leadership teams face in this situation: manage the communication carefully &mdash; release information gradually, avoid specifics, and frame the situation as positively as possible &mdash; or communicate fully, honestly, and immediately, with a clear explanation of what had gone wrong and a credible plan to address it. After significant internal debate, the board chose the second path.</p>
+      </div>
+      <div class="case-section-label">The Communication Approach</div>
+      <div class="case-text">
+        <p>Within 72 hours of the quarter's end, Clarendon published a detailed interim update acknowledging the underperformance directly. The announcement stated: <em>"Performance in Q2 2022 was materially below the standards we expect of ourselves and below the outcomes our clients have a right to expect. We take full responsibility for the positioning decisions that contributed to this outcome."</em> The update then provided a detailed attribution analysis explaining which positions had underperformed and why, what the portfolio management team's reasoning had been, and why that reasoning had proved incorrect in the circumstances.</p>
+        <p>The CFO hosted an emergency investor call within five days of the announcement. Rather than opening with a positive framing of the longer-term performance record, he opened by acknowledging the severity of the quarter, expressing regret directly, and then moving to the specific changes being made to risk management procedures and portfolio construction guidelines. He was asked approximately 45 questions by analysts and investors during a 90-minute call. His approach to every question was consistent: direct acknowledgement of the concern, a precise factual response, and a refusal to speculate beyond what the data supported.</p>
+        <p>The result was counterintuitive to some observers. Despite the scale of the underperformance, net outflows in Q3 were 60% lower than modelled by the sell-side. The share price stabilised within two weeks of the call. Several investors subsequently cited the quality of the communication &mdash; its directness, its specific attribution analysis, and the absence of defensive language &mdash; as a significant reason for maintaining their positions. By Q4 2022, performance had partially recovered, and the full-year outflows were substantially below the levels initially feared. The CFO's post-mortem observation: "Investors can manage disappointment. What they cannot manage is uncertainty about whether management understands the problem."</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 1 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs1')">Check Answers</button>
+        <div id="cs1-feedback" class="feedback"></div>
+        <div id="cs1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="case-header">
+      <h3>Case Study 2: Northgate Retail Group &mdash; When Poor Financial Communication Compounded a Business Problem</h3>
+      <p>Profit Warning Communication &middot; Analyst Relations &middot; Selective Disclosure &middot; Regulatory Consequences</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Northgate Retail Group is a UK-listed mid-market fashion retailer that had been experiencing structural trading difficulties since 2019. In late 2021, trading deteriorated significantly as the company faced a combination of supply chain disruption, rising wage costs, and a shift in consumer spending away from the mid-market category. By October 2021, the finance team was aware that full-year profit was likely to be significantly below the guidance of &pound;42m that had been issued in June. The actual expected outcome, based on internal projections, was now &pound;24m to &pound;28m &mdash; a shortfall of approximately 38%.</p>
+        <p>The CFO was reluctant to issue a profit warning before the interim results, scheduled for November, arguing that the situation might improve in the final weeks of the period. The legal and company secretary teams recommended immediate disclosure; the executive team overruled them. In the intervening period, the CFO met informally with two major institutional shareholders at an industry conference and, in the course of those conversations, shared information about the likely shortfall that was not yet in the public domain. This constituted selective disclosure, a violation of the UK Market Abuse Regulation.</p>
+      </div>
+      <div class="case-section-label">The Consequences</div>
+      <div class="case-text">
+        <p>When the profit warning was finally published alongside the interim results, it came as a severe shock to the market. The company's shares fell 43% on the day of the announcement &mdash; significantly more than would typically be expected for a profit shortfall of this magnitude, partly because the delay had created the impression that management was not in control of its financial reporting and partly because rumours of the selective disclosure had reached the broader analyst community. The FCA launched an investigation into the informal conversations at the industry conference, which was eventually settled with a significant regulatory fine and a formal censure of the CFO.</p>
+        <p>The case became a widely referenced example in investor relations training for what not to do. Several lessons were drawn by practitioners. First: a profit warning issued immediately, when the shortfall first becomes known, will always produce a smaller market reaction than one delayed and then announced alongside financial results. Second: selective disclosure &mdash; sharing material information with specific investors before the broader market &mdash; is not a favour to those investors but a serious regulatory violation with severe consequences for both the company and the individual. Third: the decision about when and how to disclose material adverse information is not a communication decision &mdash; it is a legal decision, and the company secretary and legal counsel must be the primary advisors rather than the executive team's instincts about market timing.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 2 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs2')">Check Answers</button>
+        <div id="cs2-feedback" class="feedback"></div>
+        <div id="cs2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="assessment" class="section">
+  <div class="hero">
+    <div class="section-tag">🎯 Final Assessment</div>
+    <div class="hero-title">Final <span>Assessment</span></div>
+    <p class="hero-desc">20 multiple choice questions covering all module sections. Score 70% or above to pass. You have two attempts.</p>
+  </div>
+  <div class="content-area">
+    <div class="assessment-header">
+      <h2>Module 10 &mdash; Final Assessment</h2>
+      <p>Communicating with Financial Stakeholders</p>
+      <div class="assessment-meta">
+        <div class="assessment-meta-item"><div class="assessment-meta-num">20</div><div class="assessment-meta-label">Questions</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">70%</div><div class="assessment-meta-label">Pass Mark</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">2</div><div class="assessment-meta-label">Attempts</div></div>
+      </div>
+      <div class="attempt-badge" id="attempt-badge">Attempt 1 of 2</div>
+    </div>
+    <div id="assessment-result" class="assessment-result">
+      <div class="result-score" id="result-score-text"></div>
+      <div class="result-msg" id="result-msg"></div>
+      <div id="retake-wrap"></div>
+    </div>
+    <div class="card" id="assessment-form">
+      <div class="mcq-title">📝 Assessment Questions</div>
+      <div id="fa-mcqs"></div>
+      <button class="check-btn" onclick="submitAssessment()" style="margin-top:8px;padding:12px 32px;font-size:14px">Submit Assessment</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const DATA={
+r1:{questions:[
+  {q:"Which of the following is NOT listed as a type of financial stakeholder in Text 1?",opts:["Institutional investors such as pension funds and hedge funds","Sell-side analysts who publish research reports","Marketing agencies that develop the company's brand communications","Regulators who require accurate and timely disclosure"],ans:2},
+  {q:"What does Text 1 say about retail investors compared to institutional investors?",opts:["Retail investors receive more detailed engagement than institutional investors","Retail investors expect the same level of engagement as institutional investors","Retail investors own shares individually and typically receive less detailed engagement","Retail investors are more important to investor relations than institutional investors"],ans:2},
+  {q:"What are the three elements that typically comprise an earnings announcement, according to Text 1?",opts:["A press release, a social media post, and an investor presentation","A regulatory announcement, a results presentation, and an earnings call","A shareholder letter, a roadshow, and an analyst briefing","A profit warning, an interim update, and a full-year results statement"],ans:1},
+  {q:"What does Text 1 say about the language of the regulatory announcement component of earnings?",opts:["It can use narrative style and selective emphasis to highlight positive messages","It must be precise, factual, and legally compliant, with every statement supportable","It is typically the least important element and can use informal language","It is written by the investor relations team without legal review"],ans:1},
+  {q:"What does Text 1 say the earnings call requires in terms of communication skills?",opts:["Only the ability to read prepared statements from a script","Primarily the skill of presenting financial data using visual aids","The ability to explain complex information clearly, handle challenging questions, and convey confidence without overstating the outlook","A deep understanding of accounting standards and auditing methodology"],ans:2},
+  {q:"What does Text 1 say happens when a company consistently delivers results in line with or above guidance?",opts:["The share price always outperforms the stock market index","It builds trust and credibility with investors and analysts over time","The company can stop providing forward guidance in subsequent years","Sell-side analysts upgrade their recommendations to strong buy"],ans:1},
+  {q:"What happens when a company consistently misses its guidance, according to Text 1?",opts:["The company is required to withdraw from providing future guidance","It destroys trust, depresses valuation, and can lead to activist pressure or board changes","The regulatory authority launches an immediate investigation","The company must issue a public apology to all shareholders"],ans:1},
+  {q:"What is the purpose of hedging expressions like 'we anticipate' and 'subject to market conditions' in financial guidance?",opts:["To make the guidance sound more confident and reassuring to investors","To signal management's best current expectations while protecting against accusations of misleading the market","To avoid having to provide any specific financial targets","To comply with accounting standards that prohibit definitive financial forecasts"],ans:1},
+  {q:"What does Text 1 say about a sophisticated institutional investor's expectations?",opts:["They only need an annual report and a dividend payment to remain satisfied","They expect granular financial analysis and access to senior management through investor meetings and earnings calls","They prefer to receive information through social media rather than formal investor communications","They require the same information as retail investors, presented in a simpler format"],ans:1},
+  {q:"What does Text 1 identify as the central challenge for the finance and investor relations team?",opts:["Maximising the share price by presenting only positive financial information","Ensuring the annual report meets the minimum legal disclosure requirements","Communicating appropriately with all stakeholder audiences simultaneously, using the right language, format, and level of detail for each","Restricting information flow to institutional investors who are most important to the share price"],ans:2}
+]},
+r2:{questions:[
+  {q:"What does Text 2 describe as the most demanding communication challenge in professional financial life?",opts:["Presenting positive financial results that are above market expectations","Communicating complex technical accounting changes to non-specialist board members","Presenting negative results such as a profit warning, earnings miss, or going concern qualification","Managing relations with sell-side analysts during the pre-close period"],ans:2},
+  {q:"What pattern does the research on financial communication during distress consistently show?",opts:["Companies that manage their communication carefully by releasing information gradually fare best","Companies that communicate problems early, clearly, and with a credible plan fare significantly better than those that delay or obscure","The timing of disclosure has no significant impact on market reaction or stakeholder trust","Companies that wait for the problem to resolve before communicating preserve the most value"],ans:1},
+  {q:"What phrase do experienced investor relations professionals use about bad news?",opts:["Bad news is always less serious than analysts initially assume","Bad news should be released gradually to avoid market panic","Bad news does not get better with time","Bad news can always be offset by a strong dividend announcement"],ans:2},
+  {q:"What is the FIRST step in the most effective structure for communicating negative financial results?",opts:["Present the management response and the specific actions being taken","Provide the positive context and the company's long-term track record","State the news directly and immediately, without burying it in positive context","Acknowledge the macroeconomic factors that contributed to the outcome"],ans:2},
+  {q:"What does Text 2 say about leading bad news with a long positive preamble?",opts:["It is the most effective approach as it contextualises the problem appropriately","Audiences that sense they are being led to bad news this way lose trust immediately","It is required by stock exchange disclosure rules in the UK","It is appropriate for boards but not for public market announcements"],ans:1},
+  {q:"What is the common error called 'euphemistic language' in negative financial communication?",opts:["Using passive constructions that deflect accountability from management","Creating premature positive signals that create expectations the company cannot substantiate","Using vague or understated language that obscures the severity of the situation","Providing too much detailed financial data that confuses non-specialist stakeholders"],ans:2},
+  {q:"What example of passive construction deflecting accountability does Text 2 give?",opts:["Using 'it is expected' instead of 'we expect'","Saying 'revenues were impacted' rather than 'we failed to convert the pipeline we guided for'","Writing 'the board has been advised' rather than 'management told the board'","Using 'performance was below target' instead of naming specific shortfalls"],ans:1},
+  {q:"Who does Text 2 say are sell-side analysts and how do they prepare for earnings calls?",opts:["Junior employees who take notes during management presentations","External professionals who prepare extensively by modelling results and identifying areas where they need more clarity","Internal advisors who help management prepare their earnings call scripts","Regulatory officials who monitor earnings calls for compliance with disclosure rules"],ans:1},
+  {q:"What are the three principles the most effective CFOs apply in the analyst Q&A?",opts:["Prepare only for expected questions; project confidence always; give long comprehensive answers","Prepare exhaustively; be honest about uncertainty; control the scope of answers and stop after answering the question asked","Deflect difficult questions; buy time with detail; always refer to the forward guidance","Always have a positive response; never admit uncertainty; provide additional context beyond what was asked"],ans:1},
+  {q:"What does Text 2 say about attempting to project confidence where none genuinely exists?",opts:["It is a necessary professional skill in investor relations","It is almost always detected by experienced analysts and reduces rather than builds trust","It is appropriate in the short term provided actual results eventually improve","It is only problematic in the written regulatory announcement, not in verbal earnings calls"],ans:1}
+]},
+v1:{questions:[
+  {q:"The company issued a _______ when it became clear that full-year profits would be significantly below the guidance provided to the market in March.",opts:["shareholder letter","profit warning","forward guidance update","capital markets day"],ans:1},
+  {q:"The CFO provided _______ for the coming year, stating that revenue was expected to be in the range of GBP420m to GBP440m, subject to currency movements.",opts:["an audit committee report","forward guidance","a road show","an EBITDA adjustment"],ans:1},
+  {q:"The _______ lasted 90 minutes, with the first 30 minutes dedicated to the CFO's presentation and the remainder to questions from analysts and institutional investors.",opts:["road show","annual report","earnings call","capital markets day"],ans:2},
+  {q:"The sell-side _______ downgraded the company from 'buy' to 'hold' following the profit warning, citing concerns about management credibility and the reliability of future guidance.",opts:["investor","auditor","analyst","regulator"],ans:2},
+  {q:"The company reported _______ revenue growth of 6%, which excluded the contribution from the two acquisitions completed during the year.",opts:["inorganic","adjusted","EBITDA","organic"],ans:3},
+  {q:"At the board meeting, the audit committee chair raised concerns about the _______ status of one of the group's subsidiary companies, which had insufficient working capital to meet its obligations for the next twelve months.",opts:["forward guidance","earnings call","going concern","profit warning"],ans:2},
+  {q:"The CFO was careful to ensure that no _______ was shared during the informal investor dinner, reminding attendees that only information already in the public domain could be discussed.",opts:["forward guidance","material non-public information","EBITDA","net debt"],ans:1},
+  {q:"The company reported _______ of GBP195m, a key metric the management used to demonstrate the underlying cash generation of the business before the impact of debt servicing costs.",opts:["earnings per share","net debt","EBITDA","going concern"],ans:2},
+  {q:"Following the rights issue, the company's _______ was reduced from GBP680m to GBP420m, significantly improving the balance sheet position and reducing interest costs.",opts:["EBITDA","organic growth","earnings per share","net debt"],ans:3},
+  {q:"The company held its triennial _______ at its London headquarters, presenting a detailed five-year strategic plan and new financial targets to approximately 80 institutional investors and analysts.",opts:["earnings call","capital markets day","road show","audit committee"],ans:1}
+]},
+v2gaps:[
+  {sent:"The company issued full-year _______ in January, stating that it expected adjusted operating profit to be between GBP95m and GBP105m for the financial year.",ans:"guidance"},
+  {sent:"_______ revenue grew 9% after excluding the one-off contribution from the acquisition of the German distribution business completed in Q3.",ans:"organic"},
+  {sent:"The results presentation highlighted _______ of GBP312m, described by the CFO as the most relevant measure of the group's underlying operating performance.",ans:"EBITDA"},
+  {sent:"The company was in technical breach of its banking _______, having exceeded the agreed net debt to EBITDA ratio of 3.0x for two consecutive quarters.",ans:"covenant"},
+  {sent:"All material developments must be subject to timely regulatory _______ under the obligations of the UK Listing Rules and Market Abuse Regulation.",ans:"disclosure"},
+  {sent:"The _______ committee reviewed the draft financial statements and met with the external auditors to discuss the significant accounting judgements made in the preparation of the accounts.",ans:"audit"},
+  {sent:"The management team conducted a _______ show across eight European cities over two weeks, meeting with over 60 institutional investors ahead of the planned equity offering.",ans:"road"},
+  {sent:"The quantum of the provision recognised does not _______ further disclosure at this stage, as the range of possible outcomes is insufficiently narrow to provide meaningful guidance.",ans:"warrant"},
+  {sent:"The group reported _______ debt of GBP245m as at the period end, representing a reduction of GBP38m since the prior year following strong operating cash generation.",ans:"net"},
+  {sent:"The board concluded that the information constituted _______ information within the meaning of the Market Abuse Regulation and was required to be disclosed without delay.",ans:"material"}
+],
+v3tf:[
+  {stmt:"An earnings call is a conference call in which management presents financial results and takes live questions from analysts and investors.",ans:true},
+  {stmt:"Forward guidance refers to a company's historical financial performance data as published in its annual report.",ans:false},
+  {stmt:"A profit warning is a public announcement that a company's earnings will be significantly below market expectations.",ans:true},
+  {stmt:"Organic revenue growth includes the contribution from acquisitions and disposals completed during the reporting period.",ans:false},
+  {stmt:"Selective disclosure, which involves sharing material information with specific investors before the broader market, is prohibited under fair disclosure regulations.",ans:true},
+  {stmt:"A sell-side analyst is employed by an investment fund and evaluates securities to inform that fund's own investment decisions.",ans:false},
+  {stmt:"EBITDA represents Earnings Before Interest, Taxes, Depreciation, and Amortisation and is used as a measure of core operating profitability.",ans:true},
+  {stmt:"A going concern qualification means that auditors are satisfied that the company will continue operating normally for the foreseeable future.",ans:false},
+  {stmt:"A capital markets day is an event at which management presents long-term strategy and financial targets to institutional investors and analysts.",ans:true},
+  {stmt:"Net debt is calculated as total borrowings minus cash and cash equivalents and is a key measure of a company's financial leverage.",ans:true}
+],
+g1:{questions:[
+  {q:"'We _______ full-year revenue to be in the range of GBP420m to GBP440m, subject to no material deterioration in trading conditions.' Which hedging verb is most appropriate?",opts:["guarantee","confirm","anticipate","have established"],ans:2},
+  {q:"'The board is _______ that the cost reduction programme will deliver annualised savings of GBP25m to GBP30m by the end of the financial year.'",opts:["certain","guaranteeing","confident","promising"],ans:2},
+  {q:"Which phrase most appropriately introduces a hedged financial forecast in an earnings call?",opts:["We will definitely achieve revenue of exactly GBP500m.","We guarantee our margins will improve by 150 basis points.","At this stage, we are not in a position to provide specific guidance for the next financial year.","Revenue will be GBP500m."],ans:2},
+  {q:"'_______ trading conditions remain broadly stable, we are targeting an improvement in adjusted EBITDA margin of approximately 50 basis points.'",opts:["Because","Guaranteeing","Assuming","Although"],ans:2},
+  {q:"'Inflationary pressures _______ create headwinds in the second half, though we believe the pricing actions taken in Q1 will partially offset this impact.'",opts:["will certainly","guarantee to","could","must"],ans:2},
+  {q:"Which sentence most appropriately hedges an uncertain financial outcome?",opts:["The acquisition will definitely be earnings-accretive in year one.","It is not possible at this stage to quantify with precision the financial impact of the regulatory change.","The new contract guarantees GBP40m of incremental revenue in H2.","Margins will definitely recover to 18% by December."],ans:1},
+  {q:"'Performance in the first quarter was _______ consistent with the guidance we issued at the full-year results in March.'",opts:["exactly","perfectly","broadly","completely"],ans:2},
+  {q:"'We _______ to provide more specific guidance on the restructuring costs once the programme design has been finalised.'",opts:["guarantee","refuse","are targeting","are expecting"],ans:3},
+  {q:"'_______ the outcome of ongoing discussions with our principal lenders, we are not in a position to confirm the terms of the refinancing at this stage.'",opts:["Because of","Pending","Following","Despite"],ans:1},
+  {q:"Which phrase most appropriately qualifies a forward-looking statement in a UK regulatory announcement?",opts:["This is not a guarantee of future performance.","Forward-looking statements are always accurate.","We promise these results will be achieved.","The board guarantees the financial targets stated above."],ans:0}
+]},
+g2:{questions:[
+  {q:"Direct: 'Revenue grew 12% in H1.' Reported: The CFO stated that revenue _______ 12% in H1.",opts:["grows","will grow","had grown","is growing"],ans:2},
+  {q:"Direct: 'We expect margins to recover in Q4.' Reported: Management indicated that they _______ margins to recover in Q4.",opts:["expect","will expect","are expecting","expected"],ans:3},
+  {q:"Direct: 'What is driving the cost increase?' Reported (indirect question): The analyst asked _______ the cost increase.",opts:["what is driving","what driving was","what was driving","that was driving"],ans:2},
+  {q:"Direct: 'Will you reinstate the dividend?' Reported (indirect question): An investor asked _______ the company intended to reinstate the dividend.",opts:["that","if","what","which"],ans:1},
+  {q:"Direct: 'We cannot comment on that at this stage.' Reported: The CEO stated that the company _______ comment on that at that stage.",opts:["cannot","will not","could not","does not"],ans:2},
+  {q:"Direct: 'The acquisition will complete in Q3.' Reported: Management confirmed that the acquisition _______ in Q3.",opts:["will complete","completes","would complete","is completing"],ans:2},
+  {q:"Direct: 'Are you on track to meet your guidance?' Reported: The analyst asked _______ the company was on track to meet its guidance.",opts:["that","what","whether","which"],ans:2},
+  {q:"Direct: 'We do not expect any further impairments.' Reported: The CFO told the board that they _______ any further impairments.",opts:["do not expect","will not expect","did not expect","are not expecting"],ans:2},
+  {q:"Direct: 'How much of the cost saving has been achieved?' Reported: The chairman asked _______ of the cost saving had been achieved.",opts:["how much","that how much","what amount","how many"],ans:0},
+  {q:"Direct: 'The restructuring will be completed by year end.' Reported: The COO assured the audit committee that the restructuring _______ by year end.",opts:["will be completed","would be completed","is completed","completes"],ans:1}
+]},
+g3:{questions:[
+  {q:"Which sentence uses the most appropriate formal passive structure for a financial regulatory announcement?",opts:["We have adjusted revenue to exclude one-off items.","Revenue has been adjusted to exclude one-off items of GBP12m.","Someone adjusted the revenue figures.","We adjusted the numbers for the one-off items."],ans:1},
+  {q:"Which sentence most appropriately uses the formal passive for an audit committee report?",opts:["We reviewed the financial statements and approved them.","The financial statements were reviewed and approved by the external auditors at their meeting on 14 March.","Auditors looked at the accounts and said they were fine.","We got the auditors to check the accounts."],ans:1},
+  {q:"Which impersonal passive construction is most appropriate in a financial report?",opts:["We think there will be a problem predicting this.","It is not possible at this stage to predict the outcome of the litigation with certainty.","Nobody can say what will happen with the court case.","The outcome of the court case is impossible to know."],ans:1},
+  {q:"Which sentence uses the passive to appropriately avoid naming individuals in a board paper?",opts:["John decided to write down the North American assets.","It has been determined by the executive team to write down the North American assets.","The decision was taken to recognise an impairment charge of GBP45m in respect of the North American operations.","Someone decided to take a GBP45m impairment."],ans:2},
+  {q:"Which version is most appropriate for a formal financial disclosure?",opts:["We are going to tell you something important.","Shareholders are hereby notified of the following material development.","This is important information for shareholders.","We need to tell shareholders about this."],ans:1},
+  {q:"Which sentence correctly uses a formal passive in a going concern section?",opts:["We are worried the company might not survive.","The directors have concluded that it is appropriate to prepare the financial statements on a going concern basis.","Going concern is OK, we think.","We decided the company will be fine."],ans:1},
+  {q:"Which version most formally states a forward-looking condition in a financial document?",opts:["We will get a dividend if things go well.","Subject to the completion of the proposed refinancing, the board intends to recommend the reinstatement of the dividend.","The dividend will come back when refinancing is done.","If refinancing happens, there will probably be a dividend."],ans:1},
+  {q:"Which sentence most appropriately uses the passive to describe an accounting policy change?",opts:["We changed how we count revenue this year.","The prior year comparative figures have been restated to reflect the change in accounting policy adopted in the current year.","We restated last year's numbers because we changed accounting policies.","The accounting policy was changed and we fixed the old numbers."],ans:1},
+  {q:"Which sentence uses the most formal register for a board recommendation?",opts:["The board thinks shareholders should vote yes.","It is recommended that shareholders vote in favour of the resolution at the forthcoming Annual General Meeting.","We want shareholders to approve this.","Please vote yes at the AGM."],ans:1},
+  {q:"Which version most formally expresses that a disclosure decision is pending legal review?",opts:["We are waiting for the lawyers to tell us what to say.","Legal is looking at this before we say anything.","Disclosure of the matter referred to above is subject to ongoing legal review and will be made in accordance with the applicable regulatory requirements.","We will disclose this once legal reviews it."],ans:2}
+]},
+listening:[
+{
+  emoji:"📞",
+  title:"Activity 1: How to Structure an Earnings Call",
+  sub:"Sarah Chen, Head of Investor Relations &mdash; Professional training session",
+  level:"B1",type:"Multiple Choice",focus:"Listening for main ideas",
+  transcript:`Good morning. My name is Sarah Chen, and I have led investor relations at three listed companies over the past fourteen years. Today I want to walk you through the structure of an earnings call, because it is the most important regular communication event in the investor relations calendar, and getting it right is critical to the company's relationship with its shareholder base.
+
+A well-structured earnings call has five parts. Part one is the introduction. The operator connects all participants, the Head of Investor Relations introduces the speakers, and any necessary legal disclaimers are read out. This typically takes two to three minutes.
+
+Part two is the CEO's strategic overview. The CEO summarises the key strategic highlights of the period: what the business achieved, how the strategy is progressing, and any significant operational developments. This should be short and high-level: no more than eight to ten minutes. The CEO's role on the call is to communicate vision and confidence, not to walk through the detailed numbers.
+
+Part three is the CFO's financial review. This is the heart of the call. The CFO walks through the financial results in detail: revenue, operating profit, EBITDA, earnings per share, cash flow, net debt, and the dividend. Each metric should be presented in context: against the prior year, against guidance, and against the market's expectations. This section typically lasts fifteen to twenty minutes.
+
+Part four is forward guidance. Either the CEO or the CFO provides the market's expectations for future performance: revenue guidance, margin targets, capital expenditure expectations. This section must be carefully scripted, because every word will be scrutinised. Use hedged language throughout. Do not make commitments you cannot keep.
+
+Part five is the Q&A. Analysts and institutional investors ask questions. This is where the team needs to be at its best. Listen carefully to each question. Answer precisely. Do not speculate. If you do not know the answer, say so and commit to following up. And know when to end the call.`,
+  questions:[
+    {q:"How many years of investor relations experience does Sarah have?",opts:["Eight years","Eleven years","Fourteen years","Twenty years"],ans:2},
+    {q:"What does Sarah say about the CEO's role in Part Two of the earnings call?",opts:["The CEO should walk through the detailed financial numbers in depth","The CEO should read out the legal disclaimers and introduce the speakers","The CEO communicates vision and confidence through a short high-level strategic overview","The CEO handles all analyst questions in the Q&A session"],ans:2},
+    {q:"Which financial metrics does Sarah say the CFO should cover in Part Three?",opts:["Only revenue and profit, keeping the financial review brief","Revenue, operating profit, EBITDA, EPS, cash flow, net debt, and the dividend","Share price performance and market capitalisation relative to peers","Gross margin and operating leverage only, as these are most watched by analysts"],ans:1},
+    {q:"How does Sarah say each metric in the CFO's review should be presented?",opts:["As an absolute number only, without year-on-year comparisons","Against the prior year, against guidance, and against market expectations","In percentage terms only, to make comparisons easier for international investors","Alongside the equivalent figures from the three closest competitors"],ans:2},
+    {q:"What does Sarah say about the forward guidance section?",opts:["It should be improvised to show management is confident without over-committing","It must be carefully scripted and use hedged language throughout","It should only cover revenue and avoid any margin or cash flow guidance","It is optional for companies that prefer not to provide numerical forecasts"],ans:1},
+    {q:"What should you do if you do not know the answer to an analyst question?",opts:["Give your best estimate to show confidence in your financial knowledge","Deflect the question to another topic you are better prepared for","Say you do not know and commit to following up with the answer","Ask the analyst to rephrase the question in a simpler way"],ans:2},
+    {q:"What does Sarah say Part Five, the Q&A, requires from the team?",opts:["The ability to read from pre-prepared scripts for each likely question","A willingness to speculate about future performance when pressed by analysts","The team to be at its best: listening carefully, answering precisely, not speculating","The CFO to handle all questions alone without support from the CEO"],ans:2},
+    {q:"What is Part One of the earnings call, according to Sarah?",opts:["The CEO's strategic overview covering the key highlights of the period","The CFO's detailed walkthrough of the financial results","The forward guidance section covering expectations for the next period","The introduction, where participants are connected and legal disclaimers are read"],ans:3}
+  ]
+},
+{
+  emoji:"⚠️",
+  title:"Activity 2: Communicating a Profit Warning &mdash; What to Say and How to Say It",
+  sub:"Marcus Webb, CFO Advisory &mdash; Financial communications workshop",
+  level:"B1",type:"Multiple Choice",focus:"Listening for specific information",
+  transcript:`Good afternoon. I want to talk today about something that every CFO hopes never to do but that most eventually face: communicating a profit warning to the market. Getting this right is one of the hardest tests in financial communication, and in my experience, most companies get it wrong.
+
+Let me start with the most important principle. When you become aware that your results will be materially below your guidance, you have a legal obligation to disclose that fact without delay. This is not a communication decision. It is a legal decision. The moment the board is aware that a profit shortfall constitutes material non-public information, the disclosure clock starts. Any deliberate delay is a regulatory violation.
+
+Now, how do you write the announcement? There are four things a well-written profit warning must contain. First: a clear statement of the shortfall. Not "we are experiencing challenging conditions" but "the board now expects adjusted profit before tax to be in the range of GBP24m to GBP28m, compared to the previous guidance of GBP38m to GBP42m." Put the number in the first paragraph. Do not make people read to the end to find out how bad it is.
+
+Second: a clear explanation of the drivers. What specifically went wrong? The market needs to understand whether this is a one-off event, a cyclical issue, or a structural problem. How you characterise the nature of the shortfall will significantly affect how the market prices the risk.
+
+Third: what management is doing about it. Have cost reduction actions been identified? Has a strategic review been initiated? This shows the board is in control and responding proactively.
+
+Fourth: what the outlook is. Do not be optimistic if the picture is not clear. A realistic assessment, even if uncertain, is more valuable than false positivity. Use hedged language: "subject to trading conditions stabilising, we anticipate returning to more normal profitability levels in the second half." And if you cannot say even that with confidence, do not say it at all.`,
+  questions:[
+    {q:"What does Marcus say about when a company becomes aware that results will be materially below guidance?",opts:["The company can wait until the next scheduled results announcement to disclose","The company has a legal obligation to disclose the shortfall without delay","The board should first discuss the issue with major shareholders before disclosing","The CFO should decide individually when the appropriate time to disclose is"],ans:1},
+    {q:"What does Marcus say a profit warning announcement must contain as its FIRST element?",opts:["A statement of the management actions being taken to address the shortfall","An explanation of the macroeconomic conditions that contributed to the problem","A clear numerical statement of the shortfall in the first paragraph","An expression of confidence that the situation will improve in the second half"],ans:2},
+    {q:"Which version of a profit warning opening does Marcus describe as correct?",opts:["We are experiencing some challenging near-term conditions.","The board now expects adjusted profit before tax to be GBP24m to GBP28m, compared to previous guidance of GBP38m to GBP42m.","Trading has been somewhat below our initial expectations.","We are monitoring the situation closely and will update the market in due course."],ans:1},
+    {q:"Why does Marcus say the market needs a clear explanation of the drivers of the shortfall?",opts:["To help the board decide whether to initiate a strategic review","So that analysts can update their models before the stock market opens","To understand whether it is a one-off event, a cyclical issue, or a structural problem","Because the regulator requires this explanation as part of the disclosure"],ans:2},
+    {q:"What is the THIRD element that Marcus says a profit warning must contain?",opts:["The forward guidance for the next financial year","What management is doing about the problem, showing the board is in control","A comparison of the company's performance against its sector peers","A statement from the company's external auditors confirming the figures"],ans:1},
+    {q:"What does Marcus say about using optimistic language in the outlook section when the picture is not clear?",opts:["Optimistic language is appropriate to maintain investor confidence","Do not be optimistic if the picture is not clear; a realistic assessment is more valuable","Always end a profit warning with a positive statement about the future to stabilise the share price","Optimism is acceptable as long as it is clearly labelled as management aspiration"],ans:1},
+    {q:"What hedged language does Marcus suggest for the outlook?",opts:["We are confident that results will fully recover in the second half.","Subject to trading conditions stabilising, we anticipate returning to more normal profitability levels in the second half.","We guarantee the full-year result will meet the original guidance.","We expect a rapid and complete recovery by year end."],ans:1},
+    {q:"What does Marcus say about disclosing a profit warning before the next scheduled results announcement?",opts:["It is optional if the company believes the shortfall may be temporary","It is only required if the shortfall exceeds 50% of the guided figure","The delay is acceptable if agreed with the stock exchange in advance","Any deliberate delay constitutes a regulatory violation"],ans:3}
+  ]
+},
+{
+  emoji:"🔍",
+  title:"Activity 3: Handling Analyst Questions &mdash; Composure, Precision, and Honesty",
+  sub:"Dr Elena Vasquez, Former CFO &mdash; Executive finance programme",
+  level:"B2",type:"Multiple Choice",focus:"Understanding professional explanations",
+  transcript:`Thank you. I want to spend this session on the analyst question-and-answer session, because in my thirty years as a finance director and CFO of listed companies, I have come to believe that it is the highest-stakes communication event in the corporate calendar. And I have watched many experienced finance professionals &mdash; people who are highly intelligent and deeply knowledgeable about their businesses &mdash; underperform significantly in this setting, because the skills it requires are not primarily financial skills. They are communication skills.
+
+Let me start with preparation. The Q&A feels like an improvisation, but the best ones are anything but. Before every earnings call, my team and I would spend at least three hours generating every question we thought we might be asked. Not roughly. Precisely. We would write out the full question and the full answer. And then we would drill them. I would sit in a room with the Head of Investor Relations and two senior members of the finance team, and they would ask me the hardest questions they could think of. We called it the hostile analyst session. It was uncomfortable. It was the most valuable preparation I did.
+
+Now, in the actual Q&A, three things matter above everything else. First: listen to the full question before you begin your answer. This sounds obvious. It is not. Under the stress of a live earnings call with 200 analysts listening, the temptation to begin formulating your answer before the question is finished is overwhelming. If you do this, you often answer a slightly different question from the one that was asked, which experienced analysts will notice immediately and interpret as evasion, even when it is simply inattention.
+
+Second: be honest about what you do not know. Nothing destroys credibility faster than being caught bluffing. If an analyst asks for a number you do not have in front of you, say so: "I do not have that figure to hand, but I will come back to you with a precise answer within 24 hours." That is a credible, professional response. Making up a number is not.
+
+Third: control the length of your answers. The instinct under stress is to give a long, detailed answer to prove you understand the issue. In practice, long answers create more problems than they solve. They introduce new issues, give analysts additional threads to pull on, and create the impression of defensiveness. Answer the question asked. Then stop.`,
+  questions:[
+    {q:"How long was Dr Vasquez a finance director and CFO of listed companies?",opts:["Ten years","Fifteen years","Twenty years","Thirty years"],ans:3},
+    {q:"What does Dr Vasquez say are the primary skills required for a successful analyst Q&A?",opts:["Advanced financial modelling and technical accounting knowledge","Communication skills rather than primarily financial skills","The ability to read prepared scripts fluently under pressure","Industry-specific knowledge about the company's competitive sector"],ans:1},
+    {q:"What was the preparation technique Dr Vasquez describes as the hostile analyst session?",opts:["Reviewing every analyst report published in the previous twelve months","Reading the questions submitted in advance by sell-side analysts","Sitting with the IR team who asked the hardest possible questions, with written full Q&A pairs prepared","Rehearsing the prepared earnings presentation until it could be delivered from memory"],ans:2},
+    {q:"What does Dr Vasquez say about listening to the full question before beginning your answer?",opts:["It is only important for complex multi-part questions","It is obvious and most experienced CFOs do it naturally","Under the stress of a live earnings call, the temptation to start answering before the question ends is overwhelming and often causes problems","It is less important than preparing the financial data accurately"],ans:2},
+    {q:"What does Dr Vasquez say experienced analysts interpret if a CFO answers a slightly different question from the one asked?",opts:["That the CFO has misunderstood the question due to a language barrier","That the CFO is demonstrating depth of knowledge by adding additional context","Evasion, even when it is simply inattention","That the company does not have the relevant data available"],ans:2},
+    {q:"What does Dr Vasquez recommend saying when you do not have a specific number available during a Q&A?",opts:["Give your best estimate rounded to the nearest significant figure","Decline to answer and move to the next question","Say you do not have it to hand but will provide a precise answer within 24 hours","Ask an analyst colleague if they have the number in their financial model"],ans:2},
+    {q:"What does Dr Vasquez say long answers in a Q&A typically do?",opts:["Demonstrate the CFO's comprehensive knowledge of the business","Impress analysts with the depth and transparency of management's thinking","Create more problems by introducing new issues and giving analysts additional threads to pull on","Reduce the number of follow-up questions by addressing concerns comprehensively"],ans:2},
+    {q:"What is Dr Vasquez's core advice about the length of Q&A answers?",opts:["Always give a comprehensive answer to pre-empt follow-up questions","Answer the question asked, then stop","Provide at least two minutes of context before directly answering each question","Match the length of your answer to the complexity of the question asked"],ans:1}
+  ]
+},
+{
+  emoji:"🌱",
+  title:"Activity 4: ESG Reporting &mdash; The New Frontier of Financial Stakeholder Communication",
+  sub:"James Okafor, Head of Sustainable Finance &mdash; Conference keynote",
+  level:"B2",type:"Multiple Choice",focus:"Listening for detail and implication",
+  transcript:`Thank you very much. I want to talk today about ESG reporting and why I believe it represents the most significant structural change in financial stakeholder communication in a generation.
+
+Let me start by explaining what ESG reporting is, because I find that even experienced finance professionals sometimes have a superficial understanding of it. ESG stands for Environmental, Social, and Governance. Environmental criteria cover a company's impact on the natural world: carbon emissions, water usage, waste management, biodiversity, and climate-related risk. Social criteria cover the company's relationships with its employees, suppliers, customers, and communities: labour standards, health and safety, diversity and inclusion, and community investment. Governance criteria cover the structures and practices by which the company is directed and controlled: board composition, executive pay, audit quality, anti-corruption policies, and shareholder rights.
+
+Why has ESG reporting become so important to financial stakeholder communication? Three reasons. First: investor demand. Major institutional investors now systematically integrate ESG data into their investment and risk management processes. The world's largest asset managers &mdash; which together hold trillions of dollars in assets &mdash; have committed to engaging with companies on their ESG performance and, in some cases, to voting against management at companies that fail to meet minimum ESG standards. If your largest shareholders are asking ESG questions, your investor relations function must be able to answer them.
+
+Second: regulatory requirement. In the UK, large listed companies are now required to report in accordance with the Task Force on Climate-related Financial Disclosures, or TCFD, framework. This requires companies to disclose not just their current emissions but their climate-related risks, their governance of those risks, their strategy for managing them, and the targets they have set. In the European Union, the Corporate Sustainability Reporting Directive, CSRD, goes further still. Reporting obligations are increasing, not decreasing.
+
+Third: commercial relevance. ESG is no longer simply a reputational matter. It affects a company's cost of capital: companies with strong ESG credentials tend to access debt and equity capital at lower cost than those with poor credentials. It affects talent acquisition: many professionals, particularly younger ones, actively research the ESG practices of employers before accepting positions. And it affects customer relationships in a growing number of sectors.
+
+The challenge for financial communicators is that ESG reporting requires a very different skill set from traditional financial reporting. The data is more complex, the standards are less settled, and the audience expectations are evolving rapidly. My advice to finance professionals who want to build this capability is to start now, because the expectation gap between what investors are asking for and what most companies can currently provide is significant, and it is closing fast.`,
+  questions:[
+    {q:"What does the E in ESG stand for and what does it cover?",opts:["Economics: financial performance, revenue growth, and profitability metrics","Equity: shareholder returns, dividends, and share buyback programmes","Environmental: a company's impact on the natural world including emissions, water usage, and climate-related risk","Enterprise: the overall business model and strategy of the company"],ans:2},
+    {q:"Which of the following is listed under the Social (S) criteria of ESG?",opts:["Carbon emissions and biodiversity","Board composition and executive pay","Labour standards, health and safety, diversity and inclusion, and community investment","Audit quality and anti-corruption policies"],ans:2},
+    {q:"What is the FIRST reason James gives for why ESG reporting has become important for financial stakeholder communication?",opts:["Regulatory requirements from the FCA and European Commission","Commercial relevance affecting cost of capital and talent acquisition","Investor demand from major institutional investors who integrate ESG into their investment processes","The reputational risk of being associated with environmental controversies"],ans:2},
+    {q:"What commitment does James say some of the world's largest asset managers have made regarding ESG?",opts:["To invest exclusively in companies with a net-zero emissions target by 2030","To engage with companies on ESG performance and in some cases vote against management at companies failing minimum ESG standards","To require quarterly ESG updates from all companies in their portfolios","To exclude all fossil fuel investments from their managed funds"],ans:1},
+    {q:"What does the TCFD framework require companies to disclose?",opts:["Only their current carbon emissions in absolute terms","Their climate-related risks, governance of those risks, strategy for managing them, and the targets they have set","Their social impact metrics including employee satisfaction scores and community investment","Their total ESG spending as a percentage of revenue"],ans:1},
+    {q:"What does James say ESG credentials affect in terms of commercial relevance?",opts:["Only reputational positioning with environmental campaign groups","Cost of capital, talent acquisition, and customer relationships in a growing number of sectors","Exclusively the regulatory relationship with government and environmental authorities","Only the company's ability to attract institutional investment"],ans:1},
+    {q:"What does James say about the skill set required for ESG reporting compared to traditional financial reporting?",opts:["ESG reporting requires the same skill set as traditional financial reporting","ESG reporting is simpler because the standards are more settled than accounting standards","ESG reporting requires a very different skill set: the data is more complex, standards are less settled, and audience expectations are evolving rapidly","ESG reporting only requires knowledge of one international standard, making it more straightforward"],ans:2},
+    {q:"What practical advice does James give to finance professionals who want to build ESG reporting capability?",opts:["Wait until the regulatory framework is fully settled before investing in ESG reporting capability","Hire specialist ESG consultants to manage all ESG communications externally","Start now, because the expectation gap between investor requests and company capabilities is significant and closing fast","Focus only on environmental metrics as these are currently most important to investors"],ans:2}
+  ]
+}
+],
+cs1:{questions:[
+  {q:"How much in assets did Clarendon Capital manage approximately?",opts:["GBP8bn","GBP18bn","GBP28bn","GBP48bn"],ans:2},
+  {q:"By how much did Clarendon's flagship funds underperform their benchmarks?",opts:["2 to 4 percentage points","4 to 6 percentage points","8 to 12 percentage points","15 to 20 percentage points"],ans:2},
+  {q:"By how much did assets under management fall in the quarter?",opts:["8%","12%","18%","34%"],ans:2},
+  {q:"By how much did Clarendon's share price drop between March and June?",opts:["18%","24%","34%","42%"],ans:2},
+  {q:"What were the two communication options the board considered?",opts:["Releasing a press statement versus hosting a shareholder meeting","Managing communication carefully and gradually versus communicating fully, honestly, and immediately","Disclosing via regulatory announcement versus via social media","Delaying until the next quarter versus issuing an interim update"],ans:1},
+  {q:"How long after the quarter's end did Clarendon publish its interim update?",opts:["Within 24 hours","Within 72 hours","Within one week","Within two weeks"],ans:1},
+  {q:"What did the interim update acknowledge about the portfolio management team?",opts:["That the team had made reasonable decisions given available information and would not change their approach","That the team had deliberately withheld information from the board","What positions underperformed and why, and that the reasoning had proved incorrect in the circumstances","That the team had violated the fund's investment mandate"],ans:2},
+  {q:"How many questions were asked during the 90-minute investor call?",opts:["Approximately 15","Approximately 25","Approximately 45","Approximately 80"],ans:2},
+  {q:"What happened to net outflows in Q3 compared to what sell-side analysts had modelled?",opts:["They were 20% higher than modelled","They were 60% lower than modelled","They were exactly in line with the sell-side model","They were 40% higher than modelled"],ans:1},
+  {q:"What did the CFO say was the key insight from the communication approach?",opts:["Investors do not care about performance as long as management is honest","Investors can manage disappointment but cannot manage uncertainty about whether management understands the problem","The best way to handle underperformance is to focus entirely on the future","Institutional investors respond better to direct communication than retail investors"],ans:1}
+]},
+cs2:{questions:[
+  {q:"What guidance had Northgate issued for full-year profit in June?",opts:["GBP24m to GBP28m","GBP32m to GBP36m","GBP42m","GBP50m to GBP55m"],ans:2},
+  {q:"What was the finance team's internal projection for full-year profit by October?",opts:["GBP30m to GBP35m","GBP24m to GBP28m","GBP18m to GBP22m","GBP38m to GBP42m"],ans:1},
+  {q:"Approximately what percentage shortfall did the revised projection represent?",opts:["15%","25%","38%","50%"],ans:2},
+  {q:"What was the CFO's argument for not issuing an immediate profit warning?",opts:["The legal team had advised that disclosure was not yet required","The situation might improve in the final weeks of the period before the interim results","The shortfall was not yet material enough to require disclosure","Major shareholders had asked for more time before a public announcement"],ans:1},
+  {q:"Who recommended immediate disclosure and was overruled?",opts:["The external auditors and the company's stockbroker","The chief executive and the chairman","The legal and company secretary teams","The audit committee and the remuneration committee"],ans:2},
+  {q:"What happened at the industry conference that constituted selective disclosure?",opts:["The CFO presented a detailed trading update to all attendees at a public session","The CFO discussed information about the likely shortfall with two major institutional shareholders that was not yet public","The CFO published forward guidance on social media before the regulatory announcement","The CFO gave a press interview that was broadcast before the market opened"],ans:1},
+  {q:"By how much did the company's shares fall on the day the profit warning was finally published?",opts:["22%","33%","43%","56%"],ans:2},
+  {q:"Which regulatory body launched an investigation into the informal conversations?",opts:["The Competition and Markets Authority","The Prudential Regulation Authority","The Financial Conduct Authority","The Serious Fraud Office"],ans:2},
+  {q:"What was the consequence of the FCA investigation?",opts:["The company was required to delist from the stock exchange","The CFO received a significant fine and formal censure","All directors were required to resign from the board","The company was required to restate its financial statements"],ans:1},
+  {q:"What does the Northgate case study identify as the primary advisor on disclosure timing?",opts:["The executive team based on their assessment of market conditions","The largest institutional shareholders who have the most to lose","The company secretary and legal counsel, not the executive team's instincts about market timing","The stock exchange authorities who must be consulted before any announcement"],ans:2}
+]},
+fa:{questions:[
+  {q:"What is an earnings call?",opts:["A telephone call between the CFO and the company's external auditors to discuss the financial statements","A scheduled conference call where management presents financial results and takes questions from analysts and investors","An internal call between the finance team and the board of directors to review management accounts","A call between the company and its major lenders to discuss covenant compliance"],ans:1},
+  {q:"What is forward guidance in financial communication?",opts:["A legal statement confirming that the company will meet its obligations to creditors","A historical record of the company's financial performance over the previous five years","Management's published expectations for future financial performance used by the market as a benchmark","A regulatory requirement to disclose all financial projections at the start of each financial year"],ans:2},
+  {q:"What does EBITDA stand for?",opts:["Earnings Before Interest, Taxes, Depreciation, and Amortisation","Earnings Before Income Tax, Dividends, and Adjustments","Estimated Business Income, Tax, Debt, and Assets","Earnings Based on Interest, Tax, and Depreciation Allowances"],ans:0},
+  {q:"Which sentence correctly uses hedging language in a financial forward guidance context?",opts:["We guarantee full-year revenue will be exactly GBP450m.","We are confident that revenue will definitely exceed GBP450m.","We anticipate full-year revenue to be in the range of GBP430m to GBP450m, subject to no material deterioration in trading.","Revenue will be GBP450m."],ans:2},
+  {q:"Which sentence correctly converts direct speech into reported speech in a financial context?",opts:["The CFO said that revenue will grow 8%.","The CFO stated that revenue had grown 8% in the first half.","The CFO says that revenue grew 8%.","The CFO stated revenue grows 8%."],ans:1},
+  {q:"What is selective disclosure?",opts:["The practice of publishing financial results in two stages: a headline figure followed by the full details","The choice of which financial metrics to highlight in a results presentation","Sharing material financial information with specific investors before the broader market, which is prohibited","The process of selecting which financial data to include in the annual report"],ans:2},
+  {q:"Which passive construction is most appropriate for a formal financial document?",opts:["We have recognised an impairment charge of GBP45m.","Someone wrote down the North American assets by GBP45m.","An impairment charge of GBP45m has been recognised in respect of the North American operations.","Management decided to take a GBP45m impairment on North America."],ans:2},
+  {q:"What is organic revenue growth?",opts:["Revenue growth from environmentally sustainable business practices","Revenue growth from the company's existing operations, excluding the impact of acquisitions and disposals","Revenue growth from new product launches in existing markets","Revenue growth from international operations where the currency has strengthened"],ans:1},
+  {q:"In the Clarendon Capital case study, what was the counterintuitive outcome of the transparent crisis communication?",opts:["The share price fell further than expected due to the detailed disclosure of problems","Net outflows in Q3 were 60% lower than modelled and the share price stabilised within two weeks","Several major institutional investors sold their entire positions after the investor call","The FCA launched an investigation into the communication approach"],ans:1},
+  {q:"What is material non-public information (MNPI)?",opts:["Any financial information that has not yet been translated into all relevant languages","Accounting information that is not yet audited and therefore cannot be relied upon","Information not yet disclosed to the market that would likely affect a company's securities price if disclosed; sharing it is illegal","Financial projections that have not been approved by the board of directors"],ans:2},
+  {q:"What does a going concern qualification from auditors indicate?",opts:["That the auditors are fully satisfied with the financial statements and have no concerns","That the company has exceeded its financial targets for the year","That there is doubt about whether the company will continue operating for the foreseeable future","That the financial statements comply with all relevant accounting standards"],ans:2},
+  {q:"In the Northgate case study, what was the first lesson drawn from the communication failure?",opts:["Profit warnings should only be issued by the CEO, not the CFO","A profit warning issued immediately produces a smaller market reaction than one delayed and announced alongside financial results","Companies should always consult with major shareholders before issuing a profit warning","Selective disclosure is acceptable if limited to fewer than three investors"],ans:1},
+  {q:"What is the difference between a buy-side and a sell-side analyst?",opts:["Sell-side analysts work within companies; buy-side analysts work for external research firms","Buy-side analysts work for investment funds and inform the fund's own decisions; sell-side analysts work for brokerages and publish research for institutional clients","They perform identical functions but are employed by different types of financial institutions","Buy-side analysts focus on equities; sell-side analysts focus exclusively on fixed income"],ans:1},
+  {q:"Which indirect question form is correct for a financial briefing context?",opts:["The analyst asked what is driving the cost increase.","The analyst asked what was driving the cost increase.","The analyst asked that what drives cost increases.","The analyst asked what drives the cost increase is."],ans:1},
+  {q:"According to Dr Vasquez in the listening activities, what is the instinct under Q&A stress that she advises against?",opts:["Answering too quickly before considering the implications for forward guidance","Giving a long, detailed answer to prove understanding of the issue, which introduces new problems","Using hedged language that makes the company appear uncertain about its financial position","Asking analysts to clarify their questions before providing an answer"],ans:1},
+  {q:"What is net debt?",opts:["The total revenue of a company minus its total operating costs","The company's total assets minus its total liabilities","Total borrowings minus cash and cash equivalents; a key measure of financial leverage","The total debt of the company before accounting for interest costs"],ans:2},
+  {q:"What does ESG stand for and what does the G cover?",opts:["Equity, Sustainability, Growth; G covers growth strategy","Economy, Society, Governance; G covers economic sustainability","Environmental, Social, Governance; G covers board composition, executive pay, audit quality, and shareholder rights","Earnings, Stability, Guidance; G covers forward guidance framework"],ans:2},
+  {q:"What is a capital markets day?",opts:["The anniversary of the company's listing on the stock exchange","An event at which senior management presents long-term strategy and financial targets to institutional investors and analysts","A training day for the company's finance and investor relations team","The annual general meeting at which shareholders vote on board appointments"],ans:1},
+  {q:"Which sentence most formally and appropriately expresses a hedged financial outlook?",opts:["We will definitely achieve our targets next year.","At this stage, we expect adjusted EPS to be in the range of 42p to 46p, subject to the usual caveats around currency and exceptional items.","Results will be good next year, we think.","We are hoping for better results in the coming financial year."],ans:1},
+  {q:"What does James Okafor say in the listening activities about the expectation gap in ESG reporting?",opts:["The gap between investor expectations and company capability has been fully closed by recent regulatory changes","The gap is widening as investor expectations grow faster than company capability","The expectation gap between what investors are asking for and what most companies can provide is significant and closing fast, which is why starting now is essential","The gap only exists for smaller companies; large listed companies already meet all investor ESG expectations"],ans:2}
+]}
+};
+
+function renderMCQ(containerId,questions,prefix,isListening){
+  const c=document.getElementById(containerId);if(!c)return;
+  const wrap=isListening?'<div class="listen-mcq-wrap">':'';
+  const wrapClose=isListening?'</div>':'';
+  c.innerHTML=wrap+questions.map((item,i)=>`
+    <div class="mcq-item" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((o,j)=>`<div class="mcq-option" onclick="selectOpt('${prefix}',${i},${j})" id="${prefix}-q${i}-o${j}"><span class="opt-letter">${['A','B','C','D'][j]}</span>${o}</div>`).join('')}
+      </div>
+    </div>`).join('')+wrapClose;
+}
+function selectOpt(prefix,qi,oi){
+  const item=DATA[prefix].questions[qi];
+  for(let j=0;j<item.opts.length;j++){const el=document.getElementById(`${prefix}-q${qi}-o${j}`);if(el)el.classList.remove('selected');}
+  const el=document.getElementById(`${prefix}-q${qi}-o${oi}`);if(el)el.classList.add('selected');
+}
+function checkMCQ(prefix){
+  const qs=DATA[prefix].questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#${prefix}-q${i} .mcq-option`);
+    let chosen=-1;opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+    if(chosen===item.ans)score++;
+  });
+  const fb=document.getElementById(`${prefix}-feedback`);
+  if(fb){fb.className='feedback show '+(score>=Math.ceil(total*0.7)?'good':'bad');fb.textContent=score>=Math.ceil(total*0.7)?`Well done! You scored ${score}/${total}.`:`You scored ${score}/${total}. Review the relevant sections and try again.`;}
+  const sc=document.getElementById(`${prefix}-score`);
+  if(sc){sc.className='score-display show';sc.innerHTML=`<div><div class="score-label">Your Score</div><div class="score-val">${score}/${total}</div></div><div style="font-size:13px;color:var(--text-light)">${Math.round(score/total*100)}%</div>`;}
+}
+function renderGaps(){
+  const c=document.getElementById('v2-gaps');if(!c)return;
+  c.innerHTML=DATA.v2gaps.map((g,i)=>`<div class="gap-sentence">${i+1}. ${g.sent.replace('_______',`<input class="gap-input" id="gap-${i}" placeholder="?" autocomplete="off">`)}</div>`).join('');
+}
+function checkGaps(){
+  let score=0;
+  DATA.v2gaps.forEach((g,i)=>{
+    const el=document.getElementById(`gap-${i}`);if(!el)return;
+    const val=el.value.trim().toLowerCase();
+    if(val===g.ans.toLowerCase()){score++;el.style.borderBottomColor='var(--success)';el.style.color='var(--success)';}
+    else{el.style.borderBottomColor='var(--error)';el.style.color='var(--error)';el.value=g.ans;}
+  });
+  const fb=document.getElementById('v2-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`Great work! ${score}/10 correct.`:`${score}/10 correct. Correct answers are shown in red.`;
+}
+const tfAnswers={};
+function renderTF(){
+  const c=document.getElementById('v3-tf');if(!c)return;
+  c.innerHTML=DATA.v3tf.map((item,i)=>`
+    <div class="tf-item" id="tf-${i}">
+      <div class="tf-stmt">${i+1}. ${item.stmt}</div>
+      <div class="tf-btns"><button class="tf-btn" onclick="selectTF(${i},true,this)">True</button><button class="tf-btn" onclick="selectTF(${i},false,this)">False</button></div>
+    </div>`).join('');
+}
+function selectTF(i,val,btn){
+  tfAnswers[i]=val;const row=document.getElementById(`tf-${i}`);
+  row.querySelectorAll('.tf-btn').forEach(b=>b.className='tf-btn');
+  btn.className='tf-btn '+(val?'sel-t':'sel-f');
+}
+function checkTF(){
+  let score=0;
+  DATA.v3tf.forEach((item,i)=>{
+    if(tfAnswers[i]===undefined)return;
+    const row=document.getElementById(`tf-${i}`);
+    row.querySelectorAll('.tf-btn').forEach(b=>{
+      const isTrue=b.textContent.trim()==='True';b.className='tf-btn';
+      if(isTrue===item.ans){b.style.background=item.ans?'#dcfce7':'#fee2e2';b.style.borderColor=item.ans?'var(--success)':'var(--error)';b.style.color=item.ans?'var(--success)':'var(--error)';b.textContent=(isTrue?'True':'False')+' ✓';}
+    });
+    if(tfAnswers[i]===item.ans)score++;
+  });
+  const fb=document.getElementById('v3-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`Excellent! ${score}/10 correct.`:`${score}/10 correct. Review the vocabulary definitions.`;
+}
+function renderListening(){
+  const c=document.getElementById('listening-cards');if(!c)return;
+  c.innerHTML=DATA.listening.map((act,ai)=>`
+    <div class="audio-card">
+      <div class="audio-header">
+        <div class="audio-emoji">${act.emoji}</div>
+        <div><div class="audio-title">${act.title}</div><div class="audio-sub">${act.sub}</div>
+          <div class="audio-tags"><span class="audio-tag tag-level">Level: ${act.level}</span><span class="audio-tag tag-type">${act.type}</span><span class="audio-tag tag-focus">Focus: ${act.focus}</span></div>
+        </div>
+      </div>
+      <div class="player-box">
+        <div class="player-row">
+          <button class="play-btn" id="play-${ai}" onclick="handlePlay(${ai})">&#9654;</button>
+          <div class="player-info"><div class="player-title-sm">${act.title}</div><div class="player-sub-sm">${act.sub}</div></div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="player-progress"><div class="player-progress-fill" id="pf-${ai}"></div></div>
+        <div class="speed-row">
+          <span class="speed-label">Speed:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7&times;</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2&times;</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">&#8617; Replay</button>
+        </div>
+        <div class="tts-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">&#9660; Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans-${ai}">${act.transcript.split('\n\n').map(p=>`<p>${p.trim()}</p>`).join('')}</div>
+      <div class="listen-instruction">&#128203; Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</div>
+      <div class="listen-mcq-wrap">
+        <div class="mcq-title">Questions &mdash; Activity ${ai+1}</div>
+        <div id="la${ai}-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('la${ai}')">Check Answers</button>
+        <div id="la${ai}-feedback" class="feedback"></div>
+        <div id="la${ai}-score" class="score-display"></div>
+      </div>
+    </div>`).join('');
+  DATA.listening.forEach((act,ai)=>{DATA[`la${ai}`]={questions:act.questions};renderMCQ(`la${ai}-mcqs`,act.questions,`la${ai}`,true);});
+}
+const audioState={};
+function handlePlay(ai){
+  const act=DATA.listening[ai];
+  if(!audioState[ai])audioState[ai]={playing:false,speed:0.85};
+  const st=audioState[ai];const btn=document.getElementById(`play-${ai}`);
+  if(st.playing){window.speechSynthesis.cancel();st.playing=false;btn.innerHTML='&#9654;';if(st.timer)clearInterval(st.timer);return;}
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.lang='en-GB';utt.rate=st.speed;utt.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const chosen=voices.find(v=>v.name==='Google UK English Female')||voices.find(v=>v.lang==='en-GB'&&v.name.toLowerCase().includes('female'))||voices.find(v=>v.lang==='en-GB');
+  if(chosen)utt.voice=chosen;
+  const words=act.transcript.split(/\s+/).length;const dur=Math.round(words/(st.speed*2.6));
+  const fmt=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  document.getElementById(`time-${ai}`).textContent=`0:00 / ${fmt(dur)}`;
+  let elapsed=0;
+  st.timer=setInterval(()=>{
+    if(!audioState[ai].playing){clearInterval(st.timer);return;}
+    elapsed++;
+    document.getElementById(`pf-${ai}`).style.width=Math.min(elapsed/dur*100,100)+'%';
+    document.getElementById(`time-${ai}`).textContent=`${fmt(elapsed)} / ${fmt(dur)}`;
+  },1000);
+  utt.onend=()=>{st.playing=false;btn.innerHTML='&#9654;';clearInterval(st.timer);document.getElementById(`pf-${ai}`).style.width='100%';};
+  window.speechSynthesis.speak(utt);st.playing=true;btn.innerHTML='&#9646;&#9646;';
+}
+function setSpeed(ai,spd,btn){
+  if(!audioState[ai])audioState[ai]={playing:false,speed:spd};audioState[ai].speed=spd;
+  btn.closest('.audio-card').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  if(audioState[ai].playing){window.speechSynthesis.cancel();audioState[ai].playing=false;document.getElementById(`play-${ai}`).innerHTML='&#9654;';if(audioState[ai].timer)clearInterval(audioState[ai].timer);setTimeout(()=>handlePlay(ai),80);}
+}
+function replayAudio(ai){
+  if(audioState[ai]){audioState[ai].playing=false;if(audioState[ai].timer)clearInterval(audioState[ai].timer);}
+  window.speechSynthesis.cancel();const pf=document.getElementById(`pf-${ai}`);if(pf)pf.style.width='0%';
+  document.getElementById(`play-${ai}`).innerHTML='&#9654;';setTimeout(()=>handlePlay(ai),80);
+}
+function toggleTranscript(ai){document.getElementById(`trans-${ai}`).classList.toggle('open');}
+function updateWordCount(id,max){
+  const ta=document.getElementById(`${id}-text`);const wc=document.getElementById(`${id}-wc`);if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  wc.textContent=`${words} / ${max} words`;wc.style.color=words>max?'var(--error)':'var(--text-light)';
+}
+function submitWriting(id){
+  const ta=document.getElementById(`${id}-text`);if(!ta||ta.value.trim().length<30){alert('Please write your response before submitting.');return;}
+  const s=document.getElementById(`${id}-success`);s.style.display='block';s.scrollIntoView({behavior:'smooth'});
+}
+let attemptCount=0;
+function renderAssessment(){renderMCQ('fa-mcqs',DATA.fa.questions,'fa',false);}
+function submitAssessment(){
+  attemptCount++;const qs=DATA.fa.questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#fa-q${i} .mcq-option`);let chosen=-1;
+    opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    if(chosen===item.ans)score++;
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+  });
+  const pct=Math.round(score/total*100);const pass=pct>=70;
+  const res=document.getElementById('assessment-result');res.style.display='block';res.scrollIntoView({behavior:'smooth'});
+  document.getElementById('result-score-text').className='result-score '+(pass?'pass':'fail');
+  document.getElementById('result-score-text').textContent=`${pct}% — ${score}/${total}`;
+  document.getElementById('result-msg').textContent=pass?'Congratulations! You have passed Module 10. Excellent work on Communicating with Financial Stakeholders.':'You did not reach the 70% pass mark. Please review the module content and try again.';
+  const wrap=document.getElementById('retake-wrap');
+  if(!pass&&attemptCount<2)wrap.innerHTML=`<button class="retake-btn" onclick="retakeAssessment()">Retake Assessment (Attempt ${attemptCount+1} of 2)</button>`;
+  else if(attemptCount>=2&&!pass){wrap.innerHTML=`<p style="color:var(--error);font-size:14px;margin-top:12px">You have used both attempts. Please review the module content.</p>`;document.getElementById('assessment-form').style.display='none';}
+  document.getElementById('attempt-badge').textContent=`Attempt ${attemptCount} of 2`;
+}
+function retakeAssessment(){
+  document.getElementById('assessment-result').style.display='none';
+  document.querySelectorAll('#fa-mcqs .mcq-option').forEach(o=>o.classList.remove('selected','correct','wrong'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(id);if(sec)sec.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{if((n.getAttribute('onclick')||'').includes(`'${id}'`))n.classList.add('active');});
+  window.scrollTo({top:0,behavior:'smooth'});trackProgress(id);
+}
+function trackProgress(id){
+  let v=JSON.parse(sessionStorage.getItem('fin10v')||'[]');
+  if(!v.includes(id)){v.push(id);sessionStorage.setItem('fin10v',JSON.stringify(v));}
+  const pct=Math.round(v.length/11*100);
+  const pf=document.getElementById('progress-fill');const pp=document.getElementById('progress-pct');
+  if(pf)pf.style.width=pct+'%';if(pp)pp.textContent=pct+'%';
+}
+window.addEventListener('load',()=>{
+  if(window.speechSynthesis){window.speechSynthesis.getVoices();if(window.speechSynthesis.onvoiceschanged!==undefined)window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();}
+  renderMCQ('r1-mcqs',DATA.r1.questions,'r1',false);
+  renderMCQ('r2-mcqs',DATA.r2.questions,'r2',false);
+  renderMCQ('v1-mcqs',DATA.v1.questions,'v1',false);
+  renderGaps();renderTF();
+  renderMCQ('g1-mcqs',DATA.g1.questions,'g1',false);
+  renderMCQ('g2-mcqs',DATA.g2.questions,'g2',false);
+  renderMCQ('g3-mcqs',DATA.g3.questions,'g3',false);
+  renderListening();
+  renderMCQ('cs1-mcqs',DATA.cs1.questions,'cs1',false);
+  renderMCQ('cs2-mcqs',DATA.cs2.questions,'cs2',false);
+  renderAssessment();
+  trackProgress('overview');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5: Writing Effective Marketing Emails</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2744;--navy-dark:#111b33;--navy-mid:#243055;--navy-light:#2d3d6b;
+  --gold:#f0a830;--gold-light:#f5c55a;--gold-pale:#fef3d0;
+  --cream:#faf7f2;--cream-dark:#f0ebe0;
+  --white:#fff;--text-dark:#1a2744;--text-mid:#3d4f6e;--text-light:#6b7a99;
+  --success:#2d7a4f;--error:#b83232;
+  --sidebar-w:260px;--radius:10px;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh}
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--navy-dark);display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:4px}.sidebar::-webkit-scrollbar-thumb{background:var(--navy-light);border-radius:2px}
+.sidebar-brand{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand-title{font-family:'Fraunces',serif;font-size:13px;font-weight:600;color:var(--gold);line-height:1.3}
+.brand-sub{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:3px}
+.level-badge{display:inline-block;background:var(--gold);color:var(--navy-dark);font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 8px;border-radius:20px;margin-top:10px}
+.sidebar-module-label{padding:18px 20px 8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:600}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;color:rgba(255,255,255,.65);font-size:13px;font-weight:400;transition:all .18s;border-left:3px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:rgba(240,168,48,.12);color:#fff;border-left-color:var(--gold)}
+.nav-item .nav-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.nav-item .nav-label{flex:1}
+.nav-badge{background:var(--gold);color:var(--navy-dark);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.section{display:none}.section.active{display:block}
+.hero{background:var(--navy);padding:28px 52px 36px;position:relative;overflow:hidden;min-height:280px}
+.hero::before{content:'';position:absolute;right:-40px;top:-30px;width:460px;height:460px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='10' y='320' font-size='280' opacity='.04' fill='%23fff' font-family='serif'%3EM5%3C/text%3E%3C/svg%3E") center/contain no-repeat}
+.section-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:22px;font-family:'DM Mono',monospace}
+.hero-title{font-family:'Fraunces',serif;font-size:54px;font-weight:700;line-height:1.05;color:#fff;margin-bottom:16px}
+.hero-title span{color:var(--gold)}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.65);max-width:620px;line-height:1.65;margin-bottom:28px}
+.stats-row{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:24px}
+.stat-num{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.stat-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.progress-track{height:4px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .6s ease;width:0%}
+.content-area{background:var(--cream);padding:40px 52px}
+.card{background:#fff;border-radius:var(--radius);padding:32px;margin-bottom:24px;border:1px solid rgba(26,39,68,.08);box-shadow:0 2px 12px rgba(26,39,68,.06)}
+.card-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--text-dark);margin-bottom:6px}
+.card-title-bar{width:40px;height:3px;background:var(--gold);border-radius:2px;margin-bottom:18px}
+.prose{font-size:15px;line-height:1.75;color:var(--text-mid)}
+.prose strong{color:var(--text-dark);font-weight:600}
+.prose p+p{margin-top:12px}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.outcome-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--cream);border-radius:8px;border:1px solid var(--cream-dark)}
+.outcome-icon{color:var(--gold);flex-shrink:0;margin-top:1px}
+.outcome-text{font-size:13.5px;color:var(--text-mid);line-height:1.5}
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.q-card{background:#fff;border:1px solid rgba(26,39,68,.1);border-radius:8px;padding:16px;display:flex;gap:12px;align-items:flex-start;transition:box-shadow .2s}
+.q-card:hover{box-shadow:0 4px 16px rgba(26,39,68,.1)}
+.q-num{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--gold-light);flex-shrink:0;min-width:28px;line-height:1}
+.q-text{font-size:14px;color:var(--text-mid);line-height:1.55}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.wb-card{background:#fff;border:1px solid rgba(26,39,68,.1);border-radius:10px;padding:18px 16px;display:flex;flex-direction:column;gap:6px;transition:transform .2s,box-shadow .2s}
+.wb-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,39,68,.1)}
+.wb-emoji{font-size:24px}
+.wb-term{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--text-dark)}
+.wb-pos{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.wb-def{font-size:13px;color:var(--text-mid);line-height:1.5}
+.reading-text{background:var(--cream);border-left:4px solid var(--gold);padding:24px 28px;border-radius:0 8px 8px 0;margin-bottom:28px}
+.reading-text h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--text-dark);margin-bottom:14px}
+.reading-text p{font-size:14.5px;line-height:1.75;color:var(--text-mid);margin-bottom:10px}
+.mcq-section{margin-top:24px}
+.mcq-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--text-dark);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--cream-dark)}
+.mcq-item{margin-bottom:20px}
+.mcq-q{font-size:14.5px;font-weight:600;color:var(--text-dark);margin-bottom:10px;line-height:1.5}
+.mcq-options{display:grid;gap:7px}
+.mcq-option{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1.5px solid rgba(26,39,68,.15);cursor:pointer;transition:all .18s;font-size:13.5px;color:var(--text-mid);background:#fff}
+.mcq-option:hover{border-color:var(--gold);background:var(--gold-pale)}
+.mcq-option.selected{border-color:var(--navy);background:rgba(26,39,68,.06);color:var(--text-dark)}
+.mcq-option.correct{border-color:var(--success)!important;background:rgba(45,122,79,.08)!important;color:var(--success)!important}
+.mcq-option.wrong{border-color:var(--error)!important;background:rgba(184,50,50,.07)!important;color:var(--error)!important}
+.opt-letter{width:22px;height:22px;border-radius:50%;background:rgba(26,39,68,.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'DM Mono',monospace}
+.check-btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 22px;background:var(--navy);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;transition:background .18s}
+.check-btn:hover{background:var(--navy-light)}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;display:none}
+.feedback.show{display:block}
+.feedback.good{background:rgba(45,122,79,.1);color:var(--success);border:1px solid rgba(45,122,79,.2)}
+.feedback.bad{background:rgba(184,50,50,.08);color:var(--error);border:1px solid rgba(184,50,50,.2)}
+.score-display{background:var(--cream);border-radius:8px;padding:14px 18px;margin-top:16px;display:none}
+.score-display.show{display:flex;align-items:center;justify-content:space-between}
+.score-val{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--text-dark)}
+.score-label{font-size:13px;color:var(--text-light)}
+.ex-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ex-badge{background:var(--navy);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.06em}
+.ex-type{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.ex-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--text-dark);margin-bottom:4px}
+.ex-instruction{font-size:13.5px;color:var(--text-light);margin-bottom:20px;font-style:italic}
+.word-box{background:var(--cream);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--text-mid);display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:20px}
+.word-chip{background:#fff;border:1px solid rgba(26,39,68,.15);border-radius:5px;padding:2px 9px;font-size:13px}
+.gap-sentence{font-size:14.5px;color:var(--text-dark);line-height:2.4;margin-bottom:8px}
+.gap-input{border:none;border-bottom:2px solid var(--gold);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);padding:2px 6px;width:170px;outline:none;text-align:center;transition:border-color .18s}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.tf-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--cream-dark)}
+.tf-stmt{flex:1;font-size:14.5px;color:var(--text-mid);line-height:1.55}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+.tf-btn{padding:5px 14px;border-radius:6px;border:1.5px solid rgba(26,39,68,.2);cursor:pointer;font-size:12px;font-weight:600;background:#fff;color:var(--text-mid);transition:all .18s;font-family:'DM Sans',sans-serif}
+.tf-btn:hover{border-color:var(--gold);color:var(--gold)}
+.tf-btn.sel-t{background:#dcfce7;border-color:var(--success);color:var(--success)}
+.tf-btn.sel-f{background:#fee2e2;border-color:var(--error);color:var(--error)}
+.gr-box{background:var(--navy);color:#fff;border-radius:10px;padding:28px;margin-bottom:24px}
+.gr-box-title{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--gold);margin-bottom:6px}
+.gr-box-sub{font-size:12px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px}
+.gr-rule{background:rgba(255,255,255,.08);border-radius:8px;padding:16px;margin-bottom:12px}
+.gr-rule-title{font-size:13px;font-weight:600;color:var(--gold-light);margin-bottom:6px}
+.gr-rule-text{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.6}
+.gr-example{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--gold-pale);background:rgba(255,255,255,.05);padding:8px 12px;border-radius:6px;margin-top:8px;line-height:1.6}
+.gr-table{width:100%;border-collapse:collapse;margin-top:14px}
+.gr-table th{background:rgba(255,255,255,.1);padding:8px 12px;font-size:12px;text-align:left;color:var(--gold-light);letter-spacing:.06em;text-transform:uppercase}
+.gr-table td{padding:8px 12px;font-size:13px;color:rgba(255,255,255,.75);border-top:1px solid rgba(255,255,255,.08)}
+.gr-table tr:hover td{background:rgba(255,255,255,.04)}
+.writing-prompt{background:rgba(240,168,48,.08);border:1px solid rgba(240,168,48,.35);border-radius:8px;padding:18px 20px;margin-bottom:16px}
+.writing-prompt h4{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--text-dark);margin-bottom:8px}
+.writing-prompt p{font-size:13.5px;color:var(--text-mid);line-height:1.6}
+.writing-focus{background:rgba(26,39,68,.04);border:1px solid rgba(26,39,68,.12);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--text-light)}
+.writing-focus strong{color:var(--text-mid)}
+.writing-textarea{width:100%;min-height:180px;border:1.5px solid rgba(26,39,68,.2);border-radius:8px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);resize:vertical;outline:none;background:#fff;line-height:1.65;transition:border-color .18s}
+.writing-textarea:focus{border-color:var(--gold)}
+.writing-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.word-count{font-size:12px;color:var(--text-light);font-family:'DM Mono',monospace}
+.submit-btn{padding:10px 24px;background:var(--gold);color:var(--navy-dark);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .18s}
+.submit-btn:hover{background:var(--gold-light)}
+.submit-success{display:none;padding:12px 16px;background:rgba(45,122,79,.1);border:1px solid rgba(45,122,79,.25);border-radius:8px;color:var(--success);font-size:13.5px;font-weight:500;margin-top:12px}
+
+/* ── AUDIO CARDS ── */
+.audio-card{background:var(--navy-mid);border-radius:12px;padding:24px;margin-bottom:28px}
+.audio-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
+.audio-emoji{font-size:30px;background:rgba(255,255,255,.1);border-radius:8px;padding:9px;flex-shrink:0;line-height:1}
+.audio-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#fff;margin-bottom:4px}
+.audio-sub{font-size:12px;color:rgba(255,255,255,.5)}
+.audio-tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.audio-tag{font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 9px;border-radius:10px;text-transform:uppercase}
+.tag-level{background:rgba(240,168,48,.3);color:var(--gold-light)}
+.tag-type{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
+.tag-focus{color:rgba(255,255,255,.45);font-size:10px}
+.player-box{background:var(--navy-dark);border-radius:10px;padding:16px 18px;margin-bottom:12px}
+.player-row{display:flex;align-items:center;gap:14px}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:background .18s;color:var(--navy-dark)}
+.play-btn:hover{background:var(--gold-light)}
+.player-info{flex:1}
+.player-title-sm{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px}
+.player-sub-sm{font-size:11px;color:rgba(255,255,255,.4)}
+.player-time{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.5);white-space:nowrap}
+.player-progress{width:100%;height:3px;background:rgba(255,255,255,.12);border-radius:2px;margin-top:10px;overflow:hidden}
+.player-progress-fill{height:100%;width:0%;background:var(--gold);border-radius:2px;transition:width .5s linear}
+.speed-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase}
+.speed-btn{padding:3px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:all .18s}
+.speed-btn.active,.speed-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-dark);font-weight:700}
+.replay-btn{padding:3px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.6);font-size:11px;cursor:pointer;transition:all .18s}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light)}
+.tts-note{font-size:11px;color:rgba(255,255,255,.3);font-style:italic;margin-top:6px}
+.transcript-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;color:rgba(255,255,255,.6);font-size:12.5px;padding:8px 0;border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:color .18s}
+.transcript-toggle:hover{color:var(--gold-light)}
+.transcript-box{display:none;background:rgba(255,255,255,.06);border-radius:8px;padding:16px;margin-top:6px;margin-bottom:14px}
+.transcript-box.open{display:block}
+.transcript-box p{font-size:13px;color:rgba(255,255,255,.7);line-height:1.75;margin-bottom:8px}
+
+/* ── LISTENING MCQs — all text WHITE ── */
+.listen-instruction{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.08);border-radius:8px;font-size:13px;color:#fff;margin-bottom:18px;font-weight:500}
+.listen-mcq-wrap .mcq-title{color:#fff;border-bottom-color:rgba(255,255,255,.2)}
+.listen-mcq-wrap .mcq-q{color:#fff}
+.listen-mcq-wrap .mcq-option{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2);color:#fff}
+.listen-mcq-wrap .mcq-option:hover{border-color:var(--gold);background:rgba(240,168,48,.15);color:#fff}
+.listen-mcq-wrap .mcq-option.selected{border-color:var(--gold);background:rgba(240,168,48,.2);color:#fff}
+.listen-mcq-wrap .mcq-option.correct{border-color:#4ade80!important;background:rgba(74,222,128,.15)!important;color:#4ade80!important}
+.listen-mcq-wrap .mcq-option.wrong{border-color:#f87171!important;background:rgba(248,113,113,.12)!important;color:#f87171!important}
+.listen-mcq-wrap .opt-letter{background:rgba(255,255,255,.15);color:#fff}
+.listen-mcq-wrap .check-btn{background:var(--gold);color:var(--navy-dark)}
+.listen-mcq-wrap .check-btn:hover{background:var(--gold-light)}
+.listen-mcq-wrap .feedback.good{background:rgba(74,222,128,.15);color:#4ade80;border-color:rgba(74,222,128,.3)}
+.listen-mcq-wrap .feedback.bad{background:rgba(248,113,113,.12);color:#f87171;border-color:rgba(248,113,113,.25)}
+.listen-mcq-wrap .score-display{background:rgba(255,255,255,.08)}
+.listen-mcq-wrap .score-val{color:#fff}
+.listen-mcq-wrap .score-label{color:rgba(255,255,255,.6)}
+
+/* ── CASE STUDIES ── */
+.case-header{background:var(--navy);border-radius:10px 10px 0 0;padding:22px 28px}
+.case-header h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#fff;margin-bottom:4px}
+.case-header p{font-size:13px;color:rgba(255,255,255,.5)}
+.case-body{background:#fff;border:1px solid rgba(26,39,68,.1);border-top:none;border-radius:0 0 10px 10px;padding:24px 28px;margin-bottom:28px}
+.case-section-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.case-text{font-size:14.5px;color:var(--text-mid);line-height:1.75;margin-bottom:20px}
+.case-text strong{color:var(--text-dark)}
+
+/* ── EMAIL SPECIMEN ── */
+.email-specimen{background:#fff;border:1px solid rgba(26,39,68,.12);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.email-specimen-header{background:var(--navy-dark);padding:12px 18px;display:flex;flex-direction:column;gap:5px}
+.email-field{display:flex;gap:10px;font-size:12px;color:rgba(255,255,255,.55);font-family:'DM Mono',monospace}
+.email-field strong{color:rgba(255,255,255,.8);min-width:60px}
+.email-specimen-body{padding:20px 24px;font-size:14px;color:var(--text-mid);line-height:1.7}
+.email-specimen-body p{margin-bottom:10px}
+.email-specimen-body .subj{font-weight:700;color:var(--text-dark)}
+
+/* ── ASSESSMENT ── */
+.assessment-header{background:linear-gradient(135deg,var(--navy-dark),var(--navy-mid));border-radius:12px;padding:28px 32px;margin-bottom:28px;text-align:center}
+.assessment-header h2{font-family:'Fraunces',serif;font-size:28px;color:#fff;margin-bottom:8px}
+.assessment-header p{color:rgba(255,255,255,.6);font-size:14px}
+.assessment-meta{display:flex;justify-content:center;gap:28px;margin-top:16px;flex-wrap:wrap}
+.assessment-meta-item{text-align:center}
+.assessment-meta-num{font-family:'Fraunces',serif;font-size:22px;color:var(--gold);font-weight:700}
+.assessment-meta-label{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em}
+.attempt-badge{display:inline-block;padding:4px 12px;border-radius:10px;font-size:11px;font-weight:600;background:rgba(240,168,48,.2);color:var(--gold-light);margin-top:8px}
+.assessment-result{display:none;text-align:center;padding:28px;background:#fff;border-radius:12px;border:2px solid var(--cream-dark);margin-bottom:24px}
+.result-score{font-family:'Fraunces',serif;font-size:56px;font-weight:700}
+.result-score.pass{color:var(--success)}.result-score.fail{color:var(--error)}
+.result-msg{font-size:16px;color:var(--text-mid);margin-top:8px}
+.retake-btn{padding:10px 24px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-top:16px;font-family:'DM Sans',sans-serif}
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-title">Marketing &amp; Advertising English</div>
+    <div class="brand-sub">Professional Development</div>
+    <div class="level-badge">B1&ndash;B2 LEVEL</div>
+  </div>
+  <div class="sidebar-module-label">Module 5</div>
+  <div class="nav-item active" onclick="showSection('overview')"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  <div class="nav-item" onclick="showSection('speaking')"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span><span class="nav-badge">21Q</span></div>
+  <div class="nav-item" onclick="showSection('wordbank')"><span class="nav-icon">🟩</span><span class="nav-label">Word Bank</span><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="showSection('reading')"><span class="nav-icon">📄</span><span class="nav-label">Reading</span><span class="nav-badge">2T</span></div>
+  <div class="nav-item" onclick="showSection('vocabulary')"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar')"><span class="nav-icon">📘</span><span class="nav-label">Grammar</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar-review')"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  <div class="nav-item" onclick="showSection('writing')"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span><span class="nav-badge">2W</span></div>
+  <div class="nav-item" onclick="showSection('listening')"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span><span class="nav-badge">4Ex</span></div>
+  <div class="nav-item" onclick="showSection('casestudies')"><span class="nav-icon">📊</span><span class="nav-label">Case Studies</span><span class="nav-badge">2CS</span></div>
+  <div class="nav-item" onclick="showSection('assessment')"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span><span class="nav-badge">20Q</span></div>
+</nav>
+<div class="main">
+
+<!-- OVERVIEW -->
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="section-tag">🏛️ Module 5 &middot; Marketing &amp; Advertising English</div>
+    <div class="hero-title">Writing Effective<br><span>Marketing Emails</span></div>
+    <p class="hero-desc">Master the language, structure, and strategy behind high-performing marketing emails &mdash; from subject lines and opening hooks to calls to action, personalisation, and A/B testing vocabulary.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+    <div>
+      <div class="progress-label"><span>Module Progress</span><span id="progress-pct">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div><div class="card-title-bar"></div>
+      <div class="prose">
+        <p><strong>Welcome to Module 5: Writing Effective Marketing Emails.</strong> Email remains one of the highest-return channels in digital marketing &mdash; for every &pound;1 spent, the average return is &pound;36. But that return only materialises when emails are written well. Most marketing emails fail not because of poor strategy but because of poor writing: subject lines that are ignored, openings that bore, and calls to action that persuade nobody.</p>
+        <p>This module focuses on the precise English skills you need to write marketing emails that people actually open, read, and act on. You will learn the vocabulary of email marketing metrics, the structures used in high-performing campaigns, and the grammar patterns that make copywriting feel natural, urgent, and persuasive. You will analyse real email specimens, practise writing subject lines and calls to action, and develop a complete email campaign from brief to finished copy.</p>
+        <p>By the end of this module, you will be able to write a professional marketing email from scratch in English, explain A/B testing methodology, discuss email performance metrics, and apply the grammar of persuasive writing &mdash; including imperatives, conditionals, and hedging language &mdash; accurately and confidently in a marketing context.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div><div class="card-title-bar"></div>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Write compelling subject lines and preview text for marketing emails</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Structure a marketing email using professional opening, body, and CTA patterns</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use 21+ key email marketing terms accurately in professional contexts</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Apply imperative verb forms and softened imperatives in persuasive copy</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use conditional structures to express offers, consequences, and urgency</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Discuss and apply personalisation, segmentation, and A/B testing</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Interpret email performance metrics: open rate, CTR, conversion, unsubscribe</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Write a complete promotional or nurture email in professional English</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPEAKING -->
+<div id="speaking" class="section">
+  <div class="hero">
+    <div class="section-tag">🎙️ Speaking Activities</div>
+    <div class="hero-title">Speaking <span>Discussion</span></div>
+    <p class="hero-desc">21 discussion questions on email marketing, copywriting, and digital communication strategy &mdash; build fluency and professional vocabulary through focused conversation.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Discussion Questions</div><div class="card-title-bar"></div>
+      <div class="q-grid"><div class="q-card"><div class="q-num">1</div><div class="q-text">Do you read marketing emails you receive, or do you delete them immediately? What makes you decide to open one?</div></div><div class="q-card"><div class="q-num">2</div><div class="q-text">Think of a marketing email you received that made you take action. What was it about, and what did you do after reading it?</div></div><div class="q-card"><div class="q-num">3</div><div class="q-text">What makes a good email subject line? Can you think of any examples that caught your attention?</div></div><div class="q-card"><div class="q-num">4</div><div class="q-text">Why do you think email marketing has such a high return on investment compared to other digital channels?</div></div><div class="q-card"><div class="q-num">5</div><div class="q-text">What is the difference between a promotional email, a welcome email, and a newsletter? When would you use each?</div></div><div class="q-card"><div class="q-num">6</div><div class="q-text">How important is personalisation in email marketing? Have you ever received an email that felt genuinely relevant to you?</div></div><div class="q-card"><div class="q-num">7</div><div class="q-text">What does 'tone of voice' mean in the context of email copywriting? How does tone change depending on the brand and audience?</div></div><div class="q-card"><div class="q-num">8</div><div class="q-text">What is a call to action (CTA) and why is it so important in marketing emails? What makes a CTA effective?</div></div><div class="q-card"><div class="q-num">9</div><div class="q-text">Have you ever unsubscribed from a mailing list? What made you do it, and what could the company have done differently?</div></div><div class="q-card"><div class="q-num">10</div><div class="q-text">What is A/B testing in email marketing? Can you think of elements you might test in an email campaign?</div></div><div class="q-card"><div class="q-num">11</div><div class="q-text">How does the time and day an email is sent affect its open rate? What factors should a marketer consider?</div></div><div class="q-card"><div class="q-num">12</div><div class="q-text">What is 'email fatigue' and how can brands avoid causing it in their subscribers?</div></div><div class="q-card"><div class="q-num">13</div><div class="q-text">What is GDPR (or a similar regulation in your country) and how does it affect email marketing practices?</div></div><div class="q-card"><div class="q-num">14</div><div class="q-text">How do mobile devices affect email design and copywriting? What should marketers keep in mind for mobile readers?</div></div><div class="q-card"><div class="q-num">15</div><div class="q-text">What is a 'drip campaign' or 'email sequence'? Can you describe how one might work for a new software product?</div></div><div class="q-card"><div class="q-num">16</div><div class="q-text">What is the difference between a transactional email and a marketing email? Can you give examples of each?</div></div><div class="q-card"><div class="q-num">17</div><div class="q-text">How do brands use storytelling in marketing emails? Why might a story be more effective than a list of product features?</div></div><div class="q-card"><div class="q-num">18</div><div class="q-text">What makes someone trust an email enough to click on a link inside it? How do brands build that trust?</div></div><div class="q-card"><div class="q-num">19</div><div class="q-text">What is 'list hygiene' and why is it important for email deliverability?</div></div><div class="q-card"><div class="q-num">20</div><div class="q-text">How do you think artificial intelligence is changing email copywriting and personalisation?</div></div><div class="q-card"><div class="q-num">21</div><div class="q-text">If you were launching a new online language school and building an email list from zero, what would your first three emails say?</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- WORD BANK -->
+<div id="wordbank" class="section">
+  <div class="hero">
+    <div class="section-tag">🟩 Word Bank</div>
+    <div class="hero-title">Word <span>Bank</span></div>
+    <p class="hero-desc">21 essential email marketing terms &mdash; with clear definitions and professional usage guidance for each concept.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Key Vocabulary &mdash; 21 Terms</div><div class="card-title-bar"></div>
+      <div class="wb-grid"><div class="wb-card"><div class="wb-emoji">📧</div><div class="wb-term">Open rate</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of recipients who open a marketing email, used as a key measure of subject line effectiveness and sender reputation.</div></div><div class="wb-card"><div class="wb-emoji">🖱️</div><div class="wb-term">Click-through rate (CTR)</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of email recipients who click on at least one link within the email, indicating engagement with the content.</div></div><div class="wb-card"><div class="wb-emoji">🎯</div><div class="wb-term">Call to action (CTA)</div><div class="wb-pos">noun phrase</div><div class="wb-def">A button, link, or phrase in a marketing email that directs the reader to take a specific desired action, such as 'Shop Now' or 'Download Free Guide'.</div></div><div class="wb-card"><div class="wb-emoji">✉️</div><div class="wb-term">Subject line</div><div class="wb-pos">noun phrase</div><div class="wb-def">The short line of text visible in the recipient's inbox before opening the email; the most important factor in determining whether the email is opened.</div></div><div class="wb-card"><div class="wb-emoji">👁️</div><div class="wb-term">Preview text</div><div class="wb-pos">noun phrase</div><div class="wb-def">The short snippet of text displayed after the subject line in the inbox, giving recipients a second opportunity to decide whether to open the email.</div></div><div class="wb-card"><div class="wb-emoji">🧪</div><div class="wb-term">A/B testing</div><div class="wb-pos">noun phrase</div><div class="wb-def">An experiment in which two versions of an email element (such as the subject line or CTA) are sent to different portions of the list to determine which performs better.</div></div><div class="wb-card"><div class="wb-emoji">💌</div><div class="wb-term">Drip campaign</div><div class="wb-pos">noun phrase</div><div class="wb-def">An automated series of pre-written emails sent to subscribers at set intervals or triggered by specific behaviours, used to nurture leads over time.</div></div><div class="wb-card"><div class="wb-emoji">📊</div><div class="wb-term">Conversion rate</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of email recipients who complete the desired goal (such as making a purchase or filling in a form) after clicking through from an email.</div></div><div class="wb-card"><div class="wb-emoji">🔕</div><div class="wb-term">Unsubscribe rate</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of recipients who opt out of a mailing list after receiving a specific email, often used to identify content that is irrelevant or too frequent.</div></div><div class="wb-card"><div class="wb-emoji">📬</div><div class="wb-term">Deliverability</div><div class="wb-pos">noun phrase</div><div class="wb-def">The ability of a marketing email to successfully reach the recipient's inbox rather than being filtered into spam or junk folders.</div></div><div class="wb-card"><div class="wb-emoji">🧹</div><div class="wb-term">List hygiene</div><div class="wb-pos">noun phrase</div><div class="wb-def">The practice of regularly removing invalid, inactive, or disengaged email addresses from a mailing list to maintain high deliverability and engagement rates.</div></div><div class="wb-card"><div class="wb-emoji">🤖</div><div class="wb-term">Personalisation</div><div class="wb-pos">noun phrase</div><div class="wb-def">The use of subscriber data — such as name, location, purchase history, or behaviour — to tailor email content to the individual recipient.</div></div><div class="wb-card"><div class="wb-emoji">🧩</div><div class="wb-term">Segmentation</div><div class="wb-pos">noun phrase</div><div class="wb-def">The division of an email list into distinct groups based on shared characteristics or behaviours, allowing more targeted and relevant messaging.</div></div><div class="wb-card"><div class="wb-emoji">📈</div><div class="wb-term">Email sequence</div><div class="wb-pos">noun phrase</div><div class="wb-def">A series of emails designed to be sent in a specific order to guide a subscriber through a journey, such as onboarding, re-engagement, or post-purchase.</div></div><div class="wb-card"><div class="wb-emoji">⚡</div><div class="wb-term">Urgency</div><div class="wb-pos">noun phrase</div><div class="wb-def">A copywriting technique that creates time pressure around an offer or action, such as countdown timers, limited availability, or deadline language.</div></div><div class="wb-card"><div class="wb-emoji">🔓</div><div class="wb-term">GDPR compliance</div><div class="wb-pos">noun phrase</div><div class="wb-def">Adherence to the EU General Data Protection Regulation, which requires explicit consent before sending marketing emails and gives subscribers the right to opt out.</div></div><div class="wb-card"><div class="wb-emoji">📱</div><div class="wb-term">Mobile optimisation</div><div class="wb-pos">noun phrase</div><div class="wb-def">The design and formatting of emails to display and function correctly on smartphones, including short subject lines, large text, and single-column layouts.</div></div><div class="wb-card"><div class="wb-emoji">📝</div><div class="wb-term">Nurture email</div><div class="wb-pos">noun phrase</div><div class="wb-def">A marketing email designed to build a relationship with a prospect over time by providing value, rather than making a direct sales pitch.</div></div><div class="wb-card"><div class="wb-emoji">🔁</div><div class="wb-term">Re-engagement campaign</div><div class="wb-pos">noun phrase</div><div class="wb-def">A targeted email sequence sent to inactive subscribers with the goal of encouraging them to re-engage with the brand before being removed from the list.</div></div><div class="wb-card"><div class="wb-emoji">💡</div><div class="wb-term">Hook</div><div class="wb-pos">noun phrase</div><div class="wb-def">The first sentence or opening element of an email body designed to immediately capture the reader's attention and encourage them to keep reading.</div></div><div class="wb-card"><div class="wb-emoji">📉</div><div class="wb-term">Bounce rate</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of emails that could not be delivered to recipients' inboxes, either due to invalid addresses (hard bounce) or temporary issues (soft bounce).</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- READING -->
+<div id="reading" class="section">
+  <div class="hero">
+    <div class="section-tag">📄 Reading Activities</div>
+    <div class="hero-title">Reading <span>Texts</span></div>
+    <p class="hero-desc">Two professional texts on email marketing strategy and copywriting craft. Read carefully, then answer the comprehension questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Text 1: The Anatomy of a High-Performing Marketing Email</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; Why Email Still Dominates</h3>
+        <p>Despite the rise of social media, push notifications, and messaging apps, email marketing consistently outperforms every other digital channel in terms of return on investment. Industry research regularly places email's average ROI at between &pound;36 and &pound;42 for every &pound;1 spent &mdash; a figure no other channel can match at scale. The reasons are structural: email reaches people in a personal, distraction-reduced environment; the subscriber has, by definition, already expressed interest in the brand; and email allows a level of personalisation, sequencing, and behavioural targeting that is simply not available on mass media channels.</p>
+        <p>Yet most marketing emails fail. They sit unread in inboxes, are deleted within seconds, or are filtered into spam before they even arrive. The gap between a high-performing email and a mediocre one is almost never strategy &mdash; it is execution. Specifically, it is the quality of the writing. A great email campaign requires the same skills as great copywriting in any medium: clarity, empathy, relevance, and a compelling reason to act. What makes email distinctive is the specific set of constraints and conventions that govern each component of the format.</p>
+        <h3>Paragraph 2 &mdash; Subject Lines and Preview Text</h3>
+        <p>The subject line is the single most important element of any marketing email. Research consistently shows that 47% of recipients open an email based on the subject line alone. A subject line has one job: to make the reader curious, excited, or intrigued enough to open the email. Effective subject lines share several characteristics. They are short &mdash; typically between 30 and 50 characters, to avoid being cut off on mobile devices. They speak directly to the recipient's interests or pain points. They create curiosity, urgency, or a sense of benefit. And they avoid spam trigger words such as &ldquo;FREE&rdquo;, &ldquo;WINNER&rdquo;, or excessive punctuation, which can cause the email to be filtered before it reaches the inbox.</p>
+        <p>Working in conjunction with the subject line is the <strong>preview text</strong> &mdash; the brief snippet of text visible alongside the subject line in most email clients. Together, the subject line and preview text function as a two-sentence pitch for the email's content. Sophisticated email marketers treat these two elements as a unit, writing them together to maximise the combined impact. An email with a strong subject line and a weak or auto-generated preview text is a missed opportunity.</p>
+        <h3>Paragraph 3 &mdash; Structure: Hook, Body, and CTA</h3>
+        <p>The body of a marketing email must do three things in rapid succession: capture attention immediately, deliver value, and direct the reader to a specific action. The <strong>hook</strong> &mdash; the first sentence or two of the email &mdash; is critical. If the reader is not engaged within three seconds of opening, they will close the email. Effective hooks include a bold statement, a surprising statistic, a short anecdote, a direct question, or an empathetic acknowledgement of the reader's situation. Whatever the technique, the hook must connect immediately to something the reader cares about.</p>
+        <p>The body of the email should be concise. Marketing email readers do not read &mdash; they scan. Short paragraphs, clear subheadings, bullet points, and bold text all help guide the reader through the content efficiently. The email should build logically towards the <strong>call to action (CTA)</strong> &mdash; the button or link that represents the desired outcome of the email. An effective CTA uses action verbs in the imperative (&ldquo;Download your guide&rdquo;, &ldquo;Start your free trial&rdquo;), makes the benefit explicit, and creates a sense of urgency or scarcity where appropriate. Most high-performing emails contain a single, clear CTA rather than multiple competing links.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 1 (10 Questions)</div>
+        <div id="r1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r1')">Check Answers</button>
+        <div id="r1-feedback" class="feedback"></div>
+        <div id="r1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Text 2: Personalisation, Segmentation, and Testing</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; Why Personalisation Matters</h3>
+        <p>Mass email marketing &mdash; sending the same message to everyone on a list &mdash; is increasingly ineffective. As inboxes have become more crowded and consumers have become more sophisticated, the threshold for engagement has risen. Today's email subscribers expect content that is relevant to their specific situation, preferences, and stage in the customer journey. Research by McKinsey found that personalisation can drive revenue increases of 10 to 15%, and that 71% of consumers now expect personalised interactions from brands &mdash; and are frustrated when they do not receive them.</p>
+        <p>Personalisation in email marketing operates at multiple levels. At its most basic, it involves using the recipient's first name in the subject line or greeting. Research shows that personalised subject lines generate 26% higher open rates than generic ones. At a more sophisticated level, personalisation involves tailoring the entire email &mdash; including the products shown, the offers made, and the copy written &mdash; to the individual's browsing history, purchase behaviour, location, or stage in a drip sequence. This level of personalisation requires integration between the email platform and CRM or e-commerce data, but the results it produces are significantly stronger than anything achievable with a one-size-fits-all approach.</p>
+        <h3>Paragraph 2 &mdash; Segmentation: Speaking to the Right People</h3>
+        <p>Segmentation and personalisation are closely related but distinct. <strong>Segmentation</strong> involves dividing an email list into groups based on shared characteristics &mdash; demographics, purchase history, engagement level, geographic location, or stage in the sales funnel &mdash; and sending different versions of an email (or entirely different emails) to each group. <strong>Personalisation</strong> then operates within each segment to tailor the message further to the individual.</p>
+        <p>The benefits of segmentation are well-documented. Segmented email campaigns generate 14% higher open rates and 101% higher click-through rates than non-segmented campaigns. They also produce significantly lower unsubscribe rates, because recipients receive content that is relevant to them rather than generic broadcast messages. A common and highly effective form of segmentation is <strong>behavioural segmentation</strong> &mdash; targeting subscribers based on what they have actually done: opened a specific email, visited a product page, abandoned a cart, or made a previous purchase.</p>
+        <h3>Paragraph 3 &mdash; A/B Testing: The Scientific Method Applied to Email</h3>
+        <p>Even experienced email marketers cannot reliably predict which subject line, CTA, or email format will perform best with a specific audience. A/B testing &mdash; also called split testing &mdash; removes the guesswork by running controlled experiments. In a standard A/B test, the email list is divided into two groups: Group A receives one version of the email (for example, with the subject line &ldquo;Your exclusive offer is waiting&rdquo;) and Group B receives a second version (for example, with the subject line &ldquo;We saved something just for you&rdquo;). After a set period, the version with the higher open rate is identified as the winner and sent to the remainder of the list.</p>
+        <p>Almost any element of an email can be A/B tested: subject line, preview text, sender name, email length, CTA wording, CTA colour, image versus no image, send time, and more. The key discipline is to test one variable at a time. Testing multiple variables simultaneously makes it impossible to identify which change produced the observed difference in results. Over time, a systematic A/B testing programme builds a body of evidence about what resonates with a specific audience &mdash; knowledge that is invaluable and cannot be purchased from any agency or consultant.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 2 (10 Questions)</div>
+        <div id="r2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r2')">Check Answers</button>
+        <div id="r2-feedback" class="feedback"></div>
+        <div id="r2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VOCABULARY -->
+<div id="vocabulary" class="section">
+  <div class="hero">
+    <div class="section-tag">✏️ Vocabulary Exercises</div>
+    <div class="hero-title">Vocabulary <span>Practice</span></div>
+    <p class="hero-desc">Three vocabulary exercises to consolidate your command of email marketing English &mdash; multiple choice, gap-fill, and true/false.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Multiple Choice</div></div>
+      <div class="ex-title">Choosing the Right Term</div>
+      <p class="ex-instruction">Select the best word or phrase to complete each sentence in a professional email marketing context.</p>
+      <div id="v1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('v1')">Check Answers</button>
+      <div id="v1-feedback" class="feedback"></div>
+      <div id="v1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Gap-Fill</div></div>
+      <div class="ex-title">Complete the Sentences</div>
+      <p class="ex-instruction">Type the correct word from the box to complete each sentence. Check your spelling carefully.</p>
+      <div class="word-box">
+        <strong style="color:var(--text-dark);margin-right:4px">Word Box:</strong>
+        <span class="word-chip">deliverability</span><span class="word-chip">segmentation</span><span class="word-chip">urgency</span>
+        <span class="word-chip">nurture</span><span class="word-chip">bounce</span><span class="word-chip">hook</span>
+        <span class="word-chip">personalisation</span><span class="word-chip">drip</span><span class="word-chip">hygiene</span>
+        <span class="word-chip">conversion</span>
+      </div>
+      <div id="v2-gaps"></div>
+      <button class="check-btn" onclick="checkGaps()">Check Answers</button>
+      <div id="v2-feedback" class="feedback"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">True / False</div></div>
+      <div class="ex-title">True or False?</div>
+      <p class="ex-instruction">Read each statement about email marketing vocabulary. Decide whether it is TRUE or FALSE.</p>
+      <div id="v3-tf"></div>
+      <button class="check-btn" onclick="checkTF()">Check Answers</button>
+      <div id="v3-feedback" class="feedback"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GRAMMAR -->
+<div id="grammar" class="section">
+  <div class="hero">
+    <div class="section-tag">📘 Grammar Exercises</div>
+    <div class="hero-title">Grammar <span>Practice</span></div>
+    <p class="hero-desc">Three grammar exercises covering imperatives in CTA copy, conditional structures for offers and urgency, and hedging language in professional email contexts.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Imperatives &amp; CTAs</div></div>
+      <div class="ex-title">Imperative Forms in Email Copy</div>
+      <p class="ex-instruction">Select the most effective imperative form or CTA phrasing for each email marketing context.</p>
+      <div id="g1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g1')">Check Answers</button>
+      <div id="g1-feedback" class="feedback"></div>
+      <div id="g1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Conditional Structures</div></div>
+      <div class="ex-title">Conditionals for Offers, Benefits &amp; Urgency</div>
+      <p class="ex-instruction">Choose the correct conditional structure for each marketing email sentence. Pay attention to tense and meaning.</p>
+      <div id="g2-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g2')">Check Answers</button>
+      <div id="g2-feedback" class="feedback"></div>
+      <div id="g2-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">Hedging Language</div></div>
+      <div class="ex-title">Hedging &amp; Softening in Professional Emails</div>
+      <p class="ex-instruction">Select the most appropriate hedging or softening expression for each sentence from a professional marketing email.</p>
+      <div id="g3-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g3')">Check Answers</button>
+      <div id="g3-feedback" class="feedback"></div>
+      <div id="g3-score" class="score-display"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GRAMMAR REVIEW -->
+<div id="grammar-review" class="section">
+  <div class="hero">
+    <div class="section-tag">🔍 Grammar Reference</div>
+    <div class="hero-title">Grammar <span>Review</span></div>
+    <p class="hero-desc">Three detailed reference boxes covering imperatives, conditionals, and hedging language as used in professional marketing email copywriting.</p>
+  </div>
+  <div class="content-area">
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 1</div>
+      <div class="gr-box-title">Imperatives in Email Copywriting</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">The imperative in marketing</div>
+        <div class="gr-rule-text">Imperatives are the backbone of CTA (call to action) copy. They give direct instructions that drive behaviour. In email marketing, the right imperative verb makes the difference between a CTA that is clicked and one that is ignored. Imperatives use the base form of the verb with no subject.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Type</th><th>Form</th><th>Email Example</th></tr>
+        <tr><td>Simple imperative</td><td>Verb (base form)</td><td>Download your free guide. / Shop the sale.</td></tr>
+        <tr><td>Negative imperative</td><td>Don't + verb</td><td>Don't miss your chance. / Don't let this offer expire.</td></tr>
+        <tr><td>Softened imperative</td><td>Please + verb</td><td>Please take a moment to complete your profile.</td></tr>
+        <tr><td>Inclusive imperative</td><td>Let's + verb</td><td>Let's get started. / Let's make this happen.</td></tr>
+        <tr><td>Benefit-led CTA</td><td>Verb + benefit</td><td>Start saving today. / Discover what's possible.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Strong vs weak CTA verbs</div>
+        <div class="gr-rule-text">The verb you choose signals urgency and value. Strong, specific verbs outperform weak, generic ones.</div>
+        <div class="gr-example">❌ Weak: Click here. / Learn more. / Submit.<br>✅ Strong: Claim your 30% discount. / Start my free trial. / Download the playbook.</div>
+      </div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">First person CTAs (advanced)</div>
+        <div class="gr-rule-text">Some high-converting CTAs are written in the first person as if the reader is speaking. This technique increases click rates by making the action feel more personal.</div>
+        <div class="gr-example">✅ "Yes, I want my free guide." / "Take me to the sale." / "Start my free trial."</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 2</div>
+      <div class="gr-box-title">Conditional Structures in Email Marketing</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why conditionals are essential in email copy</div>
+        <div class="gr-rule-text">Conditional sentences allow marketers to express offers, consequences, and hypothetical benefits clearly and persuasively. They are used in subject lines, body copy, and CTAs to create relevance and urgency.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Type</th><th>Structure</th><th>Email Marketing Use</th></tr>
+        <tr><td>Zero conditional</td><td>If + present, present</td><td>General truths about the product/offer</td></tr>
+        <tr><td>First conditional</td><td>If + present, will + verb</td><td>Real, achievable outcomes of taking action</td></tr>
+        <tr><td>Second conditional</td><td>If + past, would + verb</td><td>Hypothetical or aspirational scenarios</td></tr>
+        <tr><td>Unless</td><td>Unless + present, will + verb</td><td>Urgency / consequence of NOT acting</td></tr>
+        <tr><td>Inverted conditional</td><td>Should you + verb...</td><td>Formal, polished offer language</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Examples in email contexts</div>
+        <div class="gr-example">If you order before midnight, you'll receive free next-day delivery. [1st conditional: real offer]</div>
+        <div class="gr-example">If you had our premium plan, you'd save 4 hours every week. [2nd conditional: aspirational]</div>
+        <div class="gr-example">Unless you act before Friday, your discount will expire. [unless: urgency]</div>
+        <div class="gr-example">Should you have any questions, please don't hesitate to contact us. [inverted: formal close]</div>
+        <div class="gr-example">If you open this email every week, you'll always be the first to know. [zero: general benefit]</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 3</div>
+      <div class="gr-box-title">Hedging Language in Professional Emails</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">What is hedging and when do you use it?</div>
+        <div class="gr-rule-text">Hedging means using language that softens a claim, acknowledges uncertainty, or avoids making overly direct or absolute statements. In marketing emails, hedging is used to sound professional and credible rather than pushy, to avoid misleading claims, and to maintain a polite, respectful tone — especially in B2B contexts or when making recommendations.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Hedging device</th><th>Example</th><th>Effect</th></tr>
+        <tr><td>Modal verbs (might, could, may)</td><td>This might be exactly what you need.</td><td>Softens a claim</td></tr>
+        <tr><td>Approximators (around, approximately)</td><td>Save around 30% on your order.</td><td>Avoids an absolute claim</td></tr>
+        <tr><td>Reporting verbs (suggests, indicates)</td><td>Research suggests this approach works better.</td><td>Attributes rather than states</td></tr>
+        <tr><td>Seem / appear</td><td>This seems like the right moment to...</td><td>Softens a direct proposition</td></tr>
+        <tr><td>Many / most (not all)</td><td>Most of our customers find that...</td><td>Avoids overgeneralisation</td></tr>
+        <tr><td>Tend to</td><td>Brands that do this tend to see better results.</td><td>General pattern, not absolute rule</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Hedging vs overclaiming</div>
+        <div class="gr-rule-text">Overclaiming (making absolute statements that cannot be proven) damages trust and may breach advertising regulations. Hedging allows you to make persuasive claims responsibly.</div>
+        <div class="gr-example">❌ Overclaiming: "This product will change your life forever and guarantee results."<br>✅ Hedged: "Many of our customers report significant improvements within the first month."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WRITING -->
+<div id="writing" class="section">
+  <div class="hero">
+    <div class="section-tag">✍️ Writing Activities</div>
+    <div class="hero-title">Writing <span>Tasks</span></div>
+    <p class="hero-desc">Two professional email writing tasks &mdash; practise crafting real marketing emails from brief to finished copy in English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Writing Activity 1 &mdash; Promotional Email</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a promotional marketing email (170&ndash;210 words, not counting subject line and preview text) for a fictional online fitness platform called <em>PeakForm</em>. The email promotes a 25% discount on annual subscriptions, available for 72 hours only. Your email must include: a subject line and preview text, an engaging hook, a clear description of the offer, at least one conditional structure, a strong CTA using an imperative, and a sign-off. Write in a friendly, energetic tone aimed at health-conscious adults aged 25&ndash;40.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Subject line + preview text &middot; Hook quality &middot; Offer clarity &middot; Conditional structure &middot; Imperative CTA &middot; Tone consistency &middot; Word count
+      </div>
+      <textarea class="writing-textarea" id="w1-text" placeholder="Subject line: &#10;Preview text: &#10;&#10;[Email body]&#10;&#10;Hi [First name],&#10;&#10;..." oninput="updateWordCount('w1',210)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w1-wc">0 / 210 words</span>
+        <button class="submit-btn" onclick="submitWriting('w1')">Submit ✓</button>
+      </div>
+      <div id="w1-success" class="submit-success">✅ Email submitted! Excellent work practising this essential marketing writing skill.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Writing Activity 2 &mdash; Nurture Email (B2B)</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a B2B nurture email (180&ndash;220 words, not counting subject line and preview text) from <em>Clarix Analytics</em>, a fictional data analytics software company. This is email 3 of a 5-part drip campaign targeting marketing managers at mid-sized companies. The email's goal is to provide value (share a useful insight about email open rates) and gently move the prospect towards booking a demo. Use hedging language appropriately, include a soft CTA (not a hard sell), and maintain a professional but approachable tone.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Appropriate nurture tone (value, not sell) &middot; Hedging language &middot; Soft CTA &middot; Professional register &middot; Subject line + preview text &middot; B2B vocabulary
+      </div>
+      <textarea class="writing-textarea" id="w2-text" placeholder="Subject line: &#10;Preview text: &#10;&#10;[Email body]&#10;&#10;Hi [First name],&#10;&#10;..." oninput="updateWordCount('w2',220)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w2-wc">0 / 220 words</span>
+        <button class="submit-btn" onclick="submitWriting('w2')">Submit ✓</button>
+      </div>
+      <div id="w2-success" class="submit-success">✅ Email submitted! Great work applying hedging language and nurture email structure in a B2B context.</div>
+    </div>
+  </div>
+</div>
+
+<!-- LISTENING -->
+<div id="listening" class="section">
+  <div class="hero">
+    <div class="section-tag">🎧 Listening Activities</div>
+    <div class="hero-title">Listening <span>Activities</span></div>
+    <p class="hero-desc">4 audio activities with built-in speech players &mdash; press &#9654; Play, listen, then answer the questions.</p>
+  </div>
+  <div class="content-area"><div id="listening-cards"></div></div>
+</div>
+
+<!-- CASE STUDIES -->
+<div id="casestudies" class="section">
+  <div class="hero">
+    <div class="section-tag">📊 Case Studies</div>
+    <div class="hero-title">Case <span>Studies</span></div>
+    <p class="hero-desc">Two real-world inspired email marketing case studies. Read carefully and answer the analysis questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="case-header">
+      <h3>Case Study 1: How Verdana Plants Grew Email Revenue by 218% in Six Months</h3>
+      <p>E-commerce Email Marketing &middot; Segmentation &middot; A/B Testing</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Verdana Plants is a UK-based online plant retailer founded in 2019. By early 2023, the business had accumulated an email list of 42,000 subscribers, but email marketing was generating less than 8% of total revenue &mdash; well below the industry benchmark of 25&ndash;30% for e-commerce brands. The single weekly newsletter that had served the brand at launch had not evolved as the business grew, and engagement metrics were deteriorating: the average open rate had fallen to 16.4% (industry average: 21.3%), and the click-through rate was 1.2% (industry average: 2.6%).</p>
+        <p>The marketing director commissioned an audit of the entire email programme. The audit revealed three core problems. First, the entire 42,000-subscriber list was receiving <strong>the same email</strong>, regardless of whether a subscriber had purchased once, purchased ten times, or had never bought at all. Second, the emails were almost entirely promotional &mdash; discounts and product announcements &mdash; with no educational or relationship-building content. Third, the subject lines were consistently generic: &ldquo;This week at Verdana&rdquo; or &ldquo;Our latest arrivals&rdquo; &mdash; offering the reader no compelling reason to open.</p>
+      </div>
+      <div class="case-section-label">Strategy &amp; Execution</div>
+      <div class="case-text">
+        <p>The team implemented a three-part strategy. First, <strong>list segmentation</strong>: the 42,000 subscribers were divided into five segments based on purchase history and engagement level: first-time buyers, repeat buyers, high-value customers, engaged non-buyers, and lapsed subscribers. Each segment received tailored content. High-value customers received early access to new collections and exclusives. Lapsed subscribers received a three-email <strong>re-engagement campaign</strong> with a subject line reading &ldquo;We miss you &mdash; here's 15% back.&rdquo;</p>
+        <p>Second, the content mix was redesigned: the ratio shifted to 60% value content (plant care guides, seasonal tips, expert Q&amp;As) and 40% promotional. Third, an <strong>A/B testing</strong> programme was launched on every campaign. Subject lines were tested weekly, with the winning version sent to 80% of the list after a four-hour test on the remaining 20%. Within three months, the average open rate had risen from 16.4% to 24.1%, and CTR from 1.2% to 3.4%. After six months, email was contributing 24.3% of total revenue &mdash; a 218% increase from the baseline.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 1 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs1')">Check Answers</button>
+        <div id="cs1-feedback" class="feedback"></div>
+        <div id="cs1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="case-header">
+      <h3>Case Study 2: Northfield Legal &mdash; Building a B2B Email Programme from Scratch</h3>
+      <p>B2B Email Marketing &middot; Drip Campaigns &middot; Personalisation</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Northfield Legal is a mid-sized UK law firm specialising in employment and commercial law for SMEs. In 2022, the firm's managing partner identified email marketing as an untapped growth channel. Although the firm had an existing database of approximately 3,800 business contacts &mdash; including former clients, event attendees, and referral partners &mdash; it had never sent a structured marketing email programme. All client communication was transactional: case updates, invoices, and appointment confirmations. There was no email content designed to maintain relationships, demonstrate expertise, or generate enquiries from warm prospects.</p>
+        <p>The challenge was both strategic and tonal. Law firms operate in a highly regulated environment where overclaiming or inappropriate promotional language can cause reputational and regulatory problems. The tone of any email programme would need to be expert, measured, and genuinely useful &mdash; not salesy. Furthermore, the firm's contacts ranged from HR managers and finance directors to CEOs and business owners, each with different concerns and different levels of legal knowledge.</p>
+      </div>
+      <div class="case-section-label">Programme Design &amp; Results</div>
+      <div class="case-text">
+        <p>The firm launched a monthly <strong>legal insights newsletter</strong> alongside a targeted <strong>drip campaign</strong> for new contacts. The newsletter, titled <em>The Northfield Briefing</em>, was designed to provide practical guidance on employment law changes, case law summaries, and HR compliance updates &mdash; content that business owners genuinely needed but rarely had time to research themselves. Each edition included one piece of long-form analysis and two shorter items. The subject lines used questions (&ldquo;Are your employment contracts still GDPR-compliant?&rdquo;) and specific regulatory references that signalled genuine expertise to legally literate readers.</p>
+        <p>New contacts were enrolled in a <strong>five-email onboarding sequence</strong>. Email 1 welcomed the contact and explained the newsletter's purpose. Email 2 shared the firm's most popular downloadable guide (&ldquo;The SME Employer's HR Checklist&rdquo;). Emails 3 and 4 addressed the two most common legal questions received by the firm. Email 5 introduced the team and invited the contact to book a free 20-minute consultation. <strong>Hedging language</strong> was used throughout to avoid making specific legal claims: &ldquo;This may be relevant if...&rdquo;, &ldquo;Many businesses find that...&rdquo;, and &ldquo;You might want to consider...&rdquo; By the end of year one, the newsletter had a 38% open rate &mdash; well above the B2B average of 21% &mdash; and had generated 47 qualified enquiries directly attributable to email, representing an estimated &pound;380,000 in new fee income.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 2 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs2')">Check Answers</button>
+        <div id="cs2-feedback" class="feedback"></div>
+        <div id="cs2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL ASSESSMENT -->
+<div id="assessment" class="section">
+  <div class="hero">
+    <div class="section-tag">🎯 Final Assessment</div>
+    <div class="hero-title">Final <span>Assessment</span></div>
+    <p class="hero-desc">20 multiple choice questions covering all module sections. Score 70% or above to pass. You have two attempts.</p>
+  </div>
+  <div class="content-area">
+    <div class="assessment-header">
+      <h2>Module 5 &mdash; Final Assessment</h2>
+      <p>Writing Effective Marketing Emails</p>
+      <div class="assessment-meta">
+        <div class="assessment-meta-item"><div class="assessment-meta-num">20</div><div class="assessment-meta-label">Questions</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">70%</div><div class="assessment-meta-label">Pass Mark</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">2</div><div class="assessment-meta-label">Attempts</div></div>
+      </div>
+      <div class="attempt-badge" id="attempt-badge">Attempt 1 of 2</div>
+    </div>
+    <div id="assessment-result" class="assessment-result">
+      <div class="result-score" id="result-score-text"></div>
+      <div class="result-msg" id="result-msg"></div>
+      <div id="retake-wrap"></div>
+    </div>
+    <div class="card" id="assessment-form">
+      <div class="mcq-title">📝 Assessment Questions</div>
+      <div id="fa-mcqs"></div>
+      <button class="check-btn" onclick="submitAssessment()" style="margin-top:8px;padding:12px 32px;font-size:14px">Submit Assessment</button>
+    </div>
+  </div>
+</div>
+</div><!-- /main -->
+<script>
+const DATA = {
+r1:{questions:[
+  {q:"According to Text 1, what is the average ROI of email marketing for every £1 spent?",opts:["Between £10 and £15","Between £36 and £42","Around £20","Between £50 and £60"],ans:1},
+  {q:"According to the text, why do most marketing emails fail?",opts:["Because the strategy is wrong","Because the lists are too small","Because of poor writing quality, not poor strategy","Because email is no longer an effective channel"],ans:2},
+  {q:"What percentage of recipients open an email based on the subject line alone?",opts:["22%","35%","47%","60%"],ans:2},
+  {q:"What is the recommended character length for a subject line, according to Text 1?",opts:["10 to 20 characters","30 to 50 characters","60 to 80 characters","Any length is acceptable"],ans:1},
+  {q:"Which of the following is listed as a spam trigger word to AVOID?",opts:["Exclusive","Limited","FREE","Now"],ans:2},
+  {q:"What does 'preview text' refer to?",opts:["The first paragraph of the email body","The footer of the email containing unsubscribe links","A short text snippet visible alongside the subject line in the inbox","The sender's name and email address"],ans:2},
+  {q:"What is described as the 'hook' in a marketing email?",opts:["The CTA button at the end of the email","The subject line and preview text combined","The first sentence or two, designed to immediately capture attention","The logo and brand imagery at the top of the email"],ans:2},
+  {q:"What does the text say about marketing email readers?",opts:["They read every word carefully before taking action","They prefer long, detailed emails with comprehensive product information","They do not read — they scan","They only respond to emails with images"],ans:2},
+  {q:"What characteristics does the text recommend for an effective CTA?",opts:["Passive verbs, multiple options, and a relaxed tone","Action verbs in the imperative, explicit benefit, and urgency or scarcity","Long explanatory sentences and multiple links","A neutral, informational tone without pressure"],ans:1},
+  {q:"According to Text 1, how many CTAs do most high-performing emails contain?",opts:["As many as possible to maximise click opportunities","Two or three, targeting different audience segments","A single, clear CTA","No CTA — they let the reader decide what to do"],ans:2}
+]},
+r2:{questions:[
+  {q:"What percentage revenue increase can personalisation drive, according to McKinsey research cited in Text 2?",opts:["5 to 8%","10 to 15%","20 to 25%","30 to 40%"],ans:1},
+  {q:"What percentage of consumers expect personalised interactions from brands, according to the text?",opts:["42%","57%","71%","89%"],ans:2},
+  {q:"By how much do personalised subject lines increase open rates compared to generic ones?",opts:["8%","16%","26%","40%"],ans:2},
+  {q:"What is the key difference between segmentation and personalisation?",opts:["Segmentation applies to B2B; personalisation applies to B2C","Segmentation divides the list into groups; personalisation tailors the message within those groups to individuals","Segmentation is more expensive than personalisation","Segmentation uses subject lines; personalisation uses email body copy"],ans:1},
+  {q:"By how much do segmented campaigns increase click-through rates compared to non-segmented campaigns?",opts:["14%","50%","101%","200%"],ans:2},
+  {q:"What is 'behavioural segmentation', according to Text 2?",opts:["Dividing subscribers by age and gender","Targeting subscribers based on their actions: opens, page visits, abandoned carts, purchases","Grouping subscribers by the device they use to open emails","Segmenting based on geographic location and local behaviour"],ans:1},
+  {q:"In a standard A/B test, what happens after the test period?",opts:["Both versions continue to be sent equally","The weaker version is sent to the whole list","The version with the higher open rate is identified as the winner and sent to the remainder of the list","The test is repeated three more times before a winner is declared"],ans:2},
+  {q:"What is the key discipline in A/B testing, according to the text?",opts:["Testing as many variables as possible simultaneously to save time","Always testing the subject line before any other element","Testing one variable at a time to identify what caused the difference in results","Only testing with a sample size of at least 10,000 subscribers"],ans:2},
+  {q:"What does the text describe as 'invaluable and impossible to purchase from any agency or consultant'?",opts:["A large email subscriber list","The results of a single successful A/B test","The knowledge built from a systematic A/B testing programme over time","Access to a sophisticated email marketing platform"],ans:2},
+  {q:"What does the text say about sophisticated personalisation, regarding the level of technical integration required?",opts:["It requires no technical integration and can be done manually","It requires integration between the email platform and CRM or e-commerce data","It only works for companies with more than 100,000 subscribers","It requires a specialist agency to implement"],ans:1}
+]},
+v1:{questions:[
+  {q:"The email campaign achieved a 28% _______, meaning more than a quarter of recipients opened the message.",opts:["click-through rate","conversion rate","open rate","bounce rate"],ans:2},
+  {q:"The subject line _______ the entire campaign because it determined whether anyone opened the email at all.",opts:["made or broke","converted","segmented","personalised"],ans:0},
+  {q:"After a three-month inactivity period, the team launched a _______ campaign to encourage lapsed subscribers to re-engage with the brand.",opts:["drip","nurture","re-engagement","personalisation"],ans:2},
+  {q:"The email's _______ was a bold question: 'Are you losing £500 a month without knowing it?' — immediately relevant to every reader.",opts:["CTA","hook","preview text","bounce rate"],ans:1},
+  {q:"To improve _______, the team regularly removed invalid email addresses and cleaned inactive contacts from the database.",opts:["open rate","deliverability","segmentation","conversion"],ans:1},
+  {q:"The _______ programme sent a new email every three days for two weeks, gradually educating subscribers about the product's key benefits.",opts:["re-engagement","A/B testing","drip","bounce"],ans:2},
+  {q:"The campaign achieved a 4.2% _______, meaning one in every 24 recipients who received the email completed a purchase.",opts:["open rate","click-through rate","conversion rate","unsubscribe rate"],ans:2},
+  {q:"The team used _______ to divide the list into purchasers, active non-purchasers, and completely lapsed contacts, sending each group tailored content.",opts:["A/B testing","personalisation","segmentation","list hygiene"],ans:2},
+  {q:"Adding the recipient's first name to the subject line is one of the simplest forms of email _______.",opts:["segmentation","deliverability","personalisation","bounce rate"],ans:2},
+  {q:"The email had a high hard _______ rate because the list had not been cleaned in over two years, and many addresses were no longer valid.",opts:["open","click","bounce","conversion"],ans:2}
+]},
+v2gaps:[
+  {sent:"Emails were landing in spam folders rather than inboxes, so the team worked urgently to improve their _______ rate.",ans:"deliverability"},
+  {sent:"The team divided the email list into five distinct groups based on purchase frequency and location &mdash; a process called _______.",ans:"segmentation"},
+  {sent:"To increase click rates, the copywriter added countdown timers and 'only 3 left' messages to create a sense of _______ in the email.",ans:"urgency"},
+  {sent:"The goal of this email is not to sell directly but to provide useful information &mdash; it is a _______ email designed to build trust over time.",ans:"nurture"},
+  {sent:"The _______ rate had risen to 12%, meaning more than one in ten emails sent could not be delivered to valid addresses.",ans:"bounce"},
+  {sent:"The opening sentence — 'What if you could save two hours every day?' — was the _______ that pulled readers into the rest of the email.",ans:"hook"},
+  {sent:"Using the subscriber's name, city, and recent purchase in the email body is an example of advanced _______.",ans:"personalisation"},
+  {sent:"The new contact was enrolled in a five-email _______ campaign that would send one email per week for the next five weeks.",ans:"drip"},
+  {sent:"Good list _______ means regularly removing invalid, inactive, or duplicate addresses to keep the database clean and deliverability high.",ans:"hygiene"},
+  {sent:"The email achieved a 6.8% _______ rate, meaning nearly 7 in every 100 recipients took the desired action after clicking through.",ans:"conversion"}
+],
+v3tf:[
+  {stmt:"The click-through rate (CTR) measures the percentage of recipients who open a marketing email.",ans:false},
+  {stmt:"Preview text is the short snippet of text visible next to the subject line in most email inboxes.",ans:true},
+  {stmt:"A drip campaign is a single email sent to all subscribers at the same time.",ans:false},
+  {stmt:"List hygiene involves regularly removing inactive or invalid email addresses to maintain high deliverability.",ans:true},
+  {stmt:"A hard bounce occurs when an email cannot be permanently delivered because the address is invalid.",ans:true},
+  {stmt:"A/B testing involves sending the same email to the entire list and then measuring which links were clicked most.",ans:false},
+  {stmt:"Personalisation in email marketing means tailoring content to individual recipients based on their data and behaviour.",ans:true},
+  {stmt:"A high unsubscribe rate typically indicates that an email's content is highly relevant to its audience.",ans:false},
+  {stmt:"GDPR requires that organisations obtain explicit consent before sending marketing emails to individuals.",ans:true},
+  {stmt:"A nurture email is designed to make an immediate sale by presenting a limited-time discount offer.",ans:false}
+],
+g1:{questions:[
+  {q:"Which CTA is the MOST effective for a promotional email offering a free trial?",opts:["Click here for more information.","Free trial available.","Start my free trial today.","We offer free trials."],ans:2},
+  {q:"Which subject line uses the MOST effective imperative technique to create urgency?",opts:["Our sale is on.","Don't let your 30% discount expire tonight.","We have a discount for you.","Discount information enclosed."],ans:1},
+  {q:"Which of the following CTA phrasings is WEAKEST?",opts:["Claim your exclusive discount.","Download the free playbook.","Submit","Get my personalised report."],ans:2},
+  {q:"Which sentence uses the first-person CTA technique correctly?",opts:["Click here to download.","Download now.","Yes, send me the free guide.","The guide is available here."],ans:2},
+  {q:"Which opening sentence is the MOST effective hook for an email about a new productivity app?",opts:["Dear Customer, we are pleased to inform you that our new app is now available.","What would you do with an extra 90 minutes every day?","This email contains information about our new app.","We have been working hard on a new product."],ans:1},
+  {q:"Which CTA uses a benefit-led imperative structure correctly?",opts:["Learn more about us.","We invite you to consider our offer.","Save 40% — shop the sale now.","The offer is available until Friday."],ans:2},
+  {q:"Which negative imperative is MOST effective in a re-engagement email?",opts:["Please note the offer is available.","Don't miss your last chance to claim this offer.","We hope you will consider returning.","The offer expires soon."],ans:1},
+  {q:"Which inclusive imperative works best as an email opening in a friendly B2C context?",opts:["It is time to make a purchase.","You should buy our product now.","Let's make this your best summer yet.","Our products are available now."],ans:2},
+  {q:"An email CTA reads: 'If you click below, you can access the webinar.' Which version is stronger?",opts:["Click below to access the webinar.","Below is a link for webinar access.","Webinar access is available below.","You may access the webinar below."],ans:0},
+  {q:"Which verb is STRONGEST for a CTA promoting an exclusive members-only event?",opts:["See","Click","Reserve my spot","Visit"],ans:2}
+]},
+g2:{questions:[
+  {q:"'_______ before midnight, you'll receive free next-day delivery.' Which conditional structure is correct?",opts:["If you order","If you ordered","Unless you order","Should you had ordered"],ans:0},
+  {q:"Which sentence uses the second conditional correctly to create an aspirational message?",opts:["If you subscribe, you will save money.","If you had our premium plan, you'd save four hours every week.","If you will subscribe, you would save money.","Unless you subscribe, you would save money."],ans:1},
+  {q:"'_______ act before Friday, your 25% discount will expire.' Which word best expresses urgency?",opts:["If you","Although you","Unless you","Provided you"],ans:2},
+  {q:"Which sentence correctly uses an inverted conditional in a professional email sign-off?",opts:["If you have questions, contact us.","Should you have any questions, please do not hesitate to contact us.","When you have questions, we will answer them.","You can contact us if you need to."],ans:1},
+  {q:"'If you open this email every week, you _______ always be the first to hear about our new arrivals.' Which form is correct?",opts:["would","will","might","should"],ans:1},
+  {q:"Which sentence uses 'provided that' correctly in an email about a limited offer?",opts:["Provided that you order before Sunday, free shipping provided.","Provided that you complete your order before Sunday, free shipping will be applied automatically.","Provided that the order, you get free shipping.","Providing to order before Sunday means free shipping."],ans:1},
+  {q:"'If you _______ our service last year, you'd already have saved over £1,000.' Which form correctly completes this third conditional?",opts:["use","used","had used","have used"],ans:2},
+  {q:"Choose the correct conditional to complete this subject line: '_______ you open this, you'll discover our biggest sale of the year.'",opts:["Unless","When","Should","Although"],ans:1},
+  {q:"Which sentence uses a first conditional to express a real, achievable outcome?",opts:["If you had signed up earlier, you would have received the discount.","If you sign up today, you'll receive a £10 welcome voucher.","Sign up today for a welcome voucher.","Should you have signed up, you would receive a voucher."],ans:1},
+  {q:"'_______ you decide not to renew, we'll be sorry to see you go &mdash; but your data will be safely deleted within 30 days.' Which word fits?",opts:["Although","Should","Unless","Provided that"],ans:1}
+]},
+g3:{questions:[
+  {q:"Which sentence uses hedging language MOST appropriately for a marketing email claim?",opts:["This supplement will cure your insomnia permanently.","This supplement guarantees you eight hours of sleep every night.","Many of our customers report significantly better sleep within the first two weeks.","Our supplement is the only product that works for insomnia."],ans:2},
+  {q:"Which hedging expression best softens a product recommendation in a nurture email?",opts:["You must buy this product.","This is the only solution you will ever need.","This might be exactly what you've been looking for.","Buy this now before it's too late."],ans:2},
+  {q:"Choose the correct hedged claim for a B2B email about a software tool's ROI:",opts:["Our software guarantees you will double your revenue within 90 days.","Research suggests that businesses using our platform tend to see ROI within the first quarter.","Every business that uses our platform doubles revenue.","You will definitely see results."],ans:1},
+  {q:"Which sentence uses an approximator correctly to avoid an absolute claim?",opts:["You will save exactly 47 minutes every day.","You will save time every day, we guarantee it.","You could save around 45 minutes a day, based on our average customer data.","Saving time is what we promise."],ans:2},
+  {q:"Which phrase hedges a recommendation most appropriately in a professional email?",opts:["You should definitely sign up immediately.","You might want to consider taking advantage of this before the deadline.","Do not miss this under any circumstances.","This is non-negotiable for your business."],ans:1},
+  {q:"Which sentence uses 'tend to' correctly as a hedging device?",opts:["Customers tend to always buy twice as much after reading our emails.","Brands that personalise their emails tend to see higher engagement rates.","We tend to guarantee every result we promise.","Our emails tend to be the best in the industry."],ans:1},
+  {q:"Which sentence correctly uses 'appear to' as a hedging device in a research-based claim?",opts:["Results appear to suggest that open rates improve when subject lines include a number.","Results appear to definitely confirm our hypothesis.","The data appears to prove beyond doubt that this approach always works.","It appears that we are the only company doing this correctly."],ans:0},
+  {q:"A marketing email makes this claim: 'Our clients always achieve a 50% increase in leads.' Which hedged version is most appropriate?",opts:["Our clients tend to see a significant increase in leads, with many reporting improvements of 40-50%.","Our clients definitely see a 50% increase in leads, usually.","We guarantee our clients get 50% more leads.","50% more leads is what you will get."],ans:0},
+  {q:"Which closing sentence in a professional email uses hedging language correctly?",opts:["I know for certain this will be the right decision for you.","This will undoubtedly transform your business overnight.","This may be a good fit if your business is looking to scale its email programme.","There is absolutely no risk involved whatsoever."],ans:2},
+  {q:"Which sentence uses the reporting verb 'suggest' correctly as a hedging device?",opts:["Research suggests that segmented campaigns can generate significantly higher click rates.","Research suggests that segmented campaigns will always generate exactly 101% more clicks.","Research suggests to use segmentation in all cases.","Research suggests you must segment your list immediately."],ans:0}
+]},
+listening:[
+{
+  emoji:"📧",
+  title:"Activity 1: The Anatomy of a Great Marketing Email",
+  sub:"Rachel Obi, Email Marketing Consultant — Masterclass introduction",
+  level:"B1",type:"Multiple Choice",focus:"Listening for main ideas",
+  transcript:`Hello everyone, and welcome to this masterclass on writing marketing emails that actually work. My name is Rachel Obi, and I've been working in email marketing for eleven years, primarily with e-commerce and subscription brands. I want to start with something that might surprise you.
+
+Email is not dead. In fact, it has never been more valuable. For most businesses, email generates between twenty and thirty percent of total revenue, yet it costs a fraction of what paid social or search advertising costs. The reason most companies underperform in email is not a lack of tools or budget. It's a lack of great writing.
+
+So what makes a great marketing email? Let me walk you through the four components I look at whenever I audit a client's email programme.
+
+Number one: the subject line. This is your headline. It has one job: to get the email opened. Research shows that around half of all email recipients decide whether to open an email based on the subject line alone. That's it. Your entire email could be a masterpiece inside, but if the subject line is weak, nobody will ever know. Great subject lines are short, specific, and create some form of curiosity, urgency, or clear benefit.
+
+Number two: the hook. The first sentence of your email is just as important as the subject line. If the reader opens the email and the first thing they see is a long paragraph introducing your company's history, they will close it immediately. Your hook needs to connect to something the reader already cares about, within the first five words.
+
+Number three: the body. Keep it short. Keep it scannable. Use short paragraphs, bullet points where appropriate, and bold text to guide the eye. Remember, your reader is probably on a mobile phone, probably distracted, and they are making a decision every few seconds about whether to keep reading. Make it easy for them.
+
+Number four: the call to action. One button. One clear instruction. Use an action verb: download, claim, book, start, discover. Make the benefit obvious. And ideally, create some form of urgency or scarcity so the reader feels they should act now rather than later.
+
+Get those four elements right, and your email will outperform ninety percent of what lands in any inbox.`,
+  questions:[
+    {q:"How long has Rachel Obi been working in email marketing?",opts:["Five years","Eight years","Eleven years","Fifteen years"],ans:2},
+    {q:"According to Rachel, what percentage of total revenue does email typically generate for most businesses?",opts:["5 to 10%","20 to 30%","40 to 50%","Over 60%"],ans:1},
+    {q:"What does Rachel say is the main reason most companies underperform in email?",opts:["A lack of tools and technology","Insufficient budget for email platforms","A lack of great writing","Poor list segmentation"],ans:2},
+    {q:"What does Rachel say is the ONE job of the subject line?",opts:["To describe the email's content accurately","To include the brand name and key offer","To get the email opened","To build trust with the subscriber"],ans:2},
+    {q:"What does Rachel say the hook must do within the first five words?",opts:["State the price or discount clearly","Introduce the company and its history","Connect to something the reader already cares about","Include the sender's name and credentials"],ans:2},
+    {q:"What specific advice does Rachel give about the email body?",opts:["Write long, detailed paragraphs to fully explain the product","Use images as the primary communication method","Keep it short, scannable, with short paragraphs and bold text","Always write more than 500 words to seem professional"],ans:2},
+    {q:"How many CTAs does Rachel recommend in a high-performing email?",opts:["As many as necessary","Two or three for different audience types","One clear button with one clear instruction","None — let the content speak for itself"],ans:2},
+    {q:"Which of the following action verbs does Rachel list as appropriate for a CTA?",opts:["Think","Consider","Feel","Claim"],ans:3}
+  ]
+},
+{
+  emoji:"🧪",
+  title:"Activity 2: A/B Testing Your Emails — A Practical Guide",
+  sub:"Tom Whitfield, Head of CRM — Internal team training session",
+  level:"B1",type:"Multiple Choice",focus:"Listening for specific information",
+  transcript:`Good morning everyone. Today I want to walk you through A/B testing for email, because I think it's one of the most underused tools available to us, and honestly, it's not that complicated once you understand the basics.
+
+So, what is A/B testing? Also called split testing, it's simply a controlled experiment where you take two versions of an email, change one thing between them, and send each version to a different portion of your list. You then measure which version performs better and use that as your winner.
+
+The key word there is one thing. That's the most common mistake I see. People change the subject line, the image, the CTA colour, and the email length all at once, and then they have no idea which change made the difference. Test one variable at a time. Always.
+
+So what can you test? Pretty much everything. Subject lines are the most popular thing to test, and for good reason — they have the biggest impact on open rates. You can also test the preview text, the sender name, the email length, the CTA wording, the CTA position, whether you include an image or not, the tone of voice, and even the day and time of sending.
+
+Here's how a typical subject line test works in our team. We take the full list. We split out ten percent of it — five percent going to version A and five percent going to version B. We send both versions at the same time. We wait four hours. After four hours, we look at the open rates. Whichever version has the higher open rate is the winner, and that version gets sent to the remaining ninety percent of the list.
+
+Now, a few things to keep in mind. First, make sure your test groups are large enough to generate statistically meaningful results. If you're testing with fifty people on each side, the results are not reliable — you need at least a few hundred, ideally a few thousand. Second, always test at the same time of day, so external factors like time and day of the week don't influence the results. And third, keep records. Your testing history is one of the most valuable assets your email programme can build over time. Over months and years, you'll develop a deep understanding of what resonates with your specific audience — knowledge that no agency and no consultant can sell you.`,
+  questions:[
+    {q:"What is A/B testing also called?",opts:["Multivariate testing","Split testing","Conversion testing","List testing"],ans:1},
+    {q:"What does Tom say is the most common mistake people make when A/B testing?",opts:["Testing too frequently and annoying subscribers","Not recording the results of their tests","Changing multiple variables at the same time instead of one","Only testing subject lines and ignoring other elements"],ans:2},
+    {q:"Which email element does Tom say is the MOST popular to test and has the BIGGEST impact on open rates?",opts:["The CTA colour","The email length","Subject lines","The sender's name"],ans:2},
+    {q:"According to Tom, how does a typical subject line A/B test work in his team?",opts:["10% to A, 10% to B, wait 24 hours, send winner to 80%","5% to A, 5% to B, wait 4 hours, send winner to 90%","50% to A, 50% to B, wait 1 week, assess results","All to A first, then all to B, then compare"],ans:1},
+    {q:"What is the minimum number of people Tom says you need on each side for reliable results?",opts:["At least 10","At least 50","At least a few hundred, ideally thousands","Exactly 1,000"],ans:2},
+    {q:"Why does Tom recommend always testing at the same time of day?",opts:["Because email servers perform better at specific times","Because subscribers prefer receiving emails at consistent times","So that time and day of the week do not influence the results","Because the email platform requires it"],ans:2},
+    {q:"What does Tom describe as 'one of the most valuable assets your email programme can build'?",opts:["A large subscriber list","A sophisticated email platform","Your testing history and records over time","A library of email templates"],ans:2},
+    {q:"What does Tom say about the knowledge gained from months of A/B testing?",opts:["It confirms what agencies already know about best practice","It is freely available from most email marketing blogs","It's something no agency or consultant can sell you — it's unique to your audience","It is only useful for e-commerce businesses"],ans:2}
+  ]
+},
+{
+  emoji:"🎯",
+  title:"Activity 3: Writing Subject Lines That Get Opened",
+  sub:"Claire Merton, Senior Copywriter — Agency workshop session",
+  level:"B2",type:"Multiple Choice",focus:"Understanding professional explanations",
+  transcript:`Right, let's talk about subject lines, because in my experience, this is where most email campaigns are won or lost. You can have the most beautifully written email body in the world, but if nobody opens it, it doesn't matter. So the subject line is where I want all of us to spend the most time.
+
+Let me start with some principles. The best subject lines do one of three things: they create curiosity, they communicate a clear benefit, or they create urgency. Sometimes they manage two of these at once, and occasionally all three. Let me give you examples of each.
+
+Curiosity: 'We almost didn't send this.' Now, what does that do? It makes you want to know what's inside. There's no information in the subject line at all, and that's the point. The reader's brain cannot resist wanting to resolve the mystery. 'The one thing your competitors aren't doing' works the same way. You're not telling them what the thing is — you're making them desperate to find out.
+
+Benefit: 'Get your first month free.' Clear, simple, direct. There's a reason to open because there's a reason to care. 'Save 25% on everything this weekend only' — again, completely explicit about what's in it for the reader.
+
+Urgency: 'Your cart expires in 3 hours.' Or: 'Last chance: sale ends at midnight.' These work because of a very simple psychological principle — people hate missing out. They are loss-averse. The threat of losing something motivates action far more effectively than the promise of gaining the same thing.
+
+Now, a few technical things. Keep subject lines short. On most mobile devices, anything over about forty characters gets cut off. Test this on your own phone — hold it vertically and look at your inbox. You'll immediately understand the constraint. Avoid ALL CAPS and excessive exclamation marks. They look spammy, they feel aggressive, and many spam filters penalise them. And avoid the word FREE in capitals — it's one of the most reliable spam triggers in existence.
+
+Finally, write your subject line and preview text as a pair. The preview text is the line that appears right next to the subject line in the inbox. Most email clients show forty to ninety characters of preview text. Together, the subject line and preview text are your two-line pitch. Write them together. Edit them together. They should feel like the beginning of a sentence, not two separate thoughts.`,
+  questions:[
+    {q:"According to Claire, what are the THREE things the best subject lines do?",opts:["Inform, entertain, and persuade","Create curiosity, communicate a clear benefit, or create urgency","Use the recipient's name, include the brand, and state a price","Ask a question, make a promise, and include a deadline"],ans:1},
+    {q:"What principle does the subject line 'We almost didn't send this' use?",opts:["Clear benefit","Urgency and scarcity","Curiosity — making the reader want to resolve a mystery","Social proof"],ans:2},
+    {q:"According to Claire, what psychological principle do urgency-based subject lines exploit?",opts:["People love receiving gifts and rewards","People always respond to clear, direct communication","People are loss-averse — the threat of losing something motivates action more than a gain","People trust familiar brands more than new ones"],ans:2},
+    {q:"What does Claire recommend as the maximum character length for a subject line on mobile devices?",opts:["About 20 characters","About 40 characters","About 80 characters","About 120 characters"],ans:1},
+    {q:"Why does Claire say to avoid ALL CAPS and excessive exclamation marks?",opts:["They are grammatically incorrect in formal English","They are unprofessional and reduce the perceived quality of the brand","They look spammy, feel aggressive, and are penalised by many spam filters","They make the subject line too long for mobile screens"],ans:2},
+    {q:"What does Claire say about the word FREE in capitals?",opts:["It is one of the most effective ways to increase open rates","It is no longer relevant as spam filters have become smarter","It is one of the most reliable spam triggers in existence","It should only be used for e-commerce brands"],ans:2},
+    {q:"How many characters of preview text do most email clients display?",opts:["5 to 15 characters","40 to 90 characters","100 to 150 characters","200 or more characters"],ans:1},
+    {q:"How does Claire say the subject line and preview text should be written?",opts:["Separately, with different copywriters working on each","The subject line first, then the preview text as an afterthought","As a pair, together, feeling like the beginning of a sentence","The preview text first, then the subject line to complement it"],ans:2}
+  ]
+},
+{
+  emoji:"📊",
+  title:"Activity 4: Understanding Email Marketing Metrics",
+  sub:"Priya Kapoor, Digital Marketing Director — Quarterly review presentation",
+  level:"B2",type:"Multiple Choice",focus:"Listening for detail and implication",
+  transcript:`Good afternoon everyone. I want to use this session to walk through our email metrics in a way that goes beyond just reading numbers off a dashboard. I find that the most important skill in email marketing is not generating the data &mdash; that happens automatically &mdash; it's knowing how to interpret it and knowing which questions to ask.
+
+Let me start with the most watched metric: open rate. Our current average is twenty-two percent. Is that good? Well, the industry average for our sector is around twenty-one percent, so we're marginally above benchmark. But here's the thing &mdash; open rate is increasingly unreliable as a primary metric, because of a change Apple made in 2021. Apple's Mail Privacy Protection feature means that every email opened in Apple Mail is registered as opened, whether the person actually read it or not. This can artificially inflate open rates significantly, particularly for audiences with a high proportion of Apple device users. So we should treat our open rate data with some caution, especially at the individual level.
+
+Click-through rate is a more reliable engagement signal. Our overall CTR is two point eight percent. But when we segment by campaign type, the picture gets more interesting. Our nurture emails, the ones providing educational content, are averaging three point six percent CTR. Our promotional discount emails are averaging two point one percent. Now, you might expect the discount emails to generate higher clicks, since there's an obvious, immediate incentive. But what we're seeing is consistent with broader industry data: subscribers who receive a high proportion of promotional emails gradually disengage, while those receiving a healthy mix of valuable content remain much more engaged over time.
+
+Conversion rate is where the real business impact is measured. We're averaging one point nine percent across all campaigns, but our best-performing segments are converting at over four percent. What drives that difference? Segmentation and personalisation. The four-percent segments are receiving emails that are specifically relevant to their purchase history and behaviour.
+
+Finally, let me talk about unsubscribe rate and what it tells us. Our monthly unsubscribe rate is zero point four percent. Below one percent is generally considered healthy. But I always look at unsubscribe rate in relation to the content we sent that week. Spikes in unsubscribes almost always correlate with emails that were sent too frequently, were irrelevant to the segment, or were overly promotional in a context where the subscriber expected value. The unsubscribe button is your subscribers' way of telling you something, and it's worth listening to.`,
+  questions:[
+    {q:"What does Priya say is the most important skill in email marketing?",opts:["Generating large volumes of data automatically","Building large subscriber lists quickly","Knowing how to interpret data and which questions to ask","Designing visually appealing email templates"],ans:2},
+    {q:"What is the company's current average open rate, and how does it compare to the industry benchmark?",opts:["18%, below the 21% benchmark","22%, marginally above the 21% benchmark","28%, well above the 21% benchmark","21%, exactly at the benchmark"],ans:1},
+    {q:"Why does Priya say open rate is increasingly unreliable as a primary metric?",opts:["Because most subscribers delete emails without opening them","Because email platforms calculate it differently from each other","Because Apple's Mail Privacy Protection registers every email in Apple Mail as opened, regardless of whether it was read","Because open rate cannot be measured accurately on mobile devices"],ans:2},
+    {q:"What is the company's overall click-through rate?",opts:["1.2%","2.8%","3.6%","4.1%"],ans:1},
+    {q:"Which type of email achieves a HIGHER CTR in Priya's data: nurture emails or promotional discount emails?",opts:["Promotional discount emails, at 3.6%","Nurture educational emails, at 3.6%","Both achieve exactly the same CTR","Promotional emails, at 2.8%"],ans:1},
+    {q:"What does Priya's data suggest about subscribers who receive a high proportion of promotional emails?",opts:["They convert at higher rates than those receiving educational content","They gradually disengage over time","They unsubscribe less frequently than other groups","They share the emails more widely on social media"],ans:1},
+    {q:"What is the conversion rate of the best-performing segments, and what drives it?",opts:["Over 4%, driven by segmentation and personalisation","Over 4%, driven by higher promotional discount offers","2.8%, driven by frequent email sending","1.9%, driven by strong subject lines"],ans:0},
+    {q:"What does Priya say spikes in the unsubscribe rate almost always correlate with?",opts:["Emails with poor subject lines","Emails sent on the wrong day of the week","Emails sent too frequently, irrelevant to the segment, or overly promotional","Emails that are too long"],ans:2}
+  ]
+}
+],
+cs1:{questions:[
+  {q:"What percentage of Verdana Plants' total revenue was email generating before the programme overhaul?",opts:["Less than 8%","Around 15%","About 25%","Over 30%"],ans:0},
+  {q:"What was Verdana Plants' average email open rate before the changes, and how did it compare to the industry average?",opts:["16.4%, below the 21.3% industry average","21.3%, exactly at the industry average","24.1%, above the 21.3% average","16.4%, above the industry average"],ans:0},
+  {q:"What were the THREE core problems identified by the email programme audit?",opts:["Poor subject lines, no mobile optimisation, and slow delivery","Everyone received the same email regardless of behaviour, content was entirely promotional, and subject lines were generic","A small subscriber list, no automation, and poor deliverability","Low send frequency, no A/B testing, and poor brand consistency"],ans:1},
+  {q:"How many segments was the subscriber list divided into?",opts:["Two: buyers and non-buyers","Three: new, active, and lapsed","Five: first-time buyers, repeat buyers, high-value customers, engaged non-buyers, and lapsed subscribers","Seven, based on product category interest"],ans:2},
+  {q:"What subject line was used in the re-engagement campaign for lapsed subscribers?",opts:["&ldquo;Come back — we need you!&rdquo;","&ldquo;We miss you — here's 15% back.&rdquo;","&ldquo;Your exclusive discount is waiting.&rdquo;","&ldquo;It's been a while. Let's reconnect.&rdquo;"],ans:1},
+  {q:"What was the new content ratio adopted for the redesigned email programme?",opts:["100% promotional","80% promotional, 20% value content","60% value content, 40% promotional","50% value, 50% promotional"],ans:2},
+  {q:"How was the A/B testing programme structured for each campaign?",opts:["100% of list received version A first, then version B one week later","The winning version from last month was sent to all subscribers","20% split equally into two test groups for 4 hours; winner sent to remaining 80%","50% received version A and 50% received version B; both results were published"],ans:2},
+  {q:"What was the open rate after three months, following the programme changes?",opts:["From 16.4% to 19.2%","From 16.4% to 24.1%","From 16.4% to 31.5%","From 16.4% to 21.3%"],ans:1},
+  {q:"What percentage of total revenue was email contributing after six months?",opts:["8.2%","16.4%","24.3%","38.0%"],ans:2},
+  {q:"What does the Verdana Plants case study demonstrate about generic, one-size-fits-all email programmes?",opts:["They are effective for small e-commerce brands with fewer than 50,000 subscribers","They can still perform well if the subject lines are strong","They consistently underperform compared to segmented, content-mixed programmes","They are only ineffective if the brand does not use personalisation"],ans:2}
+]},
+cs2:{questions:[
+  {q:"What type of law does Northfield Legal specialise in?",opts:["Criminal law and litigation","Property and conveyancing law","Employment and commercial law for SMEs","International tax law"],ans:2},
+  {q:"What was the size of the firm's existing contact database?",opts:["Around 500 contacts","Around 3,800 contacts","Around 12,000 contacts","Around 50,000 contacts"],ans:1},
+  {q:"What was the biggest challenge the firm faced in designing its email programme?",opts:["Finding enough content to write about","Getting subscribers to opt in to the list","Maintaining a tone that was expert and measured without being salesy, while complying with regulations","Choosing the right email platform for their needs"],ans:2},
+  {q:"What was the monthly newsletter titled?",opts:["The Northfield Update","The Northfield Briefing","The SME Legal Monthly","The Legal Compliance Review"],ans:1},
+  {q:"What type of content did the newsletter primarily provide?",opts:["Direct promotions for the firm's legal services","Entertainment and thought leadership with no practical value","Practical guidance on employment law changes, case law, and HR compliance updates","Personal stories from the firm's partners"],ans:2},
+  {q:"What subject line technique did the newsletter use to signal genuine expertise?",opts:["Emoji-heavy, casual subject lines","Questions using specific regulatory references","The partners' names in the subject line","Countdown timers and urgency language"],ans:1},
+  {q:"How many emails were in the onboarding drip sequence for new contacts?",opts:["Three emails","Five emails","Seven emails","Ten emails"],ans:1},
+  {q:"What was the purpose of Email 5 in the onboarding sequence?",opts:["To introduce the firm's pricing structure","To share the firm's most popular downloadable guide","To introduce the team and invite the contact to book a free consultation","To present a limited-time discount on legal services"],ans:2},
+  {q:"What examples of hedging language does the case study give from the email programme?",opts:['"We guarantee..." and "This will definitely..."','"You must..." and "This is essential for..."','"This may be relevant if..." and "Many businesses find that..." and "You might want to consider..."','"All businesses need..." and "Without this, you will..."'],ans:2},
+  {q:"What was the newsletter's open rate at the end of year one, and how did it compare to the B2B average?",opts:["21%, exactly at the B2B average of 21%","29%, slightly above the 21% average","38%, well above the 21% B2B average","15%, below the 21% B2B average"],ans:2}
+]},
+fa:{questions:[
+  {q:"What does the 'open rate' measure in email marketing?",opts:["The percentage of recipients who click a link in the email","The percentage of recipients who complete a purchase after reading the email","The percentage of recipients who open the email","The percentage of emails that are successfully delivered to inboxes"],ans:2},
+  {q:"Which of the following is the MOST effective CTA in a promotional email?",opts:["Click here.","More information available.","Claim my 25% discount now.","Submit."],ans:2},
+  {q:"What is 'preview text'?",opts:["The first paragraph of the email body that subscribers see after opening","A short snippet of text visible alongside the subject line in the inbox","The alt text that appears when images do not load","The footer text containing the unsubscribe link"],ans:1},
+  {q:"Which conditional structure is used to express a REAL, achievable outcome of taking action?",opts:["Second conditional: If + past, would + verb","Third conditional: If + past perfect, would have + verb","First conditional: If + present, will + verb","Zero conditional: If + present, present"],ans:2},
+  {q:"Which sentence uses hedging language CORRECTLY in a marketing email?",opts:["This product will definitely transform your business within 24 hours.","Many of our customers report seeing results within the first month.","We guarantee you will save exactly £500 per year.","This is the only solution that works for businesses like yours."],ans:1},
+  {q:"What is 'list hygiene'?",opts:["Formatting emails so they display correctly on all devices","Regularly removing invalid, inactive, or unengaged addresses from the mailing list","Ensuring all emails comply with GDPR requirements","Writing subject lines that avoid spam trigger words"],ans:1},
+  {q:"In the Verdana Plants case study, what did the re-engagement campaign target?",opts:["High-value customers who had not opened an email in 30 days","First-time buyers who had not made a second purchase","Lapsed subscribers who had become inactive","New subscribers who had not yet made a purchase"],ans:2},
+  {q:"Which sentence uses a SOFTENED imperative correctly?",opts:["Buy this product now.","Please take a moment to update your preferences.","You are required to click the button below.","Clicking the button would be appreciated."],ans:1},
+  {q:"What does 'deliverability' refer to in email marketing?",opts:["The speed at which an email is delivered to the recipient's server","The ability of an email to reach the recipient's inbox rather than being filtered as spam","The formatting quality of the email on different devices","The accuracy of the email content and claims"],ans:1},
+  {q:"What is A/B testing in email marketing?",opts:["Sending the same email twice to the same list to measure consistency","An experiment where two versions of an email element are sent to different portions of the list to determine which performs better","A method of personalising emails based on the recipient's purchase history","A technique for scheduling emails at optimal times of day"],ans:1},
+  {q:"Which imperative structure is an example of a 'first-person CTA'?",opts:["Download now.","Yes, send me the free guide.","Learn more about our products.","Don't miss this offer."],ans:1},
+  {q:"What does the second conditional express in marketing email copy?",opts:["A real, immediate offer that the reader can act on today","A past event that can no longer be changed","A hypothetical or aspirational scenario to make the reader imagine a better situation","A general truth about the product or service"],ans:2},
+  {q:"According to the module content, what percentage of email recipients open an email based on the subject line alone?",opts:["22%","35%","47%","60%"],ans:2},
+  {q:"What does 'behavioural segmentation' mean in an email context?",opts:["Grouping subscribers by personality type using psychographic data","Targeting subscribers based on actions they have taken: opens, page visits, purchases, abandoned carts","Dividing the list by demographic factors such as age and gender","Sending different emails based on the subscriber's geographic location"],ans:1},
+  {q:"In the Northfield Legal case study, what type of language was used throughout to avoid making specific legal claims?",opts:["Imperative language","Urgency and scarcity language","Hedging language: 'This may be relevant if...', 'You might want to consider...'","Strong promotional language with direct calls to action"],ans:2},
+  {q:"Which of the following is listed as a spam trigger word to AVOID in subject lines?",opts:["Exclusive","Limited","Now","FREE (in capitals)"],ans:3},
+  {q:"What is a 'drip campaign'?",opts:["An email sent to subscribers during a seasonal sale","A campaign that tests different email designs across the subscriber list","An automated series of pre-written emails sent at set intervals or triggered by subscriber behaviour","A one-off newsletter sent to all subscribers simultaneously"],ans:2},
+  {q:"What was the key insight from the Verdana Plants case study about content mix?",opts:["100% promotional emails generate the highest revenue","The optimal ratio is 80% promotional and 20% educational","A mix of 60% value content and 40% promotional outperformed the previous all-promotional approach","Equal parts promotional and educational content always performs best"],ans:2},
+  {q:"Which sentence correctly uses 'unless' to express urgency in a marketing email?",opts:["Unless you buy this product, you will be unhappy.","Unless you act before midnight, your discount will expire.","Unless we send you more emails, you will forget us.","Unless this email interests you, please unsubscribe."],ans:1},
+  {q:"What does Priya Kapoor say about the reliability of open rate as a metric since 2021?",opts:["It has become more reliable due to improvements in email tracking technology","It remains the single most important metric for measuring email campaign success","It is increasingly unreliable because Apple's Mail Privacy Protection inflates open rates","It should only be used for B2B email programmes, not B2C"],ans:2}
+]}
+};
+
+function renderMCQ(containerId,questions,prefix,isListening){
+  const c=document.getElementById(containerId);if(!c)return;
+  const wrap=isListening?'<div class="listen-mcq-wrap">':'';
+  const wrapClose=isListening?'</div>':'';
+  c.innerHTML=wrap+questions.map((item,i)=>`
+    <div class="mcq-item" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((o,j)=>`<div class="mcq-option" onclick="selectOpt('${prefix}',${i},${j})" id="${prefix}-q${i}-o${j}"><span class="opt-letter">${['A','B','C','D'][j]}</span>${o}</div>`).join('')}
+      </div>
+    </div>`).join('')+wrapClose;
+}
+function selectOpt(prefix,qi,oi){
+  const item=DATA[prefix].questions[qi];
+  for(let j=0;j<item.opts.length;j++){const el=document.getElementById(`${prefix}-q${qi}-o${j}`);if(el)el.classList.remove('selected');}
+  const el=document.getElementById(`${prefix}-q${qi}-o${oi}`);if(el)el.classList.add('selected');
+}
+function checkMCQ(prefix){
+  const qs=DATA[prefix].questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#${prefix}-q${i} .mcq-option`);
+    let chosen=-1;opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+    if(chosen===item.ans)score++;
+  });
+  const fb=document.getElementById(`${prefix}-feedback`);
+  if(fb){fb.className='feedback show '+(score>=Math.ceil(total*0.7)?'good':'bad');fb.textContent=score>=Math.ceil(total*0.7)?`✅ Well done! You scored ${score}/${total}.`:`❌ You scored ${score}/${total}. Review the relevant sections and try again.`;}
+  const sc=document.getElementById(`${prefix}-score`);
+  if(sc){sc.className='score-display show';sc.innerHTML=`<div><div class="score-label">Your Score</div><div class="score-val">${score}/${total}</div></div><div style="font-size:13px;color:var(--text-light)">${Math.round(score/total*100)}%</div>`;}
+}
+function renderGaps(){
+  const c=document.getElementById('v2-gaps');if(!c)return;
+  c.innerHTML=DATA.v2gaps.map((g,i)=>`<div class="gap-sentence">${i+1}. ${g.sent.replace('_______',`<input class="gap-input" id="gap-${i}" placeholder="?" autocomplete="off">`)}</div>`).join('');
+}
+function checkGaps(){
+  let score=0;
+  DATA.v2gaps.forEach((g,i)=>{
+    const el=document.getElementById(`gap-${i}`);if(!el)return;
+    const val=el.value.trim().toLowerCase();
+    if(val===g.ans.toLowerCase()){score++;el.style.borderBottomColor='var(--success)';el.style.color='var(--success)';}
+    else{el.style.borderBottomColor='var(--error)';el.style.color='var(--error)';el.value=g.ans;}
+  });
+  const fb=document.getElementById('v2-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`✅ Great work! ${score}/10 correct.`:`❌ ${score}/10 correct. Correct answers shown in red.`;
+}
+const tfAnswers={};
+function renderTF(){
+  const c=document.getElementById('v3-tf');if(!c)return;
+  c.innerHTML=DATA.v3tf.map((item,i)=>`
+    <div class="tf-item" id="tf-${i}">
+      <div class="tf-stmt">${i+1}. ${item.stmt}</div>
+      <div class="tf-btns"><button class="tf-btn" onclick="selectTF(${i},true,this)">True</button><button class="tf-btn" onclick="selectTF(${i},false,this)">False</button></div>
+    </div>`).join('');
+}
+function selectTF(i,val,btn){
+  tfAnswers[i]=val;const row=document.getElementById(`tf-${i}`);
+  row.querySelectorAll('.tf-btn').forEach(b=>b.className='tf-btn');
+  btn.className='tf-btn '+(val?'sel-t':'sel-f');
+}
+function checkTF(){
+  let score=0;
+  DATA.v3tf.forEach((item,i)=>{
+    if(tfAnswers[i]===undefined)return;
+    const row=document.getElementById(`tf-${i}`);
+    row.querySelectorAll('.tf-btn').forEach(b=>{
+      const isTrue=b.textContent.trim()==='True';b.className='tf-btn';
+      if(isTrue===item.ans){b.style.background=item.ans?'#dcfce7':'#fee2e2';b.style.borderColor=item.ans?'var(--success)':'var(--error)';b.style.color=item.ans?'var(--success)':'var(--error)';b.textContent=(isTrue?'True':'False')+' ✓';}
+    });
+    if(tfAnswers[i]===item.ans)score++;
+  });
+  const fb=document.getElementById('v3-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`✅ Excellent! ${score}/10 correct.`:`❌ ${score}/10 correct. Review the vocabulary definitions.`;
+}
+
+function renderListening(){
+  const c=document.getElementById('listening-cards');if(!c)return;
+  c.innerHTML=DATA.listening.map((act,ai)=>`
+    <div class="audio-card">
+      <div class="audio-header">
+        <div class="audio-emoji">${act.emoji}</div>
+        <div><div class="audio-title">${act.title}</div><div class="audio-sub">${act.sub}</div>
+          <div class="audio-tags"><span class="audio-tag tag-level">Level: ${act.level}</span><span class="audio-tag tag-type">${act.type}</span><span class="audio-tag tag-focus">Focus: ${act.focus}</span></div>
+        </div>
+      </div>
+      <div class="player-box">
+        <div class="player-row">
+          <button class="play-btn" id="play-${ai}" onclick="handlePlay(${ai})">&#9654;</button>
+          <div class="player-info"><div class="player-title-sm">${act.title}</div><div class="player-sub-sm">${act.sub}</div></div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="player-progress"><div class="player-progress-fill" id="pf-${ai}"></div></div>
+        <div class="speed-row">
+          <span class="speed-label">Speed:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7&times;</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2&times;</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">&#8617; Replay</button>
+        </div>
+        <div class="tts-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">&#9660; Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans-${ai}">${act.transcript.split('\n\n').map(p=>`<p>${p.trim()}</p>`).join('')}</div>
+      <div class="listen-instruction">📋 Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</div>
+      <div class="listen-mcq-wrap">
+        <div class="mcq-title">Questions — Activity ${ai+1}</div>
+        <div id="la${ai}-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('la${ai}')">Check Answers</button>
+        <div id="la${ai}-feedback" class="feedback"></div>
+        <div id="la${ai}-score" class="score-display"></div>
+      </div>
+    </div>`).join('');
+  DATA.listening.forEach((act,ai)=>{
+    DATA[`la${ai}`]={questions:act.questions};
+    renderMCQ(`la${ai}-mcqs`,act.questions,`la${ai}`,true);
+  });
+}
+
+const audioState={};
+function handlePlay(ai){
+  const act=DATA.listening[ai];
+  if(!audioState[ai])audioState[ai]={playing:false,speed:0.85};
+  const st=audioState[ai];const btn=document.getElementById(`play-${ai}`);
+  if(st.playing){window.speechSynthesis.cancel();st.playing=false;btn.innerHTML='&#9654;';if(st.timer)clearInterval(st.timer);return;}
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.lang='en-GB';utt.rate=st.speed;utt.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const chosen=voices.find(v=>v.name==='Google UK English Female')||voices.find(v=>v.lang==='en-GB'&&v.name.toLowerCase().includes('female'))||voices.find(v=>v.lang==='en-GB');
+  if(chosen)utt.voice=chosen;
+  const words=act.transcript.split(/\s+/).length;const dur=Math.round(words/(st.speed*2.6));
+  const fmt=(s)=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  document.getElementById(`time-${ai}`).textContent=`0:00 / ${fmt(dur)}`;
+  let elapsed=0;
+  st.timer=setInterval(()=>{
+    if(!audioState[ai].playing){clearInterval(st.timer);return;}
+    elapsed++;document.getElementById(`pf-${ai}`).style.width=Math.min(elapsed/dur*100,100)+'%';
+    document.getElementById(`time-${ai}`).textContent=`${fmt(elapsed)} / ${fmt(dur)}`;
+  },1000);
+  utt.onend=()=>{st.playing=false;btn.innerHTML='&#9654;';clearInterval(st.timer);document.getElementById(`pf-${ai}`).style.width='100%';};
+  window.speechSynthesis.speak(utt);st.playing=true;btn.innerHTML='&#9646;&#9646;';
+}
+function setSpeed(ai,spd,btn){
+  if(!audioState[ai])audioState[ai]={playing:false,speed:spd};audioState[ai].speed=spd;
+  btn.closest('.audio-card').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  if(audioState[ai].playing){window.speechSynthesis.cancel();audioState[ai].playing=false;document.getElementById(`play-${ai}`).innerHTML='&#9654;';if(audioState[ai].timer)clearInterval(audioState[ai].timer);setTimeout(()=>handlePlay(ai),80);}
+}
+function replayAudio(ai){
+  if(audioState[ai]){audioState[ai].playing=false;if(audioState[ai].timer)clearInterval(audioState[ai].timer);}
+  window.speechSynthesis.cancel();const pf=document.getElementById(`pf-${ai}`);if(pf)pf.style.width='0%';
+  document.getElementById(`play-${ai}`).innerHTML='&#9654;';setTimeout(()=>handlePlay(ai),80);
+}
+function toggleTranscript(ai){document.getElementById(`trans-${ai}`).classList.toggle('open');}
+function updateWordCount(id,max){
+  const ta=document.getElementById(`${id}-text`);const wc=document.getElementById(`${id}-wc`);if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  wc.textContent=`${words} / ${max} words`;wc.style.color=words>max?'var(--error)':'var(--text-light)';
+}
+function submitWriting(id){
+  const ta=document.getElementById(`${id}-text`);if(!ta||ta.value.trim().length<30){alert('Please write your response before submitting.');return;}
+  const s=document.getElementById(`${id}-success`);s.style.display='block';s.scrollIntoView({behavior:'smooth'});
+}
+let attemptCount=0;
+function renderAssessment(){renderMCQ('fa-mcqs',DATA.fa.questions,'fa',false);}
+function submitAssessment(){
+  attemptCount++;const qs=DATA.fa.questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#fa-q${i} .mcq-option`);let chosen=-1;
+    opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    if(chosen===item.ans)score++;
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+  });
+  const pct=Math.round(score/total*100);const pass=pct>=70;
+  const res=document.getElementById('assessment-result');res.style.display='block';res.scrollIntoView({behavior:'smooth'});
+  document.getElementById('result-score-text').className='result-score '+(pass?'pass':'fail');
+  document.getElementById('result-score-text').textContent=`${pct}% — ${score}/${total}`;
+  document.getElementById('result-msg').textContent=pass?'🎉 Congratulations! You have passed Module 5. Excellent work on Writing Effective Marketing Emails.':'❌ You did not reach the 70% pass mark. Please review the module content and try again.';
+  const wrap=document.getElementById('retake-wrap');
+  if(!pass&&attemptCount<2)wrap.innerHTML=`<button class="retake-btn" onclick="retakeAssessment()">Retake Assessment (Attempt ${attemptCount+1} of 2)</button>`;
+  else if(attemptCount>=2&&!pass){wrap.innerHTML=`<p style="color:var(--error);font-size:14px;margin-top:12px">You have used both attempts. Please review the module content.</p>`;document.getElementById('assessment-form').style.display='none';}
+  document.getElementById('attempt-badge').textContent=`Attempt ${attemptCount} of 2`;
+}
+function retakeAssessment(){
+  document.getElementById('assessment-result').style.display='none';
+  document.querySelectorAll('#fa-mcqs .mcq-option').forEach(o=>o.classList.remove('selected','correct','wrong'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(id);if(sec)sec.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{if((n.getAttribute('onclick')||'').includes(`'${id}'`))n.classList.add('active');});
+  window.scrollTo({top:0,behavior:'smooth'});trackProgress(id);
+}
+function trackProgress(id){
+  let v=JSON.parse(sessionStorage.getItem('mkt5v')||'[]');
+  if(!v.includes(id)){v.push(id);sessionStorage.setItem('mkt5v',JSON.stringify(v));}
+  const pct=Math.round(v.length/11*100);
+  const pf=document.getElementById('progress-fill');const pp=document.getElementById('progress-pct');
+  if(pf)pf.style.width=pct+'%';if(pp)pp.textContent=pct+'%';
+}
+window.addEventListener('load',()=>{
+  if(window.speechSynthesis){window.speechSynthesis.getVoices();if(window.speechSynthesis.onvoiceschanged!==undefined)window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();}
+  renderMCQ('r1-mcqs',DATA.r1.questions,'r1',false);
+  renderMCQ('r2-mcqs',DATA.r2.questions,'r2',false);
+  renderMCQ('v1-mcqs',DATA.v1.questions,'v1',false);
+  renderGaps();renderTF();
+  renderMCQ('g1-mcqs',DATA.g1.questions,'g1',false);
+  renderMCQ('g2-mcqs',DATA.g2.questions,'g2',false);
+  renderMCQ('g3-mcqs',DATA.g3.questions,'g3',false);
+  renderListening();
+  renderMCQ('cs1-mcqs',DATA.cs1.questions,'cs1',false);
+  renderMCQ('cs2-mcqs',DATA.cs2.questions,'cs2',false);
+  renderAssessment();
+  trackProgress('overview');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6 · Decision Making and Problem Solving</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d1b2a;--navy2:#162032;--navy3:#1e2d42;
+  --gold:#c9a84c;--gold2:#e8c86d;--gold-light:#fdf3da;
+  --cream:#f5f0e8;--cream2:#faf7f2;
+  --ink:#1a2332;--text:#2c3e50;--muted:#6b7a8d;
+  --border:#ddd8ce;--border2:#e8e4dc;
+  --mint:#1a8a6e;--rose:#c0392b;--sky:#2a6496;
+  --radius:10px;--shadow:0 2px 20px rgba(13,27,42,.10);
+  --sidebar:260px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream2);color:var(--text);min-height:100vh;display:flex}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:200;display:flex;flex-direction:column}
+.sb-brand{padding:28px 22px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand h2{font-family:'Fraunces',serif;color:var(--gold2);font-size:17px;line-height:1.3}
+.sb-brand p{color:rgba(255,255,255,.4);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-family:'DM Mono',monospace}
+.sb-badge{display:inline-block;margin-top:8px;background:var(--gold);color:var(--navy);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-family:'DM Mono',monospace}
+.sb-section{padding:16px 14px 4px;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.25);text-transform:uppercase;font-family:'DM Mono',monospace}
+.sb-nav{list-style:none;padding:0 10px 20px}
+.sb-nav li a{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,.6);font-size:13px;text-decoration:none;transition:.2s;gap:8px}
+.sb-nav li a:hover{background:rgba(255,255,255,.07);color:#fff}
+.sb-nav li a.active{background:rgba(201,168,76,.15);color:var(--gold2);font-weight:600}
+.sb-nav li a .nav-icon{font-size:15px;flex-shrink:0}
+.sb-nav li a .nav-label{flex:1}
+.sb-nav li a .nav-count{font-size:9px;background:rgba(255,255,255,.1);border-radius:20px;padding:2px 7px;font-family:'DM Mono',monospace;color:rgba(255,255,255,.45);flex-shrink:0}
+.sb-nav li a.active .nav-count{background:rgba(201,168,76,.25);color:var(--gold2)}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar);flex:1;min-height:100vh}
+
+/* HERO */
+.hero{background:var(--navy);min-height:320px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--navy) 0%,#1a2f4a 60%,#0f2035 100%)}
+.hero-pattern{position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(201,168,76,1) 39px,rgba(201,168,76,1) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(201,168,76,1) 39px,rgba(201,168,76,1) 40px)}
+.hero-letter{position:absolute;right:-20px;bottom:-40px;font-family:'Fraunces',serif;font-size:300px;font-weight:900;color:rgba(255,255,255,.02);line-height:1;pointer-events:none;user-select:none}
+.hero-content{position:relative;z-index:1;padding:44px 52px 36px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold2);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:30px;font-family:'DM Mono',monospace;margin-bottom:18px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);line-height:1.08;color:#fff;font-weight:900;max-width:700px}
+.hero h1 em{color:var(--gold2);font-style:normal}
+.hero-desc{color:rgba(255,255,255,.55);font-size:15px;max-width:580px;line-height:1.75;margin-top:14px;font-weight:300}
+.hero-stats{display:flex;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.08);margin-top:32px;padding-top:0}
+.stat-item{padding:22px 32px 22px 0;border-right:1px solid rgba(255,255,255,.07);margin-right:32px}
+.stat-item:last-child{border-right:none;margin-right:0}
+.stat-num{font-family:'Fraunces',serif;font-size:36px;color:var(--gold2);font-weight:700;line-height:1}
+.stat-label{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-family:'DM Mono',monospace}
+
+/* PROGRESS */
+.progress-bar-wrap{background:var(--navy2);padding:14px 52px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:18px}
+.progress-label{color:rgba(255,255,255,.45);font-size:12px;font-family:'DM Mono',monospace;white-space:nowrap}
+.progress-track{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:10px;width:0%;transition:width 1.2s ease}
+.progress-pct{color:var(--gold2);font-size:12px;font-family:'DM Mono',monospace;font-weight:600;white-space:nowrap}
+
+/* CONTENT */
+.content{padding:44px 52px;max-width:1000px}
+
+/* SECTION HEADER */
+.sec-header{margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.sec-header-inner{display:flex;align-items:flex-start;gap:16px}
+.sec-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;margin-top:2px}
+.sec-text .sec-title{font-family:'Fraunces',serif;font-size:30px;color:var(--navy);font-weight:700;line-height:1.1}
+.sec-text .sec-sub{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px}
+
+.divider{height:1px;background:var(--border);margin:52px 0}
+
+/* OVERVIEW */
+.overview-intro{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+.overview-intro p{font-size:14.5px;line-height:1.9;font-weight:300;color:var(--text)}
+.overview-intro p strong{font-weight:600;color:var(--navy)}
+.lo-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.lo-list li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text);line-height:1.6;font-weight:300}
+.lo-list li::before{content:'✓';color:var(--mint);font-weight:700;font-size:14px;flex-shrink:0;margin-top:1px}
+
+/* INFO BOX */
+.info-box{background:linear-gradient(135deg,#fffbf0,#fdf5e0);border:1px solid rgba(201,168,76,.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;font-size:13px;color:#6b4e00;line-height:1.7}
+
+/* SPEAKING */
+.speaking-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px}
+.sq{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:18px 20px;display:flex;gap:14px;box-shadow:var(--shadow);transition:.2s;align-items:flex-start}
+.sq:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(13,27,42,.12);border-color:var(--gold)}
+.sq-num{width:32px;height:32px;border-radius:8px;background:var(--navy);color:var(--gold2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;flex-shrink:0}
+.sq-text{font-size:13.5px;line-height:1.65;color:var(--text)}
+
+/* WORD BANK */
+.wb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.wb-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:14px 16px;display:flex;gap:12px;box-shadow:var(--shadow);transition:.15s;align-items:flex-start}
+.wb-card:hover{border-color:var(--gold);transform:translateY(-1px)}
+.wb-icon{font-size:26px;flex-shrink:0;width:36px;text-align:center;line-height:1;padding-top:2px}
+.wb-info{flex:1;min-width:0}
+.wb-pos{font-size:9px;color:var(--sky);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.wb-word{font-weight:700;font-size:13.5px;color:var(--navy);font-family:'Fraunces',serif;line-height:1.2;margin-bottom:3px}
+.wb-def{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* READING */
+.reading-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:34px;margin-bottom:18px;box-shadow:var(--shadow)}
+.reading-card h3{font-family:'Fraunces',serif;font-size:21px;color:var(--navy);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border2)}
+.reading-card p{font-size:14.5px;line-height:1.95;color:var(--text);margin-bottom:14px;font-weight:300}
+.reading-card p:last-child{margin-bottom:0}
+
+/* QUIZ */
+.quiz-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:14px}
+.quiz-title{font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:var(--navy);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border2)}
+.q-item{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border2)}
+.q-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.q-stem{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px;line-height:1.55}
+.options{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 13px;border-radius:8px;border:1.5px solid var(--border2);cursor:pointer;font-size:13px;transition:.15s;background:#fff;font-family:'DM Sans',sans-serif;line-height:1.5}
+.opt:hover{border-color:var(--gold);background:var(--gold-light)}
+.opt input[type=radio]{accent-color:var(--navy);width:14px;height:14px;flex-shrink:0;margin-top:2px}
+.opt.correct{border-color:var(--mint)!important;background:#e8f8f3!important;color:#0d6b4f!important}
+.opt.wrong{border-color:var(--rose)!important;background:#fdf0ef!important;color:#8b1a12!important}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:10px;margin-top:16px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;border:none;transition:.18s;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--navy);color:#fff}.btn-primary:hover{background:var(--navy3)}
+.btn-gold{background:var(--gold);color:var(--navy)}.btn-gold:hover{background:var(--gold2)}
+.btn-outline{background:transparent;border:1.5px solid var(--navy);color:var(--navy)}.btn-outline:hover{background:var(--navy);color:#fff}
+.score-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-weight:700;font-size:13px;font-family:'DM Mono',monospace}
+.sb-good{background:#e8f8f3;color:#0d6b4f;border:1px solid #86c9b0}
+.sb-ok{background:#fffbeb;color:#7c5c00;border:1px solid #e8c86d}
+.sb-bad{background:#fdf0ef;color:#8b1a12;border:1px solid #e8a09a}
+
+/* GAP FILL */
+.gap-input{border:none;border-bottom:2px solid var(--gold);outline:none;padding:2px 6px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--navy);background:transparent;min-width:160px;transition:.15s}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.gap-input.correct{border-bottom-color:var(--mint);color:var(--mint)}
+.gap-input.wrong{border-bottom-color:var(--rose);color:var(--rose)}
+
+/* DRAG DROP */
+.drag-bank{display:flex;flex-wrap:wrap;gap:7px;padding:12px;background:#f5f2ec;border-radius:8px;margin-bottom:12px;min-height:48px}
+.drag-chip{padding:5px 13px;border-radius:20px;background:var(--navy);color:#fff;font-size:12px;cursor:pointer;user-select:none;font-family:'DM Mono',monospace;transition:.15s;border:2px solid transparent}
+.drag-chip.selected-chip{border-color:var(--gold);background:var(--navy3)}
+.drag-chip.used{opacity:.25;pointer-events:none}
+.drop-zone{border:2px dashed var(--gold);border-radius:7px;padding:6px 12px;min-width:130px;min-height:34px;display:inline-flex;align-items:center;justify-content:center;background:#fffbf0;font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;vertical-align:middle;margin:0 3px;cursor:pointer;transition:.15s}
+.drop-zone.filled{border-style:solid;border-color:var(--mint);background:#e8f8f3;color:var(--navy);font-weight:600}
+.drop-zone.wrong-drop{border-color:var(--rose);background:#fdf0ef;color:var(--rose)}
+
+/* TRUE/FALSE */
+.tf-row{display:flex;gap:8px;margin-top:7px}
+.tf-btn{padding:5px 16px;border-radius:20px;border:1.5px solid var(--border2);cursor:pointer;font-size:12px;font-weight:600;background:#fff;transition:.15s;font-family:'DM Sans',sans-serif}
+.tf-btn:hover{border-color:var(--gold)}
+.tf-btn.sel-t{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tf-btn.sel-f{background:var(--navy3);color:#fff;border-color:var(--navy3)}
+.tf-btn.ok-tf{background:var(--mint);color:#fff;border-color:var(--mint)}
+.tf-btn.nok-tf{background:var(--rose);color:#fff;border-color:var(--rose)}
+
+/* ANSWER KEY */
+.ak-wrap{margin-top:12px}
+.ak-toggle{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--navy);color:#fff;border-radius:8px;cursor:pointer;font-size:12px;font-family:'DM Mono',monospace;border:none;width:100%;text-align:left;transition:.18s}
+.ak-toggle:hover{background:var(--navy3)}
+.ak-icon{transition:.3s;font-size:13px}
+.ak-toggle.open .ak-icon{transform:rotate(90deg)}
+.ak-content{display:none;padding:16px;background:#f8f6f2;border:1px solid var(--border2);border-top:none;border-radius:0 0 8px 8px;font-size:12.5px;line-height:1.9}
+.ak-content.visible{display:block}
+.ak-content ol{padding-left:18px}
+.ak-content li{margin-bottom:4px}
+.ak-content strong{color:var(--navy)}
+
+/* GRAMMAR BOXES */
+.grammar-box{background:#fff;border-left:4px solid var(--gold);border-radius:0 10px 10px 0;padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow)}
+.grammar-box h4{font-family:'Fraunces',serif;font-weight:700;color:var(--navy);font-size:16px;margin-bottom:10px}
+.grammar-box p{font-size:13px;line-height:1.8;color:var(--text);font-weight:300;margin-bottom:8px}
+.grammar-box ul{padding-left:16px;margin-top:6px;margin-bottom:8px}
+.grammar-box li{font-size:13px;line-height:1.8;color:var(--text);font-weight:300;margin-bottom:2px}
+.grammar-box .ex{background:#f5f2ec;border-radius:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:11.5px;color:var(--sky);margin-top:8px;line-height:1.9}
+
+/* WRITING */
+.writing-card{background:linear-gradient(135deg,#f5f3ee,#faf8f4);border:1px solid var(--border2);border-radius:var(--radius);padding:26px;margin-bottom:18px}
+.writing-card h4{font-family:'Fraunces',serif;font-size:17px;color:var(--navy);margin-bottom:8px}
+.writing-task{font-size:13px;color:var(--text);line-height:1.75;margin-bottom:12px;font-weight:300}
+.writing-area{width:100%;min-height:180px;border:1.5px solid var(--border2);border-radius:8px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);resize:vertical;outline:none;transition:.18s;background:#fff;line-height:1.7}
+.writing-area:focus{border-color:var(--gold)}
+.wc-display{font-size:11px;color:var(--muted);margin-top:4px;font-family:'DM Mono',monospace}
+.tag{display:inline-block;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.4px;margin-right:5px;margin-bottom:8px}
+.tag-navy{background:rgba(13,27,42,.1);color:var(--navy)}
+.tag-gold{background:rgba(201,168,76,.15);color:#7c5c00}
+
+/* LISTENING */
+.listen-block{margin-bottom:28px}
+.listen-header{background:var(--navy);border-radius:var(--radius) var(--radius) 0 0;padding:20px 24px;display:flex;gap:16px;align-items:flex-start}
+.listen-icon{font-size:32px;flex-shrink:0}
+.listen-meta h4{font-family:'Fraunces',serif;font-size:17px;color:#fff;font-weight:700}
+.listen-meta .track-sub{font-size:12px;color:rgba(255,255,255,.45);margin-top:3px}
+.listen-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.ltag{font-size:9px;border:1px solid;padding:2px 8px;border-radius:20px;font-family:'DM Mono',monospace;letter-spacing:.5px;text-transform:uppercase}
+.ltag-gold{border-color:var(--gold);color:var(--gold)}
+.ltag-outline{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.5)}
+.player-wrap{background:#0a1520;border:1px solid rgba(255,255,255,.06);padding:18px 22px}
+.player-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.play-pause-btn{width:44px;height:44px;border-radius:50%;background:var(--rose);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0;transition:.18s}
+.play-pause-btn:hover{background:#d44;transform:scale(1.05)}
+.player-track-info{flex:1;min-width:0}
+.track-title-sm{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track-sub-sm{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.time-display{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.5);white-space:nowrap}
+.progress-audio{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:4px;margin-bottom:10px;cursor:pointer;overflow:hidden}
+.progress-audio-fill{height:100%;background:linear-gradient(90deg,var(--rose),#ff6b6b);border-radius:4px;width:0%;transition:.1s linear;pointer-events:none}
+.speed-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace}
+.speed-btn{padding:3px 10px;border-radius:4px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.5);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:.15s}
+.speed-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700}
+.speed-btn:hover:not(.active){background:rgba(255,255,255,.08);color:#fff}
+.replay-btn{padding:3px 10px;border-radius:4px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.4);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:.15s}
+.replay-btn:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.player-note{font-size:10.5px;color:rgba(255,255,255,.25);font-style:italic;margin-top:8px;font-family:'DM Sans',sans-serif}
+.transcript-toggle-btn{width:100%;padding:11px 18px;background:rgba(255,255,255,.04);border:none;border-top:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.5);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.15s;font-family:'DM Sans',sans-serif}
+.transcript-toggle-btn:hover{background:rgba(255,255,255,.07);color:#fff}
+.transcript-toggle-btn .tt-arrow{transition:.25s;display:inline-block;font-size:10px}
+.transcript-toggle-btn.open .tt-arrow{transform:rotate(90deg)}
+.transcript-box{display:none;padding:16px 22px;background:#0d1e2e;border-top:1px solid rgba(255,255,255,.05)}
+.transcript-box.visible{display:block}
+.transcript-box p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.85;font-weight:300}
+.listen-body{background:#fff;border:1px solid var(--border2);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:22px}
+.instructions-box{background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:10px 14px;font-size:13px;color:var(--text);margin-bottom:18px;line-height:1.6}
+.instructions-box strong{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:3px;color:var(--muted)}
+
+/* CASE STUDY */
+.case-hd{background:linear-gradient(135deg,var(--navy),#1e3054);color:#fff;border-radius:var(--radius) var(--radius) 0 0;padding:22px 26px}
+.case-hd .case-company{font-size:10px;color:var(--gold);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.case-hd h3{font-family:'Fraunces',serif;font-size:20px;font-weight:700}
+.case-body{background:#fff;border:1px solid var(--border2);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:26px;box-shadow:var(--shadow)}
+.case-body p{font-size:14px;line-height:1.9;margin-bottom:14px;font-weight:300;color:var(--text)}
+.case-body p:last-child{margin-bottom:0}
+
+/* FINAL ASSESSMENT */
+.final-wrap{background:linear-gradient(160deg,var(--navy) 0%,#1a2f4a 100%);border-radius:14px;padding:36px;color:#fff}
+.final-wrap .quiz-title{color:#fff;border-bottom-color:rgba(255,255,255,.12);font-size:19px}
+.final-wrap .q-stem{color:rgba(255,255,255,.88)}
+.final-wrap .opt{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.75)}
+.final-wrap .opt:hover{background:rgba(201,168,76,.12);border-color:var(--gold)}
+.final-wrap .opt.correct{border-color:var(--mint)!important;background:rgba(26,138,110,.15)!important;color:#7ee8c8!important}
+.final-wrap .opt.wrong{border-color:var(--rose)!important;background:rgba(192,57,43,.15)!important;color:#f1a49d!important}
+.final-result{text-align:center;padding:28px;background:rgba(255,255,255,.05);border-radius:10px;margin-top:22px;display:none}
+.final-result h2{font-family:'Fraunces',serif;font-size:48px;color:var(--gold2)}
+.final-result p{color:rgba(255,255,255,.6);font-size:14px;margin-top:8px;line-height:1.6}
+.final-prog-wrap{background:rgba(255,255,255,.08);border-radius:20px;height:6px;margin:10px auto;max-width:280px;overflow:hidden}
+.final-prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:20px;transition:.8s}
+.attempts-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-family:'DM Mono',monospace;background:rgba(201,168,76,.15);color:var(--gold2);border:1px solid rgba(201,168,76,.3);margin-bottom:16px}
+
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-brand">
+    <h2>Business Management English</h2>
+    <p>Professional Development</p>
+    <span class="sb-badge">B1–B2 Level</span>
+  </div>
+  <div class="sb-section">Module 6</div>
+  <ul class="sb-nav">
+    <li><a href="#overview" class="active" onclick="setActive(this)"><span class="nav-icon">🏠</span><span class="nav-label">Overview</span></a></li>
+    <li><a href="#speaking" onclick="setActive(this)"><span class="nav-icon">💬</span><span class="nav-label">Speaking</span><span class="nav-count">20Q</span></a></li>
+    <li><a href="#wordbank" onclick="setActive(this)"><span class="nav-icon">📖</span><span class="nav-label">Word Bank</span><span class="nav-count">20</span></a></li>
+    <li><a href="#reading" onclick="setActive(this)"><span class="nav-icon">📄</span><span class="nav-label">Reading</span><span class="nav-count">2T</span></a></li>
+    <li><a href="#vocabulary" onclick="setActive(this)"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span><span class="nav-count">4Ex</span></a></li>
+    <li><a href="#grammar" onclick="setActive(this)"><span class="nav-icon">📐</span><span class="nav-label">Grammar</span><span class="nav-count">3Ex</span></a></li>
+    <li><a href="#grammarreview" onclick="setActive(this)"><span class="nav-icon">📘</span><span class="nav-label">Grammar Review</span></a></li>
+    <li><a href="#writing" onclick="setActive(this)"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span><span class="nav-count">2Ex</span></a></li>
+    <li><a href="#listening" onclick="setActive(this)"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span><span class="nav-count">3Ex</span></a></li>
+    <li><a href="#casestudy" onclick="setActive(this)"><span class="nav-icon">🏢</span><span class="nav-label">Case Studies</span><span class="nav-count">2Ex</span></a></li>
+    <li><a href="#final" onclick="setActive(this)"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></a></li>
+  </ul>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-letter">M6</div>
+  <div class="hero-content">
+    <div class="hero-badge">📋 Module 6 · Business Management English</div>
+    <h1>Decision Making and <em>Problem Solving</em></h1>
+    <p class="hero-desc">Develop the professional English skills to analyse problems systematically, evaluate options with clarity, and communicate decisions persuasively — essential competencies for effective business leadership at every level.</p>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Grammar Ex.</div></div>
+      <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Word Bank</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar-wrap">
+  <span class="progress-label">Module Progress</span>
+  <div class="progress-track"><div class="progress-fill" id="modprog"></div></div>
+  <span class="progress-pct" id="modpct">0%</span>
+</div>
+
+<div class="content">
+
+<!-- ══ OVERVIEW ══ -->
+<section id="overview">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#e8f0fb">🏠</div>
+      <div class="sec-text">
+        <div class="sec-title">Module Overview</div>
+        <div class="sec-sub">B1–B2 · Decision Making and Problem Solving</div>
+      </div>
+    </div>
+  </div>
+  <div class="overview-intro">
+    <p><strong>Welcome to Module 6: Decision Making and Problem Solving.</strong> This module develops the professional English vocabulary and language skills required to analyse complex business problems, evaluate competing options, and communicate decisions with clarity, precision, and confidence. You will study the frameworks that underpin structured decision-making in professional contexts, practise the grammar of analysis and argumentation, and build the listening and writing skills needed to contribute effectively to decision-making processes at every organisational level.</p>
+    <p style="margin-top:12px">By the end of this module, you will be able to:</p>
+    <ul class="lo-list">
+      <li>Use precise vocabulary to describe problem-solving frameworks, decision criteria, and analytical processes.</li>
+      <li>Discuss and evaluate options using structured, professional English language.</li>
+      <li>Apply grammar structures — including conditional sentences, modal verbs of deduction, and cause-and-effect language — in business decision-making contexts.</li>
+      <li>Write a professional problem analysis memo and a structured decision brief.</li>
+      <li>Listen critically to business discussions involving complex decisions and identify key arguments and conclusions.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ SPEAKING ══ -->
+<section id="speaking">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#dbeafe">💬</div>
+      <div class="sec-text">
+        <div class="sec-title">Speaking Activities</div>
+        <div class="sec-sub">20 Discussion Questions · Decision Making & Problem Solving</div>
+      </div>
+    </div>
+  </div>
+  <div class="info-box">Work in pairs or small groups. Discuss each question in detail, using specific examples from professional experience. Try to incorporate vocabulary from the Word Bank in your responses.</div>
+  <div class="speaking-grid">
+    <div class="sq"><div class="sq-num">01</div><div class="sq-text">What do you think is the difference between a problem that needs to be solved and a decision that needs to be made? Can you give a business example of each?</div></div>
+    <div class="sq"><div class="sq-num">02</div><div class="sq-text">Describe a significant business decision you have been involved in. What process did you follow? Would you do anything differently now?</div></div>
+    <div class="sq"><div class="sq-num">03</div><div class="sq-num">03</div><div class="sq-text">What are the advantages and risks of making decisions quickly in a business context? When is speed more important than thoroughness?</div></div>
+    <div class="sq"><div class="sq-num">04</div><div class="sq-text">How do you identify the root cause of a problem rather than just addressing its symptoms? What techniques or tools help?</div></div>
+    <div class="sq"><div class="sq-num">05</div><div class="sq-text">What role does data play in business decision-making? Can you describe a situation where data led to the wrong conclusion?</div></div>
+    <div class="sq"><div class="sq-num">06</div><div class="sq-text">How does cognitive bias affect decision-making in organisations? Can you think of an example of confirmation bias or groupthink at work?</div></div>
+    <div class="sq"><div class="sq-num">07</div><div class="sq-text">What is the difference between a structured, analytical approach to decision-making and a more intuitive or experience-based approach? Which do you prefer?</div></div>
+    <div class="sq"><div class="sq-num">08</div><div class="sq-text">How should a manager communicate a difficult or unpopular decision to their team? What language and approach would you recommend?</div></div>
+    <div class="sq"><div class="sq-num">09</div><div class="sq-text">What is "analysis paralysis"? Have you experienced it — or seen it — in a professional context? How can it be overcome?</div></div>
+    <div class="sq"><div class="sq-num">10</div><div class="sq-text">How do you evaluate the risk associated with a business decision? What criteria do you use to decide whether a risk is acceptable?</div></div>
+    <div class="sq"><div class="sq-num">11</div><div class="sq-text">What is the role of stakeholder input in complex decision-making? When should a manager consult widely, and when should they decide alone?</div></div>
+    <div class="sq"><div class="sq-num">12</div><div class="sq-text">Describe a situation where a decision was made on incomplete or imperfect information. What happened, and what did you learn?</div></div>
+    <div class="sq"><div class="sq-num">13</div><div class="sq-text">What problem-solving frameworks have you used — for example, SWOT analysis, the 5 Whys, or cost-benefit analysis? How effective were they?</div></div>
+    <div class="sq"><div class="sq-num">14</div><div class="sq-text">How do cultural differences affect the way decisions are made in international business teams? Have you experienced this?</div></div>
+    <div class="sq"><div class="sq-num">15</div><div class="sq-text">What is the difference between a tactical decision and a strategic decision? How does the decision-making process differ for each?</div></div>
+    <div class="sq"><div class="sq-num">16</div><div class="sq-text">What do you do when the data and your professional instinct point in opposite directions? How do you decide which to trust?</div></div>
+    <div class="sq"><div class="sq-num">17</div><div class="sq-text">Describe a time when you changed your mind about a decision after receiving new information. How did you communicate the change?</div></div>
+    <div class="sq"><div class="sq-num">18</div><div class="sq-text">How can organisations build a culture where challenging or questioning a decision is seen as constructive rather than disloyal?</div></div>
+    <div class="sq"><div class="sq-num">19</div><div class="sq-text">What are the consequences of making decisions in isolation — without consulting colleagues, data, or precedent? Can you give a real-world example?</div></div>
+    <div class="sq"><div class="sq-num">20</div><div class="sq-text">What advice would you give a junior colleague who is about to make their first major autonomous business decision? What three things should they always do?</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ WORD BANK ══ -->
+<section id="wordbank">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fef3c7">📖</div>
+      <div class="sec-text">
+        <div class="sec-title">Word Bank</div>
+        <div class="sec-sub">20 Key Terms · Decision Making and Problem Solving</div>
+      </div>
+    </div>
+  </div>
+  <div class="wb-grid">
+    <div class="wb-card"><div class="wb-icon">🧠</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Cognitive Bias</div><div class="wb-def">A systematic pattern of deviation from rationality in judgment, caused by the brain's tendency to simplify information processing — often leading to poor decisions.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🎯</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Decision Criteria</div><div class="wb-def">The specific standards, metrics, or requirements against which competing options are evaluated when making a business decision.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔍</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Root Cause Analysis</div><div class="wb-def">A structured method for identifying the fundamental underlying cause of a problem, rather than treating its surface-level symptoms.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">⚖️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Cost-Benefit Analysis</div><div class="wb-def">A systematic process for comparing the total expected costs of a decision or action against its anticipated benefits to determine viability.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔄</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Iterative Process</div><div class="wb-def">An approach to problem-solving in which solutions are developed, tested, and refined through repeated cycles rather than a single linear process.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">👥</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Groupthink</div><div class="wb-def">A psychological phenomenon in which a group's desire for harmony and conformity suppresses critical thinking, leading to poor collective decisions.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📊</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">SWOT Analysis</div><div class="wb-def">A strategic planning framework that evaluates internal Strengths and Weaknesses alongside external Opportunities and Threats to support decision-making.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🚦</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Risk Assessment</div><div class="wb-def">The process of identifying, analysing, and prioritising the potential risks associated with a decision or course of action.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🌊</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Escalation</div><div class="wb-def">The act of referring a problem or decision upward to a more senior level of authority when it exceeds the current decision-maker's authority or capability.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🧩</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Trade-off</div><div class="wb-def">A situation in which gaining one advantage requires accepting a corresponding disadvantage — an inherent tension in most complex business decisions.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🏗️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Decision Framework</div><div class="wb-def">A structured model or methodology used to guide the process of making decisions consistently, transparently, and in alignment with organisational objectives.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🌀</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Analysis Paralysis</div><div class="wb-def">A state in which excessive deliberation or data analysis prevents a decision from being made, often causing missed opportunities and organisational frustration.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📋</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Stakeholder Mapping</div><div class="wb-def">The process of identifying, analysing, and prioritising the individuals or groups who will be affected by or have influence over a decision or initiative.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🎲</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Scenario Planning</div><div class="wb-def">A strategic technique in which multiple plausible future situations are developed and analysed to test the robustness of a proposed decision.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">✅</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Consensus Decision</div><div class="wb-def">A decision reached through a process in which all relevant parties have been consulted and have broadly agreed, rather than through unilateral authority.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📉</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Opportunity Cost</div><div class="wb-def">The value of the best alternative that is foregone as a result of committing resources to a particular decision or course of action.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔎</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Due Diligence</div><div class="wb-def">The thorough investigation and verification of all relevant facts, risks, and implications prior to making a significant business decision or commitment.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">💡</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Brainstorming</div><div class="wb-def">A group creativity technique in which participants generate a large number of ideas without immediate evaluation, to expand the range of possible solutions.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🏹</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Prioritisation</div><div class="wb-def">The process of ranking problems, decisions, or tasks in order of relative importance or urgency to allocate time and resources most effectively.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔁</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Post-Decision Review</div><div class="wb-def">A structured evaluation conducted after a decision has been implemented to assess outcomes, identify lessons learned, and improve future decision-making.</div></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<!-- ══ READING ══ -->
+<section id="reading">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#dcfce7">📄</div>
+      <div class="sec-text">
+        <div class="sec-title">Reading Comprehension</div>
+        <div class="sec-sub">2 Texts · 3 Paragraphs Each · 10 MCQs Each · Auto-graded</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reading-card">
+    <h3>Text 1 — The Science and Practice of Business Decision Making</h3>
+    <p>Decision making is the central activity of management. Every day, managers at every level face choices that range from the routine and reversible — which vendor to approve, how to schedule a team meeting — to the strategic and consequential: whether to enter a new market, acquire a competitor, or restructure an entire division. What distinguishes effective decision-makers from ineffective ones is not, as popular mythology would suggest, raw intelligence or superior information. Research in cognitive psychology and behavioural economics has demonstrated repeatedly that even highly intelligent, well-informed individuals make systematically poor decisions when operating under conditions of uncertainty, time pressure, or emotional intensity. The most reliable predictor of decision quality is not cognitive horsepower, but the quality of the process through which the decision is made — specifically, whether that process includes structured problem definition, deliberate evidence evaluation, and disciplined consideration of alternatives before any commitment is made.</p>
+    <p>The primary obstacle to effective decision-making in organisations is cognitive bias — the deeply embedded mental shortcuts that the human brain uses to reduce the effort required for judgment. Among the most dangerous are confirmation bias (the tendency to seek out and overvalue evidence that supports a conclusion already intuitively reached), anchoring (the disproportionate influence of the first number or data point encountered on all subsequent estimates), and groupthink (the suppression of individual dissent in favour of group consensus, which in practice often produces the worst of both worlds — a decision that carries the authority of consensus while reflecting the analysis of none). These biases are not primarily the result of poor character or laziness; they are intrinsic features of the cognitive architecture that in other contexts is a powerful adaptive advantage. The practical implication is that awareness of bias, while necessary, is insufficient — structural safeguards such as devil's advocacy, pre-mortem analysis, and diverse decision-making teams are required to counter their effects reliably.</p>
+    <p>Effective organisations have responded to the challenge of cognitive bias by building decision frameworks — structured processes that guide decision-makers through a consistent set of steps regardless of the nature or urgency of the problem at hand. The most widely adopted frameworks share several features: a clear definition of the problem separate from its proposed solution; an explicit articulation of the decision criteria against which options will be evaluated; a disciplined generation of alternatives rather than defaulting to the first viable option identified; a structured risk assessment for each alternative; and a transparent record of the reasoning behind the final choice, which enables post-decision review and organisational learning. When these steps are followed consistently, organisations not only make better individual decisions but develop a cumulative institutional capability for high-quality judgment that becomes one of their most durable competitive advantages.</p>
+  </div>
+
+  <div id="r1" class="quiz-card">
+    <div class="quiz-title">Reading 1 — 10 Multiple-Choice Questions</div>
+    <div class="q-item"><div class="q-stem">1. According to the text, what is the most reliable predictor of decision quality?</div><div class="options"><label class="opt"><input type="radio" name="r1q1" value="a"> A. The seniority and experience of the person making the decision</label><label class="opt"><input type="radio" name="r1q1" value="b"> B. The quality of the process through which the decision is made</label><label class="opt"><input type="radio" name="r1q1" value="c"> C. The volume and quality of data available to the decision-maker</label><label class="opt"><input type="radio" name="r1q1" value="d"> D. The speed at which the decision is reached and implemented</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What does the text say about highly intelligent, well-informed people and decision-making?</div><div class="options"><label class="opt"><input type="radio" name="r1q2" value="a"> A. They consistently make better decisions than less experienced colleagues</label><label class="opt"><input type="radio" name="r1q2" value="b"> B. They are completely immune to the effects of cognitive bias</label><label class="opt"><input type="radio" name="r1q2" value="c"> C. They can still make systematically poor decisions under pressure or uncertainty</label><label class="opt"><input type="radio" name="r1q2" value="d"> D. They rely more heavily on intuition and less on data than average decision-makers</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What is confirmation bias, as defined in the text?</div><div class="options"><label class="opt"><input type="radio" name="r1q3" value="a"> A. The tendency to delay a decision until all available evidence has been reviewed</label><label class="opt"><input type="radio" name="r1q3" value="b"> B. The disproportionate influence of the first number encountered on subsequent estimates</label><label class="opt"><input type="radio" name="r1q3" value="c"> C. The tendency to seek and overvalue evidence that supports a conclusion already reached intuitively</label><label class="opt"><input type="radio" name="r1q3" value="d"> D. The suppression of individual dissent in favour of group consensus</label></div></div>
+    <div class="q-item"><div class="q-stem">4. How does the text describe groupthink's impact on decision quality?</div><div class="options"><label class="opt"><input type="radio" name="r1q4" value="a"> A. It produces consistently better outcomes because consensus reflects collective wisdom</label><label class="opt"><input type="radio" name="r1q4" value="b"> B. It produces a decision that has the authority of consensus but the analytical depth of none</label><label class="opt"><input type="radio" name="r1q4" value="c"> C. It primarily affects decisions at the operational level, not at the strategic level</label><label class="opt"><input type="radio" name="r1q4" value="d"> D. It is only problematic in newly formed teams lacking established relationships</label></div></div>
+    <div class="q-item"><div class="q-stem">5. Why does the text say that awareness of bias alone is insufficient?</div><div class="options"><label class="opt"><input type="radio" name="r1q5" value="a"> A. Because biases are impossible to identify without specialist psychological training</label><label class="opt"><input type="radio" name="r1q5" value="b"> B. Because structural safeguards are also required to counteract their effects reliably</label><label class="opt"><input type="radio" name="r1q5" value="c"> C. Because cognitive biases can only be managed through long-term behavioural therapy</label><label class="opt"><input type="radio" name="r1q5" value="d"> D. Because awareness itself tends to introduce new biases into the decision process</label></div></div>
+    <div class="q-item"><div class="q-stem">6. What does the text say about the origin of cognitive biases?</div><div class="options"><label class="opt"><input type="radio" name="r1q6" value="a"> A. They are primarily the result of laziness or poor professional character</label><label class="opt"><input type="radio" name="r1q6" value="b"> B. They develop only in complex organisations with poor leadership</label><label class="opt"><input type="radio" name="r1q6" value="c"> C. They are intrinsic features of cognitive architecture that serve an adaptive purpose in other contexts</label><label class="opt"><input type="radio" name="r1q6" value="d"> D. They are caused by insufficient access to data and relevant decision-making information</label></div></div>
+    <div class="q-item"><div class="q-stem">7. Which of the following is listed as a feature of effective decision frameworks in Paragraph 3?</div><div class="options"><label class="opt"><input type="radio" name="r1q7" value="a"> A. Immediate delegation of the final decision to the most experienced team member</label><label class="opt"><input type="radio" name="r1q7" value="b"> B. Defaulting quickly to the first viable solution to prevent analysis paralysis</label><label class="opt"><input type="radio" name="r1q7" value="c"> C. A transparent record of the reasoning behind the final choice to enable post-decision review</label><label class="opt"><input type="radio" name="r1q7" value="d"> D. Excluding dissenting views to accelerate the decision-making process</label></div></div>
+    <div class="q-item"><div class="q-stem">8. What does the text say about the relationship between decision criteria and alternatives?</div><div class="options"><label class="opt"><input type="radio" name="r1q8" value="a"> A. Decision criteria should be developed after alternatives have been generated</label><label class="opt"><input type="radio" name="r1q8" value="b"> B. Alternatives should be generated before criteria are applied, not the other way around</label><label class="opt"><input type="radio" name="r1q8" value="c"> C. Decision criteria must be articulated explicitly before options are evaluated against them</label><label class="opt"><input type="radio" name="r1q8" value="d"> D. Both criteria and alternatives should be determined by the most senior person in the room</label></div></div>
+    <div class="q-item"><div class="q-stem">9. What long-term benefit does the text say consistent use of decision frameworks creates?</div><div class="options"><label class="opt"><input type="radio" name="r1q9" value="a"> A. It eliminates the need for senior management involvement in routine decisions</label><label class="opt"><input type="radio" name="r1q9" value="b"> B. It develops a cumulative institutional capability for high-quality judgment</label><label class="opt"><input type="radio" name="r1q9" value="c"> C. It reduces the time required for each decision to a minimum</label><label class="opt"><input type="radio" name="r1q9" value="d"> D. It standardises all decisions across the organisation, eliminating inconsistency</label></div></div>
+    <div class="q-item"><div class="q-stem">10. What is the central argument of this text?</div><div class="options"><label class="opt"><input type="radio" name="r1q10" value="a"> A. Intelligence and experience are the most important factors in effective decision-making</label><label class="opt"><input type="radio" name="r1q10" value="b"> B. Cognitive bias is the primary cause of organisational failure at every level</label><label class="opt"><input type="radio" name="r1q10" value="c"> C. Structured decision processes, rather than individual talent, are the foundation of consistently high-quality decisions</label><label class="opt"><input type="radio" name="r1q10" value="d"> D. Decision frameworks are only effective when they are developed externally by specialist consultants</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('r1',{r1q1:'b',r1q2:'c',r1q3:'c',r1q4:'b',r1q5:'b',r1q6:'c',r1q7:'c',r1q8:'c',r1q9:'b',r1q10:'c'})">✅ Submit Answers</button><div id="r1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Reading 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>C</strong></li><li>3. <strong>C</strong></li><li>4. <strong>B</strong></li><li>5. <strong>B</strong></li><li>6. <strong>C</strong></li><li>7. <strong>C</strong></li><li>8. <strong>C</strong></li><li>9. <strong>B</strong></li><li>10. <strong>C</strong></li></ol></div></div>
+
+  <div style="height:32px"></div>
+
+  <div class="reading-card">
+    <h3>Text 2 — Problem Solving in Practice: From Diagnosis to Implementation</h3>
+    <p>In a business context, a problem is not simply an undesirable situation — it is a gap between the current state and a desired state, where the path from one to the other is not immediately obvious. This distinction matters because it reframes the task: the manager's job is not merely to make the bad thing go away, but to understand precisely why the gap exists and to determine which actions will most reliably close it. The most common failure in organisational problem-solving is not a failure of action, but a failure of diagnosis — the tendency to implement solutions before the root cause of the problem has been identified. When this happens, organisations find themselves repeatedly addressing the same issue in different guises: a recurring customer complaint that is resolved operationally but never at source; a team performance problem that is treated as an individual performance issue when its actual driver is structural. The 5 Whys technique, developed within the Toyota Production System, addresses this failure directly: by repeatedly asking "why" in response to each identified cause, the analyst is forced past surface symptoms to the systemic origin of the problem.</p>
+    <p>Once the root cause has been identified, the problem-solving process moves to solution generation — a phase that is critically undermined when organisations move too quickly to the first viable option. Research in design thinking and decision science consistently shows that the quality of a final solution is strongly correlated with the breadth of the option set considered before any solution is selected. Brainstorming and its more structured relatives — lateral thinking exercises, analogical reasoning, and "how might we?" framing — are powerful tools precisely because they force the generation of options that would never emerge from linear problem analysis alone. The critical discipline is to separate solution generation from solution evaluation: options should be developed without immediate critique, and only once a sufficiently broad set has been created should evaluation criteria be applied. This separation prevents premature convergence on a solution that is merely familiar or politically comfortable, rather than genuinely optimal.</div>
+    <p>The final and most frequently neglected phase of organisational problem-solving is implementation and review. A solution that is not implemented consistently and completely does not solve the problem — it creates the illusion of having solved it while the underlying issue persists. Effective implementation requires clear ownership (a single named individual accountable for each action), a realistic timeline with defined milestones, and a monitoring mechanism that provides early warning if the solution is not producing the intended results. The post-decision review — a structured assessment conducted after implementation — is the tool that transforms individual problem-solving into organisational learning: it asks not only whether the problem was solved, but whether the diagnosis was accurate, whether the solution selected was the best available, and what the process itself revealed about the organisation's broader decision-making capabilities. Organisations that conduct post-decision reviews systematically are, in effect, building a proprietary database of managerial wisdom that compounds in value over time.</p>
+  </div>
+
+  <div id="r2" class="quiz-card">
+    <div class="quiz-title">Reading 2 — 10 Multiple-Choice Questions</div>
+    <div class="q-item"><div class="q-stem">1. How does the text define a "problem" in a business context?</div><div class="options"><label class="opt"><input type="radio" name="r2q1" value="a"> A. Any situation that produces financial loss or operational inefficiency</label><label class="opt"><input type="radio" name="r2q1" value="b"> B. A gap between the current state and a desired state where the path between them is unclear</label><label class="opt"><input type="radio" name="r2q1" value="c"> C. A recurring complaint raised by customers or external stakeholders</label><label class="opt"><input type="radio" name="r2q1" value="d"> D. Any situation that requires escalation to senior management for resolution</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What does the text identify as the most common failure in organisational problem-solving?</div><div class="options"><label class="opt"><input type="radio" name="r2q2" value="a"> A. A failure to implement solutions quickly enough</label><label class="opt"><input type="radio" name="r2q2" value="b"> B. A failure of action due to excessive deliberation and analysis paralysis</label><label class="opt"><input type="radio" name="r2q2" value="c"> C. A failure of diagnosis — implementing solutions before identifying the root cause</label><label class="opt"><input type="radio" name="r2q2" value="d"> D. A failure to consult stakeholders before finalising a solution</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What is the purpose of the 5 Whys technique?</div><div class="options"><label class="opt"><input type="radio" name="r2q3" value="a"> A. To evaluate five alternative solutions before selecting the best one</label><label class="opt"><input type="radio" name="r2q3" value="b"> B. To move from surface symptoms to the systemic origin of a problem by repeatedly asking why</label><label class="opt"><input type="radio" name="r2q3" value="c"> C. To assign responsibility for each component of a problem to five named individuals</label><label class="opt"><input type="radio" name="r2q3" value="d"> D. To develop five distinct risk scenarios for a proposed solution</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What does research show about the relationship between option breadth and solution quality?</div><div class="options"><label class="opt"><input type="radio" name="r2q4" value="a"> A. A narrower option set leads to faster decisions and better implementation outcomes</label><label class="opt"><input type="radio" name="r2q4" value="b"> B. The quality of the final solution is strongly correlated with the breadth of options considered</label><label class="opt"><input type="radio" name="r2q4" value="c"> C. The quality of the solution depends primarily on the seniority of the person selecting it</label><label class="opt"><input type="radio" name="r2q4" value="d"> D. Having more options consistently causes analysis paralysis and delays implementation</label></div></div>
+    <div class="q-item"><div class="q-stem">5. Why does the text say solution generation and evaluation should be separated?</div><div class="options"><label class="opt"><input type="radio" name="r2q5" value="a"> A. Because evaluation is a senior management responsibility and generation is a team activity</label><label class="opt"><input type="radio" name="r2q5" value="b"> B. To prevent premature convergence on a solution that is merely familiar or politically comfortable</label><label class="opt"><input type="radio" name="r2q5" value="c"> C. Because evaluation criteria cannot be developed until implementation has begun</label><label class="opt"><input type="radio" name="r2q5" value="d"> D. To ensure that no option is excluded before it has been fully developed and tested</label></div></div>
+    <div class="q-item"><div class="q-stem">6. What three things does effective implementation require, according to Paragraph 3?</div><div class="options"><label class="opt"><input type="radio" name="r2q6" value="a"> A. A budget, a team, and approval from senior management</label><label class="opt"><input type="radio" name="r2q6" value="b"> B. Clear ownership, a realistic timeline with milestones, and a monitoring mechanism</label><label class="opt"><input type="radio" name="r2q6" value="c"> C. External validation, stakeholder sign-off, and a post-mortem analysis</label><label class="opt"><input type="radio" name="r2q6" value="d"> D. A pilot programme, a communications plan, and a risk register</label></div></div>
+    <div class="q-item"><div class="q-stem">7. What does the text say about a solution that is not implemented consistently?</div><div class="options"><label class="opt"><input type="radio" name="r2q7" value="a"> A. It creates resentment among the team responsible for implementation</label><label class="opt"><input type="radio" name="r2q7" value="b"> B. It becomes increasingly costly to maintain over time</label><label class="opt"><input type="radio" name="r2q7" value="c"> C. It creates the illusion of having solved the problem while the underlying issue persists</label><label class="opt"><input type="radio" name="r2q7" value="d"> D. It will automatically escalate to senior management for resolution</label></div></div>
+    <div class="q-item"><div class="q-stem">8. What three questions does the post-decision review ask, according to the text?</div><div class="options"><label class="opt"><input type="radio" name="r2q8" value="a"> A. Was the budget met, was the timeline adhered to, and were stakeholders satisfied?</label><label class="opt"><input type="radio" name="r2q8" value="b"> B. Was the problem solved, was the diagnosis accurate, and was the process itself revealing?</label><label class="opt"><input type="radio" name="r2q8" value="c"> C. Was the solution documented, was the team recognised, and was the risk assessed?</label><label class="opt"><input type="radio" name="r2q8" value="d"> D. Was the solution innovative, was it replicable, and did it generate a return on investment?</label></div></div>
+    <div class="q-item"><div class="q-stem">9. How does the text describe organisations that conduct post-decision reviews systematically?</div><div class="options"><label class="opt"><input type="radio" name="r2q9" value="a"> A. They are building a legal framework to protect themselves from accountability</label><label class="opt"><input type="radio" name="r2q9" value="b"> B. They are building a proprietary database of managerial wisdom that compounds in value over time</label><label class="opt"><input type="radio" name="r2q9" value="c"> C. They are reducing the confidence of individual decision-makers over time</label><label class="opt"><input type="radio" name="r2q9" value="d"> D. They are primarily focused on assigning blame for past decisions rather than improving future ones</label></div></div>
+    <div class="q-item"><div class="q-stem">10. What is the central argument of this text?</div><div class="options"><label class="opt"><input type="radio" name="r2q10" value="a"> A. The 5 Whys technique is the single most important tool in organisational problem-solving</label><label class="opt"><input type="radio" name="r2q10" value="b"> B. Effective problem-solving requires structured diagnosis, disciplined option generation, complete implementation, and systematic review</label><label class="opt"><input type="radio" name="r2q10" value="c"> C. Implementation is the most critical phase and is where organisations invest the most effort</label><label class="opt"><input type="radio" name="r2q10" value="d"> D. Brainstorming alone is sufficient to generate high-quality solutions to complex business problems</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('r2',{r2q1:'b',r2q2:'c',r2q3:'b',r2q4:'b',r2q5:'b',r2q6:'b',r2q7:'c',r2q8:'b',r2q9:'b',r2q10:'b'})">✅ Submit Answers</button><div id="r2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Reading 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>C</strong></li><li>3. <strong>B</strong></li><li>4. <strong>B</strong></li><li>5. <strong>B</strong></li><li>6. <strong>B</strong></li><li>7. <strong>C</strong></li><li>8. <strong>B</strong></li><li>9. <strong>B</strong></li><li>10. <strong>B</strong></li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<!-- ══ VOCABULARY ══ -->
+<section id="vocabulary">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fef3c7">✏️</div>
+      <div class="sec-text">
+        <div class="sec-title">Vocabulary Exercises</div>
+        <div class="sec-sub">4 Exercises · Multiple Choice · Gap-Fill · True/False · Drag-and-Drop</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- V1: Multiple Choice -->
+  <div id="v1" class="quiz-card">
+    <div class="quiz-title">Exercise 1 — Multiple Choice: Decision Making Vocabulary in Context</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the word or phrase that best completes each sentence.</p>
+    <div class="q-item"><div class="q-stem">1. The CFO commissioned a full ________ before the board voted on the acquisition, to verify the target company's financial position and legal standing.</div><div class="options"><label class="opt"><input type="radio" name="v1q1" value="a"> A. brainstorming</label><label class="opt"><input type="radio" name="v1q1" value="b"> B. due diligence</label><label class="opt"><input type="radio" name="v1q1" value="c"> C. post-decision review</label><label class="opt"><input type="radio" name="v1q1" value="d"> D. scenario planning</label></div></div>
+    <div class="q-item"><div class="q-stem">2. The committee reached a ________ after consulting all departments, meaning no one was forced to accept the outcome — it reflected the genuine agreement of the group.</div><div class="options"><label class="opt"><input type="radio" name="v1q2" value="a"> A. trade-off</label><label class="opt"><input type="radio" name="v1q2" value="b"> B. cognitive bias</label><label class="opt"><input type="radio" name="v1q2" value="c"> C. consensus decision</label><label class="opt"><input type="radio" name="v1q2" value="d"> D. escalation</label></div></div>
+    <div class="q-item"><div class="q-stem">3. By investing in the new distribution network, the company was accepting a significant ________ — it would not be able to fund the planned product development programme for at least two years.</div><div class="options"><label class="opt"><input type="radio" name="v1q3" value="a"> A. risk assessment</label><label class="opt"><input type="radio" name="v1q3" value="b"> B. opportunity cost</label><label class="opt"><input type="radio" name="v1q3" value="c"> C. decision framework</label><label class="opt"><input type="radio" name="v1q3" value="d"> D. groupthink</label></div></div>
+    <div class="q-item"><div class="q-stem">4. The strategy team conducted ________ to model three possible futures — optimistic, base case, and pessimistic — to test how robust the proposed investment was under each.</div><div class="options"><label class="opt"><input type="radio" name="v1q4" value="a"> A. prioritisation</label><label class="opt"><input type="radio" name="v1q4" value="b"> B. root cause analysis</label><label class="opt"><input type="radio" name="v1q4" value="c"> C. scenario planning</label><label class="opt"><input type="radio" name="v1q4" value="d"> D. brainstorming</label></div></div>
+    <div class="q-item"><div class="q-stem">5. The team's decision-making suffered from classic ________ — everyone privately had reservations about the plan, but no one voiced them because the CEO seemed committed to it.</div><div class="options"><label class="opt"><input type="radio" name="v1q5" value="a"> A. analysis paralysis</label><label class="opt"><input type="radio" name="v1q5" value="b"> B. iterative process</label><label class="opt"><input type="radio" name="v1q5" value="c"> C. stakeholder mapping</label><label class="opt"><input type="radio" name="v1q5" value="d"> D. groupthink</label></div></div>
+    <div class="q-item"><div class="q-stem">6. The new product development cycle adopted an ________ — prototypes were tested with users, refined based on feedback, and then tested again in multiple rounds before launch.</div><div class="options"><label class="opt"><input type="radio" name="v1q6" value="a"> A. iterative process</label><label class="opt"><input type="radio" name="v1q6" value="b"> B. escalation</label><label class="opt"><input type="radio" name="v1q6" value="c"> C. cost-benefit analysis</label><label class="opt"><input type="radio" name="v1q6" value="d"> D. post-decision review</label></div></div>
+    <div class="q-item"><div class="q-stem">7. After six weeks of extensive data collection and analysis, the operations director still had not made a decision — a textbook case of ________ that was frustrating the entire leadership team.</div><div class="options"><label class="opt"><input type="radio" name="v1q7" value="a"> A. due diligence</label><label class="opt"><input type="radio" name="v1q7" value="b"> B. analysis paralysis</label><label class="opt"><input type="radio" name="v1q7" value="c"> C. cognitive bias</label><label class="opt"><input type="radio" name="v1q7" value="d"> D. decision criteria</label></div></div>
+    <div class="q-item"><div class="q-stem">8. Before evaluating any of the shortlisted vendors, the procurement team defined five ________ — cost, delivery reliability, ESG standards, technical capability, and contract flexibility.</div><div class="options"><label class="opt"><input type="radio" name="v1q8" value="a"> A. trade-offs</label><label class="opt"><input type="radio" name="v1q8" value="b"> B. brainstorming</label><label class="opt"><input type="radio" name="v1q8" value="c"> C. decision criteria</label><label class="opt"><input type="radio" name="v1q8" value="d"> D. root cause analyses</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('v1',{v1q1:'b',v1q2:'c',v1q3:'b',v1q4:'c',v1q5:'d',v1q6:'a',v1q7:'b',v1q8:'c'})">✅ Submit</button><div id="v1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — due diligence</li><li>2. <strong>C</strong> — consensus decision</li><li>3. <strong>B</strong> — opportunity cost</li><li>4. <strong>C</strong> — scenario planning</li><li>5. <strong>D</strong> — groupthink</li><li>6. <strong>A</strong> — iterative process</li><li>7. <strong>B</strong> — analysis paralysis</li><li>8. <strong>C</strong> — decision criteria</li></ol></div></div>
+
+  <!-- V2: Gap Fill -->
+  <div id="v2" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 2 — Gap-Fill: Complete the Decision Making Sentences</div>
+    <div style="background:#f5f2ec;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;font-family:'DM Mono',monospace;color:var(--sky);display:flex;flex-wrap:wrap;gap:8px">
+      <span>root cause analysis</span> | <span>risk assessment</span> | <span>post-decision review</span> | <span>prioritisation</span> | <span>SWOT analysis</span> | <span>escalation</span> | <span>stakeholder mapping</span> | <span>trade-off</span>
+    </div>
+    <div class="q-item"><div class="q-stem">1. Before launching the initiative, the team conducted a thorough ________ to identify who would be affected and what level of influence each party had over the outcome.</div><div style="margin-top:8px"><input class="gap-input" id="gi1" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">2. The engineering team used ________ to drill down through four layers of causes before discovering that a faulty supplier component — not a process error — was triggering the recurring system failures.</div><div style="margin-top:8px"><input class="gap-input" id="gi2" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">3. The strategic planner began by conducting a ________ to evaluate the company's competitive position, identifying its strong brand as a key strength and its over-reliance on a single market as a major threat.</div><div style="margin-top:8px"><input class="gap-input" id="gi3" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">4. Committing to speed of delivery involved a significant ________ — the team would have less time to test the software, which increased the risk of post-launch defects.</div><div style="margin-top:8px"><input class="gap-input" id="gi4" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">5. The incident was beyond the authority of the line manager to resolve, so a formal ________ was initiated, escalating the matter to the regional director for a decision within 48 hours.</div><div style="margin-top:8px"><input class="gap-input" id="gi5" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">6. The team conducted a structured ________ for each of the three shortlisted options, rating the likelihood and impact of every potential negative outcome before making a final recommendation.</div><div style="margin-top:8px"><input class="gap-input" id="gi6" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">7. Three months after the product launch, the leadership team held a structured ________ to assess whether the decision had produced the expected results and to capture lessons for future launches.</div><div style="margin-top:8px"><input class="gap-input" id="gi7" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">8. Given the volume of issues on the agenda, the director insisted on a clear ________ exercise — distinguishing between what was urgent and critical, what could wait, and what should be delegated entirely.</div><div style="margin-top:8px"><input class="gap-input" id="gi8" placeholder="type answer…"></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeGap()">✅ Check Answers</button><div id="v2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>stakeholder mapping</strong></li><li>2. <strong>root cause analysis</strong></li><li>3. <strong>SWOT analysis</strong></li><li>4. <strong>trade-off</strong></li><li>5. <strong>escalation</strong></li><li>6. <strong>risk assessment</strong></li><li>7. <strong>post-decision review</strong></li><li>8. <strong>prioritisation</strong></li></ol></div></div>
+
+  <!-- V3: True/False -->
+  <div id="v3" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 3 — True or False: Decision Making Concepts</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Read each statement. Select <strong>True</strong> or <strong>False</strong> based on the correct meaning of the vocabulary and concepts in this module.</p>
+    <div class="q-item" id="tfr1"><div class="q-stem">1. Groupthink improves decision quality because it ensures that a consensus reflects the collective wisdom of the whole group.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'1','T')">True</button><button class="tf-btn" onclick="pickTF(this,'1','F')">False</button></div></div>
+    <div class="q-item" id="tfr2"><div class="q-stem">2. Analysis paralysis refers to a state in which excessive deliberation prevents a decision from being made at all.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'2','T')">True</button><button class="tf-btn" onclick="pickTF(this,'2','F')">False</button></div></div>
+    <div class="q-item" id="tfr3"><div class="q-stem">3. A cost-benefit analysis compares only the direct financial costs of a decision, excluding any non-monetary benefits.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'3','T')">True</button><button class="tf-btn" onclick="pickTF(this,'3','F')">False</button></div></div>
+    <div class="q-item" id="tfr4"><div class="q-stem">4. Opportunity cost refers to the value of the best alternative foregone as a result of committing to a particular decision.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'4','T')">True</button><button class="tf-btn" onclick="pickTF(this,'4','F')">False</button></div></div>
+    <div class="q-item" id="tfr5"><div class="q-stem">5. Confirmation bias is the tendency to seek evidence that contradicts a conclusion you have already intuitively reached.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'5','T')">True</button><button class="tf-btn" onclick="pickTF(this,'5','F')">False</button></div></div>
+    <div class="q-item" id="tfr6"><div class="q-stem">6. A post-decision review is conducted after implementation to assess outcomes and capture lessons for future decisions.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'6','T')">True</button><button class="tf-btn" onclick="pickTF(this,'6','F')">False</button></div></div>
+    <div class="q-item" id="tfr7"><div class="q-stem">7. Brainstorming is most effective when ideas are evaluated and critiqued immediately as they are generated.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'7','T')">True</button><button class="tf-btn" onclick="pickTF(this,'7','F')">False</button></div></div>
+    <div class="q-item" id="tfr8"><div class="q-stem">8. Root cause analysis aims to identify the fundamental underlying cause of a problem, not just its surface symptoms.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'8','T')">True</button><button class="tf-btn" onclick="pickTF(this,'8','F')">False</button></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeTF()">✅ Submit Answers</button><div id="v3-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>False</strong> — Groupthink suppresses critical thinking; it produces the authority of consensus without genuine analysis.</li><li>2. <strong>True</strong></li><li>3. <strong>False</strong> — A cost-benefit analysis compares all anticipated costs and benefits, which may include non-monetary factors.</li><li>4. <strong>True</strong></li><li>5. <strong>False</strong> — Confirmation bias involves seeking evidence that supports (not contradicts) a conclusion already reached.</li><li>6. <strong>True</strong></li><li>7. <strong>False</strong> — Brainstorming works best when evaluation is separated from generation — ideas are not critiqued immediately.</li><li>8. <strong>True</strong></li></ol></div></div>
+
+  <!-- V4: Drag-and-Drop -->
+  <div id="v4" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 4 — Match: Concept to Its Definition (Click to Select & Place)</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Click a term to select it, then click the correct definition box to place it there.</p>
+    <div class="drag-bank" id="v4bank">
+      <div class="drag-chip" data-w="Decision Framework" onclick="pickDrag(this)">Decision Framework</div>
+      <div class="drag-chip" data-w="Scenario Planning" onclick="pickDrag(this)">Scenario Planning</div>
+      <div class="drag-chip" data-w="Cognitive Bias" onclick="pickDrag(this)">Cognitive Bias</div>
+      <div class="drag-chip" data-w="Prioritisation" onclick="pickDrag(this)">Prioritisation</div>
+      <div class="drag-chip" data-w="Trade-off" onclick="pickDrag(this)">Trade-off</div>
+      <div class="drag-chip" data-w="Due Diligence" onclick="pickDrag(this)">Due Diligence</div>
+      <div class="drag-chip" data-w="Escalation" onclick="pickDrag(this)">Escalation</div>
+      <div class="drag-chip" data-w="Brainstorming" onclick="pickDrag(this)">Brainstorming</div>
+    </div>
+    <div class="q-item"><div class="q-stem">1. "A structured model or methodology that guides decision-making consistently and transparently." → <span class="drop-zone" data-ans="Decision Framework" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">2. "A systematic pattern of deviation from rational judgment caused by the brain's mental shortcuts." → <span class="drop-zone" data-ans="Cognitive Bias" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">3. "The development and analysis of multiple plausible future situations to test a decision's robustness." → <span class="drop-zone" data-ans="Scenario Planning" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">4. "Gaining one advantage while necessarily accepting a corresponding disadvantage." → <span class="drop-zone" data-ans="Trade-off" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">5. "Thorough verification of all relevant facts and risks before committing to a decision." → <span class="drop-zone" data-ans="Due Diligence" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">6. "Referring a problem upward to a more senior authority when it exceeds current decision-making capacity." → <span class="drop-zone" data-ans="Escalation" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">7. "Generating many ideas freely without immediate evaluation to expand the range of possible solutions." → <span class="drop-zone" data-ans="Brainstorming" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">8. "Ranking issues in order of importance or urgency to allocate time and resources effectively." → <span class="drop-zone" data-ans="Prioritisation" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeDrop()">✅ Check Matches</button><button class="btn btn-outline" style="font-size:12px" onclick="resetDrop()">↺ Reset</button><div id="v4-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 4</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>Decision Framework</strong></li><li>2. <strong>Cognitive Bias</strong></li><li>3. <strong>Scenario Planning</strong></li><li>4. <strong>Trade-off</strong></li><li>5. <strong>Due Diligence</strong></li><li>6. <strong>Escalation</strong></li><li>7. <strong>Brainstorming</strong></li><li>8. <strong>Prioritisation</strong></li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<!-- ══ GRAMMAR ══ -->
+<section id="grammar">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#dcfce7">📐</div>
+      <div class="sec-text">
+        <div class="sec-title">Grammar Exercises</div>
+        <div class="sec-sub">3 Exercises · Conditionals · Modal Deduction · Cause-and-Effect Language</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- G1: Mixed Conditionals -->
+  <div id="g1" class="quiz-card">
+    <div class="quiz-title">Grammar 1 — Conditional Sentences in Decision-Making Contexts</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the correct conditional form for each decision-making sentence.</p>
+    <div class="q-item"><div class="q-stem">1. If the company ________ a thorough root cause analysis before implementing the fix, the problem would not have recurred three months later.</div><div class="options"><label class="opt"><input type="radio" name="g1q1" value="a"> A. conducts</label><label class="opt"><input type="radio" name="g1q1" value="b"> B. had conducted</label><label class="opt"><input type="radio" name="g1q1" value="c"> C. conducted</label><label class="opt"><input type="radio" name="g1q1" value="d"> D. will conduct</label></div></div>
+    <div class="q-item"><div class="q-stem">2. If the board ________ scenario planning more seriously, it will be much better prepared for unexpected market shifts in the coming year.</div><div class="options"><label class="opt"><input type="radio" name="g1q2" value="a"> A. had taken</label><label class="opt"><input type="radio" name="g1q2" value="b"> B. takes</label><label class="opt"><input type="radio" name="g1q2" value="c"> C. took</label><label class="opt"><input type="radio" name="g1q2" value="d"> D. would take</label></div></div>
+    <div class="q-item"><div class="q-stem">3. Unless decision-makers ________ clear criteria before evaluating options, they risk being influenced by anchoring bias.</div><div class="options"><label class="opt"><input type="radio" name="g1q3" value="a"> A. would establish</label><label class="opt"><input type="radio" name="g1q3" value="b"> B. had established</label><label class="opt"><input type="radio" name="g1q3" value="c"> C. establish</label><label class="opt"><input type="radio" name="g1q3" value="d"> D. are establishing</label></div></div>
+    <div class="q-item"><div class="q-stem">4. If the team ________ the stakeholder analysis earlier, they would have anticipated the Finance Director's objection and prepared a stronger business case.</div><div class="options"><label class="opt"><input type="radio" name="g1q4" value="a"> A. had completed</label><label class="opt"><input type="radio" name="g1q4" value="b"> B. completed</label><label class="opt"><input type="radio" name="g1q4" value="c"> C. completes</label><label class="opt"><input type="radio" name="g1q4" value="d"> D. would complete</label></div></div>
+    <div class="q-item"><div class="q-stem">5. If the organisation ________ a post-decision review culture, it would accumulate far more institutional wisdom over time.</div><div class="options"><label class="opt"><input type="radio" name="g1q5" value="a"> A. had built</label><label class="opt"><input type="radio" name="g1q5" value="b"> B. builds</label><label class="opt"><input type="radio" name="g1q5" value="c"> C. built</label><label class="opt"><input type="radio" name="g1q5" value="d"> D. will build</label></div></div>
+    <div class="q-item"><div class="q-stem">6. If managers always ________ data with professional intuition, decisions tend to be more robust than when either is used alone.</div><div class="options"><label class="opt"><input type="radio" name="g1q6" value="a"> A. had combined</label><label class="opt"><input type="radio" name="g1q6" value="b"> B. combined</label><label class="opt"><input type="radio" name="g1q6" value="c"> C. combine</label><label class="opt"><input type="radio" name="g1q6" value="d"> D. will combine</label></div></div>
+    <div class="q-item"><div class="q-stem">7. If the leadership team ________ the acquisition proposal more carefully, they would not now be dealing with the reputational consequences.</div><div class="options"><label class="opt"><input type="radio" name="g1q7" value="a"> A. had scrutinised</label><label class="opt"><input type="radio" name="g1q7" value="b"> B. scrutinised</label><label class="opt"><input type="radio" name="g1q7" value="c"> C. scrutinises</label><label class="opt"><input type="radio" name="g1q7" value="d"> D. would scrutinise</label></div></div>
+    <div class="q-item"><div class="q-stem">8. If the company ________ the due diligence process now, it will be in a far stronger position to make a confident decision by the end of the month.</div><div class="options"><label class="opt"><input type="radio" name="g1q8" value="a"> A. had accelerated</label><label class="opt"><input type="radio" name="g1q8" value="b"> B. accelerates</label><label class="opt"><input type="radio" name="g1q8" value="c"> C. accelerated</label><label class="opt"><input type="radio" name="g1q8" value="d"> D. would accelerate</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g1',{g1q1:'b',g1q2:'b',g1q3:'c',g1q4:'a',g1q5:'c',g1q6:'c',g1q7:'a',g1q8:'b'})">✅ Submit</button><div id="g1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — "had conducted" (3rd conditional: unreal past situation)</li><li>2. <strong>B</strong> — "takes" (1st conditional: real future)</li><li>3. <strong>C</strong> — "establish" (zero/1st conditional with "unless" = if not)</li><li>4. <strong>A</strong> — "had completed" (3rd conditional: unreal past)</li><li>5. <strong>C</strong> — "built" (2nd conditional: hypothetical present/future)</li><li>6. <strong>C</strong> — "combine" (zero conditional: general truth)</li><li>7. <strong>A</strong> — "had scrutinised" (3rd conditional: unreal past → present consequence)</li><li>8. <strong>B</strong> — "accelerates" (1st conditional: real/likely future)</li></ol></div></div>
+
+  <!-- G2: Modal Deduction -->
+  <div id="g2" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Grammar 2 — Modal Verbs of Deduction and Probability in Decision Contexts</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Select the modal verb that best fits the degree of certainty or deduction expressed in each sentence.</p>
+    <div class="q-item"><div class="q-stem">1. The data shows a 40% drop in customer retention last quarter. There ________ a serious underlying problem with the onboarding experience — the correlation is too strong to ignore. <em>(near certainty)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q1" value="a"> A. might be</label><label class="opt"><input type="radio" name="g2q1" value="b"> B. must be</label><label class="opt"><input type="radio" name="g2q1" value="c"> C. can't be</label><label class="opt"><input type="radio" name="g2q1" value="d"> D. should be</label></div></div>
+    <div class="q-item"><div class="q-stem">2. The supplier ________ been aware of the quality issue before shipping — three of their own QA reports flagged it and were signed off by senior management. <em>(logical deduction about the past)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q2" value="a"> A. might have</label><label class="opt"><input type="radio" name="g2q2" value="b"> B. can't have</label><label class="opt"><input type="radio" name="g2q2" value="c"> C. must have</label><label class="opt"><input type="radio" name="g2q2" value="d"> D. should have</label></div></div>
+    <div class="q-item"><div class="q-stem">3. The decision ________ have been made without consulting the risk committee — that would completely contradict the firm's governance procedures. <em>(impossibility in the past)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q3" value="a"> A. must</label><label class="opt"><input type="radio" name="g2q3" value="b"> B. might not</label><label class="opt"><input type="radio" name="g2q3" value="c"> C. couldn't</label><label class="opt"><input type="radio" name="g2q3" value="d"> D. shouldn't</label></div></div>
+    <div class="q-item"><div class="q-stem">4. The new pricing strategy ________ increase revenue in the short term, but there is genuine uncertainty about how the market will respond in Q3. <em>(possibility)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q4" value="a"> A. must</label><label class="opt"><input type="radio" name="g2q4" value="b"> B. can't</label><label class="opt"><input type="radio" name="g2q4" value="c"> C. might</label><label class="opt"><input type="radio" name="g2q4" value="d"> D. should not</label></div></div>
+    <div class="q-item"><div class="q-stem">5. Given the evidence, the root cause ________ the outdated CRM system — every customer complaint traces back to a data synchronisation failure at that point. <em>(strong logical deduction)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q5" value="a"> A. could be</label><label class="opt"><input type="radio" name="g2q5" value="b"> B. must be</label><label class="opt"><input type="radio" name="g2q5" value="c"> C. might not be</label><label class="opt"><input type="radio" name="g2q5" value="d"> D. should be</label></div></div>
+    <div class="q-item"><div class="q-stem">6. The team ________ reached a better decision if they had included a dissenting voice — the absence of challenge almost certainly contributed to the outcome. <em>(past missed opportunity / conditional deduction)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q6" value="a"> A. must have</label><label class="opt"><input type="radio" name="g2q6" value="b"> B. could have</label><label class="opt"><input type="radio" name="g2q6" value="c"> C. can't have</label><label class="opt"><input type="radio" name="g2q6" value="d"> D. might not have</label></div></div>
+    <div class="q-item"><div class="q-stem">7. There ________ be an error in the financial model — the projected ROI figure is twice what any comparable investment has ever delivered. <em>(near impossibility / strong doubt)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q7" value="a"> A. must</label><label class="opt"><input type="radio" name="g2q7" value="b"> B. could</label><label class="opt"><input type="radio" name="g2q7" value="c"> C. can't</label><label class="opt"><input type="radio" name="g2q7" value="d"> D. might</label></div></div>
+    <div class="q-item"><div class="q-stem">8. The post-decision review results suggest the team ________ acted more quickly — the delay cost the company three weeks of lost market share. <em>(criticism of past action)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q8" value="a"> A. must have</label><label class="opt"><input type="radio" name="g2q8" value="b"> B. could not have</label><label class="opt"><input type="radio" name="g2q8" value="c"> C. should have</label><label class="opt"><input type="radio" name="g2q8" value="d"> D. might not have</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g2',{g2q1:'b',g2q2:'c',g2q3:'c',g2q4:'c',g2q5:'b',g2q6:'b',g2q7:'c',g2q8:'c'})">✅ Submit</button><div id="g2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — "must be" (near certainty / strong deduction from evidence)</li><li>2. <strong>C</strong> — "must have" (logical deduction about past: evidence is conclusive)</li><li>3. <strong>C</strong> — "couldn't have" (impossibility in the past)</li><li>4. <strong>C</strong> — "might" (genuine uncertainty / possibility)</li><li>5. <strong>B</strong> — "must be" (strong logical deduction from evidence)</li><li>6. <strong>B</strong> — "could have" (past unrealised possibility)</li><li>7. <strong>C</strong> — "can't" (near impossibility / strong disbelief)</li><li>8. <strong>C</strong> — "should have" (criticism / regret about past inaction)</li></ol></div></div>
+
+  <!-- G3: Cause and Effect -->
+  <div id="g3" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Grammar 3 — Cause-and-Effect Language in Problem Analysis</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the most appropriate cause-and-effect connector or expression to complete each professional sentence.</p>
+    <div class="q-item"><div class="q-stem">1. The decision was made without adequate stakeholder consultation. ________, several key departments were unprepared for the transition and implementation stalled.</div><div class="options"><label class="opt"><input type="radio" name="g3q1" value="a"> A. Nevertheless</label><label class="opt"><input type="radio" name="g3q1" value="b"> B. As a result</label><label class="opt"><input type="radio" name="g3q1" value="c"> C. In spite of this</label><label class="opt"><input type="radio" name="g3q1" value="d"> D. On the other hand</label></div></div>
+    <div class="q-item"><div class="q-stem">2. The team's repeated failure to hit deadlines ________ a fundamental resourcing problem that had not been addressed in the project budget.</div><div class="options"><label class="opt"><input type="radio" name="g3q2" value="a"> A. is attributed to</label><label class="opt"><input type="radio" name="g3q2" value="b"> B. stems from</label><label class="opt"><input type="radio" name="g3q2" value="c"> C. results in</label><label class="opt"><input type="radio" name="g3q2" value="d"> D. leads to</label></div></div>
+    <div class="q-item"><div class="q-stem">3. ________ the absence of a structured decision framework, each regional manager was applying different criteria, leading to highly inconsistent procurement decisions.</div><div class="options"><label class="opt"><input type="radio" name="g3q3" value="a"> A. Despite</label><label class="opt"><input type="radio" name="g3q3" value="b"> B. In order to</label><label class="opt"><input type="radio" name="g3q3" value="c"> C. Due to</label><label class="opt"><input type="radio" name="g3q3" value="d"> D. So that</label></div></div>
+    <div class="q-item"><div class="q-stem">4. The organisation's failure to conduct due diligence before the merger ________ significant legal liabilities that took three years to resolve.</div><div class="options"><label class="opt"><input type="radio" name="g3q4" value="a"> A. arose from</label><label class="opt"><input type="radio" name="g3q4" value="b"> B. stemmed from</label><label class="opt"><input type="radio" name="g3q4" value="c"> C. resulted in</label><label class="opt"><input type="radio" name="g3q4" value="d"> D. was triggered by</label></div></div>
+    <div class="q-item"><div class="q-stem">5. Customer satisfaction scores declined sharply, ________ a deterioration in delivery times which itself was triggered by the warehouse system failure in Q2.</div><div class="options"><label class="opt"><input type="radio" name="g3q5" value="a"> A. in spite of</label><label class="opt"><input type="radio" name="g3q5" value="b"> B. as a consequence of</label><label class="opt"><input type="radio" name="g3q5" value="c"> C. so that</label><label class="opt"><input type="radio" name="g3q5" value="d"> D. whereas</label></div></div>
+    <div class="q-item"><div class="q-stem">6. The senior team implemented the cost-reduction programme ________ preserve the firm's operating margin during the period of declining revenues.</div><div class="options"><label class="opt"><input type="radio" name="g3q6" value="a"> A. as a result of</label><label class="opt"><input type="radio" name="g3q6" value="b"> B. in order to</label><label class="opt"><input type="radio" name="g3q6" value="c"> C. because of</label><label class="opt"><input type="radio" name="g3q6" value="d"> D. consequently</label></div></div>
+    <div class="q-item"><div class="q-stem">7. The post-decision review revealed that the original diagnosis had been flawed, ________ the team had implemented a solution that addressed the symptoms but not the root cause.</div><div class="options"><label class="opt"><input type="radio" name="g3q7" value="a"> A. even though</label><label class="opt"><input type="radio" name="g3q7" value="b"> B. therefore</label><label class="opt"><input type="radio" name="g3q7" value="c"> C. which meant that</label><label class="opt"><input type="radio" name="g3q7" value="d"> D. despite the fact</label></div></div>
+    <div class="q-item"><div class="q-stem">8. ________ the decision was made under significant time pressure, the team still insisted on completing a structured risk assessment before committing to the final option.</div><div class="options"><label class="opt"><input type="radio" name="g3q8" value="a"> A. Because</label><label class="opt"><input type="radio" name="g3q8" value="b"> B. So that</label><label class="opt"><input type="radio" name="g3q8" value="c"> C. Although</label><label class="opt"><input type="radio" name="g3q8" value="d"> D. As a result</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g3',{g3q1:'b',g3q2:'b',g3q3:'c',g3q4:'c',g3q5:'b',g3q6:'b',g3q7:'c',g3q8:'c'})">✅ Submit</button><div id="g3-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — "As a result" (result of decision without consultation)</li><li>2. <strong>B</strong> — "stems from" (cause: failure traces back to a source)</li><li>3. <strong>C</strong> — "Due to" (cause: absence of framework → inconsistency)</li><li>4. <strong>C</strong> — "resulted in" (effect: failure to act → legal liabilities)</li><li>5. <strong>B</strong> — "as a consequence of" (effect: scores fell because of delivery deterioration)</li><li>6. <strong>B</strong> — "in order to" (purpose: action taken to achieve goal)</li><li>7. <strong>C</strong> — "which meant that" (consequential result: flawed diagnosis → wrong solution)</li><li>8. <strong>C</strong> — "Although" (concession: despite pressure, they still completed assessment)</li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ GRAMMAR REVIEW ══ -->
+<section id="grammarreview">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#e0e7ff">📘</div>
+      <div class="sec-text">
+        <div class="sec-title">Grammar Review</div>
+        <div class="sec-sub">3 Detailed Reference Boxes · All Grammar Points from Module 6</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grammar-box">
+    <h4>1. Conditional Sentences in Decision-Making English</h4>
+    <p>Conditionals are essential in decision-making language — for evaluating options, discussing consequences, and reflecting on past choices. Mastering all four types is critical for professional discussions about strategy, risk, and outcomes.</p>
+    <ul>
+      <li><strong>Zero conditional</strong> — General truths and reliable patterns: <em>If + present simple, present simple</em> — "If managers combine data with intuition, decisions tend to be more robust."</li>
+      <li><strong>First conditional</strong> — Real, likely future scenarios: <em>If + present simple, will + base verb</em> — "If the board takes scenario planning seriously, it will be better prepared."</li>
+      <li><strong>Second conditional</strong> — Hypothetical present/future (unreal): <em>If + past simple, would + base verb</em> — "If the organisation built a post-decision review culture, it would accumulate more institutional wisdom."</li>
+      <li><strong>Third conditional</strong> — Unreal past situations and their past consequences: <em>If + past perfect, would have + pp</em> — "If the team had completed the stakeholder analysis earlier, they would have anticipated the objection."</li>
+      <li><strong>Mixed conditional</strong> — Unreal past condition with present consequence: <em>If + past perfect, would + base verb</em> — "If the leadership team had scrutinised the proposal more carefully, they would not now be dealing with the reputational consequences."</li>
+      <li><strong>Unless</strong> = "if…not": "Unless decision-makers establish clear criteria, they risk anchoring bias."</li>
+    </ul>
+    <div class="ex">✔ Zero: "If decision frameworks are used consistently, outcomes improve." (general truth)<br>✔ 1st: "If the company accelerates due diligence now, it will be ready by month end." (real future)<br>✔ 2nd: "If they built a review culture, they would accumulate more wisdom." (hypothetical present)<br>✔ 3rd: "If they had conducted RCA, the problem would not have recurred." (unreal past)<br>✔ Mixed: "If they had scrutinised it, they would not now be in this position." (past cause → present result)</div>
+  </div>
+
+  <div class="grammar-box">
+    <h4>2. Modal Verbs of Deduction and Probability</h4>
+    <p>In professional decision-making contexts, modal verbs are essential for expressing the degree of certainty behind an analysis, conclusion, or deduction — enabling precise, calibrated communication about what is known, inferred, or possible.</p>
+    <ul>
+      <li><strong>must / must have</strong> — Strong logical deduction (near certainty): "There must be an error." / "They must have known about the risk."</li>
+      <li><strong>can't / couldn't have</strong> — Near impossibility / strong disbelief: "That can't be the root cause." / "The decision couldn't have been made without approval."</li>
+      <li><strong>might / could / may</strong> — Genuine possibility (uncertainty): "This might resolve the issue." / "The new strategy could generate revenue."</li>
+      <li><strong>should have</strong> — Past criticism or regret: "The team should have acted more quickly." / "Management should have consulted the risk committee."</li>
+      <li><strong>could have</strong> — Past unrealised possibility: "They could have reached a better decision with diverse input."</li>
+      <li><strong>might have</strong> — Past speculation (uncertain): "There might have been other contributing factors."</li>
+    </ul>
+    <div class="ex">✔ "There must be a fundamental problem with the onboarding experience — the data is conclusive." (strong deduction)<br>✔ "The supplier must have been aware — three QA reports were signed off." (past deduction)<br>✔ "The decision couldn't have been made without consulting governance." (past impossibility)<br>✔ "The team should have acted more quickly — the delay cost three weeks." (past criticism)<br>✔ "They could have reached a better outcome with a dissenting voice in the room." (past unrealised possibility)</div>
+  </div>
+
+  <div class="grammar-box">
+    <h4>3. Cause-and-Effect Language in Problem Analysis</h4>
+    <p>Cause-and-effect language is fundamental in professional problem analysis and decision communication. It enables precise description of the relationships between problems, their origins, and their consequences.</p>
+    <ul>
+      <li><strong>Expressing cause (noun phrase):</strong> "Due to…" / "As a result of…" / "Because of…" / "Owing to…" / "In light of…"</li>
+      <li><strong>Expressing cause (clause):</strong> "Because…" / "Since…" / "Given that…" / "As…"</li>
+      <li><strong>Tracing the source of a problem:</strong> "stems from" / "arises from" / "is triggered by" / "is attributed to" / "can be traced back to"</li>
+      <li><strong>Expressing result/consequence:</strong> "As a result, …" / "Consequently, …" / "Therefore, …" / "This led to…" / "resulted in" / "which meant that"</li>
+      <li><strong>Expressing purpose:</strong> "in order to" / "so as to" / "so that" / "with the aim of"</li>
+      <li><strong>Concession (contrast despite cause):</strong> "Although…" / "Even though…" / "Despite…" / "In spite of…" / "Nevertheless…"</li>
+    </ul>
+    <div class="ex">✔ "Due to the absence of a decision framework, outcomes were inconsistent." (cause: noun phrase)<br>✔ "The failure to conduct due diligence resulted in significant legal liabilities." (result: verb)<br>✔ "The problem stems from a faulty supplier component, not a process error." (source tracing)<br>✔ "The team implemented cost reductions in order to preserve the operating margin." (purpose)<br>✔ "Although the decision was made under pressure, a risk assessment was still completed." (concession)</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<!-- ══ WRITING ══ -->
+<section id="writing">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fef3c7">✍️</div>
+      <div class="sec-text">
+        <div class="sec-title">Writing Activities</div>
+        <div class="sec-sub">2 Professional Writing Tasks · Problem Analysis Memo & Decision Brief</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="writing-card">
+    <h4>✍️ Writing Task 1 — Problem Analysis Memo</h4>
+    <div><span class="tag tag-navy">Internal Memo</span><span class="tag tag-gold">220–280 words</span></div>
+    <p class="writing-task"><strong>Context:</strong> You are the Operations Director at a logistics company. Over the past three months, customer complaint volumes have increased by 34% and on-time delivery rates have fallen from 94% to 81%. You have conducted a root cause analysis and identified three interconnected causes: (1) a warehouse management system that has not been updated in four years and is producing incorrect stock-level data; (2) a significant increase in order volumes following a successful marketing campaign, which the current team capacity cannot handle; and (3) a gap in the driver briefing process that means drivers are not being informed of route changes in real time.<br><br>Write a professional internal memo to the CEO summarising the problem and its root causes. Your memo should: <strong>(1)</strong> Open by clearly stating the problem and its business impact. <strong>(2)</strong> Identify and explain each root cause using cause-and-effect language. <strong>(3)</strong> Use formal register throughout — no contractions or first-person informality. <strong>(4)</strong> Close with a brief paragraph stating that a formal decision brief with recommendations will follow within five working days.</p>
+    <textarea class="writing-area" id="w1ta" placeholder="Write your problem analysis memo here…" oninput="wcCalc('w1ta','w1wc',280)"></textarea>
+    <div class="wc-display" id="w1wc">Words: 0 / 280</div>
+    <div class="btn-row"><button class="btn btn-gold" onclick="alert('Memo submitted for teacher review.')">📤 Submit Memo</button></div>
+  </div>
+
+  <div class="writing-card">
+    <h4>✍️ Writing Task 2 — Decision Brief</h4>
+    <div><span class="tag tag-navy">Decision Brief</span><span class="tag tag-gold">260–320 words</span></div>
+    <p class="writing-task"><strong>Context:</strong> Following the problem analysis memo (Task 1), you have been asked to produce a concise decision brief for the CEO and CFO. You have evaluated three options for addressing the delivery performance crisis: <strong>Option A</strong> — Emergency upgrade of the warehouse management system (cost: £180,000; timeline: 6 weeks; risk: medium). <strong>Option B</strong> — Hire 12 temporary drivers and two logistics coordinators to handle the volume surge (cost: £95,000 for 3 months; risk: low; limitation: does not address the technology issue). <strong>Option C</strong> — Implement both A and B simultaneously as a phased programme (total cost: £260,000 over 6 months; risk: higher complexity but addresses all three root causes). You recommend Option C, but acknowledge the budget implications.<br><br>Write a professional decision brief. It must: <strong>(1)</strong> Briefly restate the problem and decision criteria used for evaluation. <strong>(2)</strong> Summarise each option with its key attributes and trade-offs. <strong>(3)</strong> State your recommendation clearly, using direct formal language ("It is recommended that…"). <strong>(4)</strong> Acknowledge the main risk or limitation of your recommendation. <strong>(5)</strong> Suggest a next step and timeline. Use passive voice, formal connectors, and conditional language where appropriate.</p>
+    <textarea class="writing-area" id="w2ta" placeholder="Write your decision brief here…" oninput="wcCalc('w2ta','w2wc',320)"></textarea>
+    <div class="wc-display" id="w2wc">Words: 0 / 320</div>
+    <div class="btn-row"><button class="btn btn-gold" onclick="alert('Decision brief submitted for teacher review.')">📤 Submit Decision Brief</button></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ LISTENING ══ -->
+<section id="listening">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#e0e7ff">🎧</div>
+      <div class="sec-text">
+        <div class="sec-title">Listening Activities</div>
+        <div class="sec-sub">3 Activities with built-in audio players — press ▶ Play, listen, then answer</div>
+      </div>
+    </div>
+  </div>
+  <div class="info-box" style="background:#fffbf0;border-color:rgba(201,168,76,.3)">🔊 Click ▶ to listen using your browser's built-in text-to-speech. Adjust speed as needed. Reveal the transcript after listening to review key language.</div>
+
+  <!-- L1 -->
+  <div class="listen-block">
+    <div class="listen-header">
+      <div class="listen-icon">🎙️</div>
+      <div class="listen-meta">
+        <h4>Activity 1: Podcast — Overcoming Cognitive Bias in Leadership Decisions</h4>
+        <div class="track-sub">Behavioural Economist — Business Leadership Podcast</div>
+        <div class="listen-tags"><span class="ltag ltag-gold">LEVEL: B2</span><span class="ltag ltag-outline">MULTIPLE CHOICE</span><span class="ltag ltag-outline">FOCUS: DETAIL & INFERENCE</span></div>
+      </div>
+    </div>
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp1" onclick="togglePlay('pp1','prog1','tm1','st1','ls1')">▶</button>
+        <div class="player-track-info"><div class="track-title-sm">Overcoming Cognitive Bias in Leadership Decisions</div><div class="track-sub-sm">Behavioural Economist — Business Leadership Podcast</div></div>
+        <div class="time-display"><span id="tm1">0:00</span> / <span id="dur1">0:00</span></div>
+      </div>
+      <div class="progress-audio" onclick="seekTrack(event,'prog1')"><div class="progress-audio-fill" id="prog1"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpeed('ls1',0.7,this)">0.7×</button>
+        <button class="speed-btn active" onclick="setSpeed('ls1',0.85,this)">0.85×</button>
+        <button class="speed-btn" onclick="setSpeed('ls1',1.0,this)">1.0×</button>
+        <button class="speed-btn" onclick="setSpeed('ls1',1.2,this)">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls1','prog1','tm1','pp1','st1')">↺ Replay</button>
+        <span id="st1" style="font-size:11px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace">Ready</span>
+      </div>
+      <div class="player-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+    </div>
+    <button class="transcript-toggle-btn" onclick="togTranscript(this)"><span class="tt-arrow">▶</span> Show / Hide Transcript</button>
+    <div class="transcript-box"><p id="ls1">Welcome back. Today I want to talk about something that I genuinely believe is the most underappreciated challenge in organisational leadership: the systematic ways in which our own minds work against us when we make decisions. We call these cognitive biases, and the research on them is, frankly, humbling. The most dangerous one — because it is the most invisible — is what we call confirmation bias. This is the tendency to seek out, weight, and remember information that confirms what we already believe, while unconsciously filtering out or discounting information that contradicts it. And the really uncomfortable truth is that intelligence makes you more susceptible to this, not less. Intelligent people are better at constructing sophisticated justifications for conclusions they reached intuitively. They are better at the rationalisation. The second bias I want to discuss is anchoring — the disproportionate influence of the first data point you encounter on all your subsequent estimates. If I tell you a company is worth 10 million and then ask you to value it, your estimate will be higher than if I had said 2 million — even if you know the anchor was arbitrary. In business, this shows up constantly: in salary negotiations, pricing decisions, and acquisition valuations. The single most effective countermeasure for both of these biases is what researchers call a "pre-mortem." Before you commit to a decision, you ask your team to assume the decision has already failed — catastrophically, completely — and to explain why. This forces the generation of negative information that confirmation bias would otherwise suppress, and it breaks the anchor by reframing the starting point. It costs about forty-five minutes and has been shown to reduce decision failure rates by up to thirty percent in controlled studies.</p></div>
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the podcast extract, then answer the questions below.</div>
+      <div id="l1" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. What does the speaker describe as the most dangerous cognitive bias and why?</div><div class="options"><label class="opt"><input type="radio" name="l1q1" value="a"> A. Anchoring, because it is the most mathematically precise and measurable</label><label class="opt"><input type="radio" name="l1q1" value="b"> B. Confirmation bias, because it is the most invisible and hardest to self-detect</label><label class="opt"><input type="radio" name="l1q1" value="c"> C. Groupthink, because it affects the most senior decision-makers disproportionately</label><label class="opt"><input type="radio" name="l1q1" value="d"> D. Analysis paralysis, because it most directly prevents decisions from being made</label></div></div>
+        <div class="q-item"><div class="q-stem">2. What "uncomfortable truth" does the speaker share about intelligence and confirmation bias?</div><div class="options"><label class="opt"><input type="radio" name="l1q2" value="a"> A. Intelligent people are immune to confirmation bias because they can evaluate evidence objectively</label><label class="opt"><input type="radio" name="l1q2" value="b"> B. Intelligence makes a person more susceptible, not less, because they are better at rationalising intuitive conclusions</label><label class="opt"><input type="radio" name="l1q2" value="c"> C. Intelligence reduces the speed of decision-making, which increases exposure to bias over time</label><label class="opt"><input type="radio" name="l1q2" value="d"> D. Highly intelligent people recognise their biases but find them impossible to correct</label></div></div>
+        <div class="q-item"><div class="q-stem">3. How does the speaker define anchoring bias?</div><div class="options"><label class="opt"><input type="radio" name="l1q3" value="a"> A. The tendency to rely too heavily on a single trusted advisor's opinion</label><label class="opt"><input type="radio" name="l1q3" value="b"> B. The disproportionate influence of the first data point encountered on all subsequent estimates</label><label class="opt"><input type="radio" name="l1q3" value="c"> C. The reluctance to change a decision once it has been publicly committed to</label><label class="opt"><input type="radio" name="l1q3" value="d"> D. The tendency to default to the most recent decision made in a similar context</label></div></div>
+        <div class="q-item"><div class="q-stem">4. What is a "pre-mortem" and how does it work?</div><div class="options"><label class="opt"><input type="radio" name="l1q4" value="a"> A. A review conducted after implementation to assess whether the decision succeeded</label><label class="opt"><input type="radio" name="l1q4" value="b"> B. A risk assessment conducted before the decision that rates the likelihood of each outcome</label><label class="opt"><input type="radio" name="l1q4" value="c"> C. A technique where the team assumes the decision has already failed and explains why</label><label class="opt"><input type="radio" name="l1q4" value="d"> D. A structured vote taken before the decision to measure team confidence levels</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What impact does the pre-mortem technique have on decision failure rates, according to the research cited?</div><div class="options"><label class="opt"><input type="radio" name="l1q5" value="a"> A. It eliminates decision failure entirely in controlled organisational studies</label><label class="opt"><input type="radio" name="l1q5" value="b"> B. It reduces decision failure rates by up to thirty percent in controlled studies</label><label class="opt"><input type="radio" name="l1q5" value="c"> C. It reduces failure rates in financial decisions but not operational ones</label><label class="opt"><input type="radio" name="l1q5" value="d"> D. It has been shown to double the quality of decisions in high-stakes negotiations</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l1',{l1q1:'b',l1q2:'b',l1q3:'b',l1q4:'c',l1q5:'b'})">✅ Submit</button><div id="l1-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>C</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+    </div>
+  </div>
+
+  <!-- L2 -->
+  <div class="listen-block" style="margin-top:32px">
+    <div class="listen-header">
+      <div class="listen-icon">🏢</div>
+      <div class="listen-meta">
+        <h4>Activity 2: Meeting Extract — Crisis Decision-Making in Practice</h4>
+        <div class="track-sub">CEO, CFO & Operations Director — Emergency leadership meeting</div>
+        <div class="listen-tags"><span class="ltag ltag-gold">LEVEL: B1–B2</span><span class="ltag ltag-outline">MULTIPLE CHOICE</span><span class="ltag ltag-outline">FOCUS: POSITIONS & DECISIONS</span></div>
+      </div>
+    </div>
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp2" onclick="togglePlay('pp2','prog2','tm2','st2','ls2')">▶</button>
+        <div class="player-track-info"><div class="track-title-sm">Crisis Decision-Making Meeting</div><div class="track-sub-sm">CEO, CFO & Operations Director</div></div>
+        <div class="time-display"><span id="tm2">0:00</span> / <span id="dur2">0:00</span></div>
+      </div>
+      <div class="progress-audio" onclick="seekTrack(event,'prog2')"><div class="progress-audio-fill" id="prog2"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpeed('ls2',0.7,this)">0.7×</button>
+        <button class="speed-btn active" onclick="setSpeed('ls2',0.85,this)">0.85×</button>
+        <button class="speed-btn" onclick="setSpeed('ls2',1.0,this)">1.0×</button>
+        <button class="speed-btn" onclick="setSpeed('ls2',1.2,this)">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls2','prog2','tm2','pp2','st2')">↺ Replay</button>
+        <span id="st2" style="font-size:11px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace">Ready</span>
+      </div>
+      <div class="player-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+    </div>
+    <button class="transcript-toggle-btn" onclick="togTranscript(this)"><span class="tt-arrow">▶</span> Show / Hide Transcript</button>
+    <div class="transcript-box"><p id="ls2">CEO: Right, let's not waste any time. We have a serious delivery performance problem and we need to make a decision today — not next week. Our on-time rate has dropped from 94 to 81 percent and customer complaints are up 34 percent. This is now a reputational risk. Operations Director, what is your assessment? Operations Director: We've completed the root cause analysis and there are three clear drivers. First, the warehouse management system is producing inaccurate stock data — it hasn't been properly updated in four years. Second, order volume has increased significantly since the marketing campaign launched, and the current team cannot absorb the additional load. Third, there's a gap in the driver briefing process that means route updates aren't reaching drivers in real time. CEO: So what are you recommending? Operations Director: I recommend we do two things simultaneously. First, we commission an emergency upgrade of the warehouse system — this addresses the technology issue. Second, we bring in temporary drivers and coordinators to handle the volume surge while the system upgrade is underway. CFO: I need to flag the budget implications here. The system upgrade alone is 180,000 pounds. Temporary staffing will cost roughly 95,000 for three months. We are looking at 275,000 pounds that is not in this year's budget. CEO: I hear that. But if we lose two major clients over this — which is a real possibility — we're looking at far greater losses. On balance, I think we move forward with both. I want a detailed implementation plan on my desk by Thursday, with clear ownership for each action. Any objections? CFO: Agreed, on the condition that we present this to the board for ratification before any spend is committed. CEO: Agreed. Let's move.</p></div>
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the meeting, then answer the questions below.</div>
+      <div id="l2" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. What three root causes did the Operations Director identify?</div><div class="options"><label class="opt"><input type="radio" name="l2q1" value="a"> A. Poor staff training, an outdated IT system, and low team morale</label><label class="opt"><input type="radio" name="l2q1" value="b"> B. An inaccurate warehouse system, insufficient team capacity, and a gap in the driver briefing process</label><label class="opt"><input type="radio" name="l2q1" value="c"> C. Excessive order volumes, a failed marketing campaign, and poor route planning</label><label class="opt"><input type="radio" name="l2q1" value="d"> D. Budget constraints, outdated vehicles, and a lack of driver management software</label></div></div>
+        <div class="q-item"><div class="q-stem">2. What two actions does the Operations Director recommend?</div><div class="options"><label class="opt"><input type="radio" name="l2q2" value="a"> A. Suspend the marketing campaign and invest in driver training</label><label class="opt"><input type="radio" name="l2q2" value="b"> B. An emergency warehouse system upgrade and hiring temporary drivers and coordinators</label><label class="opt"><input type="radio" name="l2q2" value="c"> C. Reduce order acceptance and invest in a new logistics platform</label><label class="opt"><input type="radio" name="l2q2" value="d"> D. Outsource the warehouse operation and renegotiate contracts with key clients</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What is the CFO's primary concern about the proposal?</div><div class="options"><label class="opt"><input type="radio" name="l2q3" value="a"> A. The timeline is too aggressive and the team cannot deliver it</label><label class="opt"><input type="radio" name="l2q3" value="b"> B. The budget implications — £275,000 is not within the current year's budget</label><label class="opt"><input type="radio" name="l2q3" value="c"> C. The proposal does not address the root cause of the driver briefing problem</label><label class="opt"><input type="radio" name="l2q3" value="d"> D. The warehouse upgrade vendor has not yet been formally approved</label></div></div>
+        <div class="q-item"><div class="q-stem">4. What reasoning does the CEO use to approve the spend?</div><div class="options"><label class="opt"><input type="radio" name="l2q4" value="a"> A. The operations team has confirmed the budget can be found within existing contingency</label><label class="opt"><input type="radio" name="l2q4" value="b"> B. Losing major clients due to the delivery failure would cost the company far more</label><label class="opt"><input type="radio" name="l2q4" value="c"> C. The CFO has agreed to defer other projects to release the required budget</label><label class="opt"><input type="radio" name="l2q4" value="d"> D. The board has already approved a contingency fund for operational emergencies</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What condition does the CFO attach to the agreement?</div><div class="options"><label class="opt"><input type="radio" name="l2q5" value="a"> A. The spend must be reviewed after three months against defined performance metrics</label><label class="opt"><input type="radio" name="l2q5" value="b"> B. The decision must be presented to the board for ratification before any money is committed</label><label class="opt"><input type="radio" name="l2q5" value="c"> C. The temporary staff must be recruited through the company's existing HR partners only</label><label class="opt"><input type="radio" name="l2q5" value="d"> D. The warehouse upgrade must be completed within four weeks, not six</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l2',{l2q1:'b',l2q2:'b',l2q3:'b',l2q4:'b',l2q5:'b'})">✅ Submit</button><div id="l2-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>B</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+    </div>
+  </div>
+
+  <!-- L3 -->
+  <div class="listen-block" style="margin-top:32px">
+    <div class="listen-header">
+      <div class="listen-icon">🎓</div>
+      <div class="listen-meta">
+        <h4>Activity 3: Expert Interview — Building Decision-Making Capability in Organisations</h4>
+        <div class="track-sub">Management Professor — Executive Education Interview</div>
+        <div class="listen-tags"><span class="ltag ltag-gold">LEVEL: B2</span><span class="ltag ltag-outline">MULTIPLE CHOICE</span><span class="ltag ltag-outline">FOCUS: OPINION & ARGUMENT</span></div>
+      </div>
+    </div>
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp3" onclick="togglePlay('pp3','prog3','tm3','st3','ls3')">▶</button>
+        <div class="player-track-info"><div class="track-title-sm">Building Decision-Making Capability in Organisations</div><div class="track-sub-sm">Management Professor — Executive Education Interview</div></div>
+        <div class="time-display"><span id="tm3">0:00</span> / <span id="dur3">0:00</span></div>
+      </div>
+      <div class="progress-audio" onclick="seekTrack(event,'prog3')"><div class="progress-audio-fill" id="prog3"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpeed('ls3',0.7,this)">0.7×</button>
+        <button class="speed-btn active" onclick="setSpeed('ls3',0.85,this)">0.85×</button>
+        <button class="speed-btn" onclick="setSpeed('ls3',1.0,this)">1.0×</button>
+        <button class="speed-btn" onclick="setSpeed('ls3',1.2,this)">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls3','prog3','tm3','pp3','st3')">↺ Replay</button>
+        <span id="st3" style="font-size:11px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace">Ready</span>
+      </div>
+      <div class="player-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+    </div>
+    <button class="transcript-toggle-btn" onclick="togTranscript(this)"><span class="tt-arrow">▶</span> Show / Hide Transcript</button>
+    <div class="transcript-box"><p id="ls3">Interviewer: Professor, in your research you argue that decision-making capability is the most critical and most underdeveloped organisational competence. Can you explain what you mean by that? Professor: Yes — thank you. What I find consistently, across industries and geographies, is that organisations invest heavily in the technical skills of their people — financial modelling, strategic analysis, project management — and invest almost nothing in teaching those people how to think clearly under uncertainty. And yet the ability to make sound decisions in ambiguous, high-stakes situations is precisely what separates the leaders who create long-term organisational value from those who don't. The paradox is that most organisations believe they are good at decision-making because they are busy making decisions. But activity is not the same as quality. Interviewer: So what should organisations actually do? Professor: Three things. First, invest in structured decision processes — not as bureaucratic requirements, but as cognitive scaffolding that protects against the worst effects of bias. Second — and this is the one most organisations resist — create genuine psychological safety around dissent. The most dangerous thing in any decision-making group is the absence of a voice willing to say "I think we are wrong." If people fear the consequences of challenging a decision, you will consistently get decisions that reflect the preferences of the most powerful person in the room, not the best analysis of the group. Third — review your decisions systematically. Not to assign blame, but to learn. Most organisations treat post-decision review as an optional extra. It should be mandatory. It is the cheapest and most powerful source of decision-making improvement that exists.</p></div>
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the expert interview, then answer the questions below.</div>
+      <div id="l3" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. What paradox does the professor describe about organisations and decision-making?</div><div class="options"><label class="opt"><input type="radio" name="l3q1" value="a"> A. Organisations invest in decision-making training but rarely apply the skills they develop</label><label class="opt"><input type="radio" name="l3q1" value="b"> B. Organisations believe they are good at decision-making because they are busy making decisions, confusing activity with quality</label><label class="opt"><input type="radio" name="l3q1" value="c"> C. Organisations understand their biases but lack the tools to overcome them</label><label class="opt"><input type="radio" name="l3q1" value="d"> D. Organisations make good tactical decisions but consistently fail at the strategic level</label></div></div>
+        <div class="q-item"><div class="q-stem">2. According to the professor, in what do organisations invest heavily, and what do they neglect?</div><div class="options"><label class="opt"><input type="radio" name="l3q2" value="a"> A. They invest in leadership development and neglect financial modelling skills</label><label class="opt"><input type="radio" name="l3q2" value="b"> B. They invest in technical skills like modelling and project management but neglect how to think clearly under uncertainty</label><label class="opt"><input type="radio" name="l3q2" value="c"> C. They invest in data infrastructure and neglect the human elements of decision-making</label><label class="opt"><input type="radio" name="l3q2" value="d"> D. They invest in process and neglect the development of individual leader capability</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What does the professor say is "the most dangerous thing" in any decision-making group?</div><div class="options"><label class="opt"><input type="radio" name="l3q3" value="a"> A. The presence of too many strong opinions from equally senior stakeholders</label><label class="opt"><input type="radio" name="l3q3" value="b"> B. The absence of a voice willing to say "I think we are wrong"</label><label class="opt"><input type="radio" name="l3q3" value="c"> C. The reliance on structured processes that reduce individual judgment</label><label class="opt"><input type="radio" name="l3q3" value="d"> D. The use of external consultants who lack context about the organisation</label></div></div>
+        <div class="q-item"><div class="q-stem">4. What happens when people fear the consequences of challenging a decision?</div><div class="options"><label class="opt"><input type="radio" name="l3q4" value="a"> A. They generate better-evidenced arguments for their own position</label><label class="opt"><input type="radio" name="l3q4" value="b"> B. Decisions consistently reflect the best analysis of the full group</label><label class="opt"><input type="radio" name="l3q4" value="c"> C. Decisions reflect the preferences of the most powerful person, not the best group analysis</label><label class="opt"><input type="radio" name="l3q4" value="d"> D. The organisation escalates to external arbitration more frequently</label></div></div>
+        <div class="q-item"><div class="q-stem">5. How does the professor describe the post-decision review, and what does he say it should be?</div><div class="options"><label class="opt"><input type="radio" name="l3q5" value="a"> A. An expensive but valuable tool that only the largest organisations can afford to implement</label><label class="opt"><input type="radio" name="l3q5" value="b"> B. The cheapest and most powerful source of decision-making improvement — and it should be mandatory, not optional</label><label class="opt"><input type="radio" name="l3q5" value="c"> C. A useful tool for assigning accountability and identifying who made the wrong call</label><label class="opt"><input type="radio" name="l3q5" value="d"> D. An effective technique for strategic decisions only, not operational or tactical ones</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l3',{l3q1:'b',l3q2:'b',l3q3:'b',l3q4:'c',l3q5:'b'})">✅ Submit</button><div id="l3-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>C</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<!-- ══ CASE STUDIES ══ -->
+<section id="casestudy">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fce7f3">🏢</div>
+      <div class="sec-text">
+        <div class="sec-title">Case Studies</div>
+        <div class="sec-sub">2 Business Cases · Decision Making in Practice · Auto-graded</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CS1 -->
+  <div style="margin-bottom:32px">
+    <div class="case-hd">
+      <div class="case-company">Case Study 1 · Consumer Technology · United States</div>
+      <h3>Novaris Tech: The Cost of Deciding Without a Framework</h3>
+    </div>
+    <div class="case-body">
+      <p>Novaris Tech is a consumer electronics company based in Austin, Texas, with approximately 1,800 employees and annual revenues of $620 million. In 2021, the company's executive team made a strategic decision to discontinue its best-selling tablet product line and redirect all resources to a new category of smart home devices, based on the CEO's conviction that the smart home market represented a transformative opportunity. The decision was made over four weeks at the executive level, without a structured feasibility report, without a formal competitive analysis, and without any consultation with the sales and customer insights teams who held the richest data on customer preferences and buying behaviour. When two members of the product strategy team raised concerns about the pace of the decision and the absence of supporting data, they were told that the leadership team had made its call and that the focus should now be on execution.</p>
+      <p>The financial consequences became apparent within twelve months. The smart home product range launched six months behind schedule and significantly over budget, due to supply chain complexity that had not been assessed in advance. Meanwhile, the discontinued tablet line — whose loyal customer base had not been consulted about its discontinuation — generated approximately $47 million in lost recurring revenues in its first year of absence. A competitor that had been trailing Novaris by a significant margin in the tablet category accelerated its own product development and captured the majority of the displaced customers within nine months. The executive team, by contrast, had allocated all available engineering and sales capacity to a category in which Novaris had no brand heritage, no established distribution partnerships, and no tested customer insights.</p>
+      <p>A retrospective analysis commissioned by the new CFO — appointed following the resignation of her predecessor — identified four critical decision-making failures: the absence of any formal decision framework; the complete exclusion of frontline knowledge from the analysis; the suppression of dissenting voices that constituted a textbook case of groupthink at the leadership level; and the failure to model even basic opportunity-cost implications of exiting the tablet category. The retrospective also noted that the decision had been based primarily on the CEO's intuition about market trends — intuition that, while not unreasonable, had never been tested against any structured scenario or risk assessment. The board subsequently approved a mandatory Decision Framework Protocol for all decisions with a revenue impact exceeding $5 million.</p>
+    </div>
+  </div>
+  <div id="cs1" class="quiz-card">
+    <div class="quiz-title">Case Study 1 — 5 Questions</div>
+    <div class="q-item"><div class="q-stem">1. What was the basis for the CEO's decision to discontinue the tablet product line?</div><div class="options"><label class="opt"><input type="radio" name="cs1q1" value="a"> A. A detailed competitive analysis showing the tablet market was declining</label><label class="opt"><input type="radio" name="cs1q1" value="b"> B. A customer survey indicating declining loyalty to the tablet product range</label><label class="opt"><input type="radio" name="cs1q1" value="c"> C. The CEO's personal conviction that the smart home market was a transformative opportunity</label><label class="opt"><input type="radio" name="cs1q1" value="d"> D. A recommendation from an external management consultancy engaged for the purpose</label></div></div>
+    <div class="q-item"><div class="q-stem">2. How did the leadership team respond when team members raised concerns about the pace and evidence base of the decision?</div><div class="options"><label class="opt"><input type="radio" name="cs1q2" value="a"> A. They commissioned additional research to address the specific concerns raised</label><label class="opt"><input type="radio" name="cs1q2" value="b"> B. They told the team the decision had been made and the focus should be on execution</label><label class="opt"><input type="radio" name="cs1q2" value="c"> C. They agreed to delay the final decision by two months to gather more data</label><label class="opt"><input type="radio" name="cs1q2" value="d"> D. They escalated the concerns to the board for a second opinion</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What was the approximate value of recurring revenues lost in the first year due to the tablet discontinuation?</div><div class="options"><label class="opt"><input type="radio" name="cs1q3" value="a"> A. $12 million</label><label class="opt"><input type="radio" name="cs1q3" value="b"> B. $47 million</label><label class="opt"><input type="radio" name="cs1q3" value="c"> C. $95 million</label><label class="opt"><input type="radio" name="cs1q3" value="d"> D. $620 million</label></div></div>
+    <div class="q-item"><div class="q-stem">4. Which decision-making failure does the case study describe as a "textbook case of groupthink"?</div><div class="options"><label class="opt"><input type="radio" name="cs1q4" value="a"> A. The failure to model the opportunity cost of exiting the tablet category</label><label class="opt"><input type="radio" name="cs1q4" value="b"> B. The absence of a formal decision framework for the strategic review</label><label class="opt"><input type="radio" name="cs1q4" value="c"> C. The complete exclusion of frontline customer insight from the analysis</label><label class="opt"><input type="radio" name="cs1q4" value="d"> D. The suppression of dissenting voices at the leadership level</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What broader lesson does the Novaris case illustrate about unstructured decision-making?</div><div class="options"><label class="opt"><input type="radio" name="cs1q5" value="a"> A. Strategic decisions should always be made by external consultants rather than internal teams</label><label class="opt"><input type="radio" name="cs1q5" value="b"> B. Even well-intentioned intuitive decisions can cause severe damage when made without structured analysis, diverse input, and honest risk assessment</label><label class="opt"><input type="radio" name="cs1q5" value="c"> C. The smart home market is inherently too risky for established consumer technology companies</label><label class="opt"><input type="radio" name="cs1q5" value="d"> D. Frontline employees are better equipped than executives to make major strategic decisions</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('cs1',{cs1q1:'c',cs1q2:'b',cs1q3:'b',cs1q4:'d',cs1q5:'b'})">✅ Submit</button><div id="cs1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Case Study 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>C</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>D</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+
+  <!-- CS2 -->
+  <div style="margin-top:40px;margin-bottom:32px">
+    <div class="case-hd">
+      <div class="case-company">Case Study 2 · Healthcare / Public Sector · Colombia</div>
+      <h3>Clínica del Valle: Transforming Decision-Making with Structured Process</h3>
+    </div>
+    <div class="case-body">
+      <p>Clínica del Valle is a private hospital group operating four facilities in the Valle del Cauca region of Colombia, with a combined annual patient volume of approximately 280,000. In 2022, the group's executive leadership identified a persistent and costly operational problem: average patient wait times in the emergency departments had increased from 48 minutes to 91 minutes over an 18-month period, despite two previous intervention attempts that had each produced temporary improvements before the problem returned. The CEO, Dr Elena Vargas, recognised that the organisation's previous approach — identifying a visible symptom and implementing a tactical fix without structured diagnosis — had repeatedly produced surface-level solutions that did not address the root cause. She commissioned a formal problem-solving programme, managed jointly by the Operations Director and the Head of Quality Improvement, with clear terms of reference and a defined eight-week timeline.</p>
+      <p>The root cause analysis, conducted using a combination of process mapping, staff interviews, and patient flow data, identified two primary drivers. First, the triage process contained a significant bottleneck at the initial patient registration stage, where a single administrative system was shared across all intake categories, causing a queue that delayed the clinical triage itself. Second, the discharge process was consistently delayed by a communication breakdown between the ward teams and the pharmacy — medications were often not ready when patients were clinically cleared for discharge, forcing patients to wait for up to 90 minutes before they could leave. Each of these was a process failure, not a staffing or resource failure — a distinction that previous interventions had missed entirely because they had prioritised visible activity over diagnostic rigour.</p>
+      <p>With the root causes clearly identified, the operations team used a structured scenario planning exercise to evaluate three intervention options, each modelled against four decision criteria: speed of impact, cost, operational disruption during implementation, and durability of the improvement. The highest-scoring option was a dual intervention: separating the registration pathway for urgent and non-urgent patients using a dedicated intake terminal, and introducing a real-time pharmacy notification protocol tied to the clinical discharge system. The intervention was piloted in the largest facility for six weeks before being rolled out across all four sites. A post-decision review conducted twelve months after full implementation recorded an average wait time of 44 minutes — below the original 48-minute baseline — and a 28% reduction in complaint volumes. Dr Vargas attributed the success not to the specific solutions chosen, but to the quality of the diagnostic and decision-making process that had preceded them.</p>
+    </div>
+  </div>
+  <div id="cs2" class="quiz-card">
+    <div class="quiz-title">Case Study 2 — 5 Questions</div>
+    <div class="q-item"><div class="q-stem">1. Why had previous interventions at Clínica del Valle failed to produce lasting improvement?</div><div class="options"><label class="opt"><input type="radio" name="cs2q1" value="a"> A. They lacked the budget and staff resources needed for effective implementation</label><label class="opt"><input type="radio" name="cs2q1" value="b"> B. They addressed visible symptoms without structured diagnosis of the root cause</label><label class="opt"><input type="radio" name="cs2q1" value="c"> C. They were designed externally and did not reflect the hospital's specific operational context</label><label class="opt"><input type="radio" name="cs2q1" value="d"> D. They were implemented too quickly and without adequate staff training</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What were the two root causes identified by the root cause analysis?</div><div class="options"><label class="opt"><input type="radio" name="cs2q2" value="a"> A. Insufficient staffing in the emergency department and poor patient record management</label><label class="opt"><input type="radio" name="cs2q2" value="b"> B. A bottleneck in patient registration shared across all intake categories, and delays in pharmacy discharge communication</label><label class="opt"><input type="radio" name="cs2q2" value="c"> C. An outdated triage assessment tool and a shortage of qualified clinical staff during peak hours</label><label class="opt"><input type="radio" name="cs2q2" value="d"> D. Poor scheduling systems and a lack of coordination between the surgical and emergency teams</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What four decision criteria were used to evaluate the three intervention options?</div><div class="options"><label class="opt"><input type="radio" name="cs2q3" value="a"> A. Staff satisfaction, patient safety, regulatory compliance, and public relations impact</label><label class="opt"><input type="radio" name="cs2q3" value="b"> B. Budget, timeline, stakeholder approval, and risk rating</label><label class="opt"><input type="radio" name="cs2q3" value="c"> C. Speed of impact, cost, operational disruption during implementation, and durability of improvement</label><label class="opt"><input type="radio" name="cs2q3" value="d"> D. Technical complexity, vendor availability, team capability, and board approval</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What was the result of the post-decision review conducted twelve months after full implementation?</div><div class="options"><label class="opt"><input type="radio" name="cs2q4" value="a"> A. Wait times improved to 61 minutes and complaints reduced by 10%</label><label class="opt"><input type="radio" name="cs2q4" value="b"> B. Wait times fell to 44 minutes — below the original baseline — and complaints reduced by 28%</label><label class="opt"><input type="radio" name="cs2q4" value="c"> C. Wait times reached the 48-minute target but complaint volumes remained unchanged</label><label class="opt"><input type="radio" name="cs2q4" value="d"> D. The pilot facility achieved the target but the other three sites did not sustain the improvement</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What does Dr Vargas attribute the success to, according to the case study?</div><div class="options"><label class="opt"><input type="radio" name="cs2q5" value="a"> A. The specific solutions chosen, which were more innovative than previous interventions</label><label class="opt"><input type="radio" name="cs2q5" value="b"> B. The budget that was made available for the programme</label><label class="opt"><input type="radio" name="cs2q5" value="c"> C. The quality of the diagnostic and decision-making process that preceded the solutions</label><label class="opt"><input type="radio" name="cs2q5" value="d"> D. The expertise of the external consultants engaged to manage the programme</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('cs2',{cs2q1:'b',cs2q2:'b',cs2q3:'c',cs2q4:'b',cs2q5:'c'})">✅ Submit</button><div id="cs2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Case Study 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>C</strong></li><li>4. <strong>B</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<!-- ══ FINAL ASSESSMENT ══ -->
+<section id="final">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fee2e2">🏆</div>
+      <div class="sec-text">
+        <div class="sec-title">Final Assessment</div>
+        <div class="sec-sub">20 Multiple-Choice Questions · Full Module 6 · Pass: 70% · 2 Attempts Allowed</div>
+      </div>
+    </div>
+  </div>
+  <div class="info-box" style="background:#fffbf0;border-color:rgba(201,168,76,.35)">⚠️ <strong>Assessment Rules:</strong> This assessment covers all sections of Module 6. A score of <strong>14/20 (70%)</strong> or above is required to pass. You have <strong>2 attempts</strong>. After your first attempt, review any missed questions before retrying.</div>
+
+  <div class="final-wrap" id="fwrap">
+    <div class="quiz-title">Module 6 Final Assessment — 20 Questions</div>
+    <div class="attempts-badge" id="att-badge">Attempt 1 of 2</div>
+
+    <div class="q-item"><div class="q-stem">1. The process of identifying the fundamental underlying cause of a problem, rather than treating its symptoms, is called ________.</div><div class="options"><label class="opt"><input type="radio" name="fq1" value="a"> A. scenario planning</label><label class="opt"><input type="radio" name="fq1" value="b"> B. root cause analysis</label><label class="opt"><input type="radio" name="fq1" value="c"> C. cost-benefit analysis</label><label class="opt"><input type="radio" name="fq1" value="d"> D. stakeholder mapping</label></div></div>
+    <div class="q-item"><div class="q-stem">2. "If the team ________ a pre-mortem exercise, they would have identified the critical risks before committing to the decision." — Correct conditional:</div><div class="options"><label class="opt"><input type="radio" name="fq2" value="a"> A. conducts</label><label class="opt"><input type="radio" name="fq2" value="b"> B. had conducted</label><label class="opt"><input type="radio" name="fq2" value="c"> C. conducted</label><label class="opt"><input type="radio" name="fq2" value="d"> D. will conduct</label></div></div>
+    <div class="q-item"><div class="q-stem">3. In the Novaris Tech case study, what was the suppression of dissenting voices described as?</div><div class="options"><label class="opt"><input type="radio" name="fq3" value="a"> A. An inevitable consequence of strong executive leadership</label><label class="opt"><input type="radio" name="fq3" value="b"> B. A textbook case of analysis paralysis at the leadership level</label><label class="opt"><input type="radio" name="fq3" value="c"> C. A textbook case of groupthink at the leadership level</label><label class="opt"><input type="radio" name="fq3" value="d"> D. An appropriate governance response to a time-pressured decision</label></div></div>
+    <div class="q-item"><div class="q-stem">4. "There ________ a fundamental flaw in the financial model — the projected return is three times higher than any comparable investment has ever delivered." — Correct modal (near impossibility):</div><div class="options"><label class="opt"><input type="radio" name="fq4" value="a"> A. must be</label><label class="opt"><input type="radio" name="fq4" value="b"> B. might be</label><label class="opt"><input type="radio" name="fq4" value="c"> C. could be</label><label class="opt"><input type="radio" name="fq4" value="d"> D. can't not be</label></div></div>
+    <div class="q-item"><div class="q-stem">5. The value of the best alternative that is given up as a result of committing to a particular decision is called the ________.</div><div class="options"><label class="opt"><input type="radio" name="fq5" value="a"> A. trade-off</label><label class="opt"><input type="radio" name="fq5" value="b"> B. decision criteria</label><label class="opt"><input type="radio" name="fq5" value="c"> C. opportunity cost</label><label class="opt"><input type="radio" name="fq5" value="d"> D. risk assessment</label></div></div>
+    <div class="q-item"><div class="q-stem">6. "The customer satisfaction decline ________ a series of delivery failures triggered by the warehouse system failure in Q2." — Best cause-and-effect expression:</div><div class="options"><label class="opt"><input type="radio" name="fq6" value="a"> A. results in</label><label class="opt"><input type="radio" name="fq6" value="b"> B. stems from</label><label class="opt"><input type="radio" name="fq6" value="c"> C. leads to</label><label class="opt"><input type="radio" name="fq6" value="d"> D. is caused for</label></div></div>
+    <div class="q-item"><div class="q-stem">7. According to Reading Text 1, what is the long-term organisational benefit of consistently using decision frameworks?</div><div class="options"><label class="opt"><input type="radio" name="fq7" value="a"> A. It reduces the number of decisions that need to be made each year</label><label class="opt"><input type="radio" name="fq7" value="b"> B. It develops a cumulative institutional capability for high-quality judgment</label><label class="opt"><input type="radio" name="fq7" value="c"> C. It eliminates all major cognitive biases at the organisational level</label><label class="opt"><input type="radio" name="fq7" value="d"> D. It standardises all decisions so they can be made by junior staff</label></div></div>
+    <div class="q-item"><div class="q-stem">8. "The team ________ acted more quickly — the delay cost the company significant market share." — Correct modal for past criticism:</div><div class="options"><label class="opt"><input type="radio" name="fq8" value="a"> A. must have</label><label class="opt"><input type="radio" name="fq8" value="b"> B. could not have</label><label class="opt"><input type="radio" name="fq8" value="c"> C. should have</label><label class="opt"><input type="radio" name="fq8" value="d"> D. might not have</label></div></div>
+    <div class="q-item"><div class="q-stem">9. A state in which excessive deliberation or data analysis prevents a decision from being made is called ________.</div><div class="options"><label class="opt"><input type="radio" name="fq9" value="a"> A. groupthink</label><label class="opt"><input type="radio" name="fq9" value="b"> B. cognitive bias</label><label class="opt"><input type="radio" name="fq9" value="c"> C. analysis paralysis</label><label class="opt"><input type="radio" name="fq9" value="d"> D. escalation</label></div></div>
+    <div class="q-item"><div class="q-stem">10. In the Clínica del Valle case study, what did Dr Vargas attribute the programme's success to?</div><div class="options"><label class="opt"><input type="radio" name="fq10" value="a"> A. The specific solutions chosen, which were more innovative than previous attempts</label><label class="opt"><input type="radio" name="fq10" value="b"> B. The external consultants engaged to design the intervention</label><label class="opt"><input type="radio" name="fq10" value="c"> C. The quality of the diagnostic and decision-making process that preceded the solutions</label><label class="opt"><input type="radio" name="fq10" value="d"> D. The budget made available for the programme</label></div></div>
+    <div class="q-item"><div class="q-stem">11. "If managers ________ data with professional intuition, decisions tend to be more robust." — Correct conditional for a general truth:</div><div class="options"><label class="opt"><input type="radio" name="fq11" value="a"> A. combined</label><label class="opt"><input type="radio" name="fq11" value="b"> B. had combined</label><label class="opt"><input type="radio" name="fq11" value="c"> C. combine</label><label class="opt"><input type="radio" name="fq11" value="d"> D. will combine</label></div></div>
+    <div class="q-item"><div class="q-stem">12. Which technique does the podcast speaker (Listening Activity 1) recommend as the most effective countermeasure against both confirmation bias and anchoring?</div><div class="options"><label class="opt"><input type="radio" name="fq12" value="a"> A. Stakeholder mapping before finalising the decision</label><label class="opt"><input type="radio" name="fq12" value="b"> B. The pre-mortem — assuming the decision has already failed and explaining why</label><label class="opt"><input type="radio" name="fq12" value="c"> C. A structured cost-benefit analysis applied to each option</label><label class="opt"><input type="radio" name="fq12" value="d"> D. Delegating the final decision to someone with no prior knowledge of the issue</label></div></div>
+    <div class="q-item"><div class="q-stem">13. "________ the absence of a structured decision process, each manager applied different criteria, leading to inconsistent decisions." — Best connector:</div><div class="options"><label class="opt"><input type="radio" name="fq13" value="a"> A. Despite</label><label class="opt"><input type="radio" name="fq13" value="b"> B. So that</label><label class="opt"><input type="radio" name="fq13" value="c"> C. Due to</label><label class="opt"><input type="radio" name="fq13" value="d"> D. Even though</label></div></div>
+    <div class="q-item"><div class="q-stem">14. In Reading Text 2, what does the text say about the relationship between option breadth and solution quality?</div><div class="options"><label class="opt"><input type="radio" name="fq14" value="a"> A. Considering more options consistently leads to analysis paralysis and delays</label><label class="opt"><input type="radio" name="fq14" value="b"> B. The quality of the final solution is strongly correlated with the breadth of options considered</label><label class="opt"><input type="radio" name="fq14" value="c"> C. A smaller option set leads to faster and more confident decision-making</label><label class="opt"><input type="radio" name="fq14" value="d"> D. Option breadth is less important than the experience of the person selecting the solution</label></div></div>
+    <div class="q-item"><div class="q-stem">15. A structured technique in which multiple plausible future situations are analysed to test the robustness of a decision is called ________.</div><div class="options"><label class="opt"><input type="radio" name="fq15" value="a"> A. brainstorming</label><label class="opt"><input type="radio" name="fq15" value="b"> B. cost-benefit analysis</label><label class="opt"><input type="radio" name="fq15" value="c"> C. root cause analysis</label><label class="opt"><input type="radio" name="fq15" value="d"> D. scenario planning</label></div></div>
+    <div class="q-item"><div class="q-stem">16. "The supplier ________ been aware of the defect before shipping — three QA reports flagged it and were signed off by management." — Correct modal (strong past deduction):</div><div class="options"><label class="opt"><input type="radio" name="fq16" value="a"> A. might have</label><label class="opt"><input type="radio" name="fq16" value="b"> B. should have</label><label class="opt"><input type="radio" name="fq16" value="c"> C. must have</label><label class="opt"><input type="radio" name="fq16" value="d"> D. could not have</label></div></div>
+    <div class="q-item"><div class="q-stem">17. In the expert interview (Listening Activity 3), what does the professor say happens when people fear the consequences of challenging a decision?</div><div class="options"><label class="opt"><input type="radio" name="fq17" value="a"> A. Decisions reflect the best collective analysis of the full group</label><label class="opt"><input type="radio" name="fq17" value="b"> B. Decisions reflect the preferences of the most powerful person, not the best group analysis</label><label class="opt"><input type="radio" name="fq17" value="c"> C. People tend to abstain from voting rather than supporting the dominant view</label><label class="opt"><input type="radio" name="fq17" value="d"> D. The group naturally gravitates toward the safest and least risky option available</label></div></div>
+    <div class="q-item"><div class="q-stem">18. "The cost-reduction programme was implemented ________ preserve the firm's operating margin during the revenue decline." — Correct purpose connector:</div><div class="options"><label class="opt"><input type="radio" name="fq18" value="a"> A. as a result of</label><label class="opt"><input type="radio" name="fq18" value="b"> B. because of</label><label class="opt"><input type="radio" name="fq18" value="c"> C. in order to</label><label class="opt"><input type="radio" name="fq18" value="d"> D. even though</label></div></div>
+    <div class="q-item"><div class="q-stem">19. A structured evaluation conducted after a decision has been implemented to assess outcomes and capture lessons for future decisions is called a ________.</div><div class="options"><label class="opt"><input type="radio" name="fq19" value="a"> A. feasibility report</label><label class="opt"><input type="radio" name="fq19" value="b"> B. post-decision review</label><label class="opt"><input type="radio" name="fq19" value="c"> C. stakeholder analysis</label><label class="opt"><input type="radio" name="fq19" value="d"> D. decision brief</label></div></div>
+    <div class="q-item"><div class="q-stem">20. Which statement best summarises the central message of Module 6: Decision Making and Problem Solving?</div><div class="options"><label class="opt"><input type="radio" name="fq20" value="a"> A. Individual intelligence and experience are the primary determinants of decision quality in organisations</label><label class="opt"><input type="radio" name="fq20" value="b"> B. Speed is the most important factor in business decision-making, and delays always cause greater harm than imperfect decisions</label><label class="opt"><input type="radio" name="fq20" value="c"> C. Effective decision-making and problem-solving require structured processes, honest diagnosis, disciplined analysis, and systematic review</label><label class="opt"><input type="radio" name="fq20" value="d"> D. Cognitive biases are insurmountable and organisations should rely on external specialists for all significant decisions</label></div></div>
+
+    <div class="btn-row" style="margin-top:28px">
+      <button class="btn btn-gold" id="submit-btn" style="font-size:15px;padding:12px 28px" onclick="gradeFinal()">🏆 Submit Final Assessment</button>
+    </div>
+    <div class="final-result" id="fresult">
+      <div id="femoji" style="font-size:50px;margin-bottom:10px"></div>
+      <h2 id="fscore"></h2>
+      <div class="final-prog-wrap"><div class="final-prog-fill" id="fprog" style="width:0%"></div></div>
+      <p id="fmsg" style="margin-top:12px"></p>
+      <div id="retry-row" style="display:none;margin-top:16px"></div>
+    </div>
+  </div>
+  <div class="ak-wrap" style="margin-top:14px">
+    <button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Final Assessment</span><span class="ak-icon">▶</span></button>
+    <div class="ak-content"><ol>
+      <li>1. <strong>B</strong> — root cause analysis</li>
+      <li>2. <strong>B</strong> — had conducted (3rd conditional)</li>
+      <li>3. <strong>C</strong> — textbook case of groupthink</li>
+      <li>4. <strong>A</strong> — must be (strong deduction / near certainty)</li>
+      <li>5. <strong>C</strong> — opportunity cost</li>
+      <li>6. <strong>B</strong> — stems from (tracing cause)</li>
+      <li>7. <strong>B</strong> — cumulative institutional capability</li>
+      <li>8. <strong>C</strong> — should have (past criticism)</li>
+      <li>9. <strong>C</strong> — analysis paralysis</li>
+      <li>10. <strong>C</strong> — quality of diagnostic and decision-making process</li>
+      <li>11. <strong>C</strong> — combine (zero conditional: general truth)</li>
+      <li>12. <strong>B</strong> — pre-mortem technique</li>
+      <li>13. <strong>C</strong> — Due to (cause: noun phrase)</li>
+      <li>14. <strong>B</strong> — quality correlated with breadth of options considered</li>
+      <li>15. <strong>D</strong> — scenario planning</li>
+      <li>16. <strong>C</strong> — must have (strong past deduction)</li>
+      <li>17. <strong>B</strong> — decisions reflect the most powerful person's preferences</li>
+      <li>18. <strong>C</strong> — in order to (purpose)</li>
+      <li>19. <strong>B</strong> — post-decision review</li>
+      <li>20. <strong>C</strong> — structured process, honest diagnosis, disciplined analysis, systematic review</li>
+    </ol></div>
+  </div>
+</section>
+
+</div><!-- /content -->
+
+<div style="background:var(--navy);color:rgba(255,255,255,.25);text-align:center;padding:20px;font-size:11px;font-family:'DM Mono',monospace;margin-top:44px">
+  Business Management English · Module 6: Decision Making and Problem Solving · B1–B2 Level
+</div>
+</main>
+
+<script>
+/* ── GRADER ── */
+function gradeQ(id,ans){
+  let sc=0,tot=Object.keys(ans).length;
+  Object.entries(ans).forEach(([nm,cr])=>{
+    const sel=document.querySelector(`input[name="${nm}"]:checked`);
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(o=>{const l=o.closest('.opt');if(l)l.classList.remove('correct','wrong');});
+    if(sel){const sl=sel.closest('.opt');if(sel.value===cr){sc++;if(sl)sl.classList.add('correct');}else{if(sl)sl.classList.add('wrong');}}
+    const ci=document.querySelector(`input[name="${nm}"][value="${cr}"]`);
+    if(ci){const cl=ci.closest('.opt');if(cl&&!cl.classList.contains('wrong'))cl.classList.add('correct');}
+  });
+  const pct=Math.round(sc/tot*100),el=document.getElementById(id+'-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/${tot} (${pct}%)</span>`;}
+  updateProgress();
+}
+
+/* ── GAP FILL ── */
+const gapAns={gi1:'stakeholder mapping',gi2:'root cause analysis',gi3:'SWOT analysis',gi4:'trade-off',gi5:'escalation',gi6:'risk assessment',gi7:'post-decision review',gi8:'prioritisation'};
+function gradeGap(){
+  let sc=0;
+  Object.entries(gapAns).forEach(([id,ans])=>{
+    const inp=document.getElementById(id);if(!inp)return;
+    inp.classList.remove('correct','wrong');
+    if(inp.value.toLowerCase().trim()===ans.toLowerCase()){sc++;inp.classList.add('correct');}else inp.classList.add('wrong');
+  });
+  const pct=Math.round(sc/8*100),el=document.getElementById('v2-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+
+/* ── TRUE/FALSE ── */
+const tfSel={};
+const tfAns={'1':'F','2':'T','3':'F','4':'T','5':'F','6':'T','7':'F','8':'T'};
+function pickTF(btn,num,val){
+  const row=btn.closest('.tf-row');
+  row.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('sel-t','sel-f'));
+  btn.classList.add(val==='T'?'sel-t':'sel-f');
+  tfSel[num]=val;
+}
+function gradeTF(){
+  let sc=0;
+  for(let i=1;i<=8;i++){
+    const s=tfSel[String(i)],c=tfAns[String(i)];
+    const row=document.querySelector(`#tfr${i} .tf-row`);if(!row)continue;
+    const btns=row.querySelectorAll('.tf-btn');
+    btns.forEach(b=>b.classList.remove('ok-tf','nok-tf','sel-t','sel-f'));
+    if(s){
+      if(s===c)sc++;
+      btns.forEach(b=>{const v=b.textContent.trim()==='True'?'T':'F';if(v===c)b.classList.add('ok-tf');else if(v===s&&s!==c)b.classList.add('nok-tf');});
+    }else{btns.forEach(b=>{if((b.textContent.trim()==='True'?'T':'F')===c)b.classList.add('ok-tf');});}
+  }
+  const pct=Math.round(sc/8*100),el=document.getElementById('v3-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+
+/* ── DRAG DROP ── */
+let curDrag=null;
+function pickDrag(el){
+  if(el.classList.contains('used'))return;
+  document.querySelectorAll('.drag-chip').forEach(d=>d.classList.remove('selected-chip'));
+  if(curDrag===el){curDrag=null;}else{curDrag=el;el.classList.add('selected-chip');}
+}
+function doDrop(zone){
+  if(!curDrag)return;
+  if(zone.dataset.cur){document.querySelectorAll('.drag-chip').forEach(d=>{if(d.dataset.w===zone.dataset.cur)d.classList.remove('used');});}
+  zone.textContent=curDrag.dataset.w;zone.classList.add('filled');zone.dataset.cur=curDrag.dataset.w;
+  curDrag.classList.add('used');curDrag.classList.remove('selected-chip');curDrag=null;
+}
+function gradeDrop(){
+  let sc=0;
+  document.querySelectorAll('.drop-zone').forEach(z=>{
+    z.classList.remove('filled','wrong-drop');
+    if(z.dataset.cur===z.dataset.ans){sc++;z.classList.add('filled');}
+    else if(z.dataset.cur)z.classList.add('wrong-drop');
+  });
+  const pct=Math.round(sc/8*100),el=document.getElementById('v4-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+function resetDrop(){
+  document.querySelectorAll('.drop-zone').forEach(z=>{z.textContent='Place here';z.classList.remove('filled','wrong-drop');delete z.dataset.cur;});
+  document.querySelectorAll('.drag-chip').forEach(d=>d.classList.remove('used','selected-chip'));
+  curDrag=null;const el=document.getElementById('v4-score');if(el)el.innerHTML='';
+}
+
+/* ── ANSWER KEY ── */
+function togAK(btn){btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('visible');}
+
+/* ── WORD COUNT ── */
+function wcCalc(tid,cid,max){
+  const t=document.getElementById(tid).value.trim();
+  const n=t===''?0:t.split(/\s+/).length;
+  const el=document.getElementById(cid);if(el)el.textContent=`Words: ${n} / ${max}`;
+}
+
+/* ── TRANSCRIPT ── */
+function togTranscript(btn){btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('visible');}
+
+/* ── TTS AUDIO ── */
+const trackState={};
+function togglePlay(ppId,progId,tmId,stId,scriptId){
+  const s=trackState[scriptId];
+  if(s&&s.utt&&speechSynthesis.speaking){
+    if(s.paused){speechSynthesis.resume();s.paused=false;document.getElementById(ppId).textContent='⏸';}
+    else{speechSynthesis.pause();s.paused=true;document.getElementById(ppId).textContent='▶';}
+    return;
+  }
+  Object.keys(trackState).forEach(k=>{if(k!==scriptId&&trackState[k]&&trackState[k].utt)speechSynthesis.cancel();});
+  const text=document.getElementById(scriptId).textContent.trim();
+  const utt=new SpeechSynthesisUtterance(text);
+  utt.rate=trackState[scriptId]?.speed||0.85;utt.lang='en-GB';utt.pitch=1.02;
+  const numId=ppId.slice(2);
+  const estSec=text.split(' ').length/(utt.rate*150)*60;
+  trackState[scriptId]={utt,paused:false,speed:utt.rate,start:Date.now(),dur:estSec};
+  const durEl=document.getElementById('dur'+numId);if(durEl)durEl.textContent=fmtTime(estSec);
+  const pp=document.getElementById(ppId),st=document.getElementById(stId),prog=document.getElementById(progId),tm=document.getElementById(tmId);
+  utt.onstart=()=>{
+    if(pp)pp.textContent='⏸';if(st)st.textContent='▶ Playing…';
+    trackState[scriptId].timer=setInterval(()=>{
+      if(trackState[scriptId].paused)return;
+      const elapsed=(Date.now()-trackState[scriptId].start)/1000;
+      const pct=Math.min(elapsed/estSec*100,99);
+      if(prog)prog.style.width=pct+'%';if(tm)tm.textContent=fmtTime(elapsed);
+    },300);
+  };
+  utt.onend=()=>{if(pp)pp.textContent='▶';if(st)st.textContent='✓ Done';if(prog)prog.style.width='100%';clearInterval(trackState[scriptId].timer);};
+  utt.onerror=()=>{if(pp)pp.textContent='▶';if(st)st.textContent='Error';clearInterval(trackState[scriptId].timer);};
+  speechSynthesis.speak(utt);
+}
+function replayTrack(scriptId,progId,tmId,ppId,stId){
+  speechSynthesis.cancel();
+  const prog=document.getElementById(progId),tm=document.getElementById(tmId);
+  if(prog)prog.style.width='0%';if(tm)tm.textContent='0:00';
+  delete trackState[scriptId];
+  setTimeout(()=>togglePlay(ppId,progId,tmId,stId,scriptId),200);
+}
+function setSpeed(scriptId,rate,btn){
+  btn.closest('.speed-row').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(!trackState[scriptId])trackState[scriptId]={};
+  trackState[scriptId].speed=rate;
+}
+function seekTrack(e,progId){
+  const bar=e.currentTarget,rect=bar.getBoundingClientRect();
+  const pct=(e.clientX-rect.left)/rect.width;
+  document.getElementById(progId).style.width=(pct*100)+'%';
+}
+function fmtTime(s){const m=Math.floor(s/60),sec=Math.floor(s%60);return `${m}:${sec<10?'0':''}${sec}`;}
+
+/* ── FINAL ASSESSMENT (2 ATTEMPTS) ── */
+const fAns={fq1:'b',fq2:'b',fq3:'c',fq4:'a',fq5:'c',fq6:'b',fq7:'b',fq8:'c',fq9:'c',fq10:'c',fq11:'c',fq12:'b',fq13:'c',fq14:'b',fq15:'d',fq16:'c',fq17:'b',fq18:'c',fq19:'b',fq20:'c'};
+let attemptsUsed=0;
+const maxAttempts=2;
+
+function gradeFinal(){
+  if(attemptsUsed>=maxAttempts)return;
+  attemptsUsed++;
+  let sc=0;
+  Object.entries(fAns).forEach(([nm,cr])=>{
+    const sel=document.querySelector(`input[name="${nm}"]:checked`);
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(o=>{const l=o.closest('.opt');if(l)l.classList.remove('correct','wrong');});
+    if(sel){const sl=sel.closest('.opt');if(sel.value===cr){sc++;if(sl)sl.classList.add('correct');}else{if(sl)sl.classList.add('wrong');}}
+    const ci=document.querySelector(`input[name="${nm}"][value="${cr}"]`);
+    if(ci){const cl=ci.closest('.opt');if(cl)cl.classList.add('correct');}
+  });
+  const pct=Math.round(sc/20*100);
+  const r=document.getElementById('fresult');r.style.display='block';
+  document.getElementById('fscore').textContent=`${sc} / 20`;
+  document.getElementById('fprog').style.width=pct+'%';
+  const em=document.getElementById('femoji'),msg=document.getElementById('fmsg'),retryRow=document.getElementById('retry-row');
+  if(pct>=90){em.textContent='🏆';msg.textContent=`Outstanding — ${pct}%. Excellent mastery of Module 6.`;}
+  else if(pct>=70){em.textContent='✅';msg.textContent=`Well done — ${pct}%. You have passed Module 6. Review any missed questions using the answer key above.`;}
+  else{em.textContent='📚';msg.textContent=`${pct}% — You did not reach the 70% pass mark this time.`;}
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+  if(attemptsUsed<maxAttempts&&pct<70){
+    retryRow.style.display='block';
+    retryRow.innerHTML=`<p style="color:rgba(255,255,255,.5);font-size:13px;margin-bottom:10px">Review the answer key, then try again. You have <strong style="color:var(--gold2)">${maxAttempts-attemptsUsed}</strong> attempt(s) remaining.</p>
+    <button class="btn btn-gold" onclick="resetFinal()" style="font-size:13px">🔄 Try Again (Attempt 2)</button>`;
+    document.getElementById('att-badge').textContent=`Attempt ${attemptsUsed} of ${maxAttempts}`;
+  } else {
+    document.getElementById('submit-btn').disabled=true;
+    document.getElementById('submit-btn').style.opacity='.5';
+    document.getElementById('att-badge').textContent=`All ${maxAttempts} attempts used`;
+    if(attemptsUsed>=maxAttempts)document.querySelectorAll('#fwrap input[name^="fq"]').forEach(i=>i.disabled=true);
+  }
+}
+
+function resetFinal(){
+  document.querySelectorAll('#fwrap input[name^="fq"]').forEach(i=>{i.disabled=false;i.checked=false;});
+  document.querySelectorAll('#fwrap .opt').forEach(o=>o.classList.remove('correct','wrong'));
+  document.getElementById('fresult').style.display='none';
+  document.getElementById('retry-row').style.display='none';
+  document.getElementById('att-badge').textContent=`Attempt 2 of 2`;
+  document.getElementById('fprog').style.width='0%';
+}
+
+/* ── SIDEBAR & PROGRESS ── */
+function setActive(el){document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.remove('active'));el.classList.add('active');}
+window.addEventListener('scroll',()=>{
+  const secs=document.querySelectorAll('section[id]');let cur='';
+  secs.forEach(s=>{if(s.getBoundingClientRect().top<200)cur=s.id;});
+  document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+function updateProgress(){
+  const scored=document.querySelectorAll('.score-badge').length;
+  const pct=Math.min(Math.round(scored/10*100),100);
+  const prog=document.getElementById('modprog'),pctEl=document.getElementById('modpct');
+  if(prog)prog.style.width=pct+'%';if(pctEl)pctEl.textContent=pct+'%';
+}
+setTimeout(()=>{const p=document.getElementById('modprog');if(p)p.style.width='0%';},200);
+</script>
+</body>
+</html>

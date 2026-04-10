@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3: Income and Cash Flow Statements — Finance & Accounting English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d1e35;
+  --navy-mid: #152e4d;
+  --navy-light: #1e4068;
+  --gold: #b8860b;
+  --gold-light: #d4a820;
+  --cream: #f4f1eb;
+  --cream-dark: #e8e2d6;
+  --white: #ffffff;
+  --text-light: #a0b4cc;
+  --text-mid: #5e7a99;
+  --red-accent: #c0392b;
+  --green-accent: #1a8a4a;
+  --teal: #0e7490;
+  --sidebar-w: 265px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--navy); display:flex; min-height:100vh; overflow-x:hidden; }
+
+/* ─── SIDEBAR ─── */
+#sidebar { width:var(--sidebar-w); min-height:100vh; background:var(--navy); position:fixed; top:0; left:0; display:flex; flex-direction:column; z-index:100; overflow-y:auto; }
+.sidebar-brand { padding:22px 20px 16px; border-bottom:1px solid rgba(255,255,255,0.08); }
+.sidebar-brand h1 { font-family:'Playfair Display',serif; font-size:14px; font-weight:700; color:var(--gold-light); line-height:1.35; margin-bottom:4px; }
+.sidebar-brand .subtitle { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-mid); font-weight:500; }
+.level-badge { display:inline-block; margin-top:10px; background:var(--gold); color:#fff; font-size:10px; font-weight:700; letter-spacing:1px; padding:3px 10px; border-radius:20px; }
+.sidebar-section-label { padding:18px 20px 8px; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--text-mid); font-weight:600; }
+.nav-item { display:flex; align-items:center; justify-content:space-between; padding:10px 20px; cursor:pointer; transition:all 0.2s; border-left:3px solid transparent; }
+.nav-item:hover { background:rgba(255,255,255,0.05); }
+.nav-item.active { background:rgba(212,168,32,0.13); border-left-color:var(--gold-light); }
+.nav-item .nav-left { display:flex; align-items:center; gap:10px; }
+.nav-icon { font-size:15px; }
+.nav-label { font-size:13px; color:var(--text-light); font-weight:400; }
+.nav-item.active .nav-label { color:var(--white); font-weight:500; }
+.nav-badge { font-size:10px; font-weight:700; color:var(--navy); background:var(--gold-light); padding:1px 7px; border-radius:10px; }
+
+/* ─── MAIN ─── */
+#main { margin-left:var(--sidebar-w); flex:1; min-height:100vh; }
+.section { display:none; }
+.section.active { display:block; }
+
+/* ─── HERO ─── */
+.hero { background:linear-gradient(135deg,#0d1e35 0%,#152e4d 55%,#0e3055 100%); padding:60px 60px 52px; position:relative; overflow:hidden; }
+.hero::before { content:'M3'; position:absolute; right:-10px; bottom:-50px; font-family:'Playfair Display',serif; font-size:320px; font-weight:900; color:rgba(255,255,255,0.025); line-height:1; pointer-events:none; }
+.hero::after { content:''; position:absolute; top:0; right:0; width:340px; height:100%; background:linear-gradient(135deg,transparent 0%,rgba(14,116,144,0.08) 100%); pointer-events:none; }
+.module-tag { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.09); border:1px solid rgba(255,255,255,0.14); padding:6px 16px; border-radius:30px; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-light); font-weight:500; margin-bottom:28px; }
+.hero h2 { font-family:'Playfair Display',serif; font-size:clamp(34px,4.8vw,56px); font-weight:900; color:var(--white); line-height:1.1; margin-bottom:4px; }
+.hero h2 span { color:var(--gold-light); }
+.hero p { font-size:15px; color:var(--text-light); max-width:640px; line-height:1.75; margin-top:18px; font-weight:300; }
+.hero-stats { display:flex; gap:38px; margin-top:42px; flex-wrap:wrap; }
+.stat { display:flex; flex-direction:column; gap:4px; }
+.stat-num { font-family:'Playfair Display',serif; font-size:30px; font-weight:700; color:var(--gold-light); line-height:1; }
+.stat-label { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-mid); font-weight:500; }
+
+/* ─── PROGRESS BAR ─── */
+.progress-bar-wrap { background:var(--navy-mid); padding:15px 60px; display:flex; align-items:center; gap:20px; }
+.progress-label { font-size:12px; font-weight:600; letter-spacing:0.5px; color:var(--text-light); white-space:nowrap; }
+.progress-track { flex:1; height:6px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:10px; width:0%; transition:width 0.9s ease; }
+.progress-pct { font-size:13px; font-weight:700; color:var(--gold-light); min-width:34px; }
+
+/* ─── CONTENT ─── */
+.content-area { padding:50px 60px; }
+.card { background:var(--white); border-radius:14px; padding:30px 34px; margin-bottom:26px; border:1px solid var(--cream-dark); box-shadow:0 2px 16px rgba(13,30,53,0.06); }
+.card-title { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--navy); margin-bottom:6px; }
+.card-title-bar { width:42px; height:3px; background:var(--gold); border-radius:2px; margin-bottom:22px; }
+
+/* ─── OUTCOMES ─── */
+.outcomes-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px; }
+.outcome-item { display:flex; align-items:flex-start; gap:12px; background:var(--cream); border-radius:10px; padding:14px 16px; border-left:3px solid var(--gold); }
+.outcome-num { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:var(--gold); line-height:1; min-width:24px; }
+.outcome-text { font-size:13.5px; color:var(--navy); line-height:1.5; font-weight:400; }
+
+/* ─── SPEAKING ─── */
+.speaking-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+.speaking-card { background:var(--cream); border-radius:10px; padding:18px 20px; border-top:3px solid var(--gold); transition:transform 0.2s,box-shadow 0.2s; }
+.speaking-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(13,30,53,0.1); }
+.q-num { font-family:'DM Mono',monospace; font-size:11px; color:var(--gold); font-weight:500; margin-bottom:8px; letter-spacing:1px; }
+.q-text { font-size:13.5px; color:var(--navy); line-height:1.55; }
+
+/* ─── WORD BANK ─── */
+.wordbank-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.word-card { background:var(--navy); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:8px; transition:transform 0.2s; }
+.word-card:hover { transform:translateY(-2px); }
+.word-emoji { font-size:24px; }
+.word-term { font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:var(--gold-light); }
+.word-def { font-size:12.5px; color:var(--text-light); line-height:1.5; }
+
+/* ─── READING ─── */
+.reading-text-box { background:var(--cream); border-radius:12px; padding:28px 32px; margin-bottom:28px; border-left:4px solid var(--gold); }
+.reading-text-box h4 { font-family:'Playfair Display',serif; font-size:19px; font-weight:700; color:var(--navy); margin-bottom:16px; }
+.reading-text-box p { font-size:14px; color:var(--navy); line-height:1.82; margin-bottom:14px; }
+.reading-text-box p:last-child { margin-bottom:0; }
+
+/* ─── MCQ ─── */
+.mcq-block { margin-bottom:22px; }
+.mcq-q { font-size:14px; font-weight:600; color:var(--navy); margin-bottom:12px; line-height:1.5; }
+.mcq-options { display:flex; flex-direction:column; gap:8px; }
+.mcq-option { display:flex; align-items:center; gap:10px; background:var(--cream); border:2px solid var(--cream-dark); border-radius:8px; padding:10px 14px; cursor:pointer; transition:all 0.2s; font-size:13.5px; color:var(--navy); user-select:none; }
+.mcq-option:hover { border-color:var(--gold); background:#fdf6e3; }
+.mcq-option.selected { border-color:var(--gold); background:#fdf0c8; }
+.mcq-option.correct { border-color:var(--green-accent); background:#e8f8ee; color:#145e32; }
+.mcq-option.incorrect { border-color:var(--red-accent); background:#fdecea; color:#7b1a14; }
+.option-letter { font-family:'DM Mono',monospace; font-size:11px; font-weight:700; width:22px; height:22px; border-radius:50%; background:var(--cream-dark); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--navy); }
+.mcq-option.correct .option-letter { background:var(--green-accent); color:white; }
+.mcq-option.incorrect .option-letter { background:var(--red-accent); color:white; }
+.check-btn { margin-top:14px; background:var(--navy); color:var(--gold-light); border:none; padding:10px 24px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:background 0.2s; font-family:'DM Sans',sans-serif; }
+.check-btn:hover { background:var(--navy-light); }
+.score-display { display:inline-flex; align-items:center; gap:8px; background:var(--navy); color:var(--gold-light); font-size:13px; font-weight:600; padding:8px 18px; border-radius:20px; margin-top:16px; }
+
+/* ─── TABS ─── */
+.ex-tabs { display:flex; gap:4px; margin-bottom:28px; background:var(--cream-dark); border-radius:10px; padding:4px; }
+.ex-tab { flex:1; text-align:center; padding:9px 12px; border-radius:7px; font-size:12.5px; font-weight:500; cursor:pointer; color:var(--text-mid); transition:all 0.2s; }
+.ex-tab.active { background:var(--navy); color:var(--gold-light); }
+
+/* ─── GRAMMAR REF ─── */
+.grammar-ref-box { background:var(--navy); border-radius:14px; padding:28px 32px; margin-bottom:18px; color:var(--white); }
+.grammar-ref-box h4 { font-family:'Playfair Display',serif; font-size:18px; color:var(--gold-light); margin-bottom:16px; }
+.grammar-rule { background:rgba(255,255,255,0.07); border-radius:8px; padding:14px 18px; margin-bottom:12px; border-left:3px solid var(--gold); }
+.grammar-rule .rule-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gold-light); margin-bottom:8px; }
+.grammar-rule p,.grammar-rule li { font-size:13px; color:var(--text-light); line-height:1.65; }
+.grammar-rule code { font-family:'DM Mono',monospace; background:rgba(212,168,32,0.18); color:var(--gold-light); padding:1px 6px; border-radius:4px; font-size:12px; }
+.grammar-rule ul { padding-left:18px; }
+
+/* ─── GAP FILL ─── */
+.gapfill-item { display:flex; flex-wrap:wrap; align-items:center; gap:4px; font-size:14px; color:var(--navy); line-height:2.1; margin-bottom:12px; }
+.gap-input { border:none; border-bottom:2px solid var(--gold); background:transparent; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--navy); padding:2px 6px; width:155px; outline:none; text-align:center; }
+.gap-input.correct { border-color:var(--green-accent); color:var(--green-accent); }
+.gap-input.incorrect { border-color:var(--red-accent); color:var(--red-accent); }
+
+/* ─── TRUE FALSE ─── */
+.tf-item { background:var(--cream); border-radius:8px; padding:14px 18px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.tf-statement { font-size:13.5px; color:var(--navy); flex:1; line-height:1.5; }
+.tf-buttons { display:flex; gap:8px; flex-shrink:0; }
+.tf-btn { padding:6px 16px; border-radius:6px; border:2px solid var(--cream-dark); font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s; background:white; font-family:'DM Sans',sans-serif; }
+.tf-btn:hover { border-color:var(--gold); }
+.tf-btn.selected-true { background:var(--navy); color:white; border-color:var(--navy); }
+.tf-btn.selected-false { background:var(--navy); color:white; border-color:var(--navy); }
+.tf-btn.correct-answer { background:var(--green-accent); color:white; border-color:var(--green-accent); }
+.tf-btn.wrong-answer { background:var(--red-accent); color:white; border-color:var(--red-accent); }
+
+/* ─── WRITING ─── */
+.writing-prompt { background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%); border-radius:14px; padding:28px 32px; margin-bottom:20px; color:var(--white); }
+.writing-prompt h4 { font-family:'Playfair Display',serif; font-size:18px; color:var(--gold-light); margin-bottom:10px; }
+.writing-prompt p { font-size:13.5px; color:var(--text-light); line-height:1.75; }
+.writing-meta { display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; }
+.writing-tag { background:rgba(212,168,32,0.18); color:var(--gold-light); font-size:11px; font-weight:600; letter-spacing:0.8px; padding:4px 12px; border-radius:20px; text-transform:uppercase; border:1px solid rgba(212,168,32,0.3); }
+.writing-textarea { width:100%; min-height:185px; border:2px solid var(--cream-dark); border-radius:10px; padding:16px 18px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--navy); background:var(--cream); outline:none; resize:vertical; transition:border-color 0.2s; line-height:1.75; margin-bottom:12px; }
+.writing-textarea:focus { border-color:var(--gold); background:white; }
+.word-counter { font-size:12px; color:var(--text-mid); text-align:right; margin-bottom:12px; }
+.submit-btn { background:var(--gold); color:var(--navy); border:none; padding:12px 28px; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; font-family:'DM Sans',sans-serif; }
+.submit-btn:hover { background:var(--gold-light); transform:translateY(-1px); }
+.submit-success { display:none; align-items:center; gap:10px; background:#e8f8ee; border:1px solid var(--green-accent); border-radius:8px; padding:12px 18px; font-size:13.5px; color:#145e32; font-weight:500; margin-top:12px; }
+
+/* ─── LISTENING ─── */
+.listening-activity { background:linear-gradient(135deg,#152e4d 0%,#0d1e35 100%); border-radius:14px; margin-bottom:28px; overflow:hidden; }
+.listening-header { padding:22px 28px 18px; display:flex; align-items:flex-start; gap:16px; }
+.listening-icon { font-size:32px; margin-top:2px; }
+.listening-title { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--white); margin-bottom:4px; }
+.listening-subtitle { font-size:13px; color:var(--text-mid); }
+.listening-tags { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+.l-tag { font-size:10px; font-weight:700; letter-spacing:0.8px; padding:3px 10px; border-radius:20px; text-transform:uppercase; }
+.l-tag-level { background:rgba(212,168,32,0.2); color:var(--gold-light); border:1px solid rgba(212,168,32,0.3); }
+.l-tag-type { color:#e8a0a0; background:rgba(192,57,43,0.2); border:1px solid rgba(192,57,43,0.3); }
+.l-tag-focus { color:var(--text-light); }
+.audio-player { background:rgba(0,0,0,0.35); margin:0 20px 18px; border-radius:12px; padding:18px 20px; }
+.player-top { display:flex; align-items:center; gap:16px; margin-bottom:14px; }
+.play-btn { width:44px; height:44px; border-radius:50%; background:var(--teal); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:16px; color:white; flex-shrink:0; transition:background 0.2s,transform 0.15s; }
+.play-btn:hover { background:#0e8aaa; transform:scale(1.07); }
+.player-info { flex:1; }
+.player-title { font-size:13px; font-weight:600; color:var(--white); }
+.player-desc { font-size:11.5px; color:var(--text-mid); }
+.player-time { font-family:'DM Mono',monospace; font-size:12px; color:var(--text-mid); white-space:nowrap; }
+.progress-audio { width:100%; height:4px; background:rgba(255,255,255,0.15); border-radius:4px; margin-bottom:12px; }
+.progress-audio-fill { height:100%; background:var(--teal); border-radius:4px; width:0%; transition:width 0.4s; }
+.speed-controls { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.speed-label { font-size:10px; font-weight:700; color:var(--text-mid); letter-spacing:0.5px; text-transform:uppercase; }
+.speed-btn { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); color:var(--text-light); font-size:11px; font-weight:600; padding:3px 10px; border-radius:6px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
+.speed-btn:hover { background:rgba(255,255,255,0.18); }
+.speed-btn.active { background:var(--gold); color:var(--navy); border-color:var(--gold); }
+.replay-btn { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); color:var(--text-light); font-size:11px; font-weight:600; padding:3px 12px; border-radius:6px; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.audio-note { font-size:11px; color:var(--text-mid); font-style:italic; margin-top:8px; }
+.transcript-toggle { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text-mid); cursor:pointer; padding:10px 28px; border-top:1px solid rgba(255,255,255,0.07); user-select:none; transition:color 0.2s; }
+.transcript-toggle:hover { color:var(--text-light); }
+.transcript-toggle .arrow { transition:transform 0.2s; font-size:11px; }
+.transcript-toggle.open .arrow { transform:rotate(180deg); }
+.transcript-content { display:none; padding:16px 28px 20px; background:rgba(255,255,255,0.03); }
+.transcript-content.open { display:block; }
+.transcript-content p { font-size:13px; color:var(--text-light); line-height:1.8; font-style:italic; }
+.listening-mcq { padding:20px 28px 24px; }
+.instructions-box { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:12px 16px; margin-bottom:20px; display:flex; gap:10px; align-items:flex-start; }
+.inst-icon { font-size:14px; color:var(--gold-light); margin-top:1px; }
+.inst-text { font-size:12.5px; color:var(--text-mid); line-height:1.5; }
+.l-mcq-option { background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.1); color:var(--white); }
+.l-mcq-option:hover { border-color:var(--gold-light); background:rgba(212,168,32,0.1); color:var(--white); }
+.l-mcq-option.selected { border-color:var(--gold-light); background:rgba(212,168,32,0.15); color:var(--white); }
+.l-mcq-option.correct { border-color:var(--green-accent); background:rgba(26,138,74,0.15); color:#7dddaa; }
+.l-mcq-option.incorrect { border-color:var(--red-accent); background:rgba(192,57,43,0.15); color:#f1948a; }
+.listening-mcq .mcq-q { color:var(--white); }
+.listening-mcq .score-display { background:rgba(255,255,255,0.1); color:var(--gold-light); }
+.listening-mcq .option-letter { background:rgba(255,255,255,0.12); color:var(--white); }
+.l-check-btn { background:var(--teal); color:white; }
+.l-check-btn:hover { background:#0e8aaa; }
+
+/* ─── CASE STUDY ─── */
+.case-header { background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%); border-radius:14px 14px 0 0; padding:28px 32px; border-bottom:3px solid var(--gold); }
+.case-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gold-light); font-weight:600; margin-bottom:8px; }
+.case-title { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--white); margin-bottom:8px; line-height:1.3; }
+.case-sub { font-size:13.5px; color:var(--text-light); }
+.case-body { background:white; border-radius:0 0 14px 14px; padding:28px 32px; margin-bottom:24px; border:1px solid var(--cream-dark); border-top:none; }
+.case-body p { font-size:14px; color:var(--navy); line-height:1.82; margin-bottom:14px; }
+.case-body h5 { font-family:'Playfair Display',serif; font-size:16px; color:var(--navy); margin:20px 0 10px; padding-bottom:6px; border-bottom:2px solid var(--cream-dark); }
+
+/* ─── ASSESSMENT ─── */
+.assessment-banner { background:linear-gradient(135deg,var(--navy),var(--navy-light)); border-radius:14px; padding:32px 36px; color:white; margin-bottom:28px; text-align:center; }
+.assessment-banner h3 { font-family:'Playfair Display',serif; font-size:26px; color:var(--gold-light); margin-bottom:8px; }
+.assessment-banner p { font-size:14px; color:var(--text-light); margin-bottom:20px; line-height:1.6; }
+.assessment-meta { display:flex; justify-content:center; gap:32px; flex-wrap:wrap; }
+.a-meta-item { display:flex; flex-direction:column; align-items:center; gap:4px; }
+.a-meta-num { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:var(--gold-light); }
+.a-meta-label { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-mid); }
+.attempts-display { display:flex; align-items:center; gap:8px; justify-content:flex-end; margin-bottom:20px; font-size:13px; color:var(--text-mid); }
+.attempt-dot { width:10px; height:10px; border-radius:50%; background:var(--cream-dark); }
+.attempt-dot.used { background:var(--gold); }
+.final-result { display:none; background:var(--navy); border-radius:12px; padding:28px 32px; text-align:center; color:white; margin-top:20px; }
+.final-result.pass { border:2px solid var(--green-accent); }
+.final-result.fail { border:2px solid var(--red-accent); }
+.final-score { font-family:'Playfair Display',serif; font-size:52px; font-weight:700; margin-bottom:4px; }
+.final-result.pass .final-score { color:#7dddaa; }
+.final-result.fail .final-score { color:#f1948a; }
+.final-verdict { font-size:18px; font-weight:600; margin-bottom:8px; }
+.final-msg { font-size:14px; color:var(--text-light); line-height:1.6; }
+.ex-divider { height:1px; background:var(--cream-dark); margin:28px 0; }
+
+@media (max-width:960px) {
+  :root { --sidebar-w:220px; }
+  .content-area { padding:32px 28px; }
+  .hero { padding:40px 28px 36px; }
+  .progress-bar-wrap { padding:14px 28px; }
+  .speaking-grid { grid-template-columns:1fr 1fr; }
+  .wordbank-grid { grid-template-columns:1fr 1fr; }
+  .outcomes-grid { grid-template-columns:1fr; }
+}
+@media (max-width:620px) {
+  #sidebar { display:none; }
+  #main { margin-left:0; }
+  .speaking-grid,.wordbank-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h1>Finance &amp; Accounting English</h1>
+    <div class="subtitle">Professional Development</div>
+    <span class="level-badge">B1–B2 LEVEL</span>
+  </div>
+  <div class="sidebar-section-label">Module 3</div>
+  <div class="nav-item active" onclick="showSection('overview')">
+    <div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  </div>
+  <div class="nav-item" onclick="showSection('speaking')">
+    <div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div>
+    <span class="nav-badge">21Q</span>
+  </div>
+  <div class="nav-item" onclick="showSection('wordbank')">
+    <div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div>
+    <span class="nav-badge">21</span>
+  </div>
+  <div class="nav-item" onclick="showSection('reading')">
+    <div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div>
+    <span class="nav-badge">2T</span>
+  </div>
+  <div class="nav-item" onclick="showSection('vocabulary')">
+    <div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span></div>
+    <span class="nav-badge">3Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('grammar')">
+    <div class="nav-left"><span class="nav-icon">📝</span><span class="nav-label">Grammar</span></div>
+    <span class="nav-badge">3Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('grammar-review')">
+    <div class="nav-left"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  </div>
+  <div class="nav-item" onclick="showSection('writing')">
+    <div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div>
+    <span class="nav-badge">2W</span>
+  </div>
+  <div class="nav-item" onclick="showSection('listening')">
+    <div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div>
+    <span class="nav-badge">4Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('casestudies')">
+    <div class="nav-left"><span class="nav-icon">🏢</span><span class="nav-label">Case Studies</span></div>
+    <span class="nav-badge">2CS</span>
+  </div>
+  <div class="nav-item" onclick="showSection('assessment')">
+    <div class="nav-left"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span></div>
+    <span class="nav-badge">20Q</span>
+  </div>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main id="main">
+
+<!-- OVERVIEW -->
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="module-tag">💼 MODULE 3 · FINANCE &amp; ACCOUNTING ENGLISH</div>
+    <h2>Income &amp; Cash Flow<br><span>Statements</span></h2>
+    <p>Build the professional English skills to read, analyse, and discuss income statements and cash flow statements in depth — from revenue recognition to free cash flow analysis — with accuracy and confidence.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <span class="progress-label">Module Progress</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:14px;line-height:1.85;color:#1a2e4a;margin-bottom:14px;">
+        <strong>Welcome to Module 3: Income and Cash Flow Statements.</strong> This module takes a focused, professional look at two of the most widely studied financial documents in any organisation — the income statement and the cash flow statement. Building on the foundations of Modules 1 and 2, you will move beyond basic definitions to develop the language and analytical skills needed to interpret profitability, earnings quality, and cash generation in a sophisticated and accurate way.
+      </p>
+      <p style="font-size:14px;line-height:1.85;color:#1a2e4a;">
+        You will learn how to describe every major line item on both statements, understand the crucial difference between profit and cash flow, and use the specific grammar and vocabulary that finance professionals employ when presenting, reporting, and discussing financial performance. This module is essential for anyone who works with financial results — including accountants, analysts, controllers, finance business partners, and senior managers.
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">By the end of this module, you will be able to:</p>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-num">1</div><div class="outcome-text">Identify and explain every major line item on the income statement — from revenue and gross profit through to EBIT, EBITDA, and net profit — using precise and professional English.</div></div>
+        <div class="outcome-item"><div class="outcome-num">2</div><div class="outcome-text">Describe the three sections of the cash flow statement — operating, investing, and financing activities — and explain what each section reveals about a company's financial behaviour.</div></div>
+        <div class="outcome-item"><div class="outcome-num">3</div><div class="outcome-text">Explain the difference between profit and cash flow, including why a profitable company can run out of cash, and use the appropriate language to communicate this clearly.</div></div>
+        <div class="outcome-item"><div class="outcome-num">4</div><div class="outcome-text">Use conditional sentences (first, second, and third conditionals) correctly to discuss financial scenarios, projections, and hypothetical outcomes in professional contexts.</div></div>
+        <div class="outcome-item"><div class="outcome-num">5</div><div class="outcome-text">Apply concession structures (although, despite, even though, however, nevertheless) to contrast positive and negative financial findings in reports and presentations.</div></div>
+        <div class="outcome-item"><div class="outcome-num">6</div><div class="outcome-text">Form and use advanced income statement and cash flow collocations correctly — including revenue recognition, free cash flow, operating leverage, and earnings quality.</div></div>
+        <div class="outcome-item"><div class="outcome-num">7</div><div class="outcome-text">Write a formal income statement commentary and a professional memo analysing cash flow performance for a finance or management audience.</div></div>
+        <div class="outcome-item"><div class="outcome-num">8</div><div class="outcome-text">Listen to and understand earnings calls, analyst briefings, and finance training sessions focused on income and cash flow statement interpretation and performance analysis.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPEAKING -->
+<div id="speaking" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🎙️ SPEAKING ACTIVITIES</div>
+    <h2>Discussion <span>Questions</span></h2>
+    <p>21 questions to practise speaking about income statements, cash flow, profitability, and financial performance at B1–B2 level.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Speaking Questions</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">Discuss these questions with a partner or prepare a spoken response of 2–3 minutes each.</p>
+      <div class="speaking-grid" id="speakingGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- WORD BANK -->
+<div id="wordbank" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">📚 WORD BANK</div>
+    <h2>Key <span>Vocabulary</span></h2>
+    <p>21 essential terms for reading and discussing income and cash flow statements at B1–B2 level.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Vocabulary</div>
+      <div class="card-title-bar"></div>
+      <div class="wordbank-grid" id="wordbankGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- READING -->
+<div id="reading" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">📖 READING</div>
+    <h2>Reading <span>Texts</span></h2>
+    <p>Two professional texts followed by 10 multiple-choice comprehension questions each.</p>
+  </div>
+  <div class="content-area" id="readingContent"></div>
+</div>
+
+<!-- VOCABULARY -->
+<div id="vocabulary" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">✏️ VOCABULARY EXERCISES</div>
+    <h2>Vocabulary <span>Practice</span></h2>
+    <p>Three exercises to consolidate your understanding of key income and cash flow vocabulary.</p>
+  </div>
+  <div class="content-area">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocabEx(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocabEx(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocabEx(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vocab-ex-0" class="vocab-ex"></div>
+    <div id="vocab-ex-1" class="vocab-ex" style="display:none"></div>
+    <div id="vocab-ex-2" class="vocab-ex" style="display:none"></div>
+  </div>
+</div>
+
+<!-- GRAMMAR -->
+<div id="grammar" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">📝 GRAMMAR EXERCISES</div>
+    <h2>Grammar <span>Practice</span></h2>
+    <p>Three grammar exercises covering conditional sentences, concession structures, and income statement collocations.</p>
+  </div>
+  <div class="content-area">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGrammarEx(0,this)">Exercise 1 · Conditional Sentences</div>
+      <div class="ex-tab" onclick="showGrammarEx(1,this)">Exercise 2 · Concession Structures</div>
+      <div class="ex-tab" onclick="showGrammarEx(2,this)">Exercise 3 · Collocations</div>
+    </div>
+    <div id="grammar-ex-0" class="grammar-ex"></div>
+    <div id="grammar-ex-1" class="grammar-ex" style="display:none"></div>
+    <div id="grammar-ex-2" class="grammar-ex" style="display:none"></div>
+  </div>
+</div>
+
+<!-- GRAMMAR REVIEW -->
+<div id="grammar-review" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🔍 GRAMMAR REVIEW</div>
+    <h2>Grammar <span>Reference</span></h2>
+    <p>Detailed reference boxes covering all three grammar points in this module.</p>
+  </div>
+  <div class="content-area" id="grammarReviewContent"></div>
+</div>
+
+<!-- WRITING -->
+<div id="writing" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">✍️ WRITING ACTIVITIES</div>
+    <h2>Writing <span>Tasks</span></h2>
+    <p>Two structured writing tasks to practise income statement commentary and cash flow analysis reporting.</p>
+  </div>
+  <div class="content-area" id="writingContent"></div>
+</div>
+
+<!-- LISTENING -->
+<div id="listening" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🎧 LISTENING ACTIVITIES</div>
+    <h2>Listening <span>Activities</span></h2>
+    <p>4 audio activities with built-in speech players — press ▶ Play, listen, then answer the questions.</p>
+  </div>
+  <div class="content-area" id="listeningContent"></div>
+</div>
+
+<!-- CASE STUDIES -->
+<div id="casestudies" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🏢 CASE STUDIES</div>
+    <h2>Real-World <span>Cases</span></h2>
+    <p>Two in-depth case studies on income statement analysis and cash flow management, with comprehension questions.</p>
+  </div>
+  <div class="content-area" id="caseStudiesContent"></div>
+</div>
+
+<!-- ASSESSMENT -->
+<div id="assessment" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🎯 FINAL ASSESSMENT</div>
+    <h2>Module 3 <span>Assessment</span></h2>
+    <p>20 multiple-choice questions covering all areas of the module. Pass mark: 70%. Two attempts allowed.</p>
+  </div>
+  <div class="content-area" id="assessmentContent"></div>
+</div>
+
+</main>
+
+<script>
+/* ══════════════════════ DATA ══════════════════════ */
+
+const speakingQs = [
+  "What is the difference between the income statement and the cash flow statement? Why do companies need both?",
+  "Can you explain the difference between gross profit and net profit? Which figure do you think is more useful for assessing a company's performance?",
+  "Why can a company report strong profits but still run out of cash? Can you give an example from your work or studies?",
+  "What is EBITDA and why do analysts use it as a measure of operating performance? What are its limitations?",
+  "How does depreciation appear in both the income statement and the cash flow statement? Why is this important to understand?",
+  "What does 'revenue recognition' mean and why does the timing of revenue recognition matter?",
+  "What is the difference between operating cash flow and free cash flow? Why do investors focus on free cash flow?",
+  "Can you explain the three sections of the cash flow statement — operating, investing, and financing? Give an example of what appears in each section.",
+  "What does it mean when a company has high revenue growth but declining margins? What might be causing this?",
+  "How does an increase in accounts receivable affect the cash flow statement? Why does this matter?",
+  "What is operating leverage and why do companies with high fixed costs tend to have high operating leverage?",
+  "What is the difference between capital expenditure (capex) and operating expenditure (opex)? How does each appear in the financial statements?",
+  "What is a non-cash expense? Can you give two examples and explain how they affect the income statement and cash flow statement differently?",
+  "What does 'earnings quality' mean? What are the signs that a company's reported earnings might be of low quality?",
+  "Why might a company choose to lease assets rather than buy them outright? How does this affect the income statement?",
+  "What is the indirect method of preparing the cash flow statement? Why is it the most commonly used method?",
+  "What is free cash flow yield and why do value investors use it as a valuation metric?",
+  "How would a large one-off restructuring charge affect the income statement and cash flow statement?",
+  "What is the difference between recurring revenue and one-off revenue? Why does this distinction matter for forecasting?",
+  "If a company's operating cash flow is consistently lower than its net profit, what might this indicate about the quality of its earnings?",
+  "What do you think is more important when assessing a company — its profit margin or its cash conversion? Explain your reasoning."
+];
+
+const wordBank = [
+  { emoji:"💰", term:"Revenue recognition", def:"The accounting principle that determines when and how revenue is recorded on the income statement. Under IFRS 15, revenue is recognised when performance obligations to the customer are satisfied." },
+  { emoji:"📉", term:"Gross profit margin", def:"Gross profit divided by revenue, expressed as a percentage. Measures how efficiently a company manages its direct production costs relative to its sales." },
+  { emoji:"🔧", term:"Operating profit (EBIT)", def:"Earnings Before Interest and Tax. Profit after deducting cost of goods sold and operating expenses from revenue. Measures the profitability of core business operations." },
+  { emoji:"📊", term:"EBITDA", def:"Earnings Before Interest, Taxes, Depreciation, and Amortisation. A widely used proxy for operating cash generation and a key metric for comparing profitability across companies." },
+  { emoji:"🧾", term:"Operating expenses (opex)", def:"The costs incurred in running the business day-to-day — including salaries, rent, marketing, and utilities — that are not directly tied to production and are expensed in the period incurred." },
+  { emoji:"🏗️", term:"Capital expenditure (capex)", def:"Spending on acquiring or upgrading long-term physical assets such as buildings, machinery, and equipment. Recorded as an asset on the balance sheet, not as an expense on the income statement." },
+  { emoji:"💧", term:"Operating cash flow", def:"Cash generated from a company's core business operations. Found in the operating activities section of the cash flow statement." },
+  { emoji:"🆓", term:"Free cash flow (FCF)", def:"Operating cash flow minus capital expenditure. Represents the cash a business generates after maintaining and investing in its asset base. A key measure of financial flexibility." },
+  { emoji:"🔄", term:"Indirect method", def:"The most common method of preparing the operating activities section of the cash flow statement. Starts with net profit and adjusts for non-cash items and working capital changes." },
+  { emoji:"📐", term:"Non-cash expense", def:"An expense recorded on the income statement that does not involve an outflow of cash — such as depreciation, amortisation, and impairment charges." },
+  { emoji:"📈", term:"Operating leverage", def:"The degree to which a company's operating profit changes in response to a change in revenue, driven by the proportion of fixed versus variable costs. High fixed costs create high operating leverage." },
+  { emoji:"🎯", term:"Earnings quality", def:"A measure of how reliably reported earnings reflect the company's true underlying economic performance. High-quality earnings are sustainable, recurring, and backed by cash flow." },
+  { emoji:"🔁", term:"Working capital movement", def:"Changes in current assets and current liabilities from one period to the next. Increases in working capital consume cash; decreases release it. Shown as an adjustment in operating cash flow." },
+  { emoji:"⚡", term:"Cash conversion cycle", def:"The number of days it takes a company to convert its investments in inventory and other resources into cash from sales. Shorter cycles indicate better liquidity management." },
+  { emoji:"📑", term:"Amortisation", def:"The systematic allocation of the cost of an intangible asset over its useful life, recorded as an expense on the income statement and added back in the cash flow statement." },
+  { emoji:"💼", term:"Recurring revenue", def:"Revenue that is predictable, stable, and expected to continue into the future — such as subscription fees, maintenance contracts, or long-term service agreements." },
+  { emoji:"🔻", term:"Impairment charge", def:"A write-down of an asset's carrying value on the balance sheet when its recoverable amount falls below its book value. Recognised as an expense on the income statement." },
+  { emoji:"📋", term:"Interest cover ratio", def:"Operating profit (EBIT) divided by interest expense. Measures how comfortably a company can service its debt obligations from its operating earnings." },
+  { emoji:"🌐", term:"Revenue mix", def:"The composition of total revenue by product, service, geography, or customer segment. Shifts in revenue mix can significantly affect overall profitability and margin trends." },
+  { emoji:"💡", term:"Restructuring charge", def:"A one-time cost recorded on the income statement related to reorganising business operations — such as redundancy payments, lease terminations, and asset write-downs." },
+  { emoji:"📌", term:"Net profit margin", def:"Net profit divided by revenue, expressed as a percentage. The definitive measure of overall profitability after all costs, interest, and taxes have been accounted for." }
+];
+
+const readingTexts = [
+  {
+    title: "Text 1: The Income Statement — Structure, Margins, and Earnings Quality",
+    subtitle: "How to read the income statement from top line to bottom line",
+    paragraphs: [
+      "The income statement — also known as the profit and loss account or P&L — is a systematic record of how a company converts revenue into profit over a defined accounting period. The journey from the top line to the bottom line passes through several important intermediate profit measures, each of which tells a different part of the financial performance story. Starting with revenue — the total income from the company's primary activities — the first deduction is the cost of goods sold (COGS), which yields gross profit. The gross profit margin, calculated by dividing gross profit by revenue, is the most direct measure of a company's ability to manage its production or service delivery costs efficiently.",
+      "Below gross profit, operating expenses are deducted to arrive at operating profit, also expressed as EBIT — Earnings Before Interest and Tax. These operating expenses include salaries, marketing, rent, and research and development, all of which are necessary to run the business but are not directly tied to the production of individual units. Adding back depreciation and amortisation from EBIT gives EBITDA — Earnings Before Interest, Taxes, Depreciation, and Amortisation — which approximates the cash generated by operations before capital investment decisions and financing costs. After EBIT, interest expense is deducted to arrive at pre-tax profit, and after the corporation tax charge, the remaining figure is net profit — the bottom line that belongs to shareholders.",
+      "Sophisticated analysts do not simply look at the headline net profit figure; they scrutinise earnings quality — the degree to which reported profits reflect the company's true, sustainable underlying performance. High-quality earnings are characterised by being recurring rather than one-off, supported by operating cash flow rather than accounting adjustments, and driven by core business activities rather than exceptional items. Warning signs of poor earnings quality include large restructuring charges that recur every year — suggesting they are not truly exceptional — aggressive revenue recognition policies that book income before cash is received, and significant divergence between reported net profit and operating cash flow."
+    ],
+    questions: [
+      { q: "What is another name for the income statement?", opts: ["Cash flow statement", "Balance sheet", "Profit and loss account", "Statement of equity"], ans: 2 },
+      { q: "How is gross profit calculated?", opts: ["Revenue minus operating expenses", "Revenue minus cost of goods sold", "Revenue minus net profit", "Revenue minus interest and tax"], ans: 1 },
+      { q: "What does EBIT stand for?", opts: ["Earnings Before Income Tax", "Earnings Before Interest and Tax", "Equity Before Investment Total", "Estimated Business Income Total"], ans: 1 },
+      { q: "What does adding back depreciation and amortisation to EBIT give?", opts: ["Net profit", "Gross profit", "EBITDA", "Free cash flow"], ans: 2 },
+      { q: "What are operating expenses NOT directly tied to?", opts: ["The profitability of the company", "The production of individual units", "The company's revenue growth", "The payment of interest"], ans: 1 },
+      { q: "What is 'earnings quality' as described in the text?", opts: ["The absolute size of the net profit figure", "The degree to which reported profits reflect true, sustainable performance", "The ratio of gross profit to revenue", "The level of EBITDA margin achieved"], ans: 1 },
+      { q: "Which of the following is a characteristic of high-quality earnings?", opts: ["Large recurring restructuring charges", "Revenue recognised before cash is received", "Earnings supported by operating cash flow", "Significant divergence from cash flow"], ans: 2 },
+      { q: "What does a recurring restructuring charge that appears every year suggest?", opts: ["Exceptional operational efficiency", "The charge is not truly exceptional", "Strong earnings quality", "The company is growing rapidly"], ans: 1 },
+      { q: "After deducting interest expense from EBIT, what figure do we arrive at?", opts: ["Gross profit", "EBITDA", "Net profit", "Pre-tax profit"], ans: 3 },
+      { q: "What does the gross profit margin measure?", opts: ["Overall profitability after all costs", "A company's ability to manage production costs relative to sales", "The proportion of revenue paid as tax", "The company's total earnings before interest"], ans: 1 }
+    ]
+  },
+  {
+    title: "Text 2: The Cash Flow Statement — Why Cash Is King",
+    subtitle: "Understanding the three sections and the profit-versus-cash distinction",
+    paragraphs: [
+      "The cash flow statement is the financial statement that tracks the actual movement of cash into and out of a business during an accounting period. Unlike the income statement, which is prepared on an accruals basis — recognising income when it is earned and expenses when they are incurred, regardless of when cash changes hands — the cash flow statement records only real cash transactions. This distinction is critical: a company can report healthy profits while simultaneously experiencing a cash crisis if, for example, it has billed customers but not yet collected payment, or if it has invested heavily in inventory that has not yet been sold. Understanding the cash flow statement is therefore essential for assessing whether reported profits are being converted into actual cash.",
+      "The cash flow statement is divided into three sections. Operating activities show the cash generated or consumed by the company's core business operations. Prepared using the indirect method, this section begins with net profit and adjusts for non-cash expenses such as depreciation and amortisation, as well as changes in working capital — increases in receivables and inventory consume cash, while increases in payables release it. Investing activities record cash used to purchase or received from the sale of long-term assets, including capital expenditure on property and equipment and proceeds from disposals. Financing activities capture cash flows related to the company's capital structure: borrowings and repayments of debt, proceeds from share issuances, and dividend payments to shareholders.",
+      "Free cash flow — operating cash flow minus capital expenditure — is arguably the most important metric derived from the cash flow statement. It represents the cash the business genuinely generates after maintaining and investing in its productive asset base, and is the ultimate source of value for shareholders: it funds dividends, share buybacks, debt repayment, and acquisitions. A company that consistently generates strong and growing free cash flow is demonstrating that its business model is not only profitable but genuinely cash-generative. Analysts pay particular attention to the cash conversion ratio — operating cash flow divided by operating profit — as a measure of how efficiently a company converts its accounting profits into real cash. A ratio consistently below 1.0 is a significant red flag."
+    ],
+    questions: [
+      { q: "What does the cash flow statement track?", opts: ["A company's profitability over a period", "Revenue and operating expenses", "The actual movement of cash into and out of the business", "The changes in shareholders' equity"], ans: 2 },
+      { q: "What is the accruals basis of accounting?", opts: ["Recording only cash transactions", "Recognising income when earned and expenses when incurred, regardless of cash timing", "Recording transactions when cash is received or paid", "A method unique to the cash flow statement"], ans: 1 },
+      { q: "Why can a profitable company experience a cash crisis?", opts: ["Because it has too many employees", "Because it has billed customers but not yet collected payment, or invested in unsold inventory", "Because its share price has fallen", "Because its EBITDA margin is too high"], ans: 1 },
+      { q: "What method does the text say is used to prepare the operating activities section?", opts: ["Direct method", "Accruals method", "Indirect method", "Cash basis method"], ans: 2 },
+      { q: "In the indirect method, what does an increase in receivables indicate?", opts: ["Cash has been received ahead of revenue recognition", "Cash has been consumed", "The company's profitability has improved", "Working capital has been released"], ans: 1 },
+      { q: "What appears in the investing activities section?", opts: ["Dividend payments", "Interest expense", "Capital expenditure and proceeds from asset disposals", "Depreciation and amortisation"], ans: 2 },
+      { q: "What type of cash flows appear in the financing activities section?", opts: ["Revenue and operating expenses", "Capital expenditure", "Borrowings, debt repayments, share issuances, and dividends", "Changes in working capital"], ans: 2 },
+      { q: "How is free cash flow calculated?", opts: ["Net profit minus tax", "Operating cash flow minus capital expenditure", "EBITDA minus interest", "Revenue minus operating expenses"], ans: 1 },
+      { q: "What is the cash conversion ratio?", opts: ["Net profit divided by revenue", "Free cash flow divided by net profit", "Operating cash flow divided by operating profit", "Capital expenditure divided by revenue"], ans: 2 },
+      { q: "What does a cash conversion ratio consistently below 1.0 indicate?", opts: ["Very strong cash generation", "The company is growing rapidly", "A significant concern about earnings quality", "Excellent working capital management"], ans: 2 }
+    ]
+  }
+];
+
+const vocabExercises = [
+  {
+    type: "mcq",
+    title: "Exercise 1: Multiple Choice",
+    instructions: "Choose the best word or phrase to complete each sentence.",
+    questions: [
+      { q: "Operating cash flow minus capital expenditure gives us _____.", opts: ["net profit", "gross profit", "free cash flow", "EBITDA"], ans: 2 },
+      { q: "Depreciation is a _____ because it reduces profit but does not involve a payment of cash.", opts: ["sunk cost", "non-cash expense", "working capital movement", "capital expenditure"], ans: 1 },
+      { q: "The company's _____ was growing strongly, but cash flow from operations was falling — a sign of potential earnings quality concerns.", opts: ["working capital", "net profit margin", "capital structure", "amortisation charge"], ans: 1 },
+      { q: "The systematic allocation of an intangible asset's cost over its useful life is called _____.", opts: ["depreciation", "impairment", "amortisation", "capitalisation"], ans: 2 },
+      { q: "Revenue that is predictable and expected to continue into the future — such as a subscription fee — is called _____.", opts: ["one-off revenue", "exceptional revenue", "recurring revenue", "gross revenue"], ans: 2 },
+      { q: "The _____ method starts with net profit and adjusts for non-cash items and working capital changes to calculate operating cash flow.", opts: ["direct", "accruals", "indirect", "straight-line"], ans: 2 },
+      { q: "The proportion of fixed costs in a company's cost base determines its _____, which amplifies both profits and losses when revenue changes.", opts: ["cash conversion ratio", "operating leverage", "revenue mix", "interest cover"], ans: 1 },
+      { q: "Spending on acquiring or improving long-term assets — such as a new factory — is classified as _____.", opts: ["opex", "working capital", "capex", "amortisation"], ans: 2 },
+      { q: "EBIT divided by interest expense gives the _____, which measures how easily a company can service its debt.", opts: ["cash conversion ratio", "free cash flow yield", "interest cover ratio", "operating leverage"], ans: 2 },
+      { q: "A one-time cost related to reorganising business operations — such as redundancy payments — is called a _____.", opts: ["depreciation charge", "amortisation adjustment", "restructuring charge", "working capital movement"], ans: 2 }
+    ]
+  },
+  {
+    type: "gapfill",
+    title: "Exercise 2: Gap Fill",
+    instructions: "Complete each sentence using the correct word or phrase from the box.",
+    words: ["operating activities", "accruals", "free cash flow", "revenue mix", "cash conversion", "impairment", "amortisation", "capex", "EBITDA", "earnings quality"],
+    sentences: [
+      { before: "The company's ", blank: "EBITDA", after: " margin improved from 18% to 22%, reflecting strong cost discipline across all divisions." },
+      { before: "Under the ", blank: "accruals", after: " basis, revenue is recorded when it is earned, not when cash is received." },
+      { before: "The ", blank: "free cash flow", after: " was $48 million after deducting $22 million of capital expenditure from operating cash flow." },
+      { before: "The analyst raised concerns about the company's ", blank: "earnings quality", after: ", noting that net profit had consistently exceeded operating cash flow for three years." },
+      { before: "The ", blank: "cash conversion", after: " ratio fell to 0.78, suggesting that a significant portion of profit was not being translated into cash." },
+      { before: "Payments for new equipment are recorded in the ", blank: "capex", after: " line of the investing activities section." },
+      { before: "Cash generated from selling goods and collecting receivables is shown under ", blank: "operating activities", after: " on the cash flow statement." },
+      { before: "A change in the ", blank: "revenue mix", after: " towards higher-margin services contributed to the improvement in gross profit margin." },
+      { before: "The brand name acquired in 2019 is subject to ", blank: "amortisation", after: " over its estimated useful life of ten years." },
+      { before: "A goodwill ", blank: "impairment", after: " charge of $30 million was recorded after the performance review of the acquired division." }
+    ]
+  },
+  {
+    type: "truefalse",
+    title: "Exercise 3: True / False",
+    instructions: "Read the statements and decide if they are TRUE or FALSE.",
+    statements: [
+      { text: "The cash flow statement is prepared on the accruals basis of accounting.", ans: false },
+      { text: "Free cash flow is calculated by subtracting capital expenditure from operating cash flow.", ans: true },
+      { text: "Depreciation is added back to net profit in the indirect method because it is a non-cash expense.", ans: true },
+      { text: "An increase in accounts receivable represents a source of cash in the cash flow statement.", ans: false },
+      { text: "EBITDA is calculated by adding depreciation and amortisation back to EBIT.", ans: true },
+      { text: "Financing activities in the cash flow statement include the purchase of new machinery.", ans: false },
+      { text: "A cash conversion ratio consistently below 1.0 is a positive sign for earnings quality.", ans: false },
+      { text: "Recurring revenue is considered higher quality than one-off or exceptional revenue.", ans: true },
+      { text: "Capital expenditure appears as an expense on the income statement in the period it is paid.", ans: false },
+      { text: "The interest cover ratio is calculated by dividing EBIT by interest expense.", ans: true }
+    ]
+  }
+];
+
+const grammarExercises = [
+  {
+    type: "mcq",
+    title: "Exercise 1: Conditional Sentences in Financial Contexts",
+    instructions: "Choose the correct conditional form to complete each financial sentence.",
+    questions: [
+      { q: "If revenue _____ by 10%, gross profit would improve significantly given the high fixed cost base.", opts: ["increases", "increased", "will increase", "would increase"], ans: 1 },
+      { q: "If the company _____ its receivables collection period, free cash flow will increase accordingly.", opts: ["shortened", "had shortened", "shortens", "would shorten"], ans: 2 },
+      { q: "If operating leverage _____ been higher, the profit impact of the revenue decline would have been far greater.", opts: ["has", "had", "was", "would have"], ans: 1 },
+      { q: "Operating cash flow _____ negative if the company had not collected the large receivable before year end.", opts: ["will be", "would have been", "would be", "had been"], ans: 1 },
+      { q: "If the restructuring charge _____ excluded, the reported net profit margin would have been 2% higher.", opts: ["is", "was", "had been", "were"], ans: 2 },
+      { q: "If EBITDA margins continue to decline, the board _____ consider a cost reduction programme.", opts: ["would", "had", "will", "were"], ans: 2 },
+      { q: "The company _____ missed its debt covenants last year if cash flow had not recovered in Q4.", opts: ["would have", "will have", "had", "would"], ans: 0 },
+      { q: "If the company _____ invested more in capex over the past three years, its asset base would be more modern today.", opts: ["has", "had", "would have", "will have"], ans: 1 },
+      { q: "Cash flow _____ improve next year if working capital management is tightened as planned.", opts: ["would", "would have", "had", "will"], ans: 3 },
+      { q: "If the revenue mix _____ to higher-margin products, the EBITDA margin would expand meaningfully.", opts: ["shifts", "shifted", "had shifted", "will shift"], ans: 1 }
+    ]
+  },
+  {
+    type: "mcq",
+    title: "Exercise 2: Concession Structures in Financial Reporting",
+    instructions: "Choose the most appropriate concession word or phrase to complete each sentence.",
+    questions: [
+      { q: "_____ revenue grew by 8%, the net profit margin fell due to rising input costs.", opts: ["Because", "Therefore", "Although", "Consequently"], ans: 2 },
+      { q: "The company reported strong EBITDA. _____, free cash flow was disappointing due to high capex.", opts: ["Moreover", "Therefore", "However", "Since"], ans: 2 },
+      { q: "_____ the large restructuring charge, operating cash flow remained strongly positive.", opts: ["Despite", "Although", "However", "Even though"], ans: 0 },
+      { q: "Gross margins improved meaningfully. _____, the company failed to convert these gains into net profit growth.", opts: ["Despite", "However", "Because", "Since"], ans: 1 },
+      { q: "_____ cash flow from operations was strong, the company's free cash flow was negative due to heavy investment.", opts: ["Despite", "Therefore", "Even though", "As a result"], ans: 2 },
+      { q: "The interest cover ratio remained comfortable _____ the increase in long-term debt.", opts: ["although", "despite", "even though", "however"], ans: 1 },
+      { q: "Revenue was above target in Q3. _____, the full-year result is expected to miss guidance due to Q4 shortfalls.", opts: ["Despite", "Although", "Nevertheless", "Because"], ans: 2 },
+      { q: "_____ the company cut costs aggressively, it was unable to prevent a decline in net profit margin.", opts: ["Despite", "Even though", "However", "Since"], ans: 1 },
+      { q: "The earnings quality appears low _____ strong headline profitability, due to weak cash conversion.", opts: ["despite", "although", "however", "therefore"], ans: 0 },
+      { q: "Operating expenses increased by 12%. _____, EBIT was protected by a strong improvement in gross margin.", opts: ["As a result", "However", "Nevertheless", "Although"], ans: 2 }
+    ]
+  },
+  {
+    type: "mcq",
+    title: "Exercise 3: Income Statement & Cash Flow Collocations",
+    instructions: "Choose the word that correctly completes the financial collocation or expression.",
+    questions: [
+      { q: "The company _____ revenue of $340 million for the full financial year, in line with market expectations.", opts: ["made", "reported", "got", "produced"], ans: 1 },
+      { q: "Analysts were pleased that the company continued to _____ strong free cash flow despite the challenging environment.", opts: ["make", "generate", "produce", "build"], ans: 1 },
+      { q: "The board decided to _____ a one-time restructuring charge of $18 million in the second half of the year.", opts: ["write", "do", "take", "put"], ans: 2 },
+      { q: "The company _____ its EBITDA guidance from $95 million to $105 million following the strong first-half results.", opts: ["raised", "grew", "improved", "put up"], ans: 0 },
+      { q: "The sharp increase in raw material prices _____ pressure on the gross margin throughout the year.", opts: ["made", "gave", "put", "did"], ans: 2 },
+      { q: "The finance team was asked to _____ an analysis of the company's cash conversion over the past five years.", opts: ["do", "make", "run", "produce"], ans: 3 },
+      { q: "Operating leverage _____ profits when revenue grew strongly, but also amplified losses during the downturn.", opts: ["boosted", "made", "ran", "led"], ans: 0 },
+      { q: "Revenue recognition was _____ in the notes to the financial statements, describing when and how income is recorded.", opts: ["discussed", "written", "told", "explained thoroughly"], ans: 0 },
+      { q: "The company has consistently _____ its capex budget, investing below what was originally planned.", opts: ["underspent", "missed", "reduced below", "came short on"], ans: 0 },
+      { q: "A strong improvement in working capital management _____ a significant release of cash in the second quarter.", opts: ["gave", "resulted in", "made", "did"], ans: 1 }
+    ]
+  }
+];
+
+const grammarReview = [
+  {
+    title: "Grammar Reference 1: Conditional Sentences in Finance",
+    points: [
+      { title: "Why conditionals matter in financial English", body: "Finance professionals constantly discuss scenarios, projections, and hypothetical outcomes. Conditional sentences are essential for expressing what will, would, or would have happened under different circumstances — in forecasting, analysis, and risk assessment.", examples: [] },
+      { title: "First Conditional — real and likely future outcomes", body: "Use the first conditional (if + present simple, will + infinitive) for realistic future scenarios based on current conditions.", examples: [
+        "If revenue increases by 5%, EBITDA will improve by approximately $3 million.",
+        "If working capital is tightened, free cash flow will rise significantly.",
+        "If costs continue to rise, the board will need to review the pricing strategy."
+      ]},
+      { title: "Second Conditional — hypothetical or unlikely present/future scenarios", body: "Use the second conditional (if + past simple, would + infinitive) for hypothetical or unlikely scenarios.", examples: [
+        "If the company reduced its capex, free cash flow would improve by $20 million.",
+        "If operating leverage were lower, the profit impact of the revenue decline would be smaller.",
+        "If the restructuring charge were excluded, the net margin would be 3% higher."
+      ]},
+      { title: "Third Conditional — past hypotheticals (what didn't happen)", body: "Use the third conditional (if + past perfect, would have + past participle) to discuss past events that did not occur and their hypothetical consequences.", examples: [
+        "If cash flow had not recovered in Q4, the company would have breached its covenants.",
+        "If the company had invested more in capex, its margins would have improved sooner.",
+        "If revenue recognition had been more conservative, reported profits would have been lower."
+      ]}
+    ]
+  },
+  {
+    title: "Grammar Reference 2: Concession Structures in Financial Reports",
+    points: [
+      { title: "What are concession structures?", body: "Concession structures are used to acknowledge a contrasting or surprising fact — to show that despite one thing being true, something unexpected also happened. They are essential for balanced, professional financial commentary.", examples: [] },
+      { title: "Concession conjunctions — joining two clauses", body: "Use these when combining two contrasting ideas in one sentence. Be careful about which clause each word introduces:", examples: [
+        "Although revenue grew strongly, net profit fell due to rising costs.",
+        "Even though EBITDA improved, free cash flow remained negative.",
+        "While margins were under pressure, the company maintained its market share."
+      ]},
+      { title: "Concession with noun phrases — despite / in spite of", body: "Despite and in spite of are prepositions — they are followed by a noun phrase, not a clause. This is one of the most common grammar mistakes in financial writing.", examples: [
+        "Despite the strong revenue performance, margins continued to decline. (correct)",
+        "Despite revenue grew strongly, margins declined. (INCORRECT)",
+        "In spite of higher costs, the company maintained its profitability targets."
+      ]},
+      { title: "Concession adverbials — connecting separate sentences", body: "Use these to connect two separate sentences or clauses, typically with a semicolon or as a new sentence:", examples: [
+        "Revenue exceeded expectations; however, cash flow fell short of targets.",
+        "EBITDA was above guidance. Nevertheless, management remains cautious about the outlook.",
+        "The gross margin improved. Nonetheless, the net margin was impacted by rising interest charges."
+      ]}
+    ]
+  },
+  {
+    title: "Grammar Reference 3: Income Statement & Cash Flow Collocations",
+    points: [
+      { title: "Why collocations matter", body: "In professional financial English, specific verb and noun combinations are fixed. Using the wrong combination — even with the right meaning — sounds unnatural and damages professional credibility. These patterns must be learned and practised.", examples: [] },
+      { title: "Verb + Noun collocations: income statement", body: "These verb-noun pairs are standard in income statement discussion:", examples: [
+        "report / post / record → revenue, profit, a loss, earnings",
+        "raise / upgrade / cut / lower → guidance, forecasts, targets",
+        "take / record → a charge, a write-down, an impairment",
+        "squeeze / protect / expand → margins"
+      ]},
+      { title: "Verb + Noun collocations: cash flow", body: "These combinations are fixed in cash flow reporting:", examples: [
+        "generate / produce → cash flow, free cash flow",
+        "convert → profit into cash (strong cash conversion)",
+        "release / consume / tie up → working capital, cash",
+        "invest in / spend on → capex, plant and equipment"
+      ]},
+      { title: "Key adverb + adjective combinations", body: "These combinations are frequently used when describing financial performance:", examples: [
+        "significantly / materially / marginally → above / below / higher / lower",
+        "broadly / largely → in line with, consistent with",
+        "consistently / historically → strong, weak, above average",
+        "temporarily / structurally → impacted, suppressed, elevated"
+      ]}
+    ]
+  }
+];
+
+const listeningActivities = [
+  {
+    title: "Activity 1: Reading the Income Statement — A Finance Training Session",
+    subtitle: "Finance trainer — Graduate onboarding programme",
+    level: "B1",
+    type: "Multiple Choice",
+    focus: "Listening for Main Ideas",
+    transcript: `Good morning, everyone, and welcome to our second session on financial statement analysis. Today we are going to work through the income statement line by line. Let me start with a question: what is the first line of an income statement? That's right — revenue. Sometimes called the top line, revenue is the total income a company earns from its primary business activities in the period. The first deduction from revenue is the cost of goods sold — COGS — which represents the direct costs of producing what was sold. Subtracting COGS from revenue gives us gross profit, and when we express this as a percentage of revenue, we get the gross profit margin. Now, below gross profit, we deduct operating expenses — things like salaries, rent, marketing, and research and development. This gives us operating profit, also known as EBIT — earnings before interest and tax. EBIT is an important measure because it shows the profitability of the business before financing and tax decisions are taken into account. Now, if we add back depreciation and amortisation to EBIT, we get EBITDA. EBITDA is widely used because it approximates the cash being generated by operations. After EBIT, we deduct interest expense — the cost of servicing the company's debt — to arrive at pre-tax profit. Then, after deducting corporation tax, we arrive at net profit — the bottom line. Net profit belongs to the shareholders and can either be paid out as a dividend or retained in the business to fund future growth. Any questions on this structure before we look at a real example?`,
+    questions: [
+      { q: "What is revenue sometimes called in financial language?", opts: ["The bottom line", "The gross line", "The top line", "The net line"], ans: 2 },
+      { q: "What does COGS represent?", opts: ["The total operating expenses of the business", "The direct costs of producing what was sold", "Interest and tax charges", "Salaries and administrative costs"], ans: 1 },
+      { q: "How is the gross profit margin calculated?", opts: ["Net profit divided by revenue", "Gross profit divided by COGS", "Gross profit expressed as a percentage of revenue", "Revenue minus operating expenses"], ans: 2 },
+      { q: "What does EBIT measure?", opts: ["Profitability before financing and tax decisions", "Total cash generated by operations", "Revenue minus cost of goods sold", "Earnings after interest and tax"], ans: 0 },
+      { q: "What do you get when you add depreciation and amortisation back to EBIT?", opts: ["Net profit", "Free cash flow", "Gross profit", "EBITDA"], ans: 3 },
+      { q: "Why does the trainer say EBITDA is widely used?", opts: ["Because it equals net profit", "Because it approximates the cash being generated by operations", "Because it includes interest and tax", "Because it is required by IFRS"], ans: 1 },
+      { q: "What is deducted from EBIT to arrive at pre-tax profit?", opts: ["Depreciation and amortisation", "Cost of goods sold", "Interest expense", "Corporation tax"], ans: 2 },
+      { q: "What can net profit be used for, according to the trainer?", opts: ["Only to pay back debt", "To pay dividends or retain in the business for future growth", "Only for share buybacks", "To fund capital expenditure directly"], ans: 1 }
+    ]
+  },
+  {
+    title: "Activity 2: A Q3 Earnings Call — Income and Cash Flow Review",
+    subtitle: "CFO presenting results — Investor relations call format",
+    level: "B2",
+    type: "Multiple Choice",
+    focus: "Listening for Specific Information",
+    transcript: `Good afternoon, and welcome to Clearwater Group's third-quarter results call. I'm Helena Voss, Chief Financial Officer. Let me take you through our financial performance. Revenue for the quarter was $198 million, up 7.4% year-on-year, driven by strong growth in our software services division, which now accounts for 44% of group revenue — up from 38% a year ago. Gross profit was $86 million, delivering a gross margin of 43.4%, compared to 40.1% in Q3 last year. The improvement reflects the continuing shift in our revenue mix towards higher-margin software services. EBITDA was $52 million, representing an EBITDA margin of 26.3%. We recorded a restructuring charge of $6 million in the quarter relating to the consolidation of two distribution centres. Excluding this charge, adjusted EBITDA would have been $58 million and the adjusted margin would have been 29.3%. Net profit was $24 million, or $0.31 per share. Turning to cash flow. Operating cash flow was $44 million, and capital expenditure was $19 million, resulting in free cash flow of $25 million — an improvement of $8 million compared to the same quarter last year. The improvement in free cash flow was driven by better working capital management, particularly a 9-day reduction in our average receivables collection period. Our cash conversion ratio for the quarter was 0.85, reflecting the timing of some payments in the period. We expect this to normalise to above 0.90 for the full year. We are maintaining our full-year revenue guidance of $790 million and raising our EBITDA margin guidance from 25% to 26%.`,
+    questions: [
+      { q: "Who is presenting on the call?", opts: ["The CEO of Clearwater Group", "Helena Voss, the CFO", "An investment analyst", "The Head of Investor Relations"], ans: 1 },
+      { q: "What was Q3 revenue?", opts: ["$182 million", "$198 million", "$210 million", "$790 million"], ans: 1 },
+      { q: "What share of group revenue does the software services division now represent?", opts: ["38%", "40%", "44%", "47%"], ans: 2 },
+      { q: "What was the gross margin in Q3?", opts: ["40.1%", "43.4%", "26.3%", "29.3%"], ans: 1 },
+      { q: "What was the value of the restructuring charge taken in Q3?", opts: ["$3 million", "$6 million", "$8 million", "$19 million"], ans: 1 },
+      { q: "What was the free cash flow for Q3?", opts: ["$44 million", "$19 million", "$25 million", "$52 million"], ans: 2 },
+      { q: "What drove the improvement in free cash flow?", opts: ["A reduction in capital expenditure", "Better working capital management — a 9-day reduction in receivables collection", "An increase in EBITDA margin", "A one-off asset disposal"], ans: 1 },
+      { q: "What happened to the full-year EBITDA margin guidance?", opts: ["It was lowered from 26% to 25%", "It was maintained at 25%", "It was raised from 25% to 26%", "It was withdrawn entirely"], ans: 2 }
+    ]
+  },
+  {
+    title: "Activity 3: Understanding Cash Flow — Why Profit Is Not Cash",
+    subtitle: "Finance lecturer — University business school format",
+    level: "B2",
+    type: "Multiple Choice",
+    focus: "Understanding Argument and Explanation",
+    transcript: `Good morning. Today I want to address one of the most common misconceptions in finance — the idea that profit and cash are the same thing. They are not, and understanding why they differ is one of the most important skills you will develop in this course. Profit is calculated on the accruals basis. This means that revenue is recognised when it is earned — when the goods are delivered or the service is provided — and expenses are matched to the period in which the economic benefit is consumed. Cash, on the other hand, moves when money physically changes hands. So when a company invoices a customer for $100,000, it records $100,000 of revenue immediately on its income statement. But if the customer doesn't pay for 90 days, the company doesn't actually receive the cash for another three months. In the meantime, the company still needs to pay its own suppliers, its employees, and its overheads. This is exactly how profitable companies go into cash crisis — they are running out of money not because the business is failing, but because of timing differences between earning profit and receiving cash. Now, there is a second important difference. Some income statement expenses are non-cash in nature. Depreciation, for example, reduces profit every year — but it doesn't involve any outflow of cash. The cash was spent when the asset was originally purchased. So when we prepare the cash flow statement using the indirect method, we start with net profit and add back all the non-cash expenses like depreciation and amortisation. We then adjust for changes in working capital — if receivables have increased, that means customers owe us more money than before, so cash has gone out; if payables have increased, we have delayed payments to suppliers, so cash has come in. The result is operating cash flow — the true cash generation of the business.`,
+    questions: [
+      { q: "What is the key misconception the lecturer wants to address?", opts: ["That EBITDA and net profit are the same", "That profit and cash are the same thing", "That depreciation is a cash expense", "That revenue and income are different"], ans: 1 },
+      { q: "Under the accruals basis, when is revenue recognised?", opts: ["When cash is received from the customer", "When the invoice is issued, regardless of delivery", "When goods are delivered or the service is provided", "At the end of the financial year"], ans: 2 },
+      { q: "In the lecturer's example, why does the company not receive cash immediately?", opts: ["The customer has gone bankrupt", "The customer has a 90-day payment term", "The goods were returned by the customer", "The invoice was incorrectly prepared"], ans: 1 },
+      { q: "How can a profitable company go into cash crisis?", opts: ["Because it is growing too slowly", "Because of timing differences between earning profit and receiving cash", "Because its EBITDA is too high", "Because it pays too many dividends"], ans: 1 },
+      { q: "Why is depreciation described as a non-cash expense?", opts: ["Because it is not included in the income statement", "Because it reduces profit but involves no current outflow of cash", "Because it is recorded in the financing activities section", "Because the government pays it"], ans: 1 },
+      { q: "In the indirect method, what happens to depreciation?", opts: ["It is subtracted from net profit", "It is ignored completely", "It is added back to net profit", "It is recorded as capex"], ans: 2 },
+      { q: "What does an increase in accounts receivable indicate for cash flow?", opts: ["Cash has been received ahead of revenue recognition", "Cash has gone out because customers owe more money", "Working capital has improved", "Cash flow from operations has increased"], ans: 1 },
+      { q: "What is operating cash flow described as in the lecture?", opts: ["The same as EBITDA", "The true cash generation of the business", "Revenue minus cost of goods sold", "Net profit plus taxes"], ans: 1 }
+    ]
+  },
+  {
+    title: "Activity 4: An Analyst Discusses Cash Flow Red Flags",
+    subtitle: "Equity research analyst — Investment conference panel",
+    level: "B1–B2",
+    type: "Multiple Choice",
+    focus: "Listening for Opinion and Detail",
+    transcript: `Moderator: Welcome to the panel. Our topic is cash flow analysis and what it reveals about business quality. I'll start with you, Sarah. When you look at a company's cash flow statement, what are the most important things you check? Sarah: The first thing I always look at is the cash conversion ratio — operating cash flow divided by EBIT. If this is consistently below 0.8 or 0.9, I want to understand why. It usually means one of three things: working capital is building up because collections are slowing, the company is being aggressive in its revenue recognition, or there are expenses that are being capitalised when they arguably should be expensed. Moderator: What else do you look for? Sarah: The capex level relative to depreciation is very informative. If a company is consistently spending less on capex than its annual depreciation charge, it may be under-investing in its asset base — this artificially inflates free cash flow in the short term but ultimately erodes the quality of the business. I call this harvest mode — the company is extracting cash without reinvesting for the future. On the other hand, if capex is much higher than depreciation, the company is in investment mode, which can be a very positive sign if the returns justify it. Moderator: What about free cash flow yield? Sarah: Free cash flow yield — free cash flow divided by market capitalisation — is one of my favourite valuation metrics. A yield above 5% or 6% tells me the company is genuinely cash generative relative to its price. Companies with high earnings but low free cash flow yield often have quality issues — the earnings look good on paper but the cash isn't materialising. Moderator: Any final red flags? Sarah: Watch out for companies that consistently generate operating cash flow in Q4 only, reversing losses from earlier quarters. That pattern often indicates aggressive quarter-end billing or channel stuffing — pushing sales to customers right at the end of the quarter to inflate reported revenue, only to see those goods returned in Q1.`,
+    questions: [
+      { q: "What is the cash conversion ratio Sarah uses as her starting point?", opts: ["Operating cash flow divided by revenue", "Operating cash flow divided by EBIT", "Free cash flow divided by net profit", "Net profit divided by operating cash flow"], ans: 1 },
+      { q: "What does a cash conversion ratio consistently below 0.8 or 0.9 usually indicate?", opts: ["The company has excellent earnings quality", "Possible issues with working capital, aggressive revenue recognition, or capitalisation of expenses", "The company is highly profitable", "The company's capex is too high"], ans: 1 },
+      { q: "What does Sarah call a company that consistently spends less on capex than its depreciation charge?", opts: ["Investment mode", "Harvest mode", "Growth mode", "Maintenance mode"], ans: 1 },
+      { q: "What does a company in harvest mode do?", opts: ["Reinvests heavily in growth assets", "Extracts cash without reinvesting for the future", "Generates strong free cash flow through efficiency gains", "Issues new shares to fund expansion"], ans: 1 },
+      { q: "How is free cash flow yield calculated?", opts: ["Free cash flow divided by total assets", "Free cash flow divided by revenue", "Free cash flow divided by market capitalisation", "Operating cash flow divided by equity"], ans: 2 },
+      { q: "What does a free cash flow yield above 5% or 6% suggest?", opts: ["The company is overvalued", "The company is genuinely cash generative relative to its price", "The company has high levels of debt", "The company's earnings quality is poor"], ans: 1 },
+      { q: "What does it mean when a company has high earnings but low free cash flow yield?", opts: ["The earnings are of very high quality", "The earnings look good on paper but the cash is not materialising", "The company is growing very fast", "The EBITDA margin is expanding strongly"], ans: 1 },
+      { q: "What is 'channel stuffing' as described by Sarah?", opts: ["Reducing inventory before year end", "Pushing sales to customers at quarter end to inflate reported revenue", "Moving expenses from one quarter to another", "Capitalising operating costs to improve EBITDA"], ans: 1 }
+    ]
+  }
+];
+
+const caseStudies = [
+  {
+    title: "WorldCom: Revenue Fraud and Capitalised Expenses",
+    subtitle: "USA · Telecommunications · 2002 Fraud · Income Statement Manipulation",
+    intro: "How inflated earnings through fraudulent expense capitalisation destroyed a $180 billion company",
+    sections: [
+      { heading: "Background", text: "WorldCom was one of the largest telecommunications companies in the United States and, at its peak in the late 1990s, had a market capitalisation of approximately $180 billion. Under the leadership of CEO Bernie Ebbers, WorldCom pursued an aggressive growth strategy based primarily on acquisitions. By the early 2000s, however, the telecoms industry entered a severe downturn. Call volumes fell, competition intensified, and the revenue growth that had justified WorldCom's expansive strategy began to dry up. Rather than report declining results honestly, senior management — led by CFO Scott Sullivan — chose to manipulate the financial statements in a way that directly distorted the income statement." },
+      { heading: "The Fraud", text: "WorldCom's fraud was deceptively simple but devastatingly effective. The company had large and growing line costs — the fees it paid to other telecoms companies to use their networks — which were properly classified as operating expenses. When recognised as expenses on the income statement, these costs reduced operating profit and exposed the declining performance of the business. Sullivan directed that approximately $3.8 billion of these genuine operating costs be reclassified as capital expenditure — moving them from the income statement to the balance sheet. The effect was dramatic: by capitalising what should have been expenses, WorldCom removed these costs from the income statement entirely in the current period, massively inflating reported EBITDA and operating profit. This is the precise opposite of good practice: instead of flowing through the income statement and reducing profit, the costs were spread over future years as depreciation." },
+      { heading: "Detection and Consequences", text: "The fraud was ultimately uncovered by WorldCom's internal audit team, led by Cynthia Cooper, who noticed suspicious accounting entries during a routine review in 2002. When the fraud was revealed, WorldCom restated its earnings by over $11 billion — the largest accounting restatement in history at the time — and filed for bankruptcy. Bernie Ebbers was convicted of fraud and sentenced to 25 years in prison. Scott Sullivan pleaded guilty and cooperated with prosecutors. The WorldCom scandal, coming so closely after the Enron collapse, accelerated the passage of the Sarbanes-Oxley Act of 2002, which introduced strict requirements for CEO and CFO certifications of financial statements, among other reforms." }
+    ],
+    questions: [
+      { q: "What was WorldCom's approximate market capitalisation at its peak?", opts: ["$18 billion", "$80 billion", "$180 billion", "$380 billion"], ans: 2 },
+      { q: "What was the primary nature of WorldCom's growth strategy under Bernie Ebbers?", opts: ["Organic revenue growth through product innovation", "Cost reduction and efficiency improvements", "Acquisitions", "International expansion into emerging markets"], ans: 2 },
+      { q: "What type of costs did WorldCom fraudulently reclassify?", opts: ["Capital expenditure reclassified as revenue", "Operating expenses (line costs) reclassified as capital expenditure", "Depreciation charges reclassified as operating expenses", "Tax payments reclassified as financing costs"], ans: 1 },
+      { q: "How much was reclassified from operating expenses to capital expenditure?", opts: ["$380 million", "$1.1 billion", "$3.8 billion", "$11 billion"], ans: 2 },
+      { q: "What was the effect on the income statement of capitalising these costs?", opts: ["It reduced reported operating profit significantly", "It increased the depreciation charge immediately", "It removed these costs from the income statement, massively inflating EBITDA and operating profit", "It reduced the company's reported revenue"], ans: 2 },
+      { q: "Who uncovered the fraud?", opts: ["The external auditors", "The SEC", "WorldCom's internal audit team led by Cynthia Cooper", "A competitor company"], ans: 2 },
+      { q: "By how much did WorldCom restate its earnings?", opts: ["$3.8 billion", "$7 billion", "$11 billion", "$18 billion"], ans: 2 },
+      { q: "What sentence did Bernie Ebbers receive?", opts: ["5 years in prison", "10 years in prison", "A large fine but no prison sentence", "25 years in prison"], ans: 3 },
+      { q: "What legislation was accelerated by the WorldCom scandal?", opts: ["The Dodd-Frank Act", "The IFRS 15 Revenue Standard", "The Sarbanes-Oxley Act of 2002", "The Basel III Framework"], ans: 2 },
+      { q: "What key lesson does the WorldCom case teach about the income statement?", opts: ["Operating expenses should always be capitalised when possible", "The distinction between operating expenses and capital expenditure is fundamental and must not be manipulated", "EBITDA is always more reliable than net profit", "External auditors always detect fraud quickly"], ans: 1 }
+    ]
+  },
+  {
+    title: "Amazon: Negative Free Cash Flow That Built a Trillion-Dollar Business",
+    subtitle: "USA · Technology & Retail · 1994–Present · Strategic Investment",
+    intro: "How deliberately negative free cash flow and a unique cash flow model created extraordinary long-term value",
+    sections: [
+      { heading: "The Business Model and Early Financials", text: "Amazon's financial history offers one of the most instructive case studies in cash flow analysis ever recorded. For the first decade of its existence, Amazon reported either losses or very modest profits on its income statement — a fact that frustrated many traditional investors who evaluated companies primarily through the lens of the P&L. Year after year through the late 1990s and 2000s, Amazon invested its cash aggressively in warehousing infrastructure, technology, logistics, and expansion into new product categories. Capital expenditure ran consistently far above the depreciation charge, and free cash flow was frequently negative. By any conventional measure, this looked like a company destroying value." },
+      { heading: "The Cash Flow Insight", text: "What founder Jeff Bezos understood — and consistently communicated to shareholders — was that Amazon's cash flow model was fundamentally different from and superior to its reported income statement. Amazon collected cash from customers immediately at the point of sale, but paid its suppliers on extended terms of 45 to 60 days. This meant that Amazon was, in effect, operating with a large pool of supplier-funded float — cash that technically belonged to suppliers but was temporarily available to Amazon for reinvestment. As Amazon's revenue scaled, this float grew proportionally. Bezos framed this as a structural advantage: the faster Amazon grew, the more supplier float it generated, and the more cash it had available to fund new investments without needing external financing. This dynamic shows up in the operating activities section of the cash flow statement — despite modest earnings, operating cash flow was strongly positive." },
+      { heading: "Lessons for Cash Flow Analysis", text: "Amazon's case illustrates three critical lessons for financial analysts. First, the income statement alone can be deeply misleading when a company is in an early or high-investment phase of its development — cash flow analysis is essential context. Second, the structure of working capital can be a source of competitive advantage, not merely a passive reflection of operational efficiency. A company that collects before it pays — like Amazon — is effectively being financed by its supply chain. Third, deliberately negative free cash flow driven by high-return capital investment is fundamentally different from negative free cash flow driven by operational losses or poor working capital management. Distinguishing between these causes requires careful reading of all three sections of the cash flow statement, not just the headline free cash flow number." }
+    ],
+    questions: [
+      { q: "What did Amazon report on its income statement for much of its first decade?", opts: ["Exceptional profits and strong margins", "Losses or very modest profits", "Consistent double-digit net profit margins", "Rapidly growing EBITDA margins"], ans: 1 },
+      { q: "What was the key characteristic of Amazon's capital expenditure strategy?", opts: ["Capex was always below the annual depreciation charge", "Capex consistently ran far above the depreciation charge", "Capex was focused only on IT infrastructure", "Capex was financed entirely through equity issuances"], ans: 1 },
+      { q: "What is the 'supplier-funded float' mentioned in the text?", opts: ["A loan from Amazon's key suppliers", "Cash that technically belongs to suppliers but was temporarily available to Amazon due to extended payment terms", "Amazon's working capital reserve", "Dividends paid to Amazon's shareholders by its suppliers"], ans: 1 },
+      { q: "What payment terms did Amazon offer its suppliers?", opts: ["Immediate payment on delivery", "7-day payment terms", "45 to 60 days payment terms", "90 to 120 days payment terms"], ans: 2 },
+      { q: "According to the text, where does this cash flow advantage show up in the financial statements?", opts: ["In the financing activities section, as new debt issued", "In the investing activities section, as capex reductions", "In the operating activities section, as strongly positive operating cash flow", "In the income statement, as higher reported revenue"], ans: 2 },
+      { q: "What did Bezos argue happened as Amazon's revenue grew?", opts: ["The company needed more external financing", "The supplier float grew proportionally, providing more cash for reinvestment", "Free cash flow became permanently negative", "Capital expenditure needed to be reduced"], ans: 1 },
+      { q: "What is the first key lesson the text draws from the Amazon case?", opts: ["The income statement is always the most important financial statement", "Cash flow analysis is essential context, especially for high-investment phase companies", "Free cash flow should always be positive", "Companies should avoid investing in warehousing"], ans: 1 },
+      { q: "What does the text say about a company that collects cash before it pays suppliers?", opts: ["It has poor working capital management", "It is effectively being financed by its supply chain", "It has very high earnings quality", "It is likely to miss its debt covenants"], ans: 1 },
+      { q: "What is the critical distinction the text draws regarding negative free cash flow?", opts: ["Negative FCF is always a sign of financial distress", "Negative FCF from high-return investment is fundamentally different from negative FCF from operational losses", "Negative FCF always leads to a cash crisis within two years", "Negative FCF means a company's EBITDA margin is declining"], ans: 1 },
+      { q: "What does the text say is required to distinguish the causes of negative free cash flow?", opts: ["Only reading the income statement in detail", "Comparing the company to its peers", "Careful reading of all three sections of the cash flow statement", "Reviewing the CEO's letter to shareholders"], ans: 2 }
+    ]
+  }
+];
+
+const assessmentQs = [
+  { q: "What is EBIT an abbreviation for?", opts: ["Estimated Before Income Tax", "Earnings Before Interest and Tax", "Equity Before Investment Total", "Earnings Based on Income Tax"], ans: 1 },
+  { q: "How is EBITDA calculated from EBIT?", opts: ["By subtracting depreciation and amortisation", "By adding back depreciation and amortisation", "By adding interest and tax", "By subtracting capital expenditure"], ans: 1 },
+  { q: "Which of the following correctly describes free cash flow?", opts: ["Net profit minus capital expenditure", "EBITDA minus interest", "Operating cash flow minus capital expenditure", "Revenue minus operating expenses"], ans: 2 },
+  { q: "Which conditional form correctly describes a real future outcome?", opts: ["If revenue increased, margins would improve.", "If revenue increases, margins will improve.", "If revenue had increased, margins would have improved.", "If revenue were to increase, margins improved."], ans: 1 },
+  { q: "Which sentence uses a concession structure correctly?", opts: ["Despite revenue grew strongly, profit fell.", "Although revenue grew strongly, profit fell.", "However revenue grew strongly, profit fell.", "Despite of revenue growth, profit fell."], ans: 1 },
+  { q: "What does the cash conversion ratio measure?", opts: ["Revenue divided by operating expenses", "How efficiently a company converts accounting profit into cash", "Free cash flow divided by market capitalisation", "Net profit divided by total assets"], ans: 1 },
+  { q: "Why is depreciation added back in the indirect method cash flow statement?", opts: ["Because it increases operating profit", "Because it is a financing expense", "Because it is a non-cash expense that reduced profit", "Because it is recorded in investing activities"], ans: 2 },
+  { q: "In WorldCom's fraud, what did the company do with genuine operating expenses?", opts: ["It overstated them to reduce tax", "It reclassified them as capital expenditure to inflate reported profit", "It deferred them to future periods as accruals", "It recorded them as financing costs"], ans: 1 },
+  { q: "What is the correct collocation? 'The company _____ a one-time restructuring charge of $15 million.'", opts: ["made", "did", "took", "produced"], ans: 2 },
+  { q: "What does a cash conversion ratio consistently below 1.0 suggest?", opts: ["The company is highly efficient at converting profit to cash", "A significant concern about earnings quality", "Capital expenditure is below the depreciation charge", "The company has negative free cash flow"], ans: 1 },
+  { q: "What are financing activities in the cash flow statement?", opts: ["Cash flows from buying and selling long-term assets", "Cash flows from selling goods and services", "Cash flows related to debt, share issuances, and dividends", "Changes in working capital"], ans: 2 },
+  { q: "What is 'operating leverage'?", opts: ["The level of long-term debt on the balance sheet", "How profit changes in response to revenue changes, driven by fixed costs", "The ratio of operating cash flow to capex", "The proportion of revenue from recurring sources"], ans: 1 },
+  { q: "Which sentence uses the third conditional correctly for a past hypothetical?", opts: ["If cash flow improved, covenants would not be breached.", "If cash flow improves, covenants will not be breached.", "If cash flow had improved, covenants would not have been breached.", "If cash flow would improve, covenants had not been breached."], ans: 2 },
+  { q: "In Amazon's cash flow model, what created the 'supplier-funded float'?", opts: ["Customers paying on extended credit terms", "Amazon collecting from customers immediately but paying suppliers on 45–60 day terms", "High capital expenditure on warehousing", "Negative free cash flow from operational losses"], ans: 1 },
+  { q: "What is amortisation?", opts: ["The systematic depreciation of tangible fixed assets", "A write-down of goodwill due to impairment", "The systematic allocation of an intangible asset's cost over its useful life", "Cash paid to service long-term debt"], ans: 2 },
+  { q: "What is recurring revenue?", opts: ["Revenue earned from one-time transactions only", "Revenue that is predictable and expected to continue, such as subscriptions", "Revenue recognised before cash is received", "Revenue from the disposal of fixed assets"], ans: 1 },
+  { q: "The correct form to complete this sentence is: 'Revenue grew strongly. _____, the net profit margin fell.'", opts: ["Therefore", "Despite", "However", "Because"], ans: 2 },
+  { q: "What is the interest cover ratio?", opts: ["Total debt divided by EBITDA", "EBIT divided by interest expense", "Net profit divided by interest payments", "Operating cash flow divided by total liabilities"], ans: 1 },
+  { q: "What does 'earnings quality' describe?", opts: ["The absolute size of reported net profit", "How reliably reported earnings reflect true, sustainable economic performance", "The ratio of EBITDA to revenue", "The level of capital expenditure relative to depreciation"], ans: 1 },
+  { q: "Which of the following is an example of a non-cash expense?", opts: ["A payment to a supplier", "Capital expenditure on new equipment", "Depreciation of fixed assets", "A dividend payment to shareholders"], ans: 2 }
+];
+
+/* ══════════════════════ NAVIGATION ══════════════════════ */
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(`'${id}'`)) n.classList.add('active');
+  });
+  window.scrollTo(0, 0);
+}
+
+/* ══════════════════════ MCQ ENGINE ══════════════════════ */
+const userAnswers = {};
+function renderMCQ(questions, containerId, darkMode=false) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const L = ['A','B','C','D'];
+  let html = questions.map((item,qi) => `
+    <div class="mcq-block" id="${containerId}-q${qi}">
+      <div class="mcq-q">${qi+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((opt,oi) => `
+          <div class="mcq-option ${darkMode?'l-mcq-option':''}" onclick="selectOption('${containerId}',${qi},${oi},${item.ans})" id="${containerId}-q${qi}-o${oi}">
+            <span class="option-letter">${L[oi]}</span>${opt}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+  html += `<button class="check-btn ${darkMode?'l-check-btn':''}" onclick="checkAll('${containerId}',${questions.length})">Check Answers</button>
+  <div id="${containerId}-score" style="display:none" class="score-display"></div>`;
+  container.innerHTML = html;
+}
+function selectOption(cid, qi, oi, correct) {
+  const key = `${cid}-q${qi}`;
+  if (userAnswers[key]?.checked) return;
+  userAnswers[key] = { selected:oi, correct };
+  document.querySelectorAll(`#${cid}-q${qi} .mcq-option`).forEach((o,i) => {
+    o.classList.remove('selected');
+    if (i===oi) o.classList.add('selected');
+  });
+}
+function checkAll(cid, count) {
+  let score = 0;
+  for (let qi=0; qi<count; qi++) {
+    const key = `${cid}-q${qi}`;
+    const data = userAnswers[key];
+    if (!data) continue;
+    data.checked = true;
+    document.querySelectorAll(`#${cid}-q${qi} .mcq-option`).forEach((o,i) => {
+      o.classList.remove('selected');
+      if (i===data.correct) o.classList.add('correct');
+      if (i===data.selected && data.selected!==data.correct) o.classList.add('incorrect');
+    });
+    if (data.selected===data.correct) score++;
+  }
+  const el = document.getElementById(`${cid}-score`);
+  if (el) { el.style.display='inline-flex'; el.textContent=`Score: ${score} / ${count}`; }
+}
+
+/* ══════════════════════ RENDER FUNCTIONS ══════════════════════ */
+function renderSpeaking() {
+  document.getElementById('speakingGrid').innerHTML = speakingQs.map((q,i) => `
+    <div class="speaking-card">
+      <div class="q-num">Q${String(i+1).padStart(2,'0')}</div>
+      <div class="q-text">${q}</div>
+    </div>`).join('');
+}
+
+function renderWordBank() {
+  document.getElementById('wordbankGrid').innerHTML = wordBank.map(w => `
+    <div class="word-card">
+      <div class="word-emoji">${w.emoji}</div>
+      <div class="word-term">${w.term}</div>
+      <div class="word-def">${w.def}</div>
+    </div>`).join('');
+}
+
+function renderReading() {
+  document.getElementById('readingContent').innerHTML = readingTexts.map((text,ti) => {
+    const cid = `reading-mcq-${ti}`;
+    return `<div class="card">
+      <div class="card-title">${text.title}</div>
+      <div class="card-title-bar"></div>
+      <div class="reading-text-box">
+        <h4>${text.subtitle}</h4>
+        ${text.paragraphs.map(p=>`<p>${p}</p>`).join('')}
+      </div>
+      <h4 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:18px;">Comprehension Questions</h4>
+      <div id="${cid}"></div>
+    </div>`;
+  }).join('');
+  readingTexts.forEach((t,ti) => renderMCQ(t.questions, `reading-mcq-${ti}`));
+}
+
+function renderVocabulary() {
+  document.getElementById('vocab-ex-0').innerHTML = `<div class="card"><div class="card-title">${vocabExercises[0].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${vocabExercises[0].instructions}</p>
+  <div id="vocab-mcq-0"></div></div>`;
+  renderMCQ(vocabExercises[0].questions, 'vocab-mcq-0');
+
+  const wordsHtml = vocabExercises[1].words.map(w =>
+    `<span style="display:inline-block;background:var(--navy);color:var(--gold-light);font-size:12px;font-weight:600;padding:3px 12px;border-radius:20px;margin:3px;">${w}</span>`).join('');
+  const gapHtml = vocabExercises[1].sentences.map((s,i) => `
+    <div class="gapfill-item">
+      <span>${i+1}. ${s.before}</span>
+      <input class="gap-input" id="gf-${i}" type="text" placeholder="…">
+      <span>${s.after}</span>
+    </div>`).join('');
+  document.getElementById('vocab-ex-1').innerHTML = `<div class="card"><div class="card-title">${vocabExercises[1].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:14px;">${vocabExercises[1].instructions}</p>
+  <div style="margin-bottom:20px;padding:14px 16px;background:var(--cream);border-radius:8px;line-height:2;">${wordsHtml}</div>
+  ${gapHtml}
+  <button class="check-btn" onclick="checkGapFill()">Check Answers</button>
+  <div id="gf-score" style="display:none" class="score-display"></div></div>`;
+
+  const tfHtml = vocabExercises[2].statements.map((s,i) => `
+    <div class="tf-item">
+      <div class="tf-statement">${i+1}. ${s.text}</div>
+      <div class="tf-buttons">
+        <button class="tf-btn" id="tf-${i}-T" onclick="selectTF(${i},'T',${s.ans})">True</button>
+        <button class="tf-btn" id="tf-${i}-F" onclick="selectTF(${i},'F',${s.ans})">False</button>
+      </div>
+    </div>`).join('');
+  document.getElementById('vocab-ex-2').innerHTML = `<div class="card"><div class="card-title">${vocabExercises[2].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${vocabExercises[2].instructions}</p>
+  ${tfHtml}
+  <button class="check-btn" onclick="checkTF()">Check Answers</button>
+  <div id="tf-score" style="display:none" class="score-display"></div></div>`;
+}
+
+const tfAnswers = {};
+function selectTF(i, val, correct) {
+  if (tfAnswers[i]?.checked) return;
+  tfAnswers[i] = { selected:val, correct };
+  ['T','F'].forEach(v => document.getElementById(`tf-${i}-${v}`).classList.remove('selected-true','selected-false'));
+  document.getElementById(`tf-${i}-${val}`).classList.add(val==='T'?'selected-true':'selected-false');
+}
+function checkTF() {
+  let score = 0;
+  vocabExercises[2].statements.forEach((s,i) => {
+    const data = tfAnswers[i];
+    if (!data) return;
+    data.checked = true;
+    const cv = s.ans ? 'T' : 'F';
+    ['T','F'].forEach(v => document.getElementById(`tf-${i}-${v}`).classList.remove('selected-true','selected-false'));
+    const selBtn = document.getElementById(`tf-${i}-${data.selected}`);
+    const corrBtn = document.getElementById(`tf-${i}-${cv}`);
+    if (data.selected===cv) { selBtn.classList.add('correct-answer'); score++; }
+    else { selBtn.classList.add('wrong-answer'); corrBtn.classList.add('correct-answer'); }
+  });
+  const sc = document.getElementById('tf-score');
+  sc.style.display='inline-flex';
+  sc.textContent=`Score: ${score} / ${vocabExercises[2].statements.length}`;
+}
+function checkGapFill() {
+  let score = 0;
+  vocabExercises[1].sentences.forEach((s,i) => {
+    const input = document.getElementById(`gf-${i}`);
+    const val = input.value.trim().toLowerCase();
+    input.classList.remove('correct','incorrect');
+    if (val===s.blank.toLowerCase()) { input.classList.add('correct'); score++; }
+    else { input.classList.add('incorrect'); input.value=s.blank; }
+  });
+  const sc = document.getElementById('gf-score');
+  sc.style.display='inline-flex';
+  sc.textContent=`Score: ${score} / ${vocabExercises[1].sentences.length}`;
+}
+function showVocabEx(idx, el) {
+  document.querySelectorAll('.vocab-ex').forEach((e,i) => e.style.display=i===idx?'block':'none');
+  el.parentElement.querySelectorAll('.ex-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function renderGrammar() {
+  grammarExercises.forEach((ex,ei) => {
+    const cid = `grammar-mcq-${ei}`;
+    document.getElementById(`grammar-ex-${ei}`).innerHTML = `<div class="card"><div class="card-title">${ex.title}</div><div class="card-title-bar"></div>
+    <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${ex.instructions}</p>
+    <div id="${cid}"></div></div>`;
+    renderMCQ(ex.questions, cid);
+  });
+}
+function showGrammarEx(idx, el) {
+  document.querySelectorAll('.grammar-ex').forEach((e,i) => e.style.display=i===idx?'block':'none');
+  el.parentElement.querySelectorAll('.ex-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function renderGrammarReview() {
+  document.getElementById('grammarReviewContent').innerHTML = grammarReview.map(ref => `
+    <div class="card">
+      <div class="card-title">${ref.title}</div>
+      <div class="card-title-bar"></div>
+      ${ref.points.map(pt => `
+        <div class="grammar-ref-box" style="margin-bottom:16px;">
+          <h4>${pt.title}</h4>
+          <div class="grammar-rule">
+            <p>${pt.body}</p>
+            ${pt.examples.length ? `<ul style="margin-top:10px">${pt.examples.map(e=>`<li style="margin-bottom:6px"><code>${e}</code></li>`).join('')}</ul>` : ''}
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function renderWriting() {
+  const tasks = [
+    {
+      activity: "Writing Activity 1", type: "Income Statement Commentary",
+      title: "Write an Income Statement Commentary for Investors",
+      prompt: "You have been given the following income statement highlights for Proxima Technology Ltd for the year ended 31 December: Revenue: $124m (up 14% YoY). Gross profit: $62m (gross margin 50%, up from 46%). EBITDA: $31m (margin 25%, up from 22%). Restructuring charge: $4.5m. Net profit: $11m (down from $13m last year, due to higher interest charges following a refinancing). Write a professional income statement commentary of approximately 250–280 words. Discuss revenue growth, margin improvement, the restructuring charge, and explain why net profit fell despite improved operating performance.",
+      tags: ["250–280 words", "Formal investor-facing register", "Include: Revenue, Gross Margin, EBITDA, Restructuring, Net Profit, Outlook comment"],
+      id: "writing-1"
+    },
+    {
+      activity: "Writing Activity 2", type: "Cash Flow Analysis Memo",
+      title: "Internal Memo: Cash Flow Performance and Working Capital",
+      prompt: "Write a professional internal memo to the CEO summarising the company's cash flow performance for the half-year period. Key figures: Operating cash flow: $18m. Capital expenditure: $24m. Free cash flow: -$6m. Cash conversion ratio: 0.72 (versus 0.91 in the same period last year). The shortfall in free cash flow is due to the planned investment in a new production facility. Working capital deteriorated: receivable days increased from 38 to 52 days. Explain what the figures mean, why free cash flow is negative, why this is acceptable in this case, and what action should be taken on receivables.",
+      tags: ["220–260 words", "Semi-formal memo register", "Include: Purpose, FCF explanation, working capital concern, recommended action"],
+      id: "writing-2"
+    }
+  ];
+  document.getElementById('writingContent').innerHTML = tasks.map(t => `
+    <div class="card">
+      <div class="card-title">${t.activity}: ${t.type}</div>
+      <div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>${t.title}</h4>
+        <p>${t.prompt}</p>
+        <div class="writing-meta">${t.tags.map(tag=>`<span class="writing-tag">${tag}</span>`).join('')}</div>
+      </div>
+      <textarea class="writing-textarea" id="${t.id}-textarea" placeholder="Write your response here…" oninput="updateWordCount('${t.id}')"></textarea>
+      <div class="word-counter" id="${t.id}-counter">0 words</div>
+      <button class="submit-btn" onclick="submitWriting('${t.id}')">Submit Writing ✓</button>
+      <div class="submit-success" id="${t.id}-success">✅ <span>Submitted successfully! Your response has been recorded.</span></div>
+    </div>`).join('');
+}
+function updateWordCount(id) {
+  const ta = document.getElementById(`${id}-textarea`);
+  const wc = ta.value.trim()==='' ? 0 : ta.value.trim().split(/\s+/).length;
+  document.getElementById(`${id}-counter`).textContent=`${wc} words`;
+}
+function submitWriting(id) {
+  const ta = document.getElementById(`${id}-textarea`);
+  const suc = document.getElementById(`${id}-success`);
+  if (ta.value.trim().length<20) { alert('Please write at least a few sentences before submitting.'); return; }
+  suc.style.display='flex';
+  ta.style.borderColor='var(--green-accent)';
+}
+
+function renderListening() {
+  document.getElementById('listeningContent').innerHTML = listeningActivities.map((act,ai) => {
+    const cid = `l-mcq-${ai}`;
+    return `
+    <div class="listening-activity">
+      <div class="listening-header">
+        <div class="listening-icon">📈</div>
+        <div>
+          <div class="listening-title">${act.title}</div>
+          <div class="listening-subtitle">${act.subtitle}</div>
+          <div class="listening-tags">
+            <span class="l-tag l-tag-level">LEVEL: ${act.level}</span>
+            <span class="l-tag l-tag-type">${act.type}</span>
+            <span class="l-tag l-tag-focus">FOCUS: ${act.focus}</span>
+          </div>
+        </div>
+      </div>
+      <div class="audio-player">
+        <div class="player-top">
+          <button class="play-btn" onclick="togglePlay(${ai})" id="play-${ai}">▶</button>
+          <div class="player-info">
+            <div class="player-title">🎧 ${act.title}</div>
+            <div class="player-desc">${act.subtitle}</div>
+          </div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="progress-audio"><div class="progress-audio-fill" id="prog-${ai}"></div></div>
+        <div class="speed-controls">
+          <span class="speed-label">SPEED:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7×</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2×</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">↩ Replay</button>
+        </div>
+        <div class="audio-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <div class="transcript-toggle" id="trans-toggle-${ai}" onclick="toggleTranscript(${ai})">
+        <span class="arrow">▼</span> Show / Hide Transcript
+      </div>
+      <div class="transcript-content" id="trans-${ai}">
+        <p>${act.transcript}</p>
+      </div>
+      <div class="listening-mcq">
+        <div class="instructions-box">
+          <span class="inst-icon">📋</span>
+          <span class="inst-text">Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</span>
+        </div>
+        <div id="${cid}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  listeningActivities.forEach((_,ai) => renderMCQ(listeningActivities[ai].questions, `l-mcq-${ai}`, true));
+}
+
+function renderCaseStudies() {
+  document.getElementById('caseStudiesContent').innerHTML = caseStudies.map((cs,ci) => {
+    const cid = `cs-mcq-${ci}`;
+    return `
+    <div style="margin-bottom:34px;">
+      <div class="case-header">
+        <div class="case-label">Case Study ${ci+1}</div>
+        <div class="case-title">${cs.title}</div>
+        <div class="case-sub">${cs.subtitle} &nbsp;·&nbsp; ${cs.intro}</div>
+      </div>
+      <div class="case-body">
+        ${cs.sections.map(s=>`<h5>${s.heading}</h5><p>${s.text}</p>`).join('')}
+        <div class="ex-divider"></div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:18px;">Comprehension Questions</h4>
+        <div id="${cid}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  caseStudies.forEach((_,ci) => renderMCQ(caseStudies[ci].questions, `cs-mcq-${ci}`));
+}
+
+/* ══════════════════════ AUDIO ENGINE — American Female Voice ══════════════════════ */
+const speechInstances = {};
+let cachedAmericanFemaleVoice = null;
+const US_FEMALE_VOICE_NAMES = ['Samantha','Karen','Victoria','Allison','Susan','Zira','Microsoft Zira','Microsoft Zira Desktop','Google US English','en-US-Neural2-F','en-US-Wavenet-F','Ava','Nova','Jenny','Aria'];
+
+function pickAmericanFemaleVoice() {
+  if (cachedAmericanFemaleVoice) return cachedAmericanFemaleVoice;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  for (const name of US_FEMALE_VOICE_NAMES) {
+    const v = voices.find(v => v.name===name);
+    if (v) { cachedAmericanFemaleVoice=v; return v; }
+  }
+  for (const name of US_FEMALE_VOICE_NAMES) {
+    const v = voices.find(v => v.name.toLowerCase().includes(name.toLowerCase()));
+    if (v) { cachedAmericanFemaleVoice=v; return v; }
+  }
+  const enUS = voices.filter(v => v.lang==='en-US');
+  const female = enUS.find(v => /female|woman|girl|zira|samantha|ava|nova|jenny|aria/i.test(v.name));
+  if (female) { cachedAmericanFemaleVoice=female; return female; }
+  if (enUS.length) { cachedAmericanFemaleVoice=enUS[0]; return enUS[0]; }
+  const enAny = voices.find(v => v.lang.startsWith('en'));
+  if (enAny) { cachedAmericanFemaleVoice=enAny; return enAny; }
+  return voices[0];
+}
+function getVoiceThenSpeak(ai, cb) {
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length) { cb(pickAmericanFemaleVoice()); return; }
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.onvoiceschanged=null;
+    cachedAmericanFemaleVoice=null;
+    cb(pickAmericanFemaleVoice());
+  };
+  setTimeout(() => { if (!cachedAmericanFemaleVoice) { cachedAmericanFemaleVoice=null; cb(pickAmericanFemaleVoice()); }}, 600);
+}
+const progressIntervals = {};
+function startProgressAnimation(ai) {
+  const progEl = document.getElementById(`prog-${ai}`);
+  const timeEl = document.getElementById(`time-${ai}`);
+  if (!progEl) return;
+  const wordCount = listeningActivities[ai].transcript.split(/\s+/).length;
+  const rate = speechInstances[`${ai}-rate`] || 0.85;
+  const estimatedSec = Math.round((wordCount/130)*60/rate);
+  let elapsed = 0;
+  progEl.style.width='0%';
+  const fmt = s => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  if (timeEl) timeEl.textContent=`0:00 / ${fmt(estimatedSec)}`;
+  clearInterval(progressIntervals[ai]);
+  progressIntervals[ai] = setInterval(() => {
+    elapsed++;
+    progEl.style.width=Math.min((elapsed/estimatedSec)*100,99)+'%';
+    if (timeEl) timeEl.textContent=`${fmt(elapsed)} / ${fmt(estimatedSec)}`;
+  }, 1000);
+}
+function stopProgressAnimation(ai, complete=false) {
+  clearInterval(progressIntervals[ai]);
+  const progEl = document.getElementById(`prog-${ai}`);
+  if (progEl && complete) progEl.style.width='100%';
+}
+function togglePlay(ai) {
+  const btn = document.getElementById(`play-${ai}`);
+  if (speechInstances[ai]) {
+    window.speechSynthesis.cancel();
+    stopProgressAnimation(ai);
+    btn.textContent='▶';
+    delete speechInstances[ai];
+    return;
+  }
+  getVoiceThenSpeak(ai, (voice) => {
+    const utterance = new SpeechSynthesisUtterance(listeningActivities[ai].transcript);
+    utterance.voice=voice; utterance.lang='en-US';
+    utterance.rate=speechInstances[`${ai}-rate`]||0.85;
+    utterance.pitch=1.08; utterance.volume=1.0;
+    utterance.onstart=()=>{ btn.textContent='⏸'; startProgressAnimation(ai); };
+    utterance.onend=()=>{ btn.textContent='▶'; stopProgressAnimation(ai,true); delete speechInstances[ai]; };
+    utterance.onerror=(e)=>{ if (e.error!=='interrupted') { btn.textContent='▶'; stopProgressAnimation(ai); delete speechInstances[ai]; }};
+    window.speechSynthesis.speak(utterance);
+    speechInstances[ai]=utterance;
+  });
+}
+function setSpeed(ai, rate, el) {
+  speechInstances[`${ai}-rate`]=rate;
+  el.closest('.speed-controls').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  if (speechInstances[ai]) {
+    window.speechSynthesis.cancel(); stopProgressAnimation(ai); delete speechInstances[ai];
+    document.getElementById(`play-${ai}`).textContent='▶';
+    setTimeout(()=>togglePlay(ai),150);
+  }
+}
+function replayAudio(ai) {
+  if (speechInstances[ai]) { window.speechSynthesis.cancel(); stopProgressAnimation(ai); delete speechInstances[ai]; }
+  document.getElementById(`play-${ai}`).textContent='▶';
+  setTimeout(()=>togglePlay(ai),200);
+}
+function toggleTranscript(ai) {
+  document.getElementById(`trans-toggle-${ai}`).classList.toggle('open');
+  document.getElementById(`trans-${ai}`).classList.toggle('open');
+}
+
+/* ══════════════════════ ASSESSMENT ══════════════════════ */
+let assessmentAttempts = 0;
+function renderAssessment() {
+  document.getElementById('assessmentContent').innerHTML = `
+    <div class="assessment-banner">
+      <h3>Module 3 Final Assessment</h3>
+      <p>This assessment covers all areas of Module 3: Income and Cash Flow Statements.<br>Answer all 20 questions. You need 70% or above to pass. You have 2 attempts.</p>
+      <div class="assessment-meta">
+        <div class="a-meta-item"><div class="a-meta-num">20</div><div class="a-meta-label">Questions</div></div>
+        <div class="a-meta-item"><div class="a-meta-num">70%</div><div class="a-meta-label">Pass Mark</div></div>
+        <div class="a-meta-item"><div class="a-meta-num">2</div><div class="a-meta-label">Attempts</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="attempts-display">Attempts used: <span class="attempt-dot" id="att-0"></span><span class="attempt-dot" id="att-1"></span></div>
+      <div id="assessment-questions"></div>
+      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="submit-btn" id="submit-assessment-btn" onclick="submitAssessment()">Submit Assessment</button>
+        <button class="check-btn" id="retry-assessment-btn" onclick="resetAssessment()" style="display:none">Try Again</button>
+      </div>
+      <div class="final-result" id="final-result"></div>
+    </div>`;
+  renderAssessmentQuestions();
+}
+const finalAnswers = {};
+function renderAssessmentQuestions() {
+  const L = ['A','B','C','D'];
+  document.getElementById('assessment-questions').innerHTML = assessmentQs.map((item,qi) => `
+    <div class="mcq-block" id="asmq-q${qi}">
+      <div class="mcq-q">${qi+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((opt,oi) => `
+          <div class="mcq-option" onclick="selectFinalOption(${qi},${oi},${item.ans})" id="asmq-q${qi}-o${oi}">
+            <span class="option-letter">${L[oi]}</span>${opt}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function selectFinalOption(qi, oi, correct) {
+  if (finalAnswers[qi]?.checked) return;
+  finalAnswers[qi]={selected:oi,correct};
+  document.querySelectorAll(`#asmq-q${qi} .mcq-option`).forEach((o,i)=>{ o.classList.remove('selected'); if (i===oi) o.classList.add('selected'); });
+}
+function submitAssessment() {
+  if (assessmentAttempts>=2) return;
+  assessmentAttempts++;
+  document.getElementById(`att-${assessmentAttempts-1}`).classList.add('used');
+  let score=0;
+  assessmentQs.forEach((item,qi)=>{
+    const data=finalAnswers[qi];
+    const opts=document.querySelectorAll(`#asmq-q${qi} .mcq-option`);
+    opts.forEach(o=>o.style.pointerEvents='none');
+    if (!data) return;
+    data.checked=true;
+    opts.forEach((o,i)=>{
+      o.classList.remove('selected');
+      if (i===data.correct) o.classList.add('correct');
+      if (i===data.selected && data.selected!==data.correct) o.classList.add('incorrect');
+    });
+    if (data.selected===data.correct) score++;
+  });
+  const pct=Math.round((score/assessmentQs.length)*100);
+  const passed=pct>=70;
+  const resultEl=document.getElementById('final-result');
+  resultEl.className=`final-result ${passed?'pass':'fail'}`;
+  resultEl.style.display='block';
+  resultEl.innerHTML=`
+    <div class="final-score">${pct}%</div>
+    <div class="final-verdict">${passed?'🎉 Congratulations! You passed!':'❌ Not quite — keep studying!'}</div>
+    <div class="final-msg">${passed
+      ?`You scored ${score} out of ${assessmentQs.length}. Excellent work on Module 3: Income and Cash Flow Statements. You have demonstrated strong command of financial language, analysis, and professional grammar.`
+      :`You scored ${score} out of ${assessmentQs.length}. You need 70% to pass (14/20). ${assessmentAttempts<2?'You have 1 attempt remaining. Review the module and try again.':'You have used both attempts. Please review the module and speak to your instructor.'}`
+    }</div>`;
+  document.getElementById('submit-assessment-btn').style.display='none';
+  if (assessmentAttempts<2 && !passed) document.getElementById('retry-assessment-btn').style.display='inline-block';
+}
+function resetAssessment() {
+  Object.keys(finalAnswers).forEach(k=>delete finalAnswers[k]);
+  renderAssessmentQuestions();
+  document.getElementById('final-result').style.display='none';
+  document.getElementById('submit-assessment-btn').style.display='inline-block';
+  document.getElementById('retry-assessment-btn').style.display='none';
+}
+
+/* ══════════════════════ INIT ══════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  renderSpeaking();
+  renderWordBank();
+  renderReading();
+  renderVocabulary();
+  renderGrammar();
+  renderGrammarReview();
+  renderWriting();
+  renderListening();
+  renderCaseStudies();
+  renderAssessment();
+  setTimeout(()=>{
+    document.getElementById('progressFill').style.width='0%';
+    document.getElementById('progressPct').textContent='0%';
+  }, 600);
+});
+</script>
+</body>
+</html>

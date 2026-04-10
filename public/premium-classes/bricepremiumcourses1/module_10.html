@@ -1,0 +1,2398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 10: Budgeting and Resource Allocation — Business Management English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2e;
+    --navy-mid: #162540;
+    --navy-light: #1e3358;
+    --gold: #c8982a;
+    --gold-light: #e2b84a;
+    --cream: #f5f0e8;
+    --cream-dark: #ede6d8;
+    --white: #ffffff;
+    --text-light: #cdd5e0;
+    --text-muted: #8a9bb5;
+    --red: #c0392b;
+    --green: #27ae60;
+    --blue-accent: #3a7bd5;
+    --radius: 10px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.25);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--navy);
+    padding: 28px 0;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+    border-right: 1px solid var(--navy-light);
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 20px;
+    border-bottom: 1px solid var(--navy-light);
+  }
+  .sidebar-brand h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--white);
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+  .sidebar-brand p {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+  }
+  .level-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .sidebar-label {
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 20px 24px 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .nav-item:hover { background: var(--navy-light); }
+  .nav-item.active {
+    background: var(--navy-light);
+    border-left-color: var(--gold);
+  }
+  .nav-item-left { display: flex; align-items: center; gap: 10px; }
+  .nav-icon { font-size: 1rem; width: 20px; text-align: center; }
+  .nav-label { color: var(--text-light); font-size: 0.85rem; }
+  .nav-item.active .nav-label { color: var(--white); font-weight: 600; }
+  .nav-badge {
+    background: var(--navy-light);
+    color: var(--gold);
+    font-size: 0.65rem;
+    padding: 2px 7px;
+    border-radius: 20px;
+    border: 1px solid var(--gold);
+    font-weight: 600;
+  }
+
+  /* ── MAIN ── */
+  #main {
+    margin-left: 260px;
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1a3060 100%);
+    padding: 50px 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: 'M10';
+    position: absolute;
+    right: 40px;
+    bottom: -30px;
+    font-family: 'Playfair Display', serif;
+    font-size: 220px;
+    font-weight: 900;
+    color: rgba(200,152,42,0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .hero-module-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--text-light);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 6px 16px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: var(--white);
+    line-height: 1.1;
+    font-weight: 900;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-desc {
+    color: var(--text-light);
+    font-size: 1rem;
+    max-width: 600px;
+    margin-top: 14px;
+    line-height: 1.65;
+    font-family: 'Source Serif 4', serif;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: left; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); font-weight: 700; }
+  .stat-label { color: var(--text-muted); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar-wrap {
+    background: var(--white);
+    padding: 16px 60px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+  .progress-label { font-size: 0.8rem; color: var(--navy); font-weight: 600; white-space: nowrap; }
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: var(--cream-dark);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--navy), var(--gold));
+    border-radius: 10px;
+    width: 0%;
+    transition: width 0.6s ease;
+  }
+  .progress-pct { font-size: 0.85rem; font-weight: 700; color: var(--navy); min-width: 36px; text-align: right; }
+
+  /* ── CONTENT AREA ── */
+  .content-area {
+    padding: 40px 60px 80px;
+  }
+
+  /* ── SECTION HEADING ── */
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--navy);
+  }
+  .section-line {
+    width: 48px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+    margin-top: 8px;
+  }
+
+  /* ── TABS ── */
+  .section-panel { display: none; }
+  .section-panel.active { display: block; }
+
+  /* ── OVERVIEW ── */
+  .overview-intro {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    border-left: 4px solid var(--gold);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.97rem;
+    line-height: 1.8;
+    color: #2a3a50;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+  }
+  .overview-intro strong { color: var(--navy); }
+
+  .outcomes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .outcome-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border: 1px solid var(--cream-dark);
+  }
+  .outcome-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+  .outcome-text { font-size: 0.88rem; line-height: 1.55; color: #3a4a5c; }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .info-card {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 22px;
+    text-align: center;
+  }
+  .info-card .ic-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--gold); }
+  .info-card .ic-label { color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.2px; margin-top: 4px; }
+
+  /* ── SPEAKING ── */
+  .questions-list { display: flex; flex-direction: column; gap: 12px; }
+  .q-item {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 16px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border: 1px solid var(--cream-dark);
+    transition: border-color 0.2s;
+  }
+  .q-item:hover { border-color: var(--gold); }
+  .q-num {
+    background: var(--navy);
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 0.78rem;
+    min-width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .q-text { font-size: 0.92rem; line-height: 1.55; color: #2a3a50; padding-top: 4px; font-family: 'Source Serif 4', serif; }
+
+  /* ── WORD BANK ── */
+  .wordbank-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .word-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border: 1px solid var(--cream-dark);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .word-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+  .word-emoji { font-size: 1.6rem; margin-bottom: 8px; }
+  .word-term { font-weight: 700; font-size: 0.92rem; color: var(--navy); margin-bottom: 4px; }
+  .word-pos { font-size: 0.72rem; color: var(--gold); font-style: italic; margin-bottom: 6px; }
+  .word-def { font-size: 0.82rem; color: #4a5a6c; line-height: 1.5; font-family: 'Source Serif 4', serif; }
+
+  /* ── READING ── */
+  .reading-text {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .reading-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .reading-tag {
+    display: inline-block;
+    background: var(--navy);
+    color: var(--gold);
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .reading-text p {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.93rem;
+    line-height: 1.82;
+    color: #2d3d52;
+    margin-bottom: 14px;
+  }
+
+  .mcq-set { margin-top: 28px; }
+  .mcq-set h4 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .mcq-item { margin-bottom: 20px; }
+  .mcq-q { font-size: 0.92rem; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
+  .mcq-options { display: flex; flex-direction: column; gap: 7px; }
+  .mcq-opt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--cream-dark);
+    cursor: pointer;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+    background: var(--cream);
+  }
+  .mcq-opt:hover { border-color: var(--gold); background: #fffcf4; }
+  .mcq-opt.selected { border-color: var(--blue-accent); background: #eef4fd; }
+  .mcq-opt.correct { border-color: var(--green); background: #eafaf1; color: #1a5c35; }
+  .mcq-opt.wrong { border-color: var(--red); background: #fdf0ef; color: #7b1a14; }
+  .opt-letter {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .check-btn, .submit-btn {
+    margin-top: 14px;
+    background: var(--navy);
+    color: var(--gold);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .check-btn:hover, .submit-btn:hover { background: var(--navy-light); }
+  .feedback-msg { margin-top: 10px; font-size: 0.85rem; font-weight: 600; padding: 8px 14px; border-radius: 8px; }
+  .feedback-msg.correct { background: #eafaf1; color: var(--green); }
+  .feedback-msg.wrong { background: #fdf0ef; color: var(--red); }
+
+  /* ── VOCAB EXERCISES ── */
+  .ex-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .ex-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .ex-tag.mc { background: #e8f4fd; color: #2471a3; }
+  .ex-tag.gf { background: #eafaf1; color: #1a7840; }
+  .ex-tag.tf { background: #fef9e7; color: #b7770d; }
+  .ex-tag.dd { background: #f4ecf7; color: #6c3483; }
+  .ex-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--navy); margin-bottom: 6px; }
+  .ex-instructions { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
+
+  .gap-fill { font-size: 0.92rem; line-height: 2.2; color: #2a3a50; font-family: 'Source Serif 4', serif; }
+  .gap-fill input {
+    border: none;
+    border-bottom: 2px solid var(--gold);
+    background: transparent;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.92rem;
+    color: var(--navy);
+    width: 120px;
+    outline: none;
+    padding: 0 4px;
+    transition: border-color 0.2s;
+  }
+  .gap-fill input:focus { border-color: var(--blue-accent); }
+
+  .tf-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--cream-dark);
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    font-family: 'Source Serif 4', serif;
+  }
+  .tf-buttons { display: flex; gap: 8px; }
+  .tf-btn {
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--cream-dark);
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: var(--cream);
+    transition: all 0.2s;
+  }
+  .tf-btn.t:hover, .tf-btn.t.selected { background: var(--green); color: white; border-color: var(--green); }
+  .tf-btn.f:hover, .tf-btn.f.selected { background: var(--red); color: white; border-color: var(--red); }
+
+  /* Drag drop */
+  .drag-area { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+  .drag-item {
+    background: var(--navy);
+    color: var(--white);
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    cursor: grab;
+    user-select: none;
+    transition: opacity 0.2s;
+  }
+  .drag-item.dragging { opacity: 0.4; }
+  .drop-zones { display: flex; flex-direction: column; gap: 10px; }
+  .drop-zone {
+    border: 2px dashed var(--cream-dark);
+    border-radius: 8px;
+    padding: 12px 16px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    transition: border-color 0.2s;
+  }
+  .drop-zone.over { border-color: var(--gold); background: #fffcf4; }
+  .drop-zone .zone-label { font-weight: 600; color: var(--navy); min-width: 180px; }
+  .dropped-item {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* ── GRAMMAR ── */
+  .grammar-ref {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 26px 30px;
+    margin-bottom: 20px;
+    color: var(--text-light);
+  }
+  .grammar-ref h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+  .grammar-ref p { font-size: 0.88rem; line-height: 1.7; margin-bottom: 10px; }
+  .grammar-ref .example {
+    background: rgba(255,255,255,0.07);
+    border-left: 3px solid var(--gold);
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-style: italic;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.88rem;
+    margin-top: 8px;
+  }
+  .grammar-ref .form-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  .grammar-ref .form-table td, .grammar-ref .form-table th {
+    padding: 7px 12px;
+    text-align: left;
+    font-size: 0.83rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .grammar-ref .form-table th { color: var(--gold); font-weight: 600; }
+
+  /* ── WRITING ── */
+  .writing-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .writing-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .writing-prompt {
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 0.9rem;
+    font-family: 'Source Serif 4', serif;
+    color: #2d3d52;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    border-left: 3px solid var(--gold);
+  }
+  .writing-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; }
+  .writing-area {
+    width: 100%;
+    min-height: 160px;
+    border: 1px solid var(--cream-dark);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.92rem;
+    color: var(--navy);
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .writing-area:focus { border-color: var(--gold); }
+  .word-count { font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; text-align: right; }
+
+  /* ── LISTENING ── */
+  .listening-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+  }
+  .listening-header {
+    background: var(--navy);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .listening-header .lh-icon { font-size: 2rem; }
+  .listening-header h3 { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.05rem; }
+  .listening-header p { color: var(--text-muted); font-size: 0.8rem; margin-top: 2px; }
+  .lh-badges { display: flex; gap: 8px; margin-top: 8px; }
+  .lh-badge {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+  .lh-badge.level { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
+  .lh-badge.type { background: transparent; border: 1px solid rgba(255,255,255,0.25); color: var(--text-light); }
+  .lh-badge.focus { color: var(--text-muted); font-size: 0.62rem; padding: 0; background: none; border: none; margin-top: 1px; }
+
+  .audio-player {
+    background: #1a1a2e;
+    padding: 18px 24px;
+  }
+  .audio-title { color: var(--white); font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
+  .audio-subtitle { color: var(--text-muted); font-size: 0.78rem; margin-bottom: 12px; }
+  .audio-controls { display: flex; align-items: center; gap: 12px; }
+  .play-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #e74c3c;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .play-btn:hover { background: #c0392b; }
+  .play-btn.playing { background: #f39c12; }
+  .audio-timeline { flex: 1; }
+  .audio-progress {
+    width: 100%;
+    height: 4px;
+    background: #333;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    position: relative;
+  }
+  .audio-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), #e8b84a);
+    border-radius: 4px;
+    width: 0%;
+    pointer-events: none;
+    transition: width 0.1s linear;
+  }
+  .audio-time { color: var(--text-muted); font-size: 0.72rem; text-align: right; }
+  .speed-controls { display: flex; gap: 6px; margin-top: 10px; }
+  .speed-label { color: var(--text-muted); font-size: 0.75rem; margin-right: 2px; }
+  .speed-btn {
+    background: #2a2a3e;
+    color: var(--text-light);
+    border: 1px solid #3a3a5e;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .speed-btn.active { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 700; }
+  .audio-note { color: #5a5a7a; font-size: 0.72rem; margin-top: 8px; font-style: italic; }
+
+  .transcript-toggle {
+    padding: 12px 24px;
+    border-top: 1px solid var(--cream-dark);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--navy);
+    font-weight: 500;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .transcript-toggle:hover { background: var(--cream); }
+  .transcript-body {
+    display: none;
+    padding: 18px 24px;
+    background: var(--cream);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: #3a4a5c;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .transcript-body.open { display: block; }
+  .speaker { font-weight: 700; color: var(--navy); }
+
+  .listening-questions {
+    padding: 20px 24px 24px;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .inst-box {
+    background: var(--cream);
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 0.83rem;
+    color: #3a4a5c;
+    margin-bottom: 18px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  /* ── CASE STUDIES ── */
+  .case-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+  }
+  .case-header {
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    padding: 24px 28px;
+  }
+  .case-header .case-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .case-header h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--white);
+    font-size: 1.2rem;
+  }
+  .case-header p { color: var(--text-muted); font-size: 0.82rem; margin-top: 4px; }
+  .case-body { padding: 28px; }
+  .case-body p {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.92rem;
+    line-height: 1.82;
+    color: #2d3d52;
+    margin-bottom: 14px;
+  }
+  .case-body h4 { font-weight: 700; font-size: 0.9rem; color: var(--navy); margin: 18px 0 8px; }
+
+  /* ── FINAL ASSESSMENT ── */
+  .assessment-hero {
+    background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    color: var(--text-light);
+  }
+  .assessment-hero h3 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.2rem; margin-bottom: 8px; }
+  .assessment-rules { display: flex; gap: 24px; margin-top: 14px; flex-wrap: wrap; }
+  .rule-item { display: flex; align-items: center; gap: 8px; font-size: 0.83rem; }
+  .rule-icon { font-size: 1rem; }
+
+  .assessment-form { display: flex; flex-direction: column; gap: 20px; }
+  .assessment-q {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .assessment-q .q-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .q-badge {
+    background: var(--navy);
+    color: var(--gold);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .q-stem { font-size: 0.93rem; font-weight: 600; color: var(--navy); line-height: 1.5; }
+  .result-banner {
+    display: none;
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-top: 24px;
+    text-align: center;
+  }
+  .result-banner.pass { background: #eafaf1; border: 2px solid var(--green); }
+  .result-banner.fail { background: #fdf0ef; border: 2px solid var(--red); }
+  .result-banner h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 6px; }
+  .result-banner p { font-size: 0.9rem; color: #4a5a6c; }
+
+  /* ── UTILITIES ── */
+  .divider { border: none; border-top: 1px solid var(--cream-dark); margin: 28px 0; }
+  .score-display {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    background: var(--cream);
+    padding: 6px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 12px;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    #sidebar { display: none; }
+    #main { margin-left: 0; }
+    .hero { padding: 30px 24px; }
+    .content-area { padding: 24px; }
+    .hero h1 { font-size: 2rem; }
+    .outcomes-grid, .info-grid, .wordbank-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+    .progress-bar-wrap { padding: 14px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-brand">
+    <h2>Business Management English</h2>
+    <p>Professional Development</p>
+    <span class="level-badge">B1–B2 LEVEL</span>
+  </div>
+  <div class="sidebar-label">Module 10</div>
+  <div class="nav-item active" onclick="showSection('overview', this)">
+    <div class="nav-item-left"><span class="nav-icon">🏠</span><span class="nav-label">Overview</span></div>
+  </div>
+  <div class="nav-item" onclick="showSection('speaking', this)">
+    <div class="nav-item-left"><span class="nav-icon">💬</span><span class="nav-label">Speaking</span></div>
+    <span class="nav-badge">21Q</span>
+  </div>
+  <div class="nav-item" onclick="showSection('wordbank', this)">
+    <div class="nav-item-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div>
+    <span class="nav-badge">21</span>
+  </div>
+  <div class="nav-item" onclick="showSection('reading', this)">
+    <div class="nav-item-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div>
+    <span class="nav-badge">2T</span>
+  </div>
+  <div class="nav-item" onclick="showSection('vocabulary', this)">
+    <div class="nav-item-left"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span></div>
+    <span class="nav-badge">3Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('grammar', this)">
+    <div class="nav-item-left"><span class="nav-icon">🔧</span><span class="nav-label">Grammar</span></div>
+    <span class="nav-badge">3Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('grammar-review', this)">
+    <div class="nav-item-left"><span class="nav-icon">📋</span><span class="nav-label">Grammar Review</span></div>
+  </div>
+  <div class="nav-item" onclick="showSection('writing', this)">
+    <div class="nav-item-left"><span class="nav-icon">📝</span><span class="nav-label">Writing</span></div>
+    <span class="nav-badge">2Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('listening', this)">
+    <div class="nav-item-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div>
+    <span class="nav-badge">4Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('casestudies', this)">
+    <div class="nav-item-left"><span class="nav-icon">🏢</span><span class="nav-label">Case Studies</span></div>
+    <span class="nav-badge">2</span>
+  </div>
+  <div class="nav-item" onclick="showSection('assessment', this)">
+    <div class="nav-item-left"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span></div>
+    <span class="nav-badge">20Q</span>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-module-tag">📊 MODULE 10 · BUSINESS MANAGEMENT ENGLISH</div>
+    <h1>Budgeting and<br><span>Resource Allocation</span></h1>
+    <p class="hero-desc">Master the language of financial planning — from preparing annual budgets to justifying resource decisions using precise professional English.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Grammar Ex.</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Vocabulary Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar-wrap">
+    <span class="progress-label">Module Progress</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-area">
+
+    <!-- ══════════════ OVERVIEW ══════════════ -->
+    <div id="section-overview" class="section-panel active">
+      <div class="section-heading"><div><h2>Module Overview</h2><div class="section-line"></div></div></div>
+
+      <div class="overview-intro">
+        <strong>Welcome to Module 10: Budgeting and Resource Allocation.</strong> In this module you will explore the essential language professionals use when planning, defending, and adjusting financial budgets in a business environment. You will learn to discuss cost allocation strategies, justify spending decisions in meetings, write budget proposals, and interpret financial data accurately. By the end of this module, you will be able to participate confidently in budget reviews and resource planning discussions using accurate grammar and professional vocabulary.
+      </div>
+
+      <div class="section-heading"><div><h2>Learning Outcomes</h2><div class="section-line"></div></div></div>
+      <div class="outcomes-grid">
+        <div class="outcome-card"><span class="outcome-icon">💰</span><div class="outcome-text">Discuss different types of budgets and explain how resources are allocated across departments</div></div>
+        <div class="outcome-card"><span class="outcome-icon">📊</span><div class="outcome-text">Use financial vocabulary accurately to describe cost variances, forecasts, and budget cycles</div></div>
+        <div class="outcome-card"><span class="outcome-icon">🔗</span><div class="outcome-text">Employ participle clauses and cause/result linkers to explain financial decisions professionally</div></div>
+        <div class="outcome-card"><span class="outcome-icon">📝</span><div class="outcome-text">Write a formal budget proposal and a resource allocation justification memo</div></div>
+        <div class="outcome-card"><span class="outcome-icon">🎧</span><div class="outcome-text">Understand budget-related discussions, presentations, and negotiations in spoken English</div></div>
+        <div class="outcome-card"><span class="outcome-icon">🏢</span><div class="outcome-text">Analyse real-world case studies involving budget constraints and strategic resource decisions</div></div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card"><div class="ic-num">B1–B2</div><div class="ic-label">CEF Level</div></div>
+        <div class="info-card"><div class="ic-num">6–8h</div><div class="ic-label">Study Time</div></div>
+        <div class="info-card"><div class="ic-num">70%</div><div class="ic-label">Pass Mark</div></div>
+      </div>
+    </div>
+
+    <!-- ══════════════ SPEAKING ══════════════ -->
+    <div id="section-speaking" class="section-panel">
+      <div class="section-heading"><div><h2>Speaking Activities</h2><div class="section-line"></div></div></div>
+      <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:20px;">Discuss these questions with a partner or prepare a 2–3 minute spoken response to each.</p>
+      <div class="questions-list">
+        <div class="q-item"><div class="q-num">1</div><div class="q-text">What is a company budget, and why is it important for businesses to create one each year?</div></div>
+        <div class="q-item"><div class="q-num">2</div><div class="q-text">How do you think a company decides how much money to allocate to each department?</div></div>
+        <div class="q-item"><div class="q-num">3</div><div class="q-text">Have you ever had to manage a personal or professional budget? What challenges did you face?</div></div>
+        <div class="q-item"><div class="q-num">4</div><div class="q-text">What do you think is the difference between a fixed budget and a flexible budget?</div></div>
+        <div class="q-item"><div class="q-num">5</div><div class="q-text">Why might a company go over budget? What consequences could this have for the business?</div></div>
+        <div class="q-item"><div class="q-num">6</div><div class="q-text">In your opinion, which departments in a company typically need the largest budgets? Why?</div></div>
+        <div class="q-item"><div class="q-num">7</div><div class="q-text">How do economic conditions such as inflation or recession affect a company's budgeting decisions?</div></div>
+        <div class="q-item"><div class="q-num">8</div><div class="q-text">What is zero-based budgeting? Can you think of any advantages or disadvantages of this approach?</div></div>
+        <div class="q-item"><div class="q-num">9</div><div class="q-text">Describe a situation where a manager might need to cut costs mid-year. How would they communicate this to staff?</div></div>
+        <div class="q-item"><div class="q-num">10</div><div class="q-text">How important is transparency in the budgeting process? Should all employees know how the budget is distributed?</div></div>
+        <div class="q-item"><div class="q-num">11</div><div class="q-text">What is the difference between capital expenditure and operational expenditure? Can you give examples of each?</div></div>
+        <div class="q-item"><div class="q-num">12</div><div class="q-text">How do companies prioritise which projects receive funding when resources are limited?</div></div>
+        <div class="q-item"><div class="q-num">13</div><div class="q-text">What role does a financial forecast play in helping a company plan its budget for the following year?</div></div>
+        <div class="q-item"><div class="q-num">14</div><div class="q-text">How can technology and data analysis improve the accuracy of budget planning in modern organisations?</div></div>
+        <div class="q-item"><div class="q-num">15</div><div class="q-text">Discuss the phrase "doing more with less." How does it apply to resource allocation in a competitive market?</div></div>
+        <div class="q-item"><div class="q-num">16</div><div class="q-text">What is a budget variance, and how should managers respond when actual spending differs significantly from the budget?</div></div>
+        <div class="q-item"><div class="q-num">17</div><div class="q-text">How might a startup company's approach to budgeting differ from that of a large multinational corporation?</div></div>
+        <div class="q-item"><div class="q-num">18</div><div class="q-text">In what ways can poor budget management lead to business failure? Give specific examples if possible.</div></div>
+        <div class="q-item"><div class="q-num">19</div><div class="q-text">How do human resources and talent investment fit into a company's overall resource allocation strategy?</div></div>
+        <div class="q-item"><div class="q-num">20</div><div class="q-text">What ethical considerations should a company take into account when deciding how to allocate its budget?</div></div>
+        <div class="q-item"><div class="q-num">21</div><div class="q-text">If you were the CFO of a company, what would be your top three priorities when setting next year's budget? Justify your choices.</div></div>
+      </div>
+    </div>
+
+    <!-- ══════════════ WORD BANK ══════════════ -->
+    <div id="section-wordbank" class="section-panel">
+      <div class="section-heading"><div><h2>Word Bank</h2><div class="section-line"></div></div></div>
+      <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:24px;">21 essential terms for budgeting and resource allocation. Study each definition and example.</p>
+      <div class="wordbank-grid">
+        <div class="word-card"><div class="word-emoji">💼</div><div class="word-term">Budget</div><div class="word-pos">noun</div><div class="word-def">A financial plan that estimates income and expenditure over a specific period, used to guide spending decisions.</div></div>
+        <div class="word-card"><div class="word-emoji">📐</div><div class="word-term">Resource Allocation</div><div class="word-pos">noun phrase</div><div class="word-def">The process of distributing available assets — money, staff, equipment — among competing needs or projects.</div></div>
+        <div class="word-card"><div class="word-emoji">🔢</div><div class="word-term">Variance</div><div class="word-pos">noun</div><div class="word-def">The difference between the budgeted amount and the actual amount spent or earned; can be favourable or adverse.</div></div>
+        <div class="word-card"><div class="word-emoji">📉</div><div class="word-term">Cost Overrun</div><div class="word-pos">noun</div><div class="word-def">When actual costs exceed the planned budget, often requiring corrective action or additional funding approval.</div></div>
+        <div class="word-card"><div class="word-emoji">🏗️</div><div class="word-term">Capital Expenditure (CapEx)</div><div class="word-pos">noun</div><div class="word-def">Spending on long-term assets such as buildings, machinery, or technology that will benefit the company over time.</div></div>
+        <div class="word-card"><div class="word-emoji">⚙️</div><div class="word-term">Operating Expenditure (OpEx)</div><div class="word-pos">noun</div><div class="word-def">Day-to-day costs of running the business, such as salaries, utilities, and office supplies.</div></div>
+        <div class="word-card"><div class="word-emoji">🔄</div><div class="word-term">Zero-Based Budgeting</div><div class="word-pos">noun phrase</div><div class="word-def">A budgeting method where every expense must be justified from zero, rather than being based on the previous year's figures.</div></div>
+        <div class="word-card"><div class="word-emoji">📊</div><div class="word-term">Financial Forecast</div><div class="word-pos">noun phrase</div><div class="word-def">A projection of future financial performance based on current trends, market conditions, and historical data.</div></div>
+        <div class="word-card"><div class="word-emoji">🎯</div><div class="word-term">Budget Target</div><div class="word-pos">noun phrase</div><div class="word-def">A specific financial goal or limit set for a team, department, or project within a defined period.</div></div>
+        <div class="word-card"><div class="word-emoji">✂️</div><div class="word-term">Cost Cutting</div><div class="word-pos">noun / gerund</div><div class="word-def">The process of reducing spending to improve profitability or manage limited resources during difficult periods.</div></div>
+        <div class="word-card"><div class="word-emoji">📦</div><div class="word-term">Contingency Fund</div><div class="word-pos">noun phrase</div><div class="word-def">A reserve of money set aside to cover unexpected costs or emergencies that arise during a project or fiscal year.</div></div>
+        <div class="word-card"><div class="word-emoji">📅</div><div class="word-term">Fiscal Year</div><div class="word-pos">noun phrase</div><div class="word-def">A twelve-month period used for accounting and financial reporting, which may or may not align with the calendar year.</div></div>
+        <div class="word-card"><div class="word-emoji">🧾</div><div class="word-term">Line Item</div><div class="word-pos">noun</div><div class="word-def">A single entry in a budget representing a specific category of income or expenditure, such as "staff training" or "marketing."</div></div>
+        <div class="word-card"><div class="word-emoji">🏦</div><div class="word-term">Cash Flow</div><div class="word-pos">noun</div><div class="word-def">The movement of money into and out of a business; positive cash flow means more money is coming in than going out.</div></div>
+        <div class="word-card"><div class="word-emoji">📈</div><div class="word-term">Return on Investment (ROI)</div><div class="word-pos">noun phrase</div><div class="word-def">A measure of the profitability of an investment, calculated as the gain relative to the cost of the investment.</div></div>
+        <div class="word-card"><div class="word-emoji">⚖️</div><div class="word-term">Cost-Benefit Analysis</div><div class="word-pos">noun phrase</div><div class="word-def">A systematic approach to comparing the costs of a decision against the expected benefits to determine its value.</div></div>
+        <div class="word-card"><div class="word-emoji">🔍</div><div class="word-term">Budget Review</div><div class="word-pos">noun phrase</div><div class="word-def">A periodic assessment of a budget to compare actual performance with planned figures and identify necessary adjustments.</div></div>
+        <div class="word-card"><div class="word-emoji">🧩</div><div class="word-term">Reallocation</div><div class="word-pos">noun</div><div class="word-def">The act of moving funds or resources from one area to another in response to changing priorities or performance.</div></div>
+        <div class="word-card"><div class="word-emoji">📌</div><div class="word-term">Overhead Costs</div><div class="word-pos">noun phrase</div><div class="word-def">Indirect business costs that are not linked to a specific product or service, such as rent, insurance, and management salaries.</div></div>
+        <div class="word-card"><div class="word-emoji">🌐</div><div class="word-term">Strategic Investment</div><div class="word-pos">noun phrase</div><div class="word-def">Spending decisions aligned with long-term organisational goals, aimed at generating sustainable growth or competitive advantage.</div></div>
+        <div class="word-card"><div class="word-emoji">📋</div><div class="word-term">Budget Proposal</div><div class="word-pos">noun phrase</div><div class="word-def">A formal document submitted to management or stakeholders requesting funds and justifying planned expenditures for a project or period.</div></div>
+      </div>
+    </div>
+
+    <!-- ══════════════ READING ══════════════ -->
+    <div id="section-reading" class="section-panel">
+      <div class="section-heading"><div><h2>Reading</h2><div class="section-line"></div></div></div>
+
+      <!-- TEXT 1 -->
+      <div class="reading-text">
+        <h3>Text 1: The Art of Corporate Budgeting</h3>
+        <span class="reading-tag">📖 B1–B2 · Informative Article</span>
+        <p>Every successful organisation, regardless of its size or industry, depends on a well-structured budget to function effectively. A corporate budget is far more than a simple list of numbers — it is a strategic document that reflects the company's priorities, communicates expectations to all departments, and provides a framework for decision-making throughout the year. When managers understand how the budgeting process works, they are better equipped to justify their spending requests, respond to financial pressures, and contribute meaningfully to the company's overall financial health.</p>
+        <p>The most common approach to budgeting is known as the incremental method, in which the previous year's budget serves as the starting point and small adjustments are made based on projected changes in costs or revenue. While this approach is practical and saves time, it has a significant weakness: it tends to preserve inefficiencies by simply carrying forward outdated allocations without questioning whether those resources are truly needed. As an alternative, zero-based budgeting (ZBB) requires managers to justify every single line item from scratch, regardless of what was approved in the past. Although ZBB demands considerably more time and effort, it produces a leaner, more strategically aligned budget by forcing departments to clearly demonstrate the value of their activities.</p>
+        <p>Beyond the method used, effective budgeting also requires strong communication between departments and senior leadership. Managers who receive insufficient funding must be able to articulate their needs clearly and make a compelling business case for additional resources. Equally, finance teams must be transparent about constraints so that departments can plan realistically. When the budgeting process is collaborative and well-communicated, the resulting budget is more likely to be accepted, respected, and followed — ultimately leading to more consistent financial performance across the organisation.</p>
+
+        <div class="mcq-set">
+          <h4>📝 Comprehension Questions — Choose the best answer (A, B, C, or D)</h4>
+          <div id="r1-mcqs">
+            <div class="mcq-item" data-correct="B">
+              <div class="mcq-q">1. According to the text, what is the primary purpose of a corporate budget?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> To record past financial transactions</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> To reflect priorities and guide decision-making</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> To reduce the number of employees in a company</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> To communicate salary levels to all departments</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="A">
+              <div class="mcq-q">2. What is the main advantage of the incremental budgeting method?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> It is practical and saves time</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> It eliminates all inefficiencies</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> It requires departments to justify every expense</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> It is more strategically aligned than zero-based budgeting</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="C">
+              <div class="mcq-q">3. What is a key weakness of incremental budgeting mentioned in the text?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> It takes too much time to prepare</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> It does not include all departments</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> It can preserve inefficiencies from the previous year</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> It is not suitable for large companies</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="D">
+              <div class="mcq-q">4. What does zero-based budgeting (ZBB) require managers to do?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Copy the previous year's budget exactly</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Reduce spending by a fixed percentage each year</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Focus only on capital expenditure</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Justify every line item from scratch</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="B">
+              <div class="mcq-q">5. According to the third paragraph, what must managers do when they receive insufficient funding?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Immediately request a transfer from another department</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Clearly articulate their needs and make a compelling business case</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Accept the constraints without question</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Reduce their team size to match the available funding</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="A">
+              <div class="mcq-q">6. The word "leaner" in the second paragraph most likely means:</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> More efficient with fewer unnecessary costs</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> More expensive and detailed</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> More flexible and adaptable</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> More accessible to junior staff</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="C">
+              <div class="mcq-q">7. Why does the text recommend that finance teams be transparent about budget constraints?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> To prevent departments from submitting budget requests</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> To reduce the workload for senior management</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> So that departments can plan realistically</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> To eliminate the need for budget reviews</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="D">
+              <div class="mcq-q">8. What does the text suggest is the result of a collaborative budgeting process?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Lower staff turnover and better morale</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> A reduction in capital expenditure</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> More complex financial reporting procedures</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> A budget that is more likely to be accepted and followed</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="B">
+              <div class="mcq-q">9. The text presents zero-based budgeting as:</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> The only effective budgeting method for large companies</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> More demanding but more strategically aligned than incremental budgeting</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> A method that is no longer used in modern organisations</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> An approach that is ideal for small companies but not large ones</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="A">
+              <div class="mcq-q">10. What is the main idea of the text as a whole?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Effective budgeting combines the right method with strong communication</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Zero-based budgeting is always superior to the incremental method</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Finance teams, not managers, should control the entire budget process</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Companies should reduce their budgets every year to become more efficient</div>
+              </div>
+            </div>
+          </div>
+          <button class="check-btn" onclick="checkReading('r1-mcqs', this)">Check Answers</button>
+          <div class="feedback-msg" id="r1-feedback" style="display:none"></div>
+        </div>
+      </div>
+
+      <!-- TEXT 2 -->
+      <div class="reading-text">
+        <h3>Text 2: Strategic Resource Allocation — Balancing Short-Term Needs and Long-Term Goals</h3>
+        <span class="reading-tag">📖 B2 · Business Analysis</span>
+        <p>Resource allocation is one of the most complex and consequential tasks that business leaders face. Unlike budgeting, which focuses primarily on financial figures, resource allocation involves making decisions about people, time, technology, and physical assets — all of which have a direct impact on a company's ability to achieve its strategic objectives. A company that allocates its resources effectively can gain a significant competitive advantage, while poor allocation decisions can lead to bottlenecks, missed opportunities, and ultimately, business failure.</p>
+        <p>One of the most difficult aspects of resource allocation is balancing short-term operational demands with long-term strategic investments. Managers are often under pressure to deliver immediate results, which can lead to underinvestment in areas that generate returns over a longer time horizon, such as research and development, staff training, or infrastructure upgrades. To avoid this trap, organisations increasingly use formal frameworks — such as portfolio management or the balanced scorecard — to ensure that resources are allocated not only to current priorities but also to the initiatives that will drive future growth.</p>
+        <p>Effective resource allocation also requires robust data and clear decision-making criteria. Without reliable information about current resource utilisation, project performance, and market conditions, managers are forced to make allocation decisions based on intuition or internal politics rather than evidence. This is why many organisations now invest in resource management software that provides real-time visibility into how assets are being used across the business. When allocation decisions are transparent, data-driven, and aligned with strategic priorities, organisations are far better positioned to adapt quickly to change and maintain performance even under pressure.</p>
+
+        <div class="mcq-set">
+          <h4>📝 Comprehension Questions — Choose the best answer (A, B, C, or D)</h4>
+          <div id="r2-mcqs">
+            <div class="mcq-item" data-correct="C">
+              <div class="mcq-q">1. According to the text, how is resource allocation different from budgeting?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Resource allocation only concerns financial planning</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Budgeting is more strategic than resource allocation</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Resource allocation also involves people, time, and physical assets</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Budgeting is used for long-term planning while resource allocation is short-term</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="A">
+              <div class="mcq-q">2. What competitive advantage does effective resource allocation provide?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> The ability to achieve strategic objectives more successfully</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Lower employee salaries and reduced training costs</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Elimination of all financial risk in the organisation</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> A larger marketing budget compared to competitors</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="D">
+              <div class="mcq-q">3. What does the text identify as a common problem when managers face pressure for short-term results?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> They tend to overspend on research and development</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> They fail to communicate with their team effectively</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> They increase overhead costs unnecessarily</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> They underinvest in long-term areas such as R&D and staff training</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="B">
+              <div class="mcq-q">4. Which of the following frameworks is mentioned in the text as helping to balance short-term and long-term allocation?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> SWOT analysis and Gantt charts</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Portfolio management and the balanced scorecard</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Zero-based budgeting and cash flow modelling</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Cost-benefit analysis and risk matrices</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="A">
+              <div class="mcq-q">5. According to the third paragraph, what happens when managers lack reliable data for resource allocation?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> They may rely on intuition or internal politics</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> They always consult external consultants for advice</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> They reduce the size of their department</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> They automatically apply zero-based budgeting principles</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="C">
+              <div class="mcq-q">6. What is the purpose of resource management software mentioned in the text?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> To replace the role of financial managers in organisations</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> To automatically generate annual budgets</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> To provide real-time visibility into how assets are used</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> To track employee performance and attendance</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="D">
+              <div class="mcq-q">7. The phrase "time horizon" in the second paragraph refers to:</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> The deadline for submitting a budget proposal</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> The distance between two offices in different countries</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> The point at which a company breaks even</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> The future period over which an investment is expected to produce returns</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="B">
+              <div class="mcq-q">8. What does the text say about organisations that make data-driven, transparent allocation decisions?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> They are less likely to need external investment</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> They are better positioned to adapt and maintain performance under pressure</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> They can eliminate all bottlenecks and missed opportunities</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> They no longer need to conduct budget reviews</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="A">
+              <div class="mcq-q">9. The word "bottlenecks" in the first paragraph most likely refers to:</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Points of congestion or inefficiency that slow down progress</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Specific financial departments within an organisation</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Temporary increases in production output</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> External competitors who limit market growth</div>
+              </div>
+            </div>
+            <div class="mcq-item" data-correct="C">
+              <div class="mcq-q">10. Which title best summarises the main argument of the text?</div>
+              <div class="mcq-options">
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Why Financial Budgets Are More Important Than Resource Plans</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> How Technology Is Replacing Human Decision-Making in Business</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> The Importance of Data and Strategy in Effective Resource Allocation</div>
+                <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Why Companies Should Focus Only on Short-Term Financial Results</div>
+              </div>
+            </div>
+          </div>
+          <button class="check-btn" onclick="checkReading('r2-mcqs', this)">Check Answers</button>
+          <div class="feedback-msg" id="r2-feedback" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ VOCABULARY ══════════════ -->
+    <div id="section-vocabulary" class="section-panel">
+      <div class="section-heading"><div><h2>Vocabulary Exercises</h2><div class="section-line"></div></div></div>
+
+      <!-- Ex 1: Multiple Choice -->
+      <div class="ex-card">
+        <span class="ex-tag mc">Multiple Choice</span>
+        <div class="ex-title">Exercise 1: Choose the Correct Word</div>
+        <div class="ex-instructions">Choose the word or phrase (A, B, C, or D) that best completes each sentence.</div>
+        <div id="v-ex1">
+          <div class="mcq-item" data-correct="B">
+            <div class="mcq-q">1. The finance team discovered a significant _______ between projected and actual costs this quarter.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> overhead</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> variance</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> contingency</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> reallocation</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="A">
+            <div class="mcq-q">2. The new software system represents a major _______ expenditure that will be depreciated over five years.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> capital</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> operational</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> contingency</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> fiscal</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="C">
+            <div class="mcq-q">3. We always set aside a _______ fund to cover unexpected expenses during large projects.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> zero-based</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> line item</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> contingency</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> balanced</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="D">
+            <div class="mcq-q">4. The project experienced a serious cost _______ after unforeseen delays increased labour expenses by 30%.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> allocation</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> forecast</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> variance</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> overrun</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="B">
+            <div class="mcq-q">5. The board requested a full _______ analysis before approving the new manufacturing plant.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> zero-based</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> cost-benefit</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> cash flow</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> line item</div>
+            </div>
+          </div>
+        </div>
+        <button class="check-btn" onclick="checkReading('v-ex1', this)">Check Answers</button>
+        <div class="feedback-msg" id="v-ex1-feedback" style="display:none"></div>
+      </div>
+
+      <!-- Ex 2: Gap Fill -->
+      <div class="ex-card">
+        <span class="ex-tag gf">Gap-Fill</span>
+        <div class="ex-title">Exercise 2: Complete the Sentences</div>
+        <div class="ex-instructions">Fill in the blanks using the words from the box: <strong>reallocation / overhead / fiscal / ROI / forecast / zero-based</strong></div>
+        <div class="gap-fill">
+          <p>1. Our company's ________ year ends on 31 March, which differs from the calendar year.
+          <input class="gf-input" data-answer="fiscal" placeholder="____________"></p>
+          <p>2. The CFO prepared a detailed ________ for next year based on current sales trends and market conditions.
+          <input class="gf-input" data-answer="forecast" placeholder="____________"></p>
+          <p>3. High ________ costs, such as rent and utilities, were identified as a major drain on profitability.
+          <input class="gf-input" data-answer="overhead" placeholder="____________"></p>
+          <p>4. Following the poor performance of the northern division, the board approved a ________ of funds to the southern operations.
+          <input class="gf-input" data-answer="reallocation" placeholder="____________"></p>
+          <p>5. Investors carefully examined the projected ________ before committing capital to the new product line.
+          <input class="gf-input" data-answer="ROI" placeholder="____________"></p>
+          <p>6. The new director introduced ________ budgeting, requiring every department to justify its expenses from scratch.
+          <input class="gf-input" data-answer="zero-based" placeholder="____________"></p>
+        </div>
+        <button class="check-btn" onclick="checkGapFill(this)">Check Answers</button>
+        <div class="feedback-msg" id="gf-feedback" style="display:none"></div>
+      </div>
+
+      <!-- Ex 3: True/False -->
+      <div class="ex-card">
+        <span class="ex-tag tf">True / False</span>
+        <div class="ex-title">Exercise 3: True or False?</div>
+        <div class="ex-instructions">Read each statement and decide if it is True (T) or False (F) based on the definitions in the Word Bank.</div>
+        <div id="tf-items">
+          <div class="tf-item" data-correct="T"><span>A budget variance can be either favourable or adverse.</span><div class="tf-buttons"><button class="tf-btn t" onclick="selectTF(this,'T')">T</button><button class="tf-btn f" onclick="selectTF(this,'F')">F</button></div></div>
+          <div class="tf-item" data-correct="F"><span>Capital expenditure refers only to day-to-day operational costs.</span><div class="tf-buttons"><button class="tf-btn t" onclick="selectTF(this,'T')">T</button><button class="tf-btn f" onclick="selectTF(this,'F')">F</button></div></div>
+          <div class="tf-item" data-correct="T"><span>A contingency fund is reserved for unexpected or emergency costs.</span><div class="tf-buttons"><button class="tf-btn t" onclick="selectTF(this,'T')">T</button><button class="tf-btn f" onclick="selectTF(this,'F')">F</button></div></div>
+          <div class="tf-item" data-correct="F"><span>A fiscal year always runs from 1 January to 31 December.</span><div class="tf-buttons"><button class="tf-btn t" onclick="selectTF(this,'T')">T</button><button class="tf-btn f" onclick="selectTF(this,'F')">F</button></div></div>
+          <div class="tf-item" data-correct="T"><span>Positive cash flow means more money is coming into the business than going out.</span><div class="tf-buttons"><button class="tf-btn t" onclick="selectTF(this,'T')">T</button><button class="tf-btn f" onclick="selectTF(this,'F')">F</button></div></div>
+          <div class="tf-item" data-correct="F"><span>Zero-based budgeting is quicker and easier to prepare than incremental budgeting.</span><div class="tf-buttons"><button class="tf-btn t" onclick="selectTF(this,'T')">T</button><button class="tf-btn f" onclick="selectTF(this,'F')">F</button></div></div>
+        </div>
+        <button class="check-btn" onclick="checkTF(this)">Check Answers</button>
+        <div class="feedback-msg" id="tf-feedback" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════ GRAMMAR ══════════════ -->
+    <div id="section-grammar" class="section-panel">
+      <div class="section-heading"><div><h2>Grammar Exercises</h2><div class="section-line"></div></div></div>
+
+      <!-- Ex 1: Participle Clauses -->
+      <div class="ex-card">
+        <span class="ex-tag mc">Participle Clauses</span>
+        <div class="ex-title">Exercise 1: Rewrite with Participle Clauses</div>
+        <div class="ex-instructions">Choose the sentence (A or B) that correctly uses a participle clause to combine the two ideas.</div>
+        <div id="g-ex1">
+          <div class="mcq-item" data-correct="B">
+            <div class="mcq-q">1. Base: "The team reviewed the budget. They found several cost overruns."</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> The team reviewed the budget, so they found several cost overruns.</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Reviewing the budget, the team found several cost overruns.</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="A">
+            <div class="mcq-q">2. Base: "The company had exceeded its budget. It requested emergency funding."</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Having exceeded its budget, the company requested emergency funding.</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> The company was exceeded its budget and requested emergency funding.</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="B">
+            <div class="mcq-q">3. Base: "The resources were allocated efficiently. This improved project outcomes."</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> The resources were being allocated efficiently, so this improved project outcomes.</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Allocated efficiently, the resources improved project outcomes.</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="A">
+            <div class="mcq-q">4. Base: "She prepared the quarterly forecast. She noticed a downward trend in revenue."</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Preparing the quarterly forecast, she noticed a downward trend in revenue.</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> She prepared the quarterly forecast, noticing in revenue a downward trend.</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="B">
+            <div class="mcq-q">5. Base: "The board had approved the new investment strategy. It communicated the decision to all departments."</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> The board has approved the strategy and communicated the decision to all.</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Having approved the new investment strategy, the board communicated the decision to all departments.</div>
+            </div>
+          </div>
+        </div>
+        <button class="check-btn" onclick="checkReading('g-ex1', this)">Check Answers</button>
+        <div class="feedback-msg" id="g-ex1-feedback" style="display:none"></div>
+      </div>
+
+      <!-- Ex 2: Cause/Result Linkers -->
+      <div class="ex-card">
+        <span class="ex-tag gf">Cause / Result Linkers</span>
+        <div class="ex-title">Exercise 2: Complete with the Correct Linker</div>
+        <div class="ex-instructions">Choose the most appropriate linker: <em>as a result / due to / consequently / therefore / owing to</em></div>
+        <div id="g-ex2">
+          <div class="mcq-item" data-correct="A">
+            <div class="mcq-q">1. ________ rising inflation, the procurement team had to revise all supplier contracts.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Due to</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> As a result</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Consequently</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Therefore</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="C">
+            <div class="mcq-q">2. The company failed to plan for unexpected costs; ________, the project ran 25% over budget.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> due to</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> owing to</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> consequently</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> although</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="B">
+            <div class="mcq-q">3. Sales dropped significantly in Q3. ________, the marketing budget was reduced by 40%.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Owing to</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> As a result</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Due to</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Despite</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="D">
+            <div class="mcq-q">4. The data clearly shows inefficient spending in the IT division; ________, a full audit has been requested.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> as a result</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> due to</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> owing to</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> therefore</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="A">
+            <div class="mcq-q">5. ________ the successful cost-cutting measures, the company returned to profitability within two quarters.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Owing to</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Therefore</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> As a result</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Consequently</div>
+            </div>
+          </div>
+        </div>
+        <button class="check-btn" onclick="checkReading('g-ex2', this)">Check Answers</button>
+        <div class="feedback-msg" id="g-ex2-feedback" style="display:none"></div>
+      </div>
+
+      <!-- Ex 3: Phrasal Verbs -->
+      <div class="ex-card">
+        <span class="ex-tag tf">Phrasal Verbs</span>
+        <div class="ex-title">Exercise 3: Phrasal Verbs in Context</div>
+        <div class="ex-instructions">Choose the correct phrasal verb to complete each sentence: <em>cut back on / draw up / run out of / carry over / sign off on / look into</em></div>
+        <div id="g-ex3">
+          <div class="mcq-item" data-correct="B">
+            <div class="mcq-q">1. We need to ________ a new budget proposal before the board meeting next Friday.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> look into</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> draw up</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> sign off on</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> carry over</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="D">
+            <div class="mcq-q">2. Any unspent funds at the end of Q4 will ________ to the following year's budget.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> run out of</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> cut back on</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> draw up</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> carry over</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="A">
+            <div class="mcq-q">3. The finance director has asked us to ________ the discrepancy in last month's expense report.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> look into</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> run out of</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> carry over</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> cut back on</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="C">
+            <div class="mcq-q">4. The CEO will need to ________ the final budget before it can be distributed to department heads.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> draw up</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> look into</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> sign off on</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> carry over</div>
+            </div>
+          </div>
+          <div class="mcq-item" data-correct="B">
+            <div class="mcq-q">5. We have had to ________ non-essential expenses to stay within the revised budget limits.</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> look into</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> cut back on</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> draw up</div>
+              <div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> sign off on</div>
+            </div>
+          </div>
+        </div>
+        <button class="check-btn" onclick="checkReading('g-ex3', this)">Check Answers</button>
+        <div class="feedback-msg" id="g-ex3-feedback" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════ GRAMMAR REVIEW ══════════════ -->
+    <div id="section-grammar-review" class="section-panel">
+      <div class="section-heading"><div><h2>Grammar Review</h2><div class="section-line"></div></div></div>
+
+      <div class="grammar-ref">
+        <h3>📌 Reference Box 1: Participle Clauses</h3>
+        <p>Participle clauses are non-finite clauses that use a participle (present, past, or perfect) instead of a full verb with a subject. They are commonly used in formal and professional writing to combine two related ideas concisely.</p>
+        <table class="form-table">
+          <tr><th>Type</th><th>Form</th><th>Use</th></tr>
+          <tr><td>Present participle</td><td>-ing</td><td>Simultaneous actions or cause-effect (same subject)</td></tr>
+          <tr><td>Past participle</td><td>-ed / irregular</td><td>Passive meaning or completed action affecting the subject</td></tr>
+          <tr><td>Perfect participle</td><td>Having + past participle</td><td>Action completed before the main clause action</td></tr>
+        </table>
+        <div class="example">Present: <strong>Reviewing the financial data,</strong> the CFO identified several discrepancies. (= While she was reviewing...)</div>
+        <div class="example">Past: <strong>Approved by the board,</strong> the new budget was distributed to all departments. (= After it was approved...)</div>
+        <div class="example">Perfect: <strong>Having exceeded the annual forecast,</strong> the sales team received a performance bonus. (= Because they had exceeded...)</div>
+        <p style="margin-top:12px;">⚠️ <strong>Key rule:</strong> The subject of the participle clause must be the same as the subject of the main clause. Dangling participles are a common error.</p>
+        <div class="example">❌ Reviewing the budget, the discrepancy was found. (Subject mismatch — who was reviewing?)</div>
+        <div class="example">✅ Reviewing the budget, the team found the discrepancy.</div>
+      </div>
+
+      <div class="grammar-ref">
+        <h3>📌 Reference Box 2: Cause and Result Linkers</h3>
+        <p>Cause and result linkers are used to explain relationships between financial events and their consequences. Using them correctly demonstrates precision and logical thinking in professional communication.</p>
+        <table class="form-table">
+          <tr><th>Linker</th><th>Function</th><th>Position / Syntax</th></tr>
+          <tr><td>due to / owing to</td><td>Introduces a noun phrase cause</td><td>Typically at the start or mid-sentence: <em>Due to + noun phrase</em></td></tr>
+          <tr><td>because of</td><td>Introduces a noun phrase cause (informal)</td><td>Mid or start: <em>Because of + noun phrase</em></td></tr>
+          <tr><td>as a result (of)</td><td>Introduces a result or consequence</td><td>Start of sentence or clause: <em>As a result, S + V</em></td></tr>
+          <tr><td>therefore</td><td>Logical conclusion or decision</td><td>After semicolon or new sentence: <em>; therefore, S + V</em></td></tr>
+          <tr><td>consequently</td><td>Formal result; stronger logical chain</td><td>After semicolon or start: <em>Consequently, S + V</em></td></tr>
+        </table>
+        <div class="example"><strong>Due to</strong> budget constraints, the expansion plan was postponed until Q3.</div>
+        <div class="example">Revenue declined sharply; <strong>consequently,</strong> the board authorised an emergency cost review.</div>
+        <div class="example"><strong>Owing to</strong> the team's careful financial management, the company remained within its annual allocation.</div>
+        <p style="margin-top:12px;">⚠️ Note: <em>Due to</em> and <em>owing to</em> must be followed by a noun or noun phrase, not a full clause. Use <em>because</em> for a full clause.</p>
+      </div>
+
+      <div class="grammar-ref">
+        <h3>📌 Reference Box 3: Phrasal Verbs in Business English</h3>
+        <p>Phrasal verbs are frequently used in business meetings, emails, and reports. Understanding their meaning and register is essential for professional communication. Below are key phrasal verbs related to budgeting and finance.</p>
+        <table class="form-table">
+          <tr><th>Phrasal Verb</th><th>Meaning</th><th>Example</th></tr>
+          <tr><td>draw up</td><td>To prepare (a document or plan) formally</td><td><em>We need to draw up a revised budget proposal.</em></td></tr>
+          <tr><td>cut back on</td><td>To reduce spending or activities</td><td><em>Management decided to cut back on travel expenses.</em></td></tr>
+          <tr><td>carry over</td><td>To transfer (funds/tasks) to the next period</td><td><em>Unspent funds will be carried over to Q1.</em></td></tr>
+          <tr><td>sign off on</td><td>To give formal approval</td><td><em>The director needs to sign off on the final budget.</em></td></tr>
+          <tr><td>look into</td><td>To investigate or examine a situation</td><td><em>Finance is looking into the variance in last month's figures.</em></td></tr>
+          <tr><td>run out of</td><td>To exhaust a supply of something</td><td><em>The project team ran out of contingency funds in September.</em></td></tr>
+          <tr><td>set aside</td><td>To reserve money for a specific purpose</td><td><em>We set aside 10% of the budget for unforeseen costs.</em></td></tr>
+          <tr><td>write off</td><td>To remove a bad debt or asset from accounts</td><td><em>The company decided to write off the failed investment.</em></td></tr>
+        </table>
+        <p style="margin-top:12px;">💡 <strong>Register note:</strong> Most of these phrasal verbs are used in both spoken and written professional English. In highly formal reports, some may be replaced by single-word equivalents (e.g., <em>draw up → prepare; look into → investigate</em>).</p>
+      </div>
+    </div>
+
+    <!-- ══════════════ WRITING ══════════════ -->
+    <div id="section-writing" class="section-panel">
+      <div class="section-heading"><div><h2>Writing Activities</h2><div class="section-line"></div></div></div>
+
+      <div class="writing-card">
+        <h3>✍️ Writing Activity 1: Budget Proposal</h3>
+        <div class="writing-prompt">
+          You are the Marketing Manager at a mid-sized technology company. The company is planning its annual budget for next year. Write a formal budget proposal to the CFO requesting funding of £85,000 for your department. In your proposal, you must: (1) briefly describe your department's main planned activities; (2) provide a breakdown of how you would allocate the requested funds; (3) justify why each expenditure is necessary and how it will contribute to company goals; and (4) acknowledge any cost constraints and suggest how you could reduce spending if required.
+        </div>
+        <div class="writing-meta">📏 Word count: 220–280 words &nbsp;|&nbsp; 🎯 B1–B2 &nbsp;|&nbsp; 📧 Format: Formal business proposal</div>
+        <textarea class="writing-area" id="writing1" placeholder="Write your budget proposal here..." oninput="updateWordCount('writing1','wc1')"></textarea>
+        <div class="word-count" id="wc1">0 words</div>
+      </div>
+
+      <div class="writing-card">
+        <h3>✍️ Writing Activity 2: Resource Reallocation Memo</h3>
+        <div class="writing-prompt">
+          Your company recently reviewed its mid-year budget performance. The data shows that the Customer Service department has underspent by £12,000, while the Product Development team is facing a shortfall of £18,000 due to unexpected software licensing costs. Write an internal memo to all department heads explaining: (1) the current budget situation; (2) the decision to reallocate £12,000 from Customer Service to Product Development; (3) the reasons for this decision using cause and result language; and (4) any steps departments should take to ensure spending remains on track for the rest of the fiscal year.
+        </div>
+        <div class="writing-meta">📏 Word count: 200–250 words &nbsp;|&nbsp; 🎯 B2 &nbsp;|&nbsp; 📋 Format: Internal memo (TO / FROM / DATE / SUBJECT)</div>
+        <textarea class="writing-area" id="writing2" placeholder="Write your memo here..." oninput="updateWordCount('writing2','wc2')"></textarea>
+        <div class="word-count" id="wc2">0 words</div>
+      </div>
+    </div>
+
+    <!-- ══════════════ LISTENING ══════════════ -->
+    <div id="section-listening" class="section-panel">
+      <div class="section-heading"><div><h2>Listening Activities</h2><div class="section-line"></div></div></div>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:24px;">4 activities with built-in audio players — press ▶ Play, listen, then answer the questions</p>
+
+      <!-- ACTIVITY 1 -->
+      <div class="listening-card">
+        <div class="listening-header">
+          <div class="lh-icon">📻</div>
+          <div>
+            <h3>Activity 1: A Budget Planning Meeting</h3>
+            <p>Finance Director &amp; Department Heads — Meeting dialogue format</p>
+            <div class="lh-badges">
+              <span class="lh-badge level">LEVEL: B1</span>
+              <span class="lh-badge type">MULTIPLE CHOICE</span>
+              <span class="lh-badge focus">FOCUS: LISTENING FOR MAIN IDEAS</span>
+            </div>
+          </div>
+        </div>
+        <div class="audio-player">
+          <div class="audio-title">🎧 A Budget Planning Meeting</div>
+          <div class="audio-subtitle">Finance Director &amp; Department Heads — Meeting dialogue</div>
+          <div class="audio-controls">
+            <button class="play-btn" onclick="toggleAudio(this, 'tts1')" id="play1">▶</button>
+            <div class="audio-timeline">
+              <div class="audio-progress"><div class="audio-fill" id="fill1"></div></div>
+              <div class="audio-time" id="time1">0:00 / 0:00</div>
+            </div>
+          </div>
+          <div class="speed-controls">
+            <span class="speed-label">SPEED:</span>
+            <button class="speed-btn" onclick="setSpeed(this,0.7)">0.7×</button>
+            <button class="speed-btn active" onclick="setSpeed(this,0.85)">0.85×</button>
+            <button class="speed-btn" onclick="setSpeed(this,1.0)">1.0×</button>
+            <button class="speed-btn" onclick="setSpeed(this,1.2)">1.2×</button>
+          </div>
+          <div class="audio-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+        </div>
+        <div id="tts1" style="display:none" data-text="Finance Director: Good morning, everyone. Thank you for joining today's budget planning session. As you are all aware, we are currently preparing the budget for next fiscal year, and I would like each department head to present their initial funding requests. Let us start with Marketing. Marketing Manager: Thank you, Sarah. Our department is requesting an increase of fifteen percent over last year's allocation. Due to the planned product launch in Q2, we need additional funds for digital advertising and event sponsorship. Finance Director: I understand the rationale, but given our overall budget constraints this year, we may need to look at prioritising the most impactful activities. Can you identify which line items are absolutely essential? Marketing Manager: Certainly. The digital advertising budget is non-negotiable as it directly supports our revenue targets. However, we could potentially cut back on the in-person events if necessary. Finance Director: That sounds reasonable. I will note that for the final proposal. Now, let's move on to Operations. Operations Manager: Our request is more conservative. We are mainly asking for funds to upgrade two pieces of manufacturing equipment. Having reviewed the maintenance costs from last year, we believe this capital expenditure will actually reduce our operating costs over a three-year period. Finance Director: That is a strong case. A cost-benefit analysis would certainly support that kind of long-term investment. Please make sure to include the projected savings in your written proposal. Operations Manager: Absolutely. We have already drawn up a full financial model to accompany the request. Finance Director: Excellent. Thank you both. We will reconvene next Tuesday to review all proposals before signing off on the final budget."></div>
+        <div class="transcript-toggle" onclick="toggleTranscript(this)">▼ Show / Hide Transcript</div>
+        <div class="transcript-body">
+          <p><span class="speaker">Finance Director:</span> Good morning, everyone. Thank you for joining today's budget planning session. As you are all aware, we are currently preparing the budget for next fiscal year, and I would like each department head to present their initial funding requests. Let us start with Marketing.</p>
+          <p><span class="speaker">Marketing Manager:</span> Thank you, Sarah. Our department is requesting an increase of fifteen percent over last year's allocation. Due to the planned product launch in Q2, we need additional funds for digital advertising and event sponsorship.</p>
+          <p><span class="speaker">Finance Director:</span> I understand the rationale, but given our overall budget constraints this year, we may need to look at prioritising the most impactful activities. Can you identify which line items are absolutely essential?</p>
+          <p><span class="speaker">Marketing Manager:</span> Certainly. The digital advertising budget is non-negotiable as it directly supports our revenue targets. However, we could potentially cut back on the in-person events if necessary.</p>
+          <p><span class="speaker">Finance Director:</span> That sounds reasonable. I will note that for the final proposal. Now, let's move on to Operations.</p>
+          <p><span class="speaker">Operations Manager:</span> Our request is more conservative. We are mainly asking for funds to upgrade two pieces of manufacturing equipment. Having reviewed the maintenance costs from last year, we believe this capital expenditure will actually reduce our operating costs over a three-year period.</p>
+          <p><span class="speaker">Finance Director:</span> That is a strong case. A cost-benefit analysis would certainly support that kind of long-term investment. Please make sure to include the projected savings in your written proposal.</p>
+          <p><span class="speaker">Operations Manager:</span> Absolutely. We have already drawn up a full financial model to accompany the request.</p>
+          <p><span class="speaker">Finance Director:</span> Excellent. Thank you both. We will reconvene next Tuesday to review all proposals before signing off on the final budget.</p>
+        </div>
+        <div class="listening-questions">
+          <div class="inst-box">📋 <span><strong>INSTRUCTIONS:</strong> Listen to the meeting dialogue, then answer the questions below by selecting the best answer (A, B, C, or D).</span></div>
+          <div id="l1-mcqs">
+            <div class="mcq-item" data-correct="B"><div class="mcq-q">1. What is the main purpose of this meeting?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> To review last year's financial performance</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> To discuss funding requests for next year's budget</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> To announce the company's annual profit results</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> To decide on redundancies in the company</div></div></div>
+            <div class="mcq-item" data-correct="A"><div class="mcq-q">2. Why is the Marketing Manager requesting a 15% budget increase?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Due to a planned product launch in Q2</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> To fund a new team of digital designers</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Because last year's campaign was unsuccessful</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> To open a new regional office</div></div></div>
+            <div class="mcq-item" data-correct="C"><div class="mcq-q">3. Which budget item does the Marketing Manager say is non-negotiable?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Event sponsorship</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> In-person events</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Digital advertising</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Staff training</div></div></div>
+            <div class="mcq-item" data-correct="D"><div class="mcq-q">4. What does the Operations Manager claim about the equipment upgrade?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> It will increase production capacity by 50%</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> It is required by government safety regulations</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> It will increase the number of staff needed</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> It will reduce operating costs over a three-year period</div></div></div>
+            <div class="mcq-item" data-correct="B"><div class="mcq-q">5. What does the Finance Director ask the Operations Manager to include in the written proposal?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> A list of alternative suppliers</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> The projected savings from the investment</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> A timeline for staff recruitment</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> A comparison with competitor spending</div></div></div>
+          </div>
+          <button class="check-btn" onclick="checkReading('l1-mcqs', this)">Check Answers</button>
+          <div class="feedback-msg" id="l1-feedback" style="display:none"></div>
+        </div>
+      </div>
+
+      <!-- ACTIVITY 2 -->
+      <div class="listening-card">
+        <div class="listening-header">
+          <div class="lh-icon">🎙️</div>
+          <div>
+            <h3>Activity 2: A Podcast on Zero-Based Budgeting</h3>
+            <p>Business Podcast Host &amp; Finance Expert — Interview format</p>
+            <div class="lh-badges">
+              <span class="lh-badge level">LEVEL: B2</span>
+              <span class="lh-badge type">MULTIPLE CHOICE</span>
+              <span class="lh-badge focus">FOCUS: LISTENING FOR SPECIFIC INFORMATION</span>
+            </div>
+          </div>
+        </div>
+        <div class="audio-player">
+          <div class="audio-title">🎧 A Podcast on Zero-Based Budgeting</div>
+          <div class="audio-subtitle">Business Podcast Host &amp; Finance Expert</div>
+          <div class="audio-controls">
+            <button class="play-btn" onclick="toggleAudio(this, 'tts2')" id="play2">▶</button>
+            <div class="audio-timeline">
+              <div class="audio-progress"><div class="audio-fill" id="fill2"></div></div>
+              <div class="audio-time" id="time2">0:00 / 0:00</div>
+            </div>
+          </div>
+          <div class="speed-controls">
+            <span class="speed-label">SPEED:</span>
+            <button class="speed-btn" onclick="setSpeed(this,0.7)">0.7×</button>
+            <button class="speed-btn active" onclick="setSpeed(this,0.85)">0.85×</button>
+            <button class="speed-btn" onclick="setSpeed(this,1.0)">1.0×</button>
+            <button class="speed-btn" onclick="setSpeed(this,1.2)">1.2×</button>
+          </div>
+          <div class="audio-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+        </div>
+        <div id="tts2" style="display:none" data-text="Host: Welcome back to the Finance Matters podcast. Today I am joined by Dr. Elena Marsh, a corporate finance consultant with over twenty years of experience. Dr. Marsh, we hear a lot about zero-based budgeting these days. Can you explain what it actually means? Dr. Marsh: Of course. Zero-based budgeting, or ZBB, is a method where you start your budget from zero every cycle, rather than using the previous year as your baseline. Every single expense has to be justified and approved, regardless of whether it was included before. Host: That sounds like a significant amount of work. Why would a company choose this approach? Dr. Marsh: The main reason is efficiency. When companies rely on incremental budgeting, they often carry forward spending that is no longer relevant or productive. ZBB forces managers to ask: is this expense truly necessary? Does it deliver value? As a result, organisations often identify savings they simply did not know existed. Host: Are there any downsides to this approach? Dr. Marsh: Absolutely. ZBB is extremely time-intensive. It requires detailed documentation and analysis from every department, which can slow down the planning cycle significantly. Consequently, many companies only apply ZBB to specific high-cost areas rather than rolling it out across the entire organisation. Host: What types of companies tend to benefit most from zero-based budgeting? Dr. Marsh: In my experience, it works particularly well for large, complex organisations that have accumulated a lot of legacy spending — old contracts, outdated services, or processes that simply continue out of habit. ZBB is a powerful tool for eliminating that kind of structural inefficiency. Host: Fascinating. Thank you so much for your insights, Dr. Marsh. Dr. Marsh: My pleasure."></div>
+        <div class="transcript-toggle" onclick="toggleTranscript(this)">▼ Show / Hide Transcript</div>
+        <div class="transcript-body">
+          <p><span class="speaker">Host:</span> Welcome back to the Finance Matters podcast. Today I am joined by Dr. Elena Marsh, a corporate finance consultant with over twenty years of experience. Dr. Marsh, we hear a lot about zero-based budgeting these days. Can you explain what it actually means?</p>
+          <p><span class="speaker">Dr. Marsh:</span> Of course. Zero-based budgeting, or ZBB, is a method where you start your budget from zero every cycle, rather than using the previous year as your baseline. Every single expense has to be justified and approved, regardless of whether it was included before.</p>
+          <p><span class="speaker">Host:</span> That sounds like a significant amount of work. Why would a company choose this approach?</p>
+          <p><span class="speaker">Dr. Marsh:</span> The main reason is efficiency. When companies rely on incremental budgeting, they often carry forward spending that is no longer relevant or productive. ZBB forces managers to ask: is this expense truly necessary? Does it deliver value? As a result, organisations often identify savings they simply did not know existed.</p>
+          <p><span class="speaker">Host:</span> Are there any downsides to this approach?</p>
+          <p><span class="speaker">Dr. Marsh:</span> Absolutely. ZBB is extremely time-intensive. It requires detailed documentation and analysis from every department, which can slow down the planning cycle significantly. Consequently, many companies only apply ZBB to specific high-cost areas rather than rolling it out across the entire organisation.</p>
+          <p><span class="speaker">Host:</span> What types of companies tend to benefit most from zero-based budgeting?</p>
+          <p><span class="speaker">Dr. Marsh:</span> In my experience, it works particularly well for large, complex organisations that have accumulated a lot of legacy spending — old contracts, outdated services, or processes that simply continue out of habit. ZBB is a powerful tool for eliminating that kind of structural inefficiency.</p>
+          <p><span class="speaker">Host:</span> Fascinating. Thank you so much for your insights, Dr. Marsh.</p>
+        </div>
+        <div class="listening-questions">
+          <div class="inst-box">📋 <span><strong>INSTRUCTIONS:</strong> Listen to the podcast interview, then answer the questions below.</span></div>
+          <div id="l2-mcqs">
+            <div class="mcq-item" data-correct="C"><div class="mcq-q">1. What is the key difference between ZBB and incremental budgeting?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> ZBB is used only for capital expenditure</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Incremental budgeting requires more documentation</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> ZBB starts from zero while incremental uses the previous year as a base</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> ZBB is faster and simpler to implement</div></div></div>
+            <div class="mcq-item" data-correct="A"><div class="mcq-q">2. What is the main reason Dr. Marsh gives for choosing ZBB?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> It helps identify unnecessary spending and improve efficiency</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> It reduces the time spent on budget planning</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> It is required by law in many countries</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> It eliminates the need for department-level budgets</div></div></div>
+            <div class="mcq-item" data-correct="D"><div class="mcq-q">3. What is described as a significant downside of ZBB?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> It cannot be applied to operational expenditure</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> It requires approval from external auditors</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> It is too expensive for most companies</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> It is extremely time-intensive and documentation-heavy</div></div></div>
+            <div class="mcq-item" data-correct="B"><div class="mcq-q">4. How do many companies respond to the complexity of ZBB?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> They hire external consultants to manage the entire process</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> They apply it only to specific high-cost areas</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> They abandon it after one year</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> They combine it with zero-based accounting</div></div></div>
+            <div class="mcq-item" data-correct="C"><div class="mcq-q">5. According to Dr. Marsh, which type of company benefits most from ZBB?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Small startups with limited funding</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Companies operating in the technology sector only</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Large organisations with accumulated legacy spending</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Non-profit organisations with strict donor restrictions</div></div></div>
+          </div>
+          <button class="check-btn" onclick="checkReading('l2-mcqs', this)">Check Answers</button>
+          <div class="feedback-msg" id="l2-feedback" style="display:none"></div>
+        </div>
+      </div>
+
+      <!-- ACTIVITY 3 -->
+      <div class="listening-card">
+        <div class="listening-header">
+          <div class="lh-icon">📊</div>
+          <div>
+            <h3>Activity 3: A Budget Review Presentation</h3>
+            <p>CFO Presenting to the Board — Formal presentation format</p>
+            <div class="lh-badges">
+              <span class="lh-badge level">LEVEL: B2</span>
+              <span class="lh-badge type">MULTIPLE CHOICE</span>
+              <span class="lh-badge focus">FOCUS: UNDERSTANDING FORMAL LANGUAGE</span>
+            </div>
+          </div>
+        </div>
+        <div class="audio-player">
+          <div class="audio-title">🎧 A Mid-Year Budget Review Presentation</div>
+          <div class="audio-subtitle">CFO Presenting to the Board</div>
+          <div class="audio-controls">
+            <button class="play-btn" onclick="toggleAudio(this, 'tts3')" id="play3">▶</button>
+            <div class="audio-timeline">
+              <div class="audio-progress"><div class="audio-fill" id="fill3"></div></div>
+              <div class="audio-time" id="time3">0:00 / 0:00</div>
+            </div>
+          </div>
+          <div class="speed-controls">
+            <span class="speed-label">SPEED:</span>
+            <button class="speed-btn" onclick="setSpeed(this,0.7)">0.7×</button>
+            <button class="speed-btn active" onclick="setSpeed(this,0.85)">0.85×</button>
+            <button class="speed-btn" onclick="setSpeed(this,1.0)">1.0×</button>
+            <button class="speed-btn" onclick="setSpeed(this,1.2)">1.2×</button>
+          </div>
+          <div class="audio-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+        </div>
+        <div id="tts3" style="display:none" data-text="Good afternoon, members of the board. I am presenting today the results of our mid-year budget review, covering the period from January to June of this fiscal year. I am pleased to report that overall, we are broadly on track with our annual financial plan, though there are a number of specific areas that require our attention. Beginning with revenue performance: total revenue for the first half of the year came in at ninety-four percent of the target, representing a shortfall of approximately two point three million pounds. This is primarily due to delays in two major client contracts, which have now been rescheduled for the second half of the year. Consequently, we remain cautiously optimistic about achieving the full-year target. Turning to expenditure: operating costs are currently running at ninety-seven percent of the year-to-date budget, which is within acceptable variance. However, the Product Development division has exceeded its allocated budget by twelve percent, owing to unanticipated software licensing fees and the need to bring in external contractors on a short-term basis. As a result, I am recommending that we reallocate fifty thousand pounds from the contingency fund to support Product Development for the remainder of the year. I would also like to highlight that the Customer Service division has underspent its budget by eight percent. Having reviewed the reasons for this, we believe it reflects genuine operational efficiency rather than deferred spending. I will now take questions from the board before we move to the formal approval process for the recommended reallocation."></div>
+        <div class="transcript-toggle" onclick="toggleTranscript(this)">▼ Show / Hide Transcript</div>
+        <div class="transcript-body">
+          <p><span class="speaker">CFO:</span> Good afternoon, members of the board. I am presenting today the results of our mid-year budget review, covering the period from January to June of this fiscal year. I am pleased to report that overall, we are broadly on track with our annual financial plan, though there are a number of specific areas that require our attention.</p>
+          <p>Beginning with revenue performance: total revenue for the first half of the year came in at ninety-four percent of the target, representing a shortfall of approximately two point three million pounds. This is primarily due to delays in two major client contracts, which have now been rescheduled for the second half of the year. Consequently, we remain cautiously optimistic about achieving the full-year target.</p>
+          <p>Turning to expenditure: operating costs are currently running at ninety-seven percent of the year-to-date budget, which is within acceptable variance. However, the Product Development division has exceeded its allocated budget by twelve percent, owing to unanticipated software licensing fees and the need to bring in external contractors on a short-term basis. As a result, I am recommending that we reallocate fifty thousand pounds from the contingency fund to support Product Development for the remainder of the year.</p>
+          <p>I would also like to highlight that the Customer Service division has underspent its budget by eight percent. Having reviewed the reasons for this, we believe it reflects genuine operational efficiency rather than deferred spending. I will now take questions from the board before we move to the formal approval process for the recommended reallocation.</p>
+        </div>
+        <div class="listening-questions">
+          <div class="inst-box">📋 <span><strong>INSTRUCTIONS:</strong> Listen to the board presentation and answer the questions below.</span></div>
+          <div id="l3-mcqs">
+            <div class="mcq-item" data-correct="A"><div class="mcq-q">1. What period does the budget review cover?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> January to June</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> July to December</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> The full fiscal year</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Quarter 1 only</div></div></div>
+            <div class="mcq-item" data-correct="D"><div class="mcq-q">2. Why did revenue fall short of the target by £2.3 million?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> A significant drop in market demand</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Increased competition from rival firms</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> An unexpected rise in production costs</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Delays in two major client contracts</div></div></div>
+            <div class="mcq-item" data-correct="B"><div class="mcq-q">3. By how much has the Product Development division exceeded its budget?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> 8%</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> 12%</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> 3%</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> 20%</div></div></div>
+            <div class="mcq-item" data-correct="C"><div class="mcq-q">4. What does the CFO recommend to address the Product Development shortfall?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Reduce the division's headcount immediately</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Cancel the current software licensing contracts</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Reallocate £50,000 from the contingency fund</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Request additional investment from the board</div></div></div>
+            <div class="mcq-item" data-correct="A"><div class="mcq-q">5. What does the CFO say about Customer Service's underspending?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> It reflects genuine operational efficiency</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> It is the result of deferred spending to next year</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> It will be redistributed to Marketing</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> It represents a failure to meet service targets</div></div></div>
+          </div>
+          <button class="check-btn" onclick="checkReading('l3-mcqs', this)">Check Answers</button>
+          <div class="feedback-msg" id="l3-feedback" style="display:none"></div>
+        </div>
+      </div>
+
+      <!-- ACTIVITY 4 -->
+      <div class="listening-card">
+        <div class="listening-header">
+          <div class="lh-icon">🤝</div>
+          <div>
+            <h3>Activity 4: A Negotiation Over Resource Allocation</h3>
+            <p>Two Department Managers — Informal negotiation dialogue</p>
+            <div class="lh-badges">
+              <span class="lh-badge level">LEVEL: B1–B2</span>
+              <span class="lh-badge type">MULTIPLE CHOICE</span>
+              <span class="lh-badge focus">FOCUS: UNDERSTANDING SPEAKER ATTITUDE</span>
+            </div>
+          </div>
+        </div>
+        <div class="audio-player">
+          <div class="audio-title">🎧 A Negotiation Over Resource Allocation</div>
+          <div class="audio-subtitle">Two Department Managers — Negotiation dialogue</div>
+          <div class="audio-controls">
+            <button class="play-btn" onclick="toggleAudio(this, 'tts4')" id="play4">▶</button>
+            <div class="audio-timeline">
+              <div class="audio-progress"><div class="audio-fill" id="fill4"></div></div>
+              <div class="audio-time" id="time4">0:00 / 0:00</div>
+            </div>
+          </div>
+          <div class="speed-controls">
+            <span class="speed-label">SPEED:</span>
+            <button class="speed-btn" onclick="setSpeed(this,0.7)">0.7×</button>
+            <button class="speed-btn active" onclick="setSpeed(this,0.85)">0.85×</button>
+            <button class="speed-btn" onclick="setSpeed(this,1.0)">1.0×</button>
+            <button class="speed-btn" onclick="setSpeed(this,1.2)">1.2×</button>
+          </div>
+          <div class="audio-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+        </div>
+        <div id="tts4" style="display:none" data-text="Manager A - Sales: Hi David, do you have a minute? I wanted to talk to you about the shared data analytics team. Manager B - IT: Sure, what is it? Manager A: Well, as you know, our Q3 sales campaign starts in two weeks, and I am worried we will not have enough support from the analytics team to run our customer segmentation models in time. Manager B: I hear you, but I have to be honest — the analytics team is already stretched. We have the product migration project running until the end of the month, and that is consuming most of their capacity. Manager A: I understand that, but the sales campaign directly affects revenue. If we miss the segmentation window, we could be looking at a fifteen percent drop in campaign effectiveness. Manager B: That is a significant point. Look, what if we prioritise the customer segmentation work for the first three days of the week, and then the team switches back to the migration project for the remaining two days? Manager A: That could work. But can you guarantee we will have at least two analysts assigned full time for those three days? Manager B: I think we can manage that, yes. Having reviewed our current workload, I believe we can shuffle some of the lower-priority tasks to accommodate your timeline. Manager A: That would be really helpful. And in return, I am happy to postpone one of our secondary reporting requests to free up some of their time next month. Manager B: Great. Let us confirm this arrangement in writing and copy the Finance Director so she is aware of the temporary reallocation. Manager A: Agreed. Thanks for being flexible on this, David."></div>
+        <div class="transcript-toggle" onclick="toggleTranscript(this)">▼ Show / Hide Transcript</div>
+        <div class="transcript-body">
+          <p><span class="speaker">Manager A (Sales):</span> Hi David, do you have a minute? I wanted to talk to you about the shared data analytics team.</p>
+          <p><span class="speaker">Manager B (IT):</span> Sure, what is it?</p>
+          <p><span class="speaker">Manager A:</span> Well, as you know, our Q3 sales campaign starts in two weeks, and I am worried we will not have enough support from the analytics team to run our customer segmentation models in time.</p>
+          <p><span class="speaker">Manager B:</span> I hear you, but I have to be honest — the analytics team is already stretched. We have the product migration project running until the end of the month, and that is consuming most of their capacity.</p>
+          <p><span class="speaker">Manager A:</span> I understand that, but the sales campaign directly affects revenue. If we miss the segmentation window, we could be looking at a fifteen percent drop in campaign effectiveness.</p>
+          <p><span class="speaker">Manager B:</span> That is a significant point. Look, what if we prioritise the customer segmentation work for the first three days of the week, and then the team switches back to the migration project for the remaining two days?</p>
+          <p><span class="speaker">Manager A:</span> That could work. But can you guarantee we will have at least two analysts assigned full time for those three days?</p>
+          <p><span class="speaker">Manager B:</span> I think we can manage that, yes. Having reviewed our current workload, I believe we can shuffle some of the lower-priority tasks to accommodate your timeline.</p>
+          <p><span class="speaker">Manager A:</span> That would be really helpful. And in return, I am happy to postpone one of our secondary reporting requests to free up some of their time next month.</p>
+          <p><span class="speaker">Manager B:</span> Great. Let us confirm this arrangement in writing and copy the Finance Director so she is aware of the temporary reallocation.</p>
+          <p><span class="speaker">Manager A:</span> Agreed. Thanks for being flexible on this, David.</p>
+        </div>
+        <div class="listening-questions">
+          <div class="inst-box">📋 <span><strong>INSTRUCTIONS:</strong> Listen to the negotiation and answer the questions below.</span></div>
+          <div id="l4-mcqs">
+            <div class="mcq-item" data-correct="B"><div class="mcq-q">1. What is Manager A's main concern?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> The IT team's migration project is behind schedule</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Not having enough analytics support for the Q3 sales campaign</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Budget cuts affecting the sales department</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> The Finance Director's recent decision on reallocation</div></div></div>
+            <div class="mcq-item" data-correct="D"><div class="mcq-q">2. Why is the analytics team already under pressure?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> They are processing last year's budget data</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Several team members are on annual leave</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> They are preparing the company's annual report</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> They are running a product migration project</div></div></div>
+            <div class="mcq-item" data-correct="A"><div class="mcq-q">3. What compromise does Manager B suggest?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> Prioritise the sales work for the first three days, then return to migration</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> Cancel the migration project until the end of Q3</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> Hire temporary analysts to support both projects</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> Transfer the sales project to an external agency</div></div></div>
+            <div class="mcq-item" data-correct="C"><div class="mcq-q">4. What does Manager A offer in return for the analytics support?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> To share the marketing budget with IT</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> To help with the migration project directly</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> To postpone a secondary reporting request next month</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> To reduce the campaign scope significantly</div></div></div>
+            <div class="mcq-item" data-correct="B"><div class="mcq-q">5. How do they decide to formalise the agreement?</div><div class="mcq-options"><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">A</span> By presenting it at the next board meeting</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">B</span> By confirming it in writing and copying the Finance Director</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">C</span> By scheduling a formal review with HR</div><div class="mcq-opt" onclick="selectOpt(this)"><span class="opt-letter">D</span> By submitting a budget reallocation form to Finance</div></div></div>
+          </div>
+          <button class="check-btn" onclick="checkReading('l4-mcqs', this)">Check Answers</button>
+          <div class="feedback-msg" id="l4-feedback" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ CASE STUDIES ══════════════ -->
+    <div id="section-casestudies" class="section-panel">
+      <div class="section-heading"><div><h2>Case Studies</h2><div class="section-line"></div></div></div>
+
+      <div class="case-card">
+        <div class="case-header">
+          <span class="case-tag">📖 Case Study 1</span>
+          <h3>NovaBuild Construction: When Budget Discipline Saves a Company</h3>
+          <p>Resource allocation under crisis conditions — B1–B2</p>
+        </div>
+        <div class="case-body">
+          <p>NovaBuild Construction was a mid-sized infrastructure company operating in three countries when the global economic downturn of 2023 began to affect the construction sector severely. With material costs rising by over thirty percent year-on-year and several large public contracts delayed indefinitely, the company's management team faced a critical decision: how to allocate rapidly shrinking financial resources across an organisation that still had contractual obligations, ongoing projects, and a workforce of over 1,200 employees.</p>
+          <p>The CFO, Maria Theobald, led an urgent budget review process in which every department was required to submit a justification for one hundred percent of its planned expenditure — effectively adopting a zero-based budgeting approach mid-year. The process revealed that approximately £2.4 million in annual spending could be eliminated or deferred without affecting core operations. This included renegotiated supplier contracts, postponed office renovation plans, and the suspension of non-critical staff training programmes. Owing to these measures, NovaBuild managed to preserve its liquidity position and avoid the layoffs that several of its competitors were forced to implement.</p>
+          <p>The case of NovaBuild illustrates a crucial principle in financial management: the value of rigorous budget discipline is not always visible during prosperous times, but it becomes decisive when conditions deteriorate. Companies that maintain accurate records, regularly review spending, and keep contingency funds in reserve are far better equipped to respond to sudden financial pressure. As a result of its proactive approach, NovaBuild was able to secure two new contracts in Q1 of the following year, positioning it for recovery well ahead of industry peers.</p>
+          <h4>Discussion Questions</h4>
+          <p>1. What budgeting method did NovaBuild adopt in response to the crisis, and why was it appropriate in this context?</p>
+          <p>2. What kinds of spending were identified as deferrable? Do you think these were the right choices? Why or why not?</p>
+          <p>3. What does this case study suggest about the importance of maintaining contingency funds and accurate financial records?</p>
+          <p>4. How would you describe Maria Theobald's leadership approach in this situation? What language from the module could you use to discuss her decisions?</p>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-header">
+          <span class="case-tag">📖 Case Study 2</span>
+          <h3>Stellartech Labs: Balancing Innovation and Financial Constraint</h3>
+          <p>Strategic resource allocation in a technology start-up — B2</p>
+        </div>
+        <div class="case-body">
+          <p>Stellartech Labs was founded in 2020 with a clear mission: to develop AI-powered tools for the healthcare sector. By 2022, the company had grown rapidly to a team of eighty-five staff, supported by two rounds of venture capital funding totalling £9.6 million. However, as the company prepared to enter a third year of operations, its investors raised serious concerns about cash flow and the pace at which resources were being allocated to research and development versus revenue-generating activities. The burn rate — the speed at which the company was spending its cash reserves — was significantly higher than projected.</p>
+          <p>The CEO, James Okwu, commissioned an independent resource allocation review. The findings were uncomfortable but necessary: forty-two percent of the engineering team's time was being spent on internal tooling and process improvements that had minimal impact on product delivery. Furthermore, the marketing budget, which had been set aside to build brand awareness, was being consistently underspent due to unclear ownership and a lack of a coherent strategy. Having reviewed the findings, the board decided to reallocate twenty percent of the engineering budget to direct product development and to restructure the marketing team under a newly appointed Chief Marketing Officer.</p>
+          <p>Within six months, Stellartech Labs had reduced its burn rate by thirty-one percent, launched two new product features ahead of schedule, and secured its first enterprise client — a private hospital group in Germany. The case underscores a critical insight for growing companies: resource allocation is not a one-time decision made at the start of a fiscal year, but an ongoing, dynamic process that must respond to real-time performance data and strategic priorities.</p>
+          <h4>Discussion Questions</h4>
+          <p>1. What problems were identified in Stellartech's resource allocation? Use language from the Word Bank in your answer.</p>
+          <p>2. What specific changes were made following the review? Do you think these decisions were the right ones?</p>
+          <p>3. How does this case study support the argument that resource allocation is a "dynamic process"? Can you think of other examples where this principle applies?</p>
+          <p>4. Write a brief recommendation memo (75–100 words) from the independent reviewer to the board, summarising the key findings and proposed actions.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ FINAL ASSESSMENT ══════════════ -->
+    <div id="section-assessment" class="section-panel">
+      <div class="section-heading"><div><h2>Final Assessment</h2><div class="section-line"></div></div></div>
+
+      <div class="assessment-hero">
+        <h3>🎯 Module 10 Final Assessment</h3>
+        <p>Complete all 20 questions to finish the module. You need 70% or higher (14/20) to pass. You have two attempts available.</p>
+        <div class="assessment-rules">
+          <div class="rule-item"><span class="rule-icon">❓</span> 20 questions</div>
+          <div class="rule-item"><span class="rule-icon">✅</span> 70% pass mark (14/20)</div>
+          <div class="rule-item"><span class="rule-icon">🔄</span> 2 attempts allowed</div>
+          <div class="rule-item"><span class="rule-icon">⏱️</span> No time limit</div>
+        </div>
+      </div>
+
+      <div class="assessment-form" id="assessmentForm">
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q1</span><div class="q-stem">A budget that starts from zero and requires every expense to be justified from scratch is called a _______ budget.</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq1')" data-val="A"><span class="opt-letter">A</span> Incremental</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq1')" data-val="B"><span class="opt-letter">B</span> Zero-based</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq1')" data-val="C"><span class="opt-letter">C</span> Flexible</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq1')" data-val="D"><span class="opt-letter">D</span> Capital</div>
+          </div>
+          <input type="hidden" id="aq1" data-correct="B">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q2</span><div class="q-stem">The difference between the planned budget and the actual amount spent is known as a budget _______.</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq2')" data-val="A"><span class="opt-letter">A</span> Overrun</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq2')" data-val="B"><span class="opt-letter">B</span> Reallocation</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq2')" data-val="C"><span class="opt-letter">C</span> Variance</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq2')" data-val="D"><span class="opt-letter">D</span> Forecast</div>
+          </div>
+          <input type="hidden" id="aq2" data-correct="C">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q3</span><div class="q-stem">Which of the following is an example of Capital Expenditure (CapEx)?</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq3')" data-val="A"><span class="opt-letter">A</span> Monthly utility bills</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq3')" data-val="B"><span class="opt-letter">B</span> Staff salaries</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq3')" data-val="C"><span class="opt-letter">C</span> Purchasing new manufacturing equipment</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq3')" data-val="D"><span class="opt-letter">D</span> Office stationery supplies</div>
+          </div>
+          <input type="hidden" id="aq3" data-correct="C">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q4</span><div class="q-stem">Choose the sentence that correctly uses a present participle clause.</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq4')" data-val="A"><span class="opt-letter">A</span> The manager was reviewing the budget and found the error.</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq4')" data-val="B"><span class="opt-letter">B</span> Reviewing the budget, the manager found a significant error.</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq4')" data-val="C"><span class="opt-letter">C</span> The budget reviewed, there was a significant error found.</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq4')" data-val="D"><span class="opt-letter">D</span> Having been the manager reviewed the budget and found errors.</div>
+          </div>
+          <input type="hidden" id="aq4" data-correct="B">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q5</span><div class="q-stem">Which linker correctly fills the blank? "Sales declined sharply in Q3; _______, the board approved emergency cost cuts."</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq5')" data-val="A"><span class="opt-letter">A</span> due to</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq5')" data-val="B"><span class="opt-letter">B</span> although</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq5')" data-val="C"><span class="opt-letter">C</span> consequently</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq5')" data-val="D"><span class="opt-letter">D</span> owing to</div>
+          </div>
+          <input type="hidden" id="aq5" data-correct="C">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q6</span><div class="q-stem">A "contingency fund" is best described as:</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq6')" data-val="A"><span class="opt-letter">A</span> The main operating budget for daily expenses</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq6')" data-val="B"><span class="opt-letter">B</span> A reserve of money for unexpected costs or emergencies</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq6')" data-val="C"><span class="opt-letter">C</span> The total amount invested in capital assets</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq6')" data-val="D"><span class="opt-letter">D</span> A type of flexible borrowing facility from a bank</div>
+          </div>
+          <input type="hidden" id="aq6" data-correct="B">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q7</span><div class="q-stem">Which phrasal verb means "to prepare a formal document or plan"?</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq7')" data-val="A"><span class="opt-letter">A</span> Sign off on</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq7')" data-val="B"><span class="opt-letter">B</span> Cut back on</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq7')" data-val="C"><span class="opt-letter">C</span> Look into</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq7')" data-val="D"><span class="opt-letter">D</span> Draw up</div>
+          </div>
+          <input type="hidden" id="aq7" data-correct="D">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q8</span><div class="q-stem">What does a positive cash flow indicate for a business?</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq8')" data-val="A"><span class="opt-letter">A</span> The company has no outstanding debts</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq8')" data-val="B"><span class="opt-letter">B</span> More money is coming in than going out</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq8')" data-val="C"><span class="opt-letter">C</span> The company has reached its budget target</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq8')" data-val="D"><span class="opt-letter">D</span> All capital expenditures have been approved</div>
+          </div>
+          <input type="hidden" id="aq8" data-correct="B">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q9</span><div class="q-stem">"________ the strong financial performance in Q1, the company decided to increase its R&amp;D budget." Which option correctly completes this sentence?</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq9')" data-val="A"><span class="opt-letter">A</span> Although</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq9')" data-val="B"><span class="opt-letter">B</span> Consequently</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq9')" data-val="C"><span class="opt-letter">C</span> Owing to</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq9')" data-val="D"><span class="opt-letter">D</span> Therefore</div>
+          </div>
+          <input type="hidden" id="aq9" data-correct="C">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q10</span><div class="q-stem">Which sentence uses a perfect participle clause correctly?</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq10')" data-val="A"><span class="opt-letter">A</span> Having approved the budget, it was distributed to all departments by the board.</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq10')" data-val="B"><span class="opt-letter">B</span> Having approved the budget, the board distributed it to all departments.</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq10')" data-val="C"><span class="opt-letter">C</span> The board having approved the budget distributed it to all departments.</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq10')" data-val="D"><span class="opt-letter">D</span> Having been approving the budget, the board distributed it.</div>
+          </div>
+          <input type="hidden" id="aq10" data-correct="B">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q11</span><div class="q-stem">What is "overhead costs" best defined as?</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq11')" data-val="A"><span class="opt-letter">A</span> Direct costs linked to producing a specific product</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq11')" data-val="B"><span class="opt-letter">B</span> Costs associated with international shipping</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq11')" data-val="C"><span class="opt-letter">C</span> Indirect business costs not linked to a specific product, such as rent</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq11')" data-val="D"><span class="opt-letter">D</span> The total payroll for a company's management team</div>
+          </div>
+          <input type="hidden" id="aq11" data-correct="C">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q12</span><div class="q-stem">In the podcast (Listening Activity 2), Dr. Marsh said companies often apply ZBB to:</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq12')" data-val="A"><span class="opt-letter">A</span> All departments simultaneously every year</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq12')" data-val="B"><span class="opt-letter">B</span> Only the finance and accounting departments</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq12')" data-val="C"><span class="opt-letter">C</span> Specific high-cost areas rather than the whole organisation</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq12')" data-val="D"><span class="opt-letter">D</span> Small companies with fewer than 50 employees</div>
+          </div>
+          <input type="hidden" id="aq12" data-correct="C">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q13</span><div class="q-stem">Which of the following correctly describes "Return on Investment (ROI)"?</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq13')" data-val="A"><span class="opt-letter">A</span> The total amount a company spends on capital assets per year</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq13')" data-val="B"><span class="opt-letter">B</span> A measure of investment profitability relative to its cost</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq13')" data-val="C"><span class="opt-letter">C</span> The process of reinvesting profits into new market sectors</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq13')" data-val="D"><span class="opt-letter">D</span> A government-regulated minimum return on savings accounts</div>
+          </div>
+          <input type="hidden" id="aq13" data-correct="B">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q14</span><div class="q-stem">In Reading Text 1, what is identified as a significant weakness of incremental budgeting?</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq14')" data-val="A"><span class="opt-letter">A</span> It is too expensive to implement in large companies</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq14')" data-val="B"><span class="opt-letter">B</span> It requires approval from external auditors</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq14')" data-val="C"><span class="opt-letter">C</span> It tends to preserve inefficiencies from the previous year</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq14')" data-val="D"><span class="opt-letter">D</span> It does not allow for capital expenditure planning</div>
+          </div>
+          <input type="hidden" id="aq14" data-correct="C">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q15</span><div class="q-stem">Choose the sentence where "due to" is used correctly.</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq15')" data-val="A"><span class="opt-letter">A</span> Due to the company overspent, a review was needed.</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq15')" data-val="B"><span class="opt-letter">B</span> Due to rising costs, the board revised the annual forecast.</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq15')" data-val="C"><span class="opt-letter">C</span> Due to the company decided to cut costs, staff were informed.</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq15')" data-val="D"><span class="opt-letter">D</span> Due to we overspent, a budget review was conducted.</div>
+          </div>
+          <input type="hidden" id="aq15" data-correct="B">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q16</span><div class="q-stem">In the NovaBuild case study, what budgeting approach did the CFO implement during the crisis?</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq16')" data-val="A"><span class="opt-letter">A</span> Incremental budgeting</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq16')" data-val="B"><span class="opt-letter">B</span> Portfolio management</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq16')" data-val="C"><span class="opt-letter">C</span> Zero-based budgeting</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq16')" data-val="D"><span class="opt-letter">D</span> The balanced scorecard approach</div>
+          </div>
+          <input type="hidden" id="aq16" data-correct="C">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q17</span><div class="q-stem">The phrasal verb "carry over" in a budgeting context means:</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq17')" data-val="A"><span class="opt-letter">A</span> To reduce expenditure significantly</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq17')" data-val="B"><span class="opt-letter">B</span> To investigate a financial discrepancy</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq17')" data-val="C"><span class="opt-letter">C</span> To give formal approval for a document</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq17')" data-val="D"><span class="opt-letter">D</span> To transfer unspent funds to the next period</div>
+          </div>
+          <input type="hidden" id="aq17" data-correct="D">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q18</span><div class="q-stem">In Reading Text 2, what does the text say poor resource allocation can lead to?</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq18')" data-val="A"><span class="opt-letter">A</span> Higher staff morale and greater team motivation</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq18')" data-val="B"><span class="opt-letter">B</span> Bottlenecks, missed opportunities, and business failure</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq18')" data-val="C"><span class="opt-letter">C</span> Better long-term planning and investment decisions</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq18')" data-val="D"><span class="opt-letter">D</span> Increased revenue from diversified funding sources</div>
+          </div>
+          <input type="hidden" id="aq18" data-correct="B">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q19</span><div class="q-stem">Which sentence uses a past participle clause correctly?</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq19')" data-val="A"><span class="opt-letter">A</span> Approving by the board, the new budget was distributed.</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq19')" data-val="B"><span class="opt-letter">B</span> The budget approved, the board distributed it to departments.</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq19')" data-val="C"><span class="opt-letter">C</span> Approved by the board, the budget was distributed to all departments.</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq19')" data-val="D"><span class="opt-letter">D</span> The budget, approved by board, distributed to all the departments.</div>
+          </div>
+          <input type="hidden" id="aq19" data-correct="C">
+        </div>
+
+        <div class="assessment-q">
+          <div class="q-head"><span class="q-badge">Q20</span><div class="q-stem">A "financial forecast" is best defined as:</div></div>
+          <div class="mcq-options">
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq20')" data-val="A"><span class="opt-letter">A</span> An accurate record of all transactions made in the previous fiscal year</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq20')" data-val="B"><span class="opt-letter">B</span> A projection of future financial performance based on current data and trends</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq20')" data-val="C"><span class="opt-letter">C</span> A legal requirement submitted to tax authorities each quarter</div>
+            <div class="mcq-opt" onclick="selectAssessOpt(this,'aq20')" data-val="D"><span class="opt-letter">D</span> An external audit report prepared by a certified accountant</div>
+          </div>
+          <input type="hidden" id="aq20" data-correct="B">
+        </div>
+      </div>
+
+      <div style="margin-top:28px;text-align:center">
+        <button class="submit-btn" id="submitAssessmentBtn" onclick="submitAssessment()" style="font-size:1rem;padding:14px 40px;">Submit Assessment</button>
+      </div>
+      <div class="result-banner" id="resultBanner">
+        <h3 id="resultTitle"></h3>
+        <p id="resultText"></p>
+        <div id="retryBtn" style="margin-top:16px;display:none">
+          <button class="check-btn" onclick="retryAssessment()">Retry Assessment</button>
+        </div>
+      </div>
+
+    </div><!-- /assessment -->
+
+  </div><!-- /content-area -->
+</main>
+
+<script>
+// ── NAVIGATION ──
+function showSection(id, el) {
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── MCQ SELECTION ──
+function selectOpt(el) {
+  const parent = el.closest('.mcq-item');
+  parent.querySelectorAll('.mcq-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function checkReading(containerId, btn) {
+  const container = document.getElementById(containerId);
+  const items = container.querySelectorAll('.mcq-item');
+  let correct = 0;
+  items.forEach(item => {
+    const ans = item.dataset.correct;
+    const selected = item.querySelector('.mcq-opt.selected');
+    item.querySelectorAll('.mcq-opt').forEach((opt, i) => {
+      const letter = ['A','B','C','D'][i];
+      if (letter === ans) opt.classList.add('correct');
+    });
+    if (selected) {
+      const selLetter = selected.querySelector('.opt-letter').textContent;
+      if (selLetter === ans) correct++;
+      else selected.classList.add('wrong');
+    }
+  });
+  const total = items.length;
+  const feedbackId = containerId + '-feedback';
+  const fbEl = document.getElementById(feedbackId);
+  if (fbEl) {
+    fbEl.style.display = 'block';
+    const pct = Math.round(correct/total*100);
+    fbEl.className = 'feedback-msg ' + (pct >= 70 ? 'correct' : 'wrong');
+    fbEl.textContent = correct + '/' + total + ' correct (' + pct + '%)' + (pct >= 70 ? ' — Well done! ✅' : ' — Review the highlighted answers and try again.');
+  }
+  btn.disabled = true;
+  updateProgress();
+}
+
+// ── GAP FILL ──
+function checkGapFill(btn) {
+  const inputs = document.querySelectorAll('.gf-input');
+  let correct = 0;
+  inputs.forEach(inp => {
+    const val = inp.value.trim().toLowerCase();
+    const ans = inp.dataset.answer.toLowerCase();
+    if (val === ans) { inp.style.borderColor = 'var(--green)'; correct++; }
+    else { inp.style.borderColor = 'var(--red)'; inp.placeholder = inp.dataset.answer; }
+  });
+  const fbEl = document.getElementById('gf-feedback');
+  fbEl.style.display = 'block';
+  const pct = Math.round(correct/inputs.length*100);
+  fbEl.className = 'feedback-msg ' + (pct >= 70 ? 'correct' : 'wrong');
+  fbEl.textContent = correct + '/' + inputs.length + ' correct (' + pct + '%)';
+  btn.disabled = true;
+  updateProgress();
+}
+
+// ── TRUE/FALSE ──
+function selectTF(btn, val) {
+  const item = btn.closest('.tf-item');
+  item.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  btn.dataset.selected = val;
+}
+function checkTF(btn) {
+  const items = document.querySelectorAll('#tf-items .tf-item');
+  let correct = 0;
+  items.forEach(item => {
+    const ans = item.dataset.correct;
+    const tBtn = item.querySelector('.tf-btn.t');
+    const fBtn = item.querySelector('.tf-btn.f');
+    if (tBtn.dataset.selected === 'T' || fBtn.dataset.selected === 'F') {
+      const selected = tBtn.classList.contains('selected') ? 'T' : (fBtn.classList.contains('selected') ? 'F' : null);
+      if (selected === ans) correct++;
+    }
+    if (ans === 'T') tBtn.style.background = 'var(--green)', tBtn.style.color='white';
+    else fBtn.style.background = 'var(--green)', fBtn.style.color='white';
+  });
+  const fbEl = document.getElementById('tf-feedback');
+  fbEl.style.display = 'block';
+  const pct = Math.round(correct/items.length*100);
+  fbEl.className = 'feedback-msg ' + (pct >= 70 ? 'correct' : 'wrong');
+  fbEl.textContent = correct + '/' + items.length + ' correct (' + pct + '%)';
+  btn.disabled = true;
+  updateProgress();
+}
+
+// ── TRANSCRIPT TOGGLE ──
+function toggleTranscript(el) {
+  const body = el.nextElementSibling;
+  body.classList.toggle('open');
+  el.textContent = body.classList.contains('open') ? '▲ Show / Hide Transcript' : '▼ Show / Hide Transcript';
+}
+
+// ── TTS AUDIO ──
+let currentUtterance = null;
+let currentPlayBtn = null;
+let currentFill = null;
+let currentTimeEl = null;
+let ttsInterval = null;
+
+function toggleAudio(btn, ttsId) {
+  const ttsEl = document.getElementById(ttsId);
+  const text = ttsEl.dataset.text;
+  const btnId = btn.id;
+  const fillEl = document.getElementById(btnId.replace('play','fill'));
+  const timeEl = document.getElementById(btnId.replace('play','time'));
+
+  if (currentUtterance && currentPlayBtn === btn) {
+    window.speechSynthesis.cancel();
+    clearInterval(ttsInterval);
+    btn.textContent = '▶';
+    btn.classList.remove('playing');
+    if (fillEl) fillEl.style.width = '0%';
+    if (timeEl) timeEl.textContent = '0:00 / 0:00';
+    currentUtterance = null;
+    currentPlayBtn = null;
+    return;
+  }
+
+  if (currentUtterance) {
+    window.speechSynthesis.cancel();
+    clearInterval(ttsInterval);
+    if (currentPlayBtn) { currentPlayBtn.textContent = '▶'; currentPlayBtn.classList.remove('playing'); }
+    if (currentFill) currentFill.style.width = '0%';
+    if (currentTimeEl) currentTimeEl.textContent = '0:00 / 0:00';
+  }
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = parseFloat(btn.closest('.audio-player').querySelector('.speed-btn.active').textContent) || 0.85;
+  utter.lang = 'en-GB';
+
+  const words = text.split(' ').length;
+  const estimatedDuration = (words / (utter.rate * 140)) * 60;
+
+  btn.textContent = '⏹';
+  btn.classList.add('playing');
+  currentUtterance = utter;
+  currentPlayBtn = btn;
+  currentFill = fillEl;
+  currentTimeEl = timeEl;
+
+  let elapsed = 0;
+  if (timeEl) timeEl.textContent = '0:00 / ' + formatTime(estimatedDuration);
+
+  ttsInterval = setInterval(() => {
+    elapsed += 0.25;
+    const pct = Math.min((elapsed / estimatedDuration) * 100, 99);
+    if (fillEl) fillEl.style.width = pct + '%';
+    if (timeEl) timeEl.textContent = formatTime(elapsed) + ' / ' + formatTime(estimatedDuration);
+  }, 250);
+
+  utter.onend = () => {
+    clearInterval(ttsInterval);
+    btn.textContent = '▶';
+    btn.classList.remove('playing');
+    if (fillEl) fillEl.style.width = '100%';
+    if (timeEl) timeEl.textContent = formatTime(estimatedDuration) + ' / ' + formatTime(estimatedDuration);
+    currentUtterance = null;
+    currentPlayBtn = null;
+  };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function setSpeed(btn, speed) {
+  const player = btn.closest('.audio-player');
+  player.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (currentUtterance && currentPlayBtn && currentPlayBtn.closest('.audio-player') === player) {
+    currentUtterance.rate = speed;
+  }
+}
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+// ── WRITING WORD COUNT ──
+function updateWordCount(textareaId, countId) {
+  const text = document.getElementById(textareaId).value.trim();
+  const count = text ? text.split(/\s+/).length : 0;
+  document.getElementById(countId).textContent = count + ' word' + (count !== 1 ? 's' : '');
+}
+
+// ── ASSESSMENT ──
+let assessmentAttempts = 0;
+const MAX_ATTEMPTS = 2;
+const assessAnswers = {};
+
+function selectAssessOpt(el, qId) {
+  const q = el.closest('.assessment-q');
+  q.querySelectorAll('.mcq-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  assessAnswers[qId] = el.dataset.val;
+}
+
+function submitAssessment() {
+  assessmentAttempts++;
+  let correct = 0;
+  for (let i = 1; i <= 20; i++) {
+    const qId = 'aq' + i;
+    const input = document.getElementById(qId);
+    const correctAns = input.dataset.correct;
+    const q = input.closest('.assessment-q');
+    q.querySelectorAll('.mcq-opt').forEach(opt => {
+      if (opt.dataset.val === correctAns) opt.classList.add('correct');
+    });
+    const selected = q.querySelector('.mcq-opt.selected');
+    if (selected) {
+      if (selected.dataset.val === correctAns) correct++;
+      else selected.classList.add('wrong');
+    }
+  }
+
+  const pct = Math.round(correct / 20 * 100);
+  const banner = document.getElementById('resultBanner');
+  const title = document.getElementById('resultTitle');
+  const text = document.getElementById('resultText');
+  const retry = document.getElementById('retryBtn');
+
+  banner.style.display = 'block';
+
+  if (pct >= 70) {
+    banner.className = 'result-banner pass';
+    title.textContent = '🎉 Congratulations! You Passed!';
+    title.style.color = 'var(--green)';
+    text.textContent = 'You scored ' + correct + '/20 (' + pct + '%). You have successfully completed Module 10: Budgeting and Resource Allocation.';
+    retry.style.display = 'none';
+    updateProgress(100);
+  } else {
+    banner.className = 'result-banner fail';
+    title.textContent = '📚 Not Passed — ' + correct + '/20 (' + pct + '%)';
+    title.style.color = 'var(--red)';
+    if (assessmentAttempts < MAX_ATTEMPTS) {
+      text.textContent = 'You need 70% to pass. You have ' + (MAX_ATTEMPTS - assessmentAttempts) + ' attempt(s) remaining. Review the highlighted answers and try again.';
+      retry.style.display = 'block';
+    } else {
+      text.textContent = 'You have used all ' + MAX_ATTEMPTS + ' attempts. Please review the module content before trying again.';
+      retry.style.display = 'none';
+    }
+  }
+
+  document.getElementById('submitAssessmentBtn').disabled = true;
+  banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function retryAssessment() {
+  document.querySelectorAll('#assessmentForm .mcq-opt').forEach(opt => {
+    opt.classList.remove('selected', 'correct', 'wrong');
+  });
+  for (const key in assessAnswers) delete assessAnswers[key];
+  document.getElementById('resultBanner').style.display = 'none';
+  document.getElementById('submitAssessmentBtn').disabled = false;
+  window.scrollTo(0,0);
+}
+
+// ── PROGRESS ──
+function updateProgress(override) {
+  if (override !== undefined) {
+    document.getElementById('progressFill').style.width = override + '%';
+    document.getElementById('progressPct').textContent = override + '%';
+    return;
+  }
+  const total = document.querySelectorAll('.check-btn[disabled]').length + document.querySelectorAll('.submit-btn[disabled]').length;
+  const max = 15;
+  const pct = Math.min(Math.round(total/max*90), 90);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+</script>
+</body>
+</html>

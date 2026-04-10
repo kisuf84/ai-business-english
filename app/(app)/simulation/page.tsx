@@ -531,9 +531,12 @@ export default function SimulationPage() {
     includeUserInHistory: boolean;
     historySeed?: ChatMessage[];
     scenarioId?: string;
+    scenarioType?: SimulationScenarioType;
     level?: string;
     industry?: string;
     role?: string;
+    simulationIdOverride?: string | null;
+    source?: "custom-start" | "quick-start" | "conversation";
   }): Promise<
     | { ok: true }
     | { ok: false; message: string; details: string | null }
@@ -552,9 +555,13 @@ export default function SimulationPage() {
     const selectedScenario = scenarioOptions.find(
       (option) => option.id === messageScenarioId
     );
-    const scenarioType = selectedScenario?.scenarioType ?? "meeting";
+    const scenarioType =
+      params.scenarioType ?? selectedScenario?.scenarioType ?? "meeting";
     const requestPayload = {
-      simulation_id: simulationId,
+      simulation_id:
+        params.simulationIdOverride === undefined
+          ? simulationId
+          : params.simulationIdOverride,
       scenario_type: scenarioType,
       level: messageLevel,
       industry: messageIndustry.trim() || undefined,
@@ -565,7 +572,9 @@ export default function SimulationPage() {
 
     if (process.env.NODE_ENV !== "production") {
       console.log("[simulation.page] sendSimulationMessage.request", {
-        source: params.includeUserInHistory ? "conversation" : "start",
+        source:
+          params.source ??
+          (params.includeUserInHistory ? "conversation" : "custom-start"),
         scenarioId: messageScenarioId,
         scenarioType,
         level: messageLevel,
@@ -753,14 +762,31 @@ export default function SimulationPage() {
     setLevel(nextLevel);
     setIndustry(nextIndustry);
     setRole(nextRole);
+
+    if (process.env.NODE_ENV !== "production") {
+      console.log("[simulation.page] startSimulation.config", {
+        source,
+        quickStartId: quickStartId ?? null,
+        scenarioId: nextScenarioId,
+        scenarioLabel: selectedScenario.label,
+        scenarioType: selectedScenario.scenarioType,
+        level: nextLevel,
+        industry: nextIndustry || null,
+        role: nextRole || null,
+      });
+    }
+
     const result = await sendSimulationMessage({
       text: starterPrompt,
       includeUserInHistory: false,
       historySeed: [],
       scenarioId: nextScenarioId,
+      scenarioType: selectedScenario.scenarioType,
       level: nextLevel,
       industry: nextIndustry,
       role: nextRole,
+      simulationIdOverride: null,
+      source: source === "quick-start" ? "quick-start" : "custom-start",
     });
 
     if (result.ok) {
@@ -788,6 +814,7 @@ export default function SimulationPage() {
     const result = await sendSimulationMessage({
       text: userInput,
       includeUserInHistory: true,
+      source: "conversation",
     });
 
     if (!result.ok) {
@@ -846,6 +873,9 @@ export default function SimulationPage() {
   };
 
   const handleStartCatalogScenario = async (scenario: (typeof simulationCatalog)[number]) => {
+    if (process.env.NODE_ENV !== "production") {
+      console.log("[simulation.page] quickStart.selected", scenario);
+    }
     await handleStartSimulation(
       {
         scenarioId: scenario.id,
@@ -893,230 +923,237 @@ export default function SimulationPage() {
   };
   const isAnyStartLoading = isStartingCustom || activeQuickStartId !== null;
   const isAnyRequestLoading = isMessageLoading || isAnyStartLoading;
+  const isConversationFocusMode = simulationStarted && !simulationEnded;
 
   return (
     <section className="overflow-x-hidden py-6 sm:py-8 lg:py-10">
       <div className="mx-auto max-w-[960px]">
-        <div className="mb-8">
+        <div className={isConversationFocusMode ? "mb-6" : "mb-8"}>
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Workplace Simulation
           </p>
           <h1 className="mt-2 text-balance font-serif text-2xl font-normal text-[var(--ink)] sm:text-3xl md:text-[2.15rem]">
-            Simulation Hub
+            {isConversationFocusMode ? "Conversation In Progress" : "Simulation Hub"}
           </h1>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--ink-muted)] sm:text-[15px]">
-            Start a guided workplace scenario instantly or build a custom simulation below.
+            {isConversationFocusMode
+              ? "Stay focused on the live simulation. End the conversation when you're ready to review feedback or start a new scenario."
+              : "Start a guided workplace scenario instantly or build a custom simulation below."}
           </p>
         </div>
 
-        <div className="my-8 flex items-center gap-4">
-          <div className="h-px flex-1 bg-[var(--border)]" />
-          <p className="shrink-0 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
-            Custom Simulation Generator
-          </p>
-          <div className="h-px flex-1 bg-[var(--border)]" />
-        </div>
-
-        <Card className="p-6 sm:p-7" style={sectionCardStyle}>
-          <form onSubmit={handleSend}>
-            <div className="grid gap-4">
-              <div className="grid gap-2">
-                <label htmlFor="scenario_type" className="text-sm font-medium">
-                  Select a scenario
-                </label>
-                <Select
-                  id="scenario_type"
-                  value={selectedScenarioId}
-                  onChange={(event) => setSelectedScenarioId(event.target.value)}
-                  disabled={simulationStarted}
-                >
-                  {scenarioOptions.map((option) => (
-                    <option key={option.id} value={option.id}>
-                      {option.label}
-                    </option>
-                  ))}
-                </Select>
-              </div>
-
-              <div className="grid gap-2">
-                <label htmlFor="level" className="text-sm font-medium">
-                  Level
-                </label>
-                <Select
-                  id="level"
-                  value={level}
-                  onChange={(event) => setLevel(event.target.value)}
-                  disabled={simulationStarted}
-                  required
-                >
-                  <option value="">Select level</option>
-                  <option value="A2">A2</option>
-                  <option value="B1">B1</option>
-                  <option value="B2">B2</option>
-                  <option value="C1">C1</option>
-                </Select>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="grid gap-2">
-                  <label htmlFor="industry" className="text-sm font-medium">
-                    Industry
-                  </label>
-                  <Select
-                    id="industry"
-                    value={industry}
-                    onChange={(event) => setIndustry(event.target.value)}
-                    disabled={simulationStarted}
-                  >
-                    <option value="">Select industry</option>
-                    {industryOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Select>
-                </div>
-
-                <div className="grid gap-2">
-                  <label htmlFor="profession" className="text-sm font-medium">
-                    Business Role
-                  </label>
-                  <Select
-                    id="profession"
-                    value={role}
-                    onChange={(event) => setRole(event.target.value)}
-                    disabled={simulationStarted}
-                  >
-                    <option value="">Select business role</option>
-                    {roleOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Select>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3">
-                {!simulationStarted ? (
-                  <Button
-                    type="button"
-                    onClick={() => void handleStartSimulation()}
-                    disabled={isAnyRequestLoading}
-                    className="w-full rounded-lg border px-5 py-2 text-xs font-semibold transition-opacity hover:opacity-90 sm:w-auto"
-                    style={accentButtonStyle}
-                  >
-                    {isStartingCustom ? "Starting..." : "Start Conversation"}
-                  </Button>
-                ) : null}
-                {simulationStarted || simulationEnded ? (
-                  <Button
-                    type="button"
-                    onClick={handleReset}
-                    disabled={isAnyRequestLoading}
-                    className="w-full rounded-lg px-4 py-2 text-xs sm:w-auto"
-                  >
-                    Start New Conversation
-                  </Button>
-                ) : null}
-                {customStartError ? (
-                  <p className="min-w-0 text-xs" style={errorStyle}>
-                    {customStartError}
-                  </p>
-                ) : null}
-                {process.env.NODE_ENV !== "production" && customStartErrorDetails ? (
-                  <p className="min-w-0 break-words text-xs text-[var(--ink-faint)]">
-                    Debug: {customStartErrorDetails}
-                  </p>
-                ) : null}
-              </div>
+        {!isConversationFocusMode ? (
+          <>
+            <div className="my-8 flex items-center gap-4">
+              <div className="h-px flex-1 bg-[var(--border)]" />
+              <p className="shrink-0 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+                Custom Simulation Generator
+              </p>
+              <div className="h-px flex-1 bg-[var(--border)]" />
             </div>
-          </form>
-        </Card>
 
-        <div className="my-8 flex items-center gap-4">
-          <div className="h-px flex-1 bg-[var(--border)]" />
-          <p className="shrink-0 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
-            Quick Start Scenarios
-          </p>
-          <div className="h-px flex-1 bg-[var(--border)]" />
-        </div>
-
-        <div className="mb-5">
-          <p className="max-w-2xl text-sm leading-6 text-[var(--ink-muted)]">
-            Try a ready-made scenario with the role, industry, and level already filled in.
-          </p>
-          {quickStartError ? (
-            <p className="mt-3 text-sm" style={errorStyle}>
-              {quickStartError}
-            </p>
-          ) : null}
-          {process.env.NODE_ENV !== "production" && quickStartErrorDetails ? (
-            <p className="mt-2 break-words text-xs text-[var(--ink-faint)]">
-              Debug: {quickStartErrorDetails}
-            </p>
-          ) : null}
-        </div>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {simulationCatalog.map((scenario) => {
-            const isCardStarting = activeQuickStartId === scenario.id;
-
-            return (
-              <Card
-                key={scenario.id}
-                className="flex h-full min-w-0 flex-col gap-4 p-6"
-                style={sectionCardStyle}
-              >
-                <div className="flex flex-col items-start justify-between gap-3 sm:flex-row">
-                  <div className="min-w-0">
-                    <p className="text-base font-semibold leading-6 text-[var(--ink)] sm:text-lg">
-                      {scenario.title}
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">
-                      {scenario.description}
-                    </p>
+            <Card className="p-6 sm:p-7" style={sectionCardStyle}>
+              <form onSubmit={handleSend}>
+                <div className="grid gap-4">
+                  <div className="grid gap-2">
+                    <label htmlFor="scenario_type" className="text-sm font-medium">
+                      Select a scenario
+                    </label>
+                    <Select
+                      id="scenario_type"
+                      value={selectedScenarioId}
+                      onChange={(event) => setSelectedScenarioId(event.target.value)}
+                      disabled={simulationStarted}
+                    >
+                      {scenarioOptions.map((option) => (
+                        <option key={option.id} value={option.id}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </Select>
                   </div>
-                  <span
-                    className={`inline-flex shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${getLevelBadgeClass(
-                      scenario.level,
-                      mode
-                    )}`}
+
+                  <div className="grid gap-2">
+                    <label htmlFor="level" className="text-sm font-medium">
+                      Level
+                    </label>
+                    <Select
+                      id="level"
+                      value={level}
+                      onChange={(event) => setLevel(event.target.value)}
+                      disabled={simulationStarted}
+                      required
+                    >
+                      <option value="">Select level</option>
+                      <option value="A2">A2</option>
+                      <option value="B1">B1</option>
+                      <option value="B2">B2</option>
+                      <option value="C1">C1</option>
+                    </Select>
+                  </div>
+
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="grid gap-2">
+                      <label htmlFor="industry" className="text-sm font-medium">
+                        Industry
+                      </label>
+                      <Select
+                        id="industry"
+                        value={industry}
+                        onChange={(event) => setIndustry(event.target.value)}
+                        disabled={simulationStarted}
+                      >
+                        <option value="">Select industry</option>
+                        {industryOptions.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </Select>
+                    </div>
+
+                    <div className="grid gap-2">
+                      <label htmlFor="profession" className="text-sm font-medium">
+                        Business Role
+                      </label>
+                      <Select
+                        id="profession"
+                        value={role}
+                        onChange={(event) => setRole(event.target.value)}
+                        disabled={simulationStarted}
+                      >
+                        <option value="">Select business role</option>
+                        {roleOptions.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3">
+                    {!simulationStarted ? (
+                      <Button
+                        type="button"
+                        onClick={() => void handleStartSimulation()}
+                        disabled={isAnyRequestLoading}
+                        className="w-full rounded-lg border px-5 py-2 text-xs font-semibold transition-opacity hover:opacity-90 sm:w-auto"
+                        style={accentButtonStyle}
+                      >
+                        {isStartingCustom ? "Starting..." : "Start Conversation"}
+                      </Button>
+                    ) : null}
+                    {simulationStarted || simulationEnded ? (
+                      <Button
+                        type="button"
+                        onClick={handleReset}
+                        disabled={isAnyRequestLoading}
+                        className="w-full rounded-lg px-4 py-2 text-xs sm:w-auto"
+                      >
+                        Start New Conversation
+                      </Button>
+                    ) : null}
+                    {customStartError ? (
+                      <p className="min-w-0 text-xs" style={errorStyle}>
+                        {customStartError}
+                      </p>
+                    ) : null}
+                    {process.env.NODE_ENV !== "production" && customStartErrorDetails ? (
+                      <p className="min-w-0 break-words text-xs text-[var(--ink-faint)]">
+                        Debug: {customStartErrorDetails}
+                      </p>
+                    ) : null}
+                  </div>
+                </div>
+              </form>
+            </Card>
+
+            <div className="my-8 flex items-center gap-4">
+              <div className="h-px flex-1 bg-[var(--border)]" />
+              <p className="shrink-0 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+                Quick Start Scenarios
+              </p>
+              <div className="h-px flex-1 bg-[var(--border)]" />
+            </div>
+
+            <div className="mb-5">
+              <p className="max-w-2xl text-sm leading-6 text-[var(--ink-muted)]">
+                Try a ready-made scenario with the role, industry, and level already filled in.
+              </p>
+              {quickStartError ? (
+                <p className="mt-3 text-sm" style={errorStyle}>
+                  {quickStartError}
+                </p>
+              ) : null}
+              {process.env.NODE_ENV !== "production" && quickStartErrorDetails ? (
+                <p className="mt-2 break-words text-xs text-[var(--ink-faint)]">
+                  Debug: {quickStartErrorDetails}
+                </p>
+              ) : null}
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {simulationCatalog.map((scenario) => {
+                const isCardStarting = activeQuickStartId === scenario.id;
+
+                return (
+                  <Card
+                    key={scenario.id}
+                    className="flex h-full min-w-0 flex-col gap-4 p-6"
+                    style={sectionCardStyle}
                   >
-                    {scenario.level}
-                  </span>
-                </div>
+                    <div className="flex flex-col items-start justify-between gap-3 sm:flex-row">
+                      <div className="min-w-0">
+                        <p className="text-base font-semibold leading-6 text-[var(--ink)] sm:text-lg">
+                          {scenario.title}
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">
+                          {scenario.description}
+                        </p>
+                      </div>
+                      <span
+                        className={`inline-flex shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${getLevelBadgeClass(
+                          scenario.level,
+                          mode
+                        )}`}
+                      >
+                        {scenario.level}
+                      </span>
+                    </div>
 
-                <div className="flex flex-wrap gap-2 text-xs text-[var(--ink-faint)]">
-                  <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
-                    {scenario.duration}
-                  </span>
-                  <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
-                    {scenario.role}
-                  </span>
-                  <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
-                    {scenario.industry}
-                  </span>
-                </div>
+                    <div className="flex flex-wrap gap-2 text-xs text-[var(--ink-faint)]">
+                      <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
+                        {scenario.duration}
+                      </span>
+                      <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
+                        {scenario.role}
+                      </span>
+                      <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
+                        {scenario.industry}
+                      </span>
+                    </div>
 
-                <div className="mt-auto flex flex-col items-stretch justify-between gap-3 sm:flex-row sm:items-center">
-                  <p className="text-xs text-[var(--ink-faint)]">Ready-to-start scenario</p>
-                  <Button
-                    type="button"
-                    onClick={() => void handleStartCatalogScenario(scenario)}
-                    disabled={simulationStarted || isAnyRequestLoading}
-                    className="w-full rounded-lg border px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-90 sm:w-auto"
-                    style={accentButtonStyle}
-                  >
-                    {isCardStarting ? "Starting..." : "Start"}
-                  </Button>
-                </div>
-              </Card>
-            );
-          })}
-        </div>
+                    <div className="mt-auto flex flex-col items-stretch justify-between gap-3 sm:flex-row sm:items-center">
+                      <p className="text-xs text-[var(--ink-faint)]">Ready-to-start scenario</p>
+                      <Button
+                        type="button"
+                        onClick={() => void handleStartCatalogScenario(scenario)}
+                        disabled={simulationStarted || isAnyRequestLoading}
+                        className="w-full rounded-lg border px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-90 sm:w-auto"
+                        style={accentButtonStyle}
+                      >
+                        {isCardStarting ? "Starting..." : "Start"}
+                      </Button>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+          </>
+        ) : null}
 
-        <div className="mt-8">
+        <div className={isConversationFocusMode ? "mt-0" : "mt-8"}>
           <div className="mb-4 flex flex-wrap items-center gap-2">
             <button
               type="button"
@@ -1146,18 +1183,32 @@ export default function SimulationPage() {
             simulationStarted ? (
               <>
                 <Card className="mb-4 p-4" style={subtlePanelStyle}>
-                  <p className="text-xs leading-5 text-[var(--ink-muted)] sm:text-sm">
-                    Scenario: {selectedScenario?.label || "Business Conversation"}
-                    {" • "}
-                    Role: {role || "Business Professional"}
-                    {" • "}
-                    Stakeholder: {contextMeta.stakeholder}
-                    {" • "}
-                    Level: {level || "Not set"}
-                  </p>
-                  <p className="mt-1 text-xs text-[var(--ink-faint)]">
-                    Goal: {contextMeta.goal}
-                  </p>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <p className="text-xs leading-5 text-[var(--ink-muted)] sm:text-sm">
+                        Scenario: {selectedScenario?.label || "Business Conversation"}
+                        {" • "}
+                        Role: {role || "Business Professional"}
+                        {" • "}
+                        Stakeholder: {contextMeta.stakeholder}
+                        {" • "}
+                        Level: {level || "Not set"}
+                      </p>
+                      <p className="mt-1 text-xs text-[var(--ink-faint)]">
+                        Goal: {contextMeta.goal}
+                      </p>
+                    </div>
+                    {!simulationEnded ? (
+                      <Button
+                        type="button"
+                        onClick={handleEndConversation}
+                        disabled={isMessageLoading}
+                        className="w-full rounded-lg px-4 py-2 text-xs sm:w-auto"
+                      >
+                        End Conversation
+                      </Button>
+                    ) : null}
+                  </div>
                 </Card>
                 <h2 className="font-serif text-xl text-[var(--ink)] sm:text-2xl">
                   Conversation
@@ -1316,7 +1367,7 @@ export default function SimulationPage() {
                             type="button"
                             onClick={handleEndConversation}
                             disabled={isMessageLoading}
-                            className="w-full rounded-lg px-4 py-2 text-xs sm:w-auto"
+                            className="hidden"
                           >
                             End Conversation
                           </Button>

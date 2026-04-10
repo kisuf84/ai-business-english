@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Digital Marketing and Social Media English</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2744;--navy-dark:#111b33;--navy-mid:#243055;--navy-light:#2d3d6b;
+  --gold:#f0b429;--gold-light:#f7cc5e;--gold-pale:#fef3c7;
+  --cream:#faf7f2;--cream-dark:#f0ebe0;
+  --white:#fff;--text-dark:#1a2744;--text-mid:#3d4f6e;--text-light:#6b7a99;
+  --success:#2d7a4f;--error:#b83232;
+  --sidebar-w:260px;--radius:10px;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh}
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--navy-dark);display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:4px}.sidebar::-webkit-scrollbar-thumb{background:var(--navy-light);border-radius:2px}
+.sidebar-brand{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand-title{font-family:'Fraunces',serif;font-size:13px;font-weight:600;color:var(--gold);line-height:1.3}
+.brand-sub{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:3px}
+.level-badge{display:inline-block;background:var(--gold);color:var(--navy-dark);font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 8px;border-radius:20px;margin-top:10px}
+.sidebar-module-label{padding:18px 20px 8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:600}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;color:rgba(255,255,255,.65);font-size:13px;font-weight:400;transition:all .18s;border-left:3px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:rgba(201,151,58,.12);color:#fff;border-left-color:var(--gold)}
+.nav-item .nav-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.nav-item .nav-label{flex:1}
+.nav-badge{background:var(--gold);color:var(--navy-dark);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.section{display:none}.section.active{display:block}
+.hero{background:var(--navy);padding:28px 52px 36px;position:relative;overflow:hidden;min-height:280px}
+.hero::before{content:'';position:absolute;right:-40px;top:-30px;width:460px;height:460px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='10' y='320' font-size='280' opacity='.04' fill='%23fff' font-family='serif'%3EM4%3C/text%3E%3C/svg%3E") center/contain no-repeat}
+.section-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:22px;font-family:'DM Mono',monospace}
+.hero-title{font-family:'Fraunces',serif;font-size:54px;font-weight:700;line-height:1.05;color:#fff;margin-bottom:16px}
+.hero-title span{color:var(--gold)}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.65);max-width:620px;line-height:1.65;margin-bottom:28px}
+.stats-row{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:24px}
+.stat-num{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.stat-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.progress-track{height:4px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .6s ease;width:0%}
+.content-area{background:var(--cream);padding:40px 52px}
+.card{background:#fff;border-radius:var(--radius);padding:32px;margin-bottom:24px;border:1px solid rgba(26,39,68,.08);box-shadow:0 2px 12px rgba(26,39,68,.06)}
+.card-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--text-dark);margin-bottom:6px}
+.card-title-bar{width:40px;height:3px;background:var(--gold);border-radius:2px;margin-bottom:18px}
+.prose{font-size:15px;line-height:1.75;color:var(--text-mid)}
+.prose strong{color:var(--text-dark);font-weight:600}
+.prose p+p{margin-top:12px}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.outcome-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--cream);border-radius:8px;border:1px solid var(--cream-dark)}
+.outcome-icon{color:var(--gold);flex-shrink:0;margin-top:1px}
+.outcome-text{font-size:13.5px;color:var(--text-mid);line-height:1.5}
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.q-card{background:#fff;border:1px solid rgba(26,39,68,.1);border-radius:8px;padding:16px;display:flex;gap:12px;align-items:flex-start;transition:box-shadow .2s}
+.q-card:hover{box-shadow:0 4px 16px rgba(26,39,68,.1)}
+.q-num{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--gold-light);flex-shrink:0;min-width:28px;line-height:1}
+.q-text{font-size:14px;color:var(--text-mid);line-height:1.55}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.wb-card{background:#fff;border:1px solid rgba(26,39,68,.1);border-radius:10px;padding:18px 16px;display:flex;flex-direction:column;gap:6px;transition:transform .2s,box-shadow .2s}
+.wb-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,39,68,.1)}
+.wb-emoji{font-size:24px}
+.wb-term{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--text-dark)}
+.wb-pos{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.wb-def{font-size:13px;color:var(--text-mid);line-height:1.5}
+.reading-text{background:var(--cream);border-left:4px solid var(--gold);padding:24px 28px;border-radius:0 8px 8px 0;margin-bottom:28px}
+.reading-text h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--text-dark);margin-bottom:14px}
+.reading-text p{font-size:14.5px;line-height:1.75;color:var(--text-mid);margin-bottom:10px}
+.mcq-section{margin-top:24px}
+.mcq-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--text-dark);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--cream-dark)}
+.mcq-item{margin-bottom:20px}
+.mcq-q{font-size:14.5px;font-weight:600;color:var(--text-dark);margin-bottom:10px;line-height:1.5}
+.mcq-options{display:grid;gap:7px}
+.mcq-option{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1.5px solid rgba(26,39,68,.15);cursor:pointer;transition:all .18s;font-size:13.5px;color:var(--text-mid);background:#fff}
+.mcq-option:hover{border-color:var(--gold);background:var(--gold-pale)}
+.mcq-option.selected{border-color:var(--navy);background:rgba(26,39,68,.06);color:var(--text-dark)}
+.mcq-option.correct{border-color:var(--success)!important;background:rgba(45,122,79,.08)!important;color:var(--success)!important}
+.mcq-option.wrong{border-color:var(--error)!important;background:rgba(184,50,50,.07)!important;color:var(--error)!important}
+.opt-letter{width:22px;height:22px;border-radius:50%;background:rgba(26,39,68,.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'DM Mono',monospace}
+.check-btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 22px;background:var(--navy);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;transition:background .18s}
+.check-btn:hover{background:var(--navy-light)}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;display:none}
+.feedback.show{display:block}
+.feedback.good{background:rgba(45,122,79,.1);color:var(--success);border:1px solid rgba(45,122,79,.2)}
+.feedback.bad{background:rgba(184,50,50,.08);color:var(--error);border:1px solid rgba(184,50,50,.2)}
+.score-display{background:var(--cream);border-radius:8px;padding:14px 18px;margin-top:16px;display:none}
+.score-display.show{display:flex;align-items:center;justify-content:space-between}
+.score-val{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--text-dark)}
+.score-label{font-size:13px;color:var(--text-light)}
+.ex-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ex-badge{background:var(--navy);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.06em}
+.ex-type{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.ex-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--text-dark);margin-bottom:4px}
+.ex-instruction{font-size:13.5px;color:var(--text-light);margin-bottom:20px;font-style:italic}
+.word-box{background:var(--cream);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--text-mid);display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:20px}
+.word-chip{background:#fff;border:1px solid rgba(26,39,68,.15);border-radius:5px;padding:2px 9px;font-size:13px}
+.gap-sentence{font-size:14.5px;color:var(--text-dark);line-height:2.4;margin-bottom:8px}
+.gap-input{border:none;border-bottom:2px solid var(--gold);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);padding:2px 6px;width:160px;outline:none;text-align:center;transition:border-color .18s}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.tf-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--cream-dark)}
+.tf-stmt{flex:1;font-size:14.5px;color:var(--text-mid);line-height:1.55}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+.tf-btn{padding:5px 14px;border-radius:6px;border:1.5px solid rgba(26,39,68,.2);cursor:pointer;font-size:12px;font-weight:600;background:#fff;color:var(--text-mid);transition:all .18s;font-family:'DM Sans',sans-serif}
+.tf-btn:hover{border-color:var(--gold);color:var(--gold)}
+.tf-btn.sel-t{background:#dcfce7;border-color:var(--success);color:var(--success)}
+.tf-btn.sel-f{background:#fee2e2;border-color:var(--error);color:var(--error)}
+.gr-box{background:var(--navy);color:#fff;border-radius:10px;padding:28px;margin-bottom:24px}
+.gr-box-title{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--gold);margin-bottom:6px}
+.gr-box-sub{font-size:12px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px}
+.gr-rule{background:rgba(255,255,255,.08);border-radius:8px;padding:16px;margin-bottom:12px}
+.gr-rule-title{font-size:13px;font-weight:600;color:var(--gold-light);margin-bottom:6px}
+.gr-rule-text{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.6}
+.gr-example{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--gold-pale);background:rgba(255,255,255,.05);padding:8px 12px;border-radius:6px;margin-top:8px;line-height:1.6}
+.gr-table{width:100%;border-collapse:collapse;margin-top:14px}
+.gr-table th{background:rgba(255,255,255,.1);padding:8px 12px;font-size:12px;text-align:left;color:var(--gold-light);letter-spacing:.06em;text-transform:uppercase}
+.gr-table td{padding:8px 12px;font-size:13px;color:rgba(255,255,255,.75);border-top:1px solid rgba(255,255,255,.08)}
+.gr-table tr:hover td{background:rgba(255,255,255,.04)}
+.writing-prompt{background:rgba(201,151,58,.08);border:1px solid rgba(201,151,58,.3);border-radius:8px;padding:18px 20px;margin-bottom:16px}
+.writing-prompt h4{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--text-dark);margin-bottom:8px}
+.writing-prompt p{font-size:13.5px;color:var(--text-mid);line-height:1.6}
+.writing-focus{background:rgba(26,39,68,.04);border:1px solid rgba(26,39,68,.12);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--text-light)}
+.writing-focus strong{color:var(--text-mid)}
+.writing-textarea{width:100%;min-height:180px;border:1.5px solid rgba(26,39,68,.2);border-radius:8px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);resize:vertical;outline:none;background:#fff;line-height:1.65;transition:border-color .18s}
+.writing-textarea:focus{border-color:var(--gold)}
+.writing-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.word-count{font-size:12px;color:var(--text-light);font-family:'DM Mono',monospace}
+.submit-btn{padding:10px 24px;background:var(--gold);color:var(--navy-dark);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .18s}
+.submit-btn:hover{background:var(--gold-light)}
+.submit-success{display:none;padding:12px 16px;background:rgba(45,122,79,.1);border:1px solid rgba(45,122,79,.25);border-radius:8px;color:var(--success);font-size:13.5px;font-weight:500;margin-top:12px}
+.audio-card{background:var(--navy-mid);border-radius:12px;padding:24px;margin-bottom:28px}
+.audio-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
+.audio-emoji{font-size:30px;background:rgba(255,255,255,.1);border-radius:8px;padding:9px;flex-shrink:0;line-height:1}
+.audio-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#fff;margin-bottom:4px}
+.audio-sub{font-size:12px;color:rgba(255,255,255,.5)}
+.audio-tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.audio-tag{font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 9px;border-radius:10px;text-transform:uppercase}
+.tag-level{background:rgba(201,151,58,.25);color:var(--gold-light)}
+.tag-type{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
+.tag-focus{color:rgba(255,255,255,.45);font-size:10px}
+.player-box{background:var(--navy-dark);border-radius:10px;padding:16px 18px;margin-bottom:12px}
+.player-row{display:flex;align-items:center;gap:14px}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:background .18s;color:var(--navy-dark)}
+.play-btn:hover{background:var(--gold-light)}
+.player-info{flex:1}
+.player-title-sm{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px}
+.player-sub-sm{font-size:11px;color:rgba(255,255,255,.4)}
+.player-time{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.5);white-space:nowrap}
+.player-progress{width:100%;height:3px;background:rgba(255,255,255,.12);border-radius:2px;margin-top:10px;overflow:hidden}
+.player-progress-fill{height:100%;width:0%;background:var(--gold);border-radius:2px;transition:width .5s linear}
+.speed-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase}
+.speed-btn{padding:3px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:all .18s}
+.speed-btn.active,.speed-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-dark);font-weight:700}
+.replay-btn{padding:3px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.6);font-size:11px;cursor:pointer;transition:all .18s}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light)}
+.tts-note{font-size:11px;color:rgba(255,255,255,.3);font-style:italic;margin-top:6px}
+.transcript-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;color:rgba(255,255,255,.55);font-size:12.5px;padding:8px 0;border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:color .18s}
+.transcript-toggle:hover{color:var(--gold-light)}
+.transcript-box{display:none;background:rgba(255,255,255,.06);border-radius:8px;padding:16px;margin-top:6px;margin-bottom:14px}
+.transcript-box.open{display:block}
+.transcript-box p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:8px}
+.listen-instruction{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.06);border-radius:8px;font-size:13px;color:rgba(255,255,255,.55);margin-bottom:18px}
+.case-header{background:var(--navy);border-radius:10px 10px 0 0;padding:22px 28px}
+.case-header h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#fff;margin-bottom:4px}
+.case-header p{font-size:13px;color:rgba(255,255,255,.5)}
+.case-body{background:#fff;border:1px solid rgba(26,39,68,.1);border-top:none;border-radius:0 0 10px 10px;padding:24px 28px;margin-bottom:28px}
+.case-section-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.case-text{font-size:14.5px;color:var(--text-mid);line-height:1.75;margin-bottom:20px}
+.case-text strong{color:var(--text-dark)}
+.assessment-header{background:linear-gradient(135deg,var(--navy-dark),var(--navy-mid));border-radius:12px;padding:28px 32px;margin-bottom:28px;text-align:center}
+.assessment-header h2{font-family:'Fraunces',serif;font-size:28px;color:#fff;margin-bottom:8px}
+.assessment-header p{color:rgba(255,255,255,.6);font-size:14px}
+.assessment-meta{display:flex;justify-content:center;gap:28px;margin-top:16px;flex-wrap:wrap}
+.assessment-meta-item{text-align:center}
+.assessment-meta-num{font-family:'Fraunces',serif;font-size:22px;color:var(--gold);font-weight:700}
+.assessment-meta-label{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em}
+.attempt-badge{display:inline-block;padding:4px 12px;border-radius:10px;font-size:11px;font-weight:600;background:rgba(201,151,58,.2);color:var(--gold-light);margin-top:8px}
+.assessment-result{display:none;text-align:center;padding:28px;background:#fff;border-radius:12px;border:2px solid var(--cream-dark);margin-bottom:24px}
+.result-score{font-family:'Fraunces',serif;font-size:56px;font-weight:700}
+.result-score.pass{color:var(--success)}.result-score.fail{color:var(--error)}
+.result-msg{font-size:16px;color:var(--text-mid);margin-top:8px}
+.retake-btn{padding:10px 24px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-top:16px;font-family:'DM Sans',sans-serif}
+
+/* ── Listening section: MCQ overrides for dark navy background ── */
+.audio-card .mcq-title{color:#fff;border-bottom-color:rgba(255,255,255,.15)}
+.audio-card .mcq-q{color:#fff}
+.audio-card .mcq-option{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.85)}
+.audio-card .mcq-option:hover{background:rgba(240,180,41,.18);border-color:var(--gold)}
+.audio-card .mcq-option.selected{background:rgba(240,180,41,.22);border-color:var(--gold);color:#fff}
+.audio-card .mcq-option.correct{border-color:#4ade80!important;background:rgba(74,222,128,.15)!important;color:#4ade80!important}
+.audio-card .mcq-option.wrong{border-color:#f87171!important;background:rgba(248,113,113,.15)!important;color:#f87171!important}
+.audio-card .opt-letter{background:rgba(255,255,255,.15);color:#fff}
+.audio-card .check-btn{background:var(--gold);color:var(--navy-dark)}
+.audio-card .check-btn:hover{background:var(--gold-light)}
+.audio-card .feedback.good{background:rgba(74,222,128,.15);color:#4ade80;border-color:rgba(74,222,128,.3)}
+.audio-card .feedback.bad{background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.3)}
+.audio-card .score-display{background:rgba(255,255,255,.08);color:#fff}
+.audio-card .score-val{color:#fff}
+.audio-card .score-label{color:rgba(255,255,255,.6)}
+.audio-card .listen-instruction{color:rgba(255,255,255,.7)}
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-title">Marketing &amp; Advertising English</div>
+    <div class="brand-sub">Professional Development</div>
+    <div class="level-badge">B1&ndash;B2 LEVEL</div>
+  </div>
+  <div class="sidebar-module-label">Module 4</div>
+  <div class="nav-item active" onclick="showSection('overview')"><span class="nav-icon">&#127968;</span><span class="nav-label">Overview</span></div>
+  <div class="nav-item" onclick="showSection('speaking')"><span class="nav-icon">&#127897;</span><span class="nav-label">Speaking</span><span class="nav-badge">21Q</span></div>
+  <div class="nav-item" onclick="showSection('wordbank')"><span class="nav-icon">&#129001;</span><span class="nav-label">Word Bank</span><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="showSection('reading')"><span class="nav-icon">&#128196;</span><span class="nav-label">Reading</span><span class="nav-badge">2T</span></div>
+  <div class="nav-item" onclick="showSection('vocabulary')"><span class="nav-icon">&#9999;</span><span class="nav-label">Vocabulary</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar')"><span class="nav-icon">&#128218;</span><span class="nav-label">Grammar</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar-review')"><span class="nav-icon">&#128269;</span><span class="nav-label">Grammar Review</span></div>
+  <div class="nav-item" onclick="showSection('writing')"><span class="nav-icon">&#9999;&#65039;</span><span class="nav-label">Writing</span><span class="nav-badge">2W</span></div>
+  <div class="nav-item" onclick="showSection('listening')"><span class="nav-icon">&#127911;</span><span class="nav-label">Listening</span><span class="nav-badge">4Ex</span></div>
+  <div class="nav-item" onclick="showSection('casestudies')"><span class="nav-icon">&#128202;</span><span class="nav-label">Case Studies</span><span class="nav-badge">2CS</span></div>
+  <div class="nav-item" onclick="showSection('assessment')"><span class="nav-icon">&#127919;</span><span class="nav-label">Final Assessment</span><span class="nav-badge">20Q</span></div>
+</nav>
+<div class="main">
+
+<!-- OVERVIEW -->
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="section-tag">Module 4 &middot; Marketing &amp; Advertising English</div>
+    <div class="hero-title">Digital Marketing<br><span>&amp; Social Media English</span></div>
+    <p class="hero-desc">Master the professional English of digital marketing &mdash; from SEO and paid search to social media strategy, content marketing, and analytics. Communicate confidently across all digital channels and contexts.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+    <div>
+      <div class="progress-label"><span>Module Progress</span><span id="progress-pct">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div><div class="card-title-bar"></div>
+      <div class="prose">
+        <p><strong>Welcome to Module 4: Digital Marketing and Social Media English.</strong> This module equips you with the vocabulary and communication skills needed to work effectively in one of the fastest-evolving areas of modern marketing. Whether you manage social media accounts, run paid advertising campaigns, analyse website performance, or create content for digital channels, this module will give you the English you need to do it with precision and confidence.</p>
+        <p>You will explore the specific language of digital marketing &mdash; from the acronyms and metrics of paid search and social advertising to the strategic vocabulary of content marketing, influencer partnerships, and conversion optimisation. You will read professional digital marketing briefs and reports, listen to agency presentations and campaign debriefs, and practise the grammar structures most commonly used when discussing data, describing trends, and making recommendations.</p>
+        <p>By the end of this module, you will be able to explain digital marketing strategies in clear professional English, interpret and discuss key performance metrics, write a social media content brief and a campaign performance report, and use the precise language expected in agency and client-side digital marketing roles.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div><div class="card-title-bar"></div>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-icon">&#10003;</div><div class="outcome-text">Use 21+ key digital marketing and social media terms accurately in professional contexts</div></div>
+        <div class="outcome-item"><div class="outcome-icon">&#10003;</div><div class="outcome-text">Explain the key digital channels, their uses, and how they work together in an integrated strategy</div></div>
+        <div class="outcome-item"><div class="outcome-icon">&#10003;</div><div class="outcome-text">Discuss and interpret digital performance metrics including CTR, CPC, ROAS, and engagement rate</div></div>
+        <div class="outcome-item"><div class="outcome-icon">&#10003;</div><div class="outcome-text">Use present perfect and past tenses accurately to describe campaign results and performance trends</div></div>
+        <div class="outcome-item"><div class="outcome-icon">&#10003;</div><div class="outcome-text">Use conditional structures to make data-driven recommendations and forecast outcomes</div></div>
+        <div class="outcome-item"><div class="outcome-icon">&#10003;</div><div class="outcome-text">Describe trends and changes using adverbs of degree and hedging language professionally</div></div>
+        <div class="outcome-item"><div class="outcome-icon">&#10003;</div><div class="outcome-text">Write a social media content brief and a campaign performance summary in clear English</div></div>
+        <div class="outcome-item"><div class="outcome-icon">&#10003;</div><div class="outcome-text">Analyse real-world digital marketing campaigns and evaluate their strategic effectiveness</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPEAKING -->
+<div id="speaking" class="section">
+  <div class="hero">
+    <div class="section-tag">Speaking Activities</div>
+    <div class="hero-title">Speaking <span>Discussion</span></div>
+    <p class="hero-desc">21 discussion questions on digital marketing and social media &mdash; practise explaining, analysing, and debating in professional English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Discussion Questions</div><div class="card-title-bar"></div>
+      <div class="q-grid"><div class="q-card"><div class="q-num">1</div><div class="q-text">Which social media platforms do you use most for professional purposes? How do they differ from those you use personally?</div></div><div class="q-card"><div class="q-num">2</div><div class="q-text">Have you ever been influenced by a social media advertisement to buy something? What made it effective?</div></div><div class="q-card"><div class="q-num">3</div><div class="q-text">What do you think is the difference between organic content and paid advertising on social media? Which do you think is more valuable?</div></div><div class="q-card"><div class="q-num">4</div><div class="q-text">What is SEO and why does it matter for businesses? Have you ever searched for something and noticed the difference between organic and paid search results?</div></div><div class="q-card"><div class="q-num">5</div><div class="q-text">What is a content calendar and why do brands need one? How far in advance do you think companies should plan their social media content?</div></div><div class="q-card"><div class="q-num">6</div><div class="q-text">What makes a social media post go viral? Can companies plan for virality, or is it mostly luck?</div></div><div class="q-card"><div class="q-num">7</div><div class="q-text">What do you understand by the term 'algorithm'? How do platform algorithms affect what brands can and cannot achieve with organic content?</div></div><div class="q-card"><div class="q-num">8</div><div class="q-text">What is influencer marketing? Do you think it is more or less trustworthy than traditional advertising?</div></div><div class="q-card"><div class="q-num">9</div><div class="q-text">What metrics would you use to measure the success of a social media campaign? How do you know if a campaign has actually worked?</div></div><div class="q-card"><div class="q-num">10</div><div class="q-text">What is the difference between reach and engagement? Which do you think is more useful as a performance indicator?</div></div><div class="q-card"><div class="q-num">11</div><div class="q-text">Have you ever read a brand's blog or watched a company's YouTube channel? What made the content worth watching or reading?</div></div><div class="q-card"><div class="q-num">12</div><div class="q-text">What is email marketing? Is it still relevant in the age of social media, or has it been replaced?</div></div><div class="q-card"><div class="q-num">13</div><div class="q-text">What does 'conversion' mean in digital marketing? Can you give examples of different types of conversion?</div></div><div class="q-card"><div class="q-num">14</div><div class="q-text">What is A/B testing and how is it used in digital marketing? Why is it important to test before scaling campaigns?</div></div><div class="q-card"><div class="q-num">15</div><div class="q-text">How has the growth of short-form video content (like TikTok and Instagram Reels) changed the way brands communicate?</div></div><div class="q-card"><div class="q-num">16</div><div class="q-text">What is retargeting and how does it work? Have you ever noticed that a product you looked at online seemed to follow you around the internet?</div></div><div class="q-card"><div class="q-num">17</div><div class="q-text">What is first-party data, and why has it become more important as third-party cookies are being phased out?</div></div><div class="q-card"><div class="q-num">18</div><div class="q-text">How should brands respond to negative comments or a crisis on social media? What are the risks of getting this wrong?</div></div><div class="q-card"><div class="q-num">19</div><div class="q-text">What is a landing page and what makes a good one? How does it differ from a website's homepage?</div></div><div class="q-card"><div class="q-num">20</div><div class="q-text">What is the difference between CPC (cost per click) and CPM (cost per thousand impressions)? When would you choose each model?</div></div><div class="q-card"><div class="q-num">21</div><div class="q-text">If you were managing the digital marketing for a new restaurant in your city, what channels would you prioritise and why?</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- WORD BANK -->
+<div id="wordbank" class="section">
+  <div class="hero">
+    <div class="section-tag">Word Bank</div>
+    <div class="hero-title">Word <span>Bank</span></div>
+    <p class="hero-desc">21 essential terms for digital marketing and social media &mdash; with precise definitions and professional usage guidance.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Key Vocabulary &mdash; 21 Terms</div><div class="card-title-bar"></div>
+      <div class="wb-grid"><div class="wb-card"><div class="wb-emoji">&#128269;</div><div class="wb-term">SEO (Search Engine Optimisation)</div><div class="wb-pos">noun phrase</div><div class="wb-def">The practice of improving a website's visibility in organic (unpaid) search engine results by optimising content, structure, and incoming links.</div></div><div class="wb-card"><div class="wb-emoji">&#128200;</div><div class="wb-term">CTR (Click-Through Rate)</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of people who click on a link or advertisement after seeing it, calculated as clicks divided by impressions multiplied by 100.</div></div><div class="wb-card"><div class="wb-emoji">&#128181;</div><div class="wb-term">CPC (Cost Per Click)</div><div class="wb-pos">noun phrase</div><div class="wb-def">A digital advertising pricing model in which an advertiser pays a set amount each time a user clicks on their advertisement.</div></div><div class="wb-card"><div class="wb-emoji">&#127979;</div><div class="wb-term">CPM (Cost Per Thousand Impressions)</div><div class="wb-pos">noun phrase</div><div class="wb-def">A digital advertising pricing model in which an advertiser pays a fixed rate for every 1,000 times their advertisement is displayed, regardless of clicks.</div></div><div class="wb-card"><div class="wb-emoji">&#128202;</div><div class="wb-term">Engagement rate</div><div class="wb-pos">noun phrase</div><div class="wb-def">A metric measuring the level of interaction (likes, comments, shares, saves) an audience has with a piece of content, expressed as a percentage of reach or followers.</div></div><div class="wb-card"><div class="wb-emoji">&#9881;</div><div class="wb-term">Algorithm</div><div class="wb-pos">noun</div><div class="wb-def">The set of computational rules used by search engines and social media platforms to determine which content is shown to which users, and in what order.</div></div><div class="wb-card"><div class="wb-emoji">&#127381;</div><div class="wb-term">Organic reach</div><div class="wb-pos">noun phrase</div><div class="wb-def">The number of unique people who see a piece of content without paid promotion, relying instead on algorithmic distribution and sharing.</div></div><div class="wb-card"><div class="wb-emoji">&#127358;</div><div class="wb-term">Paid reach</div><div class="wb-pos">noun phrase</div><div class="wb-def">The number of unique people who see a piece of content as a result of paid advertising spend on a platform.</div></div><div class="wb-card"><div class="wb-emoji">&#129309;</div><div class="wb-term">Influencer marketing</div><div class="wb-pos">noun phrase</div><div class="wb-def">A form of social media marketing that uses individuals with significant and engaged online followings to promote products or services to their audience.</div></div><div class="wb-card"><div class="wb-emoji">&#128246;</div><div class="wb-term">ROAS (Return on Ad Spend)</div><div class="wb-pos">noun phrase</div><div class="wb-def">A metric measuring the revenue generated for every unit of currency spent on advertising, calculated as revenue divided by ad spend.</div></div><div class="wb-card"><div class="wb-emoji">&#128269;</div><div class="wb-term">Conversion</div><div class="wb-pos">noun</div><div class="wb-def">A desired action taken by a website visitor or social media user, such as making a purchase, signing up for a newsletter, or completing a contact form.</div></div><div class="wb-card"><div class="wb-emoji">&#128203;</div><div class="wb-term">Content calendar</div><div class="wb-pos">noun phrase</div><div class="wb-def">A planning document that schedules and organises all content to be published across digital channels, including dates, formats, topics, and responsible team members.</div></div><div class="wb-card"><div class="wb-emoji">&#128268;</div><div class="wb-term">Retargeting</div><div class="wb-pos">noun phrase</div><div class="wb-def">A digital advertising technique that shows ads to users who have previously visited a website or interacted with a brand, using cookies or pixel tracking.</div></div><div class="wb-card"><div class="wb-emoji">&#9995;</div><div class="wb-term">First-party data</div><div class="wb-pos">noun phrase</div><div class="wb-def">Data collected directly by a brand from its own customers and users through its website, app, email list, or loyalty programme.</div></div><div class="wb-card"><div class="wb-emoji">&#128290;</div><div class="wb-term">A/B testing</div><div class="wb-pos">noun phrase</div><div class="wb-def">An experiment in which two versions of a piece of content, advertisement, or webpage are shown to different audience segments to determine which performs better.</div></div><div class="wb-card"><div class="wb-emoji">&#128201;</div><div class="wb-term">Conversion rate</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of visitors or users who complete a desired action (a conversion) out of the total number who had the opportunity to do so.</div></div><div class="wb-card"><div class="wb-emoji">&#128222;</div><div class="wb-term">Landing page</div><div class="wb-pos">noun phrase</div><div class="wb-def">A standalone web page designed to receive traffic from a specific advertising campaign or link, optimised to drive a single conversion action.</div></div><div class="wb-card"><div class="wb-emoji">&#128463;</div><div class="wb-term">Content marketing</div><div class="wb-pos">noun phrase</div><div class="wb-def">A strategic approach to marketing that focuses on creating and distributing valuable, relevant content to attract and engage a defined target audience.</div></div><div class="wb-card"><div class="wb-emoji">&#127775;</div><div class="wb-term">Viral content</div><div class="wb-pos">noun phrase</div><div class="wb-def">Content that spreads rapidly and widely across social media platforms because users share it organically at an unusually high rate.</div></div><div class="wb-card"><div class="wb-emoji">&#128268;</div><div class="wb-term">Cookie</div><div class="wb-pos">noun</div><div class="wb-def">A small file placed on a user's device by a website to track their behaviour, preferences, and browsing history for analytics and advertising purposes.</div></div><div class="wb-card"><div class="wb-emoji">&#128202;</div><div class="wb-term">Impression</div><div class="wb-pos">noun</div><div class="wb-def">A single instance of an advertisement or piece of content being displayed on a user's screen, regardless of whether they interact with it.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- READING -->
+<div id="reading" class="section">
+  <div class="hero">
+    <div class="section-tag">Reading Activities</div>
+    <div class="hero-title">Reading <span>Texts</span></div>
+    <p class="hero-desc">Two professional texts on digital marketing strategy and social media. Read carefully, then answer the comprehension questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Text 1: The Digital Marketing Landscape</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; What Is Digital Marketing?</h3>
+        <p>Digital marketing encompasses all marketing activities that use electronic devices and the internet to reach and engage consumers. It includes search engine optimisation (SEO), paid search advertising (often called PPC or pay-per-click), social media marketing, email marketing, content marketing, influencer partnerships, and display advertising. Unlike traditional marketing channels, digital marketing offers an unprecedented ability to measure performance in real time: marketers can see exactly how many people saw an advertisement, how many clicked on it, how many visited the resulting webpage, and how many ultimately made a purchase or completed another desired action.</p>
+        <p>This measurability is both digital marketing's greatest strength and one of its most significant management challenges. Because so much data is available, marketing teams can fall into the trap of optimising for easily measurable metrics &mdash; clicks, impressions, follower counts &mdash; rather than for outcomes that actually drive business value. A social media post with thousands of likes but zero commercial impact is a vanity metric; it looks impressive but does not justify the investment. Effective digital marketers focus on metrics that connect directly to business objectives: conversion rate, return on ad spend (ROAS), customer acquisition cost (CAC), and ultimately, revenue and profit.</p>
+        <h3>Paragraph 2 &mdash; The Key Digital Channels</h3>
+        <p>Search engine optimisation (SEO) is the practice of improving a website's visibility in unpaid search engine results by optimising content, site structure, page speed, and the quality and quantity of links from other websites. The goal is to rank as highly as possible in search results for terms that potential customers are actively searching for. SEO is a long-term investment: it takes months to build authority, but once established, organic search traffic is highly cost-effective because it requires no ongoing advertising spend to maintain.</p>
+        <p>Paid search advertising works differently: advertisers bid in real-time auctions to have their advertisements displayed alongside organic search results for specific keywords. They pay only when a user clicks (CPC model) or, for brand awareness campaigns, per thousand impressions (CPM model). The key advantage of paid search is speed: unlike SEO, results are immediate. The disadvantage is that visibility stops the moment the advertising budget is exhausted. Social media advertising operates on a similar paid model but targets users based on demographic, psychographic, and behavioural data rather than search intent. Display advertising &mdash; banner ads on websites and apps &mdash; is typically used for brand awareness and retargeting: showing ads to users who have already visited a brand's website to encourage them to return and convert.</p>
+        <h3>Paragraph 3 &mdash; Integration and Attribution</h3>
+        <p>The most effective digital marketing strategies do not treat individual channels in isolation. A well-designed digital strategy integrates multiple channels so that they reinforce each other throughout the customer journey: awareness is built through social media content and display advertising; consideration is driven through SEO and targeted email campaigns; conversion is triggered by retargeting ads and landing page optimisation; and loyalty is maintained through email newsletters, loyalty programmes, and ongoing content. Understanding how different channels contribute to conversions &mdash; a challenge known as attribution &mdash; is one of the most complex and debated problems in digital marketing. Last-click attribution, which assigns all credit to the final touchpoint before conversion, is widely used but widely criticised for undervaluing upper-funnel activities like awareness advertising that set the conditions for eventual purchase.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">Comprehension Questions &mdash; Text 1 (10 Questions)</div>
+        <div id="r1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r1')">Check Answers</button>
+        <div id="r1-feedback" class="feedback"></div>
+        <div id="r1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Text 2: Social Media Strategy and Content Marketing</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; The Rise of Social Media Marketing</h3>
+        <p>Social media has fundamentally transformed the relationship between brands and their audiences. For most of marketing history, brand communication was one-directional: companies produced messages and consumers received them. Social media introduced a two-way dynamic in which consumers can respond to, share, reinterpret, and even challenge brand communications in real time, and in public. This shift has created both enormous opportunity &mdash; brands can build genuine communities around their products &mdash; and significant risk: a poorly judged post, an inadequate response to a crisis, or an ill-timed campaign can generate negative publicity that spreads faster than any advertising budget could ever amplify a positive message.</p>
+        <p>Effective social media strategy requires a clear understanding of platform differences. Instagram and Pinterest favour visual content and are particularly effective for lifestyle, fashion, beauty, and food brands. LinkedIn is the primary platform for B2B marketing, thought leadership, and professional recruitment. Twitter (now X) excels at real-time conversation, news, and customer service interactions. TikTok has transformed short-form video and is the dominant platform for reaching younger demographics. YouTube remains the second-largest search engine in the world and is essential for brands whose products benefit from demonstration, tutorial content, or long-form storytelling.</p>
+        <h3>Paragraph 2 &mdash; Content Marketing and the Algorithm Challenge</h3>
+        <p>Content marketing is a strategic approach that focuses on creating and distributing content that is genuinely valuable to the target audience &mdash; educational, entertaining, or inspiring &mdash; rather than overtly promotional. The underlying logic is that brands which consistently provide value build trust and authority, which ultimately drives commercial outcomes. A successful content marketing programme requires a content strategy (defining what to create and for whom), a content calendar (scheduling content across channels), a production process, and a measurement framework that tracks whether content is achieving its objectives.</p>
+        <p>One of the central challenges of organic social media is the declining organic reach caused by platform algorithms. When social platforms were new, publishing a post to a business page meant that most followers would see it. Today, organic reach on most platforms has declined dramatically: on Facebook and Instagram, for example, organic reach for business pages typically sits between 1% and 5% of followers. Algorithms prioritise content that generates immediate engagement &mdash; comments, shares, saves &mdash; and demote content that does not. This means that producing high-quality, genuinely engaging content has become more important than ever, while broadcasting mediocre content at high frequency has become an increasingly expensive way to achieve very little.</p>
+        <h3>Paragraph 3 &mdash; Influencer Marketing and Creator Economy</h3>
+        <p>Influencer marketing has grown into a multi-billion-dollar industry. By partnering with individuals who have established, engaged audiences on social media platforms, brands can achieve targeted reach with an authenticity that traditional advertising rarely matches. Research consistently shows that consumers trust recommendations from people they follow more than they trust advertisements from brands, even when they know the recommendation is paid. Micro-influencers &mdash; those with audiences of 10,000 to 100,000 followers &mdash; typically generate higher engagement rates and more genuine audience connection than mega-influencers, and at significantly lower cost. The challenge for brands is selecting the right partners: an influencer's audience demographics, engagement rate, content quality, and brand fit must all be carefully evaluated before any partnership is agreed.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">Comprehension Questions &mdash; Text 2 (10 Questions)</div>
+        <div id="r2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r2')">Check Answers</button>
+        <div id="r2-feedback" class="feedback"></div>
+        <div id="r2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VOCABULARY -->
+<div id="vocabulary" class="section">
+  <div class="hero">
+    <div class="section-tag">Vocabulary Exercises</div>
+    <div class="hero-title">Vocabulary <span>Practice</span></div>
+    <p class="hero-desc">Three vocabulary exercises to consolidate your command of digital marketing and social media English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Multiple Choice</div></div>
+      <div class="ex-title">Choosing the Right Word</div>
+      <p class="ex-instruction">Select the best word or phrase to complete each sentence in a professional digital marketing context.</p>
+      <div id="v1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('v1')">Check Answers</button>
+      <div id="v1-feedback" class="feedback"></div>
+      <div id="v1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Gap-Fill</div></div>
+      <div class="ex-title">Complete the Sentences</div>
+      <p class="ex-instruction">Type the correct word from the box to complete each sentence. Check your spelling carefully.</p>
+      <div class="word-box">
+        <strong style="color:var(--text-dark);margin-right:4px">Word Box:</strong>
+        <span class="word-chip">algorithm</span><span class="word-chip">retargeting</span><span class="word-chip">conversion</span>
+        <span class="word-chip">impression</span><span class="word-chip">organic</span><span class="word-chip">engagement</span>
+        <span class="word-chip">influencer</span><span class="word-chip">landing</span><span class="word-chip">attribution</span>
+        <span class="word-chip">viral</span>
+      </div>
+      <div id="v2-gaps"></div>
+      <button class="check-btn" onclick="checkGaps()">Check Answers</button>
+      <div id="v2-feedback" class="feedback"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">True / False</div></div>
+      <div class="ex-title">True or False?</div>
+      <p class="ex-instruction">Read each statement about digital marketing. Decide whether it is TRUE or FALSE and click your answer.</p>
+      <div id="v3-tf"></div>
+      <button class="check-btn" onclick="checkTF()">Check Answers</button>
+      <div id="v3-feedback" class="feedback"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GRAMMAR -->
+<div id="grammar" class="section">
+  <div class="hero">
+    <div class="section-tag">Grammar Exercises</div>
+    <div class="hero-title">Grammar <span>Practice</span></div>
+    <p class="hero-desc">Three grammar exercises covering present perfect for campaign results, conditionals for recommendations, and hedging language for data analysis.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Present Perfect &amp; Past Simple</div></div>
+      <div class="ex-title">Reporting Campaign Results and Performance</div>
+      <p class="ex-instruction">Choose the correct tense &mdash; present perfect or past simple &mdash; to complete each sentence about digital marketing performance.</p>
+      <div id="g1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g1')">Check Answers</button>
+      <div id="g1-feedback" class="feedback"></div>
+      <div id="g1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Conditionals for Recommendations</div></div>
+      <div class="ex-title">Making Data-Driven Recommendations</div>
+      <p class="ex-instruction">Select the correct conditional structure to complete each digital marketing recommendation or forecast.</p>
+      <div id="g2-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g2')">Check Answers</button>
+      <div id="g2-feedback" class="feedback"></div>
+      <div id="g2-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">Hedging Language</div></div>
+      <div class="ex-title">Describing Trends and Data with Appropriate Certainty</div>
+      <p class="ex-instruction">Choose the correct hedging word or phrase to describe each digital marketing trend or data point with appropriate precision.</p>
+      <div id="g3-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g3')">Check Answers</button>
+      <div id="g3-feedback" class="feedback"></div>
+      <div id="g3-score" class="score-display"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GRAMMAR REVIEW -->
+<div id="grammar-review" class="section">
+  <div class="hero">
+    <div class="section-tag">Grammar Reference</div>
+    <div class="hero-title">Grammar <span>Review</span></div>
+    <p class="hero-desc">Three detailed reference boxes for all grammar points in this module. Study these alongside the grammar exercises.</p>
+  </div>
+  <div class="content-area">
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 1</div>
+      <div class="gr-box-title">Present Perfect vs Past Simple for Campaign Reporting</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">When to use each tense in digital marketing contexts</div>
+        <div class="gr-rule-text">In digital marketing reports, debriefs, and presentations, choosing between present perfect and past simple signals something important about how the result relates to the current situation. Using the wrong tense can make your reporting sound imprecise or unprofessional.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Tense</th><th>When to use it</th><th>Digital marketing example</th></tr>
+        <tr><td>Present perfect (have/has + pp)</td><td>Recent results still relevant now; changes with current effect; period not yet finished</td><td>The campaign has generated 1,200 leads this month.</td></tr>
+        <tr><td>Past simple</td><td>Completed action at a specific past time; finished period; historical data</td><td>The Q3 campaign generated 4,800 leads.</td></tr>
+        <tr><td>Present perfect (ever/never)</td><td>Experience up to now</td><td>This is the highest CTR we have ever achieved.</td></tr>
+        <tr><td>Present perfect continuous</td><td>Ongoing action from past to now</td><td>Engagement has been declining since the algorithm update.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Examples in campaign debriefs and performance reports</div>
+        <div class="gr-example">The paid search campaign ran for six weeks and generated 3,200 clicks. [past simple: campaign is over]</div>
+        <div class="gr-example">Since launching the retargeting campaign, conversions have increased by 34%. [present perfect: still ongoing, result still relevant]</div>
+        <div class="gr-example">We tested three ad creatives last week and Creative B outperformed the others. [past simple: specific finished test]</div>
+        <div class="gr-example">Organic reach has dropped significantly since the platform updated its algorithm. [present perfect: change still affecting us now]</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 2</div>
+      <div class="gr-box-title">Conditional Structures for Digital Marketing Recommendations</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why conditionals are essential in digital marketing</div>
+        <div class="gr-rule-text">Digital marketers constantly make recommendations based on data. Conditional structures allow you to link actions to outcomes, make hypothetical forecasts, and express recommendations diplomatically and precisely. The type of conditional signals how certain or realistic the scenario is.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Type</th><th>Form</th><th>Use in digital marketing</th></tr>
+        <tr><td>Zero conditional</td><td>If + present, present</td><td>General truths about digital behaviour</td></tr>
+        <tr><td>First conditional</td><td>If + present, will + infinitive</td><td>Realistic future recommendations</td></tr>
+        <tr><td>Second conditional</td><td>If + past, would + infinitive</td><td>Hypothetical or low-probability scenarios</td></tr>
+        <tr><td>Third conditional</td><td>If + past perfect, would have + pp</td><td>Retrospective analysis of past campaigns</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Examples in recommendations and campaign analysis</div>
+        <div class="gr-example">If we increase the daily budget by 20%, the campaign will reach approximately 15% more users. [first: realistic recommendation]</div>
+        <div class="gr-example">If we had launched the campaign earlier in Q4, we would have captured more pre-Christmas traffic. [third: retrospective analysis]</div>
+        <div class="gr-example">If the algorithm prioritises video content, engagement rates tend to improve significantly. [zero: general pattern]</div>
+        <div class="gr-example">If we were to shift 30% of the budget to TikTok, we would likely reach a significantly younger demographic. [second: hypothetical strategy]</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 3</div>
+      <div class="gr-box-title">Hedging Language for Data Analysis and Trend Description</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why hedging is essential in digital marketing reporting</div>
+        <div class="gr-rule-text">Digital data can be ambiguous, incomplete, or subject to multiple interpretations. Professional digital marketers use hedging language to convey appropriate levels of certainty, acknowledge limitations in the data, and avoid overclaiming. Overclaiming in reports damages credibility; underclaiming makes recommendations sound weak. The goal is calibrated precision.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Function</th><th>Hedging expressions</th><th>Example</th></tr>
+        <tr><td>Approximate quantity</td><td>approximately, around, roughly, about</td><td>The campaign reached approximately 240,000 users.</td></tr>
+        <tr><td>Uncertain conclusion</td><td>appears to, seems to, tends to, suggests</td><td>The data suggests that video ads outperform static images.</td></tr>
+        <tr><td>Limited certainty</td><td>likely, probably, possibly, may, might</td><td>The drop in CTR may be related to ad fatigue.</td></tr>
+        <tr><td>Qualified claim</td><td>generally, typically, in most cases, usually</td><td>Higher frequency typically leads to declining engagement rates.</td></tr>
+        <tr><td>Attribution of view</td><td>according to, based on, the data indicates</td><td>Based on current trends, Q4 performance is expected to improve.</td></tr>
+        <tr><td>Degree of change</td><td>slightly, moderately, significantly, substantially, dramatically</td><td>Conversions have improved slightly since the landing page update.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Comparison: overclaiming vs hedged professional language</div>
+        <div class="gr-example">Overclaiming: "The video ads are definitely better. Our CTR went up."
+Hedged: "The video ads appear to outperform static creatives; CTR has improved by approximately 18% since the switch, though sample size remains limited."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WRITING -->
+<div id="writing" class="section">
+  <div class="hero">
+    <div class="section-tag">Writing Activities</div>
+    <div class="hero-title">Writing <span>Tasks</span></div>
+    <p class="hero-desc">Two professional writing tasks &mdash; practise producing clear, data-informed digital marketing documents in English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Writing Activity 1 &mdash; Social Media Content Brief</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>Task</h4>
+        <p>You are the social media manager at a sustainable fashion brand called <em>Verdure</em>. Write a content brief (160&ndash;200 words) for a four-week Instagram campaign promoting the launch of a new recycled denim collection. The brief should specify the campaign objective, target audience, content pillars, posting frequency, tone of voice, and one key performance indicator. Use appropriate hedging language where relevant.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Campaign objective &middot; Target audience &middot; Content pillars &middot; KPIs &middot; Professional register &middot; Hedging language
+      </div>
+      <textarea class="writing-textarea" id="w1-text" placeholder="SOCIAL MEDIA CONTENT BRIEF&#10;Brand: Verdure&#10;Campaign: Recycled Denim Collection Launch&#10;&#10;Objective:&#10;...&#10;&#10;Target Audience:&#10;...&#10;&#10;Content Pillars:&#10;...&#10;&#10;Posting Schedule:&#10;...&#10;&#10;Tone of Voice:&#10;...&#10;&#10;Key Performance Indicator:&#10;..." oninput="updateWordCount('w1',200)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w1-wc">0 / 200 words</span>
+        <button class="submit-btn" onclick="submitWriting('w1')">Submit</button>
+      </div>
+      <div id="w1-success" class="submit-success">Submitted! Well done for practising professional digital marketing writing in English.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Writing Activity 2 &mdash; Campaign Performance Summary</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>Task</h4>
+        <p>Write a campaign performance summary (180&ndash;220 words) for a four-week paid social campaign that has just ended. Use the following data: Total spend: &pound;8,400. Impressions: 1.2 million. Clicks: 14,400. Conversions: 288. Revenue generated: &pound;21,600. Compare these results to the previous campaign (spend: &pound;6,000; conversions: 160; revenue: &pound;12,800). Use present perfect and past simple tenses correctly, include conditional recommendations for the next campaign, and use appropriate hedging language throughout.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Correct use of present perfect / past simple &middot; Conditional recommendations &middot; Hedging language &middot; Data interpretation &middot; Professional report structure
+      </div>
+      <textarea class="writing-textarea" id="w2-text" placeholder="CAMPAIGN PERFORMANCE SUMMARY&#10;&#10;Overview:&#10;...&#10;&#10;Key Results:&#10;...&#10;&#10;Comparison with Previous Campaign:&#10;...&#10;&#10;Recommendations:&#10;..." oninput="updateWordCount('w2',220)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w2-wc">0 / 220 words</span>
+        <button class="submit-btn" onclick="submitWriting('w2')">Submit</button>
+      </div>
+      <div id="w2-success" class="submit-success">Submitted! Excellent work applying tense, conditional, and hedging structures in a realistic digital marketing context.</div>
+    </div>
+  </div>
+</div>
+
+<!-- LISTENING -->
+<div id="listening" class="section">
+  <div class="hero">
+    <div class="section-tag">Listening Activities</div>
+    <div class="hero-title">Listening <span>Activities</span></div>
+    <p class="hero-desc">4 audio activities with built-in speech players &mdash; press Play, listen, then answer the questions.</p>
+  </div>
+  <div class="content-area"><div id="listening-cards"></div></div>
+</div>
+
+<!-- CASE STUDIES -->
+<div id="casestudies" class="section">
+  <div class="hero">
+    <div class="section-tag">Case Studies</div>
+    <div class="hero-title">Case <span>Studies</span></div>
+    <p class="hero-desc">Two real-world inspired digital marketing case studies. Read carefully and answer the analysis questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="case-header">
+      <h3>Case Study 1: Bloom Botanics &mdash; Growing a DTC Brand Through Organic Social</h3>
+      <p>Content Marketing &middot; Organic Social &middot; Community Building</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Bloom Botanics is a UK-based direct-to-consumer (DTC) wellness brand founded in 2021, specialising in plant-based supplements. With a launch budget of just &pound;35,000 &mdash; a fraction of what established competitors spent on paid advertising alone &mdash; the founder, Aisha Mensah, decided to build the brand almost entirely through organic social media and content marketing rather than paid channels. The decision was strategic: in a crowded market where paid acquisition costs were rising steeply, Aisha believed that genuine community building would generate more durable brand equity and lower long-term customer acquisition costs than any paid campaign.</p>
+        <p>The brand launched on Instagram and TikTok simultaneously. Rather than using a content calendar filled with promotional posts, Aisha established three content pillars: <strong>education</strong> (explaining the science behind plant-based nutrition in accessible, jargon-free language), <strong>community</strong> (sharing customer stories, user-generated content, and behind-the-scenes content from the brand's small team), and <strong>transparency</strong> (openly discussing ingredient sourcing, pricing decisions, and even manufacturing challenges). This approach was deliberately designed to stand out from the polished, aspirational content typical of the wellness category.</p>
+      </div>
+      <div class="case-section-label">Performance and Insights</div>
+      <div class="case-text">
+        <p>Within twelve months, Bloom Botanics had accumulated 84,000 Instagram followers and 210,000 TikTok followers, with an average <strong>engagement rate</strong> of 6.8% across both platforms &mdash; significantly above the industry average of 1.5%. More importantly, 41% of new customers reported first discovering the brand through organic social content, and the brand's <strong>conversion rate</strong> from social traffic was 3.4% &mdash; more than double the industry benchmark of 1.5% for wellness brands.</p>
+        <p>The case illustrates several important principles. First, <strong>organic reach</strong>, while declining on most platforms, can still be highly effective when content is genuinely valuable and consistent. Second, community-driven content &mdash; user-generated posts, real customer reviews, transparent behind-the-scenes content &mdash; consistently outperformed polished brand content in both reach and engagement. Third, the absence of paid spend forced the team to develop creative and strategic discipline that produced content with real intrinsic value. The brand's <strong>customer acquisition cost</strong> (CAC) through organic channels was &pound;9.40, compared to an industry average CAC through paid social of &pound;34 for comparable wellness brands.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">Case Study 1 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs1')">Check Answers</button>
+        <div id="cs1-feedback" class="feedback"></div>
+        <div id="cs1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="case-header">
+      <h3>Case Study 2: Forte Fitness &mdash; Scaling with Paid Social and Retargeting</h3>
+      <p>Paid Social Advertising &middot; Retargeting &middot; Conversion Optimisation</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Forte Fitness is an online personal training platform that launched in January 2022 with a monthly subscription model priced at &pound;29 per month. The founding team had strong product and fitness expertise but limited marketing knowledge. In their first six months, they ran paid Meta (Facebook and Instagram) advertising campaigns without a clear strategy, spending &pound;18,000 with modest results: 340 paying subscribers, an average <strong>CPC</strong> of &pound;3.20, and a <strong>conversion rate</strong> from click to subscription of just 1.1%.</p>
+        <p>The team engaged a digital marketing agency to audit their campaigns. The audit identified three critical problems. First, the campaigns were targeting too broad an audience: men and women aged 18 to 55 interested in fitness. This lack of precision meant high CPCs and low conversion rates. Second, there was no <strong>retargeting</strong> in place: visitors who had viewed the website but not subscribed were never followed up with targeted advertising. Third, the <strong>landing page</strong> was poorly optimised: it contained too much text, no social proof (testimonials or reviews), and the subscription call-to-action was buried below the fold.</p>
+      </div>
+      <div class="case-section-label">The Optimisation Programme</div>
+      <div class="case-text">
+        <p>The agency implemented a three-stage programme. First, they rebuilt the audience targeting using a lookalike audience based on existing subscribers &mdash; a Meta tool that identifies users who share characteristics with a brand's best customers. This narrower targeting reduced CPC from &pound;3.20 to &pound;1.85 within four weeks. Second, they installed a Meta Pixel on the website and built a retargeting campaign that served personalised ads to visitors who had not converted, with different creative messaging depending on how far they had progressed through the subscription flow. Retargeted users converted at 4.1% &mdash; nearly four times the rate of cold audiences. Third, the landing page was rebuilt with a cleaner design, five video testimonials above the fold, a 14-day free trial offer, and a single prominent call-to-action button.</p>
+        <p>The combined effect was dramatic. Within three months of the optimisation programme, monthly new subscriber acquisitions increased from an average of 57 per month to 214 per month. <strong>ROAS</strong> improved from 1.8x to 4.3x, meaning the business was generating &pound;4.30 in monthly recurring revenue for every &pound;1 spent on advertising. Total subscribers passed 2,000 within eight months of launch &mdash; a milestone the team had originally projected to reach in 18 months.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">Case Study 2 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs2')">Check Answers</button>
+        <div id="cs2-feedback" class="feedback"></div>
+        <div id="cs2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL ASSESSMENT -->
+<div id="assessment" class="section">
+  <div class="hero">
+    <div class="section-tag">Final Assessment</div>
+    <div class="hero-title">Final <span>Assessment</span></div>
+    <p class="hero-desc">20 multiple choice questions covering all module sections. Score 70% or above to pass. You have two attempts.</p>
+  </div>
+  <div class="content-area">
+    <div class="assessment-header">
+      <h2>Module 4 &mdash; Final Assessment</h2>
+      <p>Digital Marketing and Social Media English</p>
+      <div class="assessment-meta">
+        <div class="assessment-meta-item"><div class="assessment-meta-num">20</div><div class="assessment-meta-label">Questions</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">70%</div><div class="assessment-meta-label">Pass Mark</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">2</div><div class="assessment-meta-label">Attempts</div></div>
+      </div>
+      <div class="attempt-badge" id="attempt-badge">Attempt 1 of 2</div>
+    </div>
+    <div id="assessment-result" class="assessment-result">
+      <div class="result-score" id="result-score-text"></div>
+      <div class="result-msg" id="result-msg"></div>
+      <div id="retake-wrap"></div>
+    </div>
+    <div class="card" id="assessment-form">
+      <div class="mcq-title">Assessment Questions</div>
+      <div id="fa-mcqs"></div>
+      <button class="check-btn" onclick="submitAssessment()" style="margin-top:8px;padding:12px 32px;font-size:14px">Submit Assessment</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const DATA = {
+r1:{questions:[
+  {q:"According to Text 1, what makes digital marketing different from traditional marketing?",opts:["It is always cheaper than traditional marketing","It offers the ability to measure performance in real time with precision","It reaches more people than television advertising","It requires no creative input from marketers"],ans:1},
+  {q:"What does the text say is a 'vanity metric'?",opts:["A metric used to measure return on ad spend","A metric that looks impressive but does not connect to business value, such as likes with no commercial impact","A metric used exclusively by luxury brands","A metric calculated from customer satisfaction surveys"],ans:1},
+  {q:"According to Text 1, what are the metrics that effective digital marketers focus on?",opts:["Follower count, impressions, and social shares","Conversion rate, ROAS, customer acquisition cost, revenue and profit","Click-through rate, reach, and engagement rate","Brand awareness, recall, and consideration scores"],ans:1},
+  {q:"What is the main advantage of SEO over paid search advertising?",opts:["SEO produces results faster than paid search","SEO is easier to implement than paid advertising","Once established, organic search traffic is cost-effective as it requires no ongoing advertising spend","SEO guarantees a first-page ranking for any search term"],ans:2},
+  {q:"In paid search advertising, what happens when the advertising budget is exhausted?",opts:["The campaign automatically resets with a new budget","Visibility stops immediately","The platform continues to show ads at a reduced rate","The advertiser receives a partial refund"],ans:1},
+  {q:"What does retargeting mean, according to Text 1?",opts:["Targeting a new audience segment for the first time","Showing ads to users who have already visited a brand's website to encourage them to return and convert","Re-running a previous campaign without any changes","Targeting users based on their search keywords"],ans:1},
+  {q:"What challenge does Text 1 describe as 'attribution'?",opts:["Deciding which country to target with a campaign","Measuring how many impressions an ad receives","Understanding how different channels contribute to conversions","Choosing between CPC and CPM pricing models"],ans:2},
+  {q:"What is 'last-click attribution' and what is the criticism of it?",opts:["It assigns credit to the first touchpoint; critics say it overvalues awareness advertising","It assigns all credit to the final touchpoint before conversion; critics say it undervalues upper-funnel activities","It assigns equal credit to all touchpoints; critics say it is too complicated to implement","It assigns credit based on time spent on each channel; critics say it is inaccurate"],ans:1},
+  {q:"According to Text 1, which model do advertisers use when they want to pay only when a user clicks?",opts:["CPM (cost per thousand impressions)","CPC (cost per click)","CPA (cost per acquisition)","CPV (cost per view)"],ans:1},
+  {q:"What does the text say about a well-designed digital marketing strategy?",opts:["It focuses exclusively on paid channels for maximum control","It uses social media advertising as the only channel for brand awareness","It integrates multiple channels so they reinforce each other throughout the customer journey","It prioritises SEO over all other channels to reduce paid spend"],ans:2}
+]},
+r2:{questions:[
+  {q:"What fundamental change did social media introduce to brand communication?",opts:["It made advertising more expensive for large brands","It introduced a two-way dynamic where consumers can respond, share, and challenge brand communications in real time and publicly","It replaced email marketing as the primary communication channel","It allowed brands to target users based on their search behaviour"],ans:1},
+  {q:"According to Text 2, what type of content does Instagram favour?",opts:["Long-form written articles and whitepapers","Real-time news and customer service interactions","Visual content, particularly for lifestyle, fashion, beauty, and food brands","Professional recruitment and B2B thought leadership"],ans:2},
+  {q:"What does the text say about YouTube's status as a search engine?",opts:["It is the largest search engine in the world, ahead of Google","It is the second-largest search engine in the world","It is primarily used for entertainment and not relevant for brand marketing","It is declining in importance as TikTok grows"],ans:1},
+  {q:"What is content marketing, according to Text 2?",opts:["Creating advertising that appears on social media platforms","Paying influencers to promote products to their audiences","Creating and distributing content that is genuinely valuable to the target audience rather than overtly promotional","Writing product descriptions for e-commerce websites"],ans:2},
+  {q:"What has happened to organic reach on most social platforms, according to the text?",opts:["It has increased significantly due to growing platform audiences","It has remained stable due to improved content quality","It has declined dramatically, often sitting between 1% and 5% for business pages on Facebook and Instagram","It has only declined for brands that post too frequently"],ans:2},
+  {q:"What content does the algorithm prioritise, according to Text 2?",opts:["Content from accounts with the most followers","Content that generates immediate engagement such as comments, shares, and saves","Content that includes paid promotion","Content posted at peak hours of the day"],ans:1},
+  {q:"What is the definition of a micro-influencer, as described in Text 2?",opts:["An influencer with fewer than 1,000 followers","An influencer with between 10,000 and 100,000 followers","An influencer with between 100,000 and 1 million followers","Any influencer who accepts payment below a certain rate"],ans:1},
+  {q:"Why do micro-influencers typically generate higher engagement rates than mega-influencers?",opts:["They are paid more and therefore produce better quality content","They tend to have more genuine audience connection and community trust","They use more sophisticated targeting tools on their posts","They post more frequently and at more optimal times"],ans:1},
+  {q:"What factors must brands evaluate before agreeing an influencer partnership?",opts:["Only the influencer's follower count and posting frequency","The influencer's audience demographics, engagement rate, content quality, and brand fit","Only the cost of the partnership and the influencer's reach","The influencer's personal values and lifestyle choices"],ans:1},
+  {q:"What does the text describe as both an 'enormous opportunity' and a 'significant risk' of social media?",opts:["The ability to target audiences with precision","The two-way nature of social media communication, where brands can build communities but negative publicity can also spread rapidly","The declining organic reach on most platforms","The growing cost of paid social advertising"],ans:1}
+]},
+v1:{questions:[
+  {q:"The team calculated that for every pound spent on advertising, they generated four pounds in revenue — a _______ of 4.0.",opts:["CTR","CPC","ROAS","CPM"],ans:2},
+  {q:"The _______ of the paid search campaign was 3.8%, meaning fewer than four in every hundred people who saw the ad clicked on it.",opts:["conversion rate","engagement rate","CTR","impression share"],ans:2},
+  {q:"After visiting the product page without purchasing, users were served personalised ads through a _______ campaign that reminded them what they had left behind.",opts:["retargeting","influencer","organic","A/B testing"],ans:0},
+  {q:"The brand worked with a fitness _______ who had 85,000 highly engaged followers in the exact target demographic they were trying to reach.",opts:["algorithm","conversion","influencer","impression"],ans:2},
+  {q:"Each ad was displayed 500,000 times during the campaign period, generating 500,000 _______.",opts:["conversions","impressions","clicks","engagements"],ans:1},
+  {q:"The team ran _______ tests on three versions of the email subject line to determine which produced the highest open rate before sending to the full list.",opts:["retargeting","A/B","conversion","organic"],ans:1},
+  {q:"The Instagram post achieved an _______ of 7.2%, meaning more than seven in every hundred followers liked, commented, or shared the content.",opts:["impression rate","conversion rate","engagement rate","click-through rate"],ans:2},
+  {q:"The platform's _______ was updated without warning, causing organic reach for business pages to drop by more than 40% overnight.",opts:["landing page","content calendar","cookie","algorithm"],ans:3},
+  {q:"The _______ page had been specifically designed to convert visitors from the paid campaign into email subscribers, with a single clear call to action above the fold.",opts:["landing","viral","organic","engagement"],ans:0},
+  {q:"The _______ page tracking showed that 18% of users who clicked the ad eventually completed the subscription, compared to just 2% during the previous campaign.",opts:["impression","conversion","retargeting","algorithm"],ans:1}
+]},
+v2gaps:[
+  {sent:"The platform's _______ now prioritises video content over static images, which has significantly affected organic reach for brands that rely on photography.",ans:"algorithm"},
+  {sent:"The agency set up a _______ campaign to re-engage users who had visited the checkout page but abandoned their shopping cart without completing the purchase.",ans:"retargeting"},
+  {sent:"The campaign's primary _______ goal was to get visitors to sign up for a free trial, with a secondary goal of adding them to the email marketing list.",ans:"conversion"},
+  {sent:"Each time an advertisement appeared on a user's screen, it counted as one _______, regardless of whether the user clicked on it.",ans:"impression"},
+  {sent:"The brand built its following entirely through _______ content — no paid promotion was used — relying entirely on the quality and consistency of what it published.",ans:"organic"},
+  {sent:"The post achieved an unusually high _______ rate of 9.4%, with thousands of comments and shares that far exceeded the team's expectations.",ans:"engagement"},
+  {sent:"The brand partnered with a micro-_______ who had 40,000 followers in the sustainable fashion niche, achieving a more authentic endorsement than a celebrity could provide.",ans:"influencer"},
+  {sent:"The dedicated _______ page for the campaign was stripped back to a single headline, three bullet points, and one large call-to-action button.",ans:"landing"},
+  {sent:"The _______ model used to measure campaign effectiveness assigned all conversion credit to the last channel the customer touched before buying, which undervalued the role of earlier awareness advertising.",ans:"attribution"},
+  {sent:"The product review video unexpectedly went _______, accumulating 2.3 million views in 48 hours without any paid promotion.",ans:"viral"}
+],
+v3tf:[
+  {stmt:"SEO (Search Engine Optimisation) is a form of paid advertising where brands bid to appear at the top of search results.",ans:false},
+  {stmt:"CTR stands for Click-Through Rate and is calculated as the number of clicks divided by the number of impressions.",ans:true},
+  {stmt:"Organic reach refers to the number of people who see a post as a result of paid advertising spend on a platform.",ans:false},
+  {stmt:"Retargeting is a technique that shows ads to users who have previously visited a website or interacted with a brand online.",ans:true},
+  {stmt:"A landing page is the main homepage of a company's website, designed to give visitors a full overview of all products and services.",ans:false},
+  {stmt:"ROAS stands for Return on Ad Spend and measures how much revenue is generated for every unit of currency spent on advertising.",ans:true},
+  {stmt:"Micro-influencers are defined in the module as having audiences of between 10,000 and 100,000 followers.",ans:true},
+  {stmt:"CPM (Cost Per Thousand Impressions) means the advertiser pays each time a user clicks on their advertisement.",ans:false},
+  {stmt:"First-party data is information collected directly by a brand from its own customers through its website, app, or email list.",ans:true},
+  {stmt:"A/B testing involves showing the same version of content to all users simultaneously to measure its performance.",ans:false}
+],
+g1:{questions:[
+  {q:"The paid search campaign ran for eight weeks and _______ a total of 24,000 clicks.",opts:["has generated","generated","has been generating","generate"],ans:1},
+  {q:"Since switching to video ads, our engagement rate _______ by 34%.",opts:["increased","increases","has increased","was increasing"],ans:2},
+  {q:"This is the highest ROAS we _______ in the history of the brand.",opts:["achieved","were achieving","have ever achieved","had ever achieved"],ans:2},
+  {q:"The Q2 retargeting campaign _______ 180 conversions at an average CPA of 24 pounds.",opts:["has delivered","delivers","delivered","is delivering"],ans:2},
+  {q:"Organic reach on the brand's Facebook page _______ steadily since the algorithm update in March.",opts:["declined","declines","was declining","has been declining"],ans:3},
+  {q:"We _______ three versions of the landing page last month and Version B outperformed the others significantly.",opts:["have tested","tested","have been testing","are testing"],ans:1},
+  {q:"The influencer campaign _______ 2.3 million impressions during the four-week partnership.",opts:["has generated","generates","generated","is generating"],ans:2},
+  {q:"Since launching the loyalty email sequence, the repeat purchase rate _______ from 18% to 31%.",opts:["improved","was improving","improves","has improved"],ans:3},
+  {q:"The team _______ a full audit of all paid channels last quarter and identified several inefficiencies.",opts:["has conducted","conducts","conducted","has been conducting"],ans:2},
+  {q:"Conversion rates _______ significantly better on mobile than on desktop for the past three months.",opts:["performed","have been performing","were performing","are performed"],ans:1}
+]},
+g2:{questions:[
+  {q:"If we increase the daily budget by 15%, the campaign _______ approximately 20% more users.",opts:["would reach","will reach","reaches","reached"],ans:1},
+  {q:"If we _______ a retargeting campaign earlier, we would have captured far more of the warm audience that visited without converting.",opts:["launched","would launch","had launched","have launched"],ans:2},
+  {q:"If we were to shift the budget entirely to TikTok, we _______ a significantly younger demographic.",opts:["will reach","would reach","reached","have reached"],ans:1},
+  {q:"If the algorithm _______ video content, engagement rates tend to rise regardless of follower count.",opts:["prioritises","will prioritise","would prioritise","prioritised"],ans:0},
+  {q:"If we _______ better audience segmentation from the start, the CPC would have been much lower.",opts:["used","had used","have used","would use"],ans:1},
+  {q:"If the landing page load time _______ above three seconds, a significant proportion of users will abandon before the page loads.",opts:["rises","would rise","rose","had risen"],ans:0},
+  {q:"If we _______ the ad frequency, we would likely see a reduction in engagement rate and an increase in ad fatigue.",opts:["increase","increased","would increase","had increased"],ans:1},
+  {q:"The conversion rate _______ improve significantly if we added video testimonials above the fold on the landing page.",opts:["will","would","should","can"],ans:1},
+  {q:"If we _______ the Q3 campaign with a larger budget, we would have achieved our annual subscriber target three months early.",opts:["run","had run","have run","would run"],ans:1},
+  {q:"If the client _______ their content calendar with more video posts, organic reach will almost certainly improve.",opts:["updates","would update","updated","had updated"],ans:0}
+]},
+g3:{questions:[
+  {q:"The drop in CTR _______ be related to ad fatigue, though we cannot confirm this without further testing.",opts:["definitely","certainly","may","must"],ans:2},
+  {q:"The data _______ that shorter video ads outperform longer ones in terms of completion rate.",opts:["proves","guarantees","suggests","confirms"],ans:2},
+  {q:"Conversions have improved _______ since the landing page was updated, though not yet to the target level.",opts:["dramatically","massively","slightly","negligibly"],ans:2},
+  {q:"Higher ad frequency _______ leads to declining engagement rates in extended campaigns.",opts:["definitely","always","typically","never"],ans:2},
+  {q:"_______ current trends, Q4 performance is expected to be the strongest quarter of the year.",opts:["Despite","Although","Based on","Regardless of"],ans:2},
+  {q:"The campaign reached _______ 340,000 unique users over the four-week period.",opts:["definitely","exactly","approximately","precisely"],ans:2},
+  {q:"The influencer partnership _______ to have driven a significant uplift in brand awareness, based on the tracking data.",opts:["guaranteed","is proven","appears","confirms"],ans:2},
+  {q:"Engagement rates on TikTok _______ higher for brands that post three or more times per week.",opts:["always are","tend to be","definitely are","can never be"],ans:1},
+  {q:"The reduction in organic reach _______ be caused by the platform algorithm change, though competitive factors may also be contributing.",opts:["certainly","obviously","must","may"],ans:3},
+  {q:"The results are _______ positive, though the sample size is too small to draw statistically reliable conclusions.",opts:["definitely","certainly","broadly","absolutely"],ans:2}
+]},
+listening:[
+{
+  emoji:"&#128202;",
+  title:"Activity 1: Introduction to Digital Marketing Metrics",
+  sub:"Claire Donovan, Head of Digital — Internal team training session",
+  level:"B1",type:"Multiple Choice",focus:"Listening for main ideas",
+  transcript:`Good morning everyone. Today I want to give you a clear introduction to the metrics we use in digital marketing, because I find that a lot of people start working in this field and quickly become overwhelmed by the acronyms and the numbers. My goal today is to help you understand what we measure, why we measure it, and what good looks like.
+
+Let us start with the basics. An impression is simply the number of times an advertisement or piece of content has been displayed on a screen. It does not mean the person saw it, engaged with it, or even scrolled past it. It just means it appeared. Reach is different: reach is the number of unique people who saw your content. If one person sees the same post five times, that is five impressions but one unit of reach.
+
+Click-through rate, or CTR, is the percentage of people who clicked on a link or advertisement after seeing it. A CTR of 2% means that for every 100 impressions, two people clicked. In search advertising, CTR can range from 2% to 10% depending on how relevant the ad is. In display advertising, a CTR of 0.1% is actually considered normal, which tells you that most people ignore banner ads entirely.
+
+Now, the metric I want you to pay the most attention to is conversion rate. A conversion is when someone takes the action you actually want them to take. That might be making a purchase, signing up for a newsletter, booking a call, or downloading an app. Conversion rate is the percentage of visitors who complete that action. This is the metric that connects your digital activity to real business outcomes.
+
+Finally, ROAS: return on ad spend. For every pound we spend on advertising, how many pounds do we get back in revenue? A ROAS of 3.0 means we generate three pounds of revenue for every one pound spent. A ROAS of 1.0 means we break even. Anything below 1.0 and we are losing money on the campaign. Most businesses need a ROAS of at least 2.5 to 3.0 to cover costs and generate profit after accounting for product costs and overheads.`,
+  questions:[
+    {q:"What is Claire's stated goal for the training session?",opts:["To teach the team how to run paid advertising campaigns","To help the team understand what metrics are measured, why, and what good performance looks like","To explain the differences between social media platforms","To introduce the team to the company's content management system"],ans:1},
+    {q:"What is the difference between impressions and reach, according to Claire?",opts:["Impressions are more valuable than reach because they measure clicks","Impressions count total displays of content; reach counts unique people who saw it","Reach is always higher than impressions on any campaign","There is no meaningful difference between the two metrics"],ans:1},
+    {q:"What does CTR stand for?",opts:["Cost To Reach","Content Tracking Rate","Click-Through Rate","Conversion Tracking Ratio"],ans:2},
+    {q:"What CTR does Claire describe as normal for display advertising?",opts:["2%","5%","10%","0.1%"],ans:3},
+    {q:"How does Claire define a conversion?",opts:["Any time a user sees an advertisement","The number of clicks an ad receives","When someone takes the action you actually want them to take, such as a purchase or sign-up","The total revenue generated by a campaign"],ans:2},
+    {q:"What does a ROAS of 1.0 mean?",opts:["The campaign is generating significant profit","The campaign is breaking even","The campaign is losing money","The campaign has not started yet"],ans:1},
+    {q:"What minimum ROAS does Claire say most businesses need to cover costs and generate profit?",opts:["At least 1.0 to 1.5","At least 2.5 to 3.0","At least 5.0","At least 10.0"],ans:1},
+    {q:"What does Claire describe as the metric that connects digital activity to real business outcomes?",opts:["CTR","Impressions","Reach","Conversion rate"],ans:3}
+  ]
+},
+{
+  emoji:"&#127757;",
+  title:"Activity 2: Understanding the Social Media Algorithm",
+  sub:"Ravi Patel, Social Media Strategist — Client workshop",
+  level:"B1",type:"Multiple Choice",focus:"Listening for specific information",
+  transcript:`Thank you for joining me today. I want to spend some time demystifying something that I get asked about in almost every client meeting: the algorithm. Most people treat the algorithm as a mysterious black box that inexplicably decides to show or hide their content. And while it is true that platforms do not publish the exact details of how their algorithms work, we actually know quite a lot about the factors that drive algorithmic distribution. Let me share what I have learned from working on social media strategy for the past eight years.
+
+First, the fundamental logic behind any platform algorithm is simple: the algorithm exists to keep users on the platform for as long as possible. That is how platforms generate advertising revenue. So the algorithm will always favour content that keeps people engaged: content they watch all the way through, content they comment on, content they share with others, content they save to come back to later. These engagement signals are the primary currency of the algorithm.
+
+This has a critical implication for brands. Simply posting content is not enough. You need to post content that generates genuine engagement, and the type of engagement matters. Comments are worth more than likes. Shares are worth more than comments. Saves are particularly valuable on Instagram because they signal that the content is useful enough to return to.
+
+The second thing I want you to understand is that the algorithm remembers your account's history. If your last ten posts had very low engagement, the algorithm will show your next post to a smaller audience by default. It is testing whether this new post is better. If it gets good engagement quickly, it will be shown to more people. If it does not, it will stay small. This is why consistency matters so much: an account that posts consistently high-quality content builds algorithmic trust over time.
+
+The third factor is relevance. Algorithms increasingly match content to users based on their demonstrated interests. This is why niche content often outperforms broad content: a post specifically about plant-based protein for athletes might reach fewer people in total, but it will reach people who are extremely interested in that topic and therefore much more likely to engage.`,
+  questions:[
+    {q:"What does Ravi say he gets asked about in almost every client meeting?",opts:["How to run paid advertising campaigns","The algorithm","How to grow follower counts quickly","How to measure ROI from social media"],ans:1},
+    {q:"What is the fundamental logic behind platform algorithms, according to Ravi?",opts:["To show users the highest quality content regardless of engagement","To help brands reach as many people as possible","To keep users on the platform for as long as possible to generate advertising revenue","To prioritise content from accounts with the most followers"],ans:2},
+    {q:"Which type of engagement does Ravi say is worth the most?",opts:["Likes","Comments","Shares","Saves"],ans:2},
+    {q:"Why does Ravi say saves are particularly valuable on Instagram?",opts:["They tell the algorithm the account has many followers","They signal that the content is useful enough to return to","They generate more revenue for the platform than other engagement types","They are counted twice by the algorithm"],ans:1},
+    {q:"What happens if an account's recent posts have had very low engagement?",opts:["The platform will temporarily suspend the account","The platform will suggest the account runs paid advertising","The algorithm will show the next post to a smaller audience by default","The account loses its ability to use hashtags"],ans:2},
+    {q:"What does Ravi say consistency builds over time with the algorithm?",opts:["A larger follower count","Higher ROAS on paid campaigns","Algorithmic trust","More brand partnerships"],ans:2},
+    {q:"What is the third factor Ravi describes that affects algorithmic distribution?",opts:["The time of day the content is posted","The number of hashtags used","The length of the caption","Relevance: matching content to users based on their demonstrated interests"],ans:3},
+    {q:"Why does Ravi say niche content often outperforms broad content?",opts:["Platforms prefer content that is easy to categorise","Niche content reaches fewer people but highly interested ones who are much more likely to engage","Algorithms penalise content that tries to appeal to everyone","Niche accounts pay lower advertising rates"],ans:1}
+  ]
+},
+{
+  emoji:"&#128246;",
+  title:"Activity 3: Influencer Marketing — Strategy and Pitfalls",
+  sub:"Natasha Obi, Influencer Marketing Director — Agency panel discussion",
+  level:"B2",type:"Multiple Choice",focus:"Understanding professional explanations",
+  transcript:`Thank you. I want to be honest with you today, because I think there is a lot of hype around influencer marketing and not enough honest conversation about where it works and where it does not.
+
+Let me start with where it works. Influencer marketing is most effective when the partnership is genuinely relevant: when the influencer actually uses and believes in the product, when their audience demographics closely match the brand's target consumer, and when the content created feels natural rather than scripted. When those three conditions are met, influencer marketing can generate trust and conversion rates that traditional advertising simply cannot replicate. We regularly see influencer content converting at two to four times the rate of equivalent paid social ads from the same brand account, because the audience perceives the recommendation as coming from someone they know and trust.
+
+Now let me be honest about the pitfalls. The most common mistake I see brands make is choosing influencers based on follower count alone. Follower count is a vanity metric. What matters is engagement rate, audience quality, and relevance. An influencer with 800,000 followers and an engagement rate of 0.3% is almost certainly less valuable than an influencer with 40,000 followers and an engagement rate of 6%. The audience of the larger account is likely to be less genuine, less engaged, and potentially inflated by follow-for-follow tactics or even purchased followers.
+
+The second pitfall is failing to give influencers creative freedom. Brands that send a rigid script or require influencers to use exact brand language almost always produce content that feels forced and performs poorly. Influencers have built their audiences by being themselves. When you ask them to be a brand spokesperson, you undermine the very thing that makes them effective. The best brief gives the influencer the key message, the product benefits, and any compliance requirements, and then trusts them to communicate those things in their own voice.
+
+The third pitfall is treating influencer marketing as a single transaction rather than a long-term relationship. A one-off sponsored post rarely builds the brand association you are looking for. Multiple touchpoints over time, where an influencer is seen to genuinely integrate a product into their life rather than feature it once and move on, is far more effective and far more credible with their audience.`,
+  questions:[
+    {q:"What three conditions does Natasha say must be met for influencer marketing to be most effective?",opts:["High follower count, professional photography, and a large campaign budget","Genuine relevance of the partnership, audience demographic match, and content that feels natural rather than scripted","The influencer must have over one million followers, post daily, and have a verified account","The brand must have a well-known logo, premium pricing, and a long history"],ans:1},
+    {q:"What conversion rate advantage does Natasha describe for influencer content vs equivalent paid social ads?",opts:["No meaningful difference in conversion rates","Influencer content typically converts at half the rate of paid ads","Influencer content regularly converts at two to four times the rate of equivalent paid social ads","Influencer content only outperforms paid ads for luxury brands"],ans:2},
+    {q:"What does Natasha call 'a vanity metric' in influencer marketing?",opts:["Engagement rate","Follower count","Conversion rate from influencer traffic","The cost per post"],ans:1},
+    {q:"Which influencer does Natasha suggest is MORE valuable?",opts:["800,000 followers with 0.3% engagement","40,000 followers with 6% engagement","500,000 followers with 1.0% engagement","100,000 followers with 2.5% engagement"],ans:1},
+    {q:"What is the second pitfall Natasha describes?",opts:["Choosing influencers who are too young for the brand","Failing to give influencers creative freedom by sending rigid scripts","Not measuring the performance of influencer campaigns accurately","Paying influencers too much for a single post"],ans:1},
+    {q:"What does Natasha say is the result when brands give influencers rigid scripts?",opts:["The content performs better because the messaging is consistent","The content feels forced and performs poorly","The influencer gains more credibility with their audience","The brand gets more control over the message"],ans:1},
+    {q:"What should a good influencer brief include, according to Natasha?",opts:["An exact script the influencer must follow word for word","Only the product name and a hashtag to use","The key message, product benefits, and compliance requirements, then trust the influencer to use their own voice","A complete list of prohibited words and topics to avoid"],ans:2},
+    {q:"What is the third pitfall Natasha describes?",opts:["Treating influencer marketing as a one-off transaction rather than a long-term relationship","Measuring the wrong metrics when evaluating influencer performance","Choosing influencers who are already working with competitor brands","Not disclosing paid partnerships clearly to audiences"],ans:0}
+  ]
+},
+{
+  emoji:"&#128201;",
+  title:"Activity 4: Campaign Reporting — How to Present Digital Results",
+  sub:"Finn Larsen, Performance Director — Agency client presentation",
+  level:"B2",type:"Multiple Choice",focus:"Listening for detail and implication",
+  transcript:`Good afternoon everyone. I am going to walk you through the results of your Q3 paid digital campaign, and I also want to share some reflections on how we present and interpret these results, because I think context is just as important as the numbers themselves.
+
+Let me start with the headline numbers. The campaign ran for twelve weeks and achieved a total reach of 2.1 million unique users. Impressions were 8.4 million, giving us an average frequency of four, meaning each user saw our ads an average of four times. Click-through rate was 2.8%, which is well above the industry benchmark of 1.8% for this category. Total clicks were 235,200. Conversion rate from click to purchase was 1.7%, generating 3,998 transactions. Revenue generated was 319,840 pounds. Total media spend was 72,000 pounds, giving us a ROAS of 4.44.
+
+Now, here is where I want to slow down, because these numbers look excellent in isolation, but context is everything. ROAS of 4.44 is genuinely strong. However, I want to flag that this campaign benefited from two external factors that we should not assume will repeat: first, a competitor withdrew their own paid campaigns during weeks 5 to 9, which reduced competitive pressure on our keywords and almost certainly lowered our CPCs during that period. Second, there was a surge in category search volume in week 8 that we believe was driven by media coverage the brand received on a major consumer programme. These factors inflated our performance, and I think it would be a mistake to set expectations for Q4 based on these results without acknowledging that.
+
+My recommendation for Q4 is as follows. We should increase budget by 20%, which the data suggests will generate proportional reach and conversion volume. However, we should model on a more conservative ROAS of 3.5 to account for competitive normalisation. We should also invest in testing a retargeting campaign targeting the 95,000 users who clicked but did not convert in Q3: based on our benchmarks, we would expect a conversion rate of around 3.5% from that warm audience, which could generate an additional 3,325 conversions at a significantly lower CPA than cold audience targeting.`,
+  questions:[
+    {q:"What was the total reach of the Q3 campaign?",opts:["8.4 million total impressions","2.1 million unique users","235,200 total clicks","3,998 transactions"],ans:1},
+    {q:"What was the campaign's CTR and how does it compare to the industry benchmark?",opts:["1.8%, at the industry benchmark","2.8%, well above the industry benchmark of 1.8%","3.8%, below the industry benchmark of 4%","1.7%, slightly below the industry benchmark of 2%"],ans:1},
+    {q:"What was the campaign ROAS?",opts:["1.7","2.8","3.5","4.44"],ans:3},
+    {q:"What was the first external factor Finn identifies that inflated campaign performance?",opts:["A new product launch by the brand during the campaign period","A major sporting event that drove increased search volume","A competitor withdrawing their own paid campaigns during weeks 5 to 9","A change in the platform's algorithm that reduced competitive pressure"],ans:2},
+    {q:"What does Finn recommend for the Q4 budget?",opts:["Reduce the budget by 20% to test a more efficient approach","Maintain the same budget as Q3","Increase the budget by 20%","Double the budget based on Q3 ROAS performance"],ans:2},
+    {q:"What ROAS does Finn recommend modelling Q4 on, and why?",opts:["4.44, the same as Q3, to maintain realistic expectations","5.0, an improvement target to aim for","3.5, to account for competitive normalisation","2.5, a conservative baseline in case performance drops significantly"],ans:2},
+    {q:"What retargeting opportunity does Finn identify for Q4?",opts:["Retargeting the 2.1 million users who were reached but never clicked","Retargeting the 3,998 users who made a purchase to encourage a repeat buy","Retargeting the 95,000 users who clicked but did not convert in Q3","Retargeting all users who engaged with the brand's organic social content"],ans:2},
+    {q:"What conversion rate does Finn expect from the warm retargeting audience?",opts:["1.7%, the same as the cold audience","0.5%, lower because these users already declined to purchase","Around 3.5%, higher because these users have already shown interest","Around 10%, much higher than standard benchmarks"],ans:2}
+  ]
+}
+],
+cs1:{questions:[
+  {q:"What was the total launch budget for Bloom Botanics, and how did the founder decide to spend it?",opts:["500,000 pounds, split equally between paid and organic social","35,000 pounds, invested almost entirely in organic social media and content marketing rather than paid channels","100,000 pounds, spent on influencer partnerships with macro-influencers","250,000 pounds, focused on SEO and email marketing"],ans:1},
+  {q:"What were Bloom Botanics' three content pillars?",opts:["Price, quality, and availability","Celebrity endorsement, product features, and promotions","Education, community, and transparency","Inspiration, aspiration, and lifestyle"],ans:2},
+  {q:"What was Bloom Botanics' average engagement rate across both platforms?",opts:["1.5%","3.2%","6.8%","12.4%"],ans:2},
+  {q:"How did the brand's 6.8% engagement rate compare to the industry average?",opts:["It was below the industry average of 8%","It was at the industry average","It was significantly above the industry average of 1.5%","It was slightly above the industry average of 6%"],ans:2},
+  {q:"What percentage of new customers reported first discovering Bloom Botanics through organic social content?",opts:["12%","41%","67%","89%"],ans:1},
+  {q:"What was Bloom Botanics' customer acquisition cost through organic channels, and how did it compare to the paid social industry average?",opts:["The same as the paid social average of 34 pounds","34 pounds, compared to a 9.40 pound industry average for organic","9.40 pounds, compared to a paid social industry average of 34 pounds for comparable brands","No comparison was made in the case study"],ans:2},
+  {q:"What type of content consistently outperformed polished brand content in both reach and engagement?",opts:["Professional product photography with clean white backgrounds","Community-driven content: user-generated posts, real reviews, and transparent behind-the-scenes content","Promotional content featuring discounts and limited-time offers","Long-form written articles posted to the brand's blog"],ans:1},
+  {q:"What does the case study suggest about the strategic value of not having a paid advertising budget?",opts:["It is always a disadvantage that prevents growth","It forces teams to develop creative and strategic discipline that produces content with real intrinsic value","It only works for wellness brands, not other categories","It makes measurement of performance impossible"],ans:1},
+  {q:"What was Bloom Botanics' conversion rate from social traffic?",opts:["0.8%","1.5%","3.4%","7.2%"],ans:2},
+  {q:"What broader principle does the case study illustrate about organic reach?",opts:["Organic reach is no longer effective on any major platform","Organic reach can still be highly effective when content is genuinely valuable and consistent","Organic reach is more effective than paid advertising in all marketing categories","Organic reach only works for brands with large existing followings"],ans:1}
+]},
+cs2:{questions:[
+  {q:"What were Forte Fitness's results in their first six months before the agency audit?",opts:["Excellent: 2,000 subscribers at a low CPC of 1.20 pounds","Moderate: 340 paying subscribers, CPC of 3.20 pounds, and a conversion rate of just 1.1%","Poor: no subscribers acquired despite spending the full budget","Strong: 1,000 subscribers but at a very high cost per acquisition"],ans:1},
+  {q:"What was the first critical problem identified in the agency audit?",opts:["The campaign was running on the wrong platform","The ad creative was poor quality and unappealing","The campaigns were targeting too broad an audience: men and women aged 18 to 55 interested in fitness","The daily budget was too low to achieve meaningful reach"],ans:2},
+  {q:"What is a lookalike audience, as described in the case study?",opts:["An audience of users who look similar to the brand's competitors' followers","A Meta tool that identifies users who share characteristics with a brand's best customers","A targeting option based on users who have previously visited the website","An audience segment defined by geographic location and age"],ans:1},
+  {q:"What happened to CPC after audience targeting was rebuilt using a lookalike audience?",opts:["It increased from 1.85 pounds to 3.20 pounds","It remained stable at 3.20 pounds","It fell from 3.20 pounds to 1.85 pounds within four weeks","It doubled to 6.40 pounds due to increased competition"],ans:2},
+  {q:"At what conversion rate did retargeted users convert, and how does this compare to cold audiences?",opts:["1.1%, the same as cold audiences","0.5%, lower than cold audiences because they had already seen the ads","4.1%, nearly four times the rate of cold audiences","10%, much higher than all benchmarks"],ans:2},
+  {q:"What three improvements were made to the landing page?",opts:["New logo, updated product photos, and a longer description","A cleaner design, five video testimonials above the fold, a 14-day free trial offer, and a single prominent call-to-action button","A reduced price, a new colour scheme, and social media sharing buttons","A live chat function, a countdown timer, and a contact form"],ans:1},
+  {q:"How did monthly new subscriber acquisitions change after the optimisation programme?",opts:["They decreased from 214 to 57 per month","They increased from an average of 57 to 214 per month","They remained stable at around 100 per month","They increased slightly from 57 to 80 per month"],ans:1},
+  {q:"What did ROAS improve from and to after the optimisation programme?",opts:["From 4.3x to 1.8x","From 1.0x to 2.5x","From 1.8x to 4.3x","From 3.0x to 5.0x"],ans:2},
+  {q:"When did total subscribers pass 2,000, and how did this compare to original projections?",opts:["At 18 months, exactly as projected","At 24 months, later than the 18-month projection","At 8 months, 10 months ahead of the original 18-month projection","At 6 months, one year ahead of projection"],ans:2},
+  {q:"What does the Forte Fitness case study primarily demonstrate?",opts:["That paid social advertising is never effective without a large budget","That retargeting is always more effective than any other digital channel","That targeted audience segmentation, retargeting, and landing page optimisation can dramatically improve digital campaign performance","That subscription businesses should never use paid advertising to acquire customers"],ans:2}
+]},
+fa:{questions:[
+  {q:"What does CTR stand for, and how is it calculated?",opts:["Cost To Reach, calculated as budget divided by audience size","Click-Through Rate, calculated as clicks divided by impressions multiplied by 100","Conversion Tracking Ratio, calculated as conversions divided by clicks","Content Target Rating, calculated from engagement divided by reach"],ans:1},
+  {q:"What is the difference between organic reach and paid reach?",opts:["Organic reach is always larger than paid reach","Organic reach results from algorithmic distribution without paid promotion; paid reach results from advertising spend","Paid reach is measured differently from organic reach on different platforms","There is no meaningful difference between the two terms"],ans:1},
+  {q:"A campaign spent 10,000 pounds and generated 40,000 pounds in revenue. What was the ROAS?",opts:["0.25","2.5","4.0","10.0"],ans:2},
+  {q:"Which tense is CORRECT for reporting a campaign that finished last quarter?",opts:["The Q2 campaign has generated 3,200 leads.","The Q2 campaign generated 3,200 leads.","The Q2 campaign is generating 3,200 leads.","The Q2 campaign generates 3,200 leads."],ans:1},
+  {q:"Which sentence uses the present perfect CORRECTLY to describe an ongoing result?",opts:["Since launching retargeting, conversions improved by 34%.","Since launching retargeting, conversions have improved by 34%.","Since launching retargeting, conversions were improving by 34%.","Since launching retargeting, conversions improve by 34%."],ans:1},
+  {q:"Which conditional correctly makes a future recommendation based on a planned action?",opts:["If we would increase the budget, we will reach more users.","If we increase the budget by 20%, the campaign will reach approximately 15% more users.","If we had increased the budget, we will reach more users.","If we increase the budget, we would have reached more users."],ans:1},
+  {q:"Which sentence uses appropriate hedging language for an uncertain data-based conclusion?",opts:["The drop in CTR definitely proves the ads are ineffective.","The drop in CTR suggests that ad fatigue may be a contributing factor.","The drop in CTR guarantees that we need to change the audience immediately.","The drop in CTR obviously shows the campaign has completely failed."],ans:1},
+  {q:"What is retargeting?",opts:["Targeting a completely new audience segment for the first time","Showing ads to users who have previously visited a website or interacted with a brand","Running the same campaign again in a new market","Targeting users based on their search keywords on Google"],ans:1},
+  {q:"In the Bloom Botanics case study, what was the brand's customer acquisition cost through organic channels?",opts:["34 pounds","9.40 pounds","1.50 pounds","21 pounds"],ans:1},
+  {q:"What is a micro-influencer?",opts:["An influencer with fewer than 1,000 followers","An influencer with between 1,000 and 10,000 followers","An influencer with between 10,000 and 100,000 followers","An influencer with between 100,000 and 500,000 followers"],ans:2},
+  {q:"Which sentence uses hedging correctly to describe a trend?",opts:["Engagement rates always improve when video is used.","Engagement rates definitely never decline with good content.","Engagement rates typically improve when video content is introduced, though results vary by platform and audience.","Engagement rates are guaranteed to increase if you post more frequently."],ans:2},
+  {q:"What does A/B testing involve?",opts:["Testing a campaign on two different social media platforms simultaneously","Showing two versions of content to different audience segments to determine which performs better","Running the same campaign for two consecutive weeks to compare week-on-week performance","Testing an advertisement with two different budget levels"],ans:1},
+  {q:"In the Forte Fitness case study, what was the conversion rate of retargeted users?",opts:["1.1%","2.5%","4.1%","6.8%"],ans:2},
+  {q:"What third conditional structure correctly analyses a past campaign mistake?",opts:["If we had launched the retargeting campaign earlier, we would have captured more warm audience conversions.","If we launched the retargeting campaign earlier, we will capture more warm audience conversions.","If we would have launched the retargeting campaign earlier, we captured more warm conversions.","If we have launched the retargeting campaign earlier, we would capture more warm conversions."],ans:0},
+  {q:"What does CPM stand for?",opts:["Cost Per Message","Cost Per Marketing","Cost Per Thousand Impressions","Cost Per Month"],ans:2},
+  {q:"According to Ravi Patel in Listening Activity 2, which type of engagement does the algorithm value most?",opts:["Likes","Comments","Shares","Saves"],ans:2},
+  {q:"What does first-party data refer to?",opts:["Data purchased from third-party data brokers","Data collected directly by a brand from its own customers through its website, app, or email list","Data shared between competitor brands","Data provided by social media platforms to their advertisers"],ans:1},
+  {q:"In the Forte Fitness case study, why did audience targeting using a lookalike audience reduce CPC?",opts:["It targeted a larger audience, increasing competition for clicks","It targeted users who more closely matched the characteristics of existing subscribers, making the ads more relevant","It reduced the daily budget, automatically lowering all costs","It switched from CPC to CPM pricing, which is always cheaper"],ans:1},
+  {q:"What is an impression in digital marketing?",opts:["A single click on an advertisement","A completed conversion such as a purchase or sign-up","A single instance of an advertisement or piece of content being displayed on a user's screen","The total number of unique users who saw an advertisement"],ans:2},
+  {q:"According to Finn Larsen in Listening Activity 4, what should the Q4 ROAS model be based on, and why?",opts:["4.44, the same as Q3, because performance should be maintained","5.0, a higher target to aim for after strong Q3 results","3.5, to account for competitive normalisation and external factors that inflated Q3 results","2.0, a very conservative estimate in case all external factors reverse"],ans:2}
+]}
+};
+
+
+function renderMCQ(containerId, questions, prefix){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = questions.map((item,i)=>`
+    <div class="mcq-item" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((o,j)=>`
+          <div class="mcq-option" onclick="selectOpt('${prefix}',${i},${j})" id="${prefix}-q${i}-o${j}">
+            <span class="opt-letter">${['A','B','C','D'][j]}</span>${o}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function selectOpt(prefix,qi,oi){
+  const item=DATA[prefix].questions[qi];
+  for(let j=0;j<item.opts.length;j++){
+    const el=document.getElementById(`${prefix}-q${qi}-o${j}`);
+    if(el) el.classList.remove('selected');
+  }
+  const el=document.getElementById(`${prefix}-q${qi}-o${oi}`);
+  if(el) el.classList.add('selected');
+}
+
+function checkMCQ(prefix){
+  const qs=DATA[prefix].questions;
+  let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#${prefix}-q${i} .mcq-option`);
+    let chosen=-1;
+    opts.forEach((o,j)=>{if(o.classList.contains('selected')) chosen=j;});
+    opts.forEach((o,j)=>{
+      o.classList.remove('selected','correct','wrong');
+      if(j===item.ans) o.classList.add('correct');
+      else if(j===chosen&&chosen!==item.ans) o.classList.add('wrong');
+    });
+    if(chosen===item.ans) score++;
+  });
+  const fb=document.getElementById(`${prefix}-feedback`);
+  if(fb){
+    fb.className='feedback show '+(score>=Math.ceil(total*0.7)?'good':'bad');
+    fb.textContent=score>=Math.ceil(total*0.7)
+      ?`✅ Well done! You scored ${score}/${total}.`
+      :`❌ You scored ${score}/${total}. Review the relevant sections and try again.`;
+  }
+  const sc=document.getElementById(`${prefix}-score`);
+  if(sc){
+    sc.className='score-display show';
+    sc.innerHTML=`<div><div class="score-label">Your Score</div><div class="score-val">${score}/${total}</div></div><div style="font-size:13px;color:var(--text-light)">${Math.round(score/total*100)}%</div>`;
+  }
+}
+
+// Gap fill
+function renderGaps(){
+  const c=document.getElementById('v2-gaps');
+  if(!c) return;
+  c.innerHTML=DATA.v2gaps.map((g,i)=>`
+    <div class="gap-sentence">${i+1}. ${g.sent.replace('_______',`<input class="gap-input" id="gap-${i}" placeholder="?" autocomplete="off">`)}</div>
+  `).join('');
+}
+
+function checkGaps(){
+  let score=0;
+  DATA.v2gaps.forEach((g,i)=>{
+    const el=document.getElementById(`gap-${i}`);
+    if(!el) return;
+    const val=el.value.trim().toLowerCase();
+    if(val===g.ans.toLowerCase()){
+      score++;
+      el.style.borderBottomColor='var(--success)';
+      el.style.color='var(--success)';
+    } else {
+      el.style.borderBottomColor='var(--error)';
+      el.style.color='var(--error)';
+      el.value=g.ans;
+    }
+  });
+  const fb=document.getElementById('v2-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7
+    ?`✅ Great work! ${score}/10 correct.`
+    :`❌ ${score}/10 correct. Correct answers shown in red. Review the Word Bank.`;
+}
+
+// True/False
+const tfAnswers={};
+function renderTF(){
+  const c=document.getElementById('v3-tf');
+  if(!c) return;
+  c.innerHTML=DATA.v3tf.map((item,i)=>`
+    <div class="tf-item" id="tf-${i}">
+      <div class="tf-stmt">${i+1}. ${item.stmt}</div>
+      <div class="tf-btns">
+        <button class="tf-btn" onclick="selectTF(${i},true,this)">True</button>
+        <button class="tf-btn" onclick="selectTF(${i},false,this)">False</button>
+      </div>
+    </div>`).join('');
+}
+
+function selectTF(i,val,btn){
+  tfAnswers[i]=val;
+  const row=document.getElementById(`tf-${i}`);
+  row.querySelectorAll('.tf-btn').forEach(b=>{
+    b.className='tf-btn';
+  });
+  btn.className='tf-btn '+(val?'sel-t':'sel-f');
+}
+
+function checkTF(){
+  let score=0;
+  DATA.v3tf.forEach((item,i)=>{
+    if(tfAnswers[i]===undefined) return;
+    const row=document.getElementById(`tf-${i}`);
+    const btns=row.querySelectorAll('.tf-btn');
+    btns.forEach(b=>{
+      const isTrue=b.textContent.trim()==='True';
+      b.className='tf-btn';
+      if(isTrue===item.ans){
+        b.style.background=item.ans?'#dcfce7':'#fee2e2';
+        b.style.borderColor=item.ans?'var(--success)':'var(--error)';
+        b.style.color=item.ans?'var(--success)':'var(--error)';
+        b.textContent=(isTrue?'True':'False')+' ✓';
+      }
+    });
+    if(tfAnswers[i]===item.ans) score++;
+  });
+  const fb=document.getElementById('v3-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`✅ Excellent! ${score}/10 correct.`:`❌ ${score}/10 correct. Review the vocabulary definitions.`;
+}
+
+// ═══════════════════════════════════════
+// LISTENING
+// ═══════════════════════════════════════
+
+function renderListening(){
+  const c=document.getElementById('listening-cards');
+  if(!c) return;
+  c.innerHTML=DATA.listening.map((act,ai)=>`
+    <div class="audio-card">
+      <div class="audio-header">
+        <div class="audio-emoji">${act.emoji}</div>
+        <div>
+          <div class="audio-title">${act.title}</div>
+          <div class="audio-sub">${act.sub}</div>
+          <div class="audio-tags">
+            <span class="audio-tag tag-level">Level: ${act.level}</span>
+            <span class="audio-tag tag-type">${act.type}</span>
+            <span class="audio-tag tag-focus">Focus: ${act.focus}</span>
+          </div>
+        </div>
+      </div>
+      <div class="player-box">
+        <div class="player-row">
+          <button class="play-btn" id="play-${ai}" onclick="handlePlay(${ai})">&#9654;</button>
+          <div class="player-info">
+            <div class="player-title-sm">${act.title}</div>
+            <div class="player-sub-sm">${act.sub}</div>
+          </div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="player-progress"><div class="player-progress-fill" id="pf-${ai}"></div></div>
+        <div class="speed-row">
+          <span class="speed-label">Speed:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7×</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2×</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">&#8617; Replay</button>
+        </div>
+        <div class="tts-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">&#9660; Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans-${ai}">
+        ${act.transcript.split('\n\n').map(p=>`<p>${p.trim()}</p>`).join('')}
+      </div>
+      <div class="listen-instruction">📋 Listen to the audio, then answer the questions by selecting the best answer (A, B, C, or D).</div>
+      <div id="la${ai}-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('la${ai}')">Check Answers</button>
+      <div id="la${ai}-feedback" class="feedback"></div>
+      <div id="la${ai}-score" class="score-display"></div>
+    </div>
+  `).join('');
+  DATA.listening.forEach((act,ai)=>{
+    DATA[`la${ai}`]={questions:act.questions};
+    renderMCQ(`la${ai}-mcqs`,act.questions,`la${ai}`);
+  });
+}
+
+const audioState={};
+function handlePlay(ai){
+  const act=DATA.listening[ai];
+  if(!audioState[ai]) audioState[ai]={playing:false,speed:0.85};
+  const st=audioState[ai];
+  const btn=document.getElementById(`play-${ai}`);
+  if(st.playing){
+    window.speechSynthesis.cancel();st.playing=false;btn.innerHTML='&#9654;';
+    if(st.timer) clearInterval(st.timer);return;
+  }
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.lang='en-GB';utt.rate=st.speed;utt.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const chosen=voices.find(v=>v.name==='Google UK English Female')
+    ||voices.find(v=>v.lang==='en-GB'&&v.name.toLowerCase().includes('female'))
+    ||voices.find(v=>v.lang==='en-GB');
+  if(chosen) utt.voice=chosen;
+  const words=act.transcript.split(/\s+/).length;
+  const dur=Math.round(words/(st.speed*2.6));
+  const fmt=(s)=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  document.getElementById(`time-${ai}`).textContent=`0:00 / ${fmt(dur)}`;
+  let elapsed=0;
+  st.timer=setInterval(()=>{
+    if(!audioState[ai].playing){clearInterval(st.timer);return;}
+    elapsed++;
+    document.getElementById(`pf-${ai}`).style.width=Math.min(elapsed/dur*100,100)+'%';
+    document.getElementById(`time-${ai}`).textContent=`${fmt(elapsed)} / ${fmt(dur)}`;
+  },1000);
+  utt.onend=()=>{
+    st.playing=false;btn.innerHTML='&#9654;';clearInterval(st.timer);
+    document.getElementById(`pf-${ai}`).style.width='100%';
+  };
+  window.speechSynthesis.speak(utt);
+  st.playing=true;btn.innerHTML='&#9646;&#9646;';
+}
+
+function setSpeed(ai,spd,btn){
+  if(!audioState[ai]) audioState[ai]={playing:false,speed:spd};
+  audioState[ai].speed=spd;
+  btn.closest('.audio-card').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(audioState[ai].playing){
+    window.speechSynthesis.cancel();
+    audioState[ai].playing=false;
+    document.getElementById(`play-${ai}`).innerHTML='&#9654;';
+    if(audioState[ai].timer) clearInterval(audioState[ai].timer);
+    setTimeout(()=>handlePlay(ai),80);
+  }
+}
+
+function replayAudio(ai){
+  if(audioState[ai]){audioState[ai].playing=false;if(audioState[ai].timer) clearInterval(audioState[ai].timer);}
+  window.speechSynthesis.cancel();
+  const pf=document.getElementById(`pf-${ai}`);if(pf) pf.style.width='0%';
+  document.getElementById(`play-${ai}`).innerHTML='&#9654;';
+  setTimeout(()=>handlePlay(ai),80);
+}
+
+function toggleTranscript(ai){document.getElementById(`trans-${ai}`).classList.toggle('open');}
+
+// ═══════════════════════════════════════
+// WRITING
+// ═══════════════════════════════════════
+
+function updateWordCount(id,max){
+  const ta=document.getElementById(`${id}-text`);
+  const wc=document.getElementById(`${id}-wc`);
+  if(!ta||!wc) return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  wc.textContent=`${words} / ${max} words`;
+  wc.style.color=words>max?'var(--error)':'var(--text-light)';
+}
+
+function submitWriting(id){
+  const ta=document.getElementById(`${id}-text`);
+  if(!ta||ta.value.trim().length<30){alert('Please write your response before submitting.');return;}
+  const s=document.getElementById(`${id}-success`);
+  s.style.display='block';s.scrollIntoView({behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════
+// ASSESSMENT
+// ═══════════════════════════════════════
+
+let attemptCount=0;
+function renderAssessment(){renderMCQ('fa-mcqs',DATA.fa.questions,'fa');}
+
+function submitAssessment(){
+  attemptCount++;
+  const qs=DATA.fa.questions;
+  let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#fa-q${i} .mcq-option`);
+    let chosen=-1;
+    opts.forEach((o,j)=>{if(o.classList.contains('selected')) chosen=j;});
+    if(chosen===item.ans) score++;
+    opts.forEach((o,j)=>{
+      o.classList.remove('selected','correct','wrong');
+      if(j===item.ans) o.classList.add('correct');
+      else if(j===chosen&&chosen!==item.ans) o.classList.add('wrong');
+    });
+  });
+  const pct=Math.round(score/total*100);const pass=pct>=70;
+  const res=document.getElementById('assessment-result');
+  res.style.display='block';res.scrollIntoView({behavior:'smooth'});
+  document.getElementById('result-score-text').className='result-score '+(pass?'pass':'fail');
+  document.getElementById('result-score-text').textContent=`${pct}% — ${score}/${total}`;
+  document.getElementById('result-msg').textContent=pass
+    ?'🎉 Congratulations! You have passed Module 4. Excellent work on Digital Marketing and Social Media English.'
+    :'❌ You did not reach the 70% pass mark. Please review the module content and try again.';
+  const wrap=document.getElementById('retake-wrap');
+  if(!pass&&attemptCount<2){
+    wrap.innerHTML=`<button class="retake-btn" onclick="retakeAssessment()">Retake Assessment (Attempt ${attemptCount+1} of 2)</button>`;
+  } else if(attemptCount>=2&&!pass){
+    wrap.innerHTML=`<p style="color:var(--error);font-size:14px;margin-top:12px">You have used both attempts. Please review the module content.</p>`;
+    document.getElementById('assessment-form').style.display='none';
+  }
+  document.getElementById('attempt-badge').textContent=`Attempt ${attemptCount} of 2`;
+}
+
+function retakeAssessment(){
+  document.getElementById('assessment-result').style.display='none';
+  document.querySelectorAll('#fa-mcqs .mcq-option').forEach(o=>o.classList.remove('selected','correct','wrong'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════
+// NAVIGATION & PROGRESS
+// ═══════════════════════════════════════
+
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(id);if(sec) sec.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if((n.getAttribute('onclick')||'').includes(`'${id}'`)) n.classList.add('active');
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+  trackProgress(id);
+}
+
+function trackProgress(id){
+  let v=JSON.parse(sessionStorage.getItem('mkt4v')||'[]');
+  if(!v.includes(id)){v.push(id);sessionStorage.setItem('mkt4v',JSON.stringify(v));}
+  const pct=Math.round(v.length/11*100);
+  const pf=document.getElementById('progress-fill');
+  const pp=document.getElementById('progress-pct');
+  if(pf) pf.style.width=pct+'%';if(pp) pp.textContent=pct+'%';
+}
+
+window.addEventListener('load',()=>{
+  if(window.speechSynthesis){
+    window.speechSynthesis.getVoices();
+    if(window.speechSynthesis.onvoiceschanged!==undefined)
+      window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
+  }
+  renderMCQ('r1-mcqs',DATA.r1.questions,'r1');
+  renderMCQ('r2-mcqs',DATA.r2.questions,'r2');
+  renderMCQ('v1-mcqs',DATA.v1.questions,'v1');
+  renderGaps();
+  renderTF();
+  renderMCQ('g1-mcqs',DATA.g1.questions,'g1');
+  renderMCQ('g2-mcqs',DATA.g2.questions,'g2');
+  renderMCQ('g3-mcqs',DATA.g3.questions,'g3');
+  renderListening();
+  renderMCQ('cs1-mcqs',DATA.cs1.questions,'cs1');
+  renderMCQ('cs2-mcqs',DATA.cs2.questions,'cs2');
+  renderAssessment();
+  trackProgress('overview');
+});
+
+</script>
+</body>
+</html>

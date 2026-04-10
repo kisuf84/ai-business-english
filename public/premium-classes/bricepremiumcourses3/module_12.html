@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 12: Advertising and Promotional Strategies</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1c2d4a;--navy-dark:#0f1d35;--navy-mid:#243a5e;--navy-light:#2e4875;--navy-glow:#3a5a8a;
+  --gold:#f0a830;--gold-light:#f5c55a;--gold-pale:#fef3d0;--gold-dim:rgba(240,168,48,.18);
+  --cream:#faf8f4;--cream-dark:#efe9de;
+  --white:#fff;--text-dark:#0f1d35;--text-mid:#2c3e5a;--text-light:#5a7090;
+  --success:#1e7a4a;--error:#c0392b;
+  --sidebar-w:260px;--radius:12px;
+  --shadow-card:0 4px 20px rgba(15,29,53,.10);
+  --shadow-hover:0 8px 32px rgba(15,29,53,.16);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;
+  background:linear-gradient(175deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-mid) 100%);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto;
+  box-shadow:4px 0 24px rgba(15,29,53,.35);
+}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--navy-light);border-radius:2px}
+.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,.07)}
+.brand-title{font-family:'Fraunces',serif;font-size:13px;font-weight:600;color:var(--gold);line-height:1.3;letter-spacing:.01em}
+.brand-sub{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-top:4px}
+.level-badge{display:inline-block;background:var(--gold);color:var(--navy-dark);font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:20px;margin-top:11px}
+.sidebar-module-label{padding:20px 20px 8px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:600}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;
+  color:rgba(255,255,255,.6);font-size:13px;font-weight:400;transition:all .2s;
+  border-left:3px solid transparent;position:relative;
+}
+.nav-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.95)}
+.nav-item.active{
+  background:linear-gradient(90deg,rgba(240,168,48,.16),rgba(240,168,48,.04));
+  color:#fff;border-left-color:var(--gold);
+}
+.nav-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.nav-label{flex:1}
+.nav-badge{background:var(--gold);color:var(--navy-dark);font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;flex-shrink:0}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.section{display:none}.section.active{display:block}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 50%,var(--navy-mid) 100%);
+  padding:32px 52px 40px;position:relative;overflow:hidden;min-height:290px;
+}
+.hero::before{
+  content:'';position:absolute;right:-40px;top:-30px;width:460px;height:460px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='10' y='320' font-size='280' opacity='.035' fill='%23fff' font-family='serif'%3EM12%3C/text%3E%3C/svg%3E") center/contain no-repeat;
+}
+.hero::after{
+  content:'';position:absolute;left:-80px;bottom:-80px;
+  width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(240,168,48,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.section-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+  padding:6px 14px;border-radius:20px;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:22px;
+  font-family:'DM Mono',monospace;backdrop-filter:blur(4px);
+}
+.hero-title{font-family:'Fraunces',serif;font-size:54px;font-weight:700;line-height:1.05;color:#fff;margin-bottom:16px}
+.hero-title span{color:var(--gold)}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.62);max-width:620px;line-height:1.68;margin-bottom:28px}
+.stats-row{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:24px}
+.stat-num{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.stat-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38)}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.48);margin-bottom:7px}
+.progress-track{height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;transition:width .7s ease;width:0%}
+
+/* ── CONTENT ── */
+.content-area{background:var(--cream);padding:40px 52px}
+.card{
+  background:#fff;border-radius:var(--radius);padding:32px;margin-bottom:24px;
+  border:1px solid rgba(28,45,74,.07);box-shadow:var(--shadow-card);
+  transition:box-shadow .2s;
+}
+.card:hover{box-shadow:var(--shadow-hover)}
+.card-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--text-dark);margin-bottom:6px}
+.card-title-bar{width:40px;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;margin-bottom:18px}
+.prose{font-size:15px;line-height:1.75;color:var(--text-mid)}
+.prose strong{color:var(--text-dark);font-weight:600}
+.prose p+p{margin-top:12px}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.outcome-item{display:flex;align-items:flex-start;gap:10px;padding:13px 15px;background:var(--cream);border-radius:9px;border:1px solid var(--cream-dark)}
+.outcome-icon{color:var(--gold);flex-shrink:0;margin-top:1px}
+.outcome-text{font-size:13.5px;color:var(--text-mid);line-height:1.5}
+
+/* ── SPEAKING ── */
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.q-card{
+  background:#fff;border:1px solid rgba(28,45,74,.09);border-radius:9px;
+  padding:16px;display:flex;gap:12px;align-items:flex-start;transition:all .2s;
+}
+.q-card:hover{box-shadow:var(--shadow-hover);border-color:rgba(240,168,48,.3);transform:translateY(-1px)}
+.q-num{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--gold-light);flex-shrink:0;min-width:28px;line-height:1}
+.q-text{font-size:14px;color:var(--text-mid);line-height:1.55}
+
+/* ── WORD BANK ── */
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.wb-card{
+  background:#fff;border:1px solid rgba(28,45,74,.09);border-radius:11px;
+  padding:18px 16px;display:flex;flex-direction:column;gap:6px;transition:all .2s;
+}
+.wb-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:rgba(240,168,48,.25)}
+.wb-emoji{font-size:24px}
+.wb-term{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--text-dark)}
+.wb-pos{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.wb-def{font-size:13px;color:var(--text-mid);line-height:1.5}
+
+/* ── READING ── */
+.reading-text{
+  background:linear-gradient(135deg,var(--cream) 0%,rgba(239,233,222,.5) 100%);
+  border-left:4px solid var(--gold);padding:24px 28px;border-radius:0 10px 10px 0;margin-bottom:28px;
+}
+.reading-text h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--text-dark);margin-bottom:14px}
+.reading-text p{font-size:14.5px;line-height:1.78;color:var(--text-mid);margin-bottom:10px}
+.reading-text strong{color:var(--text-dark);font-weight:600}
+
+/* ── MCQ ── */
+.mcq-section{margin-top:24px}
+.mcq-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--text-dark);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--cream-dark)}
+.mcq-item{margin-bottom:20px}
+.mcq-q{font-size:14.5px;font-weight:600;color:var(--text-dark);margin-bottom:10px;line-height:1.5}
+.mcq-options{display:grid;gap:7px}
+.mcq-option{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:9px;
+  border:1.5px solid rgba(28,45,74,.13);cursor:pointer;transition:all .18s;
+  font-size:13.5px;color:var(--text-mid);background:#fff;
+}
+.mcq-option:hover{border-color:var(--gold);background:var(--gold-pale);color:var(--text-dark)}
+.mcq-option.selected{border-color:var(--navy);background:rgba(28,45,74,.06);color:var(--text-dark)}
+.mcq-option.correct{border-color:var(--success)!important;background:rgba(30,122,74,.08)!important;color:var(--success)!important}
+.mcq-option.wrong{border-color:var(--error)!important;background:rgba(192,57,43,.07)!important;color:var(--error)!important}
+.opt-letter{
+  width:22px;height:22px;border-radius:50%;background:rgba(28,45,74,.09);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+  flex-shrink:0;font-family:'DM Mono',monospace;
+}
+.check-btn{
+  display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 22px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  color:#fff;border:none;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;
+  font-family:'DM Sans',sans-serif;transition:all .2s;box-shadow:0 2px 8px rgba(28,45,74,.2);
+}
+.check-btn:hover{background:linear-gradient(135deg,var(--navy-mid) 0%,var(--navy-light) 100%);box-shadow:0 4px 14px rgba(28,45,74,.3);transform:translateY(-1px)}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:9px;font-size:13px;font-weight:500;display:none}
+.feedback.show{display:block}
+.feedback.good{background:rgba(30,122,74,.09);color:var(--success);border:1px solid rgba(30,122,74,.2)}
+.feedback.bad{background:rgba(192,57,43,.08);color:var(--error);border:1px solid rgba(192,57,43,.2)}
+.score-display{background:var(--cream);border-radius:9px;padding:14px 18px;margin-top:16px;display:none}
+.score-display.show{display:flex;align-items:center;justify-content:space-between}
+.score-val{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--text-dark)}
+.score-label{font-size:13px;color:var(--text-light)}
+
+/* ── VOCAB EXERCISES ── */
+.ex-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ex-badge{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  color:#fff;font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px;letter-spacing:.06em;
+}
+.ex-type{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.ex-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--text-dark);margin-bottom:4px}
+.ex-instruction{font-size:13.5px;color:var(--text-light);margin-bottom:20px;font-style:italic}
+.word-box{
+  background:linear-gradient(135deg,var(--cream) 0%,var(--cream-dark) 100%);
+  border-radius:9px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:20px;
+  border:1px solid var(--cream-dark);
+}
+.word-chip{background:#fff;border:1px solid rgba(28,45,74,.13);border-radius:6px;padding:3px 10px;font-size:13px;color:var(--text-mid)}
+.gap-sentence{font-size:14.5px;color:var(--text-dark);line-height:2.5;margin-bottom:6px}
+.gap-input{
+  border:none;border-bottom:2px solid var(--gold);background:transparent;
+  font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);
+  padding:2px 6px;width:170px;outline:none;text-align:center;transition:border-color .18s;
+}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.tf-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--cream-dark)}
+.tf-stmt{flex:1;font-size:14.5px;color:var(--text-mid);line-height:1.55}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+.tf-btn{
+  padding:5px 14px;border-radius:7px;border:1.5px solid rgba(28,45,74,.18);cursor:pointer;
+  font-size:12px;font-weight:600;background:#fff;color:var(--text-mid);transition:all .18s;
+  font-family:'DM Sans',sans-serif;
+}
+.tf-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-pale)}
+.tf-btn.sel-t{background:#dcfce7;border-color:var(--success);color:var(--success)}
+.tf-btn.sel-f{background:#fee2e2;border-color:var(--error);color:var(--error)}
+
+/* ── GRAMMAR REVIEW ── */
+.gr-box{
+  background:linear-gradient(150deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-mid) 100%);
+  color:#fff;border-radius:12px;padding:30px;margin-bottom:24px;
+  box-shadow:0 6px 28px rgba(15,29,53,.25);
+}
+.gr-box-title{font-family:'Fraunces',serif;font-size:21px;font-weight:600;color:var(--gold);margin-bottom:6px}
+.gr-box-sub{font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.12em;margin-bottom:20px}
+.gr-rule{background:rgba(255,255,255,.07);border-radius:9px;padding:16px;margin-bottom:12px;border:1px solid rgba(255,255,255,.05)}
+.gr-rule-title{font-size:13px;font-weight:600;color:var(--gold-light);margin-bottom:6px}
+.gr-rule-text{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.6}
+.gr-example{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--gold-pale);background:rgba(255,255,255,.05);padding:9px 13px;border-radius:7px;margin-top:8px;line-height:1.6;border-left:2px solid rgba(240,168,48,.3)}
+.gr-table{width:100%;border-collapse:collapse;margin-top:14px}
+.gr-table th{background:rgba(255,255,255,.09);padding:9px 13px;font-size:12px;text-align:left;color:var(--gold-light);letter-spacing:.06em;text-transform:uppercase}
+.gr-table td{padding:9px 13px;font-size:13px;color:rgba(255,255,255,.75);border-top:1px solid rgba(255,255,255,.07)}
+.gr-table tr:hover td{background:rgba(255,255,255,.04)}
+
+/* ── WRITING ── */
+.writing-prompt{background:rgba(240,168,48,.07);border:1px solid rgba(240,168,48,.28);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.writing-prompt h4{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--text-dark);margin-bottom:8px}
+.writing-prompt p{font-size:13.5px;color:var(--text-mid);line-height:1.6}
+.writing-focus{background:rgba(28,45,74,.04);border:1px solid rgba(28,45,74,.1);border-radius:9px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--text-light)}
+.writing-focus strong{color:var(--text-mid)}
+.writing-textarea{width:100%;min-height:180px;border:1.5px solid rgba(28,45,74,.18);border-radius:9px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);resize:vertical;outline:none;background:#fff;line-height:1.65;transition:border-color .2s}
+.writing-textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,168,48,.1)}
+.writing-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.word-count{font-size:12px;color:var(--text-light);font-family:'DM Mono',monospace}
+.submit-btn{padding:10px 24px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--navy-dark);border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;box-shadow:0 2px 8px rgba(240,168,48,.3)}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(240,168,48,.4)}
+.submit-success{display:none;padding:12px 16px;background:rgba(30,122,74,.09);border:1px solid rgba(30,122,74,.22);border-radius:9px;color:var(--success);font-size:13.5px;font-weight:500;margin-top:12px}
+
+/* ── AUDIO CARDS ── */
+.audio-card{
+  background:linear-gradient(150deg,var(--navy-dark) 0%,var(--navy) 70%,var(--navy-mid) 100%);
+  border-radius:14px;padding:26px;margin-bottom:28px;
+  box-shadow:0 6px 28px rgba(15,29,53,.28);
+}
+.audio-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
+.audio-emoji{font-size:30px;background:rgba(255,255,255,.09);border-radius:10px;padding:10px;flex-shrink:0;line-height:1;border:1px solid rgba(255,255,255,.07)}
+.audio-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#fff;margin-bottom:4px}
+.audio-sub{font-size:12px;color:rgba(255,255,255,.48)}
+.audio-tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.audio-tag{font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 9px;border-radius:10px;text-transform:uppercase}
+.tag-level{background:rgba(240,168,48,.28);color:var(--gold-light)}
+.tag-type{background:rgba(255,255,255,.1);color:rgba(255,255,255,.72)}
+.tag-focus{color:rgba(255,255,255,.42);font-size:10px}
+.player-box{background:rgba(15,29,53,.55);border-radius:11px;padding:16px 18px;margin-bottom:12px;border:1px solid rgba(255,255,255,.06)}
+.player-row{display:flex;align-items:center;gap:14px}
+.play-btn{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;transition:all .2s;color:var(--navy-dark);
+  box-shadow:0 2px 10px rgba(240,168,48,.3);
+}
+.play-btn:hover{transform:scale(1.08);box-shadow:0 4px 16px rgba(240,168,48,.45)}
+.player-info{flex:1}
+.player-title-sm{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px}
+.player-sub-sm{font-size:11px;color:rgba(255,255,255,.4)}
+.player-time{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.48);white-space:nowrap}
+.player-progress{width:100%;height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:11px;overflow:hidden}
+.player-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;transition:width .5s linear}
+.speed-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.38);letter-spacing:.08em;text-transform:uppercase}
+.speed-btn{padding:3px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:transparent;color:rgba(255,255,255,.58);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:all .18s}
+.speed-btn.active,.speed-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-dark);font-weight:700}
+.replay-btn{padding:3px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:transparent;color:rgba(255,255,255,.58);font-size:11px;cursor:pointer;transition:all .18s}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light)}
+.tts-note{font-size:11px;color:rgba(255,255,255,.28);font-style:italic;margin-top:6px}
+.transcript-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;color:rgba(255,255,255,.55);font-size:12.5px;padding:8px 0;border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:color .18s}
+.transcript-toggle:hover{color:var(--gold-light)}
+.transcript-box{display:none;background:rgba(255,255,255,.05);border-radius:9px;padding:16px;margin-top:6px;margin-bottom:14px;border:1px solid rgba(255,255,255,.06)}
+.transcript-box.open{display:block}
+.transcript-box p{font-size:13px;color:rgba(255,255,255,.68);line-height:1.78;margin-bottom:8px}
+
+/* ── LISTENING MCQs — all WHITE ── */
+.listen-instruction{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.07);border-radius:9px;font-size:13px;color:#fff;margin-bottom:18px;font-weight:500;border:1px solid rgba(255,255,255,.06)}
+.listen-mcq-wrap .mcq-title{color:#fff;border-bottom-color:rgba(255,255,255,.18)}
+.listen-mcq-wrap .mcq-q{color:#fff}
+.listen-mcq-wrap .mcq-option{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18);color:#fff}
+.listen-mcq-wrap .mcq-option:hover{border-color:var(--gold);background:rgba(240,168,48,.14);color:#fff}
+.listen-mcq-wrap .mcq-option.selected{border-color:var(--gold);background:rgba(240,168,48,.2);color:#fff}
+.listen-mcq-wrap .mcq-option.correct{border-color:#4ade80!important;background:rgba(74,222,128,.14)!important;color:#4ade80!important}
+.listen-mcq-wrap .mcq-option.wrong{border-color:#f87171!important;background:rgba(248,113,113,.12)!important;color:#f87171!important}
+.listen-mcq-wrap .opt-letter{background:rgba(255,255,255,.13);color:#fff}
+.listen-mcq-wrap .check-btn{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--navy-dark);box-shadow:0 2px 8px rgba(240,168,48,.25)}
+.listen-mcq-wrap .check-btn:hover{background:var(--gold-light);transform:translateY(-1px)}
+.listen-mcq-wrap .feedback.good{background:rgba(74,222,128,.13);color:#4ade80;border-color:rgba(74,222,128,.28)}
+.listen-mcq-wrap .feedback.bad{background:rgba(248,113,113,.1);color:#f87171;border-color:rgba(248,113,113,.24)}
+.listen-mcq-wrap .score-display{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.06)}
+.listen-mcq-wrap .score-val{color:#fff}
+.listen-mcq-wrap .score-label{color:rgba(255,255,255,.58)}
+
+/* ── CASE STUDIES ── */
+.case-header{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy-mid) 100%);
+  border-radius:12px 12px 0 0;padding:22px 28px;
+}
+.case-header h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#fff;margin-bottom:4px}
+.case-header p{font-size:13px;color:rgba(255,255,255,.48)}
+.case-body{background:#fff;border:1px solid rgba(28,45,74,.09);border-top:none;border-radius:0 0 12px 12px;padding:24px 28px;margin-bottom:28px}
+.case-section-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.case-text{font-size:14.5px;color:var(--text-mid);line-height:1.78;margin-bottom:20px}
+.case-text strong{color:var(--text-dark)}
+
+/* ── ASSESSMENT ── */
+.assessment-header{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 50%,var(--navy-mid) 100%);
+  border-radius:14px;padding:30px 32px;margin-bottom:28px;text-align:center;
+  box-shadow:0 6px 28px rgba(15,29,53,.28);
+}
+.assessment-header h2{font-family:'Fraunces',serif;font-size:28px;color:#fff;margin-bottom:8px}
+.assessment-header p{color:rgba(255,255,255,.58);font-size:14px}
+.assessment-meta{display:flex;justify-content:center;gap:28px;margin-top:18px;flex-wrap:wrap}
+.assessment-meta-item{text-align:center}
+.assessment-meta-num{font-family:'Fraunces',serif;font-size:24px;color:var(--gold);font-weight:700}
+.assessment-meta-label{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em}
+.attempt-badge{display:inline-block;padding:4px 13px;border-radius:12px;font-size:11px;font-weight:600;background:rgba(240,168,48,.18);color:var(--gold-light);margin-top:10px;border:1px solid rgba(240,168,48,.2)}
+.assessment-result{display:none;text-align:center;padding:30px;background:#fff;border-radius:12px;border:2px solid var(--cream-dark);margin-bottom:24px;box-shadow:var(--shadow-card)}
+.result-score{font-family:'Fraunces',serif;font-size:56px;font-weight:700}
+.result-score.pass{color:var(--success)}.result-score.fail{color:var(--error)}
+.result-msg{font-size:16px;color:var(--text-mid);margin-top:8px}
+.retake-btn{padding:10px 24px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;margin-top:16px;font-family:'DM Sans',sans-serif;box-shadow:0 2px 8px rgba(28,45,74,.2)}
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:768px){
+  .sidebar{position:relative;width:100%;height:auto;flex-direction:column;overflow-y:visible;border-bottom:2px solid var(--gold);box-shadow:none}
+  .sidebar-brand{padding:16px 16px 12px}
+  .brand-title{font-size:12px}
+  .sidebar-module-label{padding:10px 16px 4px}
+  .nav-item{padding:8px 16px}
+  .main{margin-left:0}
+  .hero{padding:22px 20px 28px;min-height:auto}
+  .hero-title{font-size:34px}
+  .hero-desc{font-size:14px}
+  .stats-row{gap:20px}
+  .stat-num{font-size:22px}
+  .content-area{padding:20px 16px}
+  .card{padding:20px 16px}
+  .q-grid,.outcomes-grid,.wb-grid{grid-template-columns:1fr}
+  .gr-table{display:block;overflow-x:auto;white-space:nowrap}
+  .writing-textarea{min-height:160px;font-size:13px}
+  .mcq-option{font-size:13px;padding:9px 12px}
+  .audio-card{padding:18px}
+  .player-row{flex-wrap:wrap;gap:10px}
+  .speed-row{gap:6px}
+  .speed-btn{padding:3px 8px;font-size:10px}
+  .case-body{padding:16px}
+  .assessment-header{padding:22px 16px}
+  .assessment-meta{gap:18px}
+  .result-score{font-size:40px}
+  .tf-item{flex-direction:column;gap:8px}
+  .tf-btns{align-self:flex-start}
+  .word-box{padding:10px 12px;gap:6px}
+  .word-chip{font-size:12px;padding:2px 8px}
+  .gap-input{width:130px;font-size:13px}
+  .card-title{font-size:19px}
+  .ex-title{font-size:16px}
+  .section-tag{font-size:10px;padding:5px 10px}
+  .listen-instruction{font-size:12px;padding:8px 12px}
+  .check-btn{padding:9px 18px;font-size:12px}
+  .submit-btn{padding:9px 18px;font-size:12px}
+  .progress-label{font-size:11px}
+  .gr-box{padding:20px 16px}
+}
+@media(max-width:480px){
+  .hero-title{font-size:26px;line-height:1.1}
+  .stats-row{gap:14px}
+  .stat-num{font-size:20px}
+  .stat-label{font-size:9px}
+  .card{padding:16px 14px}
+  .mcq-q{font-size:13.5px}
+  .mcq-option{font-size:12.5px;gap:8px;padding:9px 10px}
+  .opt-letter{width:20px;height:20px;font-size:10px}
+  .audio-header{flex-direction:column;gap:10px}
+  .audio-emoji{font-size:24px;padding:8px}
+  .play-btn{width:40px;height:40px;font-size:16px}
+  .nav-badge{font-size:8px;padding:2px 5px}
+  .gr-rule{padding:12px}
+}
+
+
+
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-title">Marketing &amp; Advertising English</div>
+    <div class="brand-sub">Professional Development</div>
+    <div class="level-badge">B1&ndash;B2 LEVEL</div>
+  </div>
+  <div class="sidebar-module-label">Module 12</div>
+  <div class="nav-item active" onclick="showSection('overview')"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  <div class="nav-item" onclick="showSection('speaking')"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span><span class="nav-badge">21Q</span></div>
+  <div class="nav-item" onclick="showSection('wordbank')"><span class="nav-icon">🟩</span><span class="nav-label">Word Bank</span><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="showSection('reading')"><span class="nav-icon">📄</span><span class="nav-label">Reading</span><span class="nav-badge">2T</span></div>
+  <div class="nav-item" onclick="showSection('vocabulary')"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar')"><span class="nav-icon">📘</span><span class="nav-label">Grammar</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar-review')"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  <div class="nav-item" onclick="showSection('writing')"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span><span class="nav-badge">2W</span></div>
+  <div class="nav-item" onclick="showSection('listening')"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span><span class="nav-badge">4Ex</span></div>
+  <div class="nav-item" onclick="showSection('casestudies')"><span class="nav-icon">📊</span><span class="nav-label">Case Studies</span><span class="nav-badge">2CS</span></div>
+  <div class="nav-item" onclick="showSection('assessment')"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span><span class="nav-badge">20Q</span></div>
+</nav>
+<div class="main">
+
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="section-tag">🏛️ Module 12 &middot; Marketing &amp; Advertising English</div>
+    <div class="hero-title">Advertising &amp;<br><span>Promotional Strategies</span></div>
+    <p class="hero-desc">Master the professional English of advertising strategy, media planning, creative development, and promotional campaign execution &mdash; from above-the-line broadcast to below-the-line activation and everything in between.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+    <div>
+      <div class="progress-label"><span>Module Progress</span><span id="progress-pct">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div><div class="card-title-bar"></div>
+      <div class="prose">
+        <p><strong>Welcome to Module 12: Advertising and Promotional Strategies.</strong> Advertising is the most visible face of marketing &mdash; the campaigns that shape culture, build brands, and drive commercial results. Yet behind every successful campaign lies a complex web of strategic decisions: which media channels to use, how to allocate budget across them, what creative approach will resonate with the target audience, and how to measure whether the investment has delivered a return.</p>
+        <p>This module gives you the professional English vocabulary and communication skills to participate fluently in advertising and promotional strategy discussions. You will learn the language of media planning, creative briefing, campaign evaluation, and promotional mechanics, covering both traditional above-the-line channels &mdash; television, radio, outdoor, and press &mdash; and digital and below-the-line approaches. You will practise discussing campaign strategy, writing creative briefs, interpreting media plans, and evaluating campaign effectiveness using professional language.</p>
+        <p>By the end of this module, you will be able to discuss advertising strategy at a professional level in English, write and respond to creative briefs, interpret media plans and campaign budgets, evaluate promotional strategies using appropriate metrics and terminology, and present advertising recommendations to senior stakeholders with clarity and confidence.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div><div class="card-title-bar"></div>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use 21+ advertising and promotional strategy terms accurately in professional contexts</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Distinguish between above-the-line, below-the-line, and through-the-line advertising approaches</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Explain media planning concepts including reach, frequency, GRPs, and share of voice</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Write and interpret professional creative briefs in English</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use modal verbs and conditional structures in campaign strategy discussions</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use language of cause and effect to explain campaign mechanics and results</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Apply formal register and precise vocabulary in advertising briefs and campaign reports</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Analyse advertising case studies and evaluate channel and creative strategy decisions</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="speaking" class="section">
+  <div class="hero">
+    <div class="section-tag">🎙️ Speaking Activities</div>
+    <div class="hero-title">Speaking <span>Discussion</span></div>
+    <p class="hero-desc">21 discussion questions on advertising strategy, media planning, creative briefing, and promotional mechanics &mdash; build professional fluency in advertising English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Discussion Questions</div><div class="card-title-bar"></div>
+      <div class="q-grid"><div class="q-card"><div class="q-num">1</div><div class="q-text">Can you describe a recent advertisement that made a strong impression on you? What made it effective?</div></div><div class="q-card"><div class="q-num">2</div><div class="q-text">What is the difference between above-the-line (ATL) and below-the-line (BTL) advertising? Give an example of each.</div></div><div class="q-card"><div class="q-num">3</div><div class="q-text">What does through-the-line (TTL) advertising mean and why has it become the dominant approach in modern integrated campaigns?</div></div><div class="q-card"><div class="q-num">4</div><div class="q-text">What is a media plan and what information does it typically contain? Who is responsible for creating it?</div></div><div class="q-card"><div class="q-num">5</div><div class="q-text">What is the difference between reach and frequency in media planning? How do you decide the right balance for a campaign?</div></div><div class="q-card"><div class="q-num">6</div><div class="q-text">What are gross rating points (GRPs) and how are they used to measure the weight of a media campaign?</div></div><div class="q-card"><div class="q-num">7</div><div class="q-text">What is a creative brief and why is it such a critical document in the advertising process? What makes a good brief?</div></div><div class="q-card"><div class="q-num">8</div><div class="q-text">What is the difference between a brand campaign and a promotional campaign? When would you use each?</div></div><div class="q-card"><div class="q-num">9</div><div class="q-text">What is a unique selling proposition (USP) and how does it shape the creative direction of an advertising campaign?</div></div><div class="q-card"><div class="q-num">10</div><div class="q-text">What is share of voice (SOV) and why does research show a strong relationship between SOV and market share growth?</div></div><div class="q-card"><div class="q-num">11</div><div class="q-text">What is programmatic advertising and how has it changed the way media is bought and sold?</div></div><div class="q-card"><div class="q-num">12</div><div class="q-text">What is the difference between earned, owned, and paid media? How do they work together in an integrated campaign?</div></div><div class="q-card"><div class="q-num">13</div><div class="q-text">What is a sales promotion and what types of promotional mechanics are most commonly used in retail and e-commerce?</div></div><div class="q-card"><div class="q-num">14</div><div class="q-text">What is guerrilla marketing and what are the advantages and risks of using unconventional advertising tactics?</div></div><div class="q-card"><div class="q-num">15</div><div class="q-text">What is native advertising and why do some critics argue it is ethically problematic?</div></div><div class="q-card"><div class="q-num">16</div><div class="q-text">How do you measure the effectiveness of an above-the-line advertising campaign? What metrics are most commonly used?</div></div><div class="q-card"><div class="q-num">17</div><div class="q-text">What is brand recall and how is it measured? Why is it considered an important metric for awareness campaigns?</div></div><div class="q-card"><div class="q-num">18</div><div class="q-text">What is the role of emotional versus rational appeals in advertising? Which approach tends to be more effective and in what contexts?</div></div><div class="q-card"><div class="q-num">19</div><div class="q-text">What is an integrated marketing communications (IMC) approach and why is consistency across channels so important?</div></div><div class="q-card"><div class="q-num">20</div><div class="q-text">How has the rise of streaming services, ad-blockers, and digital media changed the effectiveness of traditional TV and radio advertising?</div></div><div class="q-card"><div class="q-num">21</div><div class="q-text">If you had a budget of GBP500,000 to advertise a new energy drink targeting 18-to-30-year-olds in the UK, how would you allocate it and why?</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="wordbank" class="section">
+  <div class="hero">
+    <div class="section-tag">🟩 Word Bank</div>
+    <div class="hero-title">Word <span>Bank</span></div>
+    <p class="hero-desc">21 essential advertising and promotional strategy terms &mdash; with professional definitions covering ATL, BTL, media planning, creative, and campaign evaluation.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Key Vocabulary &mdash; 21 Terms</div><div class="card-title-bar"></div>
+      <div class="wb-grid"><div class="wb-card"><div class="wb-emoji">📺</div><div class="wb-term">Above-the-line (ATL)</div><div class="wb-pos">noun phrase</div><div class="wb-def">Traditional mass-media advertising channels including television, radio, cinema, outdoor (out-of-home), and press, designed to build broad brand awareness across a wide audience.</div></div><div class="wb-card"><div class="wb-emoji">🎯</div><div class="wb-term">Below-the-line (BTL)</div><div class="wb-pos">noun phrase</div><div class="wb-def">Targeted, measurable promotional activities that do not use traditional mass media, including direct mail, email marketing, in-store promotions, events, and trade promotions.</div></div><div class="wb-card"><div class="wb-emoji">🔗</div><div class="wb-term">Through-the-line (TTL)</div><div class="wb-pos">noun phrase</div><div class="wb-def">An integrated advertising approach that combines both above-the-line and below-the-line strategies, ensuring a consistent brand message across all touchpoints.</div></div><div class="wb-card"><div class="wb-emoji">📡</div><div class="wb-term">Reach</div><div class="wb-pos">noun phrase</div><div class="wb-def">The total number of unique individuals exposed to an advertising message at least once during a defined campaign period, expressed as a percentage of the target audience.</div></div><div class="wb-card"><div class="wb-emoji">🔁</div><div class="wb-term">Frequency</div><div class="wb-pos">noun phrase</div><div class="wb-def">The average number of times a member of the target audience is exposed to an advertising message during a campaign period; a key variable in media planning decisions.</div></div><div class="wb-card"><div class="wb-emoji">📊</div><div class="wb-term">Gross Rating Points (GRPs)</div><div class="wb-pos">noun phrase</div><div class="wb-def">A standard measure of advertising campaign weight, calculated by multiplying reach (as a percentage) by frequency; used to compare media plan delivery across channels.</div></div><div class="wb-card"><div class="wb-emoji">🧠</div><div class="wb-term">Creative brief</div><div class="wb-pos">noun phrase</div><div class="wb-def">A document that briefs a creative agency on the advertising challenge, target audience, objectives, key message, tone of voice, mandatory requirements, and budget, serving as the foundation for all creative development.</div></div><div class="wb-card"><div class="wb-emoji">⚡</div><div class="wb-term">Unique Selling Proposition (USP)</div><div class="wb-pos">noun phrase</div><div class="wb-def">The distinctive benefit or quality that differentiates a product or service from its competitors and forms the central claim of its advertising.</div></div><div class="wb-card"><div class="wb-emoji">📢</div><div class="wb-term">Share of voice (SOV)</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of total advertising spend or advertising presence in a category captured by a brand, used as a proxy for competitive advertising weight.</div></div><div class="wb-card"><div class="wb-emoji">🤖</div><div class="wb-term">Programmatic advertising</div><div class="wb-pos">noun phrase</div><div class="wb-def">The automated buying and selling of digital advertising inventory in real time using data and algorithms, replacing traditional manual media buying processes.</div></div><div class="wb-card"><div class="wb-emoji">🏷️</div><div class="wb-term">Sales promotion</div><div class="wb-pos">noun phrase</div><div class="wb-def">A short-term marketing tactic designed to stimulate immediate purchase or trial, including price discounts, coupons, buy-one-get-one offers, competitions, and sampling.</div></div><div class="wb-card"><div class="wb-emoji">🌀</div><div class="wb-term">Guerrilla marketing</div><div class="wb-pos">noun phrase</div><div class="wb-def">An unconventional, low-cost advertising approach that creates surprise and word-of-mouth through unexpected interactions with consumers in everyday public environments.</div></div><div class="wb-card"><div class="wb-emoji">📰</div><div class="wb-term">Native advertising</div><div class="wb-pos">noun phrase</div><div class="wb-def">Paid advertising that matches the form and function of the platform on which it appears, designed to look and feel like editorial content rather than a traditional advertisement.</div></div><div class="wb-card"><div class="wb-emoji">🔔</div><div class="wb-term">Brand recall</div><div class="wb-pos">noun phrase</div><div class="wb-def">The ability of consumers to retrieve a brand name from memory when prompted by the product category or a related cue, used as a measure of advertising effectiveness.</div></div><div class="wb-card"><div class="wb-emoji">💡</div><div class="wb-term">Integrated Marketing Communications (IMC)</div><div class="wb-pos">noun phrase</div><div class="wb-def">A strategic approach that coordinates and integrates all marketing communication tools and channels to deliver a consistent, unified brand message to the target audience.</div></div><div class="wb-card"><div class="wb-emoji">🎬</div><div class="wb-term">Copy</div><div class="wb-pos">noun phrase</div><div class="wb-def">The written or spoken text in an advertising campaign, including headlines, body copy, slogans, and scripts; also used more broadly to refer to all advertising creative content.</div></div><div class="wb-card"><div class="wb-emoji">📐</div><div class="wb-term">Media plan</div><div class="wb-pos">noun phrase</div><div class="wb-def">A detailed document specifying which media channels will be used in a campaign, the scheduling and weighting of each placement, the intended reach and frequency, and the budget allocation.</div></div><div class="wb-card"><div class="wb-emoji">🌟</div><div class="wb-term">Brand equity</div><div class="wb-pos">noun phrase</div><div class="wb-def">The commercial value derived from consumer perception of a brand name, including associations, loyalty, and perceived quality, built over time through consistent advertising and brand experience.</div></div><div class="wb-card"><div class="wb-emoji">🎁</div><div class="wb-term">Promotional mechanic</div><div class="wb-pos">noun phrase</div><div class="wb-def">The specific mechanism used in a sales promotion to incentivise consumer behaviour, such as a percentage discount, free gift with purchase, loyalty points, or prize draw.</div></div><div class="wb-card"><div class="wb-emoji">📈</div><div class="wb-term">Advertising effectiveness</div><div class="wb-pos">noun phrase</div><div class="wb-def">The degree to which an advertising campaign achieves its intended objectives, measured using metrics appropriate to those objectives such as awareness, recall, consideration, or sales.</div></div><div class="wb-card"><div class="wb-emoji">🔍</div><div class="wb-term">Media buying</div><div class="wb-pos">noun phrase</div><div class="wb-def">The process of purchasing advertising space and time across media channels, negotiating placement, timing, and price with publishers and broadcasters to deliver a media plan efficiently.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="reading" class="section">
+  <div class="hero">
+    <div class="section-tag">📄 Reading Activities</div>
+    <div class="hero-title">Reading <span>Texts</span></div>
+    <p class="hero-desc">Two professional texts on advertising strategy and media planning. Read carefully, then answer the comprehension questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Text 1: Advertising Strategy &mdash; Channels, Objectives, and Creative Approaches</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; ATL, BTL, and the Case for Integration</h3>
+        <p>Advertising channels have traditionally been divided into two broad categories. <strong>Above-the-line (ATL)</strong> channels &mdash; television, radio, cinema, outdoor, and national press &mdash; are mass-media formats that reach a broad audience without precisely targeting specific individuals. They are the primary tools for building brand awareness and brand equity at scale. <strong>Below-the-line (BTL)</strong> channels &mdash; direct mail, email, in-store promotions, events, and trade marketing &mdash; are targeted, interactive, and measurable, designed to drive immediate behavioural responses such as trial, purchase, or sign-up. The distinction matters because the objectives, creative approaches, budget structures, and measurement methodologies are fundamentally different for each.</p>
+        <p>In practice, the most effective contemporary campaigns operate across both categories simultaneously in what is called a <strong>through-the-line (TTL)</strong> or integrated approach. The ATL campaign builds awareness and brand associations at a population level; the BTL and digital activities then capture, convert, and retain the interest that the ATL campaign has generated. A television advertisement that builds emotional brand associations is most effective when supported by a search strategy that captures users who act on that interest, a retargeting programme that keeps the brand visible, and in-store or online promotional mechanics that give the interested consumer a compelling reason to purchase now.</p>
+        <h3>Paragraph 2 &mdash; Creative Strategy and the USP</h3>
+        <p>At the heart of any advertising campaign is the creative strategy: the decision about what to say, how to say it, and to whom. The creative strategy begins with identifying the <strong>unique selling proposition (USP)</strong> &mdash; the single most compelling and differentiated claim the brand can make that is both true and persuasive to the target audience. A USP is not simply a description of a product feature; it is the articulation of why that feature matters to a specific customer in the context of their life. The most effective advertising campaigns are built on USPs that resonate emotionally as well as rationally, connecting the product's functional benefit to a genuine human truth.</p>
+        <p>Once the USP is established, the creative brief translates it into direction for the creative team. A well-written creative brief does not write the advertising; it creates the conditions in which great advertising can be written. It specifies the audience, the objective, the single-minded key message, the tone of voice, the mandatory brand requirements, and the channel constraints. The creative team's job is to take that brief and find the most surprising, memorable, and persuasive expression of it that is possible within the defined parameters. The brief is the foundation; the creative work is the house built on it.</p>
+        <h3>Paragraph 3 &mdash; Emotional vs Rational Appeals</h3>
+        <p>One of the most enduring debates in advertising strategy concerns the relative effectiveness of emotional and rational appeals. <strong>Rational advertising</strong> presents factual claims, product specifications, price comparisons, and logical arguments for choosing the advertised brand over alternatives. It is most effective for high-involvement purchases where the consumer is actively researching options and requires substantive information to justify their decision. <strong>Emotional advertising</strong>, by contrast, builds associations and feelings rather than conveying information, creating the kind of warm, positive brand associations that influence choices even when the consumer is not consciously aware of them. Research by the Institute of Practitioners in Advertising (IPA) consistently shows that purely emotional campaigns are approximately twice as effective at building long-term market share as purely rational campaigns, though the most effective campaigns of all combine both approaches &mdash; establishing an emotional connection that makes the rational case feel more credible and the brand more trustworthy.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 1 (10 Questions)</div>
+        <div id="r1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r1')">Check Answers</button>
+        <div id="r1-feedback" class="feedback"></div>
+        <div id="r1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Text 2: Media Planning &mdash; Reach, Frequency, and the Integrated Media Mix</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; The Core Variables of Media Planning</h3>
+        <p>Media planning is the discipline of deciding how to allocate an advertising budget across channels, schedules, and audiences to achieve the campaign's communication objectives as efficiently and effectively as possible. It is both a science and an art: a science because it involves precise quantitative decisions about audience delivery, cost efficiency, and schedule weighting; an art because the best media plans reflect an understanding of how audiences consume media and how advertising in different contexts affects the way a message is received.</p>
+        <p>The two most fundamental variables in media planning are <strong>reach</strong> and <strong>frequency</strong>. Reach refers to the number of unique individuals in the target audience who are exposed to the advertising at least once during the campaign period, typically expressed as a percentage of the total target audience. Frequency refers to the average number of times an individual in the target audience is exposed to the advertising during the same period. These two variables are in constant tension: given a fixed budget, increasing reach typically requires reducing frequency and vice versa. A media planner's central task is to find the optimal balance for the specific campaign objective: awareness campaigns generally prioritise reach, while behaviour-change campaigns typically require higher frequency to drive action.</p>
+        <h3>Paragraph 2 &mdash; GRPs, Share of Voice, and Media Weight</h3>
+        <p><strong>Gross Rating Points (GRPs)</strong> provide a single number summarising the total weight of a media plan by combining reach and frequency: GRPs = reach (%) x frequency. A plan delivering 70% reach at an average frequency of 4 generates 280 GRPs. GRPs allow media planners and clients to compare the delivery weight of different plans and to benchmark campaign weight against competitive activity or historical norms.</p>
+        <p>Closely related to GRPs is <strong>share of voice (SOV)</strong>: the percentage of total advertising weight in a category that a brand's campaign represents. Research by the IPA has established a powerful strategic principle: brands that spend above their market share in advertising tend to grow market share, while brands that spend below their market share tend to lose it. This principle, known as <strong>excess share of voice (eSOV)</strong>, suggests that maintaining a SOV higher than your market share is one of the most reliable strategies for achieving long-term growth. The implication for media planning is clear: brands should invest to maintain or exceed their SOV, particularly in competitive categories where competitors are actively spending.</p>
+        <h3>Paragraph 3 &mdash; Programmatic Advertising and the Modern Media Mix</h3>
+        <p>The emergence of programmatic advertising has fundamentally transformed how digital media is bought and sold. Rather than negotiating directly with individual publishers for fixed placements, programmatic buying uses automated technology to bid for individual ad impressions in real time as users load web pages, watch videos, or use apps. Each impression is auctioned in milliseconds, with the winning bid determined by a combination of the advertiser's targeting criteria, bid strategy, and budget. This allows advertisers to reach highly specific audiences across thousands of websites and apps simultaneously, targeting by demographics, interests, browsing behaviour, device type, and location.</p>
+        <p>The modern media mix for most campaigns combines programmatic digital buying with a selection of traditional and premium digital channels. <strong>Programmatic display and video</strong> offer scale and targeting efficiency. <strong>Paid social</strong> provides audience targeting alongside social context and creative formats native to each platform. <strong>Search</strong> captures demand at the moment of active intent. <strong>Audio</strong> (streaming and podcast) reaches audiences in environments where other media cannot. <strong>Out-of-home (OOH)</strong> &mdash; including digital out-of-home (DOOH) &mdash; delivers brand messages in the physical world with growing targeting and measurement capabilities. The skill of the modern media planner lies in allocating across this complex landscape in a way that maximises the cumulative impact of the campaign.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 2 (10 Questions)</div>
+        <div id="r2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r2')">Check Answers</button>
+        <div id="r2-feedback" class="feedback"></div>
+        <div id="r2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="vocabulary" class="section">
+  <div class="hero">
+    <div class="section-tag">✏️ Vocabulary Exercises</div>
+    <div class="hero-title">Vocabulary <span>Practice</span></div>
+    <p class="hero-desc">Three vocabulary exercises to consolidate your command of advertising and promotional strategy English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Multiple Choice</div></div>
+      <div class="ex-title">Choosing the Right Term</div>
+      <p class="ex-instruction">Select the best word or phrase to complete each sentence in a professional advertising and promotional strategy context.</p>
+      <div id="v1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('v1')">Check Answers</button>
+      <div id="v1-feedback" class="feedback"></div>
+      <div id="v1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Gap-Fill</div></div>
+      <div class="ex-title">Complete the Sentences</div>
+      <p class="ex-instruction">Type the correct word from the box to complete each sentence. Check your spelling carefully.</p>
+      <div class="word-box">
+        <strong style="color:var(--text-dark);margin-right:6px">Word Box:</strong>
+        <span class="word-chip">recall</span><span class="word-chip">programmatic</span><span class="word-chip">guerrilla</span>
+        <span class="word-chip">equity</span><span class="word-chip">frequency</span><span class="word-chip">native</span>
+        <span class="word-chip">mechanic</span><span class="word-chip">reach</span><span class="word-chip">copy</span>
+        <span class="word-chip">integrated</span>
+      </div>
+      <div id="v2-gaps"></div>
+      <button class="check-btn" onclick="checkGaps()">Check Answers</button>
+      <div id="v2-feedback" class="feedback"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">True / False</div></div>
+      <div class="ex-title">True or False?</div>
+      <p class="ex-instruction">Read each statement about advertising and promotional strategy. Decide whether it is TRUE or FALSE and click your answer.</p>
+      <div id="v3-tf"></div>
+      <button class="check-btn" onclick="checkTF()">Check Answers</button>
+      <div id="v3-feedback" class="feedback"></div>
+    </div>
+  </div>
+</div>
+
+<div id="grammar" class="section">
+  <div class="hero">
+    <div class="section-tag">📘 Grammar Exercises</div>
+    <div class="hero-title">Grammar <span>Practice</span></div>
+    <p class="hero-desc">Three grammar exercises covering modal verbs in campaign strategy, language of cause and effect, and formal register in advertising briefs and reports.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Modal Verbs</div></div>
+      <div class="ex-title">Modal Verbs in Campaign Strategy Discussions</div>
+      <p class="ex-instruction">Choose the correct modal verb or modal phrase to complete each sentence from a campaign strategy discussion. Pay attention to the degree of certainty, obligation, or possibility being expressed.</p>
+      <div id="g1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g1')">Check Answers</button>
+      <div id="g1-feedback" class="feedback"></div>
+      <div id="g1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Cause &amp; Effect</div></div>
+      <div class="ex-title">Language of Cause and Effect in Campaign Analysis</div>
+      <p class="ex-instruction">Select the correct cause-and-effect expression to complete each sentence from a campaign analysis or advertising strategy document.</p>
+      <div id="g2-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g2')">Check Answers</button>
+      <div id="g2-feedback" class="feedback"></div>
+      <div id="g2-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">Formal Register</div></div>
+      <div class="ex-title">Formal Register in Advertising Briefs &amp; Reports</div>
+      <p class="ex-instruction">Choose the most formal and professional version of each sentence for use in an advertising brief, campaign report, or agency recommendation document.</p>
+      <div id="g3-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g3')">Check Answers</button>
+      <div id="g3-feedback" class="feedback"></div>
+      <div id="g3-score" class="score-display"></div>
+    </div>
+  </div>
+</div>
+
+<div id="grammar-review" class="section">
+  <div class="hero">
+    <div class="section-tag">🔍 Grammar Reference</div>
+    <div class="hero-title">Grammar <span>Review</span></div>
+    <p class="hero-desc">Three detailed reference boxes covering modal verbs for campaign strategy, language of cause and effect, and formal register for advertising documents.</p>
+  </div>
+  <div class="content-area">
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 1</div>
+      <div class="gr-box-title">Modal Verbs in Campaign Strategy</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why modal verbs are essential in advertising discussions</div>
+        <div class="gr-rule-text">Campaign strategy discussions involve constant assessment of possibilities, recommendations, obligations, and predictions. Modal verbs allow you to express these precisely — signalling whether something is certain, probable, possible, advisable, or required. Using the wrong modal verb can significantly change the meaning and tone of a strategic recommendation.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Modal</th><th>Function</th><th>Campaign Strategy Example</th></tr>
+        <tr><td>must / have to</td><td>Strong obligation / necessity</td><td>All creative assets must comply with ASA guidelines before going live.</td></tr>
+        <tr><td>should / ought to</td><td>Recommendation / advisability</td><td>The campaign should prioritise reach in the first four weeks to build awareness.</td></tr>
+        <tr><td>could / might / may</td><td>Possibility / suggestion</td><td>A guerrilla marketing activation could generate significant earned media coverage.</td></tr>
+        <tr><td>will</td><td>Confident prediction / intention</td><td>The television campaign will deliver approximately 400 GRPs over six weeks.</td></tr>
+        <tr><td>would</td><td>Conditional / tentative suggestion</td><td>Increasing frequency to 5+ would likely improve message retention among the core audience.</td></tr>
+        <tr><td>cannot / must not</td><td>Prohibition</td><td>The advertisement must not make health claims that cannot be substantiated.</td></tr>
+        <tr><td>need not</td><td>Absence of obligation</td><td>The outdoor creative need not include a price point if the TV copy carries the promotional message.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Modal verbs in creative briefs</div>
+        <div class="gr-example">The creative approach should feel warm and accessible rather than aspirational and distant.</div>
+        <div class="gr-example">The advertisement must not show the product being consumed by anyone under 18.</div>
+        <div class="gr-example">Humour could be an effective approach here, but it would need to be tested with the target audience first.</div>
+        <div class="gr-example">The campaign might benefit from a celebrity endorsement in the launch phase.</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 2</div>
+      <div class="gr-box-title">Language of Cause and Effect in Campaign Analysis</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why cause-and-effect language is essential in advertising analysis</div>
+        <div class="gr-rule-text">Campaign analysis requires explaining why results occurred and what caused specific outcomes. Using precise cause-and-effect language demonstrates analytical rigour and helps stakeholders understand the connection between strategic decisions and measurable results.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Function</th><th>Language</th><th>Advertising Example</th></tr>
+        <tr><td>Expressing cause</td><td>because of, due to, as a result of, owing to</td><td>Due to the increased frequency in week three, brand recall improved by 14%.</td></tr>
+        <tr><td>Expressing effect</td><td>led to, resulted in, caused, produced, generated</td><td>The outdoor campaign led to a 22% uplift in foot traffic to retail locations.</td></tr>
+        <tr><td>Expressing purpose</td><td>in order to, so as to, with the aim of, to</td><td>The budget was reallocated to digital in order to improve targeting efficiency.</td></tr>
+        <tr><td>Expressing consequence</td><td>as a result, consequently, therefore, thus</td><td>The SOV was below category average; consequently, market share declined in Q3.</td></tr>
+        <tr><td>Expressing condition</td><td>if, provided that, as long as, on condition that</td><td>If the reach target is met in week one, the frequency can be increased from week two.</td></tr>
+        <tr><td>Expressing contrast</td><td>however, despite, although, nevertheless</td><td>Although the GRP delivery was on target, the conversion rate was below forecast.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Examples in campaign reports</div>
+        <div class="gr-example">Owing to the decision to concentrate the media weight in the first two weeks of the campaign, early awareness metrics were significantly above the benchmark, which in turn led to higher consideration scores by week four.</div>
+        <div class="gr-example">The promotional mechanic was changed from a percentage discount to a free gift with purchase. As a result, average transaction value increased by 18%, as customers who redeemed the offer tended to spend above the qualifying threshold.</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 3</div>
+      <div class="gr-box-title">Formal Register in Advertising Briefs &amp; Reports</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">What is register and why does it matter in advertising documents?</div>
+        <div class="gr-rule-text">Register refers to the level of formality in language. Professional advertising briefs, campaign reports, and agency recommendations require a formal register: precise vocabulary, complete sentences, passive constructions where appropriate, and avoidance of colloquial expressions. Using the wrong register in a professional document undermines credibility.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Informal / Casual</th><th>Formal / Professional</th></tr>
+        <tr><td>We want to get the word out about this.</td><td>The objective is to increase brand awareness among the defined target audience.</td></tr>
+        <tr><td>The ads should be funny and cool.</td><td>The creative approach should employ an accessible, light-hearted tone that resonates with the target demographic.</td></tr>
+        <tr><td>We did not hit our targets.</td><td>The campaign underperformed against its primary KPIs, with awareness metrics 8% below the agreed target.</td></tr>
+        <tr><td>We need more money for digital.</td><td>It is recommended that the digital media budget be increased by 15% to improve targeting efficiency and reach delivery.</td></tr>
+        <tr><td>The TV ad worked really well.</td><td>The television execution demonstrated strong performance, delivering above-target brand recall scores of 42%.</td></tr>
+        <tr><td>Let us try something different.</td><td>It is proposed that an alternative creative approach be developed and tested with the target audience prior to full campaign deployment.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Formal structures commonly used in advertising documents</div>
+        <div class="gr-example">It is recommended that... / It is proposed that... / It is anticipated that...</div>
+        <div class="gr-example">The campaign is designed to... / The budget has been allocated as follows... / Performance will be assessed against...</div>
+        <div class="gr-example">All creative materials are subject to legal review prior to production. / The media plan is contingent upon final budget approval.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="writing" class="section">
+  <div class="hero">
+    <div class="section-tag">✍️ Writing Activities</div>
+    <div class="hero-title">Writing <span>Tasks</span></div>
+    <p class="hero-desc">Two professional writing tasks &mdash; practise producing advertising creative briefs and campaign performance reports in precise, professional English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Writing Activity 1 &mdash; Creative Brief</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a creative brief (180&ndash;220 words) for a television and digital campaign for a fictional UK plant-based chocolate brand called <em>Darkroot</em>. The campaign aims to shift perception of plant-based chocolate from a compromise product to a premium, indulgent choice. Target audience: adults aged 25&ndash;45 who are health-conscious but unwilling to sacrifice taste. Budget: &pound;400,000. Key message: plant-based chocolate that tastes better, not just better for you. Include: background, objective, target audience, single-minded key message, tone of voice, mandatories, and at least one modal verb and one cause-and-effect structure.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Complete brief structure &middot; USP clearly articulated &middot; Modal verb correctly used &middot; Cause-and-effect structure &middot; Formal register &middot; Tone of voice specified
+      </div>
+      <textarea class="writing-textarea" id="w1-text" placeholder="CREATIVE BRIEF&#10;Brand: Darkroot Plant-Based Chocolate&#10;Campaign: Premium Perception Shift&#10;&#10;Background:&#10;...&#10;&#10;Objective:&#10;...&#10;&#10;Target Audience:&#10;...&#10;&#10;Key Message (single-minded):&#10;...&#10;&#10;Tone of Voice:&#10;...&#10;&#10;Mandatories:&#10;..." oninput="updateWordCount('w1',220)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w1-wc">0 / 220 words</span>
+        <button class="submit-btn" onclick="submitWriting('w1')">Submit ✓</button>
+      </div>
+      <div id="w1-success" class="submit-success">✅ Creative brief submitted! Excellent work applying advertising vocabulary and professional brief-writing structure.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Writing Activity 2 &mdash; Campaign Performance Report</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a campaign performance report (190&ndash;230 words) for a fictional UK home insurance brand called <em>Rooftop</em>. The campaign ran for 8 weeks across TV, digital display, and paid social. Use the following data: TV: 320 GRPs delivered (target: 280); brand recall: 38% (target: 30%); digital display: 18M impressions, CTR 0.09% (target: 0.12%); paid social: 4.2M reach, CPM &pound;6.20, engagement rate 2.8% (target: 2.0%); quote requests up 14% vs pre-campaign baseline. Use at least two cause-and-effect structures, one modal verb, and formal register throughout. Include one specific recommendation for the next campaign phase.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Data-accurate interpretation &middot; Two cause-and-effect structures &middot; Modal verb &middot; Formal register &middot; Balanced analysis &middot; Specific recommendation
+      </div>
+      <textarea class="writing-textarea" id="w2-text" placeholder="CAMPAIGN PERFORMANCE REPORT&#10;Brand: Rooftop Home Insurance&#10;Campaign Duration: 8 weeks&#10;&#10;Executive Summary:&#10;...&#10;&#10;Channel Performance:&#10;TV:&#10;Digital Display:&#10;Paid Social:&#10;&#10;Commercial Outcome:&#10;...&#10;&#10;Recommendation:&#10;..." oninput="updateWordCount('w2',230)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w2-wc">0 / 230 words</span>
+        <button class="submit-btn" onclick="submitWriting('w2')">Submit ✓</button>
+      </div>
+      <div id="w2-success" class="submit-success">✅ Report submitted! Great work applying cause-and-effect language, modal verbs, and formal register in a professional campaign context.</div>
+    </div>
+  </div>
+</div>
+
+<div id="listening" class="section">
+  <div class="hero">
+    <div class="section-tag">🎧 Listening Activities</div>
+    <div class="hero-title">Listening <span>Activities</span></div>
+    <p class="hero-desc">4 audio activities with built-in speech players &mdash; press &#9654; Play, listen, then answer the questions in white below.</p>
+  </div>
+  <div class="content-area"><div id="listening-cards"></div></div>
+</div>
+
+<div id="casestudies" class="section">
+  <div class="hero">
+    <div class="section-tag">📊 Case Studies</div>
+    <div class="hero-title">Case <span>Studies</span></div>
+    <p class="hero-desc">Two real-world inspired advertising and promotional campaign case studies. Read carefully and answer the analysis questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="case-header">
+      <h3>Case Study 1: Heathfield Oats &mdash; A TTL Campaign That Grew Market Share by 8 Points in 18 Months</h3>
+      <p>Through-the-Line Campaign &middot; Emotional Advertising &middot; SOV Strategy &middot; Integrated Media</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Heathfield Oats is a UK premium porridge and oat product brand that had maintained a steady 14% market share for several years in a growing but increasingly competitive category. In 2022, the marketing director identified a strategic problem: the brand had historically relied on promotional mechanics &mdash; price promotions, in-store displays, and multipack deals &mdash; to maintain volume. These activities sustained short-term sales but were doing nothing to build brand equity or consumer preference. When the promotional support was reduced, sales fell proportionally. The brand was effectively renting customers rather than building them.</p>
+        <p>The decision was made to invest in a significant brand-building campaign, departing from the previous promotional focus. The total budget was &pound;3.2M across 18 months, with 65% allocated to above-the-line activity (television and digital video) and 35% to below-the-line and digital activation. Critically, the brand increased its share of voice from 11% to 19% &mdash; significantly above its 14% market share &mdash; applying the excess share of voice strategy to drive growth. The creative strategy was built around a single emotional insight: that a bowl of porridge in the morning is not just food; it is the ritual that starts a good day.</p>
+      </div>
+      <div class="case-section-label">Campaign Execution &amp; Results</div>
+      <div class="case-text">
+        <p>The television campaign featured a series of 30-second emotional narratives showing different people &mdash; a nurse preparing for a night shift, a parent preparing their child for a first day at school, an athlete before a competition &mdash; all beginning their day with a bowl of Heathfield Oats. The tagline was: <em>"Start well. Go further."</em> The spots ran at breakfast and early morning peak times, contextually aligned with the consumption moment. Digital video extended the campaign on YouTube and connected TV, with shorter 6-second and 15-second versions retargeting users who had seen the full TV spot.</p>
+        <p>Below the line, the brand ran a sampling programme in partnership with gyms, running clubs, and commuter hubs &mdash; environments where the target audience was naturally receptive to the brand message. A social media campaign invited consumers to share their own morning rituals using a branded hashtag, generating over 180,000 organic posts in the first six months. The integrated approach meant that consumers encountered the brand message in multiple contexts &mdash; on television, on digital, in the real world, and from peers.</p>
+        <p>By the end of the 18-month campaign, brand awareness had grown from 61% to 78% among the target audience. Brand preference (the percentage of category buyers who said Heathfield was their first choice) grew from 19% to 31%. Market share reached 22% &mdash; an 8-point gain achieved without a single major promotional price reduction. The marketing director attributed the growth directly to the combination of emotional brand advertising and a sustained SOV investment above market share level, confirming the eSOV principle in practice.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 1 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs1')">Check Answers</button>
+        <div id="cs1-feedback" class="feedback"></div>
+        <div id="cs1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="case-header">
+      <h3>Case Study 2: Prism Eyewear &mdash; A Challenger Brand that Defeated Incumbents Through Creative Disruption</h3>
+      <p>Challenger Brand Strategy &middot; Guerrilla Marketing &middot; Digital-First Campaign &middot; Viral Earned Media</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Prism Eyewear is an independent UK spectacles brand that launched in 2020 targeting 25-to-45-year-old professionals who found the traditional optician experience overpriced and uninspiring. The category was dominated by three large chains that together held over 70% of market share and had significantly higher advertising budgets than Prism could access. The founding team concluded early that they could not win a conventional media spending war, so they would need to win a creative and earned media war instead.</p>
+        <p>The launch strategy was built around three non-traditional tactics. First, a <strong>guerrilla marketing activation</strong> in central London: 200 pairs of sunglasses were hidden in public spaces across the city, each with a QR code linking to an Instagram post. Participants who found a pair and shared their discovery on social media received a discount code for the website. The activation generated 2.3 million social media impressions in 48 hours at a cost of less than &pound;8,000 &mdash; a fraction of what equivalent paid reach would have cost.</p>
+      </div>
+      <div class="case-section-label">Creative Strategy &amp; Growth</div>
+      <div class="case-text">
+        <p>Second, the brand developed a <strong>native advertising</strong> partnership with three independent style and lifestyle publications, commissioning long-form articles on the intersection of eyewear, fashion, and personal identity. These articles were clearly labelled as paid partnerships but were written by the publications' own editorial teams, ensuring they matched the quality and tone of the surrounding content. The articles generated significantly higher engagement than the equivalent display advertising spend would have produced.</p>
+        <p>Third, the brand built an ambassador programme with 40 professionals in creative industries &mdash; architects, designers, photographers, and journalists &mdash; who were given complimentary Prism eyewear in exchange for authentic social media content. These were not paid influencer posts; they were product gifts to people whose style credibility would make organic endorsement meaningful to the target audience. Unlike a conventional influencer campaign, there was no content requirement and no disclosure obligation beyond the &pound;50 gift threshold, which meant the resulting posts felt genuinely organic.</p>
+        <p>By the end of year two, Prism had grown to 38,000 active customers, an average rating of 4.8 on Trustpilot, and a brand awareness figure of 34% in the target demographic &mdash; remarkable for a brand that had spent less than &pound;200,000 on paid advertising in two years. The case became a widely referenced example of how a challenger brand could build disproportionate brand presence through creative ingenuity and earned media rather than paid media weight.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 2 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs2')">Check Answers</button>
+        <div id="cs2-feedback" class="feedback"></div>
+        <div id="cs2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="assessment" class="section">
+  <div class="hero">
+    <div class="section-tag">🎯 Final Assessment</div>
+    <div class="hero-title">Final <span>Assessment</span></div>
+    <p class="hero-desc">20 multiple choice questions covering all module sections. Score 70% or above to pass. You have two attempts.</p>
+  </div>
+  <div class="content-area">
+    <div class="assessment-header">
+      <h2>Module 12 &mdash; Final Assessment</h2>
+      <p>Advertising &amp; Promotional Strategies</p>
+      <div class="assessment-meta">
+        <div class="assessment-meta-item"><div class="assessment-meta-num">20</div><div class="assessment-meta-label">Questions</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">70%</div><div class="assessment-meta-label">Pass Mark</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">2</div><div class="assessment-meta-label">Attempts</div></div>
+      </div>
+      <div class="attempt-badge" id="attempt-badge">Attempt 1 of 2</div>
+    </div>
+    <div id="assessment-result" class="assessment-result">
+      <div class="result-score" id="result-score-text"></div>
+      <div class="result-msg" id="result-msg"></div>
+      <div id="retake-wrap"></div>
+    </div>
+    <div class="card" id="assessment-form">
+      <div class="mcq-title">📝 Assessment Questions</div>
+      <div id="fa-mcqs"></div>
+      <button class="check-btn" onclick="submitAssessment()" style="margin-top:8px;padding:12px 32px;font-size:14px">Submit Assessment</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const DATA={
+r1:{questions:[
+  {q:"What are above-the-line (ATL) advertising channels, according to Text 1?",opts:["Targeted, interactive, and measurable digital channels designed to drive immediate behavioural responses","Mass-media formats including television, radio, cinema, outdoor, and press, designed to build broad brand awareness","Paid partnership channels including influencer marketing and native advertising placements","Performance-based channels where advertisers pay only for measurable commercial outcomes"],ans:1},
+  {q:"What does a through-the-line (TTL) approach combine?",opts:["Television and radio advertising with print and outdoor placements","Brand advertising and promotional mechanics run in the same time period","Both above-the-line and below-the-line strategies to deliver a consistent message across all touchpoints","Digital advertising with e-commerce sales activation"],ans:2},
+  {q:"How does Text 1 describe the relationship between ATL and BTL in an integrated campaign?",opts:["ATL and BTL should run independently to avoid confusing the target audience","ATL replaces BTL once brand awareness has been established","ATL builds awareness and associations; BTL then captures, converts, and retains the interest ATL generates","BTL always generates better ROI than ATL and should therefore receive the majority of budget"],ans:2},
+  {q:"What is a unique selling proposition (USP), according to Text 1?",opts:["A description of the most important product feature included on the packaging","The single most compelling and differentiated claim the brand can make that is both true and persuasive","The emotional narrative used in the creative execution of a television advertisement","The total budget allocated to a single channel in the media plan"],ans:1},
+  {q:"What does Text 1 say a well-written creative brief does NOT do?",opts:["Specify the target audience and campaign objective","Write the advertising itself","Define the tone of voice and mandatory brand requirements","Identify the single-minded key message"],ans:1},
+  {q:"What is rational advertising most effective for, according to Text 1?",opts:["Building emotional brand associations that influence subconscious choices","Creating warm, positive feelings about a brand over time","High-involvement purchases where consumers are actively researching and require information to decide","Challenger brands that need to build awareness quickly against larger competitors"],ans:2},
+  {q:"What does IPA research show about emotional advertising campaigns compared to rational ones?",opts:["Rational campaigns consistently outperform emotional ones on all metrics","Emotional campaigns and rational campaigns perform equally on long-term share building","Purely emotional campaigns are approximately twice as effective at building long-term market share as purely rational ones","Rational campaigns are more effective for awareness objectives while emotional ones suit conversion"],ans:2},
+  {q:"According to Text 1, what type of campaigns does the most effective advertising combine?",opts:["ATL and BTL channels running simultaneously with a unified message","Television and digital campaigns using the same creative execution","Both emotional and rational approaches, creating an emotional connection that makes the rational case more credible","Brand and promotional mechanics balanced equally across the campaign period"],ans:2},
+  {q:"What does Text 1 say a creative brief creates the conditions for?",opts:["A precise advertising execution that matches the brand guidelines exactly","Great advertising to be written, rather than writing the advertising itself","The legal team to review all claims before production begins","The media agency to recommend the optimal channel mix"],ans:1},
+  {q:"How does Text 1 describe the USP in relation to product features?",opts:["A USP is simply a comprehensive description of all the product features","A USP is more important than the product features because consumers do not care about specifications","A USP is not just a product feature description; it is the articulation of why that feature matters to the customer in the context of their life","A USP must be different from what competitors claim, regardless of whether it is true"],ans:2}
+]},
+r2:{questions:[
+  {q:"How does Text 2 describe media planning?",opts:["A purely creative discipline focused on choosing which channels look most impressive","A simple process of dividing the total budget equally across all available channels","Both a science (quantitative decisions) and an art (understanding how audiences consume media)","A financial discipline focused exclusively on minimising cost per impression"],ans:2},
+  {q:"What is reach in media planning, according to Text 2?",opts:["The total number of times an advertising message is shown across all placements","The average number of times each individual sees the advertising during the campaign","The number of unique individuals in the target audience exposed to the advertising at least once, expressed as a percentage","The total budget allocated to a media channel relative to the total campaign budget"],ans:2},
+  {q:"What is the core tension between reach and frequency in media planning?",opts:["Reach is always more important than frequency for any campaign objective","Given a fixed budget, increasing reach typically requires reducing frequency and vice versa","Frequency can be increased without affecting reach by using programmatic advertising","Reach and frequency always move in the same direction when the budget changes"],ans:1},
+  {q:"According to Text 2, what type of campaigns generally prioritise reach over frequency?",opts:["Behaviour-change campaigns that need to drive action","Loyalty campaigns targeting existing customers","Retention campaigns designed to reduce churn","Awareness campaigns designed to reach as many people as possible"],ans:3},
+  {q:"How are Gross Rating Points (GRPs) calculated?",opts:["Total impressions divided by total unique reach","Budget divided by cost per thousand (CPM)","Reach (as a percentage) multiplied by frequency","Total ad spend divided by total target audience size"],ans:2},
+  {q:"What GRPs does a plan delivering 70% reach at a frequency of 4 generate?",opts:["17.5 GRPs","74 GRPs","280 GRPs","700 GRPs"],ans:2},
+  {q:"What is excess share of voice (eSOV), according to Text 2?",opts:["Any SOV above 50% of the total category advertising spend","A situation where a brand spends exactly the same percentage as its market share","A SOV higher than the brand's market share, which research shows tends to drive market share growth","A measure of how much more creative a brand's advertising is compared to competitors"],ans:2},
+  {q:"What does the IPA research cited in Text 2 suggest about brands that spend below their market share in advertising?",opts:["They maintain market share because quality of creative compensates for lower spend","They tend to grow market share through more efficient targeting","They tend to lose market share over time","They perform better in digital channels even with lower SOV"],ans:2},
+  {q:"How does programmatic advertising differ from traditional media buying, according to Text 2?",opts:["It uses manual negotiation with individual publishers for premium fixed placements","It bids for individual ad impressions in real time through automated technology rather than fixed negotiations","It is limited to social media platforms and cannot access display or video inventory","It requires a minimum spend of GBP100,000 to access real-time auction platforms"],ans:1},
+  {q:"Which combination of channels does Text 2 describe as forming the modern media mix?",opts:["Television, radio, and outdoor only","Programmatic digital, paid social, search, audio, and out-of-home","Email, social media, and in-store promotions","Television, press, and cinema exclusively"],ans:1}
+]},
+v1:{questions:[
+  {q:"The campaign combined national television advertising with in-store promotions and targeted email marketing &mdash; a classic _______ approach ensuring the brand message was consistent across all touchpoints.",opts:["below-the-line","above-the-line","through-the-line","programmatic"],ans:2},
+  {q:"The media plan aimed for a _______ of 75% among the target audience, ensuring that three in four people saw the advertisement at least once during the eight-week campaign.",opts:["frequency","gross rating point","reach","share of voice"],ans:2},
+  {q:"The agency recommended using a _______ approach to digital buying, allowing the brand to reach its target audience across thousands of websites simultaneously by bidding in real time.",opts:["guerrilla","native","above-the-line","programmatic"],ans:3},
+  {q:"The brand increased its advertising spend significantly, pushing its _______ above its market share for the first time, in line with the eSOV principle for growth.",opts:["frequency","share of voice","gross rating point","promotional mechanic"],ans:1},
+  {q:"The team used a buy-one-get-one-free offer as the _______ for the summer sales promotion, calculating that the uplift in volume would offset the reduced margin per unit.",opts:["unique selling proposition","promotional mechanic","brand recall","creative brief"],ans:1},
+  {q:"The advertising campaign achieved a _______ score of 41% among the target demographic, meaning four in ten could correctly name the brand when shown the product category.",opts:["gross rating point","share of voice","brand recall","frequency"],ans:2},
+  {q:"The _______ was built around the insight that parents feel profound responsibility when choosing their family's breakfast cereal, giving the brand's quality claims an emotional dimension.",opts:["media plan","creative brief","promotional mechanic","GRP target"],ans:1},
+  {q:"The brand launched a _______ campaign, positioning all 12 weeks of planned spend in a burst during the summer festival season when the target audience was most receptive.",opts:["below-the-line","guerrilla","native","above-the-line"],ans:3},
+  {q:"The campaign used _______ advertising: paid content within the publication that was clearly labelled but written in the same style and tone as the editorial, achieving significantly higher engagement than display ads.",opts:["guerrilla","native","programmatic","above-the-line"],ans:1},
+  {q:"The brand built significant _______ over 20 years of consistent advertising, meaning consumers trusted it implicitly and were willing to pay a premium price without needing to be convinced.",ans:2,opts:["share of voice","promotional mechanic","brand equity","GRPs"]}
+]},
+v2gaps:[
+  {sent:"The post-campaign survey showed that _______ scores had improved significantly, with 42% of respondents correctly naming the brand when shown an image of the product category.",ans:"recall"},
+  {sent:"The team used _______ advertising technology to bid for each impression in real time, reaching their target audience across 8,000 websites without a single direct publisher negotiation.",ans:"programmatic"},
+  {sent:"The brand staged a _______ marketing event in Shoreditch, projecting giant images of their new product onto the sides of buildings at night without prior announcement, generating widespread social media coverage.",ans:"guerrilla"},
+  {sent:"The brand had built considerable _______ over two decades of consistent advertising, which made consumers willing to pay a 15% price premium over the own-label alternative.",ans:"equity"},
+  {sent:"The media plan achieved a target _______ of 4.2, meaning the average member of the target audience saw the advertisement more than four times during the six-week campaign.",ans:"frequency"},
+  {sent:"The magazine article was produced as a _______ advertising placement, written in the house style of the publication and labelled 'Advertising Feature' at the top.",ans:"native"},
+  {sent:"The promotional _______ chosen was a free sample with any purchase over GBP30, which the team calculated would introduce the product to at least 40,000 new potential customers.",ans:"mechanic"},
+  {sent:"The outdoor campaign was designed to maximise _______, targeting commuter routes and retail locations where the brand could reach the highest number of unique individuals.",ans:"reach"},
+  {sent:"The advertising _______ was written to be punchy and direct, with a headline of just four words that communicated the brand's USP without any supporting explanation needed.",ans:"copy"},
+  {sent:"The brand used an _______ marketing communications approach, ensuring the television campaign, the digital activity, and the in-store promotion all carried the same tagline and visual identity.",ans:"integrated"}
+],
+v3tf:[
+  {stmt:"Above-the-line advertising channels include television, radio, cinema, outdoor, and press, primarily used to build broad brand awareness.",ans:true},
+  {stmt:"Gross Rating Points (GRPs) are calculated by dividing reach by frequency.",ans:false},
+  {stmt:"A through-the-line campaign integrates both above-the-line and below-the-line strategies to deliver a consistent message across all touchpoints.",ans:true},
+  {stmt:"Excess share of voice (eSOV) occurs when a brand's advertising SOV is higher than its market share, which research shows tends to drive market share growth.",ans:true},
+  {stmt:"Programmatic advertising involves directly negotiating fixed placements with individual publishers through traditional media buying processes.",ans:false},
+  {stmt:"A unique selling proposition (USP) is the single most compelling and differentiated claim a brand can make that is both true and persuasive to the target audience.",ans:true},
+  {stmt:"Purely emotional advertising campaigns have been shown by IPA research to be approximately twice as effective at building long-term market share as purely rational campaigns.",ans:true},
+  {stmt:"In media planning, given a fixed budget, increasing reach and increasing frequency can both be achieved simultaneously without any trade-off.",ans:false},
+  {stmt:"Native advertising is designed to look and feel like editorial content rather than a traditional advertisement, matching the form and function of the platform on which it appears.",ans:true},
+  {stmt:"Brand recall measures a consumer's ability to name a specific brand product feature when given a price point as a prompt.",ans:false}
+],
+g1:{questions:[
+  {q:"All advertising materials _______ comply with ASA regulations before they are submitted for media booking.",opts:["might","could","must","would"],ans:2},
+  {q:"The campaign _______ benefit from a celebrity endorsement in the launch phase, though this would require an additional budget of approximately GBP150,000.",opts:["must","might","will","cannot"],ans:1},
+  {q:"The brief _______ be shared with all agency partners by Friday to ensure the creative development timeline can be maintained.",opts:["might","could","should","would"],ans:2},
+  {q:"The advertisement _______ show the product being consumed in a driving context, as this would violate the brand's safety commitment and the relevant ASA guidelines.",opts:["might","could","should","must not"],ans:3},
+  {q:"Increasing the television weight in the first two weeks _______ accelerate the awareness build and allow us to reduce frequency later in the campaign more efficiently.",opts:["must","cannot","should","need not"],ans:2},
+  {q:"The creative approach _______ include humour if the qualitative research confirms that the target audience responds positively to a lighter tone for this category.",opts:["must not","would","cannot","need"],ans:1},
+  {q:"The outdoor executions _______ carry the same headline as the television campaign to ensure consistency, but they _______ replicate the full copy.",opts:["should / need not","must not / might","could / must","would / should"],ans:0},
+  {q:"If the media budget is increased by 10%, the campaign _______ achieve 350 GRPs rather than the currently planned 280.",opts:["must","might","cannot","need not"],ans:1},
+  {q:"The social media content _______ be original and produced specifically for each platform; repurposing the television creative without adaptation is unlikely to be effective.",opts:["might","could","should","need not"],ans:2},
+  {q:"The native advertising placement _______ be clearly labelled as a paid partnership to comply with ASA guidelines and maintain reader trust.",opts:["might","could","must","would"],ans:2}
+]},
+g2:{questions:[
+  {q:"_______ the increased television weight in weeks one and two, brand awareness improved significantly faster than the campaign model had predicted.",opts:["Despite","As a result of","However","Although"],ans:1},
+  {q:"The promotional price reduction _______ a 34% uplift in sales volume during the three-week activation period.",opts:["was due to","resulted in","because of","as a result"],ans:1},
+  {q:"The campaign underperformed on awareness metrics. _______, the conversion rate among those who did see the advertising was above target.",opts:["As a result of","Due to","However","Therefore"],ans:2},
+  {q:"_______ the high frequency achieved in the first month, message retention scores were significantly above the pre-campaign benchmark by week six.",opts:["Due to","Despite","Although","As a result"],ans:0},
+  {q:"The brand increased its SOV above market share level, _______ market share began to grow consistently for the first time in three years.",opts:["however","because","and consequently","despite"],ans:2},
+  {q:"The digital display CTR was below the target of 0.12%. This _______ the decision to reallocate GBP30,000 from display to paid social in week five.",opts:["resulted in","was because of","was the result","led to"],ans:3},
+  {q:"_______ the guerrilla activation was a low-cost investment, it generated significantly more earned media impressions than any paid campaign the brand had run previously.",opts:["Because of","Although","As a result of","Therefore"],ans:1},
+  {q:"The sampling programme was conducted in gym environments _______ reach a target audience that was receptive to health and wellness brand messages.",opts:["as a result of","because","in order to","due to"],ans:2},
+  {q:"The television campaign delivered above-target GRPs. _______, brand recall scores at the end of the campaign period were 12 percentage points above the benchmark.",opts:["As a result","Despite","However","Owing to"],ans:0},
+  {q:"The media budget was concentrated in a two-week burst _______ achieve the threshold frequency required for message retention among the target audience.",opts:["as a result of","despite","so as to","therefore"],ans:2}
+]},
+g3:{questions:[
+  {q:"Which version uses the most appropriate formal register for an advertising brief?",opts:["We want the ads to be really exciting and make people want to buy the product.","The creative execution should be designed to evoke a strong emotional response that motivates purchase consideration among the target audience.","Make exciting ads that will get people to buy.","The ads need to be good and persuasive."],ans:1},
+  {q:"Which sentence uses the most professional register for a campaign performance report?",opts:["The TV campaign did really well and people remembered the ads.","TV exceeded targets, which was great for the team.","The television campaign delivered above-target performance, with brand recall scores of 42% against a target of 30%.","TV was good. Recall was 42%. Target was 30%."],ans:2},
+  {q:"Which version is most appropriate for a formal agency recommendation?",opts:["We think you should spend more money on digital because it is better.","It is recommended that the digital media budget be increased by 15% in the next campaign phase to improve targeting efficiency and reach delivery.","Digital is more effective so the budget should go up.","Increasing digital spend would be a good idea."],ans:1},
+  {q:"Which version is most formal for a creative brief's tone of voice section?",opts:["Make it sound friendly and fun, not too corporate.","The tone should be warm and accessible, reflecting the brand's commitment to making quality food enjoyable for everyday moments rather than special occasions.","Keep it casual. Not too serious.","Friendly, fun, not boring."],ans:1},
+  {q:"Which sentence uses the most appropriate formal register for a media plan summary?",opts:["We are going to advertise on TV and the internet and some outdoor stuff.","The campaign will be executed across television, programmatic digital, and out-of-home media, delivering an estimated 320 GRPs among the 25-to-45 target demographic.","TV + digital + OOH = 320 GRPs.","The campaign runs on TV, digital, and outdoors and should hit 320 GRPs."],ans:1},
+  {q:"Which sentence is most appropriate in a formal campaign debrief document?",opts:["The campaign did not work as well as we hoped in the digital part.","The digital display activity underperformed against its reach and CTR targets, attributable in part to the highly competitive auction environment during the campaign period.","Digital underperformed. Competitive auction was probably the reason.","We did not hit digital targets because it was competitive."],ans:1},
+  {q:"Which version most formally states a campaign objective in an advertising brief?",opts:["We want people to know about the new product.","The objective is to achieve a 20% increase in spontaneous brand awareness among the defined target audience within 12 weeks of campaign launch.","We need more awareness. About 20% more.","Increase brand awareness by 20% in 12 weeks."],ans:1},
+  {q:"Which sentence uses the most professional formal register for describing a promotional mechanic?",opts:["The deal is buy two get one free, which is a great offer.","The promotional mechanic is a buy-two-get-one-free offer, designed to incentivise multi-unit purchase and drive trial among new customers.","BOGOF offer to get new customers.","Two for the price of one deal to attract new buyers."],ans:1},
+  {q:"Which version is most appropriate for a formal media buying recommendation?",opts:["We think breakfast TV would be a good idea because people watch it a lot.","Given the target audience's above-average breakfast television consumption, it is proposed that the campaign be scheduled predominantly in the 06:00-to-09:00 daypart to maximise contextual relevance.","Breakfast TV is popular with this audience so we should use it.","Use breakfast TV. People watch it a lot."],ans:1},
+  {q:"Which sentence most formally presents a risk in an advertising strategy document?",opts:["If the guerrilla event goes wrong, it could be bad for the brand.","A potential risk associated with the guerrilla activation is reputational: if the event is perceived as disruptive or intrusive, it may generate negative coverage that offsets the earned media benefit.","Guerrilla marketing can backfire and cause PR problems.","The event might cause some negative press if people do not like it."],ans:1}
+]},
+listening:[
+{
+  emoji:"📺",
+  title:"Activity 1: ATL vs BTL &mdash; Choosing the Right Advertising Approach",
+  sub:"Priya Sharma, Head of Media Strategy &mdash; Agency workshop",
+  level:"B1",type:"Multiple Choice",focus:"Listening for main ideas",
+  transcript:`Good morning everyone. Today I want to explain the difference between above-the-line and below-the-line advertising in plain terms, because I find that even experienced marketing professionals sometimes mix them up, and the distinction really matters when you are planning a campaign.
+
+Above-the-line, or ATL, refers to advertising in mass media channels: television, radio, cinema, outdoor billboards, and national press. These channels are designed to reach a large, broadly defined audience. You cannot individually target a specific person with a television advertisement in the way you can with an email or a retargeted digital ad. What ATL does brilliantly is build brand awareness and emotional associations at scale. It makes your brand feel big, present, and trustworthy because everyone sees it.
+
+Below-the-line, or BTL, is everything else: direct mail, email, in-store promotions, events, sampling, trade marketing. These are targeted, measurable, and interactive. You know exactly who received the message and whether they responded. BTL is the workhorse of the marketing mix: it drives immediate action, generates measurable sales uplift, and is very accountable.
+
+The challenge is that brands often over-invest in BTL because it is so easy to measure, and they under-invest in ATL because the effects are slower to show up in the data. But here is what the research consistently shows: brands that invest only in below-the-line promotional activity and neglect brand-building advertising gradually become price-dependent. Their customers buy when there is a promotion and do not buy when there is not. The brand has no equity, no loyalty, and no pricing power.
+
+The most effective approach is through-the-line, or TTL: using ATL to build the brand and BTL to activate the sale. Television builds the emotional association; the in-store promotion or the targeted email gives the already-interested consumer the final push to purchase. These two things are not in competition with each other. They are part of the same system, and they work far better together than either works alone.`,
+  questions:[
+    {q:"What does Priya say ATL advertising is designed to do?",opts:["Target specific individuals with personalised messages based on their browsing behaviour","Measure the precise return on every pound of advertising spend","Reach a large, broadly defined audience and build brand awareness and emotional associations at scale","Drive immediate purchase behaviour through promotional incentives and limited-time offers"],ans:2},
+    {q:"Which of the following does Priya list as an ATL channel?",opts:["Direct mail","In-store promotions","Email marketing","Cinema advertising"],ans:3},
+    {q:"What does Priya say BTL advertising does well?",opts:["Build brand awareness among audiences who have never heard of the brand","Create emotional associations that make brands feel trusted and prestigious","Drive immediate action and generate measurable, accountable sales uplift","Reach the widest possible audience in the shortest possible time"],ans:2},
+    {q:"What does Priya say is the challenge with brands that over-invest in BTL?",opts:["BTL channels are too expensive relative to the reach they generate","BTL is difficult to measure accurately without specialist analytics tools","Brands that neglect ATL gradually become price-dependent, with no equity or pricing power","BTL requires a large internal team to manage effectively across all channels"],ans:2},
+    {q:"According to Priya, what does research consistently show happens to brands that invest only in below-the-line promotional activity?",opts:["They generate the highest short-term revenue but struggle to grow long-term","Their customers buy when there is a promotion but not when there is not, indicating no brand loyalty","They outperform brands that invest in ATL during periods of economic pressure","They build stronger customer relationships than brands using mass media advertising"],ans:1},
+    {q:"How does Priya describe the relationship between ATL and BTL in a TTL approach?",opts:["ATL and BTL are in competition and brands must choose one primary approach","ATL is only relevant for large brands with budgets above GBP5 million","They are part of the same system and work far better together than either works alone","BTL always delivers better ROI than ATL so the budget should prioritise it"],ans:2},
+    {q:"What role does Priya say television plays in a through-the-line campaign?",opts:["It drives immediate purchase by presenting a promotional price offer","It builds emotional association, with BTL then giving the interested consumer the final push to buy","It provides the most precisely targeted audience of any channel in the mix","It generates the highest measurable return on investment of any advertising channel"],ans:1},
+    {q:"What specific characteristic of BTL does Priya describe as making it easy to justify to finance teams?",opts:["Its ability to reach millions of people simultaneously at low cost","Its creative quality, which is often higher than ATL executions","It is targeted, measurable, and accountable: you know exactly who responded","It builds brand equity that sustains pricing power even without promotional support"],ans:2}
+  ]
+},
+{
+  emoji:"📐",
+  title:"Activity 2: Media Planning Fundamentals &mdash; Reach, Frequency, and GRPs",
+  sub:"Marcus Webb, Media Director &mdash; Client onboarding session",
+  level:"B1",type:"Multiple Choice",focus:"Listening for specific information",
+  transcript:`Good afternoon. I want to walk you through the three most important concepts in media planning: reach, frequency, and gross rating points. These are the foundation of everything we do when we are deciding how to allocate a media budget, and I want you to feel completely comfortable with them by the end of this session.
+
+Reach is the simplest concept to understand. It is the percentage of your target audience who will see your advertising at least once during the campaign. If your target audience is four million people and the campaign reaches three million of them, your reach is 75%. Reach is about coverage: how much of your potential audience have you actually touched?
+
+Frequency is the average number of times each person in that reached audience sees your advertising. If you have a four-week campaign and the average person sees your ad seven times, your frequency is seven. Frequency matters because advertising rarely works on first exposure. For a complex message or a high-involvement purchase, you might need a frequency of five or six before the message registers. For a simple awareness message, a frequency of two or three might be sufficient.
+
+Now here is the critical trade-off. Given a fixed budget, you cannot maximise both reach and frequency at the same time. If you spread your budget thin to reach more people, each person sees your ad fewer times. If you concentrate your budget on a smaller audience to drive high frequency, you reach fewer people. The media planner's job is to find the right balance for the specific campaign objective.
+
+Gross rating points, or GRPs, combine reach and frequency into a single number that summarises the total weight of a media plan. The formula is simple: GRPs equal reach as a percentage multiplied by frequency. So if you reach 60% of your target audience at an average frequency of five, you have delivered 300 GRPs. GRPs are useful because they allow you to compare the weight of different media plans and to track whether your campaign is delivering the media pressure you intended.`,
+  questions:[
+    {q:"What does reach measure in media planning?",opts:["The average number of times each person sees the advertising during the campaign","The total cost of delivering all planned advertising placements","The percentage of the target audience who see the advertising at least once","The total number of advertising impressions delivered across all channels"],ans:2},
+    {q:"If the target audience is 4 million people and the campaign reaches 3 million, what is the reach?",opts:["3%","25%","75%","300%"],ans:2},
+    {q:"What is frequency in media planning?",opts:["How often the advertising creative is updated during the campaign period","The percentage of the target audience exposed to the advertising at least once","How many different channels the advertising appears on","The average number of times each person in the reached audience sees the advertising"],ans:3},
+    {q:"What does Marcus say about why frequency matters?",opts:["Advertising always works on first exposure, so any frequency above one is wasted spend","For a complex message, you might need a frequency of five or six before the message registers","High frequency is only necessary for television campaigns, not digital","Frequency is less important than reach for all types of campaign objectives"],ans:1},
+    {q:"What is the critical trade-off in media planning that Marcus describes?",opts:["Given a fixed budget, increasing quality of placements reduces the number of placements","Given a fixed budget, you cannot maximise both reach and frequency at the same time","Increasing frequency always reduces the effectiveness of each individual exposure","Reach is always more important than frequency regardless of the campaign objective"],ans:1},
+    {q:"What happens if you spread your budget thin to reach more people?",opts:["Each person sees your ad more times, increasing frequency","The quality of the placements improves significantly","Each person sees your ad fewer times, reducing frequency","The cost per thousand (CPM) decreases proportionally"],ans:2},
+    {q:"What is the formula for calculating Gross Rating Points?",opts:["Budget divided by cost per thousand","Reach (as a percentage) plus frequency","Reach (as a percentage) multiplied by frequency","Total impressions divided by the target audience size"],ans:2},
+    {q:"If a campaign reaches 60% of the target audience at an average frequency of 5, how many GRPs does it deliver?",opts:["12 GRPs","65 GRPs","300 GRPs","600 GRPs"],ans:2}
+  ]
+},
+{
+  emoji:"✍️",
+  title:"Activity 3: Writing a Creative Brief That Gets Great Advertising",
+  sub:"Dr Elena Vasquez, Executive Creative Director &mdash; Industry masterclass",
+  level:"B2",type:"Multiple Choice",focus:"Understanding professional explanations",
+  transcript:`Good evening everyone. I want to talk tonight about something that is very close to my heart: the creative brief. Because I have spent thirty years on the creative side of advertising, and the single most reliable predictor of whether the work that comes out of a brief will be great or mediocre is the quality of the brief itself. I know that sounds like something a planner would say. But it is true.
+
+A great brief is not a long brief. The best briefs I have ever received have been one page. One page that tells me everything I need to know and nothing I do not. The worst briefs I have received have been twelve pages of research summaries, competitor analysis, brand onions, customer journey maps, and forty-seven things the client wants the advertising to communicate. A brief like that is not a brief. It is a panic attack formatted as a document.
+
+Let me tell you what a great brief contains. First: a clear description of the target audience. Not demographics. A person. I want to be able to picture the specific human being I am creating this advertising for. What do they care about? What are they afraid of? What do they want their life to look like? When I know that person, I can make advertising that speaks to them.
+
+Second: a single-minded key message. Not three messages. Not five. One. The single most important thing I want to leave in the audience's mind after they see this advertising. If the client gives me three key messages, I tell them: pick the most important one. If you cannot pick one, you have not finished thinking about your strategy.
+
+Third: the tone of voice. Not just adjectives like "friendly" or "aspirational." Give me references. Show me another campaign or a piece of film or a brand that captures the emotional register you are looking for. Tone of voice direction that consists only of generic adjectives is almost useless.
+
+Fourth: the mandatory elements. Everything that absolutely must appear: the logo, any legal disclaimers, a specific product claim that has been pre-approved, a pack shot requirement. List them. Do not discover them at the approval stage.
+
+And fifth: the media context. Tell me where this advertising will run. A 30-second television commercial, a 6-second pre-roll, an outdoor poster, a full-page press ad. Each of these has completely different creative possibilities and constraints, and a brief that does not specify the medium is asking me to make a garment without knowing whether it is for a ball or a beach.`,
+  questions:[
+    {q:"What does Dr Vasquez say is the single most reliable predictor of great advertising work?",opts:["The size of the creative team assigned to the brief","The quality of the brief itself","The amount of research conducted before the brief is written","The size of the production budget available"],ans:1},
+    {q:"How long does Dr Vasquez say the best briefs she has received have been?",opts:["Three pages maximum","Two pages with an appendix","One page","Five pages covering all key information"],ans:2},
+    {q:"How does Dr Vasquez describe a twelve-page brief with forty-seven communication points?",opts:["A comprehensive document that gives the creative team maximum information","An impressive demonstration of the depth of the client's strategic thinking","Not a brief at all: a panic attack formatted as a document","The ideal brief for a complex integrated campaign across multiple channels"],ans:2},
+    {q:"What does Dr Vasquez say she wants the target audience description to include?",opts:["Only demographic information such as age, income, and location","Psychographic information: what the person cares about, fears, and wants from their life","A complete customer journey map from awareness to purchase","Statistical data from quantitative research with a sample size of at least 1,000"],ans:1},
+    {q:"How many key messages does Dr Vasquez say a brief should contain?",opts:["As many as the client needs to communicate","At least three to give the creative team options","Five, prioritised in order of importance","One: the single most important thing to leave in the audience's mind"],ans:3},
+    {q:"What does Dr Vasquez say about tone of voice direction consisting only of generic adjectives?",opts:["Generic adjectives are perfectly clear and efficient for experienced creative teams","It is almost useless; she prefers references to other campaigns, films, or brands","Adjectives should be supplemented with a full brand personality framework","Generic adjectives are only problematic for television; they work well for print"],ans:1},
+    {q:"What does Dr Vasquez say should be listed in the mandatory elements section?",opts:["Everything the client would ideally like to include if space permits","Only the logo and legal disclaimers","Everything that absolutely must appear: logo, disclaimers, pre-approved claims, pack shots","Any optional creative directions that the client has a preference for"],ans:2},
+    {q:"Why does Dr Vasquez say the media context must be specified in the brief?",opts:["So the client knows which channels are included in the budget","Because each medium has completely different creative possibilities and constraints","To allow the creative team to select which medium they prefer to work in","Because media context determines the minimum budget required for production"],ans:1}
+  ]
+},
+{
+  emoji:"📊",
+  title:"Activity 4: Measuring Advertising Effectiveness &mdash; What to Track and Why",
+  sub:"James Nakamura, Chief Marketing Officer &mdash; Annual marketing conference",
+  level:"B2",type:"Multiple Choice",focus:"Listening for detail and implication",
+  transcript:`Thank you. I want to address something that I think is a fundamental source of confusion in marketing: how do you measure whether your advertising is working? Because the answer is more complicated than most measurement frameworks acknowledge, and getting it wrong leads to some very expensive strategic mistakes.
+
+Let me start with the distinction between short-term and long-term effectiveness, because they require very different measurement approaches. In the short term, you can measure the direct commercial impact of your advertising: sales uplift, online conversion rate, footfall to stores, click-through rates. These numbers are real, they are fast, and they are easy to present to a CFO. The problem is that they only capture the immediate effect of the advertising. They tell you almost nothing about the long-term brand-building work that advertising also does.
+
+The long-term effects of advertising work through brand equity: the accumulated associations, trust, and preference that consumers develop for a brand over years of consistent communication. These effects show up slowly &mdash; in brand awareness scores, brand preference data, willingness to pay a premium price, and ultimately in market share trends. They can take two to three years to become fully visible in the commercial data. If you measure only short-term sales uplift, you will consistently undervalue brand-building advertising and over-invest in promotional activity, which is one of the most common and costly mistakes in marketing.
+
+So what should you actually measure? I recommend a three-level measurement framework. Level one: campaign delivery metrics. Did the campaign actually reach the audience it was supposed to reach? Did it deliver the planned GRPs, the planned reach and frequency? This is table stakes: if the campaign was not delivered as planned, no other measurement is meaningful.
+
+Level two: communication metrics. Is the campaign communicating what it was supposed to communicate? Brand recall: can consumers remember the advertising? Brand awareness: has spontaneous awareness of the brand increased? Message take-out: are consumers taking away the key message the campaign was designed to deliver? These metrics tell you whether the advertising is doing its communication job.
+
+Level three: commercial and brand equity metrics. Is the brand growing? Is market share increasing? Is brand preference improving? Are consumers willing to pay a premium price? These are the metrics that ultimately matter, but they take time to move and require robust measurement methodology, including brand tracking studies conducted over multiple waves.
+
+The mistake most marketing teams make is to measure only level one and claim that proves the campaign worked. Delivery is necessary but not sufficient. The question is not whether the advertising reached people. The question is whether it changed anything.`,
+  questions:[
+    {q:"What does James say is a fundamental source of confusion in marketing?",opts:["How to allocate budget across above-the-line and below-the-line channels","How to measure whether advertising is working","How to write a creative brief that generates outstanding advertising","How to negotiate media rates with publishers and broadcasters"],ans:1},
+    {q:"What does James say short-term measurement of advertising captures?",opts:["The long-term brand equity effects that accumulate over multiple years","Only the immediate commercial impact such as sales uplift and click-through rates","Both the short-term and long-term effects of advertising investment","The emotional associations that consumers develop with the brand over time"],ans:1},
+    {q:"How does James describe the problem with measuring only short-term sales uplift?",opts:["It is too expensive to measure accurately for most brands","Short-term metrics are unreliable because they are affected by seasonal factors","It captures only the immediate effect and tells you almost nothing about the long-term brand-building work","Short-term metrics take too long to appear in the data to be useful for in-flight decisions"],ans:2},
+    {q:"Through what mechanism does James say the long-term effects of advertising work?",opts:["By generating immediate purchase behaviour among highly targeted audiences","Through brand equity: accumulated associations, trust, and preference built over years","Through programmatic optimisation that improves targeting efficiency over time","By generating earned media coverage that amplifies the paid advertising investment"],ans:1},
+    {q:"How long does James say long-term advertising effects can take to become fully visible in commercial data?",opts:["Two to four weeks after the campaign ends","Three to six months after the campaign launch","Two to three years","Only when a brand has been advertising consistently for ten or more years"],ans:2},
+    {q:"What does James say is one of the most common and costly mistakes in marketing?",opts:["Measuring only long-term brand equity and ignoring short-term sales impact","Consistently undervaluing brand-building advertising by measuring only short-term uplift","Investing too much in ATL and too little in BTL promotional mechanics","Using only one measurement methodology rather than a multi-level framework"],ans:1},
+    {q:"What does James describe as Level 2 in his measurement framework?",opts:["Campaign delivery metrics: did the campaign reach the planned audience at the planned GRPs?","Commercial and brand equity metrics: is the brand growing and is market share increasing?","Communication metrics: brand recall, brand awareness, and message take-out","Financial metrics: cost per acquisition and return on advertising spend"],ans:2},
+    {q:"What does James say is the ultimate question that measurement should answer?",opts:["Did the campaign reach the planned number of people at the planned frequency?","Was the campaign delivered within budget and on the agreed timeline?","Did the advertising reach people? That is the primary question.","Did the advertising change anything? Delivery is necessary but not sufficient."],ans:3}
+  ]
+}
+],
+cs1:{questions:[
+  {q:"What was Heathfield Oats' market share before the brand-building campaign?",opts:["8%","11%","14%","19%"],ans:2},
+  {q:"What strategic problem did the marketing director identify with the brand's previous approach?",opts:["The brand had over-invested in television advertising and neglected digital channels","The brand had relied on promotional mechanics that sustained volume but built no equity or loyalty","The brand had failed to identify a clear USP that differentiated it from competitors","The brand had set market share targets that were too ambitious given the competitive environment"],ans:1},
+  {q:"What was the total campaign budget and duration?",opts:["GBP1.2M over 12 months","GBP2.4M over 24 months","GBP3.2M over 18 months","GBP4.5M over 36 months"],ans:2},
+  {q:"How was the budget split between ATL and BTL/digital?",opts:["50% ATL, 50% BTL","65% ATL, 35% BTL and digital","80% ATL, 20% BTL","35% ATL, 65% BTL and digital"],ans:1},
+  {q:"What was the emotional insight at the heart of the creative strategy?",opts:["Heathfield Oats was the healthiest breakfast option available in the UK market","Premium ingredients justified a price premium over own-label alternatives","A bowl of porridge is not just food; it is the ritual that starts a good day","Heathfield Oats was the most convenient breakfast for busy modern lifestyles"],ans:2},
+  {q:"What share of voice did the brand achieve relative to its market share?",opts:["SOV of 11%, below its 14% market share","SOV of 14%, exactly matching its market share","SOV of 19%, significantly above its 14% market share","SOV of 25%, the highest in the category"],ans:2},
+  {q:"What environments were used for the sampling programme?",opts:["Supermarkets, petrol stations, and high street locations","Schools, hospitals, and community centres","Gyms, running clubs, and commuter hubs","Cinemas, theatres, and entertainment venues"],ans:2},
+  {q:"How many organic social media posts did the branded hashtag campaign generate?",opts:["Over 18,000 in six months","Over 45,000 in six months","Over 180,000 in six months","Over 500,000 in six months"],ans:2},
+  {q:"What market share did the brand reach by the end of the 18-month campaign?",opts:["17%","19%","22%","28%"],ans:2},
+  {q:"What does the Heathfield Oats case study demonstrate about the eSOV strategy?",opts:["Brands should always focus on below-the-line activity to maintain market share efficiently","Price promotions are the most reliable way to grow market share in a competitive category","Maintaining a SOV above market share level, combined with emotional advertising, drives consistent market share growth","ATL advertising alone is sufficient to grow market share without any BTL support"],ans:2}
+]},
+cs2:{questions:[
+  {q:"What was the market share of the three incumbent chains that Prism competed against?",opts:["Over 40%","Over 50%","Over 70%","Over 90%"],ans:2},
+  {q:"What conclusion did the founding team draw about competing with the incumbents?",opts:["They should focus on product quality rather than advertising","They could not win a conventional media spending war, so they needed to win a creative and earned media war","They should partner with a larger brand to access a bigger advertising budget","They should focus exclusively on social media advertising to reduce costs"],ans:1},
+  {q:"What was the guerrilla marketing activation, and how much did it cost?",opts:["A pop-up store in Shoreditch costing GBP45,000","200 pairs of sunglasses hidden across London with QR codes, costing less than GBP8,000","A projection mapping event on the Thames costing GBP25,000","Street art installations across five UK cities costing GBP35,000"],ans:1},
+  {q:"How many social media impressions did the guerrilla activation generate in 48 hours?",opts:["230,000","800,000","2.3 million","8 million"],ans:2},
+  {q:"What was the native advertising partnership with publications designed to achieve?",opts:["Replace the brand's display advertising budget entirely","Generate content that matched editorial quality and tone, achieving higher engagement than equivalent display spend","Build a long-term partnership that would guarantee minimum coverage for five years","Reach audiences who had installed ad-blockers and could not be reached through programmatic display"],ans:1},
+  {q:"How were the 40 professionals in the ambassador programme selected?",opts:["By follower count: all had more than 100,000 social media followers","By professional industry: architects, designers, photographers, and journalists with style credibility","By geographic location: all based in London to ensure event attendance was feasible","By purchase history: existing customers who had already bought Prism products"],ans:1},
+  {q:"Why was the ambassador programme considered different from a conventional influencer campaign?",opts:["The ambassadors were paid significantly more than standard influencer rates","There was no content requirement or disclosure obligation, so resulting posts felt genuinely organic","The ambassadors were required to sign exclusivity agreements preventing them from wearing other brands","The programme required each ambassador to post at least twice per week for 12 months"],ans:1},
+  {q:"How much had Prism spent on paid advertising after two years?",opts:["Less than GBP50,000","Less than GBP100,000","Less than GBP200,000","Less than GBP500,000"],ans:2},
+  {q:"What brand awareness level had Prism achieved in the target demographic after two years?",opts:["12%","22%","34%","48%"],ans:2},
+  {q:"What does the Prism Eyewear case study demonstrate about challenger brand advertising strategy?",opts:["All challenger brands should use the same three tactics: guerrilla, native, and ambassador","Premium pricing always generates the credibility needed to build brand awareness","A challenger brand can build disproportionate brand presence through creative ingenuity and earned media rather than paid media weight","Digital-first campaigns always outperform traditional advertising for brands with limited budgets"],ans:2}
+]},
+fa:{questions:[
+  {q:"What is the difference between above-the-line (ATL) and below-the-line (BTL) advertising?",opts:["ATL is digital; BTL is traditional print and outdoor","ATL uses mass media for broad awareness; BTL uses targeted, measurable channels for direct response","ATL is for B2C brands; BTL is more appropriate for B2B marketing","ATL is more expensive per impression; BTL is always the more cost-efficient option"],ans:1},
+  {q:"What is a Gross Rating Point (GRP)?",opts:["The total cost of a media campaign divided by the number of channels used","The average score given by consumers to an advertisement in post-campaign research","Reach as a percentage multiplied by frequency, summarising the total weight of a media plan","The percentage of the target audience who recall seeing the advertising after the campaign"],ans:2},
+  {q:"What does excess share of voice (eSOV) describe?",opts:["A situation where a brand is spending more than its competitors on social media advertising","A SOV that is higher than the brand's market share, which research shows tends to drive market share growth","The difference between a brand's planned and actual media delivery","Any SOV above 50% of the total category advertising spend"],ans:1},
+  {q:"Which modal verb expresses a strong obligation or requirement in a creative brief?",opts:["The advertisement might include a legal disclaimer about health claims.","The advertisement could show product being consumed in a variety of contexts.","The advertisement must not show the product being consumed in a driving context.","The advertisement would benefit from a celebrity appearance in the opening sequence."],ans:2},
+  {q:"Which sentence most accurately uses cause-and-effect language in a campaign report?",opts:["The campaign was good and it worked well overall.","Due to the increased television weight in weeks one and two, brand awareness improved significantly faster than projected.","Brand awareness went up because of the campaign.","The TV campaign caused results to improve."],ans:1},
+  {q:"What is programmatic advertising?",opts:["A strategic planning process for building advertising campaigns around a brand's core values","The automated buying and selling of digital advertising inventory in real time using algorithms","A creative approach that builds advertising around a predetermined emotional programme","A method of purchasing premium fixed placements directly from major publishers"],ans:1},
+  {q:"Which sentence uses the most appropriate formal register for an advertising brief?",opts:["Make the ads feel fun and energetic so people want to buy.","The creative execution should employ an accessible, energetic tone that motivates purchase consideration.","The ads need to be exciting and make people want to buy the product.","Keep the tone fun. Not too corporate."],ans:1},
+  {q:"What is a unique selling proposition (USP)?",opts:["A legally protected claim exclusive to one brand in its advertising","A price offer available to first-time buyers only","The single most compelling and differentiated claim the brand can make that is both true and persuasive","A creative technique using unexpected humour to make advertisements memorable"],ans:2},
+  {q:"In the Heathfield Oats case study, what did the emotional insight at the heart of the creative say?",opts:["Heathfield Oats was the healthiest breakfast choice available in the UK","A bowl of porridge is not just food; it is the ritual that starts a good day","Premium oats justify a premium price because quality ingredients are worth paying for","Heathfield Oats is the fastest and most convenient breakfast for busy professionals"],ans:1},
+  {q:"What does native advertising refer to?",opts:["Advertising that uses natural imagery and settings to create an organic visual style","Paid advertising that matches the form and function of the platform, designed to look like editorial content","Advertising produced by the brand's internal team rather than an external agency","Outdoor advertising that uses natural materials rather than digital displays"],ans:1},
+  {q:"What is brand recall?",opts:["The percentage of the target audience who purchased the brand at least once after the campaign","The ability of consumers to retrieve a brand name from memory when prompted by the product category","The total number of brand mentions generated across social media during a campaign period","The degree to which consumers associate specific values and emotions with a brand"],ans:1},
+  {q:"Which sentence correctly uses a cause-and-effect structure to explain a promotional outcome?",opts:["The in-store promotion worked really well.","The promotional mechanic resulted in a 34% uplift in sales volume during the three-week activation period.","Sales went up because of the promotion.","The promotion caused more people to buy."],ans:1},
+  {q:"In the Prism Eyewear case study, why was the ambassador programme considered more credible than a conventional influencer campaign?",opts:["The ambassadors had more followers than standard influencer partners","There was no content requirement or disclosure obligation, making the resulting posts feel genuinely organic","The ambassadors were paid more than standard influencer rates to ensure quality","The programme ran for three years rather than the typical three-month influencer campaign"],ans:1},
+  {q:"What is an Integrated Marketing Communications (IMC) approach?",opts:["A campaign that uses only digital channels for all advertising activity","A strategy that coordinates all communication tools to deliver a consistent, unified brand message","An approach that splits the marketing budget equally between brand and promotional activity","A planning methodology that integrates the marketing team with the product and sales teams"],ans:1},
+  {q:"Which modal verb structure is correct for making a formal advertising recommendation?",opts:["We will definitely increase the digital budget because it is effective.","The digital media budget should be increased by 15% to improve targeting efficiency and reach delivery.","The digital media budget would be increasing in the next phase.","We might could increase the digital budget if it is appropriate."],ans:1},
+  {q:"According to the listening activities, what does James Nakamura say about measuring only short-term advertising effects?",opts:["It is the most reliable approach because short-term data is more accurate than long-term tracking","It consistently leads to undervaluing brand-building advertising and over-investing in promotional activity","It provides a complete picture of advertising effectiveness when combined with ROI calculations","It is appropriate for brands in the first year of advertising but not for established brands"],ans:1},
+  {q:"What is media buying?",opts:["The creative process of producing advertising materials for different media channels","The process of purchasing advertising space and time across channels by negotiating with publishers and broadcasters","The strategic process of selecting which channels a campaign will use based on audience data","The research methodology used to measure advertising effectiveness after a campaign"],ans:1},
+  {q:"What is guerrilla marketing?",opts:["A highly aggressive paid advertising strategy targeting competitor customers","An unconventional, often low-cost approach creating surprise and word-of-mouth in everyday public environments","A digital advertising tactic using pop-up ads on competitor websites","A promotional mechanic involving surprise product samples sent to target customers by post"],ans:1},
+  {q:"According to Dr Vasquez in the listening activities, what does she say about tone of voice direction that consists only of generic adjectives like 'friendly' or 'aspirational'?",opts:["Generic adjectives are perfectly clear and efficient for experienced creative teams","They are a strong starting point that creative teams should elaborate further","It is almost useless; she prefers references to campaigns, films, or brands that capture the emotional register","Adjectives should be supplemented with a full brand personality framework of at least ten words"],ans:2},
+  {q:"What is brand equity?",opts:["The total market capitalisation of a brand divided by its annual advertising spend","The commercial value derived from consumer perception of a brand, built over time through consistent advertising","The percentage of consumers who say they prefer a brand over its nearest competitor","The financial value of a brand's product portfolio at retail price before discounts"],ans:1}
+]}
+};
+
+function renderMCQ(containerId,questions,prefix,isListening){
+  const c=document.getElementById(containerId);if(!c)return;
+  const wrap=isListening?'<div class="listen-mcq-wrap">':'';
+  const wrapClose=isListening?'</div>':'';
+  c.innerHTML=wrap+questions.map((item,i)=>`
+    <div class="mcq-item" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((o,j)=>`<div class="mcq-option" onclick="selectOpt('${prefix}',${i},${j})" id="${prefix}-q${i}-o${j}"><span class="opt-letter">${['A','B','C','D'][j]}</span>${o}</div>`).join('')}
+      </div>
+    </div>`).join('')+wrapClose;
+}
+function selectOpt(prefix,qi,oi){
+  const item=DATA[prefix].questions[qi];
+  for(let j=0;j<item.opts.length;j++){const el=document.getElementById(`${prefix}-q${qi}-o${j}`);if(el)el.classList.remove('selected');}
+  const el=document.getElementById(`${prefix}-q${qi}-o${oi}`);if(el)el.classList.add('selected');
+}
+function checkMCQ(prefix){
+  const qs=DATA[prefix].questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#${prefix}-q${i} .mcq-option`);
+    let chosen=-1;opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+    if(chosen===item.ans)score++;
+  });
+  const fb=document.getElementById(`${prefix}-feedback`);
+  if(fb){fb.className='feedback show '+(score>=Math.ceil(total*0.7)?'good':'bad');fb.textContent=score>=Math.ceil(total*0.7)?`Well done! You scored ${score}/${total}.`:`You scored ${score}/${total}. Review the relevant sections and try again.`;}
+  const sc=document.getElementById(`${prefix}-score`);
+  if(sc){sc.className='score-display show';sc.innerHTML=`<div><div class="score-label">Your Score</div><div class="score-val">${score}/${total}</div></div><div style="font-size:13px;color:var(--text-light)">${Math.round(score/total*100)}%</div>`;}
+}
+function renderGaps(){
+  const c=document.getElementById('v2-gaps');if(!c)return;
+  c.innerHTML=DATA.v2gaps.map((g,i)=>`<div class="gap-sentence">${i+1}. ${g.sent.replace('_______',`<input class="gap-input" id="gap-${i}" placeholder="?" autocomplete="off">`)}</div>`).join('');
+}
+function checkGaps(){
+  let score=0;
+  DATA.v2gaps.forEach((g,i)=>{
+    const el=document.getElementById(`gap-${i}`);if(!el)return;
+    const val=el.value.trim().toLowerCase();
+    if(val===g.ans.toLowerCase()){score++;el.style.borderBottomColor='var(--success)';el.style.color='var(--success)';}
+    else{el.style.borderBottomColor='var(--error)';el.style.color='var(--error)';el.value=g.ans;}
+  });
+  const fb=document.getElementById('v2-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`Great work! ${score}/10 correct.`:`${score}/10 correct. Correct answers are shown in red.`;
+}
+const tfAnswers={};
+function renderTF(){
+  const c=document.getElementById('v3-tf');if(!c)return;
+  c.innerHTML=DATA.v3tf.map((item,i)=>`
+    <div class="tf-item" id="tf-${i}">
+      <div class="tf-stmt">${i+1}. ${item.stmt}</div>
+      <div class="tf-btns"><button class="tf-btn" onclick="selectTF(${i},true,this)">True</button><button class="tf-btn" onclick="selectTF(${i},false,this)">False</button></div>
+    </div>`).join('');
+}
+function selectTF(i,val,btn){
+  tfAnswers[i]=val;const row=document.getElementById(`tf-${i}`);
+  row.querySelectorAll('.tf-btn').forEach(b=>b.className='tf-btn');
+  btn.className='tf-btn '+(val?'sel-t':'sel-f');
+}
+function checkTF(){
+  let score=0;
+  DATA.v3tf.forEach((item,i)=>{
+    if(tfAnswers[i]===undefined)return;
+    const row=document.getElementById(`tf-${i}`);
+    row.querySelectorAll('.tf-btn').forEach(b=>{
+      const isTrue=b.textContent.trim()==='True';b.className='tf-btn';
+      if(isTrue===item.ans){b.style.background=item.ans?'#dcfce7':'#fee2e2';b.style.borderColor=item.ans?'var(--success)':'var(--error)';b.style.color=item.ans?'var(--success)':'var(--error)';b.textContent=(isTrue?'True':'False')+' ✓';}
+    });
+    if(tfAnswers[i]===item.ans)score++;
+  });
+  const fb=document.getElementById('v3-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`Excellent! ${score}/10 correct.`:`${score}/10 correct. Review the vocabulary definitions.`;
+}
+function renderListening(){
+  const c=document.getElementById('listening-cards');if(!c)return;
+  c.innerHTML=DATA.listening.map((act,ai)=>`
+    <div class="audio-card">
+      <div class="audio-header">
+        <div class="audio-emoji">${act.emoji}</div>
+        <div><div class="audio-title">${act.title}</div><div class="audio-sub">${act.sub}</div>
+          <div class="audio-tags"><span class="audio-tag tag-level">Level: ${act.level}</span><span class="audio-tag tag-type">${act.type}</span><span class="audio-tag tag-focus">Focus: ${act.focus}</span></div>
+        </div>
+      </div>
+      <div class="player-box">
+        <div class="player-row">
+          <button class="play-btn" id="play-${ai}" onclick="handlePlay(${ai})">&#9654;</button>
+          <div class="player-info"><div class="player-title-sm">${act.title}</div><div class="player-sub-sm">${act.sub}</div></div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="player-progress"><div class="player-progress-fill" id="pf-${ai}"></div></div>
+        <div class="speed-row">
+          <span class="speed-label">Speed:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7&times;</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2&times;</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">&#8617; Replay</button>
+        </div>
+        <div class="tts-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">&#9660; Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans-${ai}">${act.transcript.split('\n\n').map(p=>`<p>${p.trim()}</p>`).join('')}</div>
+      <div class="listen-instruction">&#128203; Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</div>
+      <div class="listen-mcq-wrap">
+        <div class="mcq-title">Questions &mdash; Activity ${ai+1}</div>
+        <div id="la${ai}-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('la${ai}')">Check Answers</button>
+        <div id="la${ai}-feedback" class="feedback"></div>
+        <div id="la${ai}-score" class="score-display"></div>
+      </div>
+    </div>`).join('');
+  DATA.listening.forEach((act,ai)=>{DATA[`la${ai}`]={questions:act.questions};renderMCQ(`la${ai}-mcqs`,act.questions,`la${ai}`,true);});
+}
+const audioState={};
+function handlePlay(ai){
+  const act=DATA.listening[ai];
+  if(!audioState[ai])audioState[ai]={playing:false,speed:0.85};
+  const st=audioState[ai];const btn=document.getElementById(`play-${ai}`);
+  if(st.playing){window.speechSynthesis.cancel();st.playing=false;btn.innerHTML='&#9654;';if(st.timer)clearInterval(st.timer);return;}
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.lang='en-GB';utt.rate=st.speed;utt.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const chosen=voices.find(v=>v.name==='Google UK English Female')||voices.find(v=>v.lang==='en-GB'&&v.name.toLowerCase().includes('female'))||voices.find(v=>v.lang==='en-GB');
+  if(chosen)utt.voice=chosen;
+  const words=act.transcript.split(/\s+/).length;const dur=Math.round(words/(st.speed*2.6));
+  const fmt=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  document.getElementById(`time-${ai}`).textContent=`0:00 / ${fmt(dur)}`;
+  let elapsed=0;
+  st.timer=setInterval(()=>{
+    if(!audioState[ai].playing){clearInterval(st.timer);return;}
+    elapsed++;
+    document.getElementById(`pf-${ai}`).style.width=Math.min(elapsed/dur*100,100)+'%';
+    document.getElementById(`time-${ai}`).textContent=`${fmt(elapsed)} / ${fmt(dur)}`;
+  },1000);
+  utt.onend=()=>{st.playing=false;btn.innerHTML='&#9654;';clearInterval(st.timer);document.getElementById(`pf-${ai}`).style.width='100%';};
+  window.speechSynthesis.speak(utt);st.playing=true;btn.innerHTML='&#9646;&#9646;';
+}
+function setSpeed(ai,spd,btn){
+  if(!audioState[ai])audioState[ai]={playing:false,speed:spd};audioState[ai].speed=spd;
+  btn.closest('.audio-card').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  if(audioState[ai].playing){window.speechSynthesis.cancel();audioState[ai].playing=false;document.getElementById(`play-${ai}`).innerHTML='&#9654;';if(audioState[ai].timer)clearInterval(audioState[ai].timer);setTimeout(()=>handlePlay(ai),80);}
+}
+function replayAudio(ai){
+  if(audioState[ai]){audioState[ai].playing=false;if(audioState[ai].timer)clearInterval(audioState[ai].timer);}
+  window.speechSynthesis.cancel();const pf=document.getElementById(`pf-${ai}`);if(pf)pf.style.width='0%';
+  document.getElementById(`play-${ai}`).innerHTML='&#9654;';setTimeout(()=>handlePlay(ai),80);
+}
+function toggleTranscript(ai){document.getElementById(`trans-${ai}`).classList.toggle('open');}
+function updateWordCount(id,max){
+  const ta=document.getElementById(`${id}-text`);const wc=document.getElementById(`${id}-wc`);if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  wc.textContent=`${words} / ${max} words`;wc.style.color=words>max?'var(--error)':'var(--text-light)';
+}
+function submitWriting(id){
+  const ta=document.getElementById(`${id}-text`);if(!ta||ta.value.trim().length<30){alert('Please write your response before submitting.');return;}
+  const s=document.getElementById(`${id}-success`);s.style.display='block';s.scrollIntoView({behavior:'smooth'});
+}
+let attemptCount=0;
+function renderAssessment(){renderMCQ('fa-mcqs',DATA.fa.questions,'fa',false);}
+function submitAssessment(){
+  attemptCount++;const qs=DATA.fa.questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#fa-q${i} .mcq-option`);let chosen=-1;
+    opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    if(chosen===item.ans)score++;
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+  });
+  const pct=Math.round(score/total*100);const pass=pct>=70;
+  const res=document.getElementById('assessment-result');res.style.display='block';res.scrollIntoView({behavior:'smooth'});
+  document.getElementById('result-score-text').className='result-score '+(pass?'pass':'fail');
+  document.getElementById('result-score-text').textContent=`${pct}% — ${score}/${total}`;
+  document.getElementById('result-msg').textContent=pass?'Congratulations! You have passed Module 12. Excellent work on Advertising and Promotional Strategies.':'You did not reach the 70% pass mark. Please review the module content and try again.';
+  const wrap=document.getElementById('retake-wrap');
+  if(!pass&&attemptCount<2)wrap.innerHTML=`<button class="retake-btn" onclick="retakeAssessment()">Retake Assessment (Attempt ${attemptCount+1} of 2)</button>`;
+  else if(attemptCount>=2&&!pass){wrap.innerHTML=`<p style="color:var(--error);font-size:14px;margin-top:12px">You have used both attempts. Please review the module content.</p>`;document.getElementById('assessment-form').style.display='none';}
+  document.getElementById('attempt-badge').textContent=`Attempt ${attemptCount} of 2`;
+}
+function retakeAssessment(){
+  document.getElementById('assessment-result').style.display='none';
+  document.querySelectorAll('#fa-mcqs .mcq-option').forEach(o=>o.classList.remove('selected','correct','wrong'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(id);if(sec)sec.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{if((n.getAttribute('onclick')||'').includes(`'${id}'`))n.classList.add('active');});
+  window.scrollTo({top:0,behavior:'smooth'});trackProgress(id);
+}
+function trackProgress(id){
+  let v=JSON.parse(sessionStorage.getItem('mkt12v')||'[]');
+  if(!v.includes(id)){v.push(id);sessionStorage.setItem('mkt12v',JSON.stringify(v));}
+  const pct=Math.round(v.length/11*100);
+  const pf=document.getElementById('progress-fill');const pp=document.getElementById('progress-pct');
+  if(pf)pf.style.width=pct+'%';if(pp)pp.textContent=pct+'%';
+}
+window.addEventListener('load',()=>{
+  if(window.speechSynthesis){window.speechSynthesis.getVoices();if(window.speechSynthesis.onvoiceschanged!==undefined)window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();}
+  renderMCQ('r1-mcqs',DATA.r1.questions,'r1',false);
+  renderMCQ('r2-mcqs',DATA.r2.questions,'r2',false);
+  renderMCQ('v1-mcqs',DATA.v1.questions,'v1',false);
+  renderGaps();renderTF();
+  renderMCQ('g1-mcqs',DATA.g1.questions,'g1',false);
+  renderMCQ('g2-mcqs',DATA.g2.questions,'g2',false);
+  renderMCQ('g3-mcqs',DATA.g3.questions,'g3',false);
+  renderListening();
+  renderMCQ('cs1-mcqs',DATA.cs1.questions,'cs1',false);
+  renderMCQ('cs2-mcqs',DATA.cs2.questions,'cs2',false);
+  renderAssessment();
+  trackProgress('overview');
+});
+</script>
+</body>
+</html>

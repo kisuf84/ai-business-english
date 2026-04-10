@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: Marketing Fundamentals &amp; Key Vocabulary</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2744;--navy-dark:#111b33;--navy-mid:#243055;--navy-light:#2d3d6b;
+  --gold:#e0a83a;--gold-light:#f2c060;--gold-pale:#faebc8;
+  --cream:#faf7f2;--cream-dark:#f0ebe0;
+  --white:#fff;--text-dark:#1a2744;--text-mid:#3d4f6e;--text-light:#6b7a99;
+  --success:#2d7a4f;--error:#b83232;
+  --sidebar-w:260px;--radius:10px;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--navy-dark);display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:4px}.sidebar::-webkit-scrollbar-thumb{background:var(--navy-light);border-radius:2px}
+.sidebar-brand{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand-title{font-family:'Fraunces',serif;font-size:13px;font-weight:600;color:var(--gold);line-height:1.3}
+.brand-sub{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:3px}
+.level-badge{display:inline-block;background:var(--gold);color:var(--navy-dark);font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 8px;border-radius:20px;margin-top:10px}
+.sidebar-module-label{padding:18px 20px 8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:600}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;color:rgba(255,255,255,.65);font-size:13px;font-weight:400;transition:all .18s;border-left:3px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:rgba(224,168,58,.14);color:#fff;border-left-color:var(--gold)}
+.nav-item .nav-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.nav-item .nav-label{flex:1}
+.nav-badge{background:var(--gold);color:var(--navy-dark);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;flex-shrink:0}
+
+/* MAIN */
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.section{display:none}.section.active{display:block}
+
+/* HERO */
+.hero{background:var(--navy);padding:28px 52px 36px;position:relative;overflow:hidden;min-height:280px}
+.hero::before{content:'';position:absolute;right:-40px;top:-30px;width:460px;height:460px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='10' y='320' font-size='280' opacity='.04' fill='%23fff' font-family='serif'%3EM1%3C/text%3E%3C/svg%3E") center/contain no-repeat}
+.section-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:22px;font-family:'DM Mono',monospace}
+.hero-title{font-family:'Fraunces',serif;font-size:54px;font-weight:700;line-height:1.05;color:#fff;margin-bottom:16px}
+.hero-title span{color:var(--gold)}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.65);max-width:620px;line-height:1.65;margin-bottom:28px}
+.stats-row{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:24px}
+.stat-num{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.stat-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.progress-track{height:4px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .6s ease;width:0%}
+
+/* CONTENT */
+.content-area{background:var(--cream);padding:40px 52px;flex:1}
+.card{background:#fff;border-radius:var(--radius);padding:32px;margin-bottom:24px;border:1px solid rgba(26,39,68,.08);box-shadow:0 2px 12px rgba(26,39,68,.06)}
+.card-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--text-dark);margin-bottom:6px}
+.card-title-bar{width:40px;height:3px;background:var(--gold);border-radius:2px;margin-bottom:18px}
+.prose{font-size:15px;line-height:1.75;color:var(--text-mid)}
+.prose strong{color:var(--text-dark);font-weight:600}
+.prose p+p{margin-top:12px}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.outcome-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--cream);border-radius:8px;border:1px solid var(--cream-dark)}
+.outcome-icon{color:var(--gold);flex-shrink:0;margin-top:1px}
+.outcome-text{font-size:13.5px;color:var(--text-mid);line-height:1.5}
+
+/* SPEAKING */
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.q-card{background:#fff;border:1px solid rgba(26,39,68,.1);border-radius:8px;padding:16px;display:flex;gap:12px;align-items:flex-start;transition:box-shadow .2s}
+.q-card:hover{box-shadow:0 4px 16px rgba(26,39,68,.1)}
+.q-num{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--gold-light);flex-shrink:0;min-width:28px;line-height:1}
+.q-text{font-size:14px;color:var(--text-mid);line-height:1.55}
+
+/* WORD BANK */
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.wb-card{background:#fff;border:1px solid rgba(26,39,68,.1);border-radius:10px;padding:18px 16px;display:flex;flex-direction:column;gap:6px;transition:transform .2s,box-shadow .2s}
+.wb-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,39,68,.1)}
+.wb-emoji{font-size:24px}
+.wb-term{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--text-dark)}
+.wb-pos{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.wb-def{font-size:13px;color:var(--text-mid);line-height:1.5}
+
+/* READING */
+.reading-text{background:var(--cream);border-left:4px solid var(--gold);padding:24px 28px;border-radius:0 8px 8px 0;margin-bottom:28px}
+.reading-text h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--text-dark);margin-bottom:14px}
+.reading-text p{font-size:14.5px;line-height:1.75;color:var(--text-mid);margin-bottom:10px}
+
+/* MCQ */
+.mcq-section{margin-top:24px}
+.mcq-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--text-dark);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--cream-dark)}
+.mcq-item{margin-bottom:20px}
+.mcq-q{font-size:14.5px;font-weight:600;color:var(--text-dark);margin-bottom:10px;line-height:1.5}
+.mcq-options{display:grid;gap:7px}
+.mcq-option{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1.5px solid rgba(26,39,68,.15);cursor:pointer;transition:all .18s;font-size:13.5px;color:var(--text-mid);background:#fff}
+.mcq-option:hover{border-color:var(--gold);background:var(--gold-pale)}
+.mcq-option.selected{border-color:var(--navy);background:rgba(26,39,68,.06);color:var(--text-dark)}
+.mcq-option.correct{border-color:var(--success)!important;background:rgba(45,122,79,.08)!important;color:var(--success)!important}
+.mcq-option.wrong{border-color:var(--error)!important;background:rgba(184,50,50,.07)!important;color:var(--error)!important}
+.opt-letter{width:22px;height:22px;border-radius:50%;background:rgba(26,39,68,.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'DM Mono',monospace}
+.check-btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 22px;background:var(--navy);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;transition:background .18s}
+.check-btn:hover{background:var(--navy-light)}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;display:none}
+.feedback.show{display:block}
+.feedback.good{background:rgba(45,122,79,.1);color:var(--success);border:1px solid rgba(45,122,79,.2)}
+.feedback.bad{background:rgba(184,50,50,.08);color:var(--error);border:1px solid rgba(184,50,50,.2)}
+.score-display{background:var(--cream);border-radius:8px;padding:14px 18px;margin-top:16px;display:none}
+.score-display.show{display:flex;align-items:center;justify-content:space-between}
+.score-val{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--text-dark)}
+.score-label{font-size:13px;color:var(--text-light)}
+
+/* VOCAB EXERCISES */
+.ex-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ex-badge{background:var(--navy);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.06em}
+.ex-type{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.ex-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--text-dark);margin-bottom:4px}
+.ex-instruction{font-size:13.5px;color:var(--text-light);margin-bottom:20px;font-style:italic}
+.word-box{background:var(--cream);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--text-mid);display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:20px}
+.word-chip{background:#fff;border:1px solid rgba(26,39,68,.15);border-radius:5px;padding:2px 9px;font-size:13px}
+.gap-sentence{font-size:14.5px;color:var(--text-dark);line-height:2.4;margin-bottom:8px}
+.gap-input{border:none;border-bottom:2px solid var(--gold);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);padding:2px 6px;width:160px;outline:none;text-align:center;transition:border-color .18s}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.tf-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--cream-dark)}
+.tf-stmt{flex:1;font-size:14.5px;color:var(--text-mid);line-height:1.55}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+.tf-btn{padding:5px 14px;border-radius:6px;border:1.5px solid rgba(26,39,68,.2);cursor:pointer;font-size:12px;font-weight:600;background:#fff;color:var(--text-mid);transition:all .18s;font-family:'DM Sans',sans-serif}
+.tf-btn:hover{border-color:var(--gold);color:var(--gold)}
+.tf-btn.sel-t{background:#dcfce7;border-color:var(--success);color:var(--success)}
+.tf-btn.sel-f{background:#fee2e2;border-color:var(--error);color:var(--error)}
+
+/* GRAMMAR REVIEW */
+.gr-box{background:var(--navy);color:#fff;border-radius:10px;padding:28px;margin-bottom:24px}
+.gr-box-title{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--gold);margin-bottom:6px}
+.gr-box-sub{font-size:12px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px}
+.gr-rule{background:rgba(255,255,255,.08);border-radius:8px;padding:16px;margin-bottom:12px}
+.gr-rule-title{font-size:13px;font-weight:600;color:var(--gold-light);margin-bottom:6px}
+.gr-rule-text{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.6}
+.gr-example{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--gold-pale);background:rgba(255,255,255,.05);padding:8px 12px;border-radius:6px;margin-top:8px;line-height:1.6}
+.gr-table{width:100%;border-collapse:collapse;margin-top:14px}
+.gr-table th{background:rgba(255,255,255,.1);padding:8px 12px;font-size:12px;text-align:left;color:var(--gold-light);letter-spacing:.06em;text-transform:uppercase}
+.gr-table td{padding:8px 12px;font-size:13px;color:rgba(255,255,255,.75);border-top:1px solid rgba(255,255,255,.08)}
+.gr-table tr:hover td{background:rgba(255,255,255,.04)}
+
+/* WRITING */
+.writing-prompt{background:rgba(224,168,58,.10);border:1px solid rgba(224,168,58,.35);border-radius:8px;padding:18px 20px;margin-bottom:16px}
+.writing-prompt h4{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--text-dark);margin-bottom:8px}
+.writing-prompt p{font-size:13.5px;color:var(--text-mid);line-height:1.6}
+.writing-focus{background:rgba(26,39,68,.04);border:1px solid rgba(26,39,68,.12);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--text-light)}
+.writing-focus strong{color:var(--text-mid)}
+.writing-textarea{width:100%;min-height:180px;border:1.5px solid rgba(26,39,68,.2);border-radius:8px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);resize:vertical;outline:none;background:#fff;line-height:1.65;transition:border-color .18s}
+.writing-textarea:focus{border-color:var(--gold)}
+.writing-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.word-count{font-size:12px;color:var(--text-light);font-family:'DM Mono',monospace}
+.submit-btn{padding:10px 24px;background:var(--gold);color:var(--navy-dark);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .18s}
+.submit-btn:hover{background:var(--gold-light)}
+.submit-success{display:none;padding:12px 16px;background:rgba(45,122,79,.1);border:1px solid rgba(45,122,79,.25);border-radius:8px;color:var(--success);font-size:13.5px;font-weight:500;margin-top:12px}
+
+/* LISTENING */
+.audio-card{background:var(--navy-mid);border-radius:12px;padding:24px;margin-bottom:28px}
+.audio-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
+.audio-emoji{font-size:30px;background:rgba(255,255,255,.1);border-radius:8px;padding:9px;flex-shrink:0;line-height:1}
+.audio-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#fff;margin-bottom:4px}
+.audio-sub{font-size:12px;color:rgba(255,255,255,.5)}
+.audio-tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.audio-tag{font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 9px;border-radius:10px;text-transform:uppercase}
+.tag-level{background:rgba(224,168,58,.30);color:var(--gold-light)}
+.tag-type{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
+.tag-focus{color:rgba(255,255,255,.45);font-size:10px}
+.player-box{background:var(--navy-dark);border-radius:10px;padding:16px 18px;margin-bottom:12px}
+.player-row{display:flex;align-items:center;gap:14px}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:background .18s;color:var(--navy-dark)}
+.play-btn:hover{background:var(--gold-light)}
+.player-info{flex:1}
+.player-title-sm{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px}
+.player-sub-sm{font-size:11px;color:rgba(255,255,255,.4)}
+.player-time{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.5);white-space:nowrap}
+.player-progress{width:100%;height:3px;background:rgba(255,255,255,.12);border-radius:2px;margin-top:10px;overflow:hidden}
+.player-progress-fill{height:100%;width:0%;background:var(--gold);border-radius:2px;transition:width .5s linear}
+.speed-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase}
+.speed-btn{padding:3px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:all .18s}
+.speed-btn.active,.speed-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-dark);font-weight:700}
+.replay-btn{padding:3px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.6);font-size:11px;cursor:pointer;transition:all .18s}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light)}
+.tts-note{font-size:11px;color:rgba(255,255,255,.3);font-style:italic;margin-top:6px}
+.transcript-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;color:rgba(255,255,255,.55);font-size:12.5px;padding:8px 0;border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:color .18s}
+.transcript-toggle:hover{color:var(--gold-light)}
+.transcript-box{display:none;background:rgba(255,255,255,.06);border-radius:8px;padding:16px;margin-top:6px;margin-bottom:14px}
+.transcript-box.open{display:block}
+.transcript-box p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:8px}
+.listen-instruction{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.06);border-radius:8px;font-size:13px;color:rgba(255,255,255,.55);margin-bottom:18px}
+.audio-card .mcq-q{color:#fff}
+.audio-card .mcq-option{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.85)}
+.audio-card .mcq-option:hover{background:rgba(255,255,255,.14);border-color:var(--gold);color:#fff}
+.audio-card .mcq-option.selected{background:rgba(255,255,255,.18);border-color:var(--gold-light);color:#fff}
+.audio-card .mcq-option.correct{border-color:#4ade80!important;background:rgba(74,222,128,.15)!important;color:#4ade80!important}
+.audio-card .mcq-option.wrong{border-color:#f87171!important;background:rgba(248,113,113,.12)!important;color:#f87171!important}
+.audio-card .opt-letter{background:rgba(255,255,255,.15);color:#fff}
+.audio-card .mcq-title{color:rgba(255,255,255,.9);border-bottom-color:rgba(255,255,255,.15)}
+.audio-card .feedback.good{background:rgba(74,222,128,.12);color:#4ade80;border-color:rgba(74,222,128,.3)}
+.audio-card .feedback.bad{background:rgba(248,113,113,.1);color:#f87171;border-color:rgba(248,113,113,.25)}
+.audio-card .score-display{background:rgba(255,255,255,.08)}
+.audio-card .score-val{color:#fff}
+.audio-card .score-label{color:rgba(255,255,255,.5)}
+.audio-card .check-btn{background:var(--gold);color:var(--navy-dark)}
+.audio-card .check-btn:hover{background:var(--gold-light)}
+
+/* CASE STUDIES */
+.case-header{background:var(--navy);border-radius:10px 10px 0 0;padding:22px 28px}
+.case-header h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#fff;margin-bottom:4px}
+.case-header p{font-size:13px;color:rgba(255,255,255,.5)}
+.case-body{background:#fff;border:1px solid rgba(26,39,68,.1);border-top:none;border-radius:0 0 10px 10px;padding:24px 28px;margin-bottom:28px}
+.case-section-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.case-text{font-size:14.5px;color:var(--text-mid);line-height:1.75;margin-bottom:20px}
+.case-text strong{color:var(--text-dark)}
+
+/* ASSESSMENT */
+.assessment-header{background:linear-gradient(135deg,var(--navy-dark),var(--navy-mid));border-radius:12px;padding:28px 32px;margin-bottom:28px;text-align:center}
+.assessment-header h2{font-family:'Fraunces',serif;font-size:28px;color:#fff;margin-bottom:8px}
+.assessment-header p{color:rgba(255,255,255,.6);font-size:14px}
+.assessment-meta{display:flex;justify-content:center;gap:28px;margin-top:16px;flex-wrap:wrap}
+.assessment-meta-item{text-align:center}
+.assessment-meta-num{font-family:'Fraunces',serif;font-size:22px;color:var(--gold);font-weight:700}
+.assessment-meta-label{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em}
+.attempt-badge{display:inline-block;padding:4px 12px;border-radius:10px;font-size:11px;font-weight:600;background:rgba(224,168,58,.25);color:var(--gold-light);margin-top:8px}
+.assessment-result{display:none;text-align:center;padding:28px;background:#fff;border-radius:12px;border:2px solid var(--cream-dark);margin-bottom:24px}
+.result-score{font-family:'Fraunces',serif;font-size:56px;font-weight:700}
+.result-score.pass{color:var(--success)}.result-score.fail{color:var(--error)}
+.result-msg{font-size:16px;color:var(--text-mid);margin-top:8px}
+.retake-btn{padding:10px 24px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-top:16px;font-family:'DM Sans',sans-serif}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-title">Marketing &amp; Advertising English</div>
+    <div class="brand-sub">Professional Development</div>
+    <div class="level-badge">B1&ndash;B2 LEVEL</div>
+  </div>
+  <div class="sidebar-module-label">Module 1</div>
+  <div class="nav-item active" onclick="showSection('overview')"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  <div class="nav-item" onclick="showSection('speaking')"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span><span class="nav-badge">21Q</span></div>
+  <div class="nav-item" onclick="showSection('wordbank')"><span class="nav-icon">🟩</span><span class="nav-label">Word Bank</span><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="showSection('reading')"><span class="nav-icon">📄</span><span class="nav-label">Reading</span><span class="nav-badge">2T</span></div>
+  <div class="nav-item" onclick="showSection('vocabulary')"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar')"><span class="nav-icon">📘</span><span class="nav-label">Grammar</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar-review')"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  <div class="nav-item" onclick="showSection('writing')"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span><span class="nav-badge">2W</span></div>
+  <div class="nav-item" onclick="showSection('listening')"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span><span class="nav-badge">4Ex</span></div>
+  <div class="nav-item" onclick="showSection('casestudies')"><span class="nav-icon">📊</span><span class="nav-label">Case Studies</span><span class="nav-badge">2CS</span></div>
+  <div class="nav-item" onclick="showSection('assessment')"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span><span class="nav-badge">20Q</span></div>
+</nav>
+<div class="main">
+
+<!-- OVERVIEW -->
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="section-tag">🏛️ Module 1 &middot; Marketing &amp; Advertising English</div>
+    <div class="hero-title">Marketing <span>Fundamentals</span><br>&amp; Key Vocabulary</div>
+    <p class="hero-desc">Build the essential English vocabulary and communication skills for marketing and advertising. Learn to discuss brands, markets, consumer behaviour, and the marketing mix with confidence in professional contexts.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+    <div>
+      <div class="progress-label"><span>Module Progress</span><span id="progress-pct">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div><div class="card-title-bar"></div>
+      <div class="prose">
+        <p><strong>Welcome to Module 1: Marketing Fundamentals and Key Vocabulary.</strong> This module introduces you to the core concepts and professional English used in marketing and advertising. Whether you work in a marketing department, an agency, or interact with marketing teams in your role, this module will give you the language you need to participate confidently in conversations, meetings, and written communications about marketing strategy.</p>
+        <p>You will explore the foundational vocabulary of the discipline &mdash; from the four Ps of the marketing mix to concepts such as brand positioning, target audiences, and the customer journey. You will read professional texts, listen to authentic business conversations, and practise the grammar structures most commonly used when presenting and discussing marketing ideas.</p>
+        <p>By the end of this module, you will be able to discuss marketing strategies in English, describe products and target markets, use key marketing terminology accurately, and write a short marketing brief or brand description. This module sets the foundation for all subsequent modules in the Marketing &amp; Advertising English course.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div><div class="card-title-bar"></div>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use 21+ key marketing terms accurately in professional contexts</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Explain the four Ps of the marketing mix in English</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Discuss target audiences, segmentation, and consumer behaviour</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use defining and non-defining relative clauses in marketing descriptions</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Express purpose and result using infinitive and so/such structures</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use modal verbs of possibility and recommendation in strategy discussions</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Write a short marketing brief or product description in English</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Analyse real-world marketing case studies and identify key strategies</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPEAKING -->
+<div id="speaking" class="section">
+  <div class="hero">
+    <div class="section-tag">🎙️ Speaking Activities</div>
+    <div class="hero-title">Speaking <span>Discussion</span></div>
+    <p class="hero-desc">21 discussion questions on marketing fundamentals &mdash; practise expressing opinions, comparing ideas, and building arguments in professional marketing English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Discussion Questions</div><div class="card-title-bar"></div>
+      <div class="q-grid"><div class="q-card"><div class="q-num">1</div><div class="q-text">What brands do you use every day? What makes you loyal to them rather than switching to a competitor?</div></div><div class="q-card"><div class="q-num">2</div><div class="q-text">Think of an advertisement that you remember well. Why did it stay in your memory? What made it effective?</div></div><div class="q-card"><div class="q-num">3</div><div class="q-text">What do you think is the most important of the four Ps of marketing: Product, Price, Place, or Promotion? Give reasons.</div></div><div class="q-card"><div class="q-num">4</div><div class="q-text">Have you ever changed a purchasing decision because of advertising? What was the product and what influenced you?</div></div><div class="q-card"><div class="q-num">5</div><div class="q-text">How do you think marketing has changed in the last ten years? What role has social media played in those changes?</div></div><div class="q-card"><div class="q-num">6</div><div class="q-text">What do you think 'brand identity' means? Can you describe the brand identity of a company you admire?</div></div><div class="q-card"><div class="q-num">7</div><div class="q-text">What is the difference between marketing and advertising? Is one more important than the other?</div></div><div class="q-card"><div class="q-num">8</div><div class="q-text">How do companies use market segmentation to target different types of customers? Can you give an example?</div></div><div class="q-card"><div class="q-num">9</div><div class="q-text">Do you think it is ethical to use psychological techniques in advertising to influence consumer behaviour? Why or why not?</div></div><div class="q-card"><div class="q-num">10</div><div class="q-text">What is a USP (Unique Selling Proposition)? Why is it important for a product to have one?</div></div><div class="q-card"><div class="q-num">11</div><div class="q-text">How does pricing strategy affect a brand's image? Give examples of premium brands and budget brands.</div></div><div class="q-card"><div class="q-num">12</div><div class="q-text">What is the difference between B2B (business-to-business) and B2C (business-to-consumer) marketing?</div></div><div class="q-card"><div class="q-num">13</div><div class="q-text">How important is packaging as part of the marketing mix? Can you think of a brand whose packaging is itself a marketing tool?</div></div><div class="q-card"><div class="q-num">14</div><div class="q-text">What is a 'target audience' and how do companies identify theirs? What research methods do they use?</div></div><div class="q-card"><div class="q-num">15</div><div class="q-text">Think of a brand that has successfully repositioned itself. What did they change and why do you think it worked?</div></div><div class="q-card"><div class="q-num">16</div><div class="q-text">How do you think cultural differences affect international marketing campaigns? Can you give an example of a brand adapting its message?</div></div><div class="q-card"><div class="q-num">17</div><div class="q-text">What is content marketing? How is it different from traditional advertising?</div></div><div class="q-card"><div class="q-num">18</div><div class="q-text">How important is customer loyalty for long-term marketing success? What do companies do to build it?</div></div><div class="q-card"><div class="q-num">19</div><div class="q-text">What is the role of data and analytics in modern marketing? How has big data changed the industry?</div></div><div class="q-card"><div class="q-num">20</div><div class="q-text">Have you ever been influenced by an influencer or online review when buying something? How did it affect your decision?</div></div><div class="q-card"><div class="q-num">21</div><div class="q-text">If you were launching a new product, how would you decide on your marketing strategy? What factors would you consider first?</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- WORD BANK -->
+<div id="wordbank" class="section">
+  <div class="hero">
+    <div class="section-tag">🟩 Word Bank</div>
+    <div class="hero-title">Word <span>Bank</span></div>
+    <p class="hero-desc">21 essential terms for marketing and advertising &mdash; with clear definitions and professional usage notes for each key concept.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Key Vocabulary &mdash; 21 Terms</div><div class="card-title-bar"></div>
+      <div class="wb-grid"><div class="wb-card"><div class="wb-emoji">🎯</div><div class="wb-term">Marketing mix</div><div class="wb-pos">noun phrase</div><div class="wb-def">The combination of controllable variables — traditionally Product, Price, Place, and Promotion — that a company uses to achieve its marketing objectives.</div></div><div class="wb-card"><div class="wb-emoji">🏷️</div><div class="wb-term">Brand positioning</div><div class="wb-pos">noun phrase</div><div class="wb-def">The process of defining how a brand is perceived in the minds of target customers relative to competitors.</div></div><div class="wb-card"><div class="wb-emoji">👥</div><div class="wb-term">Target audience</div><div class="wb-pos">noun phrase</div><div class="wb-def">The specific group of consumers a marketing campaign or product is designed to reach and appeal to.</div></div><div class="wb-card"><div class="wb-emoji">📊</div><div class="wb-term">Market segmentation</div><div class="wb-pos">noun phrase</div><div class="wb-def">The process of dividing a broad market into distinct subgroups of consumers with shared characteristics, needs, or behaviours.</div></div><div class="wb-card"><div class="wb-emoji">💡</div><div class="wb-term">USP (Unique Selling Proposition)</div><div class="wb-pos">noun phrase</div><div class="wb-def">The distinctive feature or benefit that makes a product or service different from and better than its competitors.</div></div><div class="wb-card"><div class="wb-emoji">🛒</div><div class="wb-term">Consumer behaviour</div><div class="wb-pos">noun phrase</div><div class="wb-def">The study of how individuals and groups make decisions about purchasing, using, and disposing of goods and services.</div></div><div class="wb-card"><div class="wb-emoji">📈</div><div class="wb-term">Brand awareness</div><div class="wb-pos">noun phrase</div><div class="wb-def">The extent to which consumers recognise and are familiar with a particular brand and its products.</div></div><div class="wb-card"><div class="wb-emoji">🔍</div><div class="wb-term">Market research</div><div class="wb-pos">noun phrase</div><div class="wb-def">The systematic process of gathering, analysing, and interpreting information about a market, consumers, and competitors.</div></div><div class="wb-card"><div class="wb-emoji">🗺️</div><div class="wb-term">Customer journey</div><div class="wb-pos">noun phrase</div><div class="wb-def">The complete sequence of experiences and interactions a customer has with a brand, from initial awareness through to purchase and beyond.</div></div><div class="wb-card"><div class="wb-emoji">🤝</div><div class="wb-term">Brand loyalty</div><div class="wb-pos">noun phrase</div><div class="wb-def">The tendency of consumers to consistently purchase the same brand's products over time, rather than switching to competitors.</div></div><div class="wb-card"><div class="wb-emoji">📣</div><div class="wb-term">Integrated marketing</div><div class="wb-pos">noun phrase</div><div class="wb-def">A strategy that coordinates all promotional tools and communication channels to deliver a consistent, unified message about a brand.</div></div><div class="wb-card"><div class="wb-emoji">💰</div><div class="wb-term">Pricing strategy</div><div class="wb-pos">noun phrase</div><div class="wb-def">The method a company uses to set the price of its products or services, often reflecting brand positioning and market objectives.</div></div><div class="wb-card"><div class="wb-emoji">🌐</div><div class="wb-term">Digital marketing</div><div class="wb-pos">noun phrase</div><div class="wb-def">The promotion of products and services using digital channels such as social media, search engines, email, and websites.</div></div><div class="wb-card"><div class="wb-emoji">🎨</div><div class="wb-term">Brand identity</div><div class="wb-pos">noun phrase</div><div class="wb-def">The visible elements of a brand — including name, logo, colour palette, and tone of voice — that distinguish it in the market.</div></div><div class="wb-card"><div class="wb-emoji">📱</div><div class="wb-term">Content marketing</div><div class="wb-pos">noun phrase</div><div class="wb-def">A marketing approach focused on creating and distributing valuable, relevant content to attract and retain a defined audience.</div></div><div class="wb-card"><div class="wb-emoji">🔄</div><div class="wb-term">Customer retention</div><div class="wb-pos">noun phrase</div><div class="wb-def">The strategies and activities used to keep existing customers engaged and prevent them from switching to competitors.</div></div><div class="wb-card"><div class="wb-emoji">📉</div><div class="wb-term">Market share</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of total sales in a market captured by a particular company or product over a specific period.</div></div><div class="wb-card"><div class="wb-emoji">🎯</div><div class="wb-term">Positioning statement</div><div class="wb-pos">noun phrase</div><div class="wb-def">A brief description of a product or service's target market and how the brand wants to be perceived by that market.</div></div><div class="wb-card"><div class="wb-emoji">🔗</div><div class="wb-term">B2B vs B2C</div><div class="wb-pos">noun phrase</div><div class="wb-def">Business-to-business marketing (selling to other companies) versus business-to-consumer marketing (selling directly to end users).</div></div><div class="wb-card"><div class="wb-emoji">📢</div><div class="wb-term">Above the line (ATL)</div><div class="wb-pos">noun phrase</div><div class="wb-def">Mass media advertising — such as television, radio, and outdoor billboards — that targets a broad, general audience.</div></div><div class="wb-card"><div class="wb-emoji">🎁</div><div class="wb-term">Below the line (BTL)</div><div class="wb-pos">noun phrase</div><div class="wb-def">Targeted, direct promotional activities — such as email campaigns, sponsorships, and point-of-sale promotions — aimed at specific audiences.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- READING -->
+<div id="reading" class="section">
+  <div class="hero">
+    <div class="section-tag">📄 Reading Activities</div>
+    <div class="hero-title">Reading <span>Texts</span></div>
+    <p class="hero-desc">Two professional texts on marketing fundamentals. Read carefully and answer the comprehension questions that follow.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Text 1: The Marketing Mix and Its Evolution</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; What Is Marketing?</h3>
+        <p>Marketing is the process by which organisations identify customer needs and create value to satisfy those needs profitably. Far from being simply about advertising or selling, marketing encompasses the full range of activities involved in bringing a product or service from its conception to the customer &mdash; and beyond. At its core, marketing is about understanding people: who they are, what they want, why they make the decisions they do, and how a brand can position itself to become their preferred choice.</p>
+        <p>The discipline has its roots in economics and psychology, and has evolved significantly over the past century. Early marketing was largely product-focused &mdash; the assumption being that if you built a good enough product at the right price, customers would naturally come to you. Modern marketing, by contrast, starts with the customer and works backwards. This shift from a product orientation to a customer orientation represents one of the most important intellectual developments in business history.</p>
+        <h3>Paragraph 2 &mdash; The Four Ps</h3>
+        <p>The marketing mix, introduced by E. Jerome McCarthy in the 1960s, remains one of the most widely taught frameworks in business education. Its four components &mdash; Product, Price, Place, and Promotion &mdash; provide a structured way to think about all the decisions a marketer must make when bringing an offering to market. The <strong>Product</strong> refers not just to its physical attributes, but to everything the customer experiences: design, quality, features, packaging, and after-sales service. <strong>Price</strong> is a powerful signal of value and brand positioning. <strong>Place</strong> &mdash; or distribution &mdash; determines how and where the customer can access the product. <strong>Promotion</strong> covers all the communication activities used to make customers aware of and interested in the product.</p>
+        <p>In recent decades, the model has been extended. Some theorists have proposed adding People, Process, and Physical Evidence to create a "Seven Ps" model, particularly for service industries where the human element of the interaction is inseparable from the product itself. However, the original four Ps remain a foundational framework and are the starting point for most strategic marketing discussions.</p>
+        <h3>Paragraph 3 &mdash; Market Segmentation and Targeting</h3>
+        <p>One of the most important strategic decisions in marketing is identifying who you are trying to reach. Market segmentation is the process of dividing the total available market into distinct subgroups of consumers who share similar characteristics, needs, or purchasing behaviours. Common segmentation variables include demographic factors (age, gender, income, education), psychographic factors (lifestyle, values, attitudes), geographic factors, and behavioural factors (usage rate, brand loyalty, purchase occasions).</p>
+        <p>Once a market has been segmented, marketers must decide which segments to target. This targeting decision is influenced by the size and growth potential of each segment, the level of competition within it, and the company's ability to serve it profitably. Effective targeting allows companies to concentrate their marketing resources where they are most likely to generate a return, rather than spreading them thinly across an undifferentiated mass market.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 1 (10 Questions)</div>
+        <div id="r1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r1')">Check Answers</button>
+        <div id="r1-feedback" class="feedback"></div>
+        <div id="r1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Text 2: Brand Strategy and Consumer Psychology</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; What Is a Brand?</h3>
+        <p>A brand is far more than a logo or a name. It is the sum of perceptions, feelings, and associations that consumers hold about a company and its products. Successful brands create emotional connections with their customers &mdash; connections that are strong enough to influence purchasing decisions, command premium prices, and generate loyalty that outlasts individual product generations. The value that a brand adds to a product beyond its functional attributes is called brand equity, and it is one of the most powerful &mdash; and difficult to measure &mdash; assets a company can possess.</p>
+        <p>Brand positioning is the strategic process by which a company defines how it wants to be perceived in the market relative to its competitors. A clear positioning statement answers three questions: Who is the target customer? What category does the brand compete in? And what is the key benefit that sets it apart? Companies that are unclear about their positioning risk being perceived as generic, which makes it difficult to justify premium pricing or build loyalty.</p>
+        <h3>Paragraph 2 &mdash; Consumer Psychology and Decision-Making</h3>
+        <p>Understanding how consumers make purchasing decisions is central to effective marketing. Classical economic theory assumed that consumers are rational agents who evaluate products objectively based on price and utility. Behavioural economics and consumer psychology have fundamentally challenged this assumption. Research shows that most purchasing decisions are strongly influenced by emotional factors, social proof (what others are doing or recommending), scarcity signals (limited availability), and cognitive shortcuts that bypass rational analysis entirely.</p>
+        <p>For marketers, these insights have profound implications. Advertising that evokes emotion &mdash; nostalgia, aspiration, humour, or social belonging &mdash; tends to be more effective than purely informational advertising. Product design, packaging, and even the way a price is presented can all influence perceived value and purchase intent. Understanding these mechanisms allows marketers to design more persuasive communications and more compelling customer experiences.</p>
+        <h3>Paragraph 3 &mdash; The Customer Journey</h3>
+        <p>Modern marketing recognises that a consumer's relationship with a brand does not begin with a purchase and end when the transaction is complete. The customer journey &mdash; sometimes called the purchase funnel or buyer's journey &mdash; describes the full sequence of interactions a customer has with a brand, from initial awareness through to consideration, purchase, retention, and advocacy. Different marketing activities are appropriate at different stages of this journey. Above-the-line advertising is well-suited to building awareness among a broad audience. Content marketing, search engine optimisation, and comparison websites play a role in the consideration phase. Personalised offers, loyalty programmes, and excellent customer service are crucial for retention. And satisfied customers who become advocates &mdash; recommending the brand to others &mdash; are arguably the most valuable marketing asset of all.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 2 (10 Questions)</div>
+        <div id="r2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r2')">Check Answers</button>
+        <div id="r2-feedback" class="feedback"></div>
+        <div id="r2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VOCABULARY -->
+<div id="vocabulary" class="section">
+  <div class="hero">
+    <div class="section-tag">✏️ Vocabulary Exercises</div>
+    <div class="hero-title">Vocabulary <span>Practice</span></div>
+    <p class="hero-desc">Three vocabulary exercises &mdash; multiple choice, gap-fill, and true/false &mdash; to consolidate your command of core marketing English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Multiple Choice</div></div>
+      <div class="ex-title">Choosing the Right Word</div>
+      <p class="ex-instruction">Select the best word or phrase to complete each sentence in a professional marketing context.</p>
+      <div id="v1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('v1')">Check Answers</button>
+      <div id="v1-feedback" class="feedback"></div>
+      <div id="v1-score" class="score-display"></div>
+    </div>
+
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Gap-Fill</div></div>
+      <div class="ex-title">Complete the Sentences</div>
+      <p class="ex-instruction">Type the correct word from the box below to complete each sentence. Check your spelling.</p>
+      <div class="word-box">
+        <strong style="color:var(--text-dark);margin-right:4px">Word Box:</strong>
+        <span class="word-chip">positioning</span>
+        <span class="word-chip">segmentation</span>
+        <span class="word-chip">loyalty</span>
+        <span class="word-chip">awareness</span>
+        <span class="word-chip">retention</span>
+        <span class="word-chip">USP</span>
+        <span class="word-chip">digital</span>
+        <span class="word-chip">journey</span>
+        <span class="word-chip">mix</span>
+        <span class="word-chip">equity</span>
+      </div>
+      <div id="v2-gaps"></div>
+      <button class="check-btn" onclick="checkGaps()">Check Answers</button>
+      <div id="v2-feedback" class="feedback"></div>
+    </div>
+
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">True / False</div></div>
+      <div class="ex-title">True or False?</div>
+      <p class="ex-instruction">Read each statement about marketing vocabulary. Decide whether it is TRUE or FALSE and click your answer.</p>
+      <div id="v3-tf"></div>
+      <button class="check-btn" onclick="checkTF()">Check Answers</button>
+      <div id="v3-feedback" class="feedback"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GRAMMAR -->
+<div id="grammar" class="section">
+  <div class="hero">
+    <div class="section-tag">📘 Grammar Exercises</div>
+    <div class="hero-title">Grammar <span>Practice</span></div>
+    <p class="hero-desc">Three grammar exercises covering relative clauses, purpose and result structures, and modal verbs for recommendations &mdash; all in professional marketing contexts.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Relative Clauses</div></div>
+      <div class="ex-title">Defining &amp; Non-Defining Relative Clauses</div>
+      <p class="ex-instruction">Choose the correct relative pronoun or clause option to complete each marketing sentence accurately.</p>
+      <div id="g1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g1')">Check Answers</button>
+      <div id="g1-feedback" class="feedback"></div>
+      <div id="g1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Purpose &amp; Result</div></div>
+      <div class="ex-title">Expressing Purpose and Result</div>
+      <p class="ex-instruction">Select the correct structure to express purpose or result in each marketing context.</p>
+      <div id="g2-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g2')">Check Answers</button>
+      <div id="g2-feedback" class="feedback"></div>
+      <div id="g2-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">Modal Verbs</div></div>
+      <div class="ex-title">Modal Verbs for Recommendations &amp; Possibility</div>
+      <p class="ex-instruction">Choose the modal verb that best fits the meaning of each sentence in a marketing strategy context.</p>
+      <div id="g3-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g3')">Check Answers</button>
+      <div id="g3-feedback" class="feedback"></div>
+      <div id="g3-score" class="score-display"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GRAMMAR REVIEW -->
+<div id="grammar-review" class="section">
+  <div class="hero">
+    <div class="section-tag">🔍 Grammar Reference</div>
+    <div class="hero-title">Grammar <span>Review</span></div>
+    <p class="hero-desc">Three reference boxes covering all grammar points in this module. Study these alongside the grammar exercises for best results.</p>
+  </div>
+  <div class="content-area">
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 1</div>
+      <div class="gr-box-title">Relative Clauses in Marketing English</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">What are relative clauses?</div>
+        <div class="gr-rule-text">Relative clauses add information about a noun. They are essential in marketing English for describing products, audiences, and strategies precisely. There are two types: <strong style="color:var(--gold-light)">defining</strong> (essential information, no commas) and <strong style="color:var(--gold-light)">non-defining</strong> (extra information, with commas).</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Type</th><th>Pronoun</th><th>Punctuation</th><th>Removable?</th></tr>
+        <tr><td>Defining</td><td>who / which / that / whose</td><td>No commas</td><td>No &mdash; changes meaning</td></tr>
+        <tr><td>Non-defining</td><td>who / which / whose (NOT that)</td><td>Commas required</td><td>Yes &mdash; adds extra info</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Examples in Marketing Contexts</div>
+        <div class="gr-example">The customers who spend over £500 a year receive loyalty rewards. [defining: specifies which customers]</div>
+        <div class="gr-example">Our premium segment, which accounts for 30% of revenue, is growing rapidly. [non-defining: adds extra info]</div>
+        <div class="gr-example">The agency that won the pitch had the most creative strategy. [defining: 'that' is acceptable for things]</div>
+        <div class="gr-example">Nike, whose brand identity is globally recognised, invests heavily in sponsorship. [non-defining with 'whose']</div>
+      </div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Common Errors to Avoid</div>
+        <div class="gr-rule-text">Do NOT use 'that' in non-defining clauses. Do NOT omit the comma in non-defining clauses. Do NOT use 'which' where 'who' is required for people.</div>
+        <div class="gr-example">❌ Our brand, that launched last year, has been very successful.<br>✅ Our brand, which launched last year, has been very successful.</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 2</div>
+      <div class="gr-box-title">Expressing Purpose &amp; Result</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Purpose structures in marketing presentations</div>
+        <div class="gr-rule-text">When explaining why a strategy or action is taken, marketers need precise purpose structures. These are common in briefs, presentations, and strategy documents.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Structure</th><th>Use</th><th>Formality</th></tr>
+        <tr><td>to + infinitive</td><td>General purpose</td><td>All registers</td></tr>
+        <tr><td>in order to + infinitive</td><td>Formal purpose (often written)</td><td>Formal</td></tr>
+        <tr><td>so as to + infinitive</td><td>Formal purpose (often written)</td><td>Very formal</td></tr>
+        <tr><td>so that + clause</td><td>Purpose with subject change</td><td>Formal/neutral</td></tr>
+        <tr><td>so + adj + that</td><td>Result (degree)</td><td>Neutral/formal</td></tr>
+        <tr><td>such + noun phrase + that</td><td>Result (degree)</td><td>Neutral/formal</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Examples in Marketing Contexts</div>
+        <div class="gr-example">We ran the campaign in order to increase brand awareness among 18&ndash;24-year-olds.</div>
+        <div class="gr-example">The product was redesigned so that customers could use it more intuitively.</div>
+        <div class="gr-example">The campaign was so successful that the product sold out within 48 hours.</div>
+        <div class="gr-example">It generated such strong word-of-mouth that the advertising budget was cut in half.</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 3</div>
+      <div class="gr-box-title">Modal Verbs for Recommendations &amp; Possibility</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why modals matter in marketing discussions</div>
+        <div class="gr-rule-text">In strategy discussions, pitches, and meetings, marketers rarely make absolute statements. Modal verbs allow you to express degrees of certainty, make recommendations diplomatically, and discuss possibilities &mdash; all of which are essential skills in professional marketing communication.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Modal</th><th>Meaning</th><th>Marketing Example</th></tr>
+        <tr><td>should / ought to</td><td>Recommendation</td><td>We should target millennials for this campaign.</td></tr>
+        <tr><td>could</td><td>Possibility / suggestion</td><td>We could expand into the Asian market next year.</td></tr>
+        <tr><td>might / may</td><td>Uncertain possibility</td><td>This approach might appeal to a younger demographic.</td></tr>
+        <tr><td>must</td><td>Strong necessity</td><td>The brand must maintain consistency across all channels.</td></tr>
+        <tr><td>would</td><td>Hypothetical / conditional</td><td>A loyalty programme would increase customer retention.</td></tr>
+        <tr><td>need to</td><td>Necessity (practical)</td><td>We need to define our positioning before we brief the agency.</td></tr>
+        <tr><td>can</td><td>Ability / possibility</td><td>Digital channels can reach our target audience cost-effectively.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Softening Recommendations Professionally</div>
+        <div class="gr-rule-text">In professional settings, direct statements can seem aggressive. Using modal verbs makes recommendations sound collaborative and respectful while still being clear and persuasive.</div>
+        <div class="gr-example">❌ "Change the pricing strategy." (too direct)<br>✅ "We might consider revising the pricing strategy to better reflect the premium positioning."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WRITING -->
+<div id="writing" class="section">
+  <div class="hero">
+    <div class="section-tag">✍️ Writing Activities</div>
+    <div class="hero-title">Writing <span>Tasks</span></div>
+    <p class="hero-desc">Two professional writing tasks &mdash; practise producing clear, well-structured marketing documents in English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Writing Activity 1 &mdash; Product Marketing Brief</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>You are a junior marketing manager at a consumer goods company. You have been asked to write a short marketing brief (160&ndash;200 words) for a new eco-friendly water bottle called <em>PureFlow</em>. Your brief should describe the product, identify the target audience, explain the USP, and suggest the key message for the campaign. Use professional language and include at least one relative clause and one modal verb.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Product description &middot; Target audience &middot; USP identification &middot; Campaign message &middot; Professional register &middot; Use of target grammar
+      </div>
+      <textarea class="writing-textarea" id="w1-text" placeholder="MARKETING BRIEF&#10;Product: PureFlow Eco Water Bottle&#10;&#10;Product Description:&#10;...&#10;&#10;Target Audience:&#10;...&#10;&#10;Unique Selling Proposition (USP):&#10;...&#10;&#10;Key Campaign Message:&#10;..." oninput="updateWordCount('w1',200)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w1-wc">0 / 200 words</span>
+        <button class="submit-btn" onclick="submitWriting('w1')">Submit ✓</button>
+      </div>
+      <div id="w1-success" class="submit-success">✅ Brief submitted! Well done for practising this key professional writing skill in marketing English.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Writing Activity 2 &mdash; Brand Positioning Statement</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a brand positioning statement and short description (170&ndash;220 words) for a fictional premium coffee brand called <em>Altura</em>, which targets urban professionals aged 28&ndash;45 who value quality, sustainability, and craft. Your text should define the target audience, state the brand's competitive differentiation, and describe the tone of voice and values. Use vocabulary from the Word Bank and appropriate grammar structures.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Brand positioning &middot; Target audience definition &middot; Differentiation &middot; Tone of voice &middot; Module vocabulary &middot; Cohesive, professional English
+      </div>
+      <textarea class="writing-textarea" id="w2-text" placeholder="BRAND POSITIONING — ALTURA COFFEE&#10;&#10;Target Audience:&#10;...&#10;&#10;Competitive Differentiation:&#10;...&#10;&#10;Brand Values &amp; Tone of Voice:&#10;...&#10;&#10;Positioning Statement:&#10;..." oninput="updateWordCount('w2',220)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w2-wc">0 / 220 words</span>
+        <button class="submit-btn" onclick="submitWriting('w2')">Submit ✓</button>
+      </div>
+      <div id="w2-success" class="submit-success">✅ Positioning statement submitted! Excellent work applying module vocabulary and grammar in a realistic professional context.</div>
+    </div>
+  </div>
+</div>
+
+<!-- LISTENING -->
+<div id="listening" class="section">
+  <div class="hero">
+    <div class="section-tag">🎧 Listening Activities</div>
+    <div class="hero-title">Listening <span>Activities</span></div>
+    <p class="hero-desc">4 audio activities with built-in speech players &mdash; press &#9654; Play, listen, then answer the questions.</p>
+  </div>
+  <div class="content-area">
+    <div id="listening-cards"></div>
+  </div>
+</div>
+
+<!-- CASE STUDIES -->
+<div id="casestudies" class="section">
+  <div class="hero">
+    <div class="section-tag">📊 Case Studies</div>
+    <div class="hero-title">Case <span>Studies</span></div>
+    <p class="hero-desc">Two real-world inspired marketing case studies. Read carefully and answer the analysis questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="case-header">
+      <h3>Case Study 1: How Oat&amp;Go Disrupted the Breakfast Market</h3>
+      <p>Brand Launch &middot; Market Segmentation &middot; USP Development</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Oat&amp;Go is a UK-based startup that launched a range of ready-to-drink oat milk smoothies in 2021. Entering a crowded breakfast drinks market dominated by large multinationals, the founders recognised that existing products were either too sweet and indulgent, or too bland and health-focused to appeal to busy urban professionals who wanted a nutritious but enjoyable breakfast on the go. This gap in the market became the foundation of their entire marketing strategy.</p>
+        <p>The company defined its <strong>target audience</strong> with unusual precision: professionals aged 25&ndash;40 in urban areas, commuting daily, with a household income above &pound;45,000, an interest in sustainability, and an existing habit of buying their breakfast from high-street coffee shops. By being this specific, Oat&amp;Go was able to craft messaging that felt deeply relevant to its audience rather than broadly appealing to everyone and connecting with no one.</p>
+      </div>
+      <div class="case-section-label">Strategy</div>
+      <div class="case-text">
+        <p>Oat&amp;Go's <strong>USP</strong> was summarised in their tagline: "The breakfast that thinks ahead." This positioned the product as both intelligent (nutritionally optimised) and convenient (no preparation needed) &mdash; values that resonated strongly with their target segment. Rather than competing on price, they adopted a <strong>premium pricing strategy</strong> (&pound;3.50 per bottle) that signalled quality and allowed the brand to be stocked alongside premium coffee and juice brands in independent cafes and Waitrose.</p>
+        <p>Their promotional strategy was almost entirely <strong>below the line</strong>. They partnered with fitness influencers on Instagram, offered free samples at train stations during peak commuting hours, and used geo-targeted digital advertising within a 500-metre radius of their stockists. Within 18 months, Oat&amp;Go had achieved a <strong>brand awareness level</strong> of 34% among their defined target segment &mdash; a remarkable result for a startup with no above-the-line advertising budget.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 1 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs1')">Check Answers</button>
+        <div id="cs1-feedback" class="feedback"></div>
+        <div id="cs1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="case-header">
+      <h3>Case Study 2: Reviva Skincare &mdash; Repositioning for a New Generation</h3>
+      <p>Brand Repositioning &middot; Consumer Psychology &middot; Digital Strategy</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Reviva Skincare was founded in 1987 as a pharmaceutical-grade skincare range sold exclusively through pharmacies. By 2019, the brand was in serious decline. Although the products remained highly effective, the brand's visual identity and communications had not evolved in over a decade. Consumer research revealed a damaging perception: Reviva was seen as "my mother's skincare brand" &mdash; effective but old-fashioned, with no emotional appeal to younger consumers. Sales were falling at 8% per year.</p>
+        <p>The marketing director commissioned a full <strong>brand audit</strong> which identified three core problems. First, the brand's positioning was unclear: it sat uncomfortably between medical-grade products (which required a stronger clinical identity) and lifestyle beauty brands (which required an emotional, aspirational identity). Second, the packaging was functional but completely lacking in shelf appeal. Third, the brand had zero presence in <strong>digital channels</strong>, which is where its potential new customers spent most of their time.</p>
+      </div>
+      <div class="case-section-label">The Repositioning</div>
+      <div class="case-text">
+        <p>The repositioning strategy had three pillars. First, Reviva sharpened its <strong>positioning statement</strong>: "Dermatologist-developed skincare for people who value results over packaging." This deliberately targeted a sophisticated, evidence-driven consumer who was sceptical of marketing hype. Second, the packaging was redesigned with a clean, modern aesthetic that could sit comfortably in both pharmacy and premium beauty retail. Third, the brand launched a <strong>content marketing</strong> programme built around transparency: dermatologists explained the science behind each ingredient in short-form video content on Instagram and YouTube.</p>
+        <p>The results exceeded expectations. Within two years, Reviva's sales had grown by 41%, and <strong>brand awareness</strong> among 25&ndash;35-year-olds had increased from 12% to 38%. The brand had successfully attracted a new generation of consumers without alienating its existing base &mdash; a notoriously difficult balance to achieve in brand repositioning. The case became widely studied as an example of how deep consumer insight, a clear USP, and authentic communication can reverse a declining brand's fortunes.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 2 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs2')">Check Answers</button>
+        <div id="cs2-feedback" class="feedback"></div>
+        <div id="cs2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL ASSESSMENT -->
+<div id="assessment" class="section">
+  <div class="hero">
+    <div class="section-tag">🎯 Final Assessment</div>
+    <div class="hero-title">Final <span>Assessment</span></div>
+    <p class="hero-desc">20 multiple choice questions covering all module sections. Score 70% or above to pass. You have two attempts.</p>
+  </div>
+  <div class="content-area">
+    <div class="assessment-header">
+      <h2>Module 1 &mdash; Final Assessment</h2>
+      <p>Marketing Fundamentals &amp; Key Vocabulary</p>
+      <div class="assessment-meta">
+        <div class="assessment-meta-item"><div class="assessment-meta-num">20</div><div class="assessment-meta-label">Questions</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">70%</div><div class="assessment-meta-label">Pass Mark</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">2</div><div class="assessment-meta-label">Attempts</div></div>
+      </div>
+      <div class="attempt-badge" id="attempt-badge">Attempt 1 of 2</div>
+    </div>
+    <div id="assessment-result" class="assessment-result">
+      <div class="result-score" id="result-score-text"></div>
+      <div class="result-msg" id="result-msg"></div>
+      <div id="retake-wrap"></div>
+    </div>
+    <div class="card" id="assessment-form">
+      <div class="mcq-title">📝 Assessment Questions</div>
+      <div id="fa-mcqs"></div>
+      <button class="check-btn" onclick="submitAssessment()" style="margin-top:8px;padding:12px 32px;font-size:14px">Submit Assessment</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+<script>
+const DATA = {
+r1:{questions:[
+  {q:"According to Text 1, what does modern marketing start with?",opts:["A well-made product","The customer, then works backwards","A strong advertising campaign","A competitive pricing strategy"],ans:1},
+  {q:"Who introduced the four Ps marketing mix framework?",opts:["Philip Kotler","David Ogilvy","E. Jerome McCarthy","Peter Drucker"],ans:2},
+  {q:"In the marketing mix, what does 'Place' refer to?",opts:["The physical location of the company's offices","Where the advertising is displayed","How and where the customer can access the product","The geographic market being targeted"],ans:2},
+  {q:"What is the 'Seven Ps' model particularly useful for?",opts:["Product-focused companies","Manufacturing industries","Financial services firms","Service industries where human interaction is key"],ans:3},
+  {q:"Which segmentation variable relates to lifestyle and values?",opts:["Demographic","Geographic","Psychographic","Behavioural"],ans:2},
+  {q:"What is the purpose of market segmentation, according to the text?",opts:["To reduce the total number of customers","To eliminate competition","To divide the market into distinct subgroups with shared characteristics","To standardise pricing across all markets"],ans:2},
+  {q:"What does the text say about early marketing approaches?",opts:["They were customer-focused","They assumed good products would attract customers naturally","They relied heavily on digital channels","They prioritised brand positioning above all else"],ans:1},
+  {q:"What influences a company's targeting decision, according to Text 1?",opts:["The CEO's personal preferences","The size, growth potential, and competitiveness of each segment","The company's advertising budget alone","The number of competitors in the market"],ans:1},
+  {q:"According to the text, the marketing mix includes which four components?",opts:["People, Process, Price, Promotion","Product, Price, Place, Promotion","Product, Publicity, Place, People","Positioning, Price, Promotion, Performance"],ans:1},
+  {q:"What does the text identify as 'one of the most important intellectual developments in business history'?",opts:["The invention of digital advertising","The shift from product orientation to customer orientation","The introduction of market research","The development of branding as a discipline"],ans:1}
+]},
+r2:{questions:[
+  {q:"How does Text 2 define 'brand equity'?",opts:["The financial value of a company's stock","The number of products a brand sells","The value a brand adds beyond a product's functional attributes","The total cost of a brand's advertising campaigns"],ans:2},
+  {q:"What three questions does a positioning statement answer, according to the text?",opts:["What is the price? Who are the competitors? What is the USP?","Who is the target customer? What category? What is the key benefit?","What is the brand name? What is the logo? What is the slogan?","Who runs the company? What do they sell? Where do they sell it?"],ans:1},
+  {q:"What does classical economic theory assume about consumers?",opts:["They are primarily emotional decision-makers","They are loyal to familiar brands","They are rational agents who evaluate products objectively","They respond best to scarcity signals"],ans:2},
+  {q:"Which of the following is described as a factor that influences purchasing decisions?",opts:["Product weight","Factory location","Social proof","Company size"],ans:2},
+  {q:"According to the text, what type of advertising 'tends to be more effective'?",opts:["Advertising with a low budget","Advertising that evokes emotion","Advertising with the most screen time","Advertising on traditional media"],ans:1},
+  {q:"What is the 'customer journey' also called, according to Text 2?",opts:["The marketing funnel and buyer's journey","The brand lifecycle","The product development cycle","The sales pipeline"],ans:0},
+  {q:"Which marketing tool is described as well-suited to building awareness among a broad audience?",opts:["Content marketing","Loyalty programmes","Above-the-line advertising","Personalised email campaigns"],ans:2},
+  {q:"What does the text say about brand equity as an asset?",opts:["It is easy to measure and manage","It is one of the most powerful and difficult to measure assets a company can possess","It is less important than physical assets","It only applies to luxury brands"],ans:1},
+  {q:"At which stage of the customer journey are loyalty programmes described as crucial?",opts:["Awareness","Consideration","Purchase","Retention"],ans:3},
+  {q:"What risk do companies face if their positioning is unclear?",opts:["Losing their biggest suppliers","Being perceived as generic and finding it hard to justify premium pricing or build loyalty","Attracting too many customers to serve","Regulatory issues in their target market"],ans:1}
+]},
+v1:{questions:[
+  {q:"The campaign team used _______ to divide the market into groups based on age, income, and lifestyle.",opts:["brand positioning","market segmentation","customer retention","content marketing"],ans:1},
+  {q:"The brand's _______ was built on its 40-year reputation for quality and reliability.",opts:["equity","journey","segmentation","mix"],ans:0},
+  {q:"The agency was asked to develop a clear _______ that explained what made the product different from all competitors.",opts:["pricing strategy","USP","customer journey","target audience"],ans:1},
+  {q:"After the rebrand, _______ among 18&ndash;25-year-olds increased by 22% within six months.",opts:["brand loyalty","brand awareness","market share","consumer behaviour"],ans:1},
+  {q:"The marketing _______ included decisions about product features, pricing, distribution, and advertising.",opts:["journey","mix","segment","equity"],ans:1},
+  {q:"The company launched a _______ programme offering points, exclusive discounts, and early product access.",opts:["brand awareness","customer retention","consumer behaviour","brand identity"],ans:1},
+  {q:"To reach millennials effectively, the team shifted most of its budget to _______ channels including Instagram and YouTube.",opts:["above the line","below the line","digital","integrated"],ans:2},
+  {q:"The head of strategy described the complete sequence of customer interactions as the _______, from first contact to post-purchase advocacy.",opts:["marketing mix","brand equity","customer journey","market segmentation"],ans:2},
+  {q:"The brand's distinctive visual elements &mdash; including its signature teal colour and bold typography &mdash; form a strong _______ that customers recognise immediately.",opts:["brand identity","positioning statement","content marketing","target audience"],ans:0},
+  {q:"The campaign used TV commercials, outdoor billboards, and national radio &mdash; a classic _______ approach to reach the widest possible audience.",opts:["below the line","content marketing","above the line","digital marketing"],ans:2}
+]},
+v2gaps:[
+  {sent:"The brand needed a clear _______ strategy to define how it wanted to be perceived relative to its premium competitors.",ans:"positioning"},
+  {sent:"Effective market _______ allows companies to identify the most profitable groups of customers to target.",ans:"segmentation"},
+  {sent:"Customer _______ is easier to maintain than acquiring new customers &mdash; it costs far less and generates more stable revenue.",ans:"loyalty"},
+  {sent:"The campaign's primary objective was to increase brand _______ among consumers aged 18 to 30 who had never heard of the product.",ans:"awareness"},
+  {sent:"The company's biggest challenge was customer _______ &mdash; too many buyers were purchasing once and never returning.",ans:"retention"},
+  {sent:"The product's _______ was its 72-hour battery life &mdash; twice as long as any competitor on the market.",ans:"USP"},
+  {sent:"The team shifted half its budget from traditional advertising to _______ channels, focusing on Instagram, search, and email.",ans:"digital"},
+  {sent:"Mapping the customer _______ revealed that most buyers lost interest during the consideration phase, before ever reaching the purchase stage.",ans:"journey"},
+  {sent:"When planning a campaign, marketers must consider all elements of the marketing _______, not just the promotional message.",ans:"mix"},
+  {sent:"Building brand _______ takes years of consistent quality and communication, but can be destroyed very quickly by a single crisis.",ans:"equity"}
+],
+v3tf:[
+  {stmt:"The marketing mix traditionally consists of five Ps: Product, Price, Place, Promotion, and People.",ans:false},
+  {stmt:"Brand equity refers to the added value a brand brings to a product beyond its functional features.",ans:true},
+  {stmt:"Market segmentation is the process of combining different markets into one large, undifferentiated group.",ans:false},
+  {stmt:"A USP (Unique Selling Proposition) is the feature or benefit that distinguishes a product from its competitors.",ans:true},
+  {stmt:"Above the line (ATL) advertising targets specific, well-defined audience segments using direct communication.",ans:false},
+  {stmt:"Content marketing focuses on creating and sharing valuable content to attract and engage a defined target audience.",ans:true},
+  {stmt:"Brand loyalty means that customers frequently switch between different brands based on price and availability.",ans:false},
+  {stmt:"The customer journey begins at the moment of purchase and ends when the product is used.",ans:false},
+  {stmt:"Psychographic segmentation divides a market based on lifestyle, values, and attitudes.",ans:true},
+  {stmt:"B2B marketing refers to marketing activities directed at selling products or services to other businesses.",ans:true}
+],
+g1:{questions:[
+  {q:"The customers _______ spend more than £200 per month receive priority service and exclusive offers.",opts:["who","which","whose","whom"],ans:0},
+  {q:"Our new product range, _______ launched last spring, has already exceeded its first-year sales target.",opts:["that","which","who","what"],ans:1},
+  {q:"The agency _______ won the creative pitch had a very innovative approach to social media.",opts:["which","whose","who","what"],ans:0},
+  {q:"Apple, _______ brand identity is one of the most recognised in the world, invests billions in marketing each year.",opts:["which","that","whose","who"],ans:2},
+  {q:"The focus group revealed that consumers _______ buy premium products expect consistent quality across every touchpoint.",opts:["which","whose","who","what"],ans:2},
+  {q:"The campaign _______ we launched last quarter generated 40% more leads than the previous year.",opts:["who","whose","which","what"],ans:2},
+  {q:"The below-the-line strategy, _______ included influencer partnerships and geo-targeted ads, proved highly cost-effective.",opts:["that","what","which","whose"],ans:2},
+  {q:"The segment _______ is growing fastest is urban millennials with a household income above £40,000.",opts:["whose","what","who","that"],ans:3},
+  {q:"The marketing director, _______ previous campaign won three industry awards, has been asked to lead the relaunch.",opts:["which","that","whose","who"],ans:2},
+  {q:"The positioning statement _______ the team agreed on clearly differentiated the brand from all major competitors.",opts:["who","whose","what","that"],ans:3}
+]},
+g2:{questions:[
+  {q:"The brand was redesigned _______ appeal to a younger demographic without alienating existing customers.",opts:["so that to","in order to","so as that","for to"],ans:1},
+  {q:"They reduced the price _______ more price-sensitive customers could afford to try the product.",opts:["in order to","so that","so as to","for"],ans:1},
+  {q:"The campaign was _______ successful _______ the budget was doubled for the following quarter.",opts:["so / that","such / that","too / to","enough / that"],ans:0},
+  {q:"It was _______ powerful a campaign _______ it won the Grand Prix at Cannes Lions.",opts:["so / that","such / that","enough / to","too / to"],ans:0},
+  {q:"The team conducted extensive research _______ better understand the target audience's motivations.",opts:["so that","in order to","such that","so as that"],ans:1},
+  {q:"The product was reformulated _______ the health-conscious segment would find it more appealing.",opts:["in order to","so as to","so that","for"],ans:2},
+  {q:"It generated _______ strong word-of-mouth _______ the company cut its paid advertising budget by half.",opts:["so / that","such / that","too / to","enough / that"],ans:1},
+  {q:"The content was made freely available online _______ build trust and drive organic traffic to the website.",opts:["so that","such that","to","in order that"],ans:2},
+  {q:"The packaging was redesigned _______ it would stand out more clearly on a crowded supermarket shelf.",opts:["in order to","so as to","so that","in order that"],ans:2},
+  {q:"The brand was _______ well established in Europe _______ it could expand into North America with relatively low risk.",opts:["so / that","such / that","too / to","enough / that"],ans:0}
+]},
+g3:{questions:[
+  {q:"Before entering a new market, we _______ always conduct thorough market research to understand local consumer preferences.",opts:["would","must","might","can"],ans:1},
+  {q:"A loyalty programme _______ be a very effective way to improve customer retention and increase lifetime value.",opts:["must","could","need to","should"],ans:1},
+  {q:"The brand _______ consider repositioning if it wants to attract a younger target segment.",opts:["can","might","must","would"],ans:1},
+  {q:"We _______ maintain brand consistency across all channels &mdash; any inconsistency damages consumer trust.",opts:["could","might","must","would"],ans:2},
+  {q:"We _______ launch the new product line in Q3 if the market research results are positive.",opts:["must","should","could","need to"],ans:2},
+  {q:"Digital channels _______ reach our target demographic far more cost-effectively than traditional above-the-line advertising.",opts:["must","need to","can","should"],ans:2},
+  {q:"The team _______ define the brand's positioning statement before briefing the creative agency.",opts:["could","might","should","would"],ans:2},
+  {q:"This pricing strategy _______ alienate budget-conscious consumers, so we need to test it with a focus group first.",opts:["must","should","might","need to"],ans:2},
+  {q:"A celebrity endorsement _______ significantly increase brand awareness, but the cost would need to be justified by ROI.",opts:["must","would","need to","should"],ans:1},
+  {q:"The campaign _______ be adapted for different markets &mdash; a message that works in the UK may not resonate in Brazil.",opts:["might","would","could","must"],ans:3}
+]},
+listening:[
+{
+  emoji:"📣",
+  title:"Activity 1: What Is Marketing? A Beginner's Overview",
+  sub:"Helen Marsh, Marketing Lecturer — University guest lecture introduction",
+  level:"B1",type:"Multiple Choice",focus:"Listening for main ideas",
+  transcript:`Good morning everyone, and welcome. My name is Helen Marsh, and I lecture in marketing at this university. Today I am going to give you a broad introduction to what marketing actually is, because I find that many people come to this subject with a misconception. They think marketing means advertising. Or perhaps they think it means selling. But marketing is actually much bigger than either of those things.
+
+Let me start with a simple definition. Marketing is the process of understanding what customers need and want, and then creating, communicating, and delivering value that satisfies those needs profitably. Notice that advertising is only one small part of that process, specifically the communication part. Marketing also involves deciding what product to create, what price to charge, how to distribute it, and how to position it in the minds of consumers.
+
+The most famous framework for organising these decisions is the four Ps: Product, Price, Place, and Promotion. These four elements work together as a system. You cannot set your price without knowing your product. You cannot plan your promotion without knowing your target audience. And you cannot choose your distribution channels without understanding how your customers prefer to shop.
+
+One thing I always emphasise to my students is that marketing starts with the customer, not with the product. The most common marketing mistake I see companies make is to develop a product first and then ask: how do we sell this? The right approach is to ask first: who is our customer? What problem do they have? And then develop a solution that addresses that problem better than anything else available.
+
+This customer-first approach is sometimes called a market orientation, and research consistently shows that companies with a strong market orientation outperform those that are more internally focused. So whether you work in a large corporation or a small business, the ability to understand your customer is the single most valuable marketing skill you can develop.`,
+  questions:[
+    {q:"What misconception does Helen say many people have about marketing?",opts:["That it is not important","That it is only about advertising or selling","That it is too complicated to learn","That it only applies to large companies"],ans:1},
+    {q:"How does Helen define marketing?",opts:["Creating and running advertising campaigns","Developing new products for existing markets","Understanding customer needs and creating value that satisfies those needs profitably","Managing a company's social media presence"],ans:2},
+    {q:"According to Helen, what is advertising specifically?",opts:["The most important part of marketing","The pricing element of the marketing mix","Only the communication part of the marketing process","The core of all marketing decisions"],ans:2},
+    {q:"What is the most famous framework Helen mentions?",opts:["The customer journey","The seven Ps","The four Ps","Brand equity theory"],ans:2},
+    {q:"What does Helen say the four Ps work as?",opts:["Four separate independent tools","A system where the elements work together","A sequential process from product to promotion","A theoretical model rarely used in practice"],ans:1},
+    {q:"What marketing mistake does Helen say companies commonly make?",opts:["Spending too much on advertising","Setting prices too high","Developing a product first and then asking how to sell it","Targeting too broad an audience"],ans:2},
+    {q:"What is the 'right approach', according to Helen?",opts:["Developing the best possible product regardless of cost","Starting by asking who the customer is and what problem they have","Running market research only after launch","Copying the strategy of the most successful competitor"],ans:1},
+    {q:"What does Helen say research consistently shows about companies with a strong market orientation?",opts:["They have higher advertising costs","They outperform more internally focused companies","They grow more slowly but more sustainably","They are better at product development"],ans:1}
+  ]
+},
+{
+  emoji:"🎯",
+  title:"Activity 2: Understanding Brand Positioning",
+  sub:"Marcus Webb, Brand Strategist — Agency client presentation extract",
+  level:"B1",type:"Multiple Choice",focus:"Listening for specific information",
+  transcript:`Thank you for having me. I want to spend some time today talking about brand positioning, because it is one of the most misunderstood concepts in marketing, and also one of the most important.
+
+Let me start with a question. When I say the word 'Volvo', what do you think of? Safety, right? And when I say 'Apple'? Innovation. Design. Premium quality. These brands have done something remarkable: they have claimed a specific position in your mind, and they have held it consistently for decades. That is what great brand positioning looks like.
+
+Positioning is essentially the answer to the question: why should a customer choose us over everyone else? It is not just about what you sell. It is about what you stand for, and who you stand for it with. A good positioning strategy defines your target customer very precisely, identifies the specific value you deliver to that customer, and explains why you deliver it better than any alternative.
+
+The tool that brand strategists use to capture this is called a positioning statement. It follows a fairly standard template: For [target customer], who [has a specific need or problem], [brand name] is [the category] that [delivers the key benefit], because [reason to believe]. Let me give you an example. For busy working parents who want to feed their family well but have very little time, OurBrand is the meal kit service that delivers nutritious, chef-developed recipes with all ingredients pre-measured, because we work with nutritionists and top chefs to create meals that are fast, healthy, and genuinely delicious.
+
+Notice that the statement is specific. It does not try to appeal to everyone. That is intentional. The biggest positioning mistake companies make is trying to be everything to everyone. When you try to appeal to everyone, you end up meaning nothing to anyone. The best brands choose their audience deliberately and then speak to them with precision and consistency. That is the foundation of all effective marketing communication.`,
+  questions:[
+    {q:"What does Marcus describe as 'one of the most misunderstood concepts in marketing'?",opts:["Market segmentation","Brand positioning","Consumer behaviour","The marketing mix"],ans:1},
+    {q:"What does Marcus say Volvo is associated with in consumers' minds?",opts:["Innovation","Luxury","Safety","Speed"],ans:2},
+    {q:"According to Marcus, positioning is about answering which question?",opts:["What is our product made of?","How much should we charge?","Why should a customer choose us over everyone else?","Which channels should we use to advertise?"],ans:2},
+    {q:"What does a good positioning strategy define, according to Marcus?",opts:["The company's internal structure and processes","The target customer, the value delivered, and why it is delivered better","The total marketing budget and how to allocate it","The pricing structure and promotional calendar"],ans:1},
+    {q:"What tool do brand strategists use to capture positioning?",opts:["A brand audit","A customer survey","A positioning statement","A competitive analysis"],ans:2},
+    {q:"In the positioning statement template, what does 'reason to believe' refer to?",opts:["The price of the product","The reason why the brand delivers its key benefit better than competitors","The reason why the customer needs the product","The category in which the brand competes"],ans:1},
+    {q:"What does Marcus call 'the biggest positioning mistake companies make'?",opts:["Copying a competitor's positioning","Changing positioning too frequently","Trying to be everything to everyone","Spending too little on brand communications"],ans:2},
+    {q:"What is described as 'the foundation of all effective marketing communication'?",opts:["High advertising budgets","Choosing an audience deliberately and speaking to them with precision and consistency","Having the most creative agency","Using all available media channels simultaneously"],ans:1}
+  ]
+},
+{
+  emoji:"📊",
+  title:"Activity 3: Consumer Behaviour and the Buying Decision",
+  sub:"Dr Priya Nair, Consumer Psychology Researcher — Conference presentation extract",
+  level:"B2",type:"Multiple Choice",focus:"Understanding professional explanations",
+  transcript:`Good afternoon. I am Priya Nair, and my research focuses on how people actually make purchasing decisions, as opposed to how economists assumed they did for most of the twentieth century.
+
+The traditional economic model of the consumer is what we call the rational actor. This model assumes that buyers weigh the costs and benefits of all available options, process this information logically, and select the option that maximises their utility. It is an elegant model. It is also, as decades of behavioural research have demonstrated, largely wrong.
+
+The reality is that most purchase decisions involve very little conscious deliberation. Research suggests that up to 95% of purchasing decisions are made subconsciously, driven by emotion, habit, and cognitive shortcuts that psychologists call heuristics. This does not mean that people are irrational. It means that their brains have evolved to make efficient decisions using limited information, and that the triggers for those decisions are often non-rational.
+
+So what does this mean for marketers? A few things. First, emotional resonance matters enormously. Advertising that makes people feel something &mdash; a sense of belonging, aspiration, nostalgia, or even mild anxiety &mdash; is far more likely to influence purchasing behaviour than advertising that presents rational arguments or lists product features.
+
+Second, the concept of social proof is extremely powerful. People look to others to guide their behaviour, particularly in situations of uncertainty. This is why reviews, ratings, testimonials, and influencer endorsements are so effective. They reduce the perceived risk of a purchase by signalling that other people have already made this choice and found it satisfactory.
+
+Third, scarcity and urgency are highly effective triggers. When consumers believe a product is limited in availability or that an offer is time-limited, they are more likely to act quickly rather than delay the decision. Marketers have exploited this insight extensively, sometimes ethically and sometimes less so.
+
+The practical implication for anyone designing a marketing campaign is this: understand the emotional needs your product meets, not just the functional ones. Understand the social context in which your target customer makes decisions. And design your communications to speak to the subconscious as much as to the conscious mind.`,
+  questions:[
+    {q:"What does the 'rational actor' model assume about buyers?",opts:["They are primarily influenced by emotion","They rely on friends' recommendations","They weigh costs and benefits logically and select the best option","They make decisions based on habit and routine"],ans:2},
+    {q:"What percentage of purchasing decisions does research suggest are made subconsciously?",opts:["Up to 50%","Around 70%","Up to 95%","Exactly 80%"],ans:2},
+    {q:"What are the 'cognitive shortcuts' that psychologists refer to called?",opts:["Triggers","Heuristics","Biases","Archetypes"],ans:1},
+    {q:"What type of advertising does Dr Nair say is more likely to influence purchasing behaviour?",opts:["Advertising that lists product features clearly","Advertising that presents rational cost-benefit arguments","Advertising that makes people feel something — emotion-driven","Advertising that focuses on price comparison"],ans:2},
+    {q:"What is 'social proof' and why is it effective?",opts:["Proof that a brand is socially responsible; it improves brand image","The tendency to look to others for guidance; it reduces perceived purchase risk","A form of celebrity endorsement; it guarantees higher sales","Evidence of a product's environmental credentials; it appeals to ethical consumers"],ans:1},
+    {q:"Why does scarcity work as a marketing trigger?",opts:["It makes consumers feel they are getting a bargain","It reduces the price perception of the product","It signals that the product is of higher quality","It makes consumers more likely to act quickly rather than delay the decision"],ans:3},
+    {q:"Which of the following is described as 'sometimes ethical and sometimes less so'?",opts:["Influencer marketing","Emotional advertising","Using scarcity and urgency as triggers","Social proof techniques"],ans:2},
+    {q:"What is the core practical implication for marketers, according to Dr Nair?",opts:["Focus entirely on product quality and price","Understand emotional needs and social context, and speak to the subconscious","Invest in above-the-line advertising for maximum reach","Use data analytics to predict every purchasing decision"],ans:1}
+  ]
+},
+{
+  emoji:"🌐",
+  title:"Activity 4: The Digital Marketing Revolution",
+  sub:"James Okafor, Head of Digital Strategy — Industry panel discussion",
+  level:"B2",type:"Multiple Choice",focus:"Listening for detail and implication",
+  transcript:`Thank you. I have been working in digital marketing for about twelve years now, so I have had a front-row seat to what I think is genuinely the most significant transformation in the history of commercial communication.
+
+Let me put some context around this. In 2005, if you were a brand manager at a large consumer goods company, you had essentially three major channels: television, print, and outdoor. Your creative agency made one or two big campaigns a year. You measured success primarily through brand tracking surveys that told you, after a delay of several months, whether awareness had moved. It was a slow, expensive, and frankly rather imprecise business.
+
+Today, a brand can reach a specific target audience — defined by age, location, income, interests, browsing behaviour, and even life events — within hours. You can run fifty different versions of an ad simultaneously, get real-time performance data within twenty-four hours, and optimise your creative and targeting based on that data before most of your budget has even been spent. The level of precision and accountability that digital channels offer is simply without precedent in the history of advertising.
+
+But I want to push back slightly on the narrative that digital has made traditional marketing obsolete. There are still things that a well-executed television campaign or outdoor poster can do that digital simply cannot. Broad emotional resonance at scale, for example. There are moments — a product launch, a cultural event, a sponsorship — where you want to reach everyone simultaneously and create a shared cultural moment. Digital is not well-suited to that. The most sophisticated marketers I work with use digital and traditional channels together, in what we call an integrated marketing approach, where each channel does what it does best.
+
+The biggest challenge I see organisations face today is not a lack of data. It is the opposite: an overwhelming abundance of data and not enough clarity about what matters. Every click, impression, and conversion is tracked. But are you tracking the right things? Ultimately, marketing success is about building brands that people love and driving sales growth. If your data obsession is getting in the way of creativity and genuine consumer insight, you have lost sight of what marketing is fundamentally about.`,
+  questions:[
+    {q:"How long has James Okafor been working in digital marketing?",opts:["About five years","About eight years","About twelve years","About twenty years"],ans:2},
+    {q:"What were the three major advertising channels in 2005, according to James?",opts:["Radio, print, and social media","Television, print, and outdoor","Television, digital, and direct mail","Radio, television, and sponsorship"],ans:1},
+    {q:"How was marketing success primarily measured in 2005, according to James?",opts:["By direct sales figures","By website traffic data","Through brand tracking surveys, with a delay of several months","Through customer satisfaction scores"],ans:2},
+    {q:"What specific targeting options does James say digital advertising now allows?",opts:["Only age and gender targeting","Age, location, income, interests, browsing behaviour, and life events","Only demographic and geographic targeting","Location, income, and previous purchases only"],ans:1},
+    {q:"What does James say digital advertising uniquely offers that traditional advertising did not?",opts:["The ability to create emotional connections with consumers","Precision, real-time data, and accountability without precedent","Lower creative production costs","Access to a global audience at all times"],ans:1},
+    {q:"What does James say television campaigns can do that digital cannot do as well?",opts:["Target specific age groups","Measure return on investment accurately","Create broad emotional resonance at scale and shared cultural moments","Run multiple versions of the same ad simultaneously"],ans:2},
+    {q:"What does James describe as 'the biggest challenge organisations face today'?",opts:["A lack of skilled digital marketers","Not enough investment in data technology","An overwhelming abundance of data without clarity about what matters","The decline of traditional advertising channels"],ans:2},
+    {q:"What is the fundamental purpose of marketing, according to James's conclusion?",opts:["Maximising digital advertising return on investment","Tracking every possible metric and optimising accordingly","Building brands that people love and driving sales growth","Replacing traditional channels with digital equivalents"],ans:2}
+  ]
+}
+],
+cs1:{questions:[
+  {q:"What gap in the market did Oat&Go identify?",opts:["No ready-to-drink products existed in the UK","Existing products were either too sweet or too bland for busy urban professionals wanting nutritious, enjoyable breakfast drinks","The market lacked any oat-based products","There were no affordable breakfast options for commuters"],ans:1},
+  {q:"How did Oat&Go define its target audience?",opts:["Broadly as 'health-conscious UK adults'","Specifically as urban professionals aged 25-40, commuting daily, earning over £45,000, interested in sustainability","As all oat milk consumers across the UK","As gym-goers and athletes seeking nutritional supplements"],ans:1},
+  {q:"What was Oat&Go's USP, as summarised in its tagline?",opts:["'Oats the natural way'","'Fuel for champions'","'The breakfast that thinks ahead'","'Healthy taste, every morning'"],ans:2},
+  {q:"Why did Oat&Go adopt a premium pricing strategy at £3.50 per bottle?",opts:["Because production costs were very high","To limit sales to wealthy consumers only","To signal quality and allow stockage alongside premium brands","Because competitors were all priced higher"],ans:2},
+  {q:"What type of promotional strategy did Oat&Go primarily use?",opts:["Above the line: national TV and radio campaigns","Below the line: influencer partnerships, station sampling, and geo-targeted digital ads","A combination of television and social media","Mass market advertising through outdoor billboards"],ans:1},
+  {q:"What does 'geo-targeted digital advertising' mean in this context?",opts:["Advertising shown globally to all users","Advertising targeted to users within a 500-metre radius of stockists","Advertising that uses geographic imagery","Advertising on maps and navigation apps"],ans:1},
+  {q:"What brand awareness level did Oat&Go achieve among its target segment within 18 months?",opts:["12%","55%","34%","71%"],ans:2},
+  {q:"What does the case study demonstrate about the benefits of precise target audience definition?",opts:["It reduces the need for any promotional activity","It allows messaging that feels deeply relevant rather than broadly appealing to everyone","It guarantees higher sales than mass market approaches","It makes the product cheaper to produce"],ans:1},
+  {q:"What element of the marketing mix did Oat&Go's choice of Waitrose and independent cafes relate to?",opts:["Product","Promotion","Price","Place"],ans:3},
+  {q:"What can be inferred about Oat&Go's marketing approach from the case study?",opts:["Large budgets are always necessary for successful brand launches","A focused strategy targeting a precisely defined segment can outperform broad mass-market approaches","Above the line advertising is essential for achieving brand awareness","Premium pricing always limits a brand's growth potential"],ans:1}
+]},
+cs2:{questions:[
+  {q:"When was Reviva Skincare founded and through which channel was it originally sold?",opts:["2005, through department stores","1987, exclusively through pharmacies","1995, through supermarkets","2010, through online retailers"],ans:1},
+  {q:"What was the damaging consumer perception that research revealed about Reviva by 2019?",opts:["It was too expensive for most consumers","It was seen as my mother's skincare brand — effective but old-fashioned","It had no product differentiation from competitors","It was associated with low quality"],ans:1},
+  {q:"At what rate were Reviva's sales falling per year before the repositioning?",opts:["2%","5%","8%","15%"],ans:2},
+  {q:"What were the THREE core problems identified by the brand audit?",opts:["Poor product quality, high prices, and weak distribution","Unclear positioning between market segments, unappealing packaging, and zero digital presence","Low brand awareness, no USP, and poor customer service","Weak advertising, outdated products, and untrained sales staff"],ans:1},
+  {q:"What was Reviva's new positioning statement after the repositioning?",opts:["The affordable skincare brand for everyday use","Skincare for every skin type at every price point","Dermatologist-developed skincare for people who value results over packaging","Premium skincare, scientifically proven for all ages"],ans:2},
+  {q:"What type of consumer did the new positioning deliberately target?",opts:["Budget-conscious consumers looking for value","Consumers aged over 60 who trusted pharmaceutical brands","A sophisticated, evidence-driven consumer sceptical of marketing hype","Teenagers interested in beauty trends"],ans:2},
+  {q:"What was the content marketing programme built around?",opts:["Celebrity endorsements and lifestyle imagery","Transparency: dermatologists explaining the science behind each ingredient","Price promotions and limited-edition product launches","User-generated content from loyal customers"],ans:1},
+  {q:"By how much had Reviva's sales grown within two years of the repositioning?",opts:["12%","41%","25%","67%"],ans:1},
+  {q:"What did Reviva's repositioning achieve that is described as 'notoriously difficult'?",opts:["Launching in a completely new product category","Attracting new consumers without alienating the existing customer base","Reducing production costs while improving quality","Expanding internationally within two years"],ans:2},
+  {q:"What is the key lesson from the Reviva case study for brand managers?",opts:["Premium brands should never change their positioning","Deep consumer insight, a clear USP, and authentic communication can reverse a declining brand's fortunes","Packaging redesigns are the most effective way to attract new customers","Digital channels are the only effective tool for brand repositioning"],ans:1}
+]},
+fa:{questions:[
+  {q:"What does the marketing mix traditionally consist of?",opts:["People, Process, Price, Promotion","Product, Price, Place, Promotion","Product, Publicity, People, Promotion","Positioning, Price, Place, Promotion"],ans:1},
+  {q:"What is brand equity?",opts:["The financial cost of a brand's advertising budget","The number of products a brand sells annually","The value a brand adds to a product beyond its functional attributes","The market share held by a brand in its category"],ans:2},
+  {q:"Which segmentation variable divides a market based on lifestyle, values, and attitudes?",opts:["Demographic","Geographic","Behavioural","Psychographic"],ans:3},
+  {q:"A defining relative clause is used to:",opts:["Add extra information that could be removed without changing the meaning","Identify which specific person or thing is being referred to, and cannot be removed","Describe a general characteristic of all members of a group","Express a purpose or result within a sentence"],ans:1},
+  {q:"Which sentence uses 'so that' correctly to express purpose?",opts:["The price was reduced so that attract new customers.","The product was redesigned so that customers could use it more easily.","It was so successful that to win an award.","We launched early so as that competitors could not copy us."],ans:1},
+  {q:"Which modal verb best expresses a strong recommendation in a professional marketing context?",opts:["might","could","would","should"],ans:3},
+  {q:"What is a USP?",opts:["A universal standard for pricing products competitively","The distinctive feature or benefit that makes a product different from competitors","A type of market segmentation based on user behaviour","An abbreviation for Unique Social Platform"],ans:1},
+  {q:"What is 'social proof' in consumer psychology?",opts:["Evidence that a brand is socially responsible","The tendency of people to look to others' behaviour and choices to guide their own decisions","A form of public relations used to manage brand reputation","A marketing metric measuring social media engagement"],ans:1},
+  {q:"Which of the following is an example of 'above the line' (ATL) advertising?",opts:["A targeted email campaign to existing customers","An in-store product demonstration","A national television commercial","A geo-targeted social media ad"],ans:2},
+  {q:"What does 'brand positioning' refer to?",opts:["The physical placement of products on retail shelves","The process of defining how a brand wants to be perceived relative to competitors","The budgeting process for a brand's marketing activities","The design of a brand's logo and visual identity"],ans:1},
+  {q:"In the sentence 'Our premium range, _______ launched last year, has exceeded targets', which relative pronoun is correct?",opts:["that","who","which","whose"],ans:2},
+  {q:"What does 'customer retention' mean?",opts:["Attracting new customers to a brand for the first time","Keeping existing customers engaged and preventing them switching to competitors","Measuring how many customers return a product","Analysing why customers leave a brand"],ans:1},
+  {q:"Which structure correctly expresses a result of degree?",opts:["The campaign was so successful that it won three awards.","The campaign was such successful that it won three awards.","The campaign was enough successful to win three awards.","The campaign was too successful that it won awards."],ans:0},
+  {q:"What does the customer journey describe?",opts:["The steps in a product's manufacturing process","The complete sequence of interactions a customer has with a brand, from awareness to advocacy","The route a product takes from factory to retail store","The internal processes of a marketing department"],ans:1},
+  {q:"Which modal verb expresses a hypothetical outcome or conditional result?",opts:["must","can","should","would"],ans:3},
+  {q:"What is 'content marketing'?",opts:["Paying for placement of advertisements in magazines and newspapers","Creating and distributing valuable, relevant content to attract and retain a defined audience","Managing a company's internal communications","Designing product packaging with engaging visual content"],ans:1},
+  {q:"In the Oat&Go case study, what did geo-targeted advertising mean?",opts:["Advertising shown to users based on their age and income","Advertising targeted to users within a specific radius of stockists","Advertising that used geographic images and maps","Advertising shown internationally across different countries"],ans:1},
+  {q:"'The team conducted research _______ better understand the target audience.' Which word correctly completes this sentence?",opts:["so that","such that","in order to","so as that"],ans:2},
+  {q:"In the Reviva case study, what was identified as the brand's key problem in terms of the marketing mix?",opts:["Poor product quality that needed to be improved","An unclear positioning between different market segments","A price that was too high for its target consumers","Weak distribution through the wrong retail channels"],ans:1},
+  {q:"What does market segmentation allow companies to do, according to the course content?",opts:["Reduce their total product range","Eliminate competition in their category","Concentrate marketing resources on the most profitable and appropriate consumer groups","Standardise their messaging for all consumers globally"],ans:2}
+]}
+};
+
+// ═══════════════════════════════════════
+// RENDER FUNCTIONS
+// ═══════════════════════════════════════
+
+function renderMCQ(containerId, questions, prefix){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = questions.map((item,i)=>`
+    <div class="mcq-item" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((o,j)=>`
+          <div class="mcq-option" onclick="selectOpt('${prefix}',${i},${j})" id="${prefix}-q${i}-o${j}">
+            <span class="opt-letter">${['A','B','C','D'][j]}</span>${o}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function selectOpt(prefix,qi,oi){
+  const item=DATA[prefix].questions[qi];
+  for(let j=0;j<item.opts.length;j++){
+    const el=document.getElementById(`${prefix}-q${qi}-o${j}`);
+    if(el) el.classList.remove('selected');
+  }
+  const el=document.getElementById(`${prefix}-q${qi}-o${oi}`);
+  if(el) el.classList.add('selected');
+}
+
+function checkMCQ(prefix){
+  const qs=DATA[prefix].questions;
+  let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#${prefix}-q${i} .mcq-option`);
+    let chosen=-1;
+    opts.forEach((o,j)=>{if(o.classList.contains('selected')) chosen=j;});
+    opts.forEach((o,j)=>{
+      o.classList.remove('selected','correct','wrong');
+      if(j===item.ans) o.classList.add('correct');
+      else if(j===chosen&&chosen!==item.ans) o.classList.add('wrong');
+    });
+    if(chosen===item.ans) score++;
+  });
+  const fb=document.getElementById(`${prefix}-feedback`);
+  if(fb){
+    fb.className='feedback show '+(score>=Math.ceil(total*0.7)?'good':'bad');
+    fb.textContent=score>=Math.ceil(total*0.7)
+      ?`✅ Well done! You scored ${score}/${total}.`
+      :`❌ You scored ${score}/${total}. Review the relevant sections and try again.`;
+  }
+  const sc=document.getElementById(`${prefix}-score`);
+  if(sc){
+    sc.className='score-display show';
+    sc.innerHTML=`<div><div class="score-label">Your Score</div><div class="score-val">${score}/${total}</div></div><div style="font-size:13px;color:var(--text-light)">${Math.round(score/total*100)}%</div>`;
+  }
+}
+
+// Gap fill
+function renderGaps(){
+  const c=document.getElementById('v2-gaps');
+  if(!c) return;
+  c.innerHTML=DATA.v2gaps.map((g,i)=>`
+    <div class="gap-sentence">${i+1}. ${g.sent.replace('_______',`<input class="gap-input" id="gap-${i}" placeholder="?" autocomplete="off">`)}</div>
+  `).join('');
+}
+
+function checkGaps(){
+  let score=0;
+  DATA.v2gaps.forEach((g,i)=>{
+    const el=document.getElementById(`gap-${i}`);
+    if(!el) return;
+    const val=el.value.trim().toLowerCase();
+    if(val===g.ans.toLowerCase()){
+      score++;
+      el.style.borderBottomColor='var(--success)';
+      el.style.color='var(--success)';
+    } else {
+      el.style.borderBottomColor='var(--error)';
+      el.style.color='var(--error)';
+      el.value=g.ans;
+    }
+  });
+  const fb=document.getElementById('v2-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7
+    ?`✅ Great work! ${score}/10 correct.`
+    :`❌ ${score}/10 correct. Correct answers shown in red. Review the Word Bank.`;
+}
+
+// True/False
+const tfAnswers={};
+function renderTF(){
+  const c=document.getElementById('v3-tf');
+  if(!c) return;
+  c.innerHTML=DATA.v3tf.map((item,i)=>`
+    <div class="tf-item" id="tf-${i}">
+      <div class="tf-stmt">${i+1}. ${item.stmt}</div>
+      <div class="tf-btns">
+        <button class="tf-btn" onclick="selectTF(${i},true,this)">True</button>
+        <button class="tf-btn" onclick="selectTF(${i},false,this)">False</button>
+      </div>
+    </div>`).join('');
+}
+
+function selectTF(i,val,btn){
+  tfAnswers[i]=val;
+  const row=document.getElementById(`tf-${i}`);
+  row.querySelectorAll('.tf-btn').forEach(b=>{
+    b.className='tf-btn';
+  });
+  btn.className='tf-btn '+(val?'sel-t':'sel-f');
+}
+
+function checkTF(){
+  let score=0;
+  DATA.v3tf.forEach((item,i)=>{
+    if(tfAnswers[i]===undefined) return;
+    const row=document.getElementById(`tf-${i}`);
+    const btns=row.querySelectorAll('.tf-btn');
+    btns.forEach(b=>{
+      const isTrue=b.textContent.trim()==='True';
+      b.className='tf-btn';
+      if(isTrue===item.ans){
+        b.style.background=item.ans?'#dcfce7':'#fee2e2';
+        b.style.borderColor=item.ans?'var(--success)':'var(--error)';
+        b.style.color=item.ans?'var(--success)':'var(--error)';
+        b.textContent=(isTrue?'True':'False')+' ✓';
+      }
+    });
+    if(tfAnswers[i]===item.ans) score++;
+  });
+  const fb=document.getElementById('v3-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`✅ Excellent! ${score}/10 correct.`:`❌ ${score}/10 correct. Review the vocabulary definitions.`;
+}
+
+// ═══════════════════════════════════════
+// LISTENING
+// ═══════════════════════════════════════
+
+function renderListening(){
+  const c=document.getElementById('listening-cards');
+  if(!c) return;
+  c.innerHTML=DATA.listening.map((act,ai)=>`
+    <div class="audio-card">
+      <div class="audio-header">
+        <div class="audio-emoji">${act.emoji}</div>
+        <div>
+          <div class="audio-title">${act.title}</div>
+          <div class="audio-sub">${act.sub}</div>
+          <div class="audio-tags">
+            <span class="audio-tag tag-level">Level: ${act.level}</span>
+            <span class="audio-tag tag-type">${act.type}</span>
+            <span class="audio-tag tag-focus">Focus: ${act.focus}</span>
+          </div>
+        </div>
+      </div>
+      <div class="player-box">
+        <div class="player-row">
+          <button class="play-btn" id="play-${ai}" onclick="handlePlay(${ai})">&#9654;</button>
+          <div class="player-info">
+            <div class="player-title-sm">${act.title}</div>
+            <div class="player-sub-sm">${act.sub}</div>
+          </div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="player-progress"><div class="player-progress-fill" id="pf-${ai}"></div></div>
+        <div class="speed-row">
+          <span class="speed-label">Speed:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7&times;</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2&times;</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">&#8617; Replay</button>
+        </div>
+        <div class="tts-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">&#9660; Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans-${ai}">
+        ${act.transcript.split('\n\n').map(p=>`<p>${p.trim()}</p>`).join('')}
+      </div>
+      <div class="listen-instruction">📋 Listen to the audio, then answer the questions by selecting the best answer (A, B, C, or D).</div>
+      <div id="la${ai}-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('la${ai}')">Check Answers</button>
+      <div id="la${ai}-feedback" class="feedback"></div>
+      <div id="la${ai}-score" class="score-display"></div>
+    </div>
+  `).join('');
+  DATA.listening.forEach((act,ai)=>{
+    DATA[`la${ai}`]={questions:act.questions};
+    renderMCQ(`la${ai}-mcqs`,act.questions,`la${ai}`);
+  });
+}
+
+const audioState={};
+function handlePlay(ai){
+  const act=DATA.listening[ai];
+  if(!audioState[ai]) audioState[ai]={playing:false,speed:0.85};
+  const st=audioState[ai];
+  const btn=document.getElementById(`play-${ai}`);
+  if(st.playing){
+    window.speechSynthesis.cancel();st.playing=false;btn.innerHTML='&#9654;';
+    if(st.timer) clearInterval(st.timer);return;
+  }
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.lang='en-GB';utt.rate=st.speed;utt.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const chosen=voices.find(v=>v.name==='Google UK English Female')
+    ||voices.find(v=>v.lang==='en-GB'&&v.name.toLowerCase().includes('female'))
+    ||voices.find(v=>v.lang==='en-GB');
+  if(chosen) utt.voice=chosen;
+  const words=act.transcript.split(/\s+/).length;
+  const dur=Math.round(words/(st.speed*2.6));
+  const fmt=(s)=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  document.getElementById(`time-${ai}`).textContent=`0:00 / ${fmt(dur)}`;
+  let elapsed=0;
+  st.timer=setInterval(()=>{
+    if(!audioState[ai].playing){clearInterval(st.timer);return;}
+    elapsed++;
+    document.getElementById(`pf-${ai}`).style.width=Math.min(elapsed/dur*100,100)+'%';
+    document.getElementById(`time-${ai}`).textContent=`${fmt(elapsed)} / ${fmt(dur)}`;
+  },1000);
+  utt.onend=()=>{
+    st.playing=false;btn.innerHTML='&#9654;';clearInterval(st.timer);
+    document.getElementById(`pf-${ai}`).style.width='100%';
+  };
+  window.speechSynthesis.speak(utt);
+  st.playing=true;btn.innerHTML='&#9646;&#9646;';
+}
+
+function setSpeed(ai,spd,btn){
+  if(!audioState[ai]) audioState[ai]={playing:false,speed:spd};
+  audioState[ai].speed=spd;
+  btn.closest('.audio-card').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(audioState[ai].playing){
+    window.speechSynthesis.cancel();
+    audioState[ai].playing=false;
+    document.getElementById(`play-${ai}`).innerHTML='&#9654;';
+    if(audioState[ai].timer) clearInterval(audioState[ai].timer);
+    setTimeout(()=>handlePlay(ai),80);
+  }
+}
+
+function replayAudio(ai){
+  if(audioState[ai]){audioState[ai].playing=false;if(audioState[ai].timer) clearInterval(audioState[ai].timer);}
+  window.speechSynthesis.cancel();
+  const pf=document.getElementById(`pf-${ai}`);if(pf) pf.style.width='0%';
+  document.getElementById(`play-${ai}`).innerHTML='&#9654;';
+  setTimeout(()=>handlePlay(ai),80);
+}
+
+function toggleTranscript(ai){document.getElementById(`trans-${ai}`).classList.toggle('open');}
+
+// ═══════════════════════════════════════
+// WRITING
+// ═══════════════════════════════════════
+
+function updateWordCount(id,max){
+  const ta=document.getElementById(`${id}-text`);
+  const wc=document.getElementById(`${id}-wc`);
+  if(!ta||!wc) return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  wc.textContent=`${words} / ${max} words`;
+  wc.style.color=words>max?'var(--error)':'var(--text-light)';
+}
+
+function submitWriting(id){
+  const ta=document.getElementById(`${id}-text`);
+  if(!ta||ta.value.trim().length<30){alert('Please write your response before submitting.');return;}
+  const s=document.getElementById(`${id}-success`);
+  s.style.display='block';s.scrollIntoView({behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════
+// ASSESSMENT
+// ═══════════════════════════════════════
+
+let attemptCount=0;
+function renderAssessment(){renderMCQ('fa-mcqs',DATA.fa.questions,'fa');}
+
+function submitAssessment(){
+  attemptCount++;
+  const qs=DATA.fa.questions;
+  let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#fa-q${i} .mcq-option`);
+    let chosen=-1;
+    opts.forEach((o,j)=>{if(o.classList.contains('selected')) chosen=j;});
+    if(chosen===item.ans) score++;
+    opts.forEach((o,j)=>{
+      o.classList.remove('selected','correct','wrong');
+      if(j===item.ans) o.classList.add('correct');
+      else if(j===chosen&&chosen!==item.ans) o.classList.add('wrong');
+    });
+  });
+  const pct=Math.round(score/total*100);const pass=pct>=70;
+  const res=document.getElementById('assessment-result');
+  res.style.display='block';res.scrollIntoView({behavior:'smooth'});
+  document.getElementById('result-score-text').className='result-score '+(pass?'pass':'fail');
+  document.getElementById('result-score-text').textContent=`${pct}% — ${score}/${total}`;
+  document.getElementById('result-msg').textContent=pass
+    ?'🎉 Congratulations! You have passed Module 1. Excellent work on Marketing Fundamentals and Key Vocabulary.'
+    :'❌ You did not reach the 70% pass mark. Please review the module content and try again.';
+  const wrap=document.getElementById('retake-wrap');
+  if(!pass&&attemptCount<2){
+    wrap.innerHTML=`<button class="retake-btn" onclick="retakeAssessment()">Retake Assessment (Attempt ${attemptCount+1} of 2)</button>`;
+  } else if(attemptCount>=2&&!pass){
+    wrap.innerHTML=`<p style="color:var(--error);font-size:14px;margin-top:12px">You have used both attempts. Please review the module content.</p>`;
+    document.getElementById('assessment-form').style.display='none';
+  }
+  document.getElementById('attempt-badge').textContent=`Attempt ${attemptCount} of 2`;
+}
+
+function retakeAssessment(){
+  document.getElementById('assessment-result').style.display='none';
+  document.querySelectorAll('#fa-mcqs .mcq-option').forEach(o=>o.classList.remove('selected','correct','wrong'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════
+// NAVIGATION & PROGRESS
+// ═══════════════════════════════════════
+
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(id);if(sec) sec.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if((n.getAttribute('onclick')||'').includes(`'${id}'`)) n.classList.add('active');
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+  trackProgress(id);
+}
+
+function trackProgress(id){
+  let v=JSON.parse(sessionStorage.getItem('mkt1v')||'[]');
+  if(!v.includes(id)){v.push(id);sessionStorage.setItem('mkt1v',JSON.stringify(v));}
+  const pct=Math.round(v.length/11*100);
+  const pf=document.getElementById('progress-fill');
+  const pp=document.getElementById('progress-pct');
+  if(pf) pf.style.width=pct+'%';if(pp) pp.textContent=pct+'%';
+}
+
+window.addEventListener('load',()=>{
+  if(window.speechSynthesis){
+    window.speechSynthesis.getVoices();
+    if(window.speechSynthesis.onvoiceschanged!==undefined)
+      window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
+  }
+  renderMCQ('r1-mcqs',DATA.r1.questions,'r1');
+  renderMCQ('r2-mcqs',DATA.r2.questions,'r2');
+  renderMCQ('v1-mcqs',DATA.v1.questions,'v1');
+  renderGaps();
+  renderTF();
+  renderMCQ('g1-mcqs',DATA.g1.questions,'g1');
+  renderMCQ('g2-mcqs',DATA.g2.questions,'g2');
+  renderMCQ('g3-mcqs',DATA.g3.questions,'g3');
+  renderListening();
+  renderMCQ('cs1-mcqs',DATA.cs1.questions,'cs1');
+  renderMCQ('cs2-mcqs',DATA.cs2.questions,'cs2');
+  renderAssessment();
+  trackProgress('overview');
+});
+</script>
+</body>
+</html>

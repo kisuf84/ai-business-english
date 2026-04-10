@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 11: Presenting a Marketing Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1c2d4a;--navy-dark:#0f1d35;--navy-mid:#243a5e;--navy-light:#2e4875;--navy-glow:#3a5a8a;
+  --gold:#f0a830;--gold-light:#f5c55a;--gold-pale:#fef3d0;--gold-dim:rgba(240,168,48,.18);
+  --cream:#faf8f4;--cream-dark:#efe9de;
+  --white:#fff;--text-dark:#0f1d35;--text-mid:#2c3e5a;--text-light:#5a7090;
+  --success:#1e7a4a;--error:#c0392b;
+  --sidebar-w:260px;--radius:12px;
+  --shadow-card:0 4px 20px rgba(15,29,53,.10);
+  --shadow-hover:0 8px 32px rgba(15,29,53,.16);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;
+  background:linear-gradient(175deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-mid) 100%);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto;
+  box-shadow:4px 0 24px rgba(15,29,53,.35);
+}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--navy-light);border-radius:2px}
+.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,.07)}
+.brand-title{font-family:'Fraunces',serif;font-size:13px;font-weight:600;color:var(--gold);line-height:1.3;letter-spacing:.01em}
+.brand-sub{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-top:4px}
+.level-badge{display:inline-block;background:var(--gold);color:var(--navy-dark);font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:20px;margin-top:11px}
+.sidebar-module-label{padding:20px 20px 8px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:600}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;
+  color:rgba(255,255,255,.6);font-size:13px;font-weight:400;transition:all .2s;
+  border-left:3px solid transparent;position:relative;
+}
+.nav-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.95)}
+.nav-item.active{
+  background:linear-gradient(90deg,rgba(240,168,48,.16),rgba(240,168,48,.04));
+  color:#fff;border-left-color:var(--gold);
+}
+.nav-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.nav-label{flex:1}
+.nav-badge{background:var(--gold);color:var(--navy-dark);font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;flex-shrink:0}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.section{display:none}.section.active{display:block}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 50%,var(--navy-mid) 100%);
+  padding:32px 52px 40px;position:relative;overflow:hidden;min-height:290px;
+}
+.hero::before{
+  content:'';position:absolute;right:-40px;top:-30px;width:460px;height:460px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='10' y='320' font-size='280' opacity='.035' fill='%23fff' font-family='serif'%3EM11%3C/text%3E%3C/svg%3E") center/contain no-repeat;
+}
+.hero::after{
+  content:'';position:absolute;left:-80px;bottom:-80px;
+  width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(240,168,48,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.section-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+  padding:6px 14px;border-radius:20px;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:22px;
+  font-family:'DM Mono',monospace;backdrop-filter:blur(4px);
+}
+.hero-title{font-family:'Fraunces',serif;font-size:54px;font-weight:700;line-height:1.05;color:#fff;margin-bottom:16px}
+.hero-title span{color:var(--gold)}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.62);max-width:620px;line-height:1.68;margin-bottom:28px}
+.stats-row{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:24px}
+.stat-num{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.stat-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38)}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.48);margin-bottom:7px}
+.progress-track{height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;transition:width .7s ease;width:0%}
+
+/* ── CONTENT ── */
+.content-area{background:var(--cream);padding:40px 52px}
+.card{
+  background:#fff;border-radius:var(--radius);padding:32px;margin-bottom:24px;
+  border:1px solid rgba(28,45,74,.07);box-shadow:var(--shadow-card);
+  transition:box-shadow .2s;
+}
+.card:hover{box-shadow:var(--shadow-hover)}
+.card-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--text-dark);margin-bottom:6px}
+.card-title-bar{width:40px;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;margin-bottom:18px}
+.prose{font-size:15px;line-height:1.75;color:var(--text-mid)}
+.prose strong{color:var(--text-dark);font-weight:600}
+.prose p+p{margin-top:12px}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.outcome-item{display:flex;align-items:flex-start;gap:10px;padding:13px 15px;background:var(--cream);border-radius:9px;border:1px solid var(--cream-dark)}
+.outcome-icon{color:var(--gold);flex-shrink:0;margin-top:1px}
+.outcome-text{font-size:13.5px;color:var(--text-mid);line-height:1.5}
+
+/* ── SPEAKING ── */
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.q-card{
+  background:#fff;border:1px solid rgba(28,45,74,.09);border-radius:9px;
+  padding:16px;display:flex;gap:12px;align-items:flex-start;transition:all .2s;
+}
+.q-card:hover{box-shadow:var(--shadow-hover);border-color:rgba(240,168,48,.3);transform:translateY(-1px)}
+.q-num{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--gold-light);flex-shrink:0;min-width:28px;line-height:1}
+.q-text{font-size:14px;color:var(--text-mid);line-height:1.55}
+
+/* ── WORD BANK ── */
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.wb-card{
+  background:#fff;border:1px solid rgba(28,45,74,.09);border-radius:11px;
+  padding:18px 16px;display:flex;flex-direction:column;gap:6px;transition:all .2s;
+}
+.wb-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:rgba(240,168,48,.25)}
+.wb-emoji{font-size:24px}
+.wb-term{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--text-dark)}
+.wb-pos{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.wb-def{font-size:13px;color:var(--text-mid);line-height:1.5}
+
+/* ── READING ── */
+.reading-text{
+  background:linear-gradient(135deg,var(--cream) 0%,rgba(239,233,222,.5) 100%);
+  border-left:4px solid var(--gold);padding:24px 28px;border-radius:0 10px 10px 0;margin-bottom:28px;
+}
+.reading-text h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--text-dark);margin-bottom:14px}
+.reading-text p{font-size:14.5px;line-height:1.78;color:var(--text-mid);margin-bottom:10px}
+.reading-text strong{color:var(--text-dark);font-weight:600}
+
+/* ── MCQ ── */
+.mcq-section{margin-top:24px}
+.mcq-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--text-dark);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--cream-dark)}
+.mcq-item{margin-bottom:20px}
+.mcq-q{font-size:14.5px;font-weight:600;color:var(--text-dark);margin-bottom:10px;line-height:1.5}
+.mcq-options{display:grid;gap:7px}
+.mcq-option{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:9px;
+  border:1.5px solid rgba(28,45,74,.13);cursor:pointer;transition:all .18s;
+  font-size:13.5px;color:var(--text-mid);background:#fff;
+}
+.mcq-option:hover{border-color:var(--gold);background:var(--gold-pale);color:var(--text-dark)}
+.mcq-option.selected{border-color:var(--navy);background:rgba(28,45,74,.06);color:var(--text-dark)}
+.mcq-option.correct{border-color:var(--success)!important;background:rgba(30,122,74,.08)!important;color:var(--success)!important}
+.mcq-option.wrong{border-color:var(--error)!important;background:rgba(192,57,43,.07)!important;color:var(--error)!important}
+.opt-letter{
+  width:22px;height:22px;border-radius:50%;background:rgba(28,45,74,.09);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+  flex-shrink:0;font-family:'DM Mono',monospace;
+}
+.check-btn{
+  display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 22px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  color:#fff;border:none;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;
+  font-family:'DM Sans',sans-serif;transition:all .2s;box-shadow:0 2px 8px rgba(28,45,74,.2);
+}
+.check-btn:hover{background:linear-gradient(135deg,var(--navy-mid) 0%,var(--navy-light) 100%);box-shadow:0 4px 14px rgba(28,45,74,.3);transform:translateY(-1px)}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:9px;font-size:13px;font-weight:500;display:none}
+.feedback.show{display:block}
+.feedback.good{background:rgba(30,122,74,.09);color:var(--success);border:1px solid rgba(30,122,74,.2)}
+.feedback.bad{background:rgba(192,57,43,.08);color:var(--error);border:1px solid rgba(192,57,43,.2)}
+.score-display{background:var(--cream);border-radius:9px;padding:14px 18px;margin-top:16px;display:none}
+.score-display.show{display:flex;align-items:center;justify-content:space-between}
+.score-val{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--text-dark)}
+.score-label{font-size:13px;color:var(--text-light)}
+
+/* ── VOCAB EXERCISES ── */
+.ex-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ex-badge{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  color:#fff;font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px;letter-spacing:.06em;
+}
+.ex-type{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.ex-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--text-dark);margin-bottom:4px}
+.ex-instruction{font-size:13.5px;color:var(--text-light);margin-bottom:20px;font-style:italic}
+.word-box{
+  background:linear-gradient(135deg,var(--cream) 0%,var(--cream-dark) 100%);
+  border-radius:9px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:20px;
+  border:1px solid var(--cream-dark);
+}
+.word-chip{background:#fff;border:1px solid rgba(28,45,74,.13);border-radius:6px;padding:3px 10px;font-size:13px;color:var(--text-mid)}
+.gap-sentence{font-size:14.5px;color:var(--text-dark);line-height:2.5;margin-bottom:6px}
+.gap-input{
+  border:none;border-bottom:2px solid var(--gold);background:transparent;
+  font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);
+  padding:2px 6px;width:170px;outline:none;text-align:center;transition:border-color .18s;
+}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.tf-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--cream-dark)}
+.tf-stmt{flex:1;font-size:14.5px;color:var(--text-mid);line-height:1.55}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+.tf-btn{
+  padding:5px 14px;border-radius:7px;border:1.5px solid rgba(28,45,74,.18);cursor:pointer;
+  font-size:12px;font-weight:600;background:#fff;color:var(--text-mid);transition:all .18s;
+  font-family:'DM Sans',sans-serif;
+}
+.tf-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-pale)}
+.tf-btn.sel-t{background:#dcfce7;border-color:var(--success);color:var(--success)}
+.tf-btn.sel-f{background:#fee2e2;border-color:var(--error);color:var(--error)}
+
+/* ── GRAMMAR REVIEW ── */
+.gr-box{
+  background:linear-gradient(150deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-mid) 100%);
+  color:#fff;border-radius:12px;padding:30px;margin-bottom:24px;
+  box-shadow:0 6px 28px rgba(15,29,53,.25);
+}
+.gr-box-title{font-family:'Fraunces',serif;font-size:21px;font-weight:600;color:var(--gold);margin-bottom:6px}
+.gr-box-sub{font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.12em;margin-bottom:20px}
+.gr-rule{background:rgba(255,255,255,.07);border-radius:9px;padding:16px;margin-bottom:12px;border:1px solid rgba(255,255,255,.05)}
+.gr-rule-title{font-size:13px;font-weight:600;color:var(--gold-light);margin-bottom:6px}
+.gr-rule-text{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.6}
+.gr-example{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--gold-pale);background:rgba(255,255,255,.05);padding:9px 13px;border-radius:7px;margin-top:8px;line-height:1.6;border-left:2px solid rgba(240,168,48,.3)}
+.gr-table{width:100%;border-collapse:collapse;margin-top:14px}
+.gr-table th{background:rgba(255,255,255,.09);padding:9px 13px;font-size:12px;text-align:left;color:var(--gold-light);letter-spacing:.06em;text-transform:uppercase}
+.gr-table td{padding:9px 13px;font-size:13px;color:rgba(255,255,255,.75);border-top:1px solid rgba(255,255,255,.07)}
+.gr-table tr:hover td{background:rgba(255,255,255,.04)}
+
+/* ── WRITING ── */
+.writing-prompt{background:rgba(240,168,48,.07);border:1px solid rgba(240,168,48,.28);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.writing-prompt h4{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--text-dark);margin-bottom:8px}
+.writing-prompt p{font-size:13.5px;color:var(--text-mid);line-height:1.6}
+.writing-focus{background:rgba(28,45,74,.04);border:1px solid rgba(28,45,74,.1);border-radius:9px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--text-light)}
+.writing-focus strong{color:var(--text-mid)}
+.writing-textarea{width:100%;min-height:180px;border:1.5px solid rgba(28,45,74,.18);border-radius:9px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);resize:vertical;outline:none;background:#fff;line-height:1.65;transition:border-color .2s}
+.writing-textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,168,48,.1)}
+.writing-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.word-count{font-size:12px;color:var(--text-light);font-family:'DM Mono',monospace}
+.submit-btn{padding:10px 24px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--navy-dark);border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;box-shadow:0 2px 8px rgba(240,168,48,.3)}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(240,168,48,.4)}
+.submit-success{display:none;padding:12px 16px;background:rgba(30,122,74,.09);border:1px solid rgba(30,122,74,.22);border-radius:9px;color:var(--success);font-size:13.5px;font-weight:500;margin-top:12px}
+
+/* ── AUDIO CARDS ── */
+.audio-card{
+  background:linear-gradient(150deg,var(--navy-dark) 0%,var(--navy) 70%,var(--navy-mid) 100%);
+  border-radius:14px;padding:26px;margin-bottom:28px;
+  box-shadow:0 6px 28px rgba(15,29,53,.28);
+}
+.audio-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
+.audio-emoji{font-size:30px;background:rgba(255,255,255,.09);border-radius:10px;padding:10px;flex-shrink:0;line-height:1;border:1px solid rgba(255,255,255,.07)}
+.audio-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#fff;margin-bottom:4px}
+.audio-sub{font-size:12px;color:rgba(255,255,255,.48)}
+.audio-tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.audio-tag{font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 9px;border-radius:10px;text-transform:uppercase}
+.tag-level{background:rgba(240,168,48,.28);color:var(--gold-light)}
+.tag-type{background:rgba(255,255,255,.1);color:rgba(255,255,255,.72)}
+.tag-focus{color:rgba(255,255,255,.42);font-size:10px}
+.player-box{background:rgba(15,29,53,.55);border-radius:11px;padding:16px 18px;margin-bottom:12px;border:1px solid rgba(255,255,255,.06)}
+.player-row{display:flex;align-items:center;gap:14px}
+.play-btn{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;transition:all .2s;color:var(--navy-dark);
+  box-shadow:0 2px 10px rgba(240,168,48,.3);
+}
+.play-btn:hover{transform:scale(1.08);box-shadow:0 4px 16px rgba(240,168,48,.45)}
+.player-info{flex:1}
+.player-title-sm{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px}
+.player-sub-sm{font-size:11px;color:rgba(255,255,255,.4)}
+.player-time{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.48);white-space:nowrap}
+.player-progress{width:100%;height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:11px;overflow:hidden}
+.player-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;transition:width .5s linear}
+.speed-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.38);letter-spacing:.08em;text-transform:uppercase}
+.speed-btn{padding:3px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:transparent;color:rgba(255,255,255,.58);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:all .18s}
+.speed-btn.active,.speed-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-dark);font-weight:700}
+.replay-btn{padding:3px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:transparent;color:rgba(255,255,255,.58);font-size:11px;cursor:pointer;transition:all .18s}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light)}
+.tts-note{font-size:11px;color:rgba(255,255,255,.28);font-style:italic;margin-top:6px}
+.transcript-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;color:rgba(255,255,255,.55);font-size:12.5px;padding:8px 0;border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:color .18s}
+.transcript-toggle:hover{color:var(--gold-light)}
+.transcript-box{display:none;background:rgba(255,255,255,.05);border-radius:9px;padding:16px;margin-top:6px;margin-bottom:14px;border:1px solid rgba(255,255,255,.06)}
+.transcript-box.open{display:block}
+.transcript-box p{font-size:13px;color:rgba(255,255,255,.68);line-height:1.78;margin-bottom:8px}
+
+/* ── LISTENING MCQs — all WHITE ── */
+.listen-instruction{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.07);border-radius:9px;font-size:13px;color:#fff;margin-bottom:18px;font-weight:500;border:1px solid rgba(255,255,255,.06)}
+.listen-mcq-wrap .mcq-title{color:#fff;border-bottom-color:rgba(255,255,255,.18)}
+.listen-mcq-wrap .mcq-q{color:#fff}
+.listen-mcq-wrap .mcq-option{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18);color:#fff}
+.listen-mcq-wrap .mcq-option:hover{border-color:var(--gold);background:rgba(240,168,48,.14);color:#fff}
+.listen-mcq-wrap .mcq-option.selected{border-color:var(--gold);background:rgba(240,168,48,.2);color:#fff}
+.listen-mcq-wrap .mcq-option.correct{border-color:#4ade80!important;background:rgba(74,222,128,.14)!important;color:#4ade80!important}
+.listen-mcq-wrap .mcq-option.wrong{border-color:#f87171!important;background:rgba(248,113,113,.12)!important;color:#f87171!important}
+.listen-mcq-wrap .opt-letter{background:rgba(255,255,255,.13);color:#fff}
+.listen-mcq-wrap .check-btn{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--navy-dark);box-shadow:0 2px 8px rgba(240,168,48,.25)}
+.listen-mcq-wrap .check-btn:hover{background:var(--gold-light);transform:translateY(-1px)}
+.listen-mcq-wrap .feedback.good{background:rgba(74,222,128,.13);color:#4ade80;border-color:rgba(74,222,128,.28)}
+.listen-mcq-wrap .feedback.bad{background:rgba(248,113,113,.1);color:#f87171;border-color:rgba(248,113,113,.24)}
+.listen-mcq-wrap .score-display{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.06)}
+.listen-mcq-wrap .score-val{color:#fff}
+.listen-mcq-wrap .score-label{color:rgba(255,255,255,.58)}
+
+/* ── CASE STUDIES ── */
+.case-header{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy-mid) 100%);
+  border-radius:12px 12px 0 0;padding:22px 28px;
+}
+.case-header h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#fff;margin-bottom:4px}
+.case-header p{font-size:13px;color:rgba(255,255,255,.48)}
+.case-body{background:#fff;border:1px solid rgba(28,45,74,.09);border-top:none;border-radius:0 0 12px 12px;padding:24px 28px;margin-bottom:28px}
+.case-section-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.case-text{font-size:14.5px;color:var(--text-mid);line-height:1.78;margin-bottom:20px}
+.case-text strong{color:var(--text-dark)}
+
+/* ── ASSESSMENT ── */
+.assessment-header{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 50%,var(--navy-mid) 100%);
+  border-radius:14px;padding:30px 32px;margin-bottom:28px;text-align:center;
+  box-shadow:0 6px 28px rgba(15,29,53,.28);
+}
+.assessment-header h2{font-family:'Fraunces',serif;font-size:28px;color:#fff;margin-bottom:8px}
+.assessment-header p{color:rgba(255,255,255,.58);font-size:14px}
+.assessment-meta{display:flex;justify-content:center;gap:28px;margin-top:18px;flex-wrap:wrap}
+.assessment-meta-item{text-align:center}
+.assessment-meta-num{font-family:'Fraunces',serif;font-size:24px;color:var(--gold);font-weight:700}
+.assessment-meta-label{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em}
+.attempt-badge{display:inline-block;padding:4px 13px;border-radius:12px;font-size:11px;font-weight:600;background:rgba(240,168,48,.18);color:var(--gold-light);margin-top:10px;border:1px solid rgba(240,168,48,.2)}
+.assessment-result{display:none;text-align:center;padding:30px;background:#fff;border-radius:12px;border:2px solid var(--cream-dark);margin-bottom:24px;box-shadow:var(--shadow-card)}
+.result-score{font-family:'Fraunces',serif;font-size:56px;font-weight:700}
+.result-score.pass{color:var(--success)}.result-score.fail{color:var(--error)}
+.result-msg{font-size:16px;color:var(--text-mid);margin-top:8px}
+.retake-btn{padding:10px 24px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;margin-top:16px;font-family:'DM Sans',sans-serif;box-shadow:0 2px 8px rgba(28,45,74,.2)}
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:768px){
+  .sidebar{position:relative;width:100%;height:auto;flex-direction:column;overflow-y:visible;border-bottom:2px solid var(--gold);box-shadow:none}
+  .sidebar-brand{padding:16px 16px 12px}
+  .brand-title{font-size:12px}
+  .sidebar-module-label{padding:10px 16px 4px}
+  .nav-item{padding:8px 16px}
+  .main{margin-left:0}
+  .hero{padding:22px 20px 28px;min-height:auto}
+  .hero-title{font-size:34px}
+  .hero-desc{font-size:14px}
+  .stats-row{gap:20px}
+  .stat-num{font-size:22px}
+  .content-area{padding:20px 16px}
+  .card{padding:20px 16px}
+  .q-grid,.outcomes-grid,.wb-grid{grid-template-columns:1fr}
+  .gr-table{display:block;overflow-x:auto;white-space:nowrap}
+  .writing-textarea{min-height:160px;font-size:13px}
+  .mcq-option{font-size:13px;padding:9px 12px}
+  .audio-card{padding:18px}
+  .player-row{flex-wrap:wrap;gap:10px}
+  .speed-row{gap:6px}
+  .speed-btn{padding:3px 8px;font-size:10px}
+  .case-body{padding:16px}
+  .assessment-header{padding:22px 16px}
+  .assessment-meta{gap:18px}
+  .result-score{font-size:40px}
+  .tf-item{flex-direction:column;gap:8px}
+  .tf-btns{align-self:flex-start}
+  .word-box{padding:10px 12px;gap:6px}
+  .word-chip{font-size:12px;padding:2px 8px}
+  .gap-input{width:130px;font-size:13px}
+  .card-title{font-size:19px}
+  .ex-title{font-size:16px}
+  .section-tag{font-size:10px;padding:5px 10px}
+  .listen-instruction{font-size:12px;padding:8px 12px}
+  .check-btn{padding:9px 18px;font-size:12px}
+  .submit-btn{padding:9px 18px;font-size:12px}
+  .progress-label{font-size:11px}
+  .gr-box{padding:20px 16px}
+}
+@media(max-width:480px){
+  .hero-title{font-size:26px;line-height:1.1}
+  .stats-row{gap:14px}
+  .stat-num{font-size:20px}
+  .stat-label{font-size:9px}
+  .card{padding:16px 14px}
+  .mcq-q{font-size:13.5px}
+  .mcq-option{font-size:12.5px;gap:8px;padding:9px 10px}
+  .opt-letter{width:20px;height:20px;font-size:10px}
+  .audio-header{flex-direction:column;gap:10px}
+  .audio-emoji{font-size:24px;padding:8px}
+  .play-btn{width:40px;height:40px;font-size:16px}
+  .nav-badge{font-size:8px;padding:2px 5px}
+  .gr-rule{padding:12px}
+}
+
+
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-title">Marketing &amp; Advertising English</div>
+    <div class="brand-sub">Professional Development</div>
+    <div class="level-badge">B1&ndash;B2 LEVEL</div>
+  </div>
+  <div class="sidebar-module-label">Module 11</div>
+  <div class="nav-item active" onclick="showSection('overview')"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  <div class="nav-item" onclick="showSection('speaking')"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span><span class="nav-badge">21Q</span></div>
+  <div class="nav-item" onclick="showSection('wordbank')"><span class="nav-icon">🟩</span><span class="nav-label">Word Bank</span><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="showSection('reading')"><span class="nav-icon">📄</span><span class="nav-label">Reading</span><span class="nav-badge">2T</span></div>
+  <div class="nav-item" onclick="showSection('vocabulary')"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar')"><span class="nav-icon">📘</span><span class="nav-label">Grammar</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar-review')"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  <div class="nav-item" onclick="showSection('writing')"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span><span class="nav-badge">2W</span></div>
+  <div class="nav-item" onclick="showSection('listening')"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span><span class="nav-badge">4Ex</span></div>
+  <div class="nav-item" onclick="showSection('casestudies')"><span class="nav-icon">📊</span><span class="nav-label">Case Studies</span><span class="nav-badge">2CS</span></div>
+  <div class="nav-item" onclick="showSection('assessment')"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span><span class="nav-badge">20Q</span></div>
+</nav>
+<div class="main">
+
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="section-tag">🏛️ Module 11 &middot; Marketing &amp; Advertising English</div>
+    <div class="hero-title">Presenting a<br><span>Marketing Plan</span></div>
+    <p class="hero-desc">Develop the professional English skills to structure, write, and present a complete marketing plan &mdash; from executive summary to budget allocation &mdash; with the clarity, confidence, and strategic authority that senior audiences expect.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+    <div>
+      <div class="progress-label"><span>Module Progress</span><span id="progress-pct">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div><div class="card-title-bar"></div>
+      <div class="prose">
+        <p><strong>Welcome to Module 11: Presenting a Marketing Plan.</strong> The ability to present a marketing plan convincingly is one of the most valuable professional skills in marketing. A great strategy that cannot be communicated clearly will never be implemented. Whether you are presenting to a CEO, a board of directors, an agency partner, or a cross-functional leadership team, the language, structure, and confidence with which you present your plan determines whether it gets approved, funded, and acted upon.</p>
+        <p>This module focuses on the complete skill set required to write and present a marketing plan in professional English. You will learn the vocabulary and phrases used at each stage of a plan presentation &mdash; from the executive summary and situational analysis through to objectives, strategy, tactics, budget, and evaluation. You will study the grammar structures most commonly used in formal presentations, and practise the communication techniques that make the difference between a presentation that informs and one that persuades.</p>
+        <p>By the end of this module, you will be able to write and present all key sections of a marketing plan in English, use signposting language to guide your audience through your argument, handle questions and objections professionally, and adapt your communication style to different senior stakeholder audiences.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div><div class="card-title-bar"></div>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use 21+ marketing plan vocabulary terms accurately in professional contexts</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Structure a complete marketing plan presentation using professional frameworks</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Write an executive summary, situational analysis, and strategic rationale in English</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use signposting language to guide an audience through a complex presentation</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use concessive and contrastive structures to acknowledge challenges professionally</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use professional question-handling language for Q&amp;A and objections</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Write an executive summary and a strategic rationale section in professional English</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Analyse case studies on marketing plan presentations and evaluate strategic choices</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="speaking" class="section">
+  <div class="hero">
+    <div class="section-tag">🎙️ Speaking Activities</div>
+    <div class="hero-title">Speaking <span>Discussion</span></div>
+    <p class="hero-desc">21 discussion questions on marketing plan structure, presentation skills, and stakeholder communication &mdash; build professional fluency in the language of strategic marketing.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Discussion Questions</div><div class="card-title-bar"></div>
+      <div class="q-grid"><div class="q-card"><div class="q-num">1</div><div class="q-text">Have you ever presented a marketing plan or strategy to senior stakeholders? What was the most challenging part of the experience?</div></div><div class="q-card"><div class="q-num">2</div><div class="q-text">What is the difference between a marketing plan and a marketing strategy? How do the two documents relate to each other?</div></div><div class="q-card"><div class="q-num">3</div><div class="q-text">What should an executive summary of a marketing plan contain? Why is it the most important section of the document?</div></div><div class="q-card"><div class="q-num">4</div><div class="q-text">What is a SWOT analysis and what role does it play in a marketing plan? How should findings from a SWOT analysis shape the strategy?</div></div><div class="q-card"><div class="q-num">5</div><div class="q-text">What is a situational analysis and why is it important to include current market context before presenting your strategy?</div></div><div class="q-card"><div class="q-num">6</div><div class="q-text">How do you set marketing objectives that are genuinely useful? What makes an objective too vague to act on?</div></div><div class="q-card"><div class="q-num">7</div><div class="q-text">What is the difference between a marketing strategy and marketing tactics? Give examples of each in a campaign context.</div></div><div class="q-card"><div class="q-num">8</div><div class="q-text">How do you build a persuasive argument when presenting a marketing plan to a budget holder who is sceptical about marketing spend?</div></div><div class="q-card"><div class="q-num">9</div><div class="q-text">What is a budget rationale and why is it important to be able to justify each line of a marketing budget to senior stakeholders?</div></div><div class="q-card"><div class="q-num">10</div><div class="q-text">How do you handle a question in a presentation when you do not know the answer? What language can you use professionally?</div></div><div class="q-card"><div class="q-num">11</div><div class="q-text">What is signposting language in a presentation and why is it important for a non-native English speaker to master it?</div></div><div class="q-card"><div class="q-num">12</div><div class="q-text">What is the difference between a plan that informs and a plan that persuades? How do you make a presentation more persuasive?</div></div><div class="q-card"><div class="q-num">13</div><div class="q-text">How should the tone and level of detail in a marketing plan presentation change depending on the audience?</div></div><div class="q-card"><div class="q-num">14</div><div class="q-text">What is an objection in the context of a presentation, and how should you handle it professionally without becoming defensive?</div></div><div class="q-card"><div class="q-num">15</div><div class="q-text">What does it mean to have a clear call to action at the end of a marketing plan presentation? What are you typically asking your audience to do?</div></div><div class="q-card"><div class="q-num">16</div><div class="q-text">What is a risk register in a marketing plan and why might including one make a plan more credible to a risk-aware leadership team?</div></div><div class="q-card"><div class="q-num">17</div><div class="q-text">What is the role of data and evidence in a marketing plan presentation? How much data is the right amount?</div></div><div class="q-card"><div class="q-num">18</div><div class="q-text">How do you use visual aids effectively in a marketing plan presentation? What are the most common mistakes people make with slides?</div></div><div class="q-card"><div class="q-num">19</div><div class="q-text">What is the SOSTAC framework for marketing planning and how does it structure a complete marketing plan?</div></div><div class="q-card"><div class="q-num">20</div><div class="q-text">How do you present a plan that involves significant financial investment when the business has limited budget and competing priorities?</div></div><div class="q-card"><div class="q-num">21</div><div class="q-text">If a senior leader challenges a key assumption in your marketing plan during your presentation, how would you respond in English?</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="wordbank" class="section">
+  <div class="hero">
+    <div class="section-tag">🟩 Word Bank</div>
+    <div class="hero-title">Word <span>Bank</span></div>
+    <p class="hero-desc">21 essential terms for presenting a marketing plan &mdash; covering strategy, structure, presentation skills, and stakeholder communication.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Key Vocabulary &mdash; 21 Terms</div><div class="card-title-bar"></div>
+      <div class="wb-grid"><div class="wb-card"><div class="wb-emoji">📋</div><div class="wb-term">Executive summary</div><div class="wb-pos">noun phrase</div><div class="wb-def">A brief, self-contained overview of a marketing plan presenting the key findings, objectives, strategy, budget, and expected outcomes for readers who may not read the full document.</div></div><div class="wb-card"><div class="wb-emoji">📊</div><div class="wb-term">Situational analysis</div><div class="wb-pos">noun phrase</div><div class="wb-def">A structured assessment of the current internal and external environment facing a business, typically covering market trends, competitive landscape, customer insights, and brand performance.</div></div><div class="wb-card"><div class="wb-emoji">🔍</div><div class="wb-term">SWOT analysis</div><div class="wb-pos">noun phrase</div><div class="wb-def">A strategic planning tool that identifies a business's internal Strengths and Weaknesses alongside external Opportunities and Threats, used to inform strategy development.</div></div><div class="wb-card"><div class="wb-emoji">🎯</div><div class="wb-term">Marketing objective</div><div class="wb-pos">noun phrase</div><div class="wb-def">A specific, measurable statement of what a marketing plan is designed to achieve within a defined time period, directly linked to a business objective.</div></div><div class="wb-card"><div class="wb-emoji">🗺️</div><div class="wb-term">Marketing strategy</div><div class="wb-pos">noun phrase</div><div class="wb-def">The high-level approach that defines how a business will achieve its marketing objectives, including target audience, positioning, and channel priorities.</div></div><div class="wb-card"><div class="wb-emoji">⚙️</div><div class="wb-term">Marketing tactics</div><div class="wb-pos">noun phrase</div><div class="wb-def">The specific, actionable activities and executions that deliver the marketing strategy, including campaigns, content, events, partnerships, and media buys.</div></div><div class="wb-card"><div class="wb-emoji">💰</div><div class="wb-term">Budget rationale</div><div class="wb-pos">noun phrase</div><div class="wb-def">The written justification for each line of a marketing budget, explaining why the investment is needed, what it will achieve, and how it connects to the stated objectives.</div></div><div class="wb-card"><div class="wb-emoji">📌</div><div class="wb-term">SOSTAC framework</div><div class="wb-pos">noun phrase</div><div class="wb-def">A marketing planning model covering Situation, Objectives, Strategy, Tactics, Actions, and Control, used to structure a complete and logical marketing plan.</div></div><div class="wb-card"><div class="wb-emoji">🔖</div><div class="wb-term">Signposting language</div><div class="wb-pos">noun phrase</div><div class="wb-def">Words and phrases used in presentations and written documents to guide the audience through the structure of the content, signalling transitions, key points, and summaries.</div></div><div class="wb-card"><div class="wb-emoji">⚠️</div><div class="wb-term">Risk register</div><div class="wb-pos">noun phrase</div><div class="wb-def">A document listing the potential risks to a marketing plan, their likelihood and impact, and the mitigation actions proposed, used to demonstrate strategic foresight.</div></div><div class="wb-card"><div class="wb-emoji">🎤</div><div class="wb-term">Call to action</div><div class="wb-pos">noun phrase</div><div class="wb-def">The specific request made at the end of a marketing plan presentation, asking stakeholders to approve, fund, provide feedback on, or take a defined next step in relation to the plan.</div></div><div class="wb-card"><div class="wb-emoji">📣</div><div class="wb-term">Strategic rationale</div><div class="wb-pos">noun phrase</div><div class="wb-def">The reasoned argument explaining why a particular marketing strategy has been chosen, grounded in data, market insight, and alignment with business objectives.</div></div><div class="wb-card"><div class="wb-emoji">🔢</div><div class="wb-term">Budget allocation</div><div class="wb-pos">noun phrase</div><div class="wb-def">The distribution of total marketing budget across channels, activities, and time periods, reflecting the relative priority and expected return of each investment area.</div></div><div class="wb-card"><div class="wb-emoji">🏆</div><div class="wb-term">Competitive landscape</div><div class="wb-pos">noun phrase</div><div class="wb-def">An overview of the key competitors in a market, their positioning, messaging, strengths and weaknesses, and share of voice, used as context for strategic decisions.</div></div><div class="wb-card"><div class="wb-emoji">📈</div><div class="wb-term">Revenue forecast</div><div class="wb-pos">noun phrase</div><div class="wb-def">A projection of the revenue expected to result from the marketing plan's activities, typically broken down by channel, time period, and customer segment.</div></div><div class="wb-card"><div class="wb-emoji">🤔</div><div class="wb-term">Objection handling</div><div class="wb-pos">noun phrase</div><div class="wb-def">The professional skill of responding to challenges, questions, or disagreements raised by stakeholders during or after a presentation, without becoming defensive or dismissive.</div></div><div class="wb-card"><div class="wb-emoji">🧭</div><div class="wb-term">Strategic alignment</div><div class="wb-pos">noun phrase</div><div class="wb-def">The degree to which the marketing plan's objectives and activities are consistent with and supportive of the broader business strategy and organisational priorities.</div></div><div class="wb-card"><div class="wb-emoji">📅</div><div class="wb-term">Implementation roadmap</div><div class="wb-pos">noun phrase</div><div class="wb-def">A detailed schedule showing how and when each element of the marketing plan will be executed, typically displayed as a Gantt chart or phased timeline.</div></div><div class="wb-card"><div class="wb-emoji">🔄</div><div class="wb-term">Review cadence</div><div class="wb-pos">noun phrase</div><div class="wb-def">The agreed frequency at which campaign and plan performance will be reviewed against targets, enabling timely adjustments to strategy and budget allocation.</div></div><div class="wb-card"><div class="wb-emoji">🌡️</div><div class="wb-term">Market share</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of total sales in a defined market captured by a brand or product during a specific period, used as a key measure of competitive position.</div></div><div class="wb-card"><div class="wb-emoji">🧩</div><div class="wb-term">Value proposition</div><div class="wb-pos">noun phrase</div><div class="wb-def">A clear, concise statement of the unique benefit a product or service delivers to the target customer, and why it is preferable to competing alternatives.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="reading" class="section">
+  <div class="hero">
+    <div class="section-tag">📄 Reading Activities</div>
+    <div class="hero-title">Reading <span>Texts</span></div>
+    <p class="hero-desc">Two professional texts on marketing plan structure and presentation technique. Read carefully, then answer the comprehension questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Text 1: How to Structure a Marketing Plan That Gets Approved</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; The Purpose of a Marketing Plan</h3>
+        <p>A marketing plan is a formal document that articulates what a marketing team intends to do, why it intends to do it, how it will be done, and how success will be measured. It is simultaneously a strategic planning tool, a communication instrument, and an accountability framework. When a marketing plan is presented to senior stakeholders for approval, it is doing more than describing a set of activities &mdash; it is making a case for investment, demonstrating strategic thinking, and committing to measurable outcomes. The quality of the plan, and the quality of the presentation, directly determines whether the resources needed to execute the strategy will be made available.</p>
+        <p>Most marketing plans that fail to get approved do not fail because the strategy is wrong. They fail because the plan does not speak the language of its audience. A plan presented to a CFO must lead with financial rigour: ROI projections, cost-per-acquisition targets, and payback periods. A plan presented to a CEO must connect clearly to business growth objectives and competitive positioning. A plan presented to a product team must show how the marketing activities will support product adoption and retention. Understanding your audience before you write a single word of the plan is the most important step in the process.</p>
+        <h3>Paragraph 2 &mdash; The Structure of a Winning Marketing Plan</h3>
+        <p>While marketing plan formats vary by organisation, the most effective plans share a common logical structure. They begin with an <strong>executive summary</strong> &mdash; a one-to-two-page overview of the entire plan that allows a busy senior leader to understand the key conclusions without reading the full document. Many readers will only read the executive summary, so it must be self-contained, compelling, and complete. The executive summary should not be written first; it should be written last, once all other sections are finalised, so that it accurately represents the whole.</p>
+        <p>The body of the plan typically follows the SOSTAC framework: <strong>Situation</strong> (where are we now?), <strong>Objectives</strong> (where do we want to be?), <strong>Strategy</strong> (how will we get there, at a high level?), <strong>Tactics</strong> (what specifically will we do?), <strong>Actions</strong> (who will do what and when?), and <strong>Control</strong> (how will we measure progress and respond?). This structure ensures that every section of the plan flows logically from the one before it, and that the strategy is grounded in a rigorous understanding of the current situation rather than based on assumptions or wishful thinking.</p>
+        <h3>Paragraph 3 &mdash; The Situational Analysis and Strategic Rationale</h3>
+        <p>The situational analysis is the foundation on which the entire plan rests. It encompasses a <strong>market analysis</strong> (size, growth rate, key trends), a <strong>competitive landscape review</strong> (who are the main competitors, what are their strengths and weaknesses, how are they positioned?), a <strong>customer insight section</strong> (who is the target customer, what do they need, what drives their purchasing decisions?), and an assessment of the brand's own performance and capabilities. The most common weakness in marketing plans is a superficial situational analysis: conclusions stated without the evidence to support them, or analysis that describes the surface without identifying the underlying drivers.</p>
+        <p>From the situational analysis flows the <strong>strategic rationale</strong>: the reasoned argument for why the chosen strategy is the right response to the situation identified. A strong strategic rationale does not simply state what the strategy is &mdash; it explains why this strategy and not an alternative, why now and not later, and why this allocation of resources and not a different one. The strategic rationale is where the marketing leader's analytical thinking and commercial judgement are most clearly on display, and it is frequently the section that senior stakeholders scrutinise most closely.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 1 (10 Questions)</div>
+        <div id="r1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r1')">Check Answers</button>
+        <div id="r1-feedback" class="feedback"></div>
+        <div id="r1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Text 2: Presenting the Plan &mdash; Structure, Language, and Stakeholder Management</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; The Presentation as a Persuasion Exercise</h3>
+        <p>Writing a marketing plan is an analytical exercise; presenting it is a persuasion exercise. The two skills are related but distinct, and many marketing professionals who are excellent strategic thinkers are less effective as plan presenters because they approach the presentation as an information-delivery exercise rather than a persuasion exercise. The goal of a plan presentation is not to share information &mdash; the plan document does that. The goal is to build confidence, overcome scepticism, align stakeholders around a shared direction, and secure approval and resources. Every structural decision, every language choice, and every minute of preparation should be in service of that goal.</p>
+        <p>This requires understanding not just what you want to say, but what your audience needs to hear. What are their priorities, concerns, and potential objections? What level of detail do they expect? Do they prefer to be walked through a narrative sequentially, or do they prefer to engage with data first and narrative second? The most effective marketing plan presenters invest as much time researching their audience as they do preparing their slides, because a presentation that fails to connect with its specific audience &mdash; however well-crafted &mdash; will not achieve its objective.</p>
+        <h3>Paragraph 2 &mdash; Signposting and Structuring the Verbal Presentation</h3>
+        <p>In a formal marketing plan presentation, <strong>signposting language</strong> is essential. Signposting means using explicit verbal cues to tell your audience where you are in the presentation, where you are going next, and how different sections connect to each other. Without signposting, even a well-organised presentation can feel disjointed, and audience members who lose the thread of the argument may disengage. With effective signposting, the audience always knows where they are, can follow the logic of the argument, and arrives at the recommendation feeling that it is the inevitable conclusion of the evidence and reasoning presented.</p>
+        <p>Effective signposting includes three types of language: <strong>framing language</strong> at the start (telling the audience what you are going to cover and in what order), <strong>transition language</strong> between sections (connecting one section to the next and explaining why the sequencing matters), and <strong>summary language</strong> at key points (consolidating what has been established before moving on). Each of these signal types serves a different function, and using all three creates a presentation that is not just informative but genuinely easy to follow, even for audience members who are not familiar with the detailed content of the plan.</p>
+        <h3>Paragraph 3 &mdash; Handling Questions and Objections</h3>
+        <p>The question-and-answer phase of a marketing plan presentation is where credibility is won or lost. An audience that asks probing questions is an engaged audience, and questions that challenge key assumptions are a sign that the stakeholders are taking the plan seriously. The most important skill in the Q&amp;A phase is not knowing all the answers &mdash; it is responding to every question with composure, precision, and honesty. Admitting that you do not know something &mdash; "That is a good question; I would like to come back to you with a more precise figure" &mdash; is far more credible than bluffing or deflecting.</p>
+        <p>When handling objections &mdash; challenges to the plan's assumptions, strategy, or budget &mdash; it is critical to avoid becoming defensive. The most effective technique is to acknowledge the concern genuinely before providing a substantive response: "I understand why you might be concerned about the budget allocation here &mdash; let me explain the rationale behind it." This approach demonstrates emotional intelligence and strategic confidence simultaneously. It shows that the presenter has anticipated objections, has thought through the answers, and respects the stakeholder's perspective while remaining committed to their own recommendation.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 2 (10 Questions)</div>
+        <div id="r2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r2')">Check Answers</button>
+        <div id="r2-feedback" class="feedback"></div>
+        <div id="r2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="vocabulary" class="section">
+  <div class="hero">
+    <div class="section-tag">✏️ Vocabulary Exercises</div>
+    <div class="hero-title">Vocabulary <span>Practice</span></div>
+    <p class="hero-desc">Three vocabulary exercises to consolidate your command of marketing plan and presentation vocabulary.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Multiple Choice</div></div>
+      <div class="ex-title">Choosing the Right Term</div>
+      <p class="ex-instruction">Select the best word or phrase to complete each sentence in a professional marketing plan presentation context.</p>
+      <div id="v1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('v1')">Check Answers</button>
+      <div id="v1-feedback" class="feedback"></div>
+      <div id="v1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Gap-Fill</div></div>
+      <div class="ex-title">Complete the Sentences</div>
+      <p class="ex-instruction">Type the correct word from the box to complete each sentence. Check your spelling carefully.</p>
+      <div class="word-box">
+        <strong style="color:var(--text-dark);margin-right:6px">Word Box:</strong>
+        <span class="word-chip">rationale</span><span class="word-chip">signposting</span><span class="word-chip">SOSTAC</span>
+        <span class="word-chip">objection</span><span class="word-chip">cadence</span><span class="word-chip">roadmap</span>
+        <span class="word-chip">alignment</span><span class="word-chip">landscape</span><span class="word-chip">proposition</span>
+        <span class="word-chip">forecast</span>
+      </div>
+      <div id="v2-gaps"></div>
+      <button class="check-btn" onclick="checkGaps()">Check Answers</button>
+      <div id="v2-feedback" class="feedback"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">True / False</div></div>
+      <div class="ex-title">True or False?</div>
+      <p class="ex-instruction">Read each statement about marketing plan vocabulary. Decide whether it is TRUE or FALSE and click your answer.</p>
+      <div id="v3-tf"></div>
+      <button class="check-btn" onclick="checkTF()">Check Answers</button>
+      <div id="v3-feedback" class="feedback"></div>
+    </div>
+  </div>
+</div>
+
+<div id="grammar" class="section">
+  <div class="hero">
+    <div class="section-tag">📘 Grammar Exercises</div>
+    <div class="hero-title">Grammar <span>Practice</span></div>
+    <p class="hero-desc">Three grammar exercises covering signposting language in presentations, concessive and contrastive structures, and professional question-handling phrases.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Signposting Language</div></div>
+      <div class="ex-title">Signposting Language in Plan Presentations</div>
+      <p class="ex-instruction">Select the most appropriate signposting phrase for each stage of a marketing plan presentation.</p>
+      <div id="g1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g1')">Check Answers</button>
+      <div id="g1-feedback" class="feedback"></div>
+      <div id="g1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Concessive &amp; Contrastive Structures</div></div>
+      <div class="ex-title">Acknowledging Challenges Professionally</div>
+      <p class="ex-instruction">Choose the correct concessive or contrastive structure to acknowledge a challenge or tension while maintaining a persuasive, professional tone.</p>
+      <div id="g2-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g2')">Check Answers</button>
+      <div id="g2-feedback" class="feedback"></div>
+      <div id="g2-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">Question-Handling Language</div></div>
+      <div class="ex-title">Handling Questions and Objections Professionally</div>
+      <p class="ex-instruction">Select the most professional and effective response to each Q&amp;A challenge in a marketing plan presentation context.</p>
+      <div id="g3-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g3')">Check Answers</button>
+      <div id="g3-feedback" class="feedback"></div>
+      <div id="g3-score" class="score-display"></div>
+    </div>
+  </div>
+</div>
+
+<div id="grammar-review" class="section">
+  <div class="hero">
+    <div class="section-tag">🔍 Grammar Reference</div>
+    <div class="hero-title">Grammar <span>Review</span></div>
+    <p class="hero-desc">Three detailed reference boxes covering signposting language, concessive and contrastive structures, and professional question-handling phrases for marketing plan presentations.</p>
+  </div>
+  <div class="content-area">
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 1</div>
+      <div class="gr-box-title">Signposting Language for Marketing Plan Presentations</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">What is signposting and why is it essential?</div>
+        <div class="gr-rule-text">Signposting language guides your audience through your presentation, making the structure transparent and the logic easy to follow. It signals where you are, where you are going, and how sections connect. For non-native English speakers, mastering signposting is one of the fastest ways to sound more fluent and professional in presentations.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Function</th><th>Signposting Phrases</th></tr>
+        <tr><td>Opening / framing</td><td>Today I will be presenting... / I will take you through... / My presentation covers three areas...</td></tr>
+        <tr><td>Starting a new section</td><td>Let me turn now to... / Moving on to... / I would now like to look at...</td></tr>
+        <tr><td>Connecting sections</td><td>Having established X, I will now show Y... / This brings me to... / Building on what I have just said...</td></tr>
+        <tr><td>Highlighting a key point</td><td>I want to draw your attention to... / The critical finding here is... / What is particularly significant is...</td></tr>
+        <tr><td>Summarising a section</td><td>In summary... / To recap what we have covered... / The key takeaway from this section is...</td></tr>
+        <tr><td>Introducing evidence</td><td>The data shows that... / As you can see from this chart... / This is supported by...</td></tr>
+        <tr><td>Moving to the recommendation</td><td>On the basis of this analysis... / Given what we have seen... / This leads me to our recommendation...</td></tr>
+        <tr><td>Closing</td><td>To conclude... / In closing... / I would like to end by asking for your approval of...</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Example sequence in a plan presentation</div>
+        <div class="gr-example">Good morning. Today I will take you through our proposed marketing plan for 2025. I will cover four areas: the market situation, our objectives, the strategy, and the budget. Let me start with the situation...</div>
+        <div class="gr-example">Having established that the market is growing at 12% annually, I would now like to show you how our objectives are designed to capture a meaningful share of that growth...</div>
+        <div class="gr-example">In summary, this data confirms that our current approach is underperforming. This leads me to our recommended strategy...</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 2</div>
+      <div class="gr-box-title">Concessive &amp; Contrastive Structures in Plan Presentations</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why acknowledge challenges professionally?</div>
+        <div class="gr-rule-text">Senior stakeholders trust presenters who acknowledge difficulties honestly. A plan that presents only positives appears naive. Concessive and contrastive structures allow you to acknowledge risks, limitations, and tensions while immediately pivoting to the mitigation or positive counterpoint &mdash; maintaining momentum and credibility simultaneously.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Structure</th><th>Function</th><th>Example</th></tr>
+        <tr><td>Although / Even though + clause</td><td>Concede then counter</td><td>Although the budget is lower than last year, it is allocated more efficiently across high-performing channels.</td></tr>
+        <tr><td>While / Whilst + clause</td><td>Simultaneous contrast</td><td>While the market is competitive, our research identifies a clear gap in the premium segment.</td></tr>
+        <tr><td>Despite / In spite of + noun/-ing</td><td>Concede a challenge</td><td>Despite the challenging economic environment, customer intent data remains strong.</td></tr>
+        <tr><td>However / Nevertheless</td><td>Contrast between sentences</td><td>Awareness is below target. However, our conversion rate has improved significantly, indicating stronger intent.</td></tr>
+        <tr><td>On the other hand</td><td>Balanced contrast</td><td>Paid social offers wide reach. On the other hand, email generates a far higher return per pound spent.</td></tr>
+        <tr><td>Admittedly... but / yet</td><td>Honest concession + counter</td><td>Admittedly, this is a bold target, but it is grounded in the market growth data we have just seen.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Using concessive structures to pre-empt objections</div>
+        <div class="gr-example">Although this represents a 20% increase on last year's budget, the projected return has been modelled conservatively and reflects our improved attribution methodology.</div>
+        <div class="gr-example">While we acknowledge that this strategy carries some execution risk, the risk register we have prepared includes specific mitigation actions for each identified concern.</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 3</div>
+      <div class="gr-box-title">Professional Question-Handling Language</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">The Q&amp;A phase: where credibility is won or lost</div>
+        <div class="gr-rule-text">The Q&amp;A phase after a marketing plan presentation is often more important than the presentation itself. Your ability to respond compositely, honestly, and professionally to questions and objections determines whether you leave the room with approval and trust. The language patterns below cover the most common Q&amp;A situations you will encounter.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Situation</th><th>Professional Language</th></tr>
+        <tr><td>Acknowledging a question</td><td>That is a very important question... / Thank you for raising that... / I am glad you asked about that...</td></tr>
+        <tr><td>Buying time to think</td><td>Let me just take a moment to consider that... / Could you clarify what you mean by...?</td></tr>
+        <tr><td>When you do not know the answer</td><td>I do not have that figure to hand, but I will come back to you with a precise answer by end of day... / That is outside my area of expertise, but I can find out...</td></tr>
+        <tr><td>Handling an objection</td><td>I understand why you might be concerned about... / That is a fair challenge. Let me explain the rationale...</td></tr>
+        <tr><td>Agreeing partially</td><td>You make a valid point. I would add that... / I take your point, and what I would also highlight is...</td></tr>
+        <tr><td>Redirecting to evidence</td><td>If I can draw your attention to page four of the appendix... / The data on slide six addresses this directly...</td></tr>
+        <tr><td>Closing a Q&amp;A exchange</td><td>Does that address your concern? / I hope that clarifies the position. / Is there anything else on this point you would like me to address?</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Handling a budget objection professionally</div>
+        <div class="gr-example">CFO: "This budget is 25% higher than last year. How do you justify that?"<br><br>Presenter: "Thank you for raising that directly. I understand the concern, particularly in the current environment. What I would point out is that the additional investment is concentrated in two areas: email programme development, where we have demonstrated a GBP4.20 return per GBP1 invested, and the influencer programme, which delivered our lowest cost per acquisition last year. I am happy to walk through the detailed ROI projections for each budget line."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="writing" class="section">
+  <div class="hero">
+    <div class="section-tag">✍️ Writing Activities</div>
+    <div class="hero-title">Writing <span>Tasks</span></div>
+    <p class="hero-desc">Two professional writing tasks &mdash; practise producing a marketing plan executive summary and a strategic rationale section in clear, persuasive English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Writing Activity 1 &mdash; Executive Summary</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write an executive summary (180&ndash;220 words) for a marketing plan for a fictional UK premium gin brand called <em>Heather &amp; Oak</em>. The brand is repositioning from a regional craft gin to a nationally recognised premium brand. Key plan elements: target: urban professionals aged 30&ndash;50; budget: &pound;280,000; channels: on-trade (bars and restaurants), influencer marketing, and content; primary KPI: 25% increase in national brand awareness within 12 months. Your executive summary must stand alone, include the key recommendation, and use signposting language. Use at least one concessive structure.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Self-contained summary &middot; Key recommendation clear &middot; Signposting language &middot; Concessive structure &middot; Professional, persuasive register &middot; Word count
+      </div>
+      <textarea class="writing-textarea" id="w1-text" placeholder="EXECUTIVE SUMMARY&#10;Marketing Plan 2025: Heather &amp; Oak Premium Gin&#10;&#10;Overview:&#10;...&#10;&#10;Market Context:&#10;...&#10;&#10;Strategic Recommendation:&#10;...&#10;&#10;Key Objectives and Budget:&#10;...&#10;&#10;Expected Outcomes:&#10;..." oninput="updateWordCount('w1',220)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w1-wc">0 / 220 words</span>
+        <button class="submit-btn" onclick="submitWriting('w1')">Submit ✓</button>
+      </div>
+      <div id="w1-success" class="submit-success">✅ Executive summary submitted! Excellent work applying marketing plan vocabulary and signposting language.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Writing Activity 2 &mdash; Strategic Rationale</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a strategic rationale section (190&ndash;230 words) for a marketing plan for a fictional B2B HR software brand called <em>PeopleCore</em>. The proposed strategy is to shift 60% of the marketing budget from outbound sales-led activity to inbound content marketing and LinkedIn thought leadership. Justify this strategic choice using market data (content marketing generates 3x more leads at 62% lower cost), competitive analysis, and customer insight. Use concessive structures to acknowledge the risk of change, and conclude with a strong recommendation. Include at least one noun clause reporting structure.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Reasoned argument grounded in data &middot; Concessive structures &middot; Noun clause reporting &middot; Strategic recommendation &middot; Professional analytical register
+      </div>
+      <textarea class="writing-textarea" id="w2-text" placeholder="STRATEGIC RATIONALE&#10;PeopleCore &mdash; Shift to Inbound Marketing Strategy&#10;&#10;Market Context:&#10;...&#10;&#10;Why Inbound: Evidence Base:&#10;...&#10;&#10;Competitive Analysis:&#10;...&#10;&#10;Risk Acknowledgement:&#10;...&#10;&#10;Recommendation:&#10;..." oninput="updateWordCount('w2',230)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w2-wc">0 / 230 words</span>
+        <button class="submit-btn" onclick="submitWriting('w2')">Submit ✓</button>
+      </div>
+      <div id="w2-success" class="submit-success">✅ Strategic rationale submitted! Great work applying analytical language and concessive structures in a professional planning context.</div>
+    </div>
+  </div>
+</div>
+
+<div id="listening" class="section">
+  <div class="hero">
+    <div class="section-tag">🎧 Listening Activities</div>
+    <div class="hero-title">Listening <span>Activities</span></div>
+    <p class="hero-desc">4 audio activities with built-in speech players &mdash; press &#9654; Play, listen, then answer the questions below in white.</p>
+  </div>
+  <div class="content-area"><div id="listening-cards"></div></div>
+</div>
+
+<div id="casestudies" class="section">
+  <div class="hero">
+    <div class="section-tag">📊 Case Studies</div>
+    <div class="hero-title">Case <span>Studies</span></div>
+    <p class="hero-desc">Two real-world inspired case studies on marketing plan presentations. Read carefully and answer the analysis questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="case-header">
+      <h3>Case Study 1: Meridian Foods &mdash; How a Well-Structured Presentation Secured a &pound;1.2M Budget Increase</h3>
+      <p>Marketing Plan Presentation &middot; Signposting &middot; Stakeholder Alignment &middot; Budget Rationale</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Meridian Foods is a UK ambient food brand with a strong heritage in the health food sector. By 2022, the brand's market share had stagnated at 11.4% for three consecutive years, despite the category growing at 8% annually. The marketing director, newly appointed, was tasked with presenting a three-year marketing plan to the board of directors &mdash; a group that included a CFO known for scepticism about marketing spend, a CEO focused on international expansion, and two non-executive directors with retail backgrounds.</p>
+        <p>The marketing director spent six weeks preparing the plan and two weeks preparing the presentation. She began by researching each board member individually: their stated priorities, their past questions at previous marketing presentations, and the language they used in board papers. She identified three potential objections she would need to pre-empt: the CFO would challenge the budget increase, the CEO would want to understand how the plan supported the international strategy, and the NEDs would ask about retailer relationships and distribution.</p>
+      </div>
+      <div class="case-section-label">The Presentation</div>
+      <div class="case-text">
+        <p>The presentation opened with a single slide showing the market opportunity: the premium health food category was growing at 8% annually, but Meridian's share had remained flat. The implicit question &mdash; why are we not capturing this growth? &mdash; was not asked out loud, but it framed everything that followed. The situational analysis established that the brand had strong awareness but weak conversion, a clear positioning problem rather than a distribution problem. This reframing was deliberate: it made the case for marketing investment rather than distribution investment, directly countering a narrative the CFO had previously favoured.</p>
+        <p>The strategic rationale section used concessive language explicitly: <em>"Although the proposed budget represents a 40% increase on the current year, it is important to note that our current cost per acquisition is three times higher than the category benchmark, suggesting significant inefficiency in how the existing budget is being spent."</em> The budget rationale was presented channel by channel, with each line showing its projected return. The presentation concluded with a precise call to action: approval of a &pound;1.2M annual marketing budget for a three-year programme, with a 12-month review after year one. The board approved the full budget at the same meeting. The CFO asked two questions during the Q&amp;A, both of which had been anticipated and prepared for. The CEO asked how the UK programme would inform the international expansion &mdash; a question the marketing director had specifically prepared a two-minute response for.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 1 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs1')">Check Answers</button>
+        <div id="cs1-feedback" class="feedback"></div>
+        <div id="cs1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="case-header">
+      <h3>Case Study 2: Apex Digital &mdash; When a Strong Plan Failed Because of a Weak Presentation</h3>
+      <p>Marketing Plan Presentation &middot; Audience Analysis &middot; Q&amp;A Handling &middot; Executive Summary</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Apex Digital is a mid-sized UK digital agency that developed a genuinely impressive marketing plan for its own business development programme in 2023. The plan was based on solid data, included a well-reasoned channel strategy, and had a realistic budget with conservative ROI projections. By every objective measure, the plan was sound. But when it was presented to the senior leadership team for approval, it was rejected &mdash; not because of the strategy, but because of how it was presented.</p>
+        <p>The presentation was led by the head of marketing, who was an experienced strategist but an inexperienced presenter at board level. He had built a 34-slide deck that attempted to present every element of the plan in full detail. He opened not with the headline finding or the key recommendation, but with a 12-minute walkthrough of the methodology behind the situational analysis. By the time he reached the strategy section, 40 minutes had passed and several members of the leadership team had visibly disengaged. The executive summary had been placed at slide 28, rather than at the beginning or as a separate document.</p>
+      </div>
+      <div class="case-section-label">The Q&amp;A and Its Consequences</div>
+      <div class="case-text">
+        <p>The Q&amp;A was where the presentation unravelled most visibly. The CEO asked a direct question about the budget rationale for the paid search allocation. The head of marketing, caught off guard, gave a lengthy, rambling answer that did not directly address the question and included an unprompted admission that he was not entirely certain about one of the CPC assumptions. The CFO then asked about the revenue forecast methodology. The answer was technically accurate but delivered in a way that emphasised uncertainty rather than confidence, using phrases like <em>"we think"</em> and <em>"hopefully"</em> rather than data-grounded language.</p>
+        <p>The leadership team voted to defer the plan pending a revised presentation focusing on three things: a one-page executive summary, a clearer budget rationale with justified assumptions, and a concise ten-slide deck structured around the SOSTAC framework. The head of marketing returned four weeks later with a completely restructured presentation. He opened with the executive summary on slide one, led with the recommendation rather than the methodology, and used signposting language throughout to guide the team through the argument. The Q&amp;A was noticeably different: he had prepared written responses to the twelve most likely questions, and answered the CFO's budget question with a direct two-sentence response before offering to share the full model. The plan was approved at the second presentation. The lesson the agency drew: a great plan poorly presented is not a great plan &mdash; it is a missed opportunity.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 2 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs2')">Check Answers</button>
+        <div id="cs2-feedback" class="feedback"></div>
+        <div id="cs2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="assessment" class="section">
+  <div class="hero">
+    <div class="section-tag">🎯 Final Assessment</div>
+    <div class="hero-title">Final <span>Assessment</span></div>
+    <p class="hero-desc">20 multiple choice questions covering all module sections. Score 70% or above to pass. You have two attempts.</p>
+  </div>
+  <div class="content-area">
+    <div class="assessment-header">
+      <h2>Module 11 &mdash; Final Assessment</h2>
+      <p>Presenting a Marketing Plan</p>
+      <div class="assessment-meta">
+        <div class="assessment-meta-item"><div class="assessment-meta-num">20</div><div class="assessment-meta-label">Questions</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">70%</div><div class="assessment-meta-label">Pass Mark</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">2</div><div class="assessment-meta-label">Attempts</div></div>
+      </div>
+      <div class="attempt-badge" id="attempt-badge">Attempt 1 of 2</div>
+    </div>
+    <div id="assessment-result" class="assessment-result">
+      <div class="result-score" id="result-score-text"></div>
+      <div class="result-msg" id="result-msg"></div>
+      <div id="retake-wrap"></div>
+    </div>
+    <div class="card" id="assessment-form">
+      <div class="mcq-title">📝 Assessment Questions</div>
+      <div id="fa-mcqs"></div>
+      <button class="check-btn" onclick="submitAssessment()" style="margin-top:8px;padding:12px 32px;font-size:14px">Submit Assessment</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const DATA={
+r1:{questions:[
+  {q:"What does Text 1 say a marketing plan is doing when it is presented for approval?",opts:["Describing a set of planned marketing activities for the coming year","Making a case for investment, demonstrating strategic thinking, and committing to measurable outcomes","Sharing the team's creative ideas with senior stakeholders for feedback","Reporting on the previous year's campaign performance before setting new targets"],ans:1},
+  {q:"According to Text 1, why do most marketing plans fail to get approved?",opts:["Because the strategy is fundamentally wrong or poorly researched","Because the plan does not speak the language of its audience","Because the budget requested is always too high for the business to afford","Because the presentation is too long and the audience loses interest"],ans:1},
+  {q:"What does Text 1 say about the executive summary?",opts:["It should be written first as it sets the direction for the whole plan","It should be at least five pages to give a comprehensive overview","It should be written last, once all other sections are finalised, so it accurately represents the whole","It is optional and only needed when presenting to a board of directors"],ans:2},
+  {q:"What does the SOSTAC framework stand for?",opts:["Strategy, Objectives, Segments, Tactics, Audience, and Control","Situation, Objectives, Strategy, Tactics, Actions, and Control","Summary, Outline, Scope, Timeline, Allocation, and Calendar","Stakeholders, Objectives, Segments, Timing, Actions, and Costs"],ans:1},
+  {q:"What does Text 1 say about the situational analysis?",opts:["It should be brief so as not to slow down the plan before the strategy section","It is optional for experienced marketing teams who know the market well","It is the foundation on which the entire plan rests","It should focus exclusively on competitor activity rather than customer insight"],ans:2},
+  {q:"What is the most common weakness in marketing plans, according to Text 1?",opts:["Too much budget allocated to untested new channels","A situational analysis that presents conclusions without supporting evidence","Objectives that are too ambitious to be achievable within the timeframe","A strategic rationale that does not include a detailed risk register"],ans:1},
+  {q:"What should a strong strategic rationale explain, according to Text 1?",opts:["What the strategy is, without reference to alternative approaches","Why this strategy and not an alternative, why now, and why this resource allocation","The detailed tactics and execution plan for the first quarter","The full history of the brand's marketing activity over the previous three years"],ans:1},
+  {q:"What does Text 1 say a CFO-facing plan must lead with?",opts:["Creative concepts and campaign ideas to demonstrate innovation","Brand positioning and target audience definitions","Financial rigour: ROI projections, cost-per-acquisition targets, and payback periods","A detailed competitive analysis of every brand in the category"],ans:2},
+  {q:"What does Text 1 say the strategic rationale section is most closely scrutinised for?",opts:["The quality of the visual design and data presentation","The number of channels included in the recommended strategy","The marketing leader's analytical thinking and commercial judgement","The length and detail of the implementation roadmap"],ans:2},
+  {q:"What does Text 1 say about understanding your audience before writing a plan?",opts:["It is helpful but not essential if the plan is well-structured","It is the last step, done after the plan is written to tailor the language","It is the most important step in the entire process","It only matters when presenting to a board that includes non-marketing professionals"],ans:2}
+]},
+r2:{questions:[
+  {q:"How does Text 2 describe the difference between writing and presenting a marketing plan?",opts:["Writing is more difficult because it requires more data; presenting requires only good communication skills","Writing a plan is an analytical exercise; presenting it is a persuasion exercise","They are identical exercises requiring the same skills and the same preparation","Presenting is easier because you can rely on the slides to carry the argument"],ans:1},
+  {q:"What does Text 2 say the goal of a plan presentation is NOT?",opts:["To build confidence and align stakeholders around a shared direction","To secure approval and resources for the plan","To share information (which the plan document already does)","To overcome scepticism from budget holders and senior leaders"],ans:2},
+  {q:"What does Text 2 say the most effective plan presenters do that distinguishes them?",opts:["They rehearse their slides more than any other preparation activity","They invest as much time researching their audience as preparing their slides","They avoid using data and focus on storytelling to engage the audience","They always present alone rather than with colleagues to maintain authority"],ans:1},
+  {q:"What does signposting language do in a presentation, according to Text 2?",opts:["It makes the slides look more professional and visually appealing","It guides the audience through the structure, signalling transitions and how sections connect","It replaces the need for detailed content by giving a clear overview of each slide","It is used only at the beginning and end of the presentation"],ans:1},
+  {q:"What are the three types of signposting language described in Text 2?",opts:["Opening, closing, and summary language","Visual, verbal, and written signposting","Framing language at the start, transition language between sections, and summary language at key points","Objective language, evidence language, and recommendation language"],ans:2},
+  {q:"What does Text 2 say about an audience that asks probing questions during Q&A?",opts:["It indicates that the presentation was unclear and the audience is confused","It is a sign that the stakeholders are taking the plan seriously and are engaged","It suggests the presenter has not provided enough detail in the plan document","It means the presenter should have anticipated these questions in the slides"],ans:1},
+  {q:"What does Text 2 say is the most important skill in the Q&A phase?",opts:["Having memorised every figure and data point in the plan","Responding to every question with composure, precision, and honesty","Deflecting difficult questions to a later meeting to avoid slowing the presentation","Demonstrating that you know more about the topic than anyone in the room"],ans:1},
+  {q:"What does Text 2 recommend when you do not know the answer to a question?",opts:["Make an educated guess rather than admitting uncertainty to the audience","Change the subject quickly to a part of the plan you are confident about","Acknowledge it honestly: say you will come back with a precise answer later","Ask a colleague in the room to answer instead"],ans:2},
+  {q:"What is the recommended technique for handling objections, according to Text 2?",opts:["Immediately provide data to disprove the objection before the questioner can elaborate","Defer the objection to a follow-up meeting to avoid disrupting the presentation flow","Acknowledge the concern genuinely before providing a substantive response","Politely disagree and restate the original position with greater emphasis"],ans:2},
+  {q:"What does Text 2 say handling objections well demonstrates?",opts:["That the presenter has rehearsed extensively and knows the content perfectly","Emotional intelligence and strategic confidence simultaneously","That the plan has been reviewed by a senior colleague before the presentation","That the marketing team has more experience than the stakeholders questioning them"],ans:1}
+]},
+v1:{questions:[
+  {q:"The team wrote a one-page _______ that captured the market context, strategic recommendation, budget, and expected outcomes for board members who would not read the full plan.",opts:["risk register","executive summary","implementation roadmap","situational analysis"],ans:1},
+  {q:"The presentation used the _______ framework to structure the plan logically from a current market assessment through objectives and strategy to evaluation.",opts:["SWOT","ROAS","SOSTAC","CLV"],ans:2},
+  {q:"Before the meeting, the marketing director prepared detailed answers to six likely questions, knowing that _______ would be essential to maintain credibility in the Q&A.",opts:["budget allocation","objection handling","signposting language","review cadence"],ans:1},
+  {q:"The plan included a _______ explaining why each budget line was necessary and what return was expected from each investment area.",opts:["risk register","revenue forecast","budget rationale","competitive landscape"],ans:2},
+  {q:"The presenter used _______ language throughout, saying things like 'Let me now turn to the strategy' and 'Having established the market context, I want to show you the objectives'.",opts:["concessive","hedging","signposting","quantifying"],ans:2},
+  {q:"The plan included a detailed _______ showing the key risks to the strategy and the specific actions that would be taken to mitigate each one.",opts:["revenue forecast","implementation roadmap","risk register","executive summary"],ans:2},
+  {q:"The _______ section described the main competitors, their positioning, strengths, weaknesses, and approximate share of the category.",opts:["competitive landscape","value proposition","review cadence","strategic alignment"],ans:0},
+  {q:"The marketing plan included a quarterly _______ so that all stakeholders knew in advance when performance would be reviewed against the agreed targets.",opts:["budget rationale","review cadence","revenue forecast","signposting"],ans:1},
+  {q:"The strategy was built around a clear _______ for the brand: the only professional-grade tool designed specifically for independent creative studios, priced at half the cost of enterprise alternatives.",opts:["budget allocation","competitive landscape","value proposition","implementation roadmap"],ans:2},
+  {q:"The _______ section of the plan showed every channel, campaign, and team action mapped onto a 12-month timeline, with clear ownership and delivery milestones.",opts:["executive summary","implementation roadmap","SOSTAC","situational analysis"],ans:1}
+]},
+v2gaps:[
+  {sent:"The budget _______ explained why each channel received its allocation and what return was expected from the investment in both the short and long term.",ans:"rationale"},
+  {sent:"The presenter used effective _______ language throughout, saying things like 'I would now like to turn to the strategy section' to help the audience follow the argument.",ans:"signposting"},
+  {sent:"The plan was structured using the _______ framework, covering Situation, Objectives, Strategy, Tactics, Actions, and Control in that logical order.",ans:"SOSTAC"},
+  {sent:"The CFO raised a significant _______, questioning whether the projected revenue increase was realistic given the current economic conditions.",ans:"objection"},
+  {sent:"The team agreed on a monthly review _______ so that campaign performance could be assessed and the budget reallocated quickly if results were not on track.",ans:"cadence"},
+  {sent:"The implementation _______ showed every campaign, event, and content piece mapped onto a 12-month Gantt chart with named owners for each activity.",ans:"roadmap"},
+  {sent:"The plan demonstrated strong strategic _______ by showing precisely how each marketing objective connected to one of the three stated business growth priorities.",ans:"alignment"},
+  {sent:"The competitive _______ section identified four direct competitors, compared their positioning, pricing, and share of voice, and identified a clear gap in the premium segment.",ans:"landscape"},
+  {sent:"The brand's value _______ was defined as the only plant-based meal kit that delivered restaurant-quality results in under 30 minutes, targeted at busy urban professionals.",ans:"proposition"},
+  {sent:"The revenue _______ projected a 22% increase in branded sales in year one, based on historical data from a comparable brand repositioning campaign conducted in 2021.",ans:"forecast"}
+],
+v3tf:[
+  {stmt:"An executive summary should be written first because it sets the direction for the rest of the marketing plan.",ans:false},
+  {stmt:"The SOSTAC framework stands for Situation, Objectives, Strategy, Tactics, Actions, and Control.",ans:true},
+  {stmt:"Signposting language is used in presentations to guide the audience through the structure and signal transitions between sections.",ans:true},
+  {stmt:"A strong strategic rationale only needs to state what the strategy is, without explaining why it was chosen over alternatives.",ans:false},
+  {stmt:"A risk register is a document that lists potential risks to a marketing plan along with their likelihood, impact, and mitigation actions.",ans:true},
+  {stmt:"When handling an objection in a Q&A, the recommended technique is to immediately disagree and restate your original position.",ans:false},
+  {stmt:"Budget rationale refers to the written justification for each line of a marketing budget, explaining the investment and expected return.",ans:true},
+  {stmt:"A value proposition is a statement of the unique benefit a product or service delivers to the target customer and why it is preferable to alternatives.",ans:true},
+  {stmt:"In a marketing plan presentation, the goal is primarily to share information rather than to persuade and secure approval.",ans:false},
+  {stmt:"Strategic alignment refers to the degree to which a marketing plan's objectives and activities support the broader business strategy.",ans:true}
+],
+g1:{questions:[
+  {q:"Which phrase most effectively opens a marketing plan presentation for a board audience?",opts:["I have got a lot to get through today, so let me just dive straight in.","Today I will take you through our proposed marketing plan for 2025. I will cover four areas: the market situation, our objectives, the recommended strategy, and the budget.","I thought we could start by looking at some data.","The plan is quite complex so I will try to summarise the main points."],ans:1},
+  {q:"Which phrase best transitions from the situational analysis to the objectives section?",opts:["Anyway, moving on...","Now I want to talk about objectives.","Having established that the category is growing at 8% while our share remains flat, I would now like to show you how our objectives are designed to capture that growth.","Let me now show you slide seven."],ans:2},
+  {q:"Which phrase best signals a key finding the audience should pay particular attention to?",opts:["This is just one data point among many.","I want to draw your attention to a critical finding: our cost per acquisition is three times the category benchmark.","You might find this interesting if you have time to look at it later.","This chart shows some numbers that could be relevant."],ans:1},
+  {q:"Which phrase best introduces evidence to support a strategic claim?",opts:["I think this is probably the case.","This seems to be true based on my experience.","As the data on this slide demonstrates, the premium segment is growing at twice the rate of the mass market.","It is generally believed that this channel is effective."],ans:2},
+  {q:"Which phrase best summarises a section before moving on?",opts:["OK so that is that section done.","In summary, the situational analysis confirms three things: a growing market, a clear positioning gap, and an underperforming current strategy. This leads me to our objectives.","I think you have got the idea now.","Let me move on because we are running short of time."],ans:1},
+  {q:"Which phrase best introduces the recommendation at the end of a presentation?",opts:["So basically we think you should approve the budget.","Well, I think that is probably everything.","On the basis of the analysis I have presented, we are recommending approval of a three-year marketing programme at a budget of GBP1.2M annually, with a 12-month performance review.","I hope you found that interesting and will consider what I have said."],ans:2},
+  {q:"Which phrase best connects the strategy section to the tactics section?",opts:["Now I am going to talk about something different.","Building on the strategic priorities I have just outlined, I would now like to show you the specific tactics that will deliver each one.","Tactics are next on the agenda.","Let me move on to slide twelve."],ans:1},
+  {q:"Which phrase most professionally signals that you are reaching the end of the presentation?",opts:["OK, I think that is about everything.","Before I close, let me summarise the three things I would like you to take away from this presentation.","I am nearly done now.","We are almost at the end so bear with me."],ans:1},
+  {q:"Which phrase best introduces a section of data evidence in a plan presentation?",opts:["There is some data you might want to look at.","If I can draw your attention to this chart, which shows the conversion rate trend over the past 12 months...","Here is a graph.","The data is on this slide."],ans:1},
+  {q:"Which phrase most effectively closes the Q&A and ends the presentation?",opts:["OK, I think we are done. Any more questions?","Thank you for your questions. I will circulate the full plan document and the financial appendix by close of business today. I look forward to your feedback.","Right, I guess we should wrap up.","Is that everything? Shall we stop there?"],ans:1}
+]},
+g2:{questions:[
+  {q:"'_______ the budget represents a 40% increase on last year, the projected return is modelled conservatively and exceeds the target ROI.' Which word best begins this sentence?",opts:["Because","Although","Therefore","Furthermore"],ans:1},
+  {q:"'The market is highly competitive. _______, our research has identified a clear positioning gap in the premium segment that no current brand is occupying.'",opts:["Therefore","As a result","However","In addition"],ans:2},
+  {q:"'_______ the challenging economic environment, customer demand data for this category remains robust, with search volumes up 18% year-on-year.'",opts:["Although","Despite","However","Because"],ans:1},
+  {q:"'Paid social generates strong reach. _______, email consistently delivers a higher return per pound invested, particularly for the repeat purchase objective.'",opts:["Furthermore","In addition","On the other hand","As a result"],ans:2},
+  {q:"'_______ the first year will involve higher setup costs as we build the content programme, the investment will generate compounding returns from year two onwards.'",opts:["Despite","Therefore","Although","In addition"],ans:2},
+  {q:"'_______, this is an ambitious three-year target. But it is grounded in category data and is consistent with what comparable brands have achieved in similar repositioning programmes.'",opts:["Admittedly","Therefore","Furthermore","Nevertheless"],ans:0},
+  {q:"'_______ the fact that we are entering a new channel, our research suggests strong audience alignment and we have mitigated the execution risk through a phased launch plan.'",opts:["Although","Despite","However","In addition"],ans:1},
+  {q:"'Brand awareness is below target among the 25-to-40 demographic. _______, our conversion rate within that segment is the highest we have recorded, indicating strong intent.'",opts:["Furthermore","In addition","Therefore","Nevertheless"],ans:3},
+  {q:"'_______ the proposed channel mix will require a significant internal capability investment, the long-term return justifies the short-term cost.'",opts:["Therefore","As a result","While","In addition"],ans:2},
+  {q:"'_______ our current social media presence is smaller than competitors, our engagement rate is significantly higher, suggesting a more loyal and responsive audience.'",opts:["Because","Therefore","Although","In addition"],ans:2}
+]},
+g3:{questions:[
+  {q:"A stakeholder asks: 'Can you explain why the digital budget is 60% of the total?' Which response is most professional?",opts:["Because digital is the most important channel these days.","I understand why you are asking about that allocation. The digital focus reflects where our target audience is making purchase decisions: 74% of category consideration journeys now start online. I am happy to walk through each digital line individually.","Digital is just where the market is going.","We always do it this way because it works."],ans:1},
+  {q:"A board member asks a question you cannot answer immediately. Which response is most appropriate?",opts:["I actually do not know the answer to that.","Let me pretend I know and give a rough estimate.","That is a very important question. I do not have that specific data with me today, but I will provide a precise answer in writing by end of business tomorrow.","Can we move on? I will deal with that later."],ans:2},
+  {q:"The CFO challenges your revenue forecast: 'These projections seem optimistic.' Which response is most effective?",opts:["I disagree. I think they are accurate.","I understand that concern. The forecasts are based on a conservative application of the returns we achieved in our 2022 pilot campaign, adjusted downward by 15% to account for market uncertainty. I am happy to share the full model.","They are optimistic, yes, but that is intentional.","I cannot argue with you on that. We can lower them if you prefer."],ans:1},
+  {q:"A stakeholder says: 'I am not convinced the influencer channel will work for this brand.' Which response demonstrates the best Q&A technique?",opts:["It will definitely work. I am confident.","That is a fair concern, and one I anticipated. The evidence from three comparable brand campaigns in this category shows an average CPA 40% lower than paid social. I would also point to our own Q3 pilot results on slide eighteen.","You might be right. We could remove it from the plan.","Influencer marketing always works if you do it correctly."],ans:1},
+  {q:"Which phrase most professionally buys time to think when facing a difficult question?",opts:["Give me a second, I am thinking.","That is a good question. Could you clarify what aspect of the budget allocation you are most concerned about, so I can address it precisely?","I did not prepare for that question.","Can someone else answer that?"],ans:1},
+  {q:"A stakeholder partially agrees but has a concern: 'The strategy makes sense, but I am worried about the timeline.' Which response is best?",opts:["The timeline is fine. I checked it carefully.","I take your point on the timeline, and it is something the team has discussed at length. The critical path items are identified in the implementation roadmap on slide twenty-two, and we have built a two-week contingency buffer into each phase.","We can change the timeline if you want.","You are right, the timeline might be a problem."],ans:1},
+  {q:"Which phrase most effectively redirects a question to evidence already presented?",opts:["That is covered somewhere in the slides.","If I can draw your attention to slide nine, which addresses this directly: the brand awareness data there shows exactly the pattern you are asking about.","I think I mentioned that earlier.","The answer is in the appendix somewhere."],ans:1},
+  {q:"A senior leader says: 'Your market share target of 15% seems very high.' Which response best uses concessive language?",opts:["It is high, but we can try.","I understand why that figure might appear ambitious. I would point out, however, that the category is growing at 8% annually and our current share has been static for three years. The 15% target represents a proportionate capture of existing growth rather than growth at the expense of competitors.","Let me reduce it to 12% then.","That target was set by the CEO, not by me."],ans:1},
+  {q:"Which phrase most professionally closes a Q&A exchange after answering a difficult question?",opts:["OK, is that done?","Does that address your concern? I am happy to discuss further after the meeting if you would like to go into more detail.","Right. Next question.","Can we move on now?"],ans:1},
+  {q:"Which opening phrase most effectively acknowledges a challenging question before answering?",opts:["That is outside the scope of today's presentation.","Thank you for raising that &mdash; it is a question I think many people in this room may share, so I want to address it directly.","I was not expecting that question.","Other people have asked about this too."],ans:1}
+]},
+listening:[
+{
+  emoji:"📋",
+  title:"Activity 1: The Five Sections Every Marketing Plan Presentation Must Include",
+  sub:"Sophie Harrington, Marketing Strategy Consultant — Masterclass introduction",
+  level:"B1",type:"Multiple Choice",focus:"Listening for main ideas",
+  transcript:`Good morning everyone. My name is Sophie Harrington, and for the past twelve years I have been helping marketing teams turn their plans into approved, funded programmes. Today I want to focus on something very specific: the five sections that every marketing plan presentation must include if it is going to succeed with a senior audience.
+
+Section one: the market opportunity. Before you ask anyone for money, you need to show them why the opportunity is worth investing in. What is the size of the market? How fast is it growing? What is your current position relative to the market? This section sets the commercial context and should make your audience feel that not investing would be the riskier choice.
+
+Section two: the situational analysis. This is where you show you understand the world your brand is operating in. Competitors, customer behaviour, category trends, and your own performance data. The situational analysis is what gives your strategy credibility. A strategy without a rigorous situational analysis looks like guesswork.
+
+Section three: clear, measurable objectives. Not aspirations. Not directions. Actual objectives with numbers and time horizons attached. If you cannot say precisely what success looks like in twelve months, you are not ready to present your plan.
+
+Section four: the strategic rationale. This is the heart of the plan. You have shown where you are and where you want to be. Now you need to explain how you are going to get there, and why this approach rather than an alternative. This is where you earn your credibility as a strategic thinker.
+
+And section five: the evaluation framework. How will you measure success? What metrics will you track? How often will you report? This section signals to senior stakeholders that you are accountable and that the plan is not just a wish list but a commitment. Boards love accountability frameworks because they reduce the perceived risk of the investment.
+
+These five sections, in this order, create a logical argument that takes your audience from the current reality to a compelling future, with a clear and credible path between the two.`,
+  questions:[
+    {q:"How long has Sophie been helping marketing teams get their plans approved?",opts:["Five years","Eight years","Twelve years","Twenty years"],ans:2},
+    {q:"What does Sophie say section one, the market opportunity, should make the audience feel?",opts:["Excited about the creative possibilities of the campaign","Confident that the marketing team has done thorough research","That not investing would be the riskier choice","That the budget requested is reasonable and well-justified"],ans:2},
+    {q:"According to Sophie, what gives a strategy credibility?",opts:["A large and detailed set of slides demonstrating thorough preparation","A rigorous situational analysis showing understanding of the market","A team of experienced consultants who have validated the approach","A list of successful campaigns the team has run in the past"],ans:1},
+    {q:"What does Sophie say clear objectives must include?",opts:["Only a directional statement of intent, without specific numbers","Numbers and time horizons attached to each objective","A description of the channels to be used to achieve each objective","The names of the team members responsible for each objective"],ans:1},
+    {q:"What does Sophie describe as the heart of the plan?",opts:["The market opportunity section that opens the presentation","The situational analysis that establishes market context","The strategic rationale: explaining how you will get there and why this approach","The evaluation framework that demonstrates accountability"],ans:2},
+    {q:"What does Sophie say the evaluation framework signals to senior stakeholders?",opts:["That the team has enough data to be certain the plan will succeed","That the marketing budget is being spent as efficiently as possible","That the team is accountable and the plan is a commitment rather than a wish list","That the agency partners have been thoroughly briefed and are ready to execute"],ans:2},
+    {q:"In what order does Sophie say the five sections should be presented?",opts:["Objectives, Situational Analysis, Market Opportunity, Strategic Rationale, Evaluation","Situational Analysis, Objectives, Market Opportunity, Strategic Rationale, Evaluation","Market Opportunity, Situational Analysis, Objectives, Strategic Rationale, Evaluation","Strategic Rationale, Market Opportunity, Situational Analysis, Objectives, Evaluation"],ans:2},
+    {q:"What does Sophie say a strategy without a rigorous situational analysis looks like?",opts:["An interesting hypothesis that needs further research","A creative vision without commercial grounding","Guesswork","An overly academic exercise disconnected from business reality"],ans:2}
+  ]
+},
+{
+  emoji:"✍️",
+  title:"Activity 2: How to Write an Executive Summary That Gets Read",
+  sub:"Marcus Webb, Head of Strategy — Client workshop session",
+  level:"B1",type:"Multiple Choice",focus:"Listening for specific information",
+  transcript:`Good afternoon. Today I want to talk about the executive summary, because in my experience it is the single most misunderstood section of a marketing plan. Most people write it first and treat it as an introduction. In fact, it should be written last and should function as a completely self-contained document.
+
+Here is the reality: in many organisations, the executive summary is the only part of the marketing plan that the CEO or CFO will read before the presentation. Everything else &mdash; the full situational analysis, the detailed channel breakdown, the implementation roadmap &mdash; they may never read at all. So your executive summary has to do the full job of the plan in two pages.
+
+What must a great executive summary include? Let me walk you through it. First: the situation in two or three sentences. Where is the business now, what is the market context, and what is the central challenge or opportunity that the plan is responding to? Do not include data tables or charts here. Just the key headline.
+
+Second: the recommendation, stated clearly. Not a vague direction. A specific recommendation. "We recommend a three-year investment of GBP1.2M to reposition the brand in the premium segment, targeting urban professionals aged 30 to 50." That is a recommendation. "We recommend investing in the brand to grow market share" is not.
+
+Third: the objectives, in bullet form. Two or three measurable outcomes that the plan is committed to achieving, with a time horizon for each.
+
+Fourth: the key strategic choices. In two or three sentences, what is the strategy and why was it chosen over alternatives?
+
+Fifth: the budget summary. Total investment, and the top-level allocation across the main areas of spend.
+
+And sixth: the evaluation approach. How will success be measured and reported?
+
+One more critical point: the executive summary must be written in clear, direct, non-technical language. If a board member who has no marketing background reads it and cannot understand exactly what you are recommending, you need to rewrite it.`,
+  questions:[
+    {q:"When does Marcus say the executive summary should be written?",opts:["First, before any other section, to set the direction for the plan","In parallel with the other sections as each one is completed","Last, once all other sections are finalised","By an external copywriter to ensure it is clear and well-written"],ans:2},
+    {q:"What does Marcus say the executive summary should function as?",opts:["An introduction that sets the scene for the full plan","A completely self-contained document that covers the full content of the plan","A list of the main data sources used in the situational analysis","A summary of the team responsible for executing the plan"],ans:1},
+    {q:"According to Marcus, how much of the marketing plan might a CEO or CFO read before the presentation?",opts:["All of it, in preparation for asking detailed questions","The first half, including the situational analysis and objectives","Only the executive summary, with the rest never read at all","The executive summary and the budget section only"],ans:2},
+    {q:"Which of the following does Marcus describe as a specific recommendation, rather than a vague direction?",opts:["We recommend investing in the brand to grow market share.","We recommend a three-year investment of GBP1.2M to reposition the brand in the premium segment.","We recommend focusing on digital channels to improve engagement.","We recommend a more targeted approach to marketing communications."],ans:1},
+    {q:"How many measurable outcomes does Marcus say should be listed in the objectives section?",opts:["At least five to demonstrate ambition","At least ten to be comprehensive","Two or three, with a time horizon for each","One single objective to maintain strategic focus"],ans:2},
+    {q:"What does Marcus say the key strategic choices section should explain?",opts:["The detailed tactical plan for each channel in the first 90 days","What the strategy is and why it was chosen over alternatives, in two or three sentences","The full agency briefing process and timeline for creative development","The names of all competitor brands whose strategies were assessed"],ans:1},
+    {q:"What does Marcus say about the language used in the executive summary?",opts:["It should use technical marketing language to demonstrate expertise","It should be written in the same style as the full plan","It must be clear and direct so that a board member with no marketing background can understand it","It should be formal and structured, with numbered sections and bullet points"],ans:2},
+    {q:"Which of the following is NOT listed as one of the six elements Marcus says an executive summary must include?",opts:["The situation in two or three sentences","The recommendation, stated clearly","A detailed channel breakdown showing the media plan","The evaluation approach"],ans:2}
+  ]
+},
+{
+  emoji:"🤝",
+  title:"Activity 3: Handling Questions and Objections in a Plan Presentation",
+  sub:"Elena Vasquez, CMO &mdash; Executive development programme",
+  level:"B2",type:"Multiple Choice",focus:"Understanding professional explanations",
+  transcript:`Good evening everyone. I want to spend this session on something that most presentation training programmes do not cover well enough: the Q&A phase of a marketing plan presentation. Because in my experience, this is where plans live or die. I have seen brilliant plans rejected because the presenter fell apart under questioning, and I have seen average plans approved because the presenter handled the Q&A with such composure and authority that the board gained confidence in the team rather than just in the plan.
+
+Let me start with the most important principle: every question is an opportunity. Even a hostile question is an opportunity. When a CFO challenges your budget assumption, that is not an attack &mdash; it is an invitation to demonstrate the rigour of your thinking. If your thinking is rigorous, the question gives you the platform to prove it. If it is not rigorous, the question is doing you a favour by surfacing that before the plan is approved rather than after.
+
+The second principle: prepare for questions before the presentation, not during it. Before any major plan presentation, I sit down with my team and we spend at least two hours generating every possible question we might be asked. Then we write answers. Not rough ideas &mdash; actual written answers, specific and data-grounded. By the time we walk into the room, we have already answered the questions we are going to be asked. The Q&A becomes a performance, not an improvisation.
+
+Third principle: acknowledge before you answer. This is one of the most powerful techniques in professional communication and one of the least used. When someone raises an objection or a concern, the instinct is to immediately counter it. Resist that instinct. Instead, spend one sentence acknowledging the legitimacy of the question: "I understand why you might have concerns about the timeline here." Then answer. This technique does something remarkable: it removes the adversarial dynamic from the exchange. The questioner feels heard, and you appear thoughtful rather than defensive.
+
+Fourth: know what you do not know, and say so. Nothing destroys credibility faster than being caught bluffing. If you do not know the answer to a question, say so directly, commit to finding out, and give a specific time by which you will provide the answer. This is not a sign of weakness. It is a sign of integrity, and senior leaders respect it.
+
+Finally: control the Q&A energy. If a question goes off topic, redirect it professionally. If the Q&A runs long, offer to continue the conversation outside the formal session. You are the presenter &mdash; you are responsible for the energy and direction of the room, even in the Q&A phase.`,
+  questions:[
+    {q:"What does Elena say about plans and Q&A performance in her experience?",opts:["The quality of the plan is always more important than the Q&A performance","Brilliant plans are never rejected regardless of Q&A performance","Brilliant plans can be rejected because of a poor Q&A, and average plans can be approved because of a strong one","Q&A performance only matters in presentations to the CFO, not to the full board"],ans:2},
+    {q:"What does Elena say every question represents?",opts:["A risk to the credibility of the plan and the presenter","An opportunity, including hostile questions from senior stakeholders","A distraction from the main flow of the presentation argument","A sign that the presentation was not clear enough in that section"],ans:1},
+    {q:"When does Elena say you should prepare for questions?",opts:["During the Q&A itself, as questions arise","Immediately after the presentation ends, during the break","Before the presentation, spending at least two hours generating and writing answers","In the week after the presentation, to prepare for any follow-up meetings"],ans:2},
+    {q:"What does Elena say about the quality of prepared answers?",opts:["Rough ideas are sufficient as long as you know the direction of the answer","General answers that cover multiple related questions are most efficient","Actual written answers, specific and data-grounded, not rough ideas","Two-page written answers for the most complex topics are ideal"],ans:2},
+    {q:"What does Elena describe as the most powerful technique in professional communication?",opts:["Using data and evidence to immediately counter any objection raised","Redirecting difficult questions to a follow-up meeting to maintain presentation flow","Acknowledging the legitimacy of a question or concern before answering it","Demonstrating confidence by maintaining eye contact and never hesitating"],ans:2},
+    {q:"What does acknowledging a question before answering do, according to Elena?",opts:["It gives the presenter more time to think of the right answer","It removes the adversarial dynamic: the questioner feels heard and the presenter appears thoughtful","It signals to the audience that the question was anticipated and prepared for","It demonstrates emotional intelligence but can sometimes appear evasive"],ans:1},
+    {q:"What does Elena say about admitting you do not know an answer?",opts:["It is a serious weakness that undermines credibility in the room","It is acceptable only for junior presenters but not for senior marketing leaders","It is a sign of integrity that senior leaders respect, provided you commit to finding out","It should be avoided by preparing thoroughly so that no question is unanswerable"],ans:2},
+    {q:"What responsibility does Elena say the presenter holds even during the Q&A phase?",opts:["To ensure every question receives a complete and detailed answer","To remain silent and let the audience drive the direction of the discussion","To control the energy and direction of the room","To invite other team members to answer questions in their areas of expertise"],ans:2}
+  ]
+},
+{
+  emoji:"💼",
+  title:"Activity 4: Presenting Budget and ROI to a CFO",
+  sub:"James Okafor, Marketing Finance Director &mdash; Senior leadership programme",
+  level:"B2",type:"Multiple Choice",focus:"Listening for detail and implication",
+  transcript:`Thank you for having me. I want to talk about something very specific today: how to present your marketing budget and its projected return to a CFO or finance leader. Because this is where more marketing plan presentations fail than at any other point. And it is entirely avoidable.
+
+Let me start with a fundamental truth. CFOs do not think about marketing in the same way that marketers do. They do not care about brand, creativity, engagement, or reach in the abstract. What they care about is this: if I put GBP1 into marketing, how confident am I that I will get more than GBP1 out? That is the question your budget presentation has to answer. Not approximately. Not directionally. Specifically and credibly.
+
+The first thing you need to do is disaggregate your budget by channel and by objective. Not a single total marketing budget number. A line-by-line breakdown showing what each investment is intended to achieve, what it has achieved historically where you have data, and what you are projecting it will achieve in the plan period. CFOs are trained to find the weakest assumption in any financial model and press on it. Your job is to have anticipated which assumptions they will challenge and to have the supporting evidence ready.
+
+Second: use language that a CFO uses. Return on investment. Payback period. Cost per acquisition. Incremental revenue. Do not use marketing-specific jargon that a finance leader will find imprecise or opaque. Translate every marketing metric into a financial output. Your email programme generates GBP4.20 for every GBP1 invested. Your influencer programme delivers new customers at a 38% lower cost than your paid search average. That is the language of the finance team, and speaking it fluently demonstrates that you understand the commercial implications of your own recommendations.
+
+Third: be honest about uncertainty. Every revenue forecast involves assumptions, and a CFO knows this. What they do not respect is overconfidence. Present your projections with a range: a base case, an upside case, and a downside case. Explain the key assumptions behind each. This demonstrates analytical maturity and commercial awareness, and it actually increases credibility rather than decreasing it.
+
+Fourth: connect every budget line to a measurable outcome. Not just "we will invest GBP40,000 in content marketing because content is important." Instead: "we will invest GBP40,000 in the content programme, which we project will generate 4,200 organic visits per month to our key product pages by Q4, based on the performance of our existing content over the past six months." That is a sentence a CFO can evaluate, challenge, and ultimately approve.
+
+And finally: ask for a specific decision, not a general endorsement. Do not end your budget presentation by saying "we hope you will support the plan." Say: "I am asking for approval of a marketing budget of GBP850,000 for the financial year, broken down as shown on this slide, with a 90-day review after launch to assess performance against the agreed KPIs." That is a specific, accountable request that a CFO can approve, modify, or decline. And a decision is always better than ambiguity.`,
+  questions:[
+    {q:"What does James say is the fundamental question a CFO wants answered about a marketing budget?",opts:["How will this investment improve brand awareness and customer perception?","If I put GBP1 into marketing, how confident am I that I will get more than GBP1 out?","Which channels will deliver the most impressions for the lowest cost?","How does this budget compare to what competitors are spending in the same category?"],ans:1},
+    {q:"What does James say about presenting the total marketing budget as a single number?",opts:["It is the most efficient way to present budget information to a busy CFO","It is acceptable if accompanied by a channel strategy overview","It is insufficient: CFOs need a line-by-line breakdown by channel and objective","It is only appropriate for initial conversations before the full plan is presented"],ans:2},
+    {q:"What does James say CFOs are trained to do with financial models?",opts:["Accept them at face value if the total numbers are reasonable","Find the weakest assumption and press on it","Approve them quickly if the marketing team has a strong track record","Focus only on the total cost rather than individual line assumptions"],ans:1},
+    {q:"Which of the following does James list as an example of translating marketing metrics into financial language?",opts:["Our email engagement rate is 4.2%, which is above the industry average.","Our content programme generated 180,000 organic visitors last quarter.","Your email programme generates GBP4.20 for every GBP1 invested.","Our influencer campaign delivered 2.3 million impressions in the first week."],ans:2},
+    {q:"What does James say about presenting revenue forecasts?",opts:["Always present the most optimistic forecast to demonstrate ambition","Present a single base case projection to avoid appearing uncertain","Present a range: base case, upside, and downside, with key assumptions for each","Avoid revenue forecasts as they invite challenge that can derail the presentation"],ans:2},
+    {q:"What does James say presenting revenue ranges demonstrates?",opts:["That the team lacks confidence in its own projections","Analytical maturity and commercial awareness, which increases credibility","That the market is too unpredictable to forecast accurately","That the marketing team needs more data before committing to specific targets"],ans:1},
+    {q:"How does James say you should frame a content investment of GBP40,000?",opts:["We will invest in content because content marketing is important for modern brands.","We will invest GBP40,000 in content to improve brand awareness and engagement.","We will invest GBP40,000 in content, which will generate 4,200 organic visits per month to key product pages by Q4, based on existing six-month performance data.","We will invest GBP40,000 in content, which typically delivers positive results within 12 months."],ans:2},
+    {q:"What does James say you should ask for at the end of a budget presentation?",opts:["A general expression of support for the overall marketing direction","A follow-up meeting to discuss any remaining concerns before a decision is made","A specific decision: approval of a defined budget amount with a named review period","An informal indication of whether the board is likely to support the full request"],ans:2}
+  ]
+}
+],
+cs1:{questions:[
+  {q:"What was Meridian Foods' market share, and what was the category growth rate?",opts:["Market share 8%, category growth 11.4%","Market share 11.4%, category growth 8%","Market share 15%, category growth 11.4%","Market share 11.4%, category growth 15%"],ans:1},
+  {q:"How long did the marketing director spend preparing the plan and the presentation respectively?",opts:["Two weeks on the plan and six weeks on the presentation","Six weeks on the plan and two weeks on the presentation","Four weeks on each","Eight weeks on the plan and one week on the presentation"],ans:1},
+  {q:"How did the marketing director prepare for the board presentation in terms of audience research?",opts:["She sent a pre-presentation survey to all board members","She asked the CEO to brief her on the priorities of each board member","She researched each board member individually: their priorities, past questions, and the language they used","She held individual meetings with each board member before the formal presentation"],ans:2},
+  {q:"What three objections did the marketing director identify that she would need to pre-empt?",opts:["Timeline concerns, channel strategy challenges, and competitive landscape questions","Budget challenge from CFO, international strategy from CEO, retailer relationships from NEDs","Revenue forecast accuracy, team capability, and agency selection","Market sizing, customer research methodology, and KPI selection"],ans:1},
+  {q:"What did the opening slide of the presentation show?",opts:["The brand history and heritage of Meridian Foods","The proposed budget broken down by channel","The market opportunity: 8% category growth versus flat market share","A comparison of Meridian against its three main competitors"],ans:2},
+  {q:"What did the situational analysis establish about the brand's problem?",opts:["A distribution problem that required investment in retailer relationships","A pricing problem requiring a repositioning to a lower price point","A strong awareness but weak conversion, indicating a positioning rather than distribution problem","A brand awareness problem requiring significant above-the-line advertising investment"],ans:2},
+  {q:"What concessive language did the strategic rationale section use to address the budget increase?",opts:['"Although the budget is higher this year, we are confident in the results."','"Although the proposed budget represents a 40% increase, our current CPA is three times the benchmark, suggesting significant inefficiency in existing spend."','"Despite the budget increase, this plan is lower risk than our previous approach."','"While the budget is significant, the strategy is well-researched and supported by data."'],ans:1},
+  {q:"What was the specific call to action at the end of the presentation?",opts:["A request for further time to refine the strategy before a decision","Approval of a GBP1.2M annual marketing budget for a three-year programme with a 12-month review","Approval of a pilot programme at a reduced budget before committing to the full investment","A decision to appoint an external agency to validate the strategy"],ans:1},
+  {q:"What was the outcome of the presentation?",opts:["The board deferred the decision pending additional financial modelling","The board approved half the requested budget with a six-month review","The board approved the full budget at the same meeting","The board rejected the plan and asked for a revised strategy"],ans:2},
+  {q:"What does the Meridian Foods case study demonstrate about preparing for Q&A?",opts:["That detailed financial models are the most important preparation for a board Q&A","That anticipating questions and preparing specific answers before entering the room is essential","That the CFO will always ask the most difficult questions regardless of preparation","That Q&A preparation is less important than the quality of the slides"],ans:1}
+]},
+cs2:{questions:[
+  {q:"Why was the Apex Digital marketing plan initially rejected?",opts:["Because the strategy was fundamentally flawed and not supported by data","Because the budget requested was too high for the business to afford","Because of how it was presented, not because of the strategy itself","Because the leadership team disagreed with the channel mix recommended"],ans:2},
+  {q:"How many slides were in the original presentation deck?",opts:["12","18","28","34"],ans:3},
+  {q:"How long did the presenter spend on the methodology section before reaching the strategy?",opts:["Five minutes","Eight minutes","Twelve minutes","Twenty minutes"],ans:2},
+  {q:"At what slide number had the presenter placed the executive summary?",opts:["Slide 1","Slide 5","Slide 14","Slide 28"],ans:3},
+  {q:"What question did the CEO ask during the Q&A that the presenter struggled to answer well?",opts:["Why the digital budget was 60% of the total","What the budget rationale was for the paid search allocation","How the plan would deliver international expansion","What the competitive analysis had found about the main rivals"],ans:1},
+  {q:"Which unprofessional phrases did the presenter use when answering the CFO question about revenue forecast methodology?",opts:['"I believe" and "it should be"','"we think" and "hopefully"','"probably" and "I suppose"','"it seems" and "maybe"'],ans:1},
+  {q:"What three things did the leadership team ask for in the revised presentation?",opts:["More data, longer slides, and a revised timeline","A one-page executive summary, clearer budget rationale with justified assumptions, and a concise 10-slide SOSTAC-structured deck","A revised strategy, lower budget, and new agency recommendations","A shorter presentation, less data, and a stronger creative vision"],ans:1},
+  {q:"What did the presenter do differently when opening the revised presentation?",opts:["He apologised for the quality of the first presentation","He brought additional team members to co-present different sections","He opened with the executive summary on slide one and led with the recommendation","He reduced the total number of data slides to avoid challenging questions"],ans:2},
+  {q:"How did the presenter handle the CFO budget question in the revised Q&A?",opts:["He admitted the assumptions were uncertain and offered to revise them","He deflected the question to a written follow-up after the meeting","He answered with a direct two-sentence response before offering to share the full model","He referred the CFO to page twelve of the appendix document"],ans:2},
+  {q:"What central lesson does the Apex Digital case study draw?",opts:["Marketing teams should always hire professional presentation coaches","CFOs are the most important audience for any marketing plan presentation","A great plan poorly presented is not a great plan, but a missed opportunity","The SOSTAC framework always produces better presentations than other structures"],ans:2}
+]},
+fa:{questions:[
+  {q:"What is the purpose of an executive summary in a marketing plan?",opts:["To introduce the document and provide background on the marketing team","To be a self-contained overview covering key findings, strategy, budget, and outcomes for senior readers","To summarise only the budget section for finance stakeholders","To list the data sources and research methodology used in the situational analysis"],ans:1},
+  {q:"What does the SOSTAC framework stand for?",opts:["Strategy, Objectives, Segments, Tactics, Audience, and Control","Situation, Objectives, Strategy, Tactics, Actions, and Control","Summary, Outline, Scope, Timeline, Allocation, and Calendar","Stakeholders, Objectives, Segments, Timing, Actions, and Costs"],ans:1},
+  {q:"Which signposting phrase best transitions between sections of a plan presentation?",opts:["Anyway, moving on to the next thing...","OK let me now talk about something different.","Having established the market opportunity, I would now like to show you how our objectives are designed to capture that growth.","The next slide is about objectives."],ans:2},
+  {q:"Which sentence correctly uses a concessive structure to acknowledge a challenge in a plan presentation?",opts:["The budget is high because we need the money to achieve our goals.","Because the budget is higher, the return will also be higher.","Although the proposed budget represents a 40% increase, our current CPA is three times the category benchmark, suggesting significant inefficiency.","The budget is 40% higher but the strategy is better."],ans:2},
+  {q:"What is a strategic rationale in a marketing plan?",opts:["A list of all the tactics planned for each marketing channel","The reasoned argument explaining why the chosen strategy was selected over alternatives","A financial breakdown of the total budget by channel and activity","A description of the target audience's demographics and purchasing behaviour"],ans:1},
+  {q:"Which Q&A response best demonstrates the recommended technique for handling an objection?",opts:["I disagree with your assessment. The data clearly supports our approach.","I understand why you might have concerns about the budget allocation. Let me explain the rationale behind it, which is grounded in our cost per acquisition data.","Can we address that question after the meeting to keep to time?","That is a good point. We can remove that element from the plan if you prefer."],ans:1},
+  {q:"What is the most appropriate response when you do not know the answer to a board question?",opts:["Make your best estimate and present it confidently","Change the subject to a related point you are confident about","Acknowledge it directly, commit to providing a specific answer by a named time","Ask a colleague in the room to answer instead"],ans:2},
+  {q:"What is signposting language used for in a marketing plan presentation?",opts:["To make slides look more polished and professional","To guide the audience through the structure, signalling transitions and connections between sections","To introduce technical data in a way that non-specialists can understand","To summarise the key findings of the situational analysis"],ans:1},
+  {q:"In the Meridian Foods case study, what reframing did the situational analysis achieve?",opts:["It showed the problem was competitive rather than brand-related","It established that the brand needed international expansion before domestic investment","It reframed the problem as a positioning issue rather than a distribution issue, making the case for marketing investment","It demonstrated that the existing budget was being spent on the wrong channels"],ans:2},
+  {q:"What does Text 1 say is the most important step in the plan writing process?",opts:["Choosing the right data sources for the situational analysis","Structuring the plan using a recognised framework such as SOSTAC","Understanding your audience before writing a single word","Writing the executive summary to set the strategic direction"],ans:2},
+  {q:"Which sentence uses a contrastive structure correctly?",opts:["Paid social generates strong reach, therefore email delivers higher ROI.","Paid social generates strong reach, on the other hand email consistently delivers a higher return per pound invested.","Paid social generates strong reach. In addition, email delivers higher ROI.","Paid social generates strong reach because email delivers higher ROI."],ans:1},
+  {q:"In the Apex Digital case study, where did the original presenter place the executive summary?",opts:["At the start, on slide one","In the middle, on slide fourteen","Near the end, on slide twenty-eight","There was no executive summary in the original presentation"],ans:2},
+  {q:"What does Text 2 say the goal of a plan presentation is?",opts:["To share information comprehensively with the senior leadership team","To build confidence, overcome scepticism, align stakeholders, and secure approval","To demonstrate the marketing team's analytical capability and data literacy","To present the creative campaign concepts for feedback before production"],ans:1},
+  {q:"What does James Okafor in the listening activities say CFOs are trained to do?",opts:["Approve marketing budgets quickly if the top-line ROI is above a minimum threshold","Find the weakest assumption in a financial model and press on it","Focus primarily on the total budget rather than individual line items","Reject any budget that shows uncertainty in the revenue projections"],ans:1},
+  {q:"Which phrase most effectively closes a Q&A exchange after answering a difficult question?",opts:["OK, is that done? Next question.","Does that address your concern? I am happy to discuss further after the meeting.","Right, let me move on now.","Can we go to the next question please?"],ans:1},
+  {q:"What is a risk register in a marketing plan?",opts:["A list of competitor brands and their potential responses to the strategy","A financial reserve set aside in case the campaign does not hit its targets","A document listing potential risks to the plan, their likelihood and impact, and proposed mitigation actions","A record of all risks raised by stakeholders during the plan approval process"],ans:2},
+  {q:"According to Sophie Harrington in the listening activities, what does the evaluation framework signal to senior stakeholders?",opts:["That the team has enough data to guarantee the results of the plan","That the marketing budget has been allocated as efficiently as possible","That the team is accountable and the plan is a commitment rather than a wish list","That the agency partners are ready to begin execution immediately"],ans:2},
+  {q:"What is strategic alignment in the context of a marketing plan?",opts:["The degree to which the marketing team agrees with each other on the strategy","The process of aligning the marketing plan presentation with the visual brand guidelines","The degree to which the marketing plan's objectives and activities support the broader business strategy","The alignment of the marketing timeline with the product development roadmap"],ans:2},
+  {q:"Which opening sentence most effectively begins a marketing plan presentation for a board?",opts:["I have got quite a lot to cover today so let me get started.","Today I will take you through our proposed marketing plan. I will cover four sections: the market opportunity, our objectives, the recommended strategy, and the budget.","The plan is quite detailed so I will try to keep it as brief as possible.","I thought we could start by looking at some background data."],ans:1},
+  {q:"What does Text 2 say about audiences that ask probing questions during Q&A?",opts:["It indicates the presentation was unclear and needs to be restructured","It is a sign that stakeholders are taking the plan seriously and are engaged","It suggests the presenter did not provide enough supporting data","It means the plan will likely be rejected regardless of how well the Q&A goes"],ans:1}
+]}
+};
+
+function renderMCQ(containerId,questions,prefix,isListening){
+  const c=document.getElementById(containerId);if(!c)return;
+  const wrap=isListening?'<div class="listen-mcq-wrap">':'';
+  const wrapClose=isListening?'</div>':'';
+  c.innerHTML=wrap+questions.map((item,i)=>`
+    <div class="mcq-item" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((o,j)=>`<div class="mcq-option" onclick="selectOpt('${prefix}',${i},${j})" id="${prefix}-q${i}-o${j}"><span class="opt-letter">${['A','B','C','D'][j]}</span>${o}</div>`).join('')}
+      </div>
+    </div>`).join('')+wrapClose;
+}
+function selectOpt(prefix,qi,oi){
+  const item=DATA[prefix].questions[qi];
+  for(let j=0;j<item.opts.length;j++){const el=document.getElementById(`${prefix}-q${qi}-o${j}`);if(el)el.classList.remove('selected');}
+  const el=document.getElementById(`${prefix}-q${qi}-o${oi}`);if(el)el.classList.add('selected');
+}
+function checkMCQ(prefix){
+  const qs=DATA[prefix].questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#${prefix}-q${i} .mcq-option`);
+    let chosen=-1;opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+    if(chosen===item.ans)score++;
+  });
+  const fb=document.getElementById(`${prefix}-feedback`);
+  if(fb){fb.className='feedback show '+(score>=Math.ceil(total*0.7)?'good':'bad');fb.textContent=score>=Math.ceil(total*0.7)?`Well done! You scored ${score}/${total}.`:`You scored ${score}/${total}. Review the relevant sections and try again.`;}
+  const sc=document.getElementById(`${prefix}-score`);
+  if(sc){sc.className='score-display show';sc.innerHTML=`<div><div class="score-label">Your Score</div><div class="score-val">${score}/${total}</div></div><div style="font-size:13px;color:var(--text-light)">${Math.round(score/total*100)}%</div>`;}
+}
+function renderGaps(){
+  const c=document.getElementById('v2-gaps');if(!c)return;
+  c.innerHTML=DATA.v2gaps.map((g,i)=>`<div class="gap-sentence">${i+1}. ${g.sent.replace('_______',`<input class="gap-input" id="gap-${i}" placeholder="?" autocomplete="off">`)}</div>`).join('');
+}
+function checkGaps(){
+  let score=0;
+  DATA.v2gaps.forEach((g,i)=>{
+    const el=document.getElementById(`gap-${i}`);if(!el)return;
+    const val=el.value.trim().toLowerCase();
+    if(val===g.ans.toLowerCase()){score++;el.style.borderBottomColor='var(--success)';el.style.color='var(--success)';}
+    else{el.style.borderBottomColor='var(--error)';el.style.color='var(--error)';el.value=g.ans;}
+  });
+  const fb=document.getElementById('v2-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`Great work! ${score}/10 correct.`:`${score}/10 correct. Correct answers are shown in red.`;
+}
+const tfAnswers={};
+function renderTF(){
+  const c=document.getElementById('v3-tf');if(!c)return;
+  c.innerHTML=DATA.v3tf.map((item,i)=>`
+    <div class="tf-item" id="tf-${i}">
+      <div class="tf-stmt">${i+1}. ${item.stmt}</div>
+      <div class="tf-btns"><button class="tf-btn" onclick="selectTF(${i},true,this)">True</button><button class="tf-btn" onclick="selectTF(${i},false,this)">False</button></div>
+    </div>`).join('');
+}
+function selectTF(i,val,btn){
+  tfAnswers[i]=val;const row=document.getElementById(`tf-${i}`);
+  row.querySelectorAll('.tf-btn').forEach(b=>b.className='tf-btn');
+  btn.className='tf-btn '+(val?'sel-t':'sel-f');
+}
+function checkTF(){
+  let score=0;
+  DATA.v3tf.forEach((item,i)=>{
+    if(tfAnswers[i]===undefined)return;
+    const row=document.getElementById(`tf-${i}`);
+    row.querySelectorAll('.tf-btn').forEach(b=>{
+      const isTrue=b.textContent.trim()==='True';b.className='tf-btn';
+      if(isTrue===item.ans){b.style.background=item.ans?'#dcfce7':'#fee2e2';b.style.borderColor=item.ans?'var(--success)':'var(--error)';b.style.color=item.ans?'var(--success)':'var(--error)';b.textContent=(isTrue?'True':'False')+' ✓';}
+    });
+    if(tfAnswers[i]===item.ans)score++;
+  });
+  const fb=document.getElementById('v3-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`Excellent! ${score}/10 correct.`:`${score}/10 correct. Review the vocabulary definitions.`;
+}
+function renderListening(){
+  const c=document.getElementById('listening-cards');if(!c)return;
+  c.innerHTML=DATA.listening.map((act,ai)=>`
+    <div class="audio-card">
+      <div class="audio-header">
+        <div class="audio-emoji">${act.emoji}</div>
+        <div><div class="audio-title">${act.title}</div><div class="audio-sub">${act.sub}</div>
+          <div class="audio-tags"><span class="audio-tag tag-level">Level: ${act.level}</span><span class="audio-tag tag-type">${act.type}</span><span class="audio-tag tag-focus">Focus: ${act.focus}</span></div>
+        </div>
+      </div>
+      <div class="player-box">
+        <div class="player-row">
+          <button class="play-btn" id="play-${ai}" onclick="handlePlay(${ai})">&#9654;</button>
+          <div class="player-info"><div class="player-title-sm">${act.title}</div><div class="player-sub-sm">${act.sub}</div></div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="player-progress"><div class="player-progress-fill" id="pf-${ai}"></div></div>
+        <div class="speed-row">
+          <span class="speed-label">Speed:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7&times;</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2&times;</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">&#8617; Replay</button>
+        </div>
+        <div class="tts-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">&#9660; Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans-${ai}">${act.transcript.split('\n\n').map(p=>`<p>${p.trim()}</p>`).join('')}</div>
+      <div class="listen-instruction">&#128203; Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</div>
+      <div class="listen-mcq-wrap">
+        <div class="mcq-title">Questions &mdash; Activity ${ai+1}</div>
+        <div id="la${ai}-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('la${ai}')">Check Answers</button>
+        <div id="la${ai}-feedback" class="feedback"></div>
+        <div id="la${ai}-score" class="score-display"></div>
+      </div>
+    </div>`).join('');
+  DATA.listening.forEach((act,ai)=>{DATA[`la${ai}`]={questions:act.questions};renderMCQ(`la${ai}-mcqs`,act.questions,`la${ai}`,true);});
+}
+const audioState={};
+function handlePlay(ai){
+  const act=DATA.listening[ai];
+  if(!audioState[ai])audioState[ai]={playing:false,speed:0.85};
+  const st=audioState[ai];const btn=document.getElementById(`play-${ai}`);
+  if(st.playing){window.speechSynthesis.cancel();st.playing=false;btn.innerHTML='&#9654;';if(st.timer)clearInterval(st.timer);return;}
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.lang='en-GB';utt.rate=st.speed;utt.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const chosen=voices.find(v=>v.name==='Google UK English Female')||voices.find(v=>v.lang==='en-GB'&&v.name.toLowerCase().includes('female'))||voices.find(v=>v.lang==='en-GB');
+  if(chosen)utt.voice=chosen;
+  const words=act.transcript.split(/\s+/).length;const dur=Math.round(words/(st.speed*2.6));
+  const fmt=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  document.getElementById(`time-${ai}`).textContent=`0:00 / ${fmt(dur)}`;
+  let elapsed=0;
+  st.timer=setInterval(()=>{
+    if(!audioState[ai].playing){clearInterval(st.timer);return;}
+    elapsed++;
+    document.getElementById(`pf-${ai}`).style.width=Math.min(elapsed/dur*100,100)+'%';
+    document.getElementById(`time-${ai}`).textContent=`${fmt(elapsed)} / ${fmt(dur)}`;
+  },1000);
+  utt.onend=()=>{st.playing=false;btn.innerHTML='&#9654;';clearInterval(st.timer);document.getElementById(`pf-${ai}`).style.width='100%';};
+  window.speechSynthesis.speak(utt);st.playing=true;btn.innerHTML='&#9646;&#9646;';
+}
+function setSpeed(ai,spd,btn){
+  if(!audioState[ai])audioState[ai]={playing:false,speed:spd};audioState[ai].speed=spd;
+  btn.closest('.audio-card').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  if(audioState[ai].playing){window.speechSynthesis.cancel();audioState[ai].playing=false;document.getElementById(`play-${ai}`).innerHTML='&#9654;';if(audioState[ai].timer)clearInterval(audioState[ai].timer);setTimeout(()=>handlePlay(ai),80);}
+}
+function replayAudio(ai){
+  if(audioState[ai]){audioState[ai].playing=false;if(audioState[ai].timer)clearInterval(audioState[ai].timer);}
+  window.speechSynthesis.cancel();const pf=document.getElementById(`pf-${ai}`);if(pf)pf.style.width='0%';
+  document.getElementById(`play-${ai}`).innerHTML='&#9654;';setTimeout(()=>handlePlay(ai),80);
+}
+function toggleTranscript(ai){document.getElementById(`trans-${ai}`).classList.toggle('open');}
+function updateWordCount(id,max){
+  const ta=document.getElementById(`${id}-text`);const wc=document.getElementById(`${id}-wc`);if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  wc.textContent=`${words} / ${max} words`;wc.style.color=words>max?'var(--error)':'var(--text-light)';
+}
+function submitWriting(id){
+  const ta=document.getElementById(`${id}-text`);if(!ta||ta.value.trim().length<30){alert('Please write your response before submitting.');return;}
+  const s=document.getElementById(`${id}-success`);s.style.display='block';s.scrollIntoView({behavior:'smooth'});
+}
+let attemptCount=0;
+function renderAssessment(){renderMCQ('fa-mcqs',DATA.fa.questions,'fa',false);}
+function submitAssessment(){
+  attemptCount++;const qs=DATA.fa.questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#fa-q${i} .mcq-option`);let chosen=-1;
+    opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    if(chosen===item.ans)score++;
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+  });
+  const pct=Math.round(score/total*100);const pass=pct>=70;
+  const res=document.getElementById('assessment-result');res.style.display='block';res.scrollIntoView({behavior:'smooth'});
+  document.getElementById('result-score-text').className='result-score '+(pass?'pass':'fail');
+  document.getElementById('result-score-text').textContent=`${pct}% — ${score}/${total}`;
+  document.getElementById('result-msg').textContent=pass?'Congratulations! You have passed Module 11. Excellent work on Presenting a Marketing Plan.':'You did not reach the 70% pass mark. Please review the module content and try again.';
+  const wrap=document.getElementById('retake-wrap');
+  if(!pass&&attemptCount<2)wrap.innerHTML=`<button class="retake-btn" onclick="retakeAssessment()">Retake Assessment (Attempt ${attemptCount+1} of 2)</button>`;
+  else if(attemptCount>=2&&!pass){wrap.innerHTML=`<p style="color:var(--error);font-size:14px;margin-top:12px">You have used both attempts. Please review the module content.</p>`;document.getElementById('assessment-form').style.display='none';}
+  document.getElementById('attempt-badge').textContent=`Attempt ${attemptCount} of 2`;
+}
+function retakeAssessment(){
+  document.getElementById('assessment-result').style.display='none';
+  document.querySelectorAll('#fa-mcqs .mcq-option').forEach(o=>o.classList.remove('selected','correct','wrong'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(id);if(sec)sec.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{if((n.getAttribute('onclick')||'').includes(`'${id}'`))n.classList.add('active');});
+  window.scrollTo({top:0,behavior:'smooth'});trackProgress(id);
+}
+function trackProgress(id){
+  let v=JSON.parse(sessionStorage.getItem('mkt11v')||'[]');
+  if(!v.includes(id)){v.push(id);sessionStorage.setItem('mkt11v',JSON.stringify(v));}
+  const pct=Math.round(v.length/11*100);
+  const pf=document.getElementById('progress-fill');const pp=document.getElementById('progress-pct');
+  if(pf)pf.style.width=pct+'%';if(pp)pp.textContent=pct+'%';
+}
+window.addEventListener('load',()=>{
+  if(window.speechSynthesis){window.speechSynthesis.getVoices();if(window.speechSynthesis.onvoiceschanged!==undefined)window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();}
+  renderMCQ('r1-mcqs',DATA.r1.questions,'r1',false);
+  renderMCQ('r2-mcqs',DATA.r2.questions,'r2',false);
+  renderMCQ('v1-mcqs',DATA.v1.questions,'v1',false);
+  renderGaps();renderTF();
+  renderMCQ('g1-mcqs',DATA.g1.questions,'g1',false);
+  renderMCQ('g2-mcqs',DATA.g2.questions,'g2',false);
+  renderMCQ('g3-mcqs',DATA.g3.questions,'g3',false);
+  renderListening();
+  renderMCQ('cs1-mcqs',DATA.cs1.questions,'cs1',false);
+  renderMCQ('cs2-mcqs',DATA.cs2.questions,'cs2',false);
+  renderAssessment();
+  trackProgress('overview');
+});
+</script>
+</body>
+</html>

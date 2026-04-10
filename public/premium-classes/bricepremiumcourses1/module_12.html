@@ -1,0 +1,2669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 12: Ethics & Corporate Governance — Business Management English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f1f3d;
+  --navy-mid: #1a2f54;
+  --navy-light: #243b6e;
+  --gold: #c9922a;
+  --gold-light: #e8b84b;
+  --cream: #f5f0e8;
+  --cream-dark: #ebe4d6;
+  --white: #ffffff;
+  --text-light: #a8b8d0;
+  --text-mid: #6b7fa3;
+  --red-accent: #c0392b;
+  --green-accent: #27ae60;
+  --sidebar-w: 260px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── SIDEBAR ─── */
+#sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--navy);
+  position: fixed;
+  top: 0; left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar-brand h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.sidebar-brand .subtitle {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  font-weight: 500;
+}
+
+.level-badge {
+  display: inline-block;
+  margin-top: 10px;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.sidebar-section-label {
+  padding: 18px 20px 8px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  font-weight: 600;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+
+.nav-item:hover { background: rgba(255,255,255,0.05); }
+
+.nav-item.active {
+  background: rgba(201,146,42,0.15);
+  border-left-color: var(--gold);
+}
+
+.nav-item .nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-icon { font-size: 16px; }
+
+.nav-label {
+  font-size: 13px;
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+.nav-item.active .nav-label { color: var(--white); font-weight: 500; }
+
+.nav-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--gold);
+  padding: 1px 7px;
+  border-radius: 10px;
+}
+
+/* ─── MAIN ─── */
+#main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-height: 100vh;
+}
+
+/* ─── SECTIONS ─── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ─── HERO BANNER ─── */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1e3a5f 100%);
+  padding: 60px 60px 50px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: 'M12';
+  position: absolute;
+  right: -20px; bottom: -40px;
+  font-family: 'Playfair Display', serif;
+  font-size: 280px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.module-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  font-weight: 500;
+  margin-bottom: 28px;
+}
+
+.hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.hero h2 span { color: var(--gold-light); }
+
+.hero p {
+  font-size: 15px;
+  color: var(--text-light);
+  max-width: 620px;
+  line-height: 1.7;
+  margin-top: 18px;
+  font-weight: 300;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  font-weight: 500;
+}
+
+/* ─── PROGRESS BAR ─── */
+.progress-bar-wrap {
+  background: var(--navy-mid);
+  padding: 16px 60px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.progress-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 10px;
+  width: 0%;
+  transition: width 0.8s ease;
+}
+
+.progress-pct {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+/* ─── CONTENT AREA ─── */
+.content-area {
+  padding: 50px 60px;
+}
+
+/* ─── CARDS ─── */
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  border: 1px solid var(--cream-dark);
+  box-shadow: 0 2px 12px rgba(15,31,61,0.05);
+}
+
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+
+.card-title-bar {
+  width: 40px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+/* ─── SECTION TITLE ─── */
+.section-header {
+  margin-bottom: 32px;
+}
+
+.section-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+
+.section-header p {
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+
+/* ─── LEARNING OUTCOMES ─── */
+.outcomes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.outcome-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--cream);
+  border-radius: 10px;
+  padding: 14px 16px;
+  border-left: 3px solid var(--gold);
+}
+
+.outcome-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  min-width: 24px;
+}
+
+.outcome-text {
+  font-size: 13.5px;
+  color: var(--navy);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* ─── SPEAKING ─── */
+.speaking-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+.speaking-card {
+  background: var(--cream);
+  border-radius: 10px;
+  padding: 18px 20px;
+  border-top: 3px solid var(--gold);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.speaking-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(15,31,61,0.1);
+}
+
+.q-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.q-text {
+  font-size: 13.5px;
+  color: var(--navy);
+  line-height: 1.55;
+}
+
+/* ─── WORD BANK ─── */
+.wordbank-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.word-card {
+  background: var(--navy);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s;
+}
+
+.word-card:hover { transform: translateY(-2px); }
+
+.word-emoji { font-size: 24px; }
+
+.word-term {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.word-def {
+  font-size: 12.5px;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+/* ─── READING ─── */
+.reading-text-box {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 28px;
+  border-left: 4px solid var(--gold);
+}
+
+.reading-text-box h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 16px;
+}
+
+.reading-text-box p {
+  font-size: 14px;
+  color: var(--navy);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.reading-text-box p:last-child { margin-bottom: 0; }
+
+/* ─── MCQ ─── */
+.mcq-block {
+  margin-bottom: 22px;
+}
+
+.mcq-q {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.mcq-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mcq-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cream);
+  border: 2px solid var(--cream-dark);
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 13.5px;
+  color: var(--navy);
+  user-select: none;
+}
+
+.mcq-option:hover { border-color: var(--gold); background: #fdf8f0; }
+.mcq-option.selected { border-color: var(--gold); background: #fdf3e3; }
+.mcq-option.correct { border-color: var(--green-accent); background: #eafaf1; color: #1a6b3d; }
+.mcq-option.incorrect { border-color: var(--red-accent); background: #fdecea; color: #7b1a14; }
+
+.option-letter {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cream-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--navy);
+}
+
+.mcq-option.correct .option-letter { background: var(--green-accent); color: white; }
+.mcq-option.incorrect .option-letter { background: var(--red-accent); color: white; }
+
+.check-btn {
+  margin-top: 14px;
+  background: var(--navy);
+  color: var(--gold-light);
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.check-btn:hover { background: var(--navy-light); }
+
+.score-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--navy);
+  color: var(--gold-light);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 20px;
+  margin-top: 16px;
+}
+
+/* ─── EXERCISE TABS ─── */
+.ex-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 28px;
+  background: var(--cream-dark);
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.ex-tab {
+  flex: 1;
+  text-align: center;
+  padding: 9px 14px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text-mid);
+  transition: all 0.2s;
+}
+
+.ex-tab.active {
+  background: var(--navy);
+  color: var(--gold-light);
+}
+
+/* ─── GRAMMAR ─── */
+.grammar-ref-box {
+  background: var(--navy);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  color: var(--white);
+}
+
+.grammar-ref-box h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--gold-light);
+  margin-bottom: 16px;
+}
+
+.grammar-rule {
+  background: rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  border-left: 3px solid var(--gold);
+}
+
+.grammar-rule .rule-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.grammar-rule p, .grammar-rule li {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.grammar-rule code {
+  font-family: 'DM Mono', monospace;
+  background: rgba(201,146,42,0.2);
+  color: var(--gold-light);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.grammar-rule ul { padding-left: 18px; }
+
+/* ─── GAP FILL ─── */
+.gapfill-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--navy);
+  line-height: 2;
+  margin-bottom: 12px;
+}
+
+.gap-input {
+  border: none;
+  border-bottom: 2px solid var(--gold);
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  padding: 2px 6px;
+  width: 140px;
+  outline: none;
+  text-align: center;
+}
+
+.gap-input.correct { border-color: var(--green-accent); color: var(--green-accent); }
+.gap-input.incorrect { border-color: var(--red-accent); color: var(--red-accent); }
+
+/* ─── TRUE FALSE ─── */
+.tf-item {
+  background: var(--cream);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.tf-statement { font-size: 13.5px; color: var(--navy); flex: 1; line-height: 1.5; }
+
+.tf-buttons { display: flex; gap: 8px; }
+
+.tf-btn {
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: 2px solid var(--cream-dark);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.tf-btn:hover { border-color: var(--gold); }
+.tf-btn.selected-true { background: var(--navy); color: white; border-color: var(--navy); }
+.tf-btn.selected-false { background: var(--navy); color: white; border-color: var(--navy); }
+.tf-btn.correct-answer { background: var(--green-accent); color: white; border-color: var(--green-accent); }
+.tf-btn.wrong-answer { background: var(--red-accent); color: white; border-color: var(--red-accent); }
+
+/* ─── DRAG DROP ─── */
+.dragdrop-area {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.drag-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+  padding: 16px;
+  background: var(--cream);
+  border-radius: 10px;
+  border: 2px dashed var(--cream-dark);
+  align-content: flex-start;
+}
+
+.drag-word {
+  background: var(--navy);
+  color: var(--gold-light);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.15s;
+}
+
+.drag-word:active { cursor: grabbing; transform: scale(1.05); }
+.drag-word.dragging { opacity: 0.5; }
+
+.drop-sentences {
+  flex: 2;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.drop-sentence {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--navy);
+  flex-wrap: wrap;
+  line-height: 1.8;
+}
+
+.drop-zone {
+  min-width: 120px;
+  height: 32px;
+  border: 2px dashed var(--gold);
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  font-size: 13px;
+  color: var(--gold);
+  background: #fdf8f0;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.drop-zone.filled {
+  background: var(--navy);
+  color: var(--gold-light);
+  border-color: var(--navy);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.drop-zone.drag-over { background: #fdf3e3; border-color: var(--gold); border-style: solid; }
+.drop-zone.correct { background: #eafaf1; border-color: var(--green-accent); color: var(--green-accent); }
+.drop-zone.incorrect { background: #fdecea; border-color: var(--red-accent); color: var(--red-accent); }
+
+/* ─── WRITING ─── */
+.writing-prompt {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  color: var(--white);
+}
+
+.writing-prompt h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--gold-light);
+  margin-bottom: 10px;
+}
+
+.writing-prompt p {
+  font-size: 13.5px;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+.writing-meta {
+  display: flex;
+  gap: 14px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.writing-tag {
+  background: rgba(201,146,42,0.2);
+  color: var(--gold-light);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  border: 1px solid rgba(201,146,42,0.3);
+}
+
+.writing-textarea {
+  width: 100%;
+  min-height: 180px;
+  border: 2px solid var(--cream-dark);
+  border-radius: 10px;
+  padding: 16px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  background: var(--cream);
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.2s;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.writing-textarea:focus { border-color: var(--gold); background: white; }
+
+.word-counter {
+  font-size: 12px;
+  color: var(--text-mid);
+  text-align: right;
+  margin-bottom: 12px;
+}
+
+.submit-btn {
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.submit-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+.submit-success {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: #eafaf1;
+  border: 1px solid var(--green-accent);
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 13.5px;
+  color: #1a6b3d;
+  font-weight: 500;
+  margin-top: 12px;
+}
+
+/* ─── LISTENING ─── */
+.listening-activity {
+  background: linear-gradient(135deg, #1a2f54 0%, #0f1f3d 100%);
+  border-radius: 14px;
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+
+.listening-header {
+  padding: 22px 28px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.listening-icon {
+  font-size: 32px;
+  margin-top: 2px;
+}
+
+.listening-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.listening-subtitle {
+  font-size: 13px;
+  color: var(--text-mid);
+}
+
+.listening-tags {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.l-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.l-tag-level { background: rgba(201,146,42,0.2); color: var(--gold-light); border: 1px solid rgba(201,146,42,0.3); }
+.l-tag-type { color: #e8a0a0; background: rgba(192,57,43,0.2); border: 1px solid rgba(192,57,43,0.3); }
+.l-tag-focus { color: var(--text-light); }
+
+/* ─── AUDIO PLAYER ─── */
+.audio-player {
+  background: rgba(0,0,0,0.35);
+  margin: 0 20px 18px;
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+
+.player-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.play-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--red-accent);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.play-btn:hover { background: #e74c3c; transform: scale(1.07); }
+
+.player-info { flex: 1; }
+
+.player-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.player-desc {
+  font-size: 11.5px;
+  color: var(--text-mid);
+}
+
+.player-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text-mid);
+}
+
+.progress-audio {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 4px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  position: relative;
+}
+
+.progress-audio-fill {
+  height: 100%;
+  background: var(--red-accent);
+  border-radius: 4px;
+  width: 0%;
+  transition: width 0.3s;
+}
+
+.speed-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.speed-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-mid);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.speed-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--text-light);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+
+.speed-btn:hover { background: rgba(255,255,255,0.18); }
+.speed-btn.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+
+.replay-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--text-light);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.audio-note {
+  font-size: 11px;
+  color: var(--text-mid);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* ─── TRANSCRIPT ─── */
+.transcript-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-mid);
+  cursor: pointer;
+  padding: 10px 28px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  user-select: none;
+  transition: color 0.2s;
+}
+
+.transcript-toggle:hover { color: var(--text-light); }
+
+.transcript-toggle .arrow { transition: transform 0.2s; font-size: 11px; }
+.transcript-toggle.open .arrow { transform: rotate(180deg); }
+
+.transcript-content {
+  display: none;
+  padding: 16px 28px 20px;
+  background: rgba(255,255,255,0.03);
+}
+
+.transcript-content.open { display: block; }
+
+.transcript-content p {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.75;
+  font-style: italic;
+}
+
+/* ─── LISTENING MCQ ─── */
+.listening-mcq {
+  padding: 20px 28px 24px;
+}
+
+.instructions-box {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.inst-icon { font-size: 14px; color: var(--gold); margin-top: 1px; }
+
+.inst-text {
+  font-size: 12.5px;
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+
+.l-mcq-option {
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  color: var(--white);
+}
+
+.l-mcq-option:hover { border-color: var(--gold); background: rgba(201,146,42,0.1); color: var(--white); }
+.l-mcq-option.selected { border-color: var(--gold); background: rgba(201,146,42,0.15); color: var(--white); }
+.l-mcq-option.correct { border-color: var(--green-accent); background: rgba(39,174,96,0.15); color: #7dddaa; }
+.l-mcq-option.incorrect { border-color: var(--red-accent); background: rgba(192,57,43,0.15); color: #f1948a; }
+
+/* Listening MCQ question number + text — white */
+.listening-mcq .mcq-q { color: var(--white); }
+.listening-mcq .score-display { background: rgba(255,255,255,0.1); color: var(--gold-light); }
+.listening-mcq .option-letter { background: rgba(255,255,255,0.12); color: var(--white); }
+
+.l-check-btn {
+  background: var(--red-accent);
+  color: white;
+}
+
+.l-check-btn:hover { background: #e74c3c; }
+
+/* ─── CASE STUDY ─── */
+.case-header {
+  background: linear-gradient(135deg, var(--navy) 0%, #2c3e70 100%);
+  border-radius: 14px 14px 0 0;
+  padding: 28px 32px;
+  margin-bottom: 0;
+  border-bottom: 3px solid var(--gold);
+}
+
+.case-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.case-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.case-sub {
+  font-size: 13.5px;
+  color: var(--text-light);
+}
+
+.case-body {
+  background: white;
+  border-radius: 0 0 14px 14px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  border: 1px solid var(--cream-dark);
+  border-top: none;
+}
+
+.case-body p {
+  font-size: 14px;
+  color: var(--navy);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.case-body h5 {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: var(--navy);
+  margin: 20px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--cream-dark);
+}
+
+/* ─── FINAL ASSESSMENT ─── */
+.assessment-banner {
+  background: linear-gradient(135deg, var(--navy), #1e3a5f);
+  border-radius: 14px;
+  padding: 32px 36px;
+  color: white;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.assessment-banner h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: var(--gold-light);
+  margin-bottom: 8px;
+}
+
+.assessment-banner p {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.assessment-meta {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.a-meta-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.a-meta-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.a-meta-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-mid);
+}
+
+.attempts-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--text-mid);
+}
+
+.attempt-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cream-dark);
+}
+
+.attempt-dot.used { background: var(--gold); }
+
+.final-result {
+  display: none;
+  background: var(--navy);
+  border-radius: 12px;
+  padding: 28px 32px;
+  text-align: center;
+  color: white;
+  margin-top: 20px;
+}
+
+.final-result.pass { border: 2px solid var(--green-accent); }
+.final-result.fail { border: 2px solid var(--red-accent); }
+
+.final-score {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.final-result.pass .final-score { color: #7dddaa; }
+.final-result.fail .final-score { color: #f1948a; }
+
+.final-verdict {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+
+.final-msg { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+
+/* ─── DIVIDERS ─── */
+.ex-divider {
+  height: 1px;
+  background: var(--cream-dark);
+  margin: 28px 0;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  :root { --sidebar-w: 220px; }
+  .content-area { padding: 32px 28px; }
+  .hero { padding: 40px 28px 36px; }
+  .progress-bar-wrap { padding: 14px 28px; }
+  .hero-stats { gap: 24px; }
+  .speaking-grid { grid-template-columns: 1fr 1fr; }
+  .wordbank-grid { grid-template-columns: 1fr 1fr; }
+  .outcomes-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 620px) {
+  #sidebar { display: none; }
+  #main { margin-left: 0; }
+  .speaking-grid { grid-template-columns: 1fr; }
+  .wordbank-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── SIDEBAR ─── -->
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h1>Business Management English</h1>
+    <div class="subtitle">Professional Development</div>
+    <span class="level-badge">B1–B2 LEVEL</span>
+  </div>
+  <div class="sidebar-section-label">Module 12</div>
+  <div class="nav-item active" onclick="showSection('overview')">
+    <div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  </div>
+  <div class="nav-item" onclick="showSection('speaking')">
+    <div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div>
+    <span class="nav-badge">21Q</span>
+  </div>
+  <div class="nav-item" onclick="showSection('wordbank')">
+    <div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div>
+    <span class="nav-badge">21</span>
+  </div>
+  <div class="nav-item" onclick="showSection('reading')">
+    <div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div>
+    <span class="nav-badge">2T</span>
+  </div>
+  <div class="nav-item" onclick="showSection('vocabulary')">
+    <div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span></div>
+    <span class="nav-badge">3Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('grammar')">
+    <div class="nav-left"><span class="nav-icon">📝</span><span class="nav-label">Grammar</span></div>
+    <span class="nav-badge">3Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('grammar-review')">
+    <div class="nav-left"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  </div>
+  <div class="nav-item" onclick="showSection('writing')">
+    <div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div>
+    <span class="nav-badge">2W</span>
+  </div>
+  <div class="nav-item" onclick="showSection('listening')">
+    <div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div>
+    <span class="nav-badge">4Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('casestudies')">
+    <div class="nav-left"><span class="nav-icon">🏢</span><span class="nav-label">Case Studies</span></div>
+    <span class="nav-badge">2CS</span>
+  </div>
+  <div class="nav-item" onclick="showSection('assessment')">
+    <div class="nav-left"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span></div>
+    <span class="nav-badge">20Q</span>
+  </div>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<main id="main">
+
+<!-- ════════════ OVERVIEW ════════════ -->
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="module-tag">📋 MODULE 12 · BUSINESS MANAGEMENT ENGLISH</div>
+    <h2>Ethics and<br><span>Corporate Governance</span></h2>
+    <p>Develop professional English skills to discuss ethical decision-making, stakeholder responsibilities, and governance frameworks — essential for navigating modern corporate environments with integrity and confidence.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <span class="progress-label">Module Progress</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:14px;line-height:1.8;color:#2c3e6b;margin-bottom:14px;">
+        <strong>Welcome to Module 12: Ethics and Corporate Governance.</strong> In this module you will learn essential vocabulary and language for discussing ethical behaviour in business, the structures that govern corporations, and the responsibilities companies have to their stakeholders. By the end of this module, you will be able to discuss corporate scandals, argue for ethical business practices, and explain governance structures using accurate grammar and professional vocabulary.
+      </p>
+      <p style="font-size:14px;line-height:1.8;color:#2c3e6b;">
+        This module is suitable for professionals at B1–B2 level working in management, compliance, HR, finance, or any role requiring communication about corporate responsibility, ESG standards, whistleblowing, and regulatory frameworks.
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">By the end of this module, you will be able to:</p>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-num">1</div><div class="outcome-text">Define key concepts such as corporate governance, ethical conduct, and stakeholder theory using precise business vocabulary.</div></div>
+        <div class="outcome-item"><div class="outcome-num">2</div><div class="outcome-text">Discuss the roles and responsibilities of boards of directors, shareholders, and senior management in maintaining ethical standards.</div></div>
+        <div class="outcome-item"><div class="outcome-num">3</div><div class="outcome-text">Use participle clauses correctly to describe corporate events, policies, and governance procedures in formal English.</div></div>
+        <div class="outcome-item"><div class="outcome-num">4</div><div class="outcome-text">Apply cause and result linkers (therefore, consequently, as a result of, owing to) in professional writing and speaking contexts.</div></div>
+        <div class="outcome-item"><div class="outcome-num">5</div><div class="outcome-text">Identify and use phrasal verbs commonly found in discussions of corporate governance, compliance, and business ethics.</div></div>
+        <div class="outcome-item"><div class="outcome-num">6</div><div class="outcome-text">Analyse real-world corporate governance cases and evaluate the ethical decisions made by companies and their leadership.</div></div>
+        <div class="outcome-item"><div class="outcome-num">7</div><div class="outcome-text">Write a formal report and a persuasive essay on topics related to corporate ethics, CSR, and whistleblowing policies.</div></div>
+        <div class="outcome-item"><div class="outcome-num">8</div><div class="outcome-text">Listen to professional discussions and presentations on ethics and extract specific information, arguments, and recommendations.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ SPEAKING ════════════ -->
+<div id="speaking" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">🎙️ SPEAKING ACTIVITIES</div>
+    <h2>Discussion <span>Questions</span></h2>
+    <p>21 questions to practise speaking about ethics, governance, and corporate responsibility at B1–B2 level.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Speaking Questions</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">Discuss these questions with a partner or prepare a spoken response of 2–3 minutes each.</p>
+      <div class="speaking-grid" id="speakingGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ WORD BANK ════════════ -->
+<div id="wordbank" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">📚 WORD BANK</div>
+    <h2>Key <span>Vocabulary</span></h2>
+    <p>21 essential terms for discussing ethics and corporate governance at B1–B2 level.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Vocabulary</div>
+      <div class="card-title-bar"></div>
+      <div class="wordbank-grid" id="wordbankGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ READING ════════════ -->
+<div id="reading" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">📖 READING</div>
+    <h2>Reading <span>Texts</span></h2>
+    <p>Two professional texts followed by 10 multiple-choice comprehension questions each.</p>
+  </div>
+  <div class="content-area" id="readingContent"></div>
+</div>
+
+<!-- ════════════ VOCABULARY ════════════ -->
+<div id="vocabulary" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">✏️ VOCABULARY EXERCISES</div>
+    <h2>Vocabulary <span>Practice</span></h2>
+    <p>Three exercises to consolidate your understanding of key ethics and governance vocabulary.</p>
+  </div>
+  <div class="content-area">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocabEx(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocabEx(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocabEx(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vocab-ex-0" class="vocab-ex"></div>
+    <div id="vocab-ex-1" class="vocab-ex" style="display:none"></div>
+    <div id="vocab-ex-2" class="vocab-ex" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ════════════ GRAMMAR ════════════ -->
+<div id="grammar" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">📝 GRAMMAR EXERCISES</div>
+    <h2>Grammar <span>Practice</span></h2>
+    <p>Three grammar exercises covering participle clauses, cause/result linkers, and phrasal verbs.</p>
+  </div>
+  <div class="content-area">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGrammarEx(0,this)">Exercise 1 · Participle Clauses</div>
+      <div class="ex-tab" onclick="showGrammarEx(1,this)">Exercise 2 · Cause &amp; Result</div>
+      <div class="ex-tab" onclick="showGrammarEx(2,this)">Exercise 3 · Phrasal Verbs</div>
+    </div>
+    <div id="grammar-ex-0" class="grammar-ex"></div>
+    <div id="grammar-ex-1" class="grammar-ex" style="display:none"></div>
+    <div id="grammar-ex-2" class="grammar-ex" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ════════════ GRAMMAR REVIEW ════════════ -->
+<div id="grammar-review" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">🔍 GRAMMAR REVIEW</div>
+    <h2>Grammar <span>Reference</span></h2>
+    <p>Detailed grammar reference boxes for all three grammar points in this module.</p>
+  </div>
+  <div class="content-area" id="grammarReviewContent"></div>
+</div>
+
+<!-- ════════════ WRITING ════════════ -->
+<div id="writing" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">✍️ WRITING ACTIVITIES</div>
+    <h2>Writing <span>Tasks</span></h2>
+    <p>Two structured writing tasks to practise formal and persuasive writing on ethics and governance.</p>
+  </div>
+  <div class="content-area" id="writingContent"></div>
+</div>
+
+<!-- ════════════ LISTENING ════════════ -->
+<div id="listening" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">🎧 LISTENING ACTIVITIES</div>
+    <h2>Listening <span>Activities</span></h2>
+    <p>4 audio activities with built-in speech players — press ▶ Play, listen, then answer the questions.</p>
+  </div>
+  <div class="content-area" id="listeningContent"></div>
+</div>
+
+<!-- ════════════ CASE STUDIES ════════════ -->
+<div id="casestudies" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">🏢 CASE STUDIES</div>
+    <h2>Real-World <span>Cases</span></h2>
+    <p>Two in-depth case studies on corporate ethics failures and governance reforms, with comprehension questions.</p>
+  </div>
+  <div class="content-area" id="caseStudiesContent"></div>
+</div>
+
+<!-- ════════════ FINAL ASSESSMENT ════════════ -->
+<div id="assessment" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">🎯 FINAL ASSESSMENT</div>
+    <h2>Module 12 <span>Assessment</span></h2>
+    <p>20 multiple-choice questions covering all areas of the module. Pass mark: 70%. Two attempts allowed.</p>
+  </div>
+  <div class="content-area" id="assessmentContent"></div>
+</div>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════ */
+
+const speakingQs = [
+  "What does the term 'corporate governance' mean to you, and why is it important in modern business?",
+  "Can you think of a company that has behaved unethically? What happened and what were the consequences?",
+  "What is the difference between being legal and being ethical in business? Give an example.",
+  "Should companies prioritise profit or ethical behaviour? Can both coexist?",
+  "What role does a board of directors play in ensuring a company behaves ethically?",
+  "Have you ever faced an ethical dilemma at work? How did you handle it?",
+  "What is whistleblowing, and do you think employees should be legally protected when they report wrongdoing?",
+  "How can companies create a culture of integrity and transparency?",
+  "What do you understand by the term CSR (Corporate Social Responsibility)? Is it genuine or just a marketing tool?",
+  "Should executives be personally responsible for their company's ethical failures?",
+  "What are the risks of corruption in business, and how can companies prevent it?",
+  "Do you think international companies should apply the same ethical standards everywhere they operate?",
+  "How important is diversity and inclusion as part of corporate governance?",
+  "What is stakeholder theory? How does it differ from shareholder theory?",
+  "How do ESG (Environmental, Social, Governance) criteria influence investment decisions?",
+  "What would you do if your manager asked you to do something unethical?",
+  "How can technology help or hinder corporate transparency and accountability?",
+  "Should there be global regulations on corporate ethics, or should each country decide its own rules?",
+  "What is the role of the audit committee in corporate governance?",
+  "How can small and medium enterprises (SMEs) implement good governance practices with limited resources?",
+  "In your opinion, what is the most important ethical challenge facing businesses today?"
+];
+
+const wordBank = [
+  { emoji:"⚖️", term:"Corporate governance", def:"The system of rules, practices, and processes by which a company is directed and controlled." },
+  { emoji:"🤝", term:"Stakeholder", def:"Any individual or group that has an interest in the activities or performance of a company." },
+  { emoji:"📋", term:"Code of conduct", def:"A set of rules outlining the responsibilities and proper practices for individuals in an organisation." },
+  { emoji:"🔍", term:"Transparency", def:"The quality of being open and honest about a company's operations, decisions, and finances." },
+  { emoji:"🚨", term:"Whistleblowing", def:"The act of reporting illegal or unethical activities within an organisation to authorities or the public." },
+  { emoji:"♻️", term:"CSR (Corporate Social Responsibility)", def:"A business model in which companies integrate social and environmental concerns into their operations." },
+  { emoji:"📊", term:"ESG criteria", def:"Environmental, Social, and Governance standards used by investors to evaluate a company's ethical impact." },
+  { emoji:"🏛️", term:"Board of directors", def:"A group of elected individuals responsible for overseeing the management and policies of a corporation." },
+  { emoji:"⚠️", term:"Conflict of interest", def:"A situation where personal interests could improperly influence someone's professional decisions." },
+  { emoji:"💼", term:"Fiduciary duty", def:"A legal obligation to act in the best interests of another party, especially shareholders." },
+  { emoji:"🔒", term:"Compliance", def:"The process of following rules, regulations, and laws applicable to a business." },
+  { emoji:"📣", term:"Accountability", def:"The obligation of an individual or organisation to accept responsibility for its actions." },
+  { emoji:"🚫", term:"Corruption", def:"Dishonest or fraudulent conduct by those in power, often involving bribery or embezzlement." },
+  { emoji:"💡", term:"Ethical dilemma", def:"A difficult situation in which a person must choose between two or more ethical options." },
+  { emoji:"🌍", term:"Sustainability", def:"The ability to meet present needs without compromising the ability of future generations to meet theirs." },
+  { emoji:"🧩", term:"Shareholder theory", def:"The view that a company's primary responsibility is to maximise returns for its shareholders." },
+  { emoji:"📑", term:"Audit committee", def:"A subcommittee of the board responsible for overseeing financial reporting and internal controls." },
+  { emoji:"🛡️", term:"Risk management", def:"The process of identifying, assessing, and controlling threats to an organisation's capital and earnings." },
+  { emoji:"🔗", term:"Due diligence", def:"A thorough investigation or research done prior to a business decision or transaction." },
+  { emoji:"📢", term:"Disclosure", def:"The act of making relevant information available to stakeholders, often required by law." },
+  { emoji:"🎯", term:"Executive remuneration", def:"The total compensation package awarded to senior company executives, including salary and bonuses." }
+];
+
+const readingTexts = [
+  {
+    title: "Text 1: The Importance of Corporate Governance",
+    subtitle: "An overview of governance principles and their business impact",
+    paragraphs: [
+      "Corporate governance refers to the structures and processes through which companies are directed, controlled, and held accountable. At its core, it defines the relationships between a company's management, its board of directors, shareholders, and other stakeholders. Good governance ensures that companies operate transparently, ethically, and in accordance with the law, thereby protecting the interests of everyone involved. In recent decades, high-profile corporate scandals — from Enron's accounting fraud to the Volkswagen emissions scandal — have underscored the consequences of weak governance frameworks.",
+      "One of the foundational principles of effective corporate governance is accountability. Executives and board members must be answerable for their decisions, and companies must establish clear mechanisms for oversight and reporting. This is often achieved through audit committees, independent non-executive directors, and regular financial disclosures. Transparency is equally important: when companies provide accurate, complete, and timely information, they build trust with investors, regulators, and the general public. Without these safeguards, organisations become vulnerable to fraud, mismanagement, and reputational damage.",
+      "The concept of stakeholder theory has significantly influenced modern governance practices. Rather than focusing exclusively on shareholder returns, companies are now expected to consider the impact of their operations on employees, customers, communities, and the environment. This broader view of corporate responsibility is reflected in the rise of ESG (Environmental, Social, and Governance) investing, where capital is increasingly directed towards companies that demonstrate high ethical and sustainability standards. Businesses that embed governance principles into their strategy often outperform their peers over the long term, as they are better positioned to manage risk, attract talent, and maintain regulatory compliance."
+    ],
+    questions: [
+      { q: "What does corporate governance primarily define?", opts: ["A company's marketing strategy", "Relationships between management, the board, shareholders and stakeholders", "The process of hiring senior executives", "A company's approach to product development"], ans: 1 },
+      { q: "Which of the following is cited as an example of weak corporate governance?", opts: ["Tesla's expansion strategy", "Enron's accounting fraud", "Amazon's logistics model", "Apple's product launches"], ans: 1 },
+      { q: "What does an audit committee primarily help with?", opts: ["Product design and innovation", "Marketing campaign approvals", "Oversight and financial reporting", "Recruitment of new employees"], ans: 2 },
+      { q: "What is the result of transparency in corporate governance?", opts: ["Reduced marketing costs", "Increased competition among employees", "Building trust with investors, regulators, and the public", "Higher product prices"], ans: 2 },
+      { q: "What does stakeholder theory suggest companies should do?", opts: ["Focus exclusively on shareholder returns", "Consider the impact of operations on employees, customers, and communities", "Prioritise short-term profits above all else", "Avoid government regulation"], ans: 1 },
+      { q: "What does ESG stand for?", opts: ["Efficiency, Strategy, and Growth", "Environmental, Social, and Governance", "Executive, Shareholder, and Growth", "Ethical, Structural, and Global"], ans: 1 },
+      { q: "According to the text, what makes companies vulnerable to fraud?", opts: ["Expanding too quickly into new markets", "Lack of transparency and accountability", "Having too many shareholders", "Investing in technology"], ans: 1 },
+      { q: "What role do non-executive directors play?", opts: ["They manage day-to-day operations", "They provide oversight as independent board members", "They handle customer service", "They approve marketing budgets"], ans: 1 },
+      { q: "Why do well-governed companies often outperform their peers?", opts: ["They have more employees", "They are better at managing risk and maintaining compliance", "They spend more on advertising", "They operate in fewer markets"], ans: 1 },
+      { q: "Which event is NOT mentioned in the text as an example of poor governance?", opts: ["Enron's accounting fraud", "The Volkswagen emissions scandal", "The 2008 financial crisis", "None of the above"], ans: 2 }
+    ]
+  },
+  {
+    title: "Text 2: Whistleblowing and Ethical Culture in Organisations",
+    subtitle: "Exploring the role of individuals in promoting corporate integrity",
+    paragraphs: [
+      "Whistleblowing — the act of an employee disclosing information about illegal or unethical practices within their organisation — plays a critical role in corporate accountability. Notable cases, such as that of Sherron Watkins at Enron or Bradley Birkenfeld at UBS, demonstrate how individuals can expose systemic misconduct that internal management has either failed to address or actively concealed. However, whistleblowers often face significant personal and professional risks, including retaliation, dismissal, and reputational damage. This has prompted many governments to introduce legal protections for whistleblowers, recognising their vital contribution to transparency and the rule of law.",
+      "Building a genuine culture of ethics requires more than a code of conduct on paper. It demands consistent leadership by example, open channels for raising concerns, and real consequences for misconduct at all levels of the organisation. Research consistently shows that employees are more likely to report wrongdoing when they trust that their concerns will be taken seriously and that they will be protected from retaliation. Conversely, in organisations with a culture of fear or excessive hierarchy, unethical behaviour tends to go unreported, allowing small problems to escalate into major crises.",
+      "The relationship between ethics and business performance is increasingly well-documented. Companies with strong ethical cultures tend to attract better talent, retain employees longer, and enjoy stronger brand loyalty from customers. Moreover, they face fewer regulatory penalties and are less likely to suffer the catastrophic reputational damage that accompanies public scandals. Investors, too, are paying closer attention to governance and ethics as predictors of long-term value. In this sense, ethics is not just a moral obligation — it is a strategic business advantage that progressive organisations are learning to leverage effectively."
+    ],
+    questions: [
+      { q: "What is whistleblowing, according to the text?", opts: ["A legal obligation for all employees", "An employee disclosing information about illegal or unethical practices", "A management technique for monitoring staff", "A method for resolving conflicts"], ans: 1 },
+      { q: "What risk do whistleblowers commonly face?", opts: ["Promotion and recognition", "Retaliation, dismissal, and reputational damage", "Receiving bonuses for their actions", "Being transferred to another department"], ans: 1 },
+      { q: "Why have governments introduced legal protections for whistleblowers?", opts: ["To reduce the number of lawsuits", "To control employee behaviour", "To recognise their contribution to transparency and the rule of law", "To increase corporate taxes"], ans: 2 },
+      { q: "What does the text say is NOT enough to build an ethical culture?", opts: ["Open channels for raising concerns", "Leadership by example", "Having a code of conduct on paper only", "Consequences for misconduct"], ans: 2 },
+      { q: "When are employees more likely to report wrongdoing?", opts: ["When they fear losing their jobs", "When they trust their concerns will be taken seriously", "When the company is performing poorly", "When they are new to the organisation"], ans: 1 },
+      { q: "What happens in organisations with a culture of fear?", opts: ["Problems are resolved quickly", "Ethical behaviour is promoted", "Unethical behaviour goes unreported and escalates", "Employees receive more training"], ans: 2 },
+      { q: "What is one business benefit of a strong ethical culture mentioned in the text?", opts: ["Higher product prices", "Stronger brand loyalty from customers", "Fewer employees", "Less regulation"], ans: 1 },
+      { q: "What does the text say investors are paying attention to?", opts: ["Only profit margins", "Governance and ethics as predictors of long-term value", "The size of the board of directors", "The company's marketing strategy"], ans: 1 },
+      { q: "The word 'concealed' in paragraph one is closest in meaning to:", opts: ["Revealed", "Investigated", "Hidden", "Approved"], ans: 2 },
+      { q: "What is the main argument of the final paragraph?", opts: ["Ethics is only important for large corporations", "Ethical behaviour is both a moral obligation and a strategic business advantage", "Companies should avoid public scrutiny", "Investors should focus only on financial data"], ans: 1 }
+    ]
+  }
+];
+
+const vocabExercises = [
+  {
+    type: "mcq",
+    title: "Exercise 1: Multiple Choice",
+    instructions: "Choose the best word or phrase to complete each sentence.",
+    questions: [
+      { q: "The new CEO was praised for improving the company's _____, publishing detailed financial reports every quarter.", opts: ["corruption", "transparency", "retaliation", "misconduct"], ans: 1 },
+      { q: "The board established an _____ to ensure all financial records were reviewed by independent experts.", opts: ["audit committee", "executive board", "HR department", "marketing team"], ans: 0 },
+      { q: "She felt she had a _____ to report the accounting irregularities to the regulator.", opts: ["conflict of interest", "fiduciary duty", "disclosure policy", "code of conduct"], ans: 1 },
+      { q: "The manager was dismissed due to a _____, as she also owned shares in the competing supplier.", opts: ["whistleblowing case", "conflict of interest", "code of conduct", "compliance breach"], ans: 1 },
+      { q: "Investors now use _____ criteria to evaluate whether companies behave responsibly towards the environment and society.", opts: ["CSR", "CEO", "ESG", "IPO"], ans: 2 },
+      { q: "The company's _____ policy requires all executives to declare gifts received from business partners.", opts: ["disclosure", "sustainability", "whistleblowing", "accountability"], ans: 0 },
+      { q: "Several employees were hesitant to speak out because they feared _____.", opts: ["promotion", "retaliation", "recognition", "audit"], ans: 1 },
+      { q: "Due _____ was carried out before the merger to identify any hidden financial liabilities.", opts: ["diligence", "process", "accountability", "governance"], ans: 0 },
+      { q: "The firm's commitment to _____ means it now uses only renewable energy in its European operations.", opts: ["disclosure", "remuneration", "sustainability", "compliance"], ans: 2 },
+      { q: "The _____ of the new CEO was criticised by shareholders who felt the pay package was excessive.", opts: ["executive remuneration", "code of conduct", "risk management", "stakeholder theory"], ans: 0 }
+    ]
+  },
+  {
+    type: "gapfill",
+    title: "Exercise 2: Gap Fill",
+    instructions: "Complete the sentences using the words from the box.",
+    words: ["accountability", "stakeholders", "governance", "misconduct", "disclosure", "compliance", "fiduciary", "whistleblower", "audit", "integrity"],
+    sentences: [
+      { before: "The board of directors has a ", blank: "fiduciary", after: " duty to act in the best interests of shareholders." },
+      { before: "Good corporate ", blank: "governance", after: " is essential for maintaining investor confidence." },
+      { before: "The ", blank: "whistleblower", after: " provided regulators with documents proving systematic fraud." },
+      { before: "Full financial ", blank: "disclosure", after: " is required by law for all listed companies." },
+      { before: "The company was fined for failing to meet ", blank: "compliance", after: " standards set by the regulator." },
+      { before: "The ", blank: "audit", after: " committee identified serious irregularities in the quarterly accounts." },
+      { before: "All ", blank: "stakeholders", after: ", including employees and local communities, must be considered in major decisions." },
+      { before: "The executive was dismissed following allegations of financial ", blank: "misconduct", after: "." },
+      { before: "Leaders must act with ", blank: "integrity", after: " to create a culture where ethical behaviour is the norm." },
+      { before: "There must be clear lines of ", blank: "accountability", after: " from the boardroom to the front line." }
+    ]
+  },
+  {
+    type: "truefalse",
+    title: "Exercise 3: True / False",
+    instructions: "Read the statements and decide if they are TRUE or FALSE.",
+    statements: [
+      { text: "Corporate governance only refers to a company's financial management.", ans: false },
+      { text: "Stakeholders include employees, customers, and local communities.", ans: true },
+      { text: "ESG stands for Economic, Strategic, and Governance.", ans: false },
+      { text: "A code of conduct outlines expected behaviours within an organisation.", ans: true },
+      { text: "Whistleblowers are typically rewarded with promotions in most companies.", ans: false },
+      { text: "Transparency in business involves sharing accurate and complete information.", ans: true },
+      { text: "A conflict of interest always leads to criminal charges.", ans: false },
+      { text: "The audit committee is responsible for overseeing financial reporting.", ans: true },
+      { text: "Due diligence is performed after a business deal is completed.", ans: false },
+      { text: "Companies with strong ethical cultures often attract better talent.", ans: true }
+    ]
+  }
+];
+
+const grammarExercises = [
+  {
+    type: "mcq",
+    title: "Exercise 1: Participle Clauses",
+    instructions: "Choose the correct participle clause form to complete each sentence.",
+    questions: [
+      { q: "_____ the new governance policy, the board hoped to prevent future scandals.", opts: ["Having implemented", "Implementing", "Implemented", "To implement"], ans: 0 },
+      { q: "The CEO, _____ of serious misconduct, was asked to resign immediately.", opts: ["accused", "accusing", "having accused", "to accuse"], ans: 0 },
+      { q: "_____ the report carefully, the committee identified three key compliance gaps.", opts: ["Reviewed", "Having reviewed", "To review", "Reviews"], ans: 1 },
+      { q: "The new regulations, _____ last year, have significantly changed how companies disclose information.", opts: ["introduced", "introducing", "having introduced", "introduce"], ans: 0 },
+      { q: "_____ the risks involved, management decided to postpone the acquisition.", opts: ["Recognising", "Recognised", "Having been recognising", "Recognise"], ans: 0 },
+      { q: "The whistleblower, _____ for months, finally contacted the regulator.", opts: ["hesitated", "hesitating", "having hesitated", "to hesitate"], ans: 2 },
+      { q: "The shareholders, _____ by the lack of transparency, demanded an emergency board meeting.", opts: ["concerned", "concerning", "having concerned", "to concern"], ans: 0 },
+      { q: "_____ a conflict of interest, the director withdrew from the vote.", opts: ["Declared", "Declaring", "Having declared", "To declare"], ans: 1 },
+      { q: "The compliance framework, _____ in 2019, was updated following the scandal.", opts: ["establishing", "having established", "established", "to establish"], ans: 2 },
+      { q: "_____ in international law, the firm was able to navigate the complex regulatory landscape.", opts: ["Specialised", "Specialising", "Having specialised", "Specialise"], ans: 1 }
+    ]
+  },
+  {
+    type: "mcq",
+    title: "Exercise 2: Cause & Result Linkers",
+    instructions: "Choose the most appropriate linker to complete each sentence.",
+    questions: [
+      { q: "The company failed to disclose its losses; _____, several investors sold their shares.", opts: ["despite", "consequently", "although", "unless"], ans: 1 },
+      { q: "_____ the new compliance regulations, all employees must complete ethics training.", opts: ["As a result of", "Despite", "Nevertheless", "Whereas"], ans: 0 },
+      { q: "The board lacked effective oversight. _____, the fraud went undetected for years.", opts: ["However", "Therefore", "Although", "Whereas"], ans: 1 },
+      { q: "Profits fell sharply, _____ poor risk management decisions made earlier in the year.", opts: ["owing to", "in spite of", "so that", "while"], ans: 0 },
+      { q: "_____ the scandal, the company's share price dropped by 40% in one week.", opts: ["So that", "Following", "Unless", "Despite"], ans: 1 },
+      { q: "The auditors found no irregularities; _____, the regulators launched their own investigation.", opts: ["therefore", "nevertheless", "owing to", "as a result of"], ans: 1 },
+      { q: "The new CEO introduced strict ethical standards, _____ creating a more transparent culture.", opts: ["despite", "thereby", "unless", "whereas"], ans: 1 },
+      { q: "_____ the company's strong governance framework, it avoided the penalties that affected its competitors.", opts: ["Owing to", "Despite", "So that", "Whereas"], ans: 0 },
+      { q: "The board failed to act on the warnings; _____, the company faced regulatory sanctions.", opts: ["although", "as a result", "despite", "in spite of"], ans: 1 },
+      { q: "Employees were reluctant to report issues _____ fear of retaliation.", opts: ["despite", "so that", "due to", "whereas"], ans: 2 }
+    ]
+  },
+  {
+    type: "mcq",
+    title: "Exercise 3: Phrasal Verbs",
+    instructions: "Choose the correct phrasal verb to complete each sentence.",
+    questions: [
+      { q: "The investigation _____ several examples of financial misconduct within the firm.", opts: ["turned off", "brought up", "uncovered", "gave up"], ans: 2 },
+      { q: "After the scandal, the company had to _____ a new set of governance procedures.", opts: ["draw up", "take off", "bring down", "look into"], ans: 0 },
+      { q: "The board decided to _____ the acquisition after discovering regulatory issues.", opts: ["call off", "take on", "set up", "bring in"], ans: 0 },
+      { q: "The CEO was asked to _____ responsibility for the company's ethical failures.", opts: ["take on", "bring up", "call off", "give up"], ans: 0 },
+      { q: "Regulators have promised to _____ companies that fail to comply with disclosure rules.", opts: ["set up", "clamp down on", "bring up", "take off"], ans: 1 },
+      { q: "The new compliance officer _____ a thorough review of all internal procedures.", opts: ["called off", "carried out", "gave up", "took off"], ans: 1 },
+      { q: "Shareholders _____ the proposed merger at the annual general meeting.", opts: ["turned down", "set up", "drew up", "brought in"], ans: 0 },
+      { q: "The auditors were asked to _____ the unusual pattern of transactions.", opts: ["look into", "take on", "bring down", "set up"], ans: 0 },
+      { q: "It took years for the whistleblower's case to _____ in court.", opts: ["set up", "come through", "turn off", "bring in"], ans: 1 },
+      { q: "The new regulations _____ last month, requiring immediate compliance from all companies.", opts: ["came into effect", "set up", "gave up", "called off"], ans: 0 }
+    ]
+  }
+];
+
+const grammarReview = [
+  {
+    title: "Grammar Reference 1: Participle Clauses",
+    points: [
+      { title: "What are participle clauses?", body: "Participle clauses are subordinate clauses that use a participle (present or past) instead of a full finite verb. They are common in formal and academic English, especially in business writing and reports.", examples: [] },
+      { title: "Present Participle Clauses (-ing)", body: "Use the present participle to show a simultaneous action or one that immediately precedes the main verb. They can replace subject + verb constructions.", examples: [
+        "Recognising the risks, the board postponed the merger.",
+        "Having reviewed the accounts, the auditors submitted their report."
+      ]},
+      { title: "Past Participle Clauses (-ed/-en)", body: "Past participle clauses are typically passive in meaning and often describe the subject of the main clause.", examples: [
+        "Accused of misconduct, the executive was asked to resign.",
+        "The policy, introduced in 2020, has improved compliance rates."
+      ]},
+      { title: "Perfect Participle Clauses (Having + past participle)", body: "Use the perfect participle to indicate an action completed before the main clause action.", examples: [
+        "Having implemented the new framework, the company saw improved results.",
+        "Having hesitated for months, the whistleblower finally came forward."
+      ]}
+    ]
+  },
+  {
+    title: "Grammar Reference 2: Cause & Result Linkers",
+    points: [
+      { title: "Expressing Cause", body: "These linkers introduce the reason for something. They may begin a clause or modify a noun phrase.", examples: [
+        "Due to poor risk management, the company lost millions.",
+        "Owing to the new regulations, all firms must disclose their ESG impact.",
+        "As a result of the scandal, the CEO resigned."
+      ]},
+      { title: "Expressing Result", body: "These linkers introduce the consequence or outcome of an event or action.", examples: [
+        "The board failed to act; consequently, the company faced heavy fines.",
+        "Profits fell sharply; as a result, several executives were dismissed.",
+        "The governance framework was weak; therefore, fraud went undetected."
+      ]},
+      { title: "Concession vs. Contrast", body: "Be careful not to confuse cause/result linkers with contrast words. Despite and although show contrast, not cause.", examples: [
+        "Despite the new regulations, some companies continued to behave unethically. (contrast)",
+        "Due to the new regulations, companies had to change their behaviour. (cause)"
+      ]},
+      { title: "Formal Alternatives", body: "In formal writing, vary your use of linkers. Avoid repeating 'so' or 'because' — use more sophisticated alternatives:", examples: [
+        "Thereby (= as a result of this): She implemented new controls, thereby reducing the risk of fraud.",
+        "Following (= as a result of): Following the scandal, several directors resigned."
+      ]}
+    ]
+  },
+  {
+    title: "Grammar Reference 3: Phrasal Verbs in Business & Governance Contexts",
+    points: [
+      { title: "What are phrasal verbs?", body: "Phrasal verbs combine a verb with a preposition or adverb to create a new meaning. They are common in business English, particularly in informal reports and discussions.", examples: [] },
+      { title: "Phrasal Verbs for Governance & Compliance", body: "These are commonly used when discussing investigations, policies, and corporate decisions:", examples: [
+        "draw up (a policy/report) = to create or write officially",
+        "call off (a deal/investigation) = to cancel",
+        "carry out (an audit/review) = to conduct or perform",
+        "look into (a matter) = to investigate"
+      ]},
+      { title: "Phrasal Verbs for Corporate Actions", body: "Use these when discussing how companies and executives respond to challenges:", examples: [
+        "take on (responsibility) = to accept",
+        "clamp down on (misconduct) = to take strict action against",
+        "come into effect (regulations) = to become active/operative",
+        "bring in (experts/changes) = to introduce"
+      ]},
+      { title: "Separable vs. Inseparable Phrasal Verbs", body: "Some phrasal verbs can be separated by an object; others cannot.", examples: [
+        "SEPARABLE: draw up a plan / draw a plan up",
+        "INSEPARABLE: look into the matter (NOT: look the matter into)",
+        "TIP: When using a pronoun, always put it between the verb and particle: call it off, not call off it."
+      ]}
+    ]
+  }
+];
+
+const listeningActivities = [
+  {
+    title: "Activity 1: A Corporate Ethics Podcast",
+    subtitle: "Two business professionals — News discussion format",
+    level: "B1",
+    type: "Multiple Choice",
+    focus: "Listening for Main Ideas",
+    transcript: `Host: Welcome back to Ethics in Business. I'm here today with Sarah Chen, a corporate governance consultant. Sarah, can you explain what good corporate governance actually looks like in practice? Chen: Absolutely. Good governance means a company has clear roles and responsibilities — the board oversees strategy, management runs day-to-day operations, and there are mechanisms in place to ensure accountability at every level. Host: And what happens when governance breaks down? Chen: When governance fails, you typically see a concentration of power without adequate checks and balances. The board may be too closely aligned with management, which means they stop asking the right questions. Host: What should employees do if they witness misconduct? Chen: First, use internal reporting channels if they exist and if you trust them. If not, or if the misconduct involves senior leadership, go to the regulator. Many jurisdictions now have strong whistleblower protections. Host: Is there a link between ethics and profitability? Chen: Absolutely. The evidence is very clear. Companies with strong ethical cultures outperform their peers over the long term. They have lower staff turnover, stronger brand reputation, and face fewer regulatory penalties. The cost of misconduct — in fines, legal fees, and reputational damage — far exceeds any short-term gain. Host: Thank you, Sarah. This has been extremely insightful.`,
+    questions: [
+      { q: "What does Sarah Chen do professionally?", opts: ["She is a marketing director", "She is a corporate governance consultant", "She is a financial regulator", "She is a company auditor"], ans: 1 },
+      { q: "What does Sarah say good governance requires?", opts: ["High profits and low costs", "Clear roles and accountability mechanisms", "International partnerships", "Frequent board changes"], ans: 1 },
+      { q: "What typically happens when governance breaks down?", opts: ["The company grows faster", "Power becomes too concentrated without proper checks", "Employees receive higher salaries", "The board meets more frequently"], ans: 1 },
+      { q: "What should an employee do first if they witness misconduct?", opts: ["Immediately contact the press", "Use internal reporting channels if they trust them", "Resign immediately", "Ignore the situation"], ans: 1 },
+      { q: "What is said about whistleblower protections?", opts: ["They do not exist anywhere", "Many jurisdictions now have strong protections", "They only apply to senior managers", "They are optional for companies"], ans: 1 },
+      { q: "What evidence is given about ethics and profitability?", opts: ["Ethical companies make lower profits", "There is no link between ethics and profit", "Ethical companies outperform peers over the long term", "Ethics increases short-term costs only"], ans: 2 },
+      { q: "What does Sarah say about staff turnover in ethical companies?", opts: ["It is higher", "It is lower", "It stays the same", "It is unpredictable"], ans: 1 },
+      { q: "According to Sarah, what far exceeds any short-term gain from misconduct?", opts: ["Marketing expenses", "The cost of misconduct in fines and reputational damage", "Executive salaries", "Research and development costs"], ans: 1 }
+    ]
+  },
+  {
+    title: "Activity 2: A Board Meeting Presentation",
+    subtitle: "Chief Compliance Officer — Formal corporate setting",
+    level: "B2",
+    type: "Multiple Choice",
+    focus: "Listening for Specific Information",
+    transcript: `Good morning, board members. I'm presenting today on the results of our annual ethics and compliance review. I'm pleased to report that 94% of our global workforce has now completed mandatory ethics training — an increase of 12% from last year. However, I must flag three areas of concern. First, our internal reporting channel, the Ethics Hotline, received 47 reports in the past year — a 30% increase. While this could indicate growing confidence in the system, several reports highlighted a perceived gap between stated ethical values and day-to-day management practices. Second, we identified a potential conflict of interest in our procurement division, which is currently under internal investigation. The individual involved has been temporarily reassigned while the investigation proceeds. Third, our third-party due diligence process requires updating. We discovered that two of our suppliers were under investigation in their home jurisdictions for labour rights violations. I am recommending immediate suspension of those contracts pending further review. In conclusion, I would ask the board to approve three resolutions: firstly, a budget increase for the Ethics Hotline; secondly, mandatory unconscious bias training for all procurement staff; and thirdly, an updated supplier code of conduct. Thank you.`,
+    questions: [
+      { q: "What percentage of staff completed mandatory ethics training?", opts: ["82%", "78%", "94%", "100%"], ans: 2 },
+      { q: "By how much did training completion increase from the previous year?", opts: ["5%", "8%", "12%", "20%"], ans: 2 },
+      { q: "How many reports did the Ethics Hotline receive?", opts: ["27", "47", "37", "57"], ans: 1 },
+      { q: "What concern was raised about internal reporting?", opts: ["The hotline was too expensive", "A gap between stated values and actual management practices", "Too few employees used it", "Reports were not being recorded"], ans: 1 },
+      { q: "What happened to the individual involved in the conflict of interest?", opts: ["They were dismissed immediately", "They were promoted", "They were temporarily reassigned", "They resigned voluntarily"], ans: 2 },
+      { q: "Why were two supplier contracts suspended?", opts: ["They were too expensive", "They missed delivery deadlines", "Their suppliers were under investigation for labour rights violations", "They failed ethics training"], ans: 2 },
+      { q: "What is the first resolution the speaker asks the board to approve?", opts: ["New office space for compliance staff", "A budget increase for the Ethics Hotline", "A review of executive salaries", "Changes to the board structure"], ans: 1 },
+      { q: "What training is recommended for procurement staff?", opts: ["Financial reporting training", "Customer service skills", "Unconscious bias training", "Leadership development"], ans: 2 }
+    ]
+  },
+  {
+    title: "Activity 3: A University Lecture on Stakeholder Theory",
+    subtitle: "Business Ethics Professor — Academic lecture format",
+    level: "B2",
+    type: "Multiple Choice",
+    focus: "Understanding Argument and Opinion",
+    transcript: `Good afternoon, everyone. Today we're going to contrast two foundational theories in business ethics: shareholder theory and stakeholder theory. Shareholder theory, most famously associated with Milton Friedman, argues that the sole responsibility of a business is to increase its profits — within the constraints of the law. Friedman believed that when executives spend corporate money on social or environmental causes, they are essentially spending someone else's money without consent, which is a form of theft from shareholders. Now, this view was dominant for much of the twentieth century. However, stakeholder theory, developed by Edward Freeman in the 1980s, offers a fundamentally different perspective. Freeman argued that a business creates value not just for shareholders, but for all parties that affect or are affected by the organisation — employees, customers, suppliers, communities, and even the environment. The debate between these two theories has intensified in recent years. In 2019, the Business Roundtable — a group of nearly 200 CEOs of major US corporations — issued a statement explicitly abandoning the primacy of shareholder value and committing to the interests of all stakeholders. This was a landmark shift. But critics argue it was largely symbolic. The question for today is: can a corporation genuinely serve all stakeholders simultaneously, or does doing so inevitably require trade-offs that ultimately harm profitability?`,
+    questions: [
+      { q: "What is the central focus of today's lecture?", opts: ["Marketing strategies for corporations", "Shareholder theory versus stakeholder theory", "Financial reporting standards", "Corporate tax strategies"], ans: 1 },
+      { q: "Which economist is most associated with shareholder theory?", opts: ["Edward Freeman", "Milton Friedman", "John Maynard Keynes", "Adam Smith"], ans: 1 },
+      { q: "According to Friedman, what is the sole responsibility of a business?", opts: ["To protect the environment", "To serve all stakeholders equally", "To increase its profits within the law", "To create employment"], ans: 2 },
+      { q: "How does Friedman view corporate spending on social causes?", opts: ["As an investment in brand value", "As a form of theft from shareholders", "As a legal requirement", "As good public relations"], ans: 1 },
+      { q: "When did Edward Freeman develop stakeholder theory?", opts: ["In the 1960s", "In the 2000s", "In the 1980s", "In the 1990s"], ans: 2 },
+      { q: "According to Freeman, who creates and receives value in a business?", opts: ["Only shareholders", "Only employees", "Only customers", "All parties that affect or are affected by the organisation"], ans: 3 },
+      { q: "What happened in 2019 with the Business Roundtable?", opts: ["They increased focus on shareholder returns", "They issued a statement supporting all stakeholders", "They disbanded permanently", "They introduced new financial regulations"], ans: 1 },
+      { q: "What question does the lecturer pose at the end?", opts: ["Should companies pay more taxes?", "Can corporations genuinely serve all stakeholders without harming profitability?", "Should executives earn lower salaries?", "Is regulation always necessary?"], ans: 1 }
+    ]
+  },
+  {
+    title: "Activity 4: An Interview on ESG Investment",
+    subtitle: "Fund Manager & Financial Journalist — Interview format",
+    level: "B1–B2",
+    type: "Multiple Choice",
+    focus: "Listening for Detail",
+    transcript: `Journalist: Good morning. Can you tell us how ESG investing has changed in recent years? Manager: It's changed dramatically. When I started in this industry fifteen years ago, ESG was a niche concern — mainly for pension funds with ethical mandates. Now it's mainstream. Global ESG assets are estimated to exceed 40 trillion dollars. Journalist: What exactly do ESG criteria measure? Manager: E stands for Environmental — carbon emissions, water usage, waste management. S stands for Social — labour practices, diversity, community relations. And G stands for Governance — board composition, executive pay, transparency, and anti-corruption measures. Journalist: Do companies with high ESG scores perform better financially? Manager: Generally, yes. Companies that manage their environmental risks well tend to avoid the sudden costs — fines, clean-up costs, reputational damage — that come from poor environmental management. And companies with good governance are less likely to suffer the catastrophic failures that can destroy shareholder value overnight. Journalist: Are there any criticisms of ESG? Manager: Yes, significant ones. The main criticism is greenwashing — companies that score well on ESG metrics without making genuine changes. The rating agencies have been criticised for inconsistency too. Two agencies can rate the same company very differently. Journalist: What advice would you give investors? Manager: Do your own research. Don't rely solely on ESG scores. Look at what companies actually do, not just what they say. Transparency and accountability are the real indicators of good governance.`,
+    questions: [
+      { q: "How long has the fund manager worked in the industry?", opts: ["Ten years", "Twelve years", "Fifteen years", "Twenty years"], ans: 2 },
+      { q: "How large are global ESG assets estimated to be?", opts: ["$10 trillion", "$25 trillion", "$40 trillion", "$100 trillion"], ans: 2 },
+      { q: "What does the 'E' in ESG stand for?", opts: ["Earnings", "Efficiency", "Environmental", "Equity"], ans: 2 },
+      { q: "Which of the following is listed as a Social (S) criterion?", opts: ["Carbon emissions", "Board composition", "Labour practices and diversity", "Executive pay"], ans: 2 },
+      { q: "What is one example of a Governance (G) criterion mentioned?", opts: ["Water usage", "Community relations", "Waste management", "Anti-corruption measures"], ans: 3 },
+      { q: "What type of costs can come from poor environmental management?", opts: ["Lower executive salaries", "Fines, clean-up costs, and reputational damage", "Reduced marketing budgets", "Higher employee wages"], ans: 1 },
+      { q: "What is 'greenwashing' as described in the interview?", opts: ["Investing only in green technology", "Reducing energy consumption", "Scoring well on ESG without making genuine changes", "Reporting environmental data accurately"], ans: 2 },
+      { q: "What does the fund manager advise investors to do?", opts: ["Only rely on ESG scores", "Do their own research and look at what companies actually do", "Avoid ESG investing entirely", "Focus only on financial returns"], ans: 1 }
+    ]
+  }
+];
+
+const caseStudies = [
+  {
+    title: "The Wirecard Scandal: A Governance Failure",
+    subtitle: "Germany · FinTech · 2020",
+    intro: "One of the largest corporate fraud cases in European history",
+    sections: [
+      { heading: "Background", text: "Wirecard AG was a German payment processing and financial services company that was once celebrated as a European technology success story. Founded in 1999, the company grew rapidly, processing payments for thousands of merchants globally and securing a coveted spot in the prestigious DAX index — Germany's top 30 listed companies. At its peak, Wirecard was valued at over €24 billion, and its CEO Jan Marsalek was celebrated as a visionary tech entrepreneur." },
+      { heading: "The Fraud", text: "In June 2020, Wirecard admitted that €1.9 billion — approximately a quarter of its stated assets — simply did not exist. The funds were allegedly held in trust accounts in the Philippines, but Philippine banks confirmed no such accounts were held. Auditors from Ernst & Young, who had signed off on Wirecard's accounts for over a decade, came under intense scrutiny for failing to identify what turned out to be a systematic, multi-year fraud. Shortly after the admission, Wirecard filed for insolvency, and Jan Marsalek fled Germany — his whereabouts remained unknown for years." },
+      { heading: "Governance Failures", text: "The Wirecard case exposed multiple governance failures simultaneously. Analysts and journalists had raised questions about the company's accounts as early as 2015, but regulators — including Germany's BaFin — initially failed to act and even investigated the short-sellers raising concerns rather than the company itself. The supervisory board did not have sufficient independence or technical expertise. Internal controls were inadequate, and the auditors allowed relationships with management to compromise their independence. Germany subsequently introduced significant reforms to its audit and governance oversight frameworks." }
+    ],
+    questions: [
+      { q: "What was Wirecard's primary business?", opts: ["Car manufacturing", "Payment processing and financial services", "Energy production", "Software development"], ans: 1 },
+      { q: "How much money was found to be missing from Wirecard's accounts?", opts: ["€900 million", "€1.9 billion", "€5 billion", "€24 billion"], ans: 1 },
+      { q: "Where were the missing funds supposedly held?", opts: ["Switzerland", "Luxembourg", "The Philippines", "The Cayman Islands"], ans: 2 },
+      { q: "Which auditing firm had signed off on Wirecard's accounts?", opts: ["Deloitte", "PwC", "KPMG", "Ernst & Young"], ans: 3 },
+      { q: "What did Wirecard do shortly after admitting the fraud?", opts: ["Merged with a competitor", "Filed for insolvency", "Secured emergency government funding", "Appointed a new CEO"], ans: 1 },
+      { q: "How early had concerns about Wirecard's accounts been raised?", opts: ["2019", "2017", "2015", "2012"], ans: 2 },
+      { q: "What did Germany's BaFin initially do in response to concerns?", opts: ["Immediately investigated Wirecard", "Investigated the short-sellers raising concerns", "Ordered an independent audit", "Removed Wirecard from the DAX"], ans: 1 },
+      { q: "What governance failure is highlighted regarding the supervisory board?", opts: ["It had too many independent members", "It was too focused on short-term profits", "It lacked independence and technical expertise", "It approved excessive executive bonuses"], ans: 2 },
+      { q: "What happened to CEO Jan Marsalek?", opts: ["He was arrested immediately", "He cooperated fully with investigators", "He fled Germany", "He was acquitted of all charges"], ans: 2 },
+      { q: "What did Germany do following the Wirecard scandal?", opts: ["Removed all German firms from international stock exchanges", "Banned short-selling permanently", "Introduced significant reforms to audit and governance oversight", "Dissolved all German FinTech companies"], ans: 2 }
+    ]
+  },
+  {
+    title: "Patagonia's Ethical Business Model: A Governance Success",
+    subtitle: "USA · Outdoor Apparel · Ongoing",
+    intro: "How one company embedded ethics and sustainability into its core governance",
+    sections: [
+      { heading: "Background", text: "Patagonia is an American outdoor clothing company founded by Yvon Chouinard in 1973. From its early days, Patagonia positioned itself as a company with a strong environmental conscience, donating 1% of its annual sales to environmental organisations through its self-imposed 'Earth Tax.' The company has consistently rejected the idea that profit and ethics are incompatible, instead arguing that strong environmental and social values are fundamental to long-term business success. Its mission statement — 'We're in business to save our home planet' — is reflected throughout its operations and governance." },
+      { heading: "Governance and Stakeholder Commitment", text: "In 2022, Patagonia's founder Yvon Chouinard made an extraordinary governance decision: he transferred ownership of the company to a specially created trust and a non-profit organisation, rather than selling it or taking it public. This ensured that all future profits — estimated at approximately $100 million per year — would be used to fight climate change and protect undeveloped land. The decision was widely praised as a landmark moment in corporate governance, demonstrating that it is possible to structure a company in a way that explicitly prioritises the planet over personal gain." },
+      { heading: "Lessons for Business", text: "Patagonia's approach offers several governance lessons. First, that mission-driven governance creates long-term resilience — Patagonia's loyal customer base has been built on trust and shared values, not just product quality. Second, that supply chain transparency matters: Patagonia publishes its full supply chain online, including factory names and locations, which holds the company accountable for its ethical commitments. Third, that governance structures can and should reflect company values — the transfer of ownership was a structural decision with ethical implications. Critics argue the model is not easily replicable for all businesses, but its influence on the broader conversation about corporate purpose is undeniable." }
+    ],
+    questions: [
+      { q: "Who founded Patagonia?", opts: ["Jeff Bezos", "Elon Musk", "Yvon Chouinard", "Richard Branson"], ans: 2 },
+      { q: "What is Patagonia's 'Earth Tax'?", opts: ["A tax paid to the government for environmental damage", "A donation of 1% of annual sales to environmental organisations", "An internal carbon fee paid by employees", "A surcharge on all products sold internationally"], ans: 1 },
+      { q: "What was Patagonia's mission statement mentioned in the text?", opts: ["'Profit with purpose'", "'We're in business to save our home planet'", "'Sustainability through quality'", "'Leading with ethics'"], ans: 1 },
+      { q: "What did Yvon Chouinard do in 2022?", opts: ["Sold Patagonia to a private equity firm", "Floated Patagonia on the stock exchange", "Transferred ownership to a trust and non-profit", "Retired and appointed a new CEO"], ans: 2 },
+      { q: "How much profit does Patagonia reportedly generate annually?", opts: ["$10 million", "$50 million", "$100 million", "$500 million"], ans: 2 },
+      { q: "What will Patagonia's future profits be used for?", opts: ["Executive bonuses", "Marketing campaigns", "Fighting climate change and protecting undeveloped land", "Expanding retail stores"], ans: 2 },
+      { q: "How does Patagonia demonstrate supply chain transparency?", opts: ["By publishing annual ESG reports", "By publishing its full supply chain online", "By allowing customers to visit factories", "By donating to labour rights organisations"], ans: 1 },
+      { q: "What governance lesson does Patagonia's approach demonstrate?", opts: ["That all companies should become non-profits", "That ethics always reduces profitability", "That governance structures can and should reflect company values", "That shareholders should always control governance"], ans: 2 },
+      { q: "What does the text say critics argue about Patagonia's model?", opts: ["It is harmful to the environment", "It is not easily replicable for all businesses", "It reduces employee morale", "It increases costs unnecessarily"], ans: 1 },
+      { q: "What has Patagonia's ethical approach primarily built?", opts: ["The largest outdoor apparel business in the world", "A loyal customer base built on trust and shared values", "A worldwide network of environmental lobbyists", "The most profitable supply chain in the fashion industry"], ans: 1 }
+    ]
+  }
+];
+
+const assessmentQs = [
+  { q: "What is the primary purpose of corporate governance?", opts: ["To maximise short-term profits", "To direct, control, and hold companies accountable", "To manage day-to-day sales operations", "To set product pricing strategies"], ans: 1 },
+  { q: "Which term describes the legal obligation to act in the best interests of shareholders?", opts: ["Stakeholder duty", "Fiduciary duty", "Compliance risk", "Due diligence"], ans: 1 },
+  { q: "What does ESG stand for?", opts: ["Efficiency, Strategy, Governance", "Environmental, Social, Governance", "Earnings, Shareholders, Growth", "Ethical, Structural, Global"], ans: 1 },
+  { q: "A participle clause using 'having + past participle' is used to:", opts: ["Describe future plans", "Indicate an action completed before the main clause", "Express contrast", "Make suggestions"], ans: 1 },
+  { q: "Which linker best expresses a result?", opts: ["Despite", "Although", "Consequently", "Whereas"], ans: 2 },
+  { q: "What does 'draw up' mean in the context of corporate governance?", opts: ["To cancel a meeting", "To create or write officially", "To dismiss an employee", "To investigate a claim"], ans: 1 },
+  { q: "A whistleblower is someone who:", opts: ["Manages corporate communications", "Reports illegal or unethical practices within their organisation", "Conducts external audits", "Sets executive pay"], ans: 1 },
+  { q: "Which governance failure was central to the Wirecard scandal?", opts: ["Poor product development", "Auditors failing to detect systematic, multi-year fraud", "A lack of marketing strategy", "Too many independent board members"], ans: 1 },
+  { q: "What makes stakeholder theory different from shareholder theory?", opts: ["It focuses only on employee welfare", "It considers the interests of all parties affected by the business", "It rejects the importance of profit", "It focuses exclusively on government relations"], ans: 1 },
+  { q: "Which of the following is a Governance (G) criterion in ESG?", opts: ["Carbon emissions", "Labour practices", "Board composition and transparency", "Community relations"], ans: 2 },
+  { q: "'Owing to the new compliance rules, _____ companies must update their disclosure policies.'", opts: ["despite", "however", "all", "nevertheless"], ans: 2 },
+  { q: "In Patagonia's governance model, future profits are directed towards:", opts: ["Executive remuneration", "Marketing budgets", "Fighting climate change and protecting land", "Shareholder dividends"], ans: 2 },
+  { q: "The audit committee is primarily responsible for:", opts: ["Setting employee salaries", "Overseeing financial reporting and internal controls", "Approving marketing strategies", "Managing customer relations"], ans: 1 },
+  { q: "Which sentence uses a correct past participle clause?", opts: ["Accusing of fraud, he resigned.", "Accused of fraud, he resigned.", "Having accusing of fraud, he resigned.", "Accuse of fraud, he resigned."], ans: 1 },
+  { q: "What is greenwashing in the context of ESG investing?", opts: ["Investing only in clean energy companies", "Scoring well on ESG metrics without genuine ethical change", "Reporting accurate environmental data", "Reducing a company's carbon footprint effectively"], ans: 1 },
+  { q: "Which phrasal verb means 'to investigate thoroughly'?", opts: ["Call off", "Look into", "Take on", "Draw up"], ans: 1 },
+  { q: "'The board failed to act on warnings; _____, the company faced sanctions.'", opts: ["despite", "as a result", "although", "owing"], ans: 1 },
+  { q: "What governance structure did Patagonia use in 2022 to protect its mission?", opts: ["An initial public offering", "A management buyout", "Transfer of ownership to a trust and non-profit", "A merger with a competitor"], ans: 2 },
+  { q: "In the context of corporate governance, 'accountability' means:", opts: ["The ability to generate profits", "The obligation to accept responsibility for actions", "The process of hiring executives", "The method of calculating tax liabilities"], ans: 1 },
+  { q: "According to stakeholder theory (Freeman), which group is NOT typically considered a stakeholder?", opts: ["Employees", "Competitors", "Customers", "Local communities"], ans: 1 }
+];
+
+/* ═══════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════ */
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(`'${id}'`)) {
+      n.classList.add('active');
+    }
+  });
+  window.scrollTo(0, 0);
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER SPEAKING
+═══════════════════════════════════════════════ */
+function renderSpeaking() {
+  const grid = document.getElementById('speakingGrid');
+  grid.innerHTML = speakingQs.map((q, i) => `
+    <div class="speaking-card">
+      <div class="q-num">Q${String(i+1).padStart(2,'0')}</div>
+      <div class="q-text">${q}</div>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER WORD BANK
+═══════════════════════════════════════════════ */
+function renderWordBank() {
+  const grid = document.getElementById('wordbankGrid');
+  grid.innerHTML = wordBank.map(w => `
+    <div class="word-card">
+      <div class="word-emoji">${w.emoji}</div>
+      <div class="word-term">${w.term}</div>
+      <div class="word-def">${w.def}</div>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER MCQ BLOCK
+═══════════════════════════════════════════════ */
+function renderMCQ(questions, containerId, darkMode=false) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const letters = ['A','B','C','D'];
+  let html = '';
+  questions.forEach((item, qi) => {
+    html += `<div class="mcq-block" id="${containerId}-q${qi}">
+      <div class="mcq-q">${qi+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((opt, oi) => `
+          <div class="mcq-option ${darkMode?'l-mcq-option':''}" onclick="selectOption('${containerId}',${qi},${oi},${item.ans})" id="${containerId}-q${qi}-o${oi}">
+            <span class="option-letter">${letters[oi]}</span>${opt}
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  });
+  html += `<button class="check-btn ${darkMode?'l-check-btn':''}" onclick="checkAll('${containerId}',${questions.length})">Check Answers</button>
+  <div id="${containerId}-score" style="display:none" class="score-display"></div>`;
+  container.innerHTML = html;
+}
+
+const userAnswers = {};
+function selectOption(cid, qi, oi, correct) {
+  const key = `${cid}-q${qi}`;
+  if (userAnswers[key] !== undefined && userAnswers[key].checked) return;
+  userAnswers[key] = { selected: oi, correct };
+  const opts = document.querySelectorAll(`#${cid}-q${qi} .mcq-option`);
+  opts.forEach((o, i) => {
+    o.classList.remove('selected');
+    if (i === oi) o.classList.add('selected');
+  });
+}
+
+function checkAll(cid, count) {
+  let score = 0;
+  for (let qi = 0; qi < count; qi++) {
+    const key = `${cid}-q${qi}`;
+    const data = userAnswers[key];
+    if (!data) continue;
+    data.checked = true;
+    const opts = document.querySelectorAll(`#${cid}-q${qi} .mcq-option`);
+    opts.forEach((o, i) => {
+      o.classList.remove('selected');
+      if (i === data.correct) o.classList.add('correct');
+      if (i === data.selected && data.selected !== data.correct) o.classList.add('incorrect');
+    });
+    if (data.selected === data.correct) score++;
+  }
+  const scoreEl = document.getElementById(`${cid}-score`);
+  if (scoreEl) {
+    scoreEl.style.display = 'inline-flex';
+    scoreEl.textContent = `Score: ${score} / ${count}`;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER READING
+═══════════════════════════════════════════════ */
+function renderReading() {
+  const content = document.getElementById('readingContent');
+  let html = '';
+  readingTexts.forEach((text, ti) => {
+    const cid = `reading-mcq-${ti}`;
+    html += `<div class="card">
+      <div class="card-title">${text.title}</div>
+      <div class="card-title-bar"></div>
+      <div class="reading-text-box">
+        <h4>${text.subtitle}</h4>
+        ${text.paragraphs.map(p => `<p>${p}</p>`).join('')}
+      </div>
+      <h4 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:18px;">Comprehension Questions</h4>
+      <div id="${cid}"></div>
+    </div>`;
+  });
+  content.innerHTML = html;
+  readingTexts.forEach((text, ti) => {
+    renderMCQ(text.questions, `reading-mcq-${ti}`);
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER VOCABULARY EXERCISES
+═══════════════════════════════════════════════ */
+function renderVocabulary() {
+  // Exercise 1: MCQ
+  const ex0 = document.getElementById('vocab-ex-0');
+  ex0.innerHTML = `<div class="card"><div class="card-title">${vocabExercises[0].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${vocabExercises[0].instructions}</p>
+  <div id="vocab-mcq-0"></div></div>`;
+  renderMCQ(vocabExercises[0].questions, 'vocab-mcq-0');
+
+  // Exercise 2: Gap Fill
+  const ex1 = document.getElementById('vocab-ex-1');
+  const wordsHtml = vocabExercises[1].words.map(w => `<span style="display:inline-block;background:var(--navy);color:var(--gold-light);font-size:12px;font-weight:600;padding:3px 12px;border-radius:20px;margin:3px;">${w}</span>`).join('');
+  let gapHtml = vocabExercises[1].sentences.map((s, i) => `
+    <div class="gapfill-item" id="gf-item-${i}">
+      <span>${i+1}. ${s.before}</span>
+      <input class="gap-input" id="gf-${i}" type="text" placeholder="…" data-ans="${s.blank}">
+      <span>${s.after}</span>
+    </div>
+  `).join('');
+  ex1.innerHTML = `<div class="card"><div class="card-title">${vocabExercises[1].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:14px;">${vocabExercises[1].instructions}</p>
+  <div style="margin-bottom:20px;padding:14px 16px;background:var(--cream);border-radius:8px;">${wordsHtml}</div>
+  ${gapHtml}
+  <button class="check-btn" onclick="checkGapFill()" style="margin-top:14px;">Check Answers</button>
+  <div id="gf-score" style="display:none" class="score-display"></div>
+  </div>`;
+
+  // Exercise 3: True/False
+  const ex2 = document.getElementById('vocab-ex-2');
+  let tfHtml = vocabExercises[2].statements.map((s, i) => `
+    <div class="tf-item" id="tf-item-${i}">
+      <div class="tf-statement">${i+1}. ${s.text}</div>
+      <div class="tf-buttons">
+        <button class="tf-btn" id="tf-${i}-T" onclick="selectTF(${i},'T',${s.ans})" data-val="T">True</button>
+        <button class="tf-btn" id="tf-${i}-F" onclick="selectTF(${i},'F',${s.ans})" data-val="F">False</button>
+      </div>
+    </div>
+  `).join('');
+  ex2.innerHTML = `<div class="card"><div class="card-title">${vocabExercises[2].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${vocabExercises[2].instructions}</p>
+  ${tfHtml}
+  <button class="check-btn" onclick="checkTF()" style="margin-top:14px;">Check Answers</button>
+  <div id="tf-score" style="display:none" class="score-display"></div>
+  </div>`;
+}
+
+const tfAnswers = {};
+function selectTF(i, val, correct) {
+  if (tfAnswers[i] && tfAnswers[i].checked) return;
+  tfAnswers[i] = { selected: val, correct };
+  ['T','F'].forEach(v => {
+    const btn = document.getElementById(`tf-${i}-${v}`);
+    btn.classList.remove('selected-true','selected-false');
+  });
+  document.getElementById(`tf-${i}-${val}`).classList.add(val==='T'?'selected-true':'selected-false');
+}
+
+function checkTF() {
+  let score = 0;
+  vocabExercises[2].statements.forEach((s, i) => {
+    const data = tfAnswers[i];
+    if (!data) return;
+    data.checked = true;
+    const correctVal = s.ans ? 'T' : 'F';
+    ['T','F'].forEach(v => {
+      const btn = document.getElementById(`tf-${i}-${v}`);
+      btn.classList.remove('selected-true','selected-false');
+    });
+    const selBtn = document.getElementById(`tf-${i}-${data.selected}`);
+    const corrBtn = document.getElementById(`tf-${i}-${correctVal}`);
+    if (data.selected === correctVal) { selBtn.classList.add('correct-answer'); score++; }
+    else { selBtn.classList.add('wrong-answer'); corrBtn.classList.add('correct-answer'); }
+  });
+  const sc = document.getElementById('tf-score');
+  sc.style.display = 'inline-flex';
+  sc.textContent = `Score: ${score} / ${vocabExercises[2].statements.length}`;
+}
+
+function checkGapFill() {
+  let score = 0;
+  vocabExercises[1].sentences.forEach((s, i) => {
+    const input = document.getElementById(`gf-${i}`);
+    const val = input.value.trim().toLowerCase();
+    const ans = s.blank.toLowerCase();
+    input.classList.remove('correct','incorrect');
+    if (val === ans) { input.classList.add('correct'); score++; }
+    else { input.classList.add('incorrect'); input.value = s.blank; }
+  });
+  const sc = document.getElementById('gf-score');
+  sc.style.display = 'inline-flex';
+  sc.textContent = `Score: ${score} / ${vocabExercises[1].sentences.length}`;
+}
+
+function showVocabEx(idx, el) {
+  document.querySelectorAll('.vocab-ex').forEach((e,i) => e.style.display = i===idx?'block':'none');
+  el.parentElement.querySelectorAll('.ex-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER GRAMMAR EXERCISES
+═══════════════════════════════════════════════ */
+function renderGrammar() {
+  grammarExercises.forEach((ex, ei) => {
+    const cid = `grammar-mcq-${ei}`;
+    const div = document.getElementById(`grammar-ex-${ei}`);
+    div.innerHTML = `<div class="card"><div class="card-title">${ex.title}</div><div class="card-title-bar"></div>
+    <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${ex.instructions}</p>
+    <div id="${cid}"></div></div>`;
+    renderMCQ(ex.questions, cid);
+  });
+}
+
+function showGrammarEx(idx, el) {
+  document.querySelectorAll('.grammar-ex').forEach((e,i) => e.style.display = i===idx?'block':'none');
+  el.parentElement.querySelectorAll('.ex-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER GRAMMAR REVIEW
+═══════════════════════════════════════════════ */
+function renderGrammarReview() {
+  const content = document.getElementById('grammarReviewContent');
+  let html = '';
+  grammarReview.forEach(ref => {
+    html += `<div class="card">
+      <div class="card-title">${ref.title}</div>
+      <div class="card-title-bar"></div>
+      ${ref.points.map(pt => `
+        <div class="grammar-ref-box" style="margin-bottom:16px;">
+          <h4>${pt.title}</h4>
+          <div class="grammar-rule">
+            <p>${pt.body}</p>
+            ${pt.examples.length ? `<ul style="margin-top:10px">${pt.examples.map(e=>`<li style="margin-bottom:5px"><code>${e}</code></li>`).join('')}</ul>` : ''}
+          </div>
+        </div>
+      `).join('')}
+    </div>`;
+  });
+  content.innerHTML = html;
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER WRITING
+═══════════════════════════════════════════════ */
+function renderWriting() {
+  const content = document.getElementById('writingContent');
+  const tasks = [
+    {
+      activity: "Writing Activity 1",
+      type: "Formal Report",
+      title: "A Report on Corporate Governance Failures",
+      prompt: "Your company's board has asked you to write a formal report analysing a recent corporate governance failure. Choose a well-known case (e.g., Wirecard, Enron, or a company from your sector) and examine: the governance structures that failed, the key ethical issues involved, and specific recommendations to prevent similar failures in your organisation.",
+      tags: ["250–300 words", "Formal register", "Report format: Introduction, Findings, Recommendations, Conclusion"],
+      id: "writing-1"
+    },
+    {
+      activity: "Writing Activity 2",
+      type: "Persuasive Essay",
+      title: "Ethics as Competitive Advantage",
+      prompt: "Write a persuasive essay arguing that strong ethical practices and robust corporate governance are not just moral obligations, but genuine competitive advantages in today's business environment. Use specific examples and data to support your argument. Consider addressing counterarguments from those who believe ethics reduces profitability.",
+      tags: ["280–350 words", "Persuasive register", "Include: Introduction, Body (2–3 paragraphs), Conclusion"],
+      id: "writing-2"
+    }
+  ];
+
+  content.innerHTML = tasks.map((t, ti) => `
+    <div class="card">
+      <div class="card-title">${t.activity}: ${t.type}</div>
+      <div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>${t.title}</h4>
+        <p>${t.prompt}</p>
+        <div class="writing-meta">
+          ${t.tags.map(tag => `<span class="writing-tag">${tag}</span>`).join('')}
+        </div>
+      </div>
+      <textarea class="writing-textarea" id="${t.id}-textarea" placeholder="Write your response here…" oninput="updateWordCount('${t.id}')"></textarea>
+      <div class="word-counter" id="${t.id}-counter">0 words</div>
+      <button class="submit-btn" onclick="submitWriting('${t.id}')">Submit Writing ✓</button>
+      <div class="submit-success" id="${t.id}-success">
+        ✅ <span>Your writing has been submitted successfully! Well done.</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateWordCount(id) {
+  const textarea = document.getElementById(`${id}-textarea`);
+  const counter = document.getElementById(`${id}-counter`);
+  const words = textarea.value.trim() === '' ? 0 : textarea.value.trim().split(/\s+/).length;
+  counter.textContent = `${words} words`;
+}
+
+function submitWriting(id) {
+  const textarea = document.getElementById(`${id}-textarea`);
+  const success = document.getElementById(`${id}-success`);
+  if (textarea.value.trim().length < 20) {
+    alert('Please write at least a few sentences before submitting.');
+    return;
+  }
+  success.style.display = 'flex';
+  textarea.style.borderColor = 'var(--green-accent)';
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER LISTENING
+═══════════════════════════════════════════════ */
+function renderListening() {
+  const content = document.getElementById('listeningContent');
+  let html = listeningActivities.map((act, ai) => {
+    const cid = `l-mcq-${ai}`;
+    return `
+    <div class="listening-activity">
+      <div class="listening-header">
+        <div class="listening-icon">📻</div>
+        <div>
+          <div class="listening-title">${act.title}</div>
+          <div class="listening-subtitle">${act.subtitle}</div>
+          <div class="listening-tags">
+            <span class="l-tag l-tag-level">LEVEL: ${act.level}</span>
+            <span class="l-tag l-tag-type">${act.type}</span>
+            <span class="l-tag l-tag-focus">FOCUS: ${act.focus}</span>
+          </div>
+        </div>
+      </div>
+      <div class="audio-player">
+        <div class="player-top">
+          <button class="play-btn" onclick="togglePlay(${ai})" id="play-${ai}">▶</button>
+          <div class="player-info">
+            <div class="player-title">🎧 ${act.title}</div>
+            <div class="player-desc">${act.subtitle}</div>
+          </div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="progress-audio"><div class="progress-audio-fill" id="prog-${ai}"></div></div>
+        <div class="speed-controls">
+          <span class="speed-label">SPEED:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7×</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2×</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">↩ Replay</button>
+        </div>
+        <div class="audio-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <div class="transcript-toggle" id="trans-toggle-${ai}" onclick="toggleTranscript(${ai})">
+        <span class="arrow">▼</span> Show / Hide Transcript
+      </div>
+      <div class="transcript-content" id="trans-${ai}">
+        <p>${act.transcript}</p>
+      </div>
+      <div class="listening-mcq">
+        <div class="instructions-box">
+          <span class="inst-icon">📋</span>
+          <span class="inst-text">Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</span>
+        </div>
+        <div id="${cid}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  content.innerHTML = html;
+  listeningActivities.forEach((act, ai) => {
+    renderMCQ(act.questions, `l-mcq-${ai}`, true);
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   AUDIO ENGINE — American Female Voice
+═══════════════════════════════════════════════ */
+const speechInstances = {};
+let cachedAmericanFemaleVoice = null;
+
+// Priority-ordered list of known US English female voice names across browsers
+const US_FEMALE_VOICE_NAMES = [
+  'Samantha', 'Karen', 'Victoria', 'Allison', 'Susan',
+  'Zira', 'Microsoft Zira', 'Microsoft Zira Desktop',
+  'Google US English', 'en-US-Neural2-F', 'en-US-Wavenet-F',
+  'Ava', 'Nova', 'Jenny', 'Aria'
+];
+
+function pickAmericanFemaleVoice() {
+  if (cachedAmericanFemaleVoice) return cachedAmericanFemaleVoice;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return null;
+
+  // 1. Exact name match (highest quality named voices)
+  for (const name of US_FEMALE_VOICE_NAMES) {
+    const v = voices.find(v => v.name === name);
+    if (v) { cachedAmericanFemaleVoice = v; return v; }
+  }
+  // 2. Partial name match
+  for (const name of US_FEMALE_VOICE_NAMES) {
+    const v = voices.find(v => v.name.toLowerCase().includes(name.toLowerCase()));
+    if (v) { cachedAmericanFemaleVoice = v; return v; }
+  }
+  // 3. Any en-US female voice
+  const enUS = voices.filter(v => v.lang === 'en-US');
+  const female = enUS.find(v => /female|woman|girl|zira|samantha|ava|nova|jenny|aria/i.test(v.name));
+  if (female) { cachedAmericanFemaleVoice = female; return female; }
+  // 4. Any en-US voice
+  if (enUS.length) { cachedAmericanFemaleVoice = enUS[0]; return enUS[0]; }
+  // 5. Any English voice
+  const enAny = voices.find(v => v.lang.startsWith('en'));
+  if (enAny) { cachedAmericanFemaleVoice = enAny; return enAny; }
+  return voices[0];
+}
+
+function getVoiceThenSpeak(ai, onVoiceReady) {
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length) { onVoiceReady(pickAmericanFemaleVoice()); return; }
+  // Voices not loaded yet — wait for the event
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.onvoiceschanged = null;
+    cachedAmericanFemaleVoice = null; // reset cache so we re-pick
+    onVoiceReady(pickAmericanFemaleVoice());
+  };
+  // Fallback: some browsers fire getVoices() lazily
+  setTimeout(() => {
+    if (!cachedAmericanFemaleVoice) {
+      cachedAmericanFemaleVoice = null;
+      onVoiceReady(pickAmericanFemaleVoice());
+    }
+  }, 600);
+}
+
+// Progress animation interval storage
+const progressIntervals = {};
+
+function startProgressAnimation(ai, utterance) {
+  const progEl = document.getElementById(`prog-${ai}`);
+  const timeEl = document.getElementById(`time-${ai}`);
+  if (!progEl) return;
+  const text = listeningActivities[ai].transcript;
+  // Estimate duration: ~130 words/min at rate 0.85 → adjust by rate
+  const wordCount = text.split(/\s+/).length;
+  const rate = speechInstances[`${ai}-rate`] || 0.85;
+  const estimatedSec = Math.round((wordCount / 130) * 60 / rate);
+  let elapsed = 0;
+  progEl.style.width = '0%';
+  if (timeEl) timeEl.textContent = `0:00 / ${Math.floor(estimatedSec/60)}:${String(estimatedSec%60).padStart(2,'0')}`;
+  clearInterval(progressIntervals[ai]);
+  progressIntervals[ai] = setInterval(() => {
+    elapsed++;
+    const pct = Math.min((elapsed / estimatedSec) * 100, 99);
+    progEl.style.width = pct + '%';
+    const m = Math.floor(elapsed/60), s = elapsed%60;
+    const tm = Math.floor(estimatedSec/60), ts = estimatedSec%60;
+    if (timeEl) timeEl.textContent = `${m}:${String(s).padStart(2,'0')} / ${tm}:${String(ts).padStart(2,'0')}`;
+  }, 1000);
+}
+
+function stopProgressAnimation(ai, complete=false) {
+  clearInterval(progressIntervals[ai]);
+  const progEl = document.getElementById(`prog-${ai}`);
+  if (progEl) progEl.style.width = complete ? '100%' : progEl.style.width;
+}
+
+function togglePlay(ai) {
+  const act = listeningActivities[ai];
+  const btn = document.getElementById(`play-${ai}`);
+
+  // If currently speaking — pause/stop
+  if (speechInstances[ai]) {
+    window.speechSynthesis.cancel();
+    stopProgressAnimation(ai);
+    btn.textContent = '▶';
+    delete speechInstances[ai];
+    return;
+  }
+
+  // Start speaking with American female voice
+  getVoiceThenSpeak(ai, (voice) => {
+    const utterance = new SpeechSynthesisUtterance(act.transcript);
+    utterance.voice = voice;
+    utterance.lang = 'en-US';
+    utterance.rate = speechInstances[`${ai}-rate`] || 0.85;
+    utterance.pitch = 1.08;   // slightly warm/bright
+    utterance.volume = 1.0;
+
+    utterance.onstart = () => {
+      btn.textContent = '⏸';
+      startProgressAnimation(ai, utterance);
+    };
+    utterance.onend = () => {
+      btn.textContent = '▶';
+      stopProgressAnimation(ai, true);
+      delete speechInstances[ai];
+    };
+    utterance.onerror = (e) => {
+      if (e.error !== 'interrupted') {
+        btn.textContent = '▶';
+        stopProgressAnimation(ai);
+        delete speechInstances[ai];
+      }
+    };
+
+    window.speechSynthesis.speak(utterance);
+    speechInstances[ai] = utterance;
+  });
+}
+
+function setSpeed(ai, rate, el) {
+  speechInstances[`${ai}-rate`] = rate;
+  el.closest('.speed-controls').querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  // If currently playing, restart with new rate
+  if (speechInstances[ai]) {
+    window.speechSynthesis.cancel();
+    stopProgressAnimation(ai);
+    delete speechInstances[ai];
+    document.getElementById(`play-${ai}`).textContent = '▶';
+    setTimeout(() => togglePlay(ai), 150);
+  }
+}
+
+function replayAudio(ai) {
+  if (speechInstances[ai]) {
+    window.speechSynthesis.cancel();
+    stopProgressAnimation(ai);
+    delete speechInstances[ai];
+  }
+  document.getElementById(`play-${ai}`).textContent = '▶';
+  setTimeout(() => togglePlay(ai), 200);
+}
+
+function toggleTranscript(ai) {
+  const toggle = document.getElementById(`trans-toggle-${ai}`);
+  const content = document.getElementById(`trans-${ai}`);
+  toggle.classList.toggle('open');
+  content.classList.toggle('open');
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER CASE STUDIES
+═══════════════════════════════════════════════ */
+function renderCaseStudies() {
+  const content = document.getElementById('caseStudiesContent');
+  let html = '';
+  caseStudies.forEach((cs, ci) => {
+    const cid = `cs-mcq-${ci}`;
+    html += `
+    <div style="margin-bottom:32px;">
+      <div class="case-header">
+        <div class="case-label">Case Study ${ci+1}</div>
+        <div class="case-title">${cs.title}</div>
+        <div class="case-sub">${cs.subtitle} &nbsp;·&nbsp; ${cs.intro}</div>
+      </div>
+      <div class="case-body">
+        ${cs.sections.map(s => `<h5>${s.heading}</h5><p>${s.text}</p>`).join('')}
+        <div class="ex-divider"></div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:18px;">Comprehension Questions</h4>
+        <div id="${cid}"></div>
+      </div>
+    </div>`;
+  });
+  content.innerHTML = html;
+  caseStudies.forEach((cs, ci) => {
+    renderMCQ(cs.questions, `cs-mcq-${ci}`);
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER ASSESSMENT
+═══════════════════════════════════════════════ */
+let assessmentAttempts = 0;
+const MAX_ATTEMPTS = 2;
+const PASS_MARK = 0.7;
+
+function renderAssessment() {
+  const content = document.getElementById('assessmentContent');
+  content.innerHTML = `
+    <div class="assessment-banner">
+      <h3>Module 12 Final Assessment</h3>
+      <p>This assessment covers all areas of Module 12: Ethics and Corporate Governance.<br>Answer all 20 questions. You need 70% or above to pass. You have 2 attempts.</p>
+      <div class="assessment-meta">
+        <div class="a-meta-item"><div class="a-meta-num">20</div><div class="a-meta-label">Questions</div></div>
+        <div class="a-meta-item"><div class="a-meta-num">70%</div><div class="a-meta-label">Pass Mark</div></div>
+        <div class="a-meta-item"><div class="a-meta-num">2</div><div class="a-meta-label">Attempts</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="attempts-display">
+        Attempts used: <span class="attempt-dot" id="att-0"></span><span class="attempt-dot" id="att-1"></span>
+      </div>
+      <div id="assessment-questions"></div>
+      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="submit-btn" id="submit-assessment-btn" onclick="submitAssessment()">Submit Assessment</button>
+        <button class="check-btn" id="retry-assessment-btn" onclick="resetAssessment()" style="display:none">Try Again</button>
+      </div>
+      <div class="final-result" id="final-result"></div>
+    </div>
+  `;
+  renderAssessmentQuestions();
+}
+
+const finalAnswers = {};
+function renderAssessmentQuestions() {
+  const letters = ['A','B','C','D'];
+  const container = document.getElementById('assessment-questions');
+  let html = '';
+  assessmentQs.forEach((item, qi) => {
+    html += `<div class="mcq-block" id="asmq-q${qi}">
+      <div class="mcq-q">${qi+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((opt, oi) => `
+          <div class="mcq-option" onclick="selectFinalOption(${qi},${oi},${item.ans})" id="asmq-q${qi}-o${oi}">
+            <span class="option-letter">${letters[oi]}</span>${opt}
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+function selectFinalOption(qi, oi, correct) {
+  if (finalAnswers[qi] && finalAnswers[qi].checked) return;
+  finalAnswers[qi] = { selected: oi, correct };
+  const opts = document.querySelectorAll(`#asmq-q${qi} .mcq-option`);
+  opts.forEach((o, i) => { o.classList.remove('selected'); if (i === oi) o.classList.add('selected'); });
+}
+
+function submitAssessment() {
+  if (assessmentAttempts >= MAX_ATTEMPTS) return;
+  assessmentAttempts++;
+  if (assessmentAttempts <= MAX_ATTEMPTS) {
+    document.getElementById(`att-${assessmentAttempts-1}`).classList.add('used');
+  }
+  let score = 0;
+  assessmentQs.forEach((item, qi) => {
+    const data = finalAnswers[qi];
+    const opts = document.querySelectorAll(`#asmq-q${qi} .mcq-option`);
+    opts.forEach(o => o.style.pointerEvents = 'none');
+    if (!data) return;
+    data.checked = true;
+    opts.forEach((o, i) => {
+      o.classList.remove('selected');
+      if (i === data.correct) o.classList.add('correct');
+      if (i === data.selected && data.selected !== data.correct) o.classList.add('incorrect');
+    });
+    if (data.selected === data.correct) score++;
+  });
+  const pct = Math.round((score/assessmentQs.length)*100);
+  const passed = pct >= 70;
+  const resultEl = document.getElementById('final-result');
+  resultEl.className = `final-result ${passed?'pass':'fail'}`;
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = `
+    <div class="final-score">${pct}%</div>
+    <div class="final-verdict">${passed ? '🎉 Congratulations! You passed!' : '❌ Not quite — keep studying!'}</div>
+    <div class="final-msg">${passed
+      ? `You scored ${score} out of ${assessmentQs.length}. Excellent work on Module 12: Ethics and Corporate Governance. You have demonstrated a strong command of governance vocabulary, grammar, and concepts.`
+      : `You scored ${score} out of ${assessmentQs.length}. You need 70% to pass (14/20). ${assessmentAttempts < MAX_ATTEMPTS ? 'You have 1 attempt remaining. Review the module materials and try again.' : 'You have used both attempts. Please review the module and speak to your instructor.'}`
+    }</div>`;
+  document.getElementById('submit-assessment-btn').style.display = 'none';
+  if (assessmentAttempts < MAX_ATTEMPTS && !passed) {
+    document.getElementById('retry-assessment-btn').style.display = 'inline-block';
+  }
+}
+
+function resetAssessment() {
+  Object.keys(finalAnswers).forEach(k => delete finalAnswers[k]);
+  renderAssessmentQuestions();
+  document.getElementById('final-result').style.display = 'none';
+  document.getElementById('submit-assessment-btn').style.display = 'inline-block';
+  document.getElementById('retry-assessment-btn').style.display = 'none';
+}
+
+/* ═══════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  renderSpeaking();
+  renderWordBank();
+  renderReading();
+  renderVocabulary();
+  renderGrammar();
+  renderGrammarReview();
+  renderWriting();
+  renderListening();
+  renderCaseStudies();
+  renderAssessment();
+  // Animate progress bar
+  setTimeout(() => {
+    document.getElementById('progressFill').style.width = '35%';
+    document.getElementById('progressPct').textContent = '35%';
+  }, 600);
+});
+</script>
+</body>
+</html>

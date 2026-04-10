@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance & Accounting English — Module 11: Financial Planning and Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d1b2e; --navy-mid: #152337; --navy-light: #1e3352;
+  --gold: #c9952a; --gold-light: #e8b84b;
+  --cream: #f5f0e8; --cream-dark: #ece5d8;
+  --white: #ffffff; --text-muted: #8899aa;
+  --green: #2ecc8a; --red: #e05c5c;
+  --sidebar-w: 260px; --radius: 10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;display:flex;}
+
+/* SIDEBAR */
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto;padding-bottom:32px;}
+.sidebar-brand{padding:24px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08);}
+.sidebar-brand h2{color:var(--gold);font-family:'Playfair Display',serif;font-size:1rem;line-height:1.3;}
+.sidebar-brand .sub{color:var(--text-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;}
+.level-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:10px;letter-spacing:1px;}
+.sidebar-section-label{color:var(--text-muted);font-size:.65rem;text-transform:uppercase;letter-spacing:2px;padding:20px 20px 6px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;color:rgba(255,255,255,.65);font-size:.85rem;cursor:pointer;border-left:3px solid transparent;transition:all .2s;user-select:none;}
+.nav-item:hover{color:var(--white);background:rgba(255,255,255,.05);}
+.nav-item.active{color:var(--white);background:rgba(201,149,42,.12);border-left-color:var(--gold);}
+.nav-item .nav-icon{font-size:1rem;width:20px;text-align:center;}
+.nav-badge{margin-left:auto;background:rgba(201,149,42,.2);color:var(--gold-light);font-size:.65rem;font-weight:600;padding:2px 7px;border-radius:10px;}
+
+/* MAIN */
+#main{margin-left:var(--sidebar-w);flex:1;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0d1b2e 0%,#152337 60%,#1a2d45 100%);padding:48px 56px 40px;position:relative;overflow:hidden;}
+.hero::after{content:'M11';position:absolute;right:30px;bottom:-20px;font-family:'Playfair Display',serif;font-size:130px;font-weight:800;color:rgba(255,255,255,.03);line-height:1;pointer-events:none;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);font-size:.72rem;text-transform:uppercase;letter-spacing:2px;padding:6px 14px;border-radius:20px;margin-bottom:20px;}
+.hero h1{font-family:'Playfair Display',serif;color:var(--white);font-size:2.8rem;line-height:1.15;}
+.hero h1 span{color:var(--gold);}
+.hero p{color:rgba(255,255,255,.65);margin-top:14px;max-width:680px;line-height:1.7;font-size:.95rem;}
+.hero-stats{display:flex;gap:36px;margin-top:32px;flex-wrap:wrap;}
+.stat .n{font-family:'Playfair Display',serif;color:var(--gold);font-size:2rem;font-weight:700;}
+.stat .l{color:rgba(255,255,255,.5);font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;margin-top:2px;}
+
+/* PROGRESS */
+.progress-bar-wrap{background:var(--navy-mid);padding:14px 56px;display:flex;align-items:center;gap:16px;}
+.progress-label{color:rgba(255,255,255,.7);font-size:.8rem;white-space:nowrap;}
+.progress-track{flex:1;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:4px;width:0%;transition:width .8s ease;}
+.progress-pct{color:var(--gold);font-size:.85rem;font-weight:600;}
+
+/* SECTIONS */
+.section{display:none;padding:48px 56px;}
+.section.active{display:block;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--navy);margin-bottom:6px;}
+.section-title::after{content:'';display:block;width:48px;height:3px;background:var(--gold);margin-top:10px;border-radius:2px;}
+.section-sub{color:#667;font-size:.9rem;margin-top:12px;margin-bottom:28px;}
+
+/* CARDS */
+.card{background:var(--white);border-radius:var(--radius);padding:28px;margin-bottom:20px;border:1px solid rgba(0,0,0,.07);}
+
+/* OVERVIEW */
+.outcome-list{list-style:none;display:grid;gap:10px;margin-top:16px;}
+.outcome-list li{display:flex;align-items:flex-start;gap:10px;font-size:.9rem;line-height:1.5;}
+.outcome-list li::before{content:'✦';color:var(--gold);font-size:.7rem;margin-top:3px;flex-shrink:0;}
+
+/* SPEAKING */
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.q-card{background:var(--white);border-radius:8px;padding:16px 18px;border-left:3px solid var(--gold);font-size:.88rem;line-height:1.5;display:flex;gap:12px;align-items:flex-start;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.q-num{font-family:'DM Mono',monospace;color:var(--gold);font-size:.75rem;font-weight:600;flex-shrink:0;margin-top:1px;}
+
+/* WORD BANK */
+.word-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.word-card{background:var(--white);border-radius:10px;padding:18px 16px;border:1px solid rgba(0,0,0,.08);transition:transform .2s,box-shadow .2s;}
+.word-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1);}
+.word-emoji{font-size:1.6rem;margin-bottom:8px;}
+.word-term{font-weight:700;font-size:.92rem;color:var(--navy);margin-bottom:4px;}
+.word-def{font-size:.78rem;color:#556;line-height:1.5;}
+
+/* READING */
+.reading-text{background:var(--white);border-radius:var(--radius);padding:28px 32px;margin-bottom:28px;border:1px solid rgba(0,0,0,.07);}
+.reading-text h3{font-family:'Playfair Display',serif;color:var(--navy);font-size:1.2rem;margin-bottom:16px;}
+.reading-text p{font-size:.9rem;line-height:1.8;color:#334;margin-bottom:14px;}
+.reading-text p:last-child{margin-bottom:0;}
+
+/* MCQ */
+.mcq-block{margin-bottom:28px;}
+.mcq-question{font-weight:600;font-size:.9rem;margin-bottom:12px;color:var(--navy);line-height:1.5;}
+.mcq-options{display:grid;gap:8px;}
+.mcq-option{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--cream);border-radius:7px;cursor:pointer;border:2px solid transparent;transition:all .2s;font-size:.88rem;user-select:none;}
+.mcq-option:hover{border-color:var(--gold);background:rgba(201,149,42,.08);}
+.mcq-option.correct{background:rgba(46,204,138,.12);border-color:var(--green);color:#1a6e4c;}
+.mcq-option.wrong{background:rgba(224,92,92,.1);border-color:var(--red);color:#8b1a1a;}
+.mcq-option.disabled{pointer-events:none;}
+.opt-letter{width:24px;height:24px;border-radius:50%;background:rgba(201,149,42,.2);color:var(--gold);font-weight:700;font-size:.72rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.feedback{margin-top:8px;font-size:.82rem;padding:8px 12px;border-radius:6px;display:none;}
+.feedback.show{display:block;}
+.feedback.correct{background:rgba(46,204,138,.1);color:#1a6e4c;}
+.feedback.wrong{background:rgba(224,92,92,.1);color:#8b1a1a;}
+
+/* GAP FILL — dropdown */
+.gap-sentence{font-size:.9rem;line-height:2.8;margin-bottom:2px;}
+.gap-select{display:inline-block;border:2px solid var(--gold);border-radius:6px;background:var(--cream);font-family:'DM Sans',sans-serif;font-size:.85rem;padding:3px 28px 3px 10px;color:var(--navy);outline:none;cursor:pointer;vertical-align:middle;margin:0 4px;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9952a' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;transition:border-color .2s,background-color .2s;min-width:160px;}
+.gap-select:hover{border-color:var(--gold-light);}
+.gap-select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(201,149,42,.15);}
+.gap-select.correct{border-color:var(--green);background-color:rgba(46,204,138,.1);color:#1a6e4c;}
+.gap-select.wrong{border-color:var(--red);background-color:rgba(224,92,92,.08);color:var(--red);}
+.gap-select:disabled{cursor:default;opacity:.9;}
+
+/* GRAMMAR REVIEW */
+.grammar-rule{background:var(--navy);color:var(--white);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;}
+.grammar-rule h4{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:10px;}
+.grammar-rule p{font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.82);margin-bottom:10px;}
+.grammar-rule .example{background:rgba(255,255,255,.08);border-left:3px solid var(--gold);padding:10px 14px;border-radius:4px;font-size:.85rem;font-style:italic;margin-top:8px;color:rgba(255,255,255,.87);}
+.grammar-rule table{width:100%;border-collapse:collapse;margin-top:12px;font-size:.82rem;}
+.grammar-rule th{background:rgba(201,149,42,.25);color:var(--gold-light);padding:8px 12px;text-align:left;}
+.grammar-rule td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.8);}
+
+/* LISTENING */
+.listen-card{background:var(--navy);border-radius:var(--radius);padding:24px;margin-bottom:28px;}
+.listen-card-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px;}
+.listen-icon{width:50px;height:50px;background:rgba(201,149,42,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
+.listen-title{color:var(--white);font-family:'Playfair Display',serif;font-size:1.05rem;line-height:1.35;}
+.listen-meta{color:rgba(255,255,255,.5);font-size:.78rem;margin-top:3px;}
+.listen-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.badge{font-size:.65rem;text-transform:uppercase;letter-spacing:1px;padding:3px 9px;border-radius:12px;font-weight:600;}
+.badge-gold{border:1px solid var(--gold);color:var(--gold);}
+.badge-outline{border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.7);}
+.audio-player{background:#0a1525;border-radius:10px;padding:16px 20px;}
+.audio-controls{display:flex;align-items:center;gap:14px;}
+.play-btn{width:46px;height:46px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--navy);flex-shrink:0;transition:background .2s;}
+.play-btn:hover{background:var(--gold-light);}
+.audio-info{flex:1;}
+.audio-title-sm{color:var(--white);font-size:.85rem;font-weight:600;}
+.audio-sub{color:rgba(255,255,255,.45);font-size:.75rem;margin-top:2px;}
+.progress-audio{margin-top:10px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;}
+.progress-audio-fill{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width .3s;}
+.audio-time{color:rgba(255,255,255,.4);font-size:.72rem;font-family:'DM Mono',monospace;display:flex;justify-content:flex-end;margin-top:4px;}
+.speed-btns{display:flex;gap:6px;margin-top:10px;}
+.speed-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.75rem;padding:3px 10px;border-radius:12px;cursor:pointer;transition:all .2s;}
+.speed-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700;}
+.audio-note{color:rgba(255,255,255,.3);font-size:.72rem;margin-top:8px;font-style:italic;}
+.transcript-toggle{margin-top:12px;background:none;border:none;color:var(--gold);font-size:.82rem;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:'DM Sans',sans-serif;}
+.transcript-box{background:rgba(255,255,255,.05);border-radius:8px;padding:14px 18px;margin-top:10px;font-size:.84rem;color:rgba(255,255,255,.72);line-height:1.78;display:none;border:1px solid rgba(255,255,255,.06);}
+.transcript-box.open{display:block;}
+
+/* WRITING */
+.writing-prompt{background:var(--navy);color:var(--white);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
+.writing-prompt h3{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:10px;}
+.writing-prompt p{font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.82);}
+.writing-prompt ul{margin:10px 0 0 18px;font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.9;}
+.writing-area{width:100%;min-height:210px;border:2px solid rgba(0,0,0,.12);border-radius:8px;padding:16px;font-family:'DM Sans',sans-serif;font-size:.9rem;resize:vertical;outline:none;transition:border-color .2s;color:var(--navy);}
+.writing-area:focus{border-color:var(--gold);}
+.word-count{color:var(--text-muted);font-size:.78rem;margin-top:6px;}
+.submit-btn{background:var(--gold);color:var(--navy);border:none;padding:11px 28px;border-radius:25px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;margin-top:12px;transition:background .2s;}
+.submit-btn:hover{background:var(--gold-light);}
+.submit-feedback{display:none;background:rgba(46,204,138,.1);border:1px solid var(--green);border-radius:8px;padding:12px 16px;margin-top:12px;font-size:.88rem;color:#1a6e4c;}
+
+/* CASE STUDY */
+.case-header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);border-radius:var(--radius);padding:26px 30px;margin-bottom:20px;}
+.case-header h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);margin-bottom:8px;}
+.case-header .case-meta{font-size:.78rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;}
+.case-header p{font-size:.88rem;line-height:1.75;color:rgba(255,255,255,.82);margin-bottom:12px;}
+
+/* ASSESSMENT */
+.assessment-info{background:var(--navy);color:var(--white);border-radius:var(--radius);padding:24px 28px;margin-bottom:28px;display:flex;gap:32px;flex-wrap:wrap;}
+.assessment-info .info-item{text-align:center;}
+.assessment-info .info-n{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);}
+.assessment-info .info-l{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.5);margin-top:2px;}
+.check-btn{background:var(--gold);color:var(--navy);border:none;padding:13px 36px;border-radius:25px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:24px;transition:all .2s;}
+.check-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+.result-box{display:none;border-radius:var(--radius);padding:28px;margin-top:20px;text-align:center;}
+.result-box.pass{background:rgba(46,204,138,.1);border:2px solid var(--green);}
+.result-box.fail{background:rgba(224,92,92,.08);border:2px solid var(--red);}
+.result-score{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;}
+.result-score.pass{color:var(--green);}
+.result-score.fail{color:var(--red);}
+.result-label{font-size:1rem;font-weight:600;margin-top:6px;}
+.result-detail{font-size:.85rem;color:#667;margin-top:8px;}
+
+/* EXERCISE HEADER */
+.ex-header{background:linear-gradient(90deg,var(--navy),var(--navy-light));border-radius:var(--radius);padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.ex-num{width:36px;height:36px;background:var(--gold);color:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0;}
+.ex-title{color:var(--white);font-size:.95rem;font-weight:600;}
+.ex-desc{color:rgba(255,255,255,.6);font-size:.78rem;margin-top:2px;}
+.check-mcq-btn{background:var(--navy);color:var(--white);border:none;padding:9px 22px;border-radius:20px;font-size:.82rem;font-weight:600;cursor:pointer;margin-top:16px;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.check-mcq-btn:hover{background:var(--navy-light);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  :root{--sidebar-w:0px;}
+  #sidebar{transform:translateX(-260px);width:260px;transition:transform .3s;}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0;}
+  .hero{padding:28px 20px;}
+  .section{padding:28px 20px;}
+  .q-grid,.word-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:18px;}
+  .progress-bar-wrap{padding:12px 20px;}
+  .hero h1{font-size:1.8rem;}
+}
+@media(max-width:560px){
+  .word-grid{grid-template-columns:1fr 1fr;}
+  .assessment-info{flex-direction:column;gap:16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h2>Finance &amp; Accounting English</h2>
+    <div class="sub">Professional Development</div>
+    <div class="level-badge">B1–B2 LEVEL</div>
+  </div>
+  <div class="sidebar-section-label">Module 11</div>
+  <div class="nav-item active" data-section="overview"><span class="nav-icon">🏠</span> Overview</div>
+  <div class="nav-item" data-section="speaking"><span class="nav-icon">💬</span> Speaking <span class="nav-badge">21Q</span></div>
+  <div class="nav-item" data-section="wordbank"><span class="nav-icon">📚</span> Word Bank <span class="nav-badge">21</span></div>
+  <div class="nav-item" data-section="reading"><span class="nav-icon">📖</span> Reading <span class="nav-badge">2T</span></div>
+  <div class="nav-item" data-section="vocabulary"><span class="nav-icon">✏️</span> Vocabulary <span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" data-section="grammar"><span class="nav-icon">📝</span> Grammar <span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" data-section="grammarreview"><span class="nav-icon">📋</span> Grammar Review</div>
+  <div class="nav-item" data-section="writing"><span class="nav-icon">✍️</span> Writing <span class="nav-badge">2</span></div>
+  <div class="nav-item" data-section="listening"><span class="nav-icon">🎧</span> Listening <span class="nav-badge">4</span></div>
+  <div class="nav-item" data-section="casestudies"><span class="nav-icon">🏢</span> Case Studies <span class="nav-badge">2</span></div>
+  <div class="nav-item" data-section="assessment"><span class="nav-icon">🏆</span> Final Assessment</div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">📊 Module 11 · Finance &amp; Accounting English</div>
+    <h1>Financial Planning<br><span>&amp; Strategy</span></h1>
+    <p>Develop the professional English vocabulary and strategic communication skills needed to participate in financial planning cycles, present business strategies, and analyse long-term corporate performance in international business environments.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="n">21</div><div class="l">Speaking Q's</div></div>
+      <div class="stat"><div class="n">21</div><div class="l">Word Bank</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">Reading Texts</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">Listening Ex.</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">Exercises</div></div>
+      <div class="stat"><div class="n">20</div><div class="l">Final MCQs</div></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar-wrap">
+    <div class="progress-label">Module Progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-pct" id="progressPct">0%</div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section active" id="sec-overview">
+    <div class="section-title">Module Overview</div>
+    <div style="display:inline-block;background:var(--navy);color:var(--white);font-size:.72rem;padding:3px 12px;border-radius:12px;margin:12px 0 20px;letter-spacing:1px;">B1–B2</div>
+    <div class="card">
+      <p style="font-size:.93rem;line-height:1.8;"><strong>Welcome to Module 11: Financial Planning and Strategy.</strong> This module develops the professional English you need to engage confidently in corporate financial planning — from building annual budgets and long-range forecasts to presenting strategic plans to senior leadership and boards. You will learn the language of scenario analysis, capital allocation, financial modelling, and performance measurement, and practise the grammar and discourse skills that bring financial strategy communications to life. Whether you are a finance business partner, a strategic analyst, or a CFO preparing for an investor day, this module will equip you to communicate with clarity, authority, and precision.</p>
+    </div>
+    <div class="card" style="background:var(--navy);color:var(--white);">
+      <h3 style="color:var(--gold);font-family:'Playfair Display',serif;margin-bottom:16px;">🎯 Learning Outcomes</h3>
+      <ul class="outcome-list">
+        <li>Identify and correctly use key financial planning and strategy vocabulary in professional contexts</li>
+        <li>Read and interpret formal texts on corporate financial planning cycles, capital allocation, and strategic forecasting</li>
+        <li>Discuss budgeting processes, financial scenarios, and long-term strategies using precise, professional English</li>
+        <li>Understand and produce cleft sentences used to emphasise key financial information in presentations and reports</li>
+        <li>Use future forms accurately — including will, going to, present continuous, and future perfect — to describe plans, forecasts, and projections</li>
+        <li>Apply hedging language to soften claims and express degrees of certainty in financial forecasts and strategy documents</li>
+        <li>Listen to and comprehend spoken English in financial planning meetings, strategy presentations, and analyst briefings</li>
+        <li>Write a formal financial forecast memo and a strategic plan executive summary</li>
+        <li>Analyse real-world corporate financial planning and strategy case studies</li>
+      </ul>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:4px;">
+      <div class="card" style="text-align:center;padding:20px;">
+        <div style="font-size:2rem;margin-bottom:6px;">📅</div>
+        <div style="font-weight:700;font-size:.9rem;">Planning Cycles</div>
+        <div style="color:#667;font-size:.8rem;margin-top:4px;">Budgeting, forecasting, scenario planning</div>
+      </div>
+      <div class="card" style="text-align:center;padding:20px;">
+        <div style="font-size:2rem;margin-bottom:6px;">🎯</div>
+        <div style="font-weight:700;font-size:.9rem;">Strategic Finance</div>
+        <div style="color:#667;font-size:.8rem;margin-top:4px;">Capital allocation, WACC, KPIs, ROI</div>
+      </div>
+      <div class="card" style="text-align:center;padding:20px;">
+        <div style="font-size:2rem;margin-bottom:6px;">📈</div>
+        <div style="font-weight:700;font-size:.9rem;">Performance Language</div>
+        <div style="color:#667;font-size:.8rem;margin-top:4px;">Variance analysis, targets, milestones</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPEAKING -->
+  <section class="section" id="sec-speaking">
+    <div class="section-title">Speaking Activities</div>
+    <div class="section-sub">21 discussion questions to develop your fluency in financial planning and strategy topics. Discuss with a partner or prepare structured individual responses.</div>
+    <div class="q-grid" id="speakingGrid"></div>
+  </section>
+
+  <!-- WORD BANK -->
+  <section class="section" id="sec-wordbank">
+    <div class="section-title">Word Bank</div>
+    <div class="section-sub">21 essential financial planning and strategy terms. Study each definition carefully before completing the vocabulary exercises.</div>
+    <div class="word-grid" id="wordGrid"></div>
+  </section>
+
+  <!-- READING -->
+  <section class="section" id="sec-reading">
+    <div class="section-title">Reading</div>
+    <div class="section-sub">Two professional texts followed by comprehension questions. Read each text carefully before answering.</div>
+    <div id="readingContent"></div>
+  </section>
+
+  <!-- VOCABULARY -->
+  <section class="section" id="sec-vocabulary">
+    <div class="section-title">Vocabulary Exercises</div>
+    <div class="section-sub">Three exercises to practise the financial planning and strategy vocabulary from this module.</div>
+    <div id="vocabContent"></div>
+  </section>
+
+  <!-- GRAMMAR -->
+  <section class="section" id="sec-grammar">
+    <div class="section-title">Grammar Exercises</div>
+    <div class="section-sub">Three grammar exercises focusing on cleft sentences for emphasis, future forms in forecasting, and hedging language in strategy communication.</div>
+    <div id="grammarContent"></div>
+  </section>
+
+  <!-- GRAMMAR REVIEW -->
+  <section class="section" id="sec-grammarreview">
+    <div class="section-title">Grammar Review</div>
+    <div class="section-sub">Detailed reference boxes covering all three grammar points from this module.</div>
+    <div id="grammarReviewContent"></div>
+  </section>
+
+  <!-- WRITING -->
+  <section class="section" id="sec-writing">
+    <div class="section-title">Writing Activities</div>
+    <div class="section-sub">Two professional writing tasks. Apply the vocabulary and grammar from this module in your responses.</div>
+    <div id="writingContent"></div>
+  </section>
+
+  <!-- LISTENING -->
+  <section class="section" id="sec-listening">
+    <div class="section-title">Listening Activities</div>
+    <div class="section-sub">4 audio activities — press ▶ Play, listen carefully, then answer the comprehension questions below.</div>
+    <div id="listeningContent"></div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section class="section" id="sec-casestudies">
+    <div class="section-title">Case Studies</div>
+    <div class="section-sub">Two real-world financial planning and strategy scenarios. Read, analyse, and answer the comprehension questions.</div>
+    <div id="caseContent"></div>
+  </section>
+
+  <!-- FINAL ASSESSMENT -->
+  <section class="section" id="sec-assessment">
+    <div class="section-title">Final Assessment</div>
+    <div class="section-sub">Module 11 — Financial Planning and Strategy</div>
+    <div class="assessment-info">
+      <div class="info-item"><div class="info-n">20</div><div class="info-l">Questions</div></div>
+      <div class="info-item"><div class="info-n">70%</div><div class="info-l">Pass Mark</div></div>
+      <div class="info-item"><div class="info-n">2</div><div class="info-l">Attempts</div></div>
+      <div class="info-item"><div class="info-n">B1–B2</div><div class="info-l">Level</div></div>
+    </div>
+    <div id="assessmentContent"></div>
+    <div id="assessmentResult" class="result-box"></div>
+  </section>
+
+</div><!-- /main -->
+
+<script>
+/* ═══════════════════════════════════════════
+   MODULE 11 — DATA
+═══════════════════════════════════════════ */
+
+const speakingQs = [
+  "What is the difference between a budget and a forecast? Why are both important for a business?",
+  "How often do companies typically revise their financial forecasts during the year? What triggers a revision?",
+  "What is a 'rolling forecast'? What are its advantages over a traditional annual budget?",
+  "What do you understand by the term 'strategic financial planning'? How does it differ from operational planning?",
+  "What is scenario planning? Can you think of a business situation where scenario analysis would be essential?",
+  "What is WACC (Weighted Average Cost of Capital) and why is it important when evaluating investment decisions?",
+  "What is a KPI (Key Performance Indicator)? Can you give examples of financial KPIs used in your sector?",
+  "What is the difference between a top-down and a bottom-up approach to budgeting? What are the advantages of each?",
+  "Why is cash flow forecasting often considered more important than profit forecasting for short-term business survival?",
+  "What is capital allocation? How do companies decide where to invest their available capital?",
+  "What is a sensitivity analysis? How does it help financial planners understand the risks in a financial model?",
+  "What is the difference between a company's short-term financial plan and its long-range plan (LRP)?",
+  "What is variance analysis? How does it help management track performance against the budget?",
+  "What is a business case? What elements does a strong business case typically include?",
+  "What role does the CFO play in the strategic planning process? How has this role evolved in recent years?",
+  "What is a 'burn rate' and why is it a critical metric for start-up companies?",
+  "How do companies use financial ratios such as EBITDA margin and return on equity to evaluate strategic options?",
+  "What is zero-based budgeting? What are its benefits and challenges compared to incremental budgeting?",
+  "How do macroeconomic factors such as inflation, interest rates, and exchange rates affect a company's financial plan?",
+  "What is a balanced scorecard? How does it help companies align financial performance with broader strategic objectives?",
+  "If you were a CFO presenting a five-year financial plan to the board, what would be the three most important things you would want to communicate?",
+];
+
+const wordBank = [
+  {emoji:"📅",term:"Budget",def:"A detailed financial plan that sets out expected revenues, costs, and cash flows for a defined period, typically one year."},
+  {emoji:"🔭",term:"Forecast",def:"An estimate of future financial performance based on current data, trends, and assumptions, regularly updated as new information becomes available."},
+  {emoji:"🎯",term:"KPI",def:"Key Performance Indicator — a measurable value that demonstrates how effectively a company is achieving its strategic and operational objectives."},
+  {emoji:"🔄",term:"Rolling Forecast",def:"A continuously updated financial forecast that extends a fixed period ahead, replacing the traditional static annual budget."},
+  {emoji:"🌐",term:"WACC",def:"Weighted Average Cost of Capital — the average rate a company is expected to pay to finance its assets, weighted by the proportion of each source of capital."},
+  {emoji:"📊",term:"Variance Analysis",def:"The process of comparing actual financial results to budgeted or forecasted figures and investigating the causes of any differences."},
+  {emoji:"🗺️",term:"Scenario Planning",def:"A strategic planning method that creates multiple plausible future scenarios to test how an organisation might perform under different conditions."},
+  {emoji:"💰",term:"Capital Allocation",def:"The process by which management decides how to distribute available financial resources among competing investment opportunities and business units."},
+  {emoji:"📉",term:"Sensitivity Analysis",def:"A financial modelling technique that tests how changes in key assumptions affect the outcome of a projection or valuation."},
+  {emoji:"🏗️",term:"Business Case",def:"A structured document that justifies a proposed investment or initiative by presenting its expected costs, benefits, risks, and strategic rationale."},
+  {emoji:"🔥",term:"Burn Rate",def:"The rate at which a company spends its available cash reserves, typically used to assess how long a start-up can operate before needing additional funding."},
+  {emoji:"📐",term:"EBITDA",def:"Earnings Before Interest, Taxes, Depreciation and Amortisation — a widely used measure of a company's core operating profitability."},
+  {emoji:"⚖️",term:"Zero-Based Budgeting",def:"A budgeting method in which every expense must be justified from scratch for each new period, rather than simply adjusting prior-year figures."},
+  {emoji:"📋",term:"Long-Range Plan (LRP)",def:"A multi-year financial and strategic plan, typically covering three to five years, that outlines a company's vision, targets, and resource requirements."},
+  {emoji:"🎛️",term:"Balanced Scorecard",def:"A strategic performance management framework that measures performance across financial, customer, internal process, and learning and growth dimensions."},
+  {emoji:"🔑",term:"Return on Equity (ROE)",def:"A financial ratio measuring net profit as a percentage of shareholders' equity, indicating how effectively management generates returns for shareholders."},
+  {emoji:"📌",term:"Milestone",def:"A specific, measurable point in a project or strategic plan that marks the achievement of a significant goal or deliverable."},
+  {emoji:"🧮",term:"Financial Model",def:"A quantitative representation of a company's financial performance, used to evaluate business decisions, forecast results, and assess investment opportunities."},
+  {emoji:"🔃",term:"Incremental Budgeting",def:"A budgeting approach that uses the previous period's budget as a starting point and makes adjustments for the new period."},
+  {emoji:"💹",term:"Strategic Plan",def:"A comprehensive document that defines an organisation's long-term direction, priorities, and the resources required to achieve its goals."},
+  {emoji:"🏔️",term:"Stretch Target",def:"An ambitious financial or operational goal set above the baseline expectation to motivate higher performance and encourage innovation."},
+];
+
+/* READING */
+const readings = [
+  {
+    title: "Text 1: The Corporate Financial Planning Cycle — From Budget to Strategy",
+    paragraphs: [
+      "Corporate financial planning is not a single event but a continuous, iterative cycle that connects an organisation's long-term strategic ambitions to its short-term operational decisions. The process typically begins with a long-range plan (LRP) — a multi-year projection, often spanning three to five years — that translates the company's strategic vision into quantified financial targets: revenue growth, margin expansion, capital expenditure, and return on invested capital. The LRP provides the strategic anchor from which the annual budget is derived. While the LRP deals in broad directional assumptions, the annual budget is a granular, bottom-up exercise in which every business unit builds a detailed plan for the year ahead, identifying expected revenues, costs, headcount requirements, and cash flows at the operational level.",
+      "One of the most significant shifts in financial planning practice over the past decade has been the widespread adoption of rolling forecasts — regularly updated projections that extend a consistent period (typically twelve or eighteen months) into the future, regardless of where the organisation is in its fiscal year. Unlike the static annual budget, which is set once and against which actual performance is measured for the entire year, a rolling forecast is refreshed monthly or quarterly as new information becomes available. This provides management with a more timely and accurate picture of expected performance, enabling faster decision-making and more agile capital reallocation in response to changing market conditions. Companies that have moved to rolling forecasts often report that the process frees finance teams from the rigid annual budgeting ritual and redirects their energy towards more value-adding analytical work.",
+      "Scenario planning adds a further dimension to financial planning by preparing organisations for uncertainty. Rather than relying on a single 'base case' forecast, scenario planning constructs multiple plausible futures — typically a base case, an upside case, and a downside case — each built on a distinct set of macroeconomic and operational assumptions. By understanding how performance might vary under different scenarios, management can identify key risk factors, design contingency responses, and make more robust capital allocation decisions. Sensitivity analysis complements this by isolating the impact of individual variables — such as commodity prices, exchange rates, or customer demand — on the financial outcome, helping planners understand which assumptions carry the greatest uncertainty and therefore merit the closest monitoring.",
+    ],
+    questions: [
+      {q:"What is the primary purpose of a long-range plan (LRP)?",opts:["To replace the annual budget entirely","To translate strategic vision into quantified multi-year financial targets","To produce the quarterly earnings guidance issued to investors","To document historical financial performance over a five-year period"],ans:1},
+      {q:"How does the annual budget differ from the long-range plan?",opts:["The budget covers a longer time horizon than the LRP","The budget is a detailed, bottom-up operational plan derived from the LRP","The LRP is produced by the finance team while the budget is set by the board","The annual budget focuses only on capital expenditure"],ans:1},
+      {q:"What is the key advantage of a rolling forecast over a static annual budget?",opts:["It is cheaper and faster to produce","It is refreshed regularly, providing a more timely and accurate picture of performance","It replaces the need for variance analysis","It is produced annually rather than monthly"],ans:1},
+      {q:"How often is a rolling forecast typically updated?",opts:["Once per year at the start of the fiscal year","Every three years alongside the long-range plan","Monthly or quarterly as new information becomes available","Only when actual results deviate significantly from the plan"],ans:2},
+      {q:"What benefit do companies report from moving to rolling forecasts?",opts:["Reduced finance team headcount","Lower operating costs across all business units","Finance teams are freed from the annual budgeting ritual for more analytical work","Elimination of the need for scenario planning"],ans:2},
+      {q:"What does scenario planning involve?",opts:["Creating a single definitive forecast based on the most likely assumptions","Building multiple plausible futures based on distinct sets of assumptions","Testing one variable at a time to isolate its impact on results","Replacing the annual budget with a set of strategic options"],ans:1},
+      {q:"What are the three scenarios typically built in a scenario planning exercise?",opts:["Optimistic, realistic, and pessimistic","Base case, upside case, and downside case","Short-term, medium-term, and long-term","Conservative, moderate, and aggressive"],ans:1},
+      {q:"What does sensitivity analysis do?",opts:["Combines all scenarios into a weighted average forecast","Identifies which business units are underperforming","Isolates the impact of individual variables on the financial outcome","Tests whether the annual budget is consistent with the LRP"],ans:2},
+      {q:"Why is scenario planning described as 'preparing organisations for uncertainty'?",opts:["Because it removes the need for a fixed annual budget","Because it helps management identify risks and design contingency responses","Because it guarantees accurate forecasts under any market conditions","Because it allows companies to bypass the capital allocation process"],ans:1},
+      {q:"Which process helps management understand which assumptions 'carry the greatest uncertainty'?",opts:["Variance analysis","Rolling forecast","Balanced scorecard","Sensitivity analysis"],ans:3},
+    ]
+  },
+  {
+    title: "Text 2: Capital Allocation and Value Creation — The Strategic CFO's Core Challenge",
+    paragraphs: [
+      "Of all the decisions that determine a company's long-term financial performance, none is more consequential than how it allocates its capital. Capital allocation — the process by which management distributes available financial resources among competing investment opportunities — lies at the heart of value creation and destruction. A company that consistently directs capital towards its highest-return opportunities will, over time, generate superior returns for shareholders; one that allows capital to accumulate in low-return businesses or dissipates it through poorly disciplined acquisitions will erode value, often irreparably. The primary framework for evaluating capital allocation decisions is the comparison of expected returns on invested capital (ROIC) with the company's weighted average cost of capital (WACC). An investment creates value only when its expected ROIC exceeds the WACC — the minimum return required by the providers of the company's capital, both equity and debt.",
+      "In practice, capital allocation decisions take several forms. Organic investment — funding internal growth initiatives such as new product development, capacity expansion, or market entry — is typically evaluated through a business case that models the expected cash flows, risks, and strategic fit of the proposed initiative. Acquisitions and mergers represent a more concentrated and often riskier deployment of capital, requiring detailed due diligence and integration planning. Returning capital to shareholders through dividends or share buybacks is another form of capital allocation, signalling management's confidence in the company's financial position and its assessment that available investment opportunities do not offer returns sufficient to justify retention. Finally, debt repayment reduces financial leverage and interest expense, improving the company's financial flexibility and potentially its credit rating.",
+      "The CFO's role in capital allocation has evolved significantly over recent years. Where once the finance function was primarily a scorekeeper — recording and reporting historical results — today's strategic CFO is expected to be a business partner to the CEO and the board, actively shaping the company's investment agenda. This means not only building and stress-testing financial models, but also challenging business unit assumptions, identifying strategic options that management may not have considered, and framing capital allocation choices in terms of their long-term impact on shareholder value. Achieving this requires not only financial expertise but also the ability to communicate complex trade-offs clearly and persuasively — in writing, in presentations, and in the high-stakes conversations that take place in boardrooms and investor meetings.",
+    ],
+    questions: [
+      {q:"According to the text, what is the most consequential factor in determining long-term financial performance?",opts:["The accuracy of the company's annual budget","How the company allocates its capital","The quality of the company's financial reporting","The size of the company's workforce"],ans:1},
+      {q:"What is ROIC and why is it compared to WACC?",opts:["Return on Invested Capital — compared to WACC to determine if the investment creates value","Return on Individual Capital — used to measure employee productivity","Rate of Investment Capital — compared to WACC to assess tax efficiency","Revenue on Invested Capital — used to track sales growth relative to investment"],ans:0},
+      {q:"When does an investment create value according to the text?",opts:["When ROIC equals WACC","When ROIC is greater than WACC","When WACC exceeds ROIC","When ROIC exceeds the company's dividend yield"],ans:1},
+      {q:"What is 'organic investment' as described in the text?",opts:["Investment in environmentally sustainable projects","Funding internal growth initiatives such as new product development or capacity expansion","Acquiring competitors to increase market share","Returning surplus cash to shareholders"],ans:1},
+      {q:"What does returning capital to shareholders through share buybacks signal?",opts:["That the company is experiencing financial difficulty","Management's confidence in the company's position and lack of sufficient investment opportunities","That the company intends to de-list from the stock exchange","A strategic decision to reduce the company's equity base to zero"],ans:1},
+      {q:"What are the four forms of capital allocation described in the text?",opts:["Budgeting, forecasting, scenario planning, and sensitivity analysis","Organic investment, acquisitions, returning capital to shareholders, and debt repayment","Equity issuance, debt financing, dividend payments, and share purchases","Capital expenditure, operating expenditure, R&D investment, and marketing spend"],ans:1},
+      {q:"How has the CFO's role evolved according to the text?",opts:["From a strategic business partner to a purely operational role","From scorekeeper of historical results to strategic business partner shaping the investment agenda","From a technical accounting role to a purely investor-facing communications role","From a strategic planning role to a cost management function"],ans:1},
+      {q:"What does the text say a strategic CFO must be able to do beyond building financial models?",opts:["Replace the CEO in investor meetings","Challenge business unit assumptions and frame choices in terms of long-term shareholder value impact","Personally approve all capital expenditure requests above a certain threshold","Manage the company's entire technology and data infrastructure"],ans:1},
+      {q:"What does debt repayment achieve according to the text?",opts:["It increases the company's WACC","It reduces financial leverage and improves financial flexibility and credit rating","It replaces equity financing with cheaper debt","It signals to investors that the company is generating excess profits"],ans:1},
+      {q:"What skills does the text say the modern CFO needs beyond financial expertise?",opts:["Marketing and customer relationship management skills","Project management and supply chain expertise","The ability to communicate complex trade-offs clearly and persuasively","Legal and regulatory compliance expertise"],ans:2},
+    ]
+  }
+];
+
+/* VOCABULARY */
+const vocabEx1MCQ = {
+  title: "Exercise 1 — Multiple Choice: Choose the Best Word or Phrase",
+  questions: [
+    {q:"The finance team conducted a detailed _____ to understand why Q3 revenues came in $2 million below the budget.",opts:["scenario planning","sensitivity analysis","variance analysis","rolling forecast"],ans:2},
+    {q:"The board approved a _____ approach to the new market entry, requiring each business case to be built from scratch rather than simply adjusted from last year's figures.",opts:["incremental","zero-based","top-down","rolling"],ans:1},
+    {q:"The company's _____ of 18.5% comfortably exceeded its cost of capital, confirming that the acquisition had created significant shareholder value.",opts:["EBITDA","WACC","burn rate","ROIC"],ans:3},
+    {q:"The CFO presented three _____ to the board: a base case, an upside, and a downside — each built on different assumptions about interest rates and demand.",opts:["variance analyses","financial models","scenarios","KPIs"],ans:2},
+    {q:"The start-up's monthly _____ had increased to $450,000, meaning it had fewer than eight months of runway remaining before it would need to raise additional capital.",opts:["EBITDA","burn rate","ROE","WACC"],ans:1},
+    {q:"Each division was asked to submit a detailed _____ for the new production facility, including projected cash flows, payback period, and strategic rationale.",opts:["budget","business case","KPI","milestone"],ans:1},
+    {q:"The group's five-year _____ projected revenue growth of 12% per annum and an EBITDA margin improvement from 22% to 28%.",opts:["variance analysis","rolling forecast","long-range plan","balanced scorecard"],ans:2},
+    {q:"Unlike the static annual plan, the _____ is updated every quarter and always looks twelve months ahead, giving management a more current view of expected performance.",opts:["strategic plan","rolling forecast","long-range plan","sensitivity analysis"],ans:1},
+    {q:"The _____ revealed that a 1% increase in raw material costs would reduce the projected EBITDA margin by approximately 0.4 percentage points.",opts:["variance analysis","scenario planning","budget","sensitivity analysis"],ans:3},
+    {q:"The board set a _____ of 15% revenue growth for the year, acknowledging that it was ambitious but believing it would stretch the organisation to perform at its best.",opts:["milestone","business case","stretch target","balanced scorecard"],ans:2},
+  ]
+};
+
+const vocabEx2Dropdown = {
+  title: "Exercise 2 — Gap Fill: Choose the Correct Word or Phrase",
+  items: [
+    {
+      sentence: "The _____ is a performance framework that measures results across financial, customer, internal process, and learning dimensions.",
+      opts: ["rolling forecast","long-range plan","balanced scorecard","financial model"], answer: 2
+    },
+    {
+      sentence: "A company creates value only when its return on invested capital exceeds its _____.",
+      opts: ["EBITDA","burn rate","KPI","WACC"], answer: 3
+    },
+    {
+      sentence: "The process of deciding how to distribute financial resources among competing opportunities is known as _____ _____.",
+      opts: ["variance analysis","capital allocation","scenario planning","sensitivity analysis"], answer: 1
+    },
+    {
+      sentence: "The annual _____ sets out the detailed expected revenues, costs, and cash flows for the year ahead.",
+      opts: ["forecast","scenario","milestone","budget"], answer: 3
+    },
+    {
+      sentence: "The company's _____ margin improved from 19% to 24% following the successful cost reduction programme.",
+      opts: ["WACC","KPI","EBITDA","ROE"], answer: 2
+    },
+    {
+      sentence: "The project team identified three key _____ to track progress: completion of the IT migration, launch of the new product, and achievement of the revenue target.",
+      opts: ["scenarios","milestones","forecasts","burn rates"], answer: 1
+    },
+    {
+      sentence: "Under _____ budgeting, every line item must be fully justified regardless of whether it appeared in the previous year's budget.",
+      opts: ["incremental","rolling","strategic","zero-based"], answer: 3
+    },
+    {
+      sentence: "The _____ showed that a 10% decline in sales volume would reduce operating profit by approximately 35%, given the company's high fixed cost base.",
+      opts: ["balanced scorecard","sensitivity analysis","rolling forecast","capital allocation"], answer: 1
+    },
+    {
+      sentence: "The _____ plan covers a five-year horizon and outlines the company's strategic direction, investment priorities, and financial targets.",
+      opts: ["long-range","incremental","zero-based","rolling"], answer: 0
+    },
+    {
+      sentence: "The investors were concerned about the start-up's high _____ rate, as the company was spending over $600,000 per month with no clear path to profitability.",
+      opts: ["EBITDA","ROE","burn","WACC"], answer: 2
+    },
+  ]
+};
+
+const vocabEx3TF = {
+  title: "Exercise 3 — True or False",
+  items: [
+    {statement:"A rolling forecast is updated once per year at the start of the fiscal year.",answer:false},
+    {statement:"Variance analysis involves comparing actual results to budgeted or forecast figures and investigating differences.",answer:true},
+    {statement:"WACC represents the minimum return a company must earn on its investments to satisfy all providers of capital.",answer:true},
+    {statement:"Zero-based budgeting starts with last year's budget and makes incremental adjustments for the new period.",answer:false},
+    {statement:"A long-range plan typically covers a multi-year horizon of three to five years.",answer:true},
+    {statement:"Scenario planning relies on a single base-case forecast to guide management decisions.",answer:false},
+    {statement:"EBITDA is a measure of a company's core operating profitability before interest, taxes, depreciation, and amortisation.",answer:true},
+    {statement:"Capital allocation refers to how a company distributes available financial resources among competing opportunities.",answer:true},
+    {statement:"A burn rate is typically used to evaluate the performance of large, profitable corporations.",answer:false},
+    {statement:"Sensitivity analysis tests how changes in individual assumptions affect the outcome of a financial model.",answer:true},
+  ]
+};
+
+/* GRAMMAR */
+const grammarEx1 = {
+  title: "Exercise 1 — Cleft Sentences for Emphasis in Financial Presentations",
+  instructions: "Choose the cleft sentence that best emphasises the underlined information or that is correctly formed.",
+  questions: [
+    {q:"The company needs to improve its cash flow management. → Which cleft sentence correctly emphasises 'cash flow management'?",opts:["It is cash flow management that the company needs to improve.","What the company is cash flow management.","It cash flow management that the company improves.","What does the company need is improving cash flow."],ans:0},
+    {q:"'___ the board approved was the capital expenditure increase, not the headcount request.' — Choose the correct opening.",opts:["It was","What","That was","Which was"],ans:1},
+    {q:"The CFO presented the long-range plan last Tuesday. → Cleft sentence emphasising 'the CFO':",opts:["What presented the long-range plan was the CFO last Tuesday.","It was the CFO who presented the long-range plan last Tuesday.","That was the CFO presented the long-range plan on Tuesday.","It was last Tuesday that the CFO was presenting."],ans:1},
+    {q:"'It is _____ that distinguishes a world-class financial planning function from an average one.' — Choose the most appropriate completion.",opts:["the ability to communicate complex trade-offs clearly","that it communicates","when they communicate","communicating clearly that it does"],ans:0},
+    {q:"We need to reduce operating costs to improve the margin. → Which 'What…' cleft is correct?",opts:["What we need doing is reducing operating costs.","What we need is to reduce operating costs to improve the margin.","What needs us is reduce operating costs.","What the margin is to reduce operating costs."],ans:1},
+    {q:"The group missed its revenue target because of weaker demand in Asia. → Emphasise 'weaker demand in Asia':",opts:["It weaker demand in Asia that the group missed.","What caused the group to miss its target was weaker demand in Asia.","It was because weaker demand that Asia caused the miss.","What was in Asia is the revenue target missed."],ans:1},
+    {q:"'_____ enabled the turnaround was the CFO's decision to implement zero-based budgeting.' — Choose the correct opening.",opts:["It was","What","That","Which"],ans:1},
+    {q:"The finance team identified the cost overrun in March. → Cleft sentence emphasising 'in March':",opts:["It was in March that the finance team identified the cost overrun.","What the finance team did in March is the cost overrun.","It the finance team that identified the cost overrun in March.","What was March is when cost overruns were."],ans:0},
+    {q:"Which sentence is a correctly formed cleft sentence?",opts:["It was the sensitivity analysis revealed the key risk.","What the model showed was that ROIC would fall below WACC.","That was the budget approved by the board in December.","What management did approve was the business case."],ans:1},
+    {q:"'It is _____ that we must address before the next board meeting.' — Which completion is most appropriate in a financial planning context?",opts:["the variance between actual and forecast performance","that the variance is addressed","when performance varies","what the board is going to see"],ans:0},
+  ]
+};
+
+const grammarEx2 = {
+  title: "Exercise 2 — Future Forms in Financial Forecasting",
+  instructions: "Choose the most appropriate future form to complete each sentence.",
+  questions: [
+    {q:"Based on current trading trends, the group _____ its full-year revenue target of €450 million. [strong prediction based on evidence]",opts:["will achieve","is achieving","is going to achieve","will have achieved"],ans:2},
+    {q:"By the end of Q4, the finance team _____ the new financial model and presented it to the board. [future perfect — completed before a point in time]",opts:["will build","is building","will have built","is going to build"],ans:2},
+    {q:"The CFO _____ the five-year plan to investors at the annual strategy day next Thursday. [fixed future arrangement]",opts:["will present","is presenting","is going to present","will have presented"],ans:1},
+    {q:"If interest rates remain elevated, margins _____ under continued pressure throughout the year. [neutral prediction]",opts:["will remain","are remaining","are going to remain","will have remained"],ans:0},
+    {q:"We _____ the budget process in September — it has already been agreed with all division heads. [planned and decided future]",opts:["will start","are starting","will have started","start"],ans:1},
+    {q:"By the time the audit is complete, the team _____ on the financial model for over six months. [future perfect continuous]",opts:["will work","will have been working","is going to work","will be working"],ans:1},
+    {q:"The company _____ a detailed sensitivity analysis before the board approves the acquisition. [intention — already decided]",opts:["will conduct","is going to conduct","conducts","will have conduct"],ans:1},
+    {q:"Revenue _____ by approximately 8% in the base case scenario, assuming stable market conditions. [neutral forecast]",opts:["is growing","will grow","grows","is going to grow"],ans:1},
+    {q:"'Look at these cash flow trends — if we don't act now, we _____ our liquidity reserves by June.' [strong prediction from evidence]",opts:["will exhaust","are going to exhaust","exhaust","will have exhausted"],ans:1},
+    {q:"The long-range plan projects that EBITDA margin _____ 30% within five years. [future milestone — perfect aspect]",opts:["reaches","will reach","will have reached","is reaching"],ans:2},
+  ]
+};
+
+const grammarEx3 = {
+  title: "Exercise 3 — Hedging Language in Strategy and Forecasting",
+  instructions: "Choose the most appropriate hedging expression to complete each sentence.",
+  questions: [
+    {q:"Revenue _____ increase by around 7% in the base case, assuming demand remains stable.",opts:["definitely will","is expected to","must","is certain to"],ans:1},
+    {q:"The sensitivity analysis _____ that a 2% rise in input costs could reduce margins by up to 150 basis points.",opts:["confirms","proves","suggests","guarantees"],ans:2},
+    {q:"There _____ be some upside risk to the forecast if the new product launch outperforms expectations.",opts:["definitely will","must","could","should definitely"],ans:2},
+    {q:"The CFO noted that while the base case remained intact, the downside scenario _____ materialise if export markets continued to weaken.",opts:["will","might","must","shall"],ans:1},
+    {q:"Operating costs are _____ to remain broadly stable over the forecast period, barring any significant commodity price movements.",opts:["certain","projected","guaranteed","proven"],ans:1},
+    {q:"'_____ we will achieve the stretch target, but the base case of 10% growth remains our central expectation.' — Choose the best hedged opening.",opts:["We will certainly","It is possible that","We guarantee that","It is definite that"],ans:1},
+    {q:"The model _____ that ROIC will exceed WACC by year three, though this depends on the successful integration of the acquisition.",opts:["proves","guarantees","indicates","confirms as fact"],ans:2},
+    {q:"Full-year performance is _____ to come in at the lower end of the guidance range, reflecting softer trading conditions in Q3.",opts:["certain","likely","guaranteed","obliged"],ans:1},
+    {q:"The strategic plan _____ that the company will generate cumulative free cash flow of $2 billion over the next five years.",opts:["proves","estimates","guarantees","makes certain"],ans:1},
+    {q:"There remains _____ uncertainty around the macroeconomic outlook, and the board acknowledged that the forecast could be revised if conditions deteriorate.",opts:["no","considerable","slight impossible","certain"],ans:1},
+  ]
+};
+
+/* GRAMMAR REVIEW */
+const grammarReviewHTML = `
+<div class="grammar-rule">
+  <h4>📌 Grammar Point 1: Cleft Sentences for Emphasis</h4>
+  <p>Cleft sentences are a powerful tool in financial presentations and board reports. They split a simple sentence into two clauses, allowing the speaker or writer to place emphatic focus on one specific piece of information. They are common in high-stakes financial communication contexts.</p>
+  <p><strong>Two main types:</strong></p>
+  <table>
+    <tr><th>Type</th><th>Structure</th><th>Emphasises</th></tr>
+    <tr><td>It-cleft</td><td>It is/was + [focus] + that/who + [rest of clause]</td><td>A person, time, place, or reason</td></tr>
+    <tr><td>Wh-cleft (What-cleft)</td><td>What + [subject + verb] + is/was + [focus]</td><td>An action, process, or thing</td></tr>
+  </table>
+  <div class="example">
+    Simple: "The CFO presented the plan last Tuesday."<br>
+    It-cleft (emphasise person): "<em>It was the CFO who</em> presented the plan last Tuesday."<br>
+    It-cleft (emphasise time): "<em>It was last Tuesday that</em> the CFO presented the plan."<br><br>
+    Simple: "We need to reduce operating costs."<br>
+    What-cleft: "<em>What we need</em> is to reduce operating costs."<br><br>
+    Simple: "Zero-based budgeting enabled the turnaround."<br>
+    What-cleft: "<em>What enabled the turnaround</em> was zero-based budgeting."
+  </div>
+  <p><strong>Tip:</strong> In financial presentations, cleft sentences are particularly effective when contrasting two points: <em>"It is not revenue that is the problem — it is cost discipline."</em> They also work well at the opening of a key finding: <em>"What the model reveals is a significant gap between projected and required ROIC."</em></p>
+</div>
+
+<div class="grammar-rule">
+  <h4>📌 Grammar Point 2: Future Forms in Financial Forecasting</h4>
+  <p>Choosing the correct future form is essential in financial forecasting language. Different forms signal different degrees of certainty, planning, and time reference. Using the wrong form can suggest more or less certainty than intended.</p>
+  <table>
+    <tr><th>Form</th><th>Use in Finance</th><th>Example</th></tr>
+    <tr><td>will + infinitive</td><td>Neutral prediction / future fact</td><td>"Revenue <em>will grow</em> by 8% in the base case."</td></tr>
+    <tr><td>going to + infinitive</td><td>Strong prediction from evidence / decided intention</td><td>"Margins <em>are going to</em> fall — costs are rising faster than revenue."</td></tr>
+    <tr><td>Present continuous</td><td>Fixed future arrangement / scheduled event</td><td>"The CFO <em>is presenting</em> the plan to the board on Thursday."</td></tr>
+    <tr><td>will have + past participle</td><td>Future perfect — action completed before a future point</td><td>"By year three, ROIC <em>will have exceeded</em> WACC."</td></tr>
+    <tr><td>will have been + -ing</td><td>Future perfect continuous — ongoing action before a future point</td><td>"By Q4, the team <em>will have been working</em> on the model for six months."</td></tr>
+  </table>
+  <div class="example"><strong>Key distinction:</strong> <em>will</em> is used for neutral, calculated predictions ("Revenue will reach €500m."). <em>going to</em> is used when there is strong current evidence pointing to a future outcome ("Given these trends, we are going to miss the target."). Present continuous signals an arrangement already in the diary ("The CEO is meeting investors next week.").</div>
+</div>
+
+<div class="grammar-rule">
+  <h4>📌 Grammar Point 3: Hedging Language in Strategy and Forecasting</h4>
+  <p>Hedging — the use of cautious, qualified language — is essential in financial forecasting and strategy communication. It signals appropriate professional uncertainty, protects the speaker from overcommitment, and reflects the inherently uncertain nature of financial projections.</p>
+  <table>
+    <tr><th>Hedging Device</th><th>Examples</th><th>Degree of Certainty</th></tr>
+    <tr><td>Modal verbs</td><td>could, might, may, should</td><td>Low to medium</td></tr>
+    <tr><td>Epistemic adverbs</td><td>probably, likely, possibly, approximately</td><td>Medium</td></tr>
+    <tr><td>Reporting / projecting verbs</td><td>suggests, indicates, estimates, projects, anticipates</td><td>Medium — avoids strong claim</td></tr>
+    <tr><td>Adjectives</td><td>likely, projected, expected, potential, possible</td><td>Medium</td></tr>
+    <tr><td>Conditional phrases</td><td>assuming that, subject to, barring, provided that, in the event that</td><td>Signals dependency on conditions</td></tr>
+    <tr><td>Approximators</td><td>around, approximately, broadly, in the region of, roughly</td><td>Softens precise numbers</td></tr>
+  </table>
+  <div class="example">
+    Overconfident (avoid): "We <em>will achieve</em> 15% revenue growth."<br>
+    Appropriately hedged: "Revenue <em>is expected to grow</em> by <em>approximately</em> 15%, <em>assuming</em> stable market conditions."<br><br>
+    Overconfident (avoid): "The acquisition <em>will</em> generate $200m in synergies."<br>
+    Appropriately hedged: "The model <em>suggests</em> that synergies <em>could reach</em> $200m, <em>subject to</em> successful integration."
+  </div>
+  <p><strong>Cultural note:</strong> In Anglo-American business English, appropriate hedging demonstrates sophistication and analytical rigour — it is not a sign of weakness. Overly definitive claims in financial forecasting are viewed with suspicion by experienced investors and board members.</p>
+</div>`;
+
+/* WRITING */
+const writingActivities = [
+  {
+    title: "Writing Activity 1: Financial Forecast Memo",
+    type: "Internal Management Memo",
+    prompt: "You are the Head of Financial Planning and Analysis at a mid-sized consumer goods company. Based on the latest trading data, Q3 revenues came in 6% below budget, driven by weaker-than-expected demand in your largest market. You need to write an internal memo to the CFO updating the full-year forecast and recommending actions.",
+    bullets: [
+      "Open with a clear summary of the Q3 variance and its cause",
+      "Update the full-year revenue and EBITDA forecasts using hedging language appropriately",
+      "Present at least two scenarios (base case and downside) with different assumptions",
+      "Use at least five terms from the Word Bank",
+      "Recommend two or three specific actions management should consider to mitigate the shortfall",
+    ],
+    min: 200, max: 280
+  },
+  {
+    title: "Writing Activity 2: Strategic Plan Executive Summary",
+    type: "Board Executive Summary",
+    prompt: "You are the CFO of a regional logistics company preparing for the annual board strategy day. Write an executive summary of the company's three-year strategic financial plan for the board pack.",
+    bullets: [
+      "Open with a clear statement of the company's strategic and financial ambitions for the next three years",
+      "Summarise the key financial targets (revenue, EBITDA, ROIC) using appropriate future forms",
+      "Describe the main capital allocation priorities and how they link to the strategy",
+      "Use cleft sentences to emphasise two or three key strategic priorities",
+      "Acknowledge key risks and uncertainties using hedging language",
+      "Conclude with a concise statement of what success looks like at the end of the plan period",
+    ],
+    min: 230, max: 320
+  }
+];
+
+/* LISTENING */
+const listeningActivities = [
+  {
+    id: "l1",
+    title: "Activity 1: A CFO Podcast — Rethinking the Annual Budget",
+    meta: "Host & Chief Financial Officer — Business strategy podcast",
+    level: "B1–B2",
+    type: "Multiple Choice",
+    focus: "Listening for Main Ideas and Specific Information",
+    transcript: `Host: Welcome to The Finance Leader, the podcast for senior finance professionals. I'm your host, Melissa Grant, and today I'm joined by Claire Donovan, CFO of a major European consumer goods company. Claire, welcome.
+
+Guest: Thank you, Melissa. Great to be here.
+
+Host: We're talking today about financial planning — and specifically about why some companies are moving away from the traditional annual budget. Claire, can you set the scene for us?
+
+Guest: Of course. For most companies, the annual budget is the centrepiece of the financial planning calendar. It's a detailed, bottom-up exercise that can take months — sometimes the entire fourth quarter — and consumes enormous amounts of management time and energy. By the time you've finished it, the world has often moved on. And then you spend the next twelve months measuring yourself against a plan that was built on assumptions that may no longer be valid.
+
+Host: So what's the alternative?
+
+Guest: The most popular alternative is what we call rolling forecasting. Instead of building one plan at the start of the year and sticking with it, you continuously update your outlook — typically every quarter, always looking a fixed period ahead, say twelve or eighteen months. This means your forecast is always current. When something significant changes — an acquisition, a market disruption, a change in commodity prices — you incorporate it immediately, rather than waiting for the next annual cycle.
+
+Host: Is it difficult to make the transition?
+
+Guest: It requires a real mindset shift — both in the finance team and across the business. People are used to the rhythm of the annual budget. It gives them certainty: here is my target for the year, and this is what I will be measured against. Rolling forecasting changes that. Targets become more dynamic, and some managers find that uncomfortable at first.
+
+Host: How have you managed that?
+
+Guest: By being very clear about what rolling forecasting is and isn't. It isn't a tool for constantly revising targets to make them easier to hit — that would completely undermine performance accountability. What it is is a more accurate picture of reality, which helps us make better decisions about where to allocate capital, where to accelerate investment, and where to pull back. We still have clear performance targets. But now we have a much better early-warning system.
+
+Host: What's been the biggest benefit you've seen?
+
+Guest: Without doubt, it's the quality of the conversation in the boardroom. When I present a rolling forecast, the board isn't asking "are you going to hit your budget?" — because that's often a backward-looking question. They're asking "what do you expect to happen, and what are you doing about it?" That's a much more useful conversation. And frankly, it's a much more honest one.
+
+Host: Claire, that's a fascinating perspective. Thank you so much.
+
+Guest: My pleasure. The annual budget isn't dead — but it's definitely no longer enough on its own.`,
+    questions: [
+      {q:"What does Claire describe as the main problem with the traditional annual budget?",opts:["It takes too long to prepare and costs too much","It is built on assumptions that may no longer be valid by the time it is used","It does not include enough detail about individual business units","It is not approved by the board before the year begins"],ans:1},
+      {q:"How does a rolling forecast differ from a traditional annual budget?",opts:["It is prepared by the board rather than the finance team","It covers a longer time horizon of ten years","It is continuously updated, always looking a fixed period ahead","It is only updated when the CEO requests a revision"],ans:2},
+      {q:"What challenge does Claire identify in transitioning to rolling forecasting?",opts:["The technology required is too expensive","It requires approval from external auditors","It requires a mindset shift in both the finance team and across the business","Most ERP systems do not support rolling forecasting"],ans:2},
+      {q:"What does Claire say rolling forecasting is NOT?",opts:["A tool for communicating with the board","A way of tracking actual versus planned performance","A tool for constantly revising targets to make them easier to hit","A method for allocating capital across business units"],ans:2},
+      {q:"According to Claire, what is the biggest benefit of rolling forecasting?",opts:["It significantly reduces the workload of the finance team","It improves the quality of board conversations, focusing on the future rather than the past","It eliminates the need for performance accountability","It allows managers to set their own targets dynamically"],ans:1},
+      {q:"What question does Claire say the board now asks, rather than 'are you going to hit your budget?'",opts:["How much will the variance cost us?","Are we going to meet our five-year plan targets?","What do you expect to happen, and what are you doing about it?","Which business units are underperforming?"],ans:2},
+      {q:"What does Claire say about the annual budget at the end of the interview?",opts:["It should be abolished entirely and replaced with rolling forecasting","It is no longer used in any best-practice finance function","It isn't dead but is no longer sufficient on its own","It should be replaced with quarterly budgets instead"],ans:2},
+      {q:"What does Claire say a rolling forecast helps management decide?",opts:["When to hire and fire employees","Where to allocate capital, accelerate investment, or pull back","How to set individual manager bonuses","Whether to issue shares or take on new debt"],ans:1},
+    ]
+  },
+  {
+    id: "l2",
+    title: "Activity 2: A Strategy Meeting — Presenting the Three-Year Financial Plan",
+    meta: "CFO, CEO & Board Chair — Executive strategy meeting",
+    level: "B2",
+    type: "Multiple Choice",
+    focus: "Understanding Detail, Inference, and Speaker Roles",
+    transcript: `Chair: Good morning, everyone. Let's move to agenda item three — the three-year financial plan. I'll ask our CFO, Rachel Simmons, to take us through the highlights. Rachel.
+
+CFO: Thank you, Chair. Good morning, everyone. I want to start by framing what we're trying to achieve with this plan. Our ambition is clear: to double our EBITDA from its current level of $180 million to $360 million by the end of year three. That's an ambitious target, but what the model shows is that it is achievable — provided we execute on three interdependent pillars.
+
+CEO: Perhaps, Rachel, you could briefly outline those three pillars before we go into the numbers?
+
+CFO: Of course. The first pillar is revenue acceleration. We're projecting compound annual revenue growth of approximately 14% over the plan period, driven primarily by expansion into three new geographic markets in Southeast Asia and by the launch of our premium product line in existing markets. The second pillar is margin improvement. What we need here is disciplined cost management — specifically, addressing the structural inefficiencies in our supply chain that currently add an estimated $45 million to our annual cost base. If we execute that programme effectively, EBITDA margin should improve from its current 22% to around 30% by year three. The third pillar is capital efficiency. It is our capital allocation framework that will determine whether we create or destroy value over this period. We're committing to maintaining ROIC above WACC throughout the plan — currently WACC sits at 9.2% — and we will not pursue acquisitions that would dilute returns below that threshold.
+
+Chair: Rachel, can you speak to the downside scenario? What happens if the Southeast Asian expansion takes longer than expected?
+
+CFO: Absolutely. We've modelled a downside in which the geographic expansion delivers only 60% of the projected revenues in years one and two. In that scenario, EBITDA reaches $290 million by year three — still a significant improvement from today, but approximately 20% below the base case. Critically, even in the downside, ROIC remains above WACC, so we are still creating value for shareholders. The sensitivity analysis shows that the single biggest risk factor is the pace of market entry in Southeast Asia — that's where we need the most rigorous milestone tracking.
+
+CEO: I think it's also worth noting for the board that we've built conservative assumptions around input cost inflation — we've assumed 4% per annum, which is above current market consensus.
+
+Chair: That's noted and appreciated. One final question from me, Rachel: what does success look like at the end of year three in one sentence?
+
+CFO: A business generating $360 million of EBITDA, earning a 15% return on invested capital, with a strong balance sheet and clear momentum for the decade ahead.
+
+Chair: Thank you. I think that's an excellent articulation. Board members, I'll open the floor for questions.`,
+    questions: [
+      {q:"What is the CFO's headline financial ambition for the three-year plan?",opts:["To grow revenue by 14% per annum","To double EBITDA from $180 million to $360 million","To improve EBITDA margin from 22% to 28%","To reduce WACC from 9.2% to 7%"],ans:1},
+      {q:"What are the three strategic pillars of the plan?",opts:["Cost reduction, headcount optimisation, and debt repayment","Revenue acceleration, margin improvement, and capital efficiency","Market expansion, product innovation, and digital transformation","Budget discipline, forecast accuracy, and capital allocation"],ans:1},
+      {q:"What is the projected compound annual revenue growth rate?",opts:["8%","10%","12%","14%"],ans:3},
+      {q:"What does the CFO identify as causing $45 million in unnecessary annual costs?",opts:["Excessive marketing expenditure","Poor procurement practices","Structural inefficiencies in the supply chain","High interest costs on legacy debt"],ans:2},
+      {q:"What is the company's current WACC?",opts:["7.5%","8.0%","9.2%","12.0%"],ans:2},
+      {q:"What does the downside scenario assume about Southeast Asian expansion?",opts:["Complete failure with zero revenue contribution","Revenues in line with the base case but delayed by two years","Only 60% of projected revenues in years one and two","A full exit from the Southeast Asian market"],ans:2},
+      {q:"What does the EBITDA reach in the downside scenario by year three?",opts:["$180 million","$240 million","$290 million","$320 million"],ans:2},
+      {q:"What conservative assumption has the CEO highlighted regarding input costs?",opts:["Zero inflation on all raw materials","1% per annum, below market consensus","4% per annum, above current market consensus","Input costs are assumed to fall by 2% per annum"],ans:2},
+    ]
+  },
+  {
+    id: "l3",
+    title: "Activity 3: A Finance Training Session — Introduction to Scenario Planning",
+    meta: "Finance Director — Internal team training session",
+    level: "B1",
+    type: "Multiple Choice",
+    focus: "Identifying Main Ideas and Key Details",
+    transcript: `Good morning, everyone. Welcome to today's session on scenario planning. I'm Laura Bennett, Finance Director for the Northern Region, and over the next forty minutes I'm going to take you through what scenario planning is, why we use it, and how to build a simple scenario model.
+
+So let's start with the basics. What is scenario planning? Scenario planning is a strategic tool that helps organisations prepare for an uncertain future by developing multiple plausible versions of what that future might look like. Instead of relying on a single forecast — which assumes we know exactly how the future will unfold — scenario planning acknowledges uncertainty and asks: what if things go better than expected? What if they go worse? And what if something completely unexpected happens?
+
+In practice, most scenario planning exercises produce three scenarios: a base case, which represents the most likely outcome based on current trends; an upside case, which models a more favourable outcome — perhaps stronger demand, lower costs, or a successful new product launch; and a downside case, which models an adverse outcome — weaker demand, higher input costs, or a competitive threat.
+
+Now, why do we do this? The primary reason is decision-making. When you only have one forecast, you tend to make decisions as though that forecast is guaranteed to happen. When you have three scenarios, you start asking: which decisions look good in all scenarios? Which decisions are risky if the downside happens? That question changes how management thinks about capital allocation, investment timing, and risk management.
+
+The second reason is communication. When I present a single number to the board — "our forecast is €120 million EBITDA" — I'm implying a precision that doesn't really exist. When I present three scenarios, I'm having a more honest and useful conversation: here is our central expectation, here is what could go right, and here is what could go wrong. The board can then make a more informed decision about risk appetite.
+
+How do you build a scenario model? You start by identifying the two or three key drivers of your business — the variables that have the biggest impact on your financial results. For most companies, these will be things like sales volume, pricing, and input costs. You then define different assumptions for each driver in each scenario. Your base case uses your best estimate. Your upside case uses more optimistic assumptions. Your downside uses more conservative ones.
+
+Once you've defined your assumptions, you run the model to calculate the financial outcomes under each scenario. The difference between the scenarios tells you something very important: how sensitive your results are to changes in those key drivers. If the difference between the upside and the downside is very large, that tells you your business is highly sensitive to those variables — and that you probably need to invest in risk management or contingency planning.
+
+That's the core logic. In the next part of the session, we'll practise building a simple three-scenario model together. Any questions before we move on?`,
+    questions: [
+      {q:"What is the fundamental premise of scenario planning?",opts:["The future can be predicted accurately with the right model","Organisations should only plan for the most likely outcome","Acknowledging uncertainty and developing multiple plausible futures","Historical data is sufficient to make all strategic decisions"],ans:2},
+      {q:"What are the three scenarios typically produced in scenario planning?",opts:["Optimistic, neutral, and pessimistic","Short-term, medium-term, and long-term","Base case, upside case, and downside case","Conservative, moderate, and aggressive"],ans:2},
+      {q:"According to Laura, what is the primary reason for doing scenario planning?",opts:["To replace the annual budget","To impress investors with sophisticated analysis","To improve decision-making by understanding which decisions work across multiple futures","To make finance teams look more strategic"],ans:2},
+      {q:"What problem does Laura identify with presenting a single forecast to the board?",opts:["It takes too long to prepare","It implies a precision that doesn't really exist","It confuses board members who are not finance experts","It makes the CFO look uncertain about the business"],ans:1},
+      {q:"What is the first step in building a scenario model?",opts:["Running the model to calculate outcomes","Presenting the results to the board","Identifying the two or three key drivers of the business","Defining the base case assumptions"],ans:2},
+      {q:"What do the differences between scenarios tell you?",opts:["Which scenario is most likely to happen","How sensitive your results are to changes in the key drivers","Which business unit is most at risk","What the average forecast should be"],ans:1},
+      {q:"What does Laura say a large difference between the upside and downside scenarios implies?",opts:["The model has been built incorrectly","The base case is too optimistic","The business is highly sensitive to those variables and may need risk management investment","Management should choose the upside scenario as its plan"],ans:2},
+      {q:"What will participants practise in the next part of the session?",opts:["Presenting scenario results to a mock board","Building a simple three-scenario model together","Writing a scenario planning report for the CFO","Conducting a sensitivity analysis on the annual budget"],ans:1},
+    ]
+  },
+  {
+    id: "l4",
+    title: "Activity 4: An Investor Day Presentation — Strategic Financial Outlook",
+    meta: "CFO addressing investors — Investor day presentation",
+    level: "B2",
+    type: "Multiple Choice",
+    focus: "Understanding Formal Presentation Language and Inference",
+    transcript: `Good morning, and welcome to Hargrove Group's annual investor day. I'm Katherine Ashby, Chief Financial Officer, and it's my privilege to share with you today our strategic financial outlook for the next three years.
+
+Let me begin with the headline message: what we are outlining today is a clear, credible, and financially disciplined path to becoming a sustainably higher-margin business. We are not asking you to take this on faith. What we are asking you to do is engage with the evidence we'll present today — evidence that we believe demonstrates both the quality of our strategy and the rigour of our financial planning.
+
+Over the past two years, we have fundamentally restructured how we allocate capital. We exited three underperforming business units that were generating returns well below our cost of capital. We reinvested the proceeds into two high-growth platforms — our digital services division and our premium healthcare segment — both of which are now generating ROIC in excess of 16%. It is these platforms that will drive the majority of our value creation over the plan period.
+
+Looking ahead, our base case projects compound annual EBITDA growth of approximately 12%, bringing EBITDA from its current $320 million to an estimated $450 million by the end of year three. I want to be clear that this is a base case, not an aspiration. It is built on assumptions that we consider to be conservative: 6% annual revenue growth, flat-to-modest volume expansion, and a 200 basis point margin improvement driven primarily by operating leverage and supply chain optimisation.
+
+Now, I know that some of you will be asking about the downside risks. We've modelled them carefully. In our downside scenario — which assumes revenue growth of just 2% and no margin expansion — EBITDA is projected to reach $355 million by year three. That still represents a 11% uplift from today's level. And critically, in all scenarios, we expect to maintain a net debt to EBITDA ratio of below 2.0 times, preserving the financial flexibility that the board considers essential.
+
+In terms of capital returns, the board has approved a progressive dividend policy, targeting annual dividend growth of at least 5%. We will also consider share buybacks as and when excess capital accumulates and when we believe our shares represent good value.
+
+What I want to leave you with today is this: we are a business that is becoming more focused, more profitable, and more disciplined in how we allocate capital. The plan is ambitious, but it is grounded in operational reality and underpinned by a financial framework that we believe will consistently generate returns above our cost of capital.
+
+Thank you. I'm happy to take questions.`,
+    questions: [
+      {q:"What does Katherine describe as the 'headline message' of the presentation?",opts:["Hargrove Group's plan to acquire three new businesses","A clear, credible, and financially disciplined path to becoming a sustainably higher-margin business","An announcement of a major special dividend for shareholders","A plan to reduce the company's debt to zero within three years"],ans:1},
+      {q:"What has the company done with underperforming business units over the past two years?",opts:["Retained them while working on turnaround plans","Transferred them to a separate holding company","Exited them and reinvested the proceeds in high-growth platforms","Written down their value and accepted lower returns"],ans:2},
+      {q:"What ROIC are the digital services and premium healthcare segments generating?",opts:["In excess of 9.2%","In excess of 12%","In excess of 16%","Exactly equal to WACC"],ans:2},
+      {q:"What is the base case EBITDA projection for the end of year three?",opts:["$320 million","$355 million","$400 million","$450 million"],ans:3},
+      {q:"What annual revenue growth assumption underpins the base case?",opts:["2%","4%","6%","12%"],ans:2},
+      {q:"What EBITDA level does the downside scenario project by year three?",opts:["$320 million","$355 million","$400 million","$450 million"],ans:1},
+      {q:"What financial ratio does the board consider essential to preserve in all scenarios?",opts:["ROIC above 16%","Net debt to EBITDA below 2.0 times","EBITDA margin above 30%","Dividend yield above 5%"],ans:1},
+      {q:"What does Katherine say about the annual dividend policy?",opts:["Dividends will be suspended until debt is repaid","The board has approved a fixed dividend of 5% of net income","The board targets annual dividend growth of at least 5%","Dividends will be replaced entirely by share buybacks"],ans:2},
+    ]
+  }
+];
+
+/* CASE STUDIES */
+const caseStudies = [
+  {
+    title: "Case Study 1: Greenfield Manufacturing — When the Budget Became the Enemy of Strategy",
+    meta: "Sector: Industrial Manufacturing | Country: Germany | Difficulty: B2",
+    text: `Greenfield Manufacturing, a mid-sized German industrial components group with annual revenues of approximately €780 million, had operated with the same financial planning approach for over fifteen years. Every October, the company embarked on a gruelling five-month budgeting process that consumed an estimated 12,000 hours of management time across the organisation. By the time the budget was finalised and approved by the supervisory board in March, the global manufacturing environment had frequently shifted — sometimes dramatically — and the assumptions underpinning the plan were already partially obsolete.
+
+The problem became acute in 2020, when the pandemic disrupted global supply chains and demand patterns in ways that no annual budget could have anticipated. Greenfield's finance team found themselves managing to a plan that bore no resemblance to operational reality. Divisional managers, frustrated by the rigidity of fixed budget targets, began to game the system — requesting inflated budgets to create slack, and reporting performance metrics in ways that technically met targets while obscuring the true state of the business. The result was a breakdown of trust between the finance function and the operating divisions, and a loss of visibility for senior leadership at precisely the moment it was most needed.
+
+In 2021, Greenfield's newly appointed CFO, Dr. Anke Fischer, launched a comprehensive transformation of the financial planning process. The annual budget was retained as a reference point for the supervisory board, but was supplemented by a quarterly rolling forecast extending eighteen months ahead. Scenario planning was introduced as a mandatory part of the annual LRP process, requiring each business unit to model a base case, an upside, and a downside scenario with clearly defined assumptions. A new digital planning platform was implemented, reducing the time spent on mechanical data compilation and freeing finance business partners to focus on analysis and insight.
+
+By 2023, the results were significant. The time spent on the annual planning cycle had fallen from five months to seven weeks. Management reported a much higher level of confidence in the accuracy of the rolling forecasts, and the board noted that strategic conversations had shifted from backward-looking variance discussions to forward-looking scenario analysis. Critically, the divisional gaming behaviours that had characterised the old process largely disappeared, as managers no longer faced the same incentive to inflate budget requests when targets were regularly refreshed to reflect current market conditions.`,
+    questions: [
+      {q:"How long did Greenfield's annual budgeting process take, and how much management time did it consume?",opts:["Three months and 6,000 hours","Five months and 12,000 hours","Seven weeks and 8,000 hours","Four months and 15,000 hours"],ans:1},
+      {q:"What made the budgeting problem acute in 2020?",opts:["A change in German accounting regulations","The retirement of the long-serving CFO","The pandemic disrupted supply chains and demand in ways the budget could not anticipate","A hostile takeover attempt by a larger competitor"],ans:2},
+      {q:"How did divisional managers respond to the rigidity of the fixed budget?",opts:["They refused to participate in the budgeting process","They requested external consultants to build their budgets","They gamed the system — inflating budget requests and reporting metrics selectively","They proposed switching immediately to zero-based budgeting"],ans:2},
+      {q:"What was the consequence of the divisional gaming behaviour?",opts:["A breakdown of trust between finance and operations, and loss of senior visibility","Significant financial losses and a credit rating downgrade","A regulatory investigation into the company's reporting practices","Mandatory restatement of three years of financial results"],ans:0},
+      {q:"What was the key change Dr. Fischer made to the planning process?",opts:["Abolishing the annual budget entirely","Supplementing the annual budget with a quarterly rolling forecast and introducing scenario planning","Outsourcing the entire planning process to an external consultancy","Reducing the planning cycle to a single month"],ans:1},
+      {q:"How far ahead does the new rolling forecast extend?",opts:["Six months","Twelve months","Eighteen months","Three years"],ans:2},
+      {q:"What did each business unit now have to model as part of the LRP process?",opts:["A single best-estimate forecast","A base case, upside, and downside scenario","A ten-year strategic vision","A zero-based budget for every cost line"],ans:1},
+      {q:"How long did the annual planning cycle take by 2023?",opts:["Three months","Two months","Seven weeks","Four weeks"],ans:2},
+      {q:"Why did the gaming behaviours largely disappear under the new approach?",opts:["Managers were incentivised with bonuses for accurate forecasting","Managers no longer had the same incentive to inflate requests when targets were regularly refreshed","The new IT platform made it impossible to input inflated numbers","Dr. Fischer implemented disciplinary measures for inaccurate forecasting"],ans:1},
+      {q:"What shift did the board notice in strategic conversations under the new process?",opts:["From technical finance discussions to broader business strategy","From external market analysis to internal cost management","From backward-looking variance discussions to forward-looking scenario analysis","From divisional performance reviews to group-level financial reporting"],ans:2},
+    ]
+  },
+  {
+    title: "Case Study 2: Verano Capital — Building a Capital Allocation Framework from Scratch",
+    meta: "Sector: Diversified Industrial Holding | Country: United States | Difficulty: B1–B2",
+    text: `Verano Capital Partners was a US-based diversified industrial holding company with interests spanning logistics, precision engineering, and speciality chemicals — six operating divisions generating combined revenues of approximately $1.4 billion. For much of its history, Verano had operated as a decentralised conglomerate: divisional CEOs had considerable autonomy over their investment decisions, and capital was typically allocated on the basis of seniority and political influence within the organisation rather than financial merit. The result, as a new CEO named James Whitfield discovered on his arrival in 2019, was a portfolio in which three divisions were generating healthy returns well above the group's cost of capital, while two others had been consuming capital for years with returns that barely covered their cost of financing.
+
+James's first step was to commission a rigorous analysis of each division's return on invested capital (ROIC) relative to the group's WACC. The analysis revealed a stark picture: the logistics and precision engineering divisions were generating ROIC of 18% and 22% respectively against a WACC of 10.5%, creating substantial value. The speciality chemicals division was generating a ROIC of 9.8% — just below WACC. The remaining two divisions were generating ROIC of 6.2% and 4.1% respectively — both value-destroying. The analysis made the strategic priority clear: redirect capital from the value-destroying divisions towards the high-performing ones, and either fix or exit the underperformers.
+
+Over the following three years, Verano implemented a formal capital allocation framework. All investment requests above $5 million were required to submit a detailed business case modelling projected cash flows, ROIC, payback period, and strategic rationale. A capital allocation committee, chaired by the CFO, reviewed all proposals against a consistent set of criteria. The two lowest-performing divisions were restructured: one was divested for $180 million, and the other underwent a three-year operational improvement programme that brought its ROIC above WACC for the first time.
+
+By 2023, the results of the disciplined capital allocation approach were compelling. The group's average ROIC had improved from 11.2% to 16.8%, comfortably above WACC. Free cash flow generation had increased by 42%, and the group's enterprise value had more than doubled. Verano's experience became widely cited in corporate finance circles as a textbook example of how a disciplined capital allocation framework, grounded in the simple principle of directing capital to its highest-value use, can transform a company's financial performance and shareholder returns.`,
+    questions: [
+      {q:"What was the main problem with Verano's historical approach to capital allocation?",opts:["Capital was allocated based on seniority and political influence rather than financial merit","The group had too many divisions to manage effectively","Divisional CEOs lacked the authority to make their own investment decisions","The group's WACC was too high to allow any division to create value"],ans:0},
+      {q:"What were the ROIC figures for the logistics and precision engineering divisions?",opts:["12% and 15%","16% and 20%","18% and 22%","20% and 25%"],ans:2},
+      {q:"What was the group's WACC?",opts:["8.5%","9.8%","10.5%","12.0%"],ans:2},
+      {q:"What was the ROIC of the two worst-performing divisions?",opts:["9.8% and 8.1%","8.0% and 6.5%","6.2% and 4.1%","7.5% and 5.0%"],ans:2},
+      {q:"What investment threshold required a formal business case under the new framework?",opts:["$1 million","$2.5 million","$5 million","$10 million"],ans:2},
+      {q:"Who chaired the capital allocation committee?",opts:["The CEO","The divisional CFOs jointly","The CFO","An independent non-executive director"],ans:2},
+      {q:"What happened to the worst-performing division?",opts:["It was closed down and its assets were written off","It was transferred to a management buyout","It was divested for $180 million","It merged with the speciality chemicals division"],ans:2},
+      {q:"What was the group's average ROIC by 2023?",opts:["11.2%","14.5%","16.8%","22.0%"],ans:2},
+      {q:"By how much did free cash flow generation increase?",opts:["22%","35%","42%","60%"],ans:2},
+      {q:"What does the text say about Verano's experience in corporate finance circles?",opts:["It is cited as a warning about the dangers of aggressive capital reallocation","It is considered an example of poor strategic planning","It is widely cited as a textbook example of how disciplined capital allocation can transform financial performance","It is seen as an unusual case not applicable to most companies"],ans:2},
+    ]
+  }
+];
+
+/* FINAL ASSESSMENT */
+const assessmentQs = [
+  {q:"What is a 'rolling forecast'?",opts:["A forecast produced once per year at the start of the fiscal year","A continuously updated forecast that always extends a fixed period ahead","A forecast produced exclusively for investor communications","A projection based on historical rolling averages"],ans:1},
+  {q:"What is variance analysis?",opts:["The process of creating multiple financial scenarios","Comparing actual financial results to budgeted or forecast figures and investigating differences","A method for calculating the weighted average cost of capital","The allocation of capital across competing business units"],ans:1},
+  {q:"Which future form is used to describe a fixed future arrangement?",opts:["will + infinitive","going to + infinitive","Present continuous","Future perfect"],ans:2},
+  {q:"What does WACC stand for and what does it represent?",opts:["Working Average Capital Cost — the average operating cost per employee","Weighted Average Cost of Capital — the minimum return required to satisfy all providers of capital","Whole Asset Capital Contribution — the total value of assets on the balance sheet","Working Allocation of Corporate Capital — the capital budget for the year"],ans:1},
+  {q:"Which hedging expression is most appropriate in a financial forecast?",opts:["Revenue will definitely reach €500 million.","Revenue is expected to reach approximately €500 million, assuming stable demand.","Revenue must reach €500 million.","Revenue is guaranteed to reach €500 million."],ans:1},
+  {q:"What is a cleft sentence used for in financial communication?",opts:["To simplify complex financial data for non-expert audiences","To emphasise a specific piece of information by splitting the sentence into two clauses","To summarise a long report into a single sentence","To hedge a financial forecast by qualifying the main claim"],ans:1},
+  {q:"Which sentence is a correctly formed 'It-cleft'?",opts:["What the board approved was the capital increase.","It was the CFO who presented the three-year plan.","That the plan was approved by the board.","What happened the budget was approved."],ans:1},
+  {q:"What is zero-based budgeting?",opts:["A budget that targets zero profit growth","A budgeting method where every expense must be justified from scratch each period","A method of budgeting that starts with the previous year's figures and makes small adjustments","A budget that allocates zero capital to underperforming divisions"],ans:1},
+  {q:"What is EBITDA a measure of?",opts:["A company's total assets minus its total liabilities","A company's core operating profitability before interest, taxes, depreciation, and amortisation","The earnings per share paid to common shareholders","The total value of a company's equity on the balance sheet"],ans:1},
+  {q:"What is a 'stretch target'?",opts:["A target that is set below the baseline expectation to ensure it is always achievable","An ambitious target set above the baseline expectation to motivate higher performance","A target that automatically adjusts based on market conditions","A minimum performance threshold required by regulatory authorities"],ans:1},
+  {q:"What does 'capital allocation' refer to?",opts:["The process of distributing financial resources among competing investment opportunities","The calculation of a company's weighted average cost of capital","The preparation of the annual capital expenditure budget","The process of raising new capital through equity or debt issuance"],ans:0},
+  {q:"Which future form correctly expresses a strong prediction based on current evidence?",opts:["The company will achieve its target.","The company is going to miss its target — sales have been declining for three months.","The company is achieving its target.","The company will have achieved its target."],ans:1},
+  {q:"What is a 'business case' in a financial planning context?",opts:["A legal document required before any company can operate","A structured document justifying a proposed investment with costs, benefits, risks, and rationale","A summary of the company's annual financial results","A forecast of future cash flows produced for tax purposes"],ans:1},
+  {q:"What is scenario planning designed to do?",opts:["Replace the annual budget with a single optimistic plan","Provide a definitive prediction of the most likely future outcome","Prepare organisations for uncertainty by creating multiple plausible futures","Allocate capital between competing divisions based on projected returns"],ans:2},
+  {q:"Which sentence uses hedging language appropriately?",opts:["We guarantee synergies of $200 million from this acquisition.","The model proves that margins will improve by 5%.","The analysis suggests that synergies could reach approximately $200 million, subject to successful integration.","It is certain that EBITDA will double within two years."],ans:2},
+  {q:"What is a 'balanced scorecard'?",opts:["A financial statement that balances assets and liabilities","A performance management framework measuring results across financial, customer, process, and learning dimensions","A tool for balancing the annual budget between revenue and expenditure","A method for comparing a company's performance against its competitors"],ans:1},
+  {q:"An investment creates value when:",opts:["ROIC equals WACC","WACC exceeds ROIC","ROIC exceeds WACC","EBITDA exceeds total debt"],ans:2},
+  {q:"What is sensitivity analysis?",opts:["Testing how changes in individual assumptions affect the outcome of a financial model","Analysing the emotional response of investors to financial results","Comparing performance across different business units","Measuring the accuracy of a company's past forecasts"],ans:0},
+  {q:"Which is an example of a correctly used What-cleft sentence?",opts:["What the board approved was it capital the increase.","It was the budget that the board is approved.","What the model shows is that ROIC will fall below WACC in year two.","What is the plan to present the CFO."],ans:2},
+  {q:"What does a 'long-range plan' (LRP) typically cover?",opts:["A detailed month-by-month plan for the next fiscal year","A three-to-five year projection linking strategic vision to quantified financial targets","A daily operational plan for each business unit","A one-year rolling forecast updated monthly"],ans:1},
+];
+
+/* ═══════════════════════════════════════════
+   RENDER & INTERACTION FUNCTIONS
+═══════════════════════════════════════════ */
+
+function renderSpeaking() {
+  const g = document.getElementById('speakingGrid');
+  speakingQs.forEach((q,i) => {
+    g.innerHTML += `<div class="q-card"><span class="q-num">Q${String(i+1).padStart(2,'0')}</span><span>${q}</span></div>`;
+  });
+}
+
+function renderWordBank() {
+  const g = document.getElementById('wordGrid');
+  wordBank.forEach(w => {
+    g.innerHTML += `<div class="word-card"><div class="word-emoji">${w.emoji}</div><div class="word-term">${w.term}</div><div class="word-def">${w.def}</div></div>`;
+  });
+}
+
+function renderReading() {
+  const c = document.getElementById('readingContent');
+  let html = '';
+  readings.forEach((r, ri) => {
+    html += `<div class="reading-text"><h3>${r.title}</h3>`;
+    r.paragraphs.forEach(p => { html += `<p>${p}</p>`; });
+    html += `</div><div class="card"><h4 style="font-family:'Playfair Display',serif;margin-bottom:20px;color:var(--navy);">Comprehension Questions — ${r.title.split(':')[0]}</h4>`;
+    r.questions.forEach((q,qi) => {
+      const id = `read${ri}_${qi}`;
+      html += `<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j) => {
+        html += `<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;
+      });
+      html += `</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html += `</div>`;
+  });
+  c.innerHTML = html;
+}
+
+function selectMCQ(id, chosen, correct) {
+  const opts = document.querySelectorAll(`[id^="${id}_opt"]`);
+  if (opts[0].classList.contains('disabled')) return;
+  opts.forEach((o,i) => {
+    o.classList.add('disabled');
+    if (i === correct) o.classList.add('correct');
+    else if (i === chosen) o.classList.add('wrong');
+  });
+  const fb = document.getElementById(`${id}_fb`);
+  fb.classList.add('show');
+  if (chosen === correct) { fb.classList.add('correct'); fb.textContent = '✓ Correct! Well done.'; }
+  else { fb.classList.add('wrong'); fb.textContent = `✗ The correct answer is: ${['A','B','C','D'][correct]}. ${document.getElementById(`${id}_opt${correct}`).textContent.trim()}`; }
+  updateProgress();
+}
+
+function renderVocab() {
+  const c = document.getElementById('vocabContent');
+  let html = '';
+
+  // EX 1 — MCQ
+  html += `<div class="ex-header"><div class="ex-num">1</div><div><div class="ex-title">${vocabEx1MCQ.title}</div><div class="ex-desc">Choose the word or phrase that best completes each sentence.</div></div></div><div class="card">`;
+  vocabEx1MCQ.questions.forEach((q,i) => {
+    const id = `voc1_${i}`;
+    html += `<div class="mcq-block"><div class="mcq-question">${i+1}. ${q.q}</div><div class="mcq-options">`;
+    ['A','B','C','D'].forEach((l,j) => {
+      html += `<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;
+    });
+    html += `</div><div class="feedback" id="${id}_fb"></div></div>`;
+  });
+  html += `</div>`;
+
+  // EX 2 — DROPDOWN GAP FILL
+  html += `<div class="ex-header"><div class="ex-num">2</div><div><div class="ex-title">${vocabEx2Dropdown.title}</div><div class="ex-desc">Select the correct word or phrase from each dropdown to complete the sentences.</div></div></div><div class="card">`;
+  vocabEx2Dropdown.items.forEach((item, i) => {
+    const parts = item.sentence.split('_____');
+    const optHTML = `<option value="" disabled selected>▼ choose</option>` +
+      item.opts.map((o, idx) => `<option value="${idx}">${o}</option>`).join('');
+    html += `<div class="gap-sentence">${i+1}. ${parts[0]}<select class="gap-select" id="gap2_${i}" data-answer="${item.answer}">${optHTML}</select>${parts[1]||''}</div>`;
+  });
+  html += `<div style="margin-top:20px;"><button class="check-mcq-btn" onclick="checkDropdownGapFill('gap2',${vocabEx2Dropdown.items.length})">Check Answers</button></div></div>`;
+
+  // EX 3 — TRUE / FALSE
+  html += `<div class="ex-header"><div class="ex-num">3</div><div><div class="ex-title">${vocabEx3TF.title}</div><div class="ex-desc">Read each statement and decide whether it is True or False.</div></div></div><div class="card">`;
+  vocabEx3TF.items.forEach((item, i) => {
+    html += `<div class="mcq-block"><div class="mcq-question">${i+1}. ${item.statement}</div><div class="mcq-options">
+      <div class="mcq-option" onclick="selectTF('tf3_${i}',true,${item.answer})" id="tf3_${i}_optT"><span class="opt-letter">T</span>True</div>
+      <div class="mcq-option" onclick="selectTF('tf3_${i}',false,${item.answer})" id="tf3_${i}_optF"><span class="opt-letter">F</span>False</div>
+    </div><div class="feedback" id="tf3_${i}_fb"></div></div>`;
+  });
+  html += `</div>`;
+  c.innerHTML = html;
+}
+
+function checkDropdownGapFill(prefix, count) {
+  let anyUnanswered = false;
+  for (let i = 0; i < count; i++) {
+    const sel = document.getElementById(`${prefix}_${i}`);
+    if (!sel) continue;
+    if (sel.value === '') { anyUnanswered = true; continue; }
+    const chosen = parseInt(sel.value);
+    const correct = parseInt(sel.dataset.answer);
+    sel.classList.remove('correct','wrong');
+    sel.classList.add(chosen === correct ? 'correct' : 'wrong');
+    sel.disabled = true;
+  }
+  if (anyUnanswered) alert('Please answer all questions before checking.');
+  updateProgress();
+}
+
+function selectTF(id, chosen, correct) {
+  const optT = document.getElementById(`${id}_optT`);
+  const optF = document.getElementById(`${id}_optF`);
+  if (optT.classList.contains('disabled')) return;
+  [optT, optF].forEach(o => o.classList.add('disabled'));
+  const isCorrect = chosen === correct;
+  if (chosen === true) { optT.classList.add(isCorrect ? 'correct' : 'wrong'); if (!isCorrect) optF.classList.add('correct'); }
+  else { optF.classList.add(isCorrect ? 'correct' : 'wrong'); if (!isCorrect) optT.classList.add('correct'); }
+  const fb = document.getElementById(`${id}_fb`);
+  fb.classList.add('show', isCorrect ? 'correct' : 'wrong');
+  fb.textContent = isCorrect ? '✓ Correct!' : `✗ The correct answer is: ${correct ? 'True' : 'False'}.`;
+  updateProgress();
+}
+
+function renderGrammar() {
+  const c = document.getElementById('grammarContent');
+  let html = '';
+  [grammarEx1, grammarEx2, grammarEx3].forEach((ex, ei) => {
+    html += `<div class="ex-header"><div class="ex-num">${ei+1}</div><div><div class="ex-title">${ex.title}</div><div class="ex-desc">${ex.instructions}</div></div></div><div class="card">`;
+    ex.questions.forEach((q, qi) => {
+      const id = `gram${ei}_${qi}`;
+      html += `<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j) => {
+        html += `<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;
+      });
+      html += `</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html += `</div>`;
+  });
+  c.innerHTML = html;
+}
+
+function renderGrammarReview() {
+  document.getElementById('grammarReviewContent').innerHTML = grammarReviewHTML;
+}
+
+function renderWriting() {
+  const c = document.getElementById('writingContent');
+  let html = '';
+  writingActivities.forEach((a, i) => {
+    html += `<div class="writing-prompt">
+      <h3>${a.title}</h3>
+      <p style="margin-bottom:10px;"><strong>Task type:</strong> ${a.type}</p>
+      <p>${a.prompt}</p>
+      <ul>${a.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
+      <p style="margin-top:12px;color:rgba(255,255,255,.5);font-size:.8rem;">Word count: ${a.min}–${a.max} words</p>
+    </div>
+    <div class="card">
+      <textarea class="writing-area" id="write${i}" placeholder="Write your response here..." oninput="countWords('write${i}','wc${i}','${a.min}','${a.max}')"></textarea>
+      <div class="word-count" id="wc${i}">0 words (target: ${a.min}–${a.max})</div>
+      <button class="submit-btn" onclick="submitWriting(${i})">Submit Response ✓</button>
+      <div class="submit-feedback" id="wfb${i}">✓ Your response has been submitted successfully. Excellent work on completing this writing task!</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function countWords(id, wcId, min, max) {
+  const txt = document.getElementById(id).value.trim();
+  const words = txt ? txt.split(/\s+/).length : 0;
+  const wc = document.getElementById(wcId);
+  wc.textContent = `${words} words (target: ${min}–${max})`;
+  wc.style.color = words >= min && words <= max ? 'var(--green)' : words > max ? 'var(--red)' : 'var(--text-muted)';
+}
+
+function submitWriting(i) {
+  const txt = document.getElementById(`write${i}`).value.trim();
+  if (txt.length < 20) { alert('Please write your response before submitting.'); return; }
+  document.getElementById(`wfb${i}`).style.display = 'block';
+  document.getElementById(`write${i}`).disabled = true;
+  updateProgress();
+}
+
+/* LISTENING */
+let ttsState = {};
+
+function renderListening() {
+  const c = document.getElementById('listeningContent');
+  let html = '';
+  listeningActivities.forEach((act, ai) => {
+    html += `<div class="listen-card">
+      <div class="listen-card-header">
+        <div class="listen-icon">🎙️</div>
+        <div>
+          <div class="listen-title">${act.title}</div>
+          <div class="listen-meta">${act.meta}</div>
+          <div class="listen-badges">
+            <span class="badge badge-gold">LEVEL: ${act.level}</span>
+            <span class="badge badge-outline">${act.type}</span>
+            <span class="badge badge-outline">FOCUS: ${act.focus}</span>
+          </div>
+        </div>
+      </div>
+      <div class="audio-player">
+        <div class="audio-controls">
+          <button class="play-btn" onclick="togglePlay(${ai})" id="playBtn${ai}">▶</button>
+          <div class="audio-info">
+            <div class="audio-title-sm">${act.title.split(':').slice(1).join(':').trim()}</div>
+            <div class="audio-sub">${act.meta}</div>
+          </div>
+        </div>
+        <div class="progress-audio"><div class="progress-audio-fill" id="prog${ai}"></div></div>
+        <div class="audio-time" id="time${ai}">0:00 / 0:00</div>
+        <div class="speed-btns">
+          <button class="speed-btn" onclick="setSpeed(${ai},0.75,this)">0.75×</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2×</button>
+        </div>
+        <div class="audio-note">Uses your browser's built-in speech engine. Best experienced in Chrome or Edge for a US English female voice.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">▼ Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans${ai}">${act.transcript.replace(/\n/g,'<br>')}</div>
+    </div>
+    <div class="card" style="padding-top:24px;">
+      <h4 style="font-family:'Playfair Display',serif;margin-bottom:20px;">Comprehension Questions — Activity ${ai+1}</h4>`;
+    act.questions.forEach((q, qi) => {
+      const id = `lis${ai}_${qi}`;
+      html += `<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j) => {
+        html += `<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;
+      });
+      html += `</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html += `</div>`;
+  });
+  c.innerHTML = html;
+}
+
+function toggleTranscript(ai) {
+  document.getElementById(`trans${ai}`).classList.toggle('open');
+}
+
+function togglePlay(ai) {
+  const act = listeningActivities[ai];
+  const btn = document.getElementById(`playBtn${ai}`);
+  if (ttsState[ai]?.playing) {
+    speechSynthesis.cancel();
+    ttsState[ai].playing = false;
+    btn.textContent = '▶';
+    return;
+  }
+  speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(act.transcript);
+  utter.rate = ttsState[ai]?.rate || 0.85;
+  utter.pitch = 1.05;
+  const voices = speechSynthesis.getVoices();
+  const preferred = voices.find(v => v.lang === 'en-US' && /samantha|zira|google us english|aria|jenny|female/i.test(v.name))
+    || voices.find(v => v.lang === 'en-US')
+    || voices.find(v => v.lang.startsWith('en'));
+  if (preferred) utter.voice = preferred;
+  ttsState[ai] = { playing: true, rate: utter.rate };
+  btn.textContent = '⏸';
+  const words = act.transcript.split(' ').length;
+  const estDuration = (words / 130) / utter.rate * 60000;
+  const startTime = Date.now();
+  const prog = document.getElementById(`prog${ai}`);
+  const timeEl = document.getElementById(`time${ai}`);
+  const interval = setInterval(() => {
+    if (!ttsState[ai]?.playing) { clearInterval(interval); return; }
+    const elapsed = Date.now() - startTime;
+    const pct = Math.min((elapsed / estDuration) * 100, 100);
+    prog.style.width = pct + '%';
+    const elSec = Math.floor(elapsed / 1000);
+    const totSec = Math.floor(estDuration / 1000);
+    timeEl.textContent = `${Math.floor(elSec/60)}:${String(elSec%60).padStart(2,'0')} / ${Math.floor(totSec/60)}:${String(totSec%60).padStart(2,'0')}`;
+  }, 300);
+  utter.onend = () => {
+    if (ttsState[ai]) ttsState[ai].playing = false;
+    btn.textContent = '▶';
+    prog.style.width = '100%';
+    clearInterval(interval);
+  };
+  speechSynthesis.speak(utter);
+}
+
+function setSpeed(ai, rate, btn) {
+  btn.closest('.speed-btns').querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (ttsState[ai]) {
+    ttsState[ai].rate = rate;
+    if (ttsState[ai].playing) { speechSynthesis.cancel(); ttsState[ai].playing = false; document.getElementById(`playBtn${ai}`).textContent = '▶'; }
+  } else { ttsState[ai] = { rate }; }
+}
+
+/* CASE STUDIES */
+function renderCaseStudies() {
+  const c = document.getElementById('caseContent');
+  let html = '';
+  caseStudies.forEach((cs, ci) => {
+    html += `<div class="case-header"><div class="case-meta">${cs.meta}</div><h3>${cs.title}</h3>
+      ${cs.text.split('\n\n').map(p => `<p>${p}</p>`).join('')}
+    </div><div class="card"><h4 style="font-family:'Playfair Display',serif;margin-bottom:20px;">Comprehension Questions</h4>`;
+    cs.questions.forEach((q, qi) => {
+      const id = `cs${ci}_${qi}`;
+      html += `<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j) => {
+        html += `<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;
+      });
+      html += `</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html += `</div>`;
+  });
+  c.innerHTML = html;
+}
+
+/* ASSESSMENT */
+let assessmentAttempts = 0;
+function renderAssessment() {
+  const c = document.getElementById('assessmentContent');
+  let html = '';
+  assessmentQs.forEach((q, i) => {
+    const id = `ass_${i}`;
+    html += `<div class="mcq-block"><div class="mcq-question">${i+1}. ${q.q}</div><div class="mcq-options">`;
+    ['A','B','C','D'].forEach((l,j) => {
+      html += `<div class="mcq-option" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;
+    });
+    html += `</div></div>`;
+  });
+  html += `<button class="check-btn" onclick="submitAssessment()">Submit Assessment →</button>`;
+  c.innerHTML = html;
+  assessmentQs.forEach((q, i) => {
+    const id = `ass_${i}`;
+    ['A','B','C','D'].forEach((l,j) => {
+      document.getElementById(`${id}_opt${j}`).onclick = () => {
+        if (document.getElementById(`${id}_opt0`).classList.contains('disabled')) return;
+        document.querySelectorAll(`[id^="${id}_opt"]`).forEach(o => o.classList.remove('selected-opt'));
+        document.getElementById(`${id}_opt${j}`).classList.add('selected-opt');
+      };
+    });
+  });
+}
+
+function submitAssessment() {
+  if (assessmentAttempts >= 2) { alert('You have used both attempts for this assessment.'); return; }
+  let score = 0;
+  assessmentQs.forEach((q, i) => {
+    const id = `ass_${i}`;
+    let chosen = -1;
+    document.querySelectorAll(`[id^="${id}_opt"]`).forEach((o,j) => { if (o.classList.contains('selected-opt')) chosen = j; });
+    document.querySelectorAll(`[id^="${id}_opt"]`).forEach((o,j) => {
+      o.classList.add('disabled'); o.classList.remove('selected-opt');
+      if (j === q.ans) o.classList.add('correct');
+      else if (j === chosen) o.classList.add('wrong');
+    });
+    if (chosen === q.ans) score++;
+  });
+  assessmentAttempts++;
+  const pct = Math.round((score / assessmentQs.length) * 100);
+  const pass = pct >= 70;
+  const rb = document.getElementById('assessmentResult');
+  rb.className = `result-box ${pass ? 'pass' : 'fail'}`;
+  rb.style.display = 'block';
+  rb.innerHTML = `<div class="result-score ${pass ? 'pass' : 'fail'}">${pct}%</div>
+    <div class="result-label">${pass ? '🏆 Congratulations — You Passed Module 11!' : '📚 Keep Studying — You Can Retake!'}</div>
+    <div class="result-detail">Score: ${score}/${assessmentQs.length} correct &nbsp;·&nbsp; ${pass ? '✅ Pass' : '❌ Fail'} &nbsp;·&nbsp; Attempts used: ${assessmentAttempts}/2</div>
+    ${assessmentAttempts < 2 && !pass ? `<button class="check-btn" style="margin-top:16px;" onclick="retakeAssessment()">Retake Assessment</button>` : ''}`;
+  rb.scrollIntoView({ behavior: 'smooth' });
+  updateProgress();
+}
+
+function retakeAssessment() {
+  assessmentQs.forEach((q, i) => {
+    const id = `ass_${i}`;
+    document.querySelectorAll(`[id^="${id}_opt"]`).forEach(o => o.classList.remove('disabled','correct','wrong','selected-opt'));
+  });
+  document.getElementById('assessmentResult').style.display = 'none';
+}
+
+/* NAV */
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const sec = item.dataset.section;
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    item.classList.add('active');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(`sec-${sec}`).classList.add('active');
+    window.scrollTo(0, 0);
+    speechSynthesis.cancel();
+    Object.keys(ttsState).forEach(k => {
+      if (ttsState[k]) ttsState[k].playing = false;
+      const pb = document.getElementById(`playBtn${k}`);
+      if (pb) pb.textContent = '▶';
+    });
+  });
+});
+
+function updateProgress() {
+  const answered = document.querySelectorAll('.mcq-option.correct, .mcq-option.wrong, .gap-select.correct, .gap-select.wrong').length;
+  const pct = Math.min(Math.round((answered / 130) * 100), 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+/* INIT */
+window.addEventListener('load', () => {
+  renderSpeaking();
+  renderWordBank();
+  renderReading();
+  renderVocab();
+  renderGrammar();
+  renderGrammarReview();
+  renderWriting();
+  renderListening();
+  renderCaseStudies();
+  renderAssessment();
+  speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+});
+
+const selStyle = document.createElement('style');
+selStyle.textContent = `.selected-opt{border-color:var(--gold)!important;background:rgba(201,149,42,.12)!important;}`;
+document.head.appendChild(selStyle);
+</script>
+</body>
+</html>

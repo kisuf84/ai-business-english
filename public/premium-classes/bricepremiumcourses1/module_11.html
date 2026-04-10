@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 11: Business Presentations — Business Management English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f1f3d;
+  --navy-mid: #1a2f54;
+  --navy-light: #243b6e;
+  --gold: #c9922a;
+  --gold-light: #e8b84b;
+  --cream: #f5f0e8;
+  --cream-dark: #ebe4d6;
+  --white: #ffffff;
+  --text-light: #a8b8d0;
+  --text-mid: #6b7fa3;
+  --red-accent: #c0392b;
+  --green-accent: #27ae60;
+  --sidebar-w: 260px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── SIDEBAR ─── */
+#sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--navy);
+  position: fixed;
+  top: 0; left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
+}
+.sidebar-brand { padding: 24px 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.sidebar-brand h1 { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--gold-light); line-height: 1.3; margin-bottom: 4px; }
+.sidebar-brand .subtitle { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mid); font-weight: 500; }
+.level-badge { display: inline-block; margin-top: 10px; background: var(--gold); color: var(--navy); font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 3px 10px; border-radius: 20px; }
+.sidebar-section-label { padding: 18px 20px 8px; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-mid); font-weight: 600; }
+.nav-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; cursor: pointer; transition: all 0.2s; border-left: 3px solid transparent; }
+.nav-item:hover { background: rgba(255,255,255,0.05); }
+.nav-item.active { background: rgba(201,146,42,0.15); border-left-color: var(--gold); }
+.nav-item .nav-left { display: flex; align-items: center; gap: 10px; }
+.nav-icon { font-size: 16px; }
+.nav-label { font-size: 13px; color: var(--text-light); font-weight: 400; }
+.nav-item.active .nav-label { color: var(--white); font-weight: 500; }
+.nav-badge { font-size: 10px; font-weight: 600; color: var(--navy); background: var(--gold); padding: 1px 7px; border-radius: 10px; }
+
+/* ─── MAIN ─── */
+#main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; }
+.section { display: none; }
+.section.active { display: block; }
+
+/* ─── HERO ─── */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1e3a5f 100%);
+  padding: 60px 60px 50px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: 'M11';
+  position: absolute;
+  right: -20px; bottom: -40px;
+  font-family: 'Playfair Display', serif;
+  font-size: 280px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+}
+.module-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 30px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-light); font-weight: 500; margin-bottom: 28px; }
+.hero h2 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 58px); font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 4px; }
+.hero h2 span { color: var(--gold-light); }
+.hero p { font-size: 15px; color: var(--text-light); max-width: 620px; line-height: 1.7; margin-top: 18px; font-weight: 300; }
+.hero-stats { display: flex; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+.stat { display: flex; flex-direction: column; gap: 4px; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--gold-light); line-height: 1; }
+.stat-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mid); font-weight: 500; }
+
+/* ─── PROGRESS BAR ─── */
+.progress-bar-wrap { background: var(--navy-mid); padding: 16px 60px; display: flex; align-items: center; gap: 20px; }
+.progress-label { font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: var(--text-light); white-space: nowrap; }
+.progress-track { flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 10px; width: 0%; transition: width 0.8s ease; }
+.progress-pct { font-size: 13px; font-weight: 700; color: var(--gold-light); }
+
+/* ─── CONTENT ─── */
+.content-area { padding: 50px 60px; }
+.card { background: var(--white); border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; border: 1px solid var(--cream-dark); box-shadow: 0 2px 12px rgba(15,31,61,0.05); }
+.card-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.card-title-bar { width: 40px; height: 3px; background: var(--gold); border-radius: 2px; margin-bottom: 20px; }
+
+/* ─── OUTCOMES ─── */
+.outcomes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+.outcome-item { display: flex; align-items: flex-start; gap: 12px; background: var(--cream); border-radius: 10px; padding: 14px 16px; border-left: 3px solid var(--gold); }
+.outcome-num { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--gold); line-height: 1; min-width: 24px; }
+.outcome-text { font-size: 13.5px; color: var(--navy); line-height: 1.5; font-weight: 400; }
+
+/* ─── SPEAKING ─── */
+.speaking-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.speaking-card { background: var(--cream); border-radius: 10px; padding: 18px 20px; border-top: 3px solid var(--gold); transition: transform 0.2s, box-shadow 0.2s; }
+.speaking-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(15,31,61,0.1); }
+.q-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); font-weight: 500; margin-bottom: 8px; letter-spacing: 1px; }
+.q-text { font-size: 13.5px; color: var(--navy); line-height: 1.55; }
+
+/* ─── WORD BANK ─── */
+.wordbank-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.word-card { background: var(--navy); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 8px; transition: transform 0.2s; }
+.word-card:hover { transform: translateY(-2px); }
+.word-emoji { font-size: 24px; }
+.word-term { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--gold-light); }
+.word-def { font-size: 12.5px; color: var(--text-light); line-height: 1.5; }
+
+/* ─── READING ─── */
+.reading-text-box { background: var(--cream); border-radius: 12px; padding: 28px 32px; margin-bottom: 28px; border-left: 4px solid var(--gold); }
+.reading-text-box h4 { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+.reading-text-box p { font-size: 14px; color: var(--navy); line-height: 1.8; margin-bottom: 14px; }
+.reading-text-box p:last-child { margin-bottom: 0; }
+
+/* ─── MCQ ─── */
+.mcq-block { margin-bottom: 22px; }
+.mcq-q { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 12px; line-height: 1.5; }
+.mcq-options { display: flex; flex-direction: column; gap: 8px; }
+.mcq-option { display: flex; align-items: center; gap: 10px; background: var(--cream); border: 2px solid var(--cream-dark); border-radius: 8px; padding: 10px 14px; cursor: pointer; transition: all 0.2s; font-size: 13.5px; color: var(--navy); user-select: none; }
+.mcq-option:hover { border-color: var(--gold); background: #fdf8f0; }
+.mcq-option.selected { border-color: var(--gold); background: #fdf3e3; }
+.mcq-option.correct { border-color: var(--green-accent); background: #eafaf1; color: #1a6b3d; }
+.mcq-option.incorrect { border-color: var(--red-accent); background: #fdecea; color: #7b1a14; }
+.option-letter { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--navy); }
+.mcq-option.correct .option-letter { background: var(--green-accent); color: white; }
+.mcq-option.incorrect .option-letter { background: var(--red-accent); color: white; }
+.check-btn { margin-top: 14px; background: var(--navy); color: var(--gold-light); border: none; padding: 10px 22px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; font-family: 'DM Sans', sans-serif; }
+.check-btn:hover { background: var(--navy-light); }
+.score-display { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: var(--gold-light); font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 20px; margin-top: 16px; }
+
+/* ─── TABS ─── */
+.ex-tabs { display: flex; gap: 4px; margin-bottom: 28px; background: var(--cream-dark); border-radius: 10px; padding: 4px; }
+.ex-tab { flex: 1; text-align: center; padding: 9px 14px; border-radius: 7px; font-size: 13px; font-weight: 500; cursor: pointer; color: var(--text-mid); transition: all 0.2s; }
+.ex-tab.active { background: var(--navy); color: var(--gold-light); }
+
+/* ─── GRAMMAR REF ─── */
+.grammar-ref-box { background: var(--navy); border-radius: 14px; padding: 28px 32px; margin-bottom: 20px; color: var(--white); }
+.grammar-ref-box h4 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold-light); margin-bottom: 16px; }
+.grammar-rule { background: rgba(255,255,255,0.07); border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; border-left: 3px solid var(--gold); }
+.grammar-rule .rule-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); margin-bottom: 8px; }
+.grammar-rule p, .grammar-rule li { font-size: 13px; color: var(--text-light); line-height: 1.6; }
+.grammar-rule code { font-family: 'DM Mono', monospace; background: rgba(201,146,42,0.2); color: var(--gold-light); padding: 1px 6px; border-radius: 4px; font-size: 12px; }
+.grammar-rule ul { padding-left: 18px; }
+
+/* ─── GAP FILL ─── */
+.gapfill-item { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-size: 14px; color: var(--navy); line-height: 2; margin-bottom: 12px; }
+.gap-input { border: none; border-bottom: 2px solid var(--gold); background: transparent; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--navy); padding: 2px 6px; width: 150px; outline: none; text-align: center; }
+.gap-input.correct { border-color: var(--green-accent); color: var(--green-accent); }
+.gap-input.incorrect { border-color: var(--red-accent); color: var(--red-accent); }
+
+/* ─── TRUE FALSE ─── */
+.tf-item { background: var(--cream); border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.tf-statement { font-size: 13.5px; color: var(--navy); flex: 1; line-height: 1.5; }
+.tf-buttons { display: flex; gap: 8px; }
+.tf-btn { padding: 6px 16px; border-radius: 6px; border: 2px solid var(--cream-dark); font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; background: white; font-family: 'DM Sans', sans-serif; }
+.tf-btn:hover { border-color: var(--gold); }
+.tf-btn.selected-true { background: var(--navy); color: white; border-color: var(--navy); }
+.tf-btn.selected-false { background: var(--navy); color: white; border-color: var(--navy); }
+.tf-btn.correct-answer { background: var(--green-accent); color: white; border-color: var(--green-accent); }
+.tf-btn.wrong-answer { background: var(--red-accent); color: white; border-color: var(--red-accent); }
+
+/* ─── WRITING ─── */
+.writing-prompt { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); border-radius: 14px; padding: 28px 32px; margin-bottom: 20px; color: var(--white); }
+.writing-prompt h4 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold-light); margin-bottom: 10px; }
+.writing-prompt p { font-size: 13.5px; color: var(--text-light); line-height: 1.7; }
+.writing-meta { display: flex; gap: 14px; margin-top: 14px; flex-wrap: wrap; }
+.writing-tag { background: rgba(201,146,42,0.2); color: var(--gold-light); font-size: 11px; font-weight: 600; letter-spacing: 0.8px; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; border: 1px solid rgba(201,146,42,0.3); }
+.writing-textarea { width: 100%; min-height: 180px; border: 2px solid var(--cream-dark); border-radius: 10px; padding: 16px 18px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--navy); background: var(--cream); outline: none; resize: vertical; transition: border-color 0.2s; line-height: 1.7; margin-bottom: 12px; }
+.writing-textarea:focus { border-color: var(--gold); background: white; }
+.word-counter { font-size: 12px; color: var(--text-mid); text-align: right; margin-bottom: 12px; }
+.submit-btn { background: var(--gold); color: var(--navy); border: none; padding: 12px 28px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+.submit-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+.submit-success { display: none; align-items: center; gap: 10px; background: #eafaf1; border: 1px solid var(--green-accent); border-radius: 8px; padding: 12px 18px; font-size: 13.5px; color: #1a6b3d; font-weight: 500; margin-top: 12px; }
+
+/* ─── LISTENING ─── */
+.listening-activity { background: linear-gradient(135deg, #1a2f54 0%, #0f1f3d 100%); border-radius: 14px; margin-bottom: 28px; overflow: hidden; }
+.listening-header { padding: 22px 28px 18px; display: flex; align-items: flex-start; gap: 16px; }
+.listening-icon { font-size: 32px; margin-top: 2px; }
+.listening-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.listening-subtitle { font-size: 13px; color: var(--text-mid); }
+.listening-tags { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.l-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; }
+.l-tag-level { background: rgba(201,146,42,0.2); color: var(--gold-light); border: 1px solid rgba(201,146,42,0.3); }
+.l-tag-type { color: #e8a0a0; background: rgba(192,57,43,0.2); border: 1px solid rgba(192,57,43,0.3); }
+.l-tag-focus { color: var(--text-light); }
+.audio-player { background: rgba(0,0,0,0.35); margin: 0 20px 18px; border-radius: 12px; padding: 18px 20px; }
+.player-top { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.play-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--red-accent); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; color: white; flex-shrink: 0; transition: background 0.2s, transform 0.15s; }
+.play-btn:hover { background: #e74c3c; transform: scale(1.07); }
+.player-info { flex: 1; }
+.player-title { font-size: 13px; font-weight: 600; color: var(--white); }
+.player-desc { font-size: 11.5px; color: var(--text-mid); }
+.player-time { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-mid); }
+.progress-audio { width: 100%; height: 4px; background: rgba(255,255,255,0.15); border-radius: 4px; margin-bottom: 12px; cursor: pointer; }
+.progress-audio-fill { height: 100%; background: var(--red-accent); border-radius: 4px; width: 0%; transition: width 0.3s; }
+.speed-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.speed-label { font-size: 10px; font-weight: 700; color: var(--text-mid); letter-spacing: 0.5px; text-transform: uppercase; }
+.speed-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: var(--text-light); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+.speed-btn:hover { background: rgba(255,255,255,0.18); }
+.speed-btn.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+.replay-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: var(--text-light); font-size: 11px; font-weight: 600; padding: 3px 12px; border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.audio-note { font-size: 11px; color: var(--text-mid); font-style: italic; margin-top: 8px; }
+.transcript-toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-mid); cursor: pointer; padding: 10px 28px; border-top: 1px solid rgba(255,255,255,0.07); user-select: none; transition: color 0.2s; }
+.transcript-toggle:hover { color: var(--text-light); }
+.transcript-toggle .arrow { transition: transform 0.2s; font-size: 11px; }
+.transcript-toggle.open .arrow { transform: rotate(180deg); }
+.transcript-content { display: none; padding: 16px 28px 20px; background: rgba(255,255,255,0.03); }
+.transcript-content.open { display: block; }
+.transcript-content p { font-size: 13px; color: var(--text-light); line-height: 1.75; font-style: italic; }
+.listening-mcq { padding: 20px 28px 24px; }
+.instructions-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; display: flex; gap: 10px; align-items: flex-start; }
+.inst-icon { font-size: 14px; color: var(--gold); margin-top: 1px; }
+.inst-text { font-size: 12.5px; color: var(--text-mid); line-height: 1.5; }
+
+/* ─── LISTENING MCQ — WHITE TEXT ─── */
+.l-mcq-option { background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.1); color: var(--white); }
+.l-mcq-option:hover { border-color: var(--gold); background: rgba(201,146,42,0.1); color: var(--white); }
+.l-mcq-option.selected { border-color: var(--gold); background: rgba(201,146,42,0.15); color: var(--white); }
+.l-mcq-option.correct { border-color: var(--green-accent); background: rgba(39,174,96,0.15); color: #7dddaa; }
+.l-mcq-option.incorrect { border-color: var(--red-accent); background: rgba(192,57,43,0.15); color: #f1948a; }
+.listening-mcq .mcq-q { color: var(--white); }
+.listening-mcq .score-display { background: rgba(255,255,255,0.1); color: var(--gold-light); }
+.listening-mcq .option-letter { background: rgba(255,255,255,0.12); color: var(--white); }
+.l-check-btn { background: var(--red-accent); color: white; }
+.l-check-btn:hover { background: #e74c3c; }
+
+/* ─── CASE STUDY ─── */
+.case-header { background: linear-gradient(135deg, var(--navy) 0%, #2c3e70 100%); border-radius: 14px 14px 0 0; padding: 28px 32px; border-bottom: 3px solid var(--gold); }
+.case-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 8px; }
+.case-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+.case-sub { font-size: 13.5px; color: var(--text-light); }
+.case-body { background: white; border-radius: 0 0 14px 14px; padding: 28px 32px; margin-bottom: 24px; border: 1px solid var(--cream-dark); border-top: none; }
+.case-body p { font-size: 14px; color: var(--navy); line-height: 1.8; margin-bottom: 14px; }
+.case-body h5 { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--navy); margin: 20px 0 10px; padding-bottom: 6px; border-bottom: 2px solid var(--cream-dark); }
+
+/* ─── ASSESSMENT ─── */
+.assessment-banner { background: linear-gradient(135deg, var(--navy), #1e3a5f); border-radius: 14px; padding: 32px 36px; color: white; margin-bottom: 28px; text-align: center; }
+.assessment-banner h3 { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--gold-light); margin-bottom: 8px; }
+.assessment-banner p { font-size: 14px; color: var(--text-light); margin-bottom: 20px; line-height: 1.6; }
+.assessment-meta { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+.a-meta-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.a-meta-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--gold-light); }
+.a-meta-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mid); }
+.attempts-display { display: flex; align-items: center; gap: 8px; justify-content: flex-end; margin-bottom: 20px; font-size: 13px; color: var(--text-mid); }
+.attempt-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--cream-dark); }
+.attempt-dot.used { background: var(--gold); }
+.final-result { display: none; background: var(--navy); border-radius: 12px; padding: 28px 32px; text-align: center; color: white; margin-top: 20px; }
+.final-result.pass { border: 2px solid var(--green-accent); }
+.final-result.fail { border: 2px solid var(--red-accent); }
+.final-score { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; margin-bottom: 4px; }
+.final-result.pass .final-score { color: #7dddaa; }
+.final-result.fail .final-score { color: #f1948a; }
+.final-verdict { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--white); }
+.final-msg { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+
+/* ─── MISC ─── */
+.ex-divider { height: 1px; background: var(--cream-dark); margin: 28px 0; }
+
+@media (max-width: 900px) {
+  :root { --sidebar-w: 220px; }
+  .content-area { padding: 32px 28px; }
+  .hero { padding: 40px 28px 36px; }
+  .progress-bar-wrap { padding: 14px 28px; }
+  .hero-stats { gap: 24px; }
+  .speaking-grid { grid-template-columns: 1fr 1fr; }
+  .wordbank-grid { grid-template-columns: 1fr 1fr; }
+  .outcomes-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  #sidebar { display: none; }
+  #main { margin-left: 0; }
+  .speaking-grid { grid-template-columns: 1fr; }
+  .wordbank-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── SIDEBAR ─── -->
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h1>Business Management English</h1>
+    <div class="subtitle">Professional Development</div>
+    <span class="level-badge">B1–B2 LEVEL</span>
+  </div>
+  <div class="sidebar-section-label">Module 11</div>
+  <div class="nav-item active" onclick="showSection('overview')">
+    <div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  </div>
+  <div class="nav-item" onclick="showSection('speaking')">
+    <div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div>
+    <span class="nav-badge">21Q</span>
+  </div>
+  <div class="nav-item" onclick="showSection('wordbank')">
+    <div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div>
+    <span class="nav-badge">21</span>
+  </div>
+  <div class="nav-item" onclick="showSection('reading')">
+    <div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div>
+    <span class="nav-badge">2T</span>
+  </div>
+  <div class="nav-item" onclick="showSection('vocabulary')">
+    <div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span></div>
+    <span class="nav-badge">3Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('grammar')">
+    <div class="nav-left"><span class="nav-icon">📝</span><span class="nav-label">Grammar</span></div>
+    <span class="nav-badge">3Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('grammar-review')">
+    <div class="nav-left"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  </div>
+  <div class="nav-item" onclick="showSection('writing')">
+    <div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div>
+    <span class="nav-badge">2W</span>
+  </div>
+  <div class="nav-item" onclick="showSection('listening')">
+    <div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div>
+    <span class="nav-badge">4Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('casestudies')">
+    <div class="nav-left"><span class="nav-icon">🏢</span><span class="nav-label">Case Studies</span></div>
+    <span class="nav-badge">2CS</span>
+  </div>
+  <div class="nav-item" onclick="showSection('assessment')">
+    <div class="nav-left"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span></div>
+    <span class="nav-badge">20Q</span>
+  </div>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<main id="main">
+
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="module-tag">📋 MODULE 11 · BUSINESS MANAGEMENT ENGLISH</div>
+    <h2>Business<br><span>Presentations</span></h2>
+    <p>Develop the professional English skills to plan, structure, and deliver compelling business presentations — from opening with impact to handling difficult questions with confidence.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <span class="progress-label">Module Progress</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:14px;line-height:1.8;color:#2c3e6b;margin-bottom:14px;">
+        <strong>Welcome to Module 11: Business Presentations.</strong> In this module you will develop the language and skills needed to design, structure, and deliver professional presentations in English. You will learn how to open with impact, organise your content logically, use signposting language to guide your audience, handle questions confidently, and close with a memorable conclusion.
+      </p>
+      <p style="font-size:14px;line-height:1.8;color:#2c3e6b;">
+        This module is ideal for professionals at B1–B2 level who need to present to clients, colleagues, senior management, or at conferences. You will practise both formal and semi-formal presentation styles, focusing on clarity, persuasion, and audience engagement.
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">By the end of this module, you will be able to:</p>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-num">1</div><div class="outcome-text">Plan and structure a business presentation using an effective introduction, body, and conclusion framework.</div></div>
+        <div class="outcome-item"><div class="outcome-num">2</div><div class="outcome-text">Use a wide range of signposting language to guide your audience through the stages of a presentation clearly and confidently.</div></div>
+        <div class="outcome-item"><div class="outcome-num">3</div><div class="outcome-text">Apply modal verbs correctly to make recommendations, express possibility, and convey certainty or uncertainty during presentations.</div></div>
+        <div class="outcome-item"><div class="outcome-num">4</div><div class="outcome-text">Use passive voice constructions to describe data, findings, and processes in a formal, objective presentation style.</div></div>
+        <div class="outcome-item"><div class="outcome-num">5</div><div class="outcome-text">Identify and use phrasal verbs and collocations commonly found in professional presentations and business communication.</div></div>
+        <div class="outcome-item"><div class="outcome-num">6</div><div class="outcome-text">Respond to audience questions professionally using hedging language, clarification strategies, and polite deflection phrases.</div></div>
+        <div class="outcome-item"><div class="outcome-num">7</div><div class="outcome-text">Write a presentation script and a post-presentation follow-up email using appropriate register and professional vocabulary.</div></div>
+        <div class="outcome-item"><div class="outcome-num">8</div><div class="outcome-text">Analyse effective and ineffective presentations to identify key features of delivery, content, and audience engagement.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="speaking" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">🎙️ SPEAKING ACTIVITIES</div>
+    <h2>Discussion <span>Questions</span></h2>
+    <p>21 questions to practise speaking about presentations, public speaking, and business communication at B1–B2 level.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Speaking Questions</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">Discuss these questions with a partner or prepare a spoken response of 2–3 minutes each.</p>
+      <div class="speaking-grid" id="speakingGrid"></div>
+    </div>
+  </div>
+</div>
+
+<div id="wordbank" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">📚 WORD BANK</div>
+    <h2>Key <span>Vocabulary</span></h2>
+    <p>21 essential terms for delivering and discussing business presentations at B1–B2 level.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Vocabulary</div>
+      <div class="card-title-bar"></div>
+      <div class="wordbank-grid" id="wordbankGrid"></div>
+    </div>
+  </div>
+</div>
+
+<div id="reading" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">📖 READING</div>
+    <h2>Reading <span>Texts</span></h2>
+    <p>Two professional texts followed by 10 multiple-choice comprehension questions each.</p>
+  </div>
+  <div class="content-area" id="readingContent"></div>
+</div>
+
+<div id="vocabulary" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">✏️ VOCABULARY EXERCISES</div>
+    <h2>Vocabulary <span>Practice</span></h2>
+    <p>Three exercises to consolidate your understanding of key presentation vocabulary.</p>
+  </div>
+  <div class="content-area">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocabEx(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocabEx(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocabEx(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vocab-ex-0" class="vocab-ex"></div>
+    <div id="vocab-ex-1" class="vocab-ex" style="display:none"></div>
+    <div id="vocab-ex-2" class="vocab-ex" style="display:none"></div>
+  </div>
+</div>
+
+<div id="grammar" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">📝 GRAMMAR EXERCISES</div>
+    <h2>Grammar <span>Practice</span></h2>
+    <p>Three grammar exercises covering modal verbs, passive voice, and signposting language.</p>
+  </div>
+  <div class="content-area">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGrammarEx(0,this)">Exercise 1 · Modal Verbs</div>
+      <div class="ex-tab" onclick="showGrammarEx(1,this)">Exercise 2 · Passive Voice</div>
+      <div class="ex-tab" onclick="showGrammarEx(2,this)">Exercise 3 · Signposting Language</div>
+    </div>
+    <div id="grammar-ex-0" class="grammar-ex"></div>
+    <div id="grammar-ex-1" class="grammar-ex" style="display:none"></div>
+    <div id="grammar-ex-2" class="grammar-ex" style="display:none"></div>
+  </div>
+</div>
+
+<div id="grammar-review" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">🔍 GRAMMAR REVIEW</div>
+    <h2>Grammar <span>Reference</span></h2>
+    <p>Detailed reference boxes covering all three grammar points in this module.</p>
+  </div>
+  <div class="content-area" id="grammarReviewContent"></div>
+</div>
+
+<div id="writing" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">✍️ WRITING ACTIVITIES</div>
+    <h2>Writing <span>Tasks</span></h2>
+    <p>Two structured writing tasks to practise presentation scripting and professional follow-up communication.</p>
+  </div>
+  <div class="content-area" id="writingContent"></div>
+</div>
+
+<div id="listening" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">🎧 LISTENING ACTIVITIES</div>
+    <h2>Listening <span>Activities</span></h2>
+    <p>4 audio activities with built-in speech players — press ▶ Play, listen, then answer the questions.</p>
+  </div>
+  <div class="content-area" id="listeningContent"></div>
+</div>
+
+<div id="casestudies" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">🏢 CASE STUDIES</div>
+    <h2>Real-World <span>Cases</span></h2>
+    <p>Two in-depth case studies on business presentation strategies, with comprehension questions.</p>
+  </div>
+  <div class="content-area" id="caseStudiesContent"></div>
+</div>
+
+<div id="assessment" class="section">
+  <div class="hero" style="padding-bottom:40px">
+    <div class="module-tag">🎯 FINAL ASSESSMENT</div>
+    <h2>Module 11 <span>Assessment</span></h2>
+    <p>20 multiple-choice questions covering all areas of the module. Pass mark: 70%. Two attempts allowed.</p>
+  </div>
+  <div class="content-area" id="assessmentContent"></div>
+</div>
+
+</main>
+
+<script>
+/* ═══════════════════════ DATA ═══════════════════════ */
+
+const speakingQs = [
+  "Have you ever given a presentation in English? How did it go, and what was the biggest challenge?",
+  "What makes a business presentation memorable? Think of one you attended recently.",
+  "How important is body language and eye contact when presenting? Give examples of do's and don'ts.",
+  "What is the difference between presenting to a small team and presenting to a large audience? How do you adapt?",
+  "How do you prepare for a presentation? Describe your step-by-step process.",
+  "What are the most common mistakes people make when presenting in business? How can they be avoided?",
+  "How do you deal with nerves before and during a presentation?",
+  "What is the role of visual aids (slides, charts, videos) in a business presentation? Can too many visuals be a problem?",
+  "How should you open a presentation to capture the audience's attention immediately?",
+  "What techniques can you use to engage an audience that seems distracted or uninterested?",
+  "How do you handle a difficult question from the audience that you cannot answer confidently?",
+  "What is the difference between an informative presentation and a persuasive one? Give an example of each.",
+  "How has technology changed the way business presentations are delivered?",
+  "Should a presenter read directly from their slides? Why or why not?",
+  "How do you adapt your presentation style and language for a non-specialist audience?",
+  "What is storytelling in business presentations, and why is it effective?",
+  "How important is the conclusion of a presentation? What should a good conclusion always include?",
+  "Describe a presentation you would give about your own company or department. What key points would you cover?",
+  "How do you practise for an important presentation? What methods are most effective?",
+  "In your culture, what are the norms for audience behaviour during a presentation? Are questions asked during or after?",
+  "What advice would you give to a colleague who is presenting in English for the first time?"
+];
+
+const wordBank = [
+  { emoji:"🎤", term:"Signposting language", def:"Phrases used to guide the audience through a presentation (e.g. 'Moving on to…', 'To summarise…')." },
+  { emoji:"📊", term:"Visual aid", def:"Any graphic, chart, image, or video used to support and illustrate the content of a presentation." },
+  { emoji:"🧭", term:"Structure", def:"The logical organisation of a presentation into introduction, body, and conclusion." },
+  { emoji:"💡", term:"Hook", def:"An engaging opening technique — a question, story, statistic, or quote — used to capture the audience's attention." },
+  { emoji:"🗣️", term:"Delivery", def:"The way a speaker presents their content, including voice, pace, tone, and body language." },
+  { emoji:"👁️", term:"Eye contact", def:"Looking directly at members of the audience to build connection and show confidence." },
+  { emoji:"🤔", term:"Hedging language", def:"Language used to express caution or uncertainty (e.g. 'It appears that…', 'This might suggest…')." },
+  { emoji:"🔁", term:"Transition phrase", def:"A phrase used to move smoothly from one point to another in a presentation." },
+  { emoji:"📌", term:"Key message", def:"The single most important idea or takeaway the presenter wants the audience to remember." },
+  { emoji:"❓", term:"Q&A session", def:"The question-and-answer period at the end of a presentation where the audience can ask questions." },
+  { emoji:"📋", term:"Agenda", def:"An outline of the topics or sections that will be covered during a presentation." },
+  { emoji:"🎯", term:"Objective", def:"The specific goal or outcome the presenter hopes to achieve with their presentation." },
+  { emoji:"📈", term:"Data visualisation", def:"The use of charts, graphs, and infographics to present numerical or statistical information clearly." },
+  { emoji:"🤝", term:"Rapport", def:"A positive, harmonious relationship between the presenter and the audience built through engagement and empathy." },
+  { emoji:"📣", term:"Pitch", def:"A short, persuasive presentation designed to sell an idea, product, or service." },
+  { emoji:"⏱️", term:"Time management", def:"The ability to deliver a presentation within the allotted time without rushing or running over." },
+  { emoji:"🔊", term:"Pace", def:"The speed at which a presenter speaks, which should vary to maintain audience interest and emphasise key points." },
+  { emoji:"🧠", term:"Audience awareness", def:"The ability to understand and respond to the knowledge level, expectations, and reactions of the audience." },
+  { emoji:"📝", term:"Handout", def:"Printed or digital materials given to the audience to supplement or summarise the presentation content." },
+  { emoji:"💬", term:"Clarification", def:"The act of making something clearer or easier to understand, often in response to a question." },
+  { emoji:"🏆", term:"Call to action", def:"A clear instruction or request at the end of a presentation asking the audience to do something specific." }
+];
+
+const readingTexts = [
+  {
+    title: "Text 1: The Art of Structuring a Business Presentation",
+    subtitle: "How to organise content for maximum clarity and impact",
+    paragraphs: [
+      "A well-structured business presentation is the foundation of effective communication in professional environments. Regardless of the topic — whether launching a new product, presenting quarterly results, or proposing a strategic change — the basic framework remains consistent: a strong introduction, a clearly organised body, and a memorable conclusion. The introduction serves three essential functions: it captures the audience's attention, establishes the presenter's credibility, and sets out a clear agenda for what will follow. Experienced presenters often open with a surprising statistic, a rhetorical question, or a brief anecdote to create an immediate connection with their audience.",
+      "The body of the presentation is where the substantive content is delivered. To maintain clarity and help the audience follow the logic of the argument, skilled presenters use signposting language throughout — phrases such as 'Moving on to our second point,' 'As I mentioned earlier,' and 'This brings me to the key question.' These linguistic markers act as signposts on a road, preventing the audience from losing their way. It is generally recommended that a business presentation contain no more than three to five main points, as audiences struggle to retain more information than this during a single session. Each point should be supported by evidence: data, case studies, testimonials, or demonstrations.",
+      "The conclusion is arguably the most important part of the presentation, as it is what the audience will remember most clearly. A strong conclusion restates the key message, summarises the main points briefly, and ends with a clear call to action — a specific request or next step for the audience. Presenters should avoid introducing new information in the conclusion, as this can confuse the audience and dilute the impact of the closing. Closing with a memorable phrase, a return to the opening hook, or a moment of audience interaction can significantly increase the lasting impression of a presentation."
+    ],
+    questions: [
+      { q: "What are the three parts of a well-structured presentation according to the text?", opts: ["Opening, middle, ending", "Introduction, body, and conclusion", "Hook, content, summary", "Agenda, delivery, Q&A"], ans: 1 },
+      { q: "What is one purpose of a strong introduction?", opts: ["To introduce the Q&A session", "To establish the presenter's credibility", "To present the main data", "To summarise the conclusion"], ans: 1 },
+      { q: "What is a 'hook' used for, according to the text?", opts: ["To introduce supporting evidence", "To create an immediate connection with the audience", "To summarise key points", "To signal a transition between sections"], ans: 1 },
+      { q: "What does signposting language do in a presentation?", opts: ["It makes slides more visually appealing", "It helps the audience follow the logic of the presentation", "It introduces new ideas at the end", "It replaces the need for visual aids"], ans: 1 },
+      { q: "How many main points are recommended for a business presentation?", opts: ["One or two", "Seven or more", "Three to five", "As many as needed"], ans: 2 },
+      { q: "What types of evidence can support a main point?", opts: ["Only personal opinions", "Data, case studies, testimonials, or demonstrations", "Only charts and graphs", "Only video content"], ans: 1 },
+      { q: "Why is the conclusion considered the most important part?", opts: ["It is the longest part of the presentation", "It is what the audience will remember most clearly", "It introduces the presenter's credentials", "It contains the most data"], ans: 1 },
+      { q: "What should a strong conclusion include?", opts: ["New information and fresh ideas", "A restatement of the key message and a call to action", "A detailed agenda for the next meeting", "A list of all sources used"], ans: 1 },
+      { q: "What should presenters avoid doing in the conclusion?", opts: ["Using signposting language", "Summarising the main points", "Introducing new information", "Ending with a memorable phrase"], ans: 2 },
+      { q: "What technique can increase the lasting impression of a presentation?", opts: ["Reading directly from the slides", "Using as many slides as possible", "Returning to the opening hook at the close", "Avoiding audience interaction"], ans: 2 }
+    ]
+  },
+  {
+    title: "Text 2: Delivering with Confidence — Managing Nerves and Engaging Your Audience",
+    subtitle: "Practical techniques for professional presentation delivery",
+    paragraphs: [
+      "Presentation anxiety — the fear of speaking in front of an audience — affects a significant proportion of professionals, regardless of their level of experience or seniority. Research consistently shows that public speaking is among the most commonly cited fears in workplace surveys. However, anxiety is not necessarily a barrier to effective delivery; in fact, a moderate level of nervous energy can sharpen focus and improve performance. The key lies in channelling anxiety productively through thorough preparation, rehearsal, and the development of coping strategies such as controlled breathing, positive visualisation, and physical warm-up exercises before presenting.",
+      "Audience engagement is one of the most critical skills a presenter can develop. A passive audience that is merely receiving information will retain far less than one that is actively involved. Effective engagement techniques include asking rhetorical questions ('Have you ever wondered why…?'), pausing strategically to let key points sink in, varying pace and tone to maintain interest, and incorporating interactive elements such as polls, short activities, or moments for audience reflection. Research from cognitive science suggests that attention naturally dips after approximately ten minutes of continuous listening; skilled presenters account for this by introducing a change of format or activity at regular intervals.",
+      "Handling questions is an area where many otherwise competent presenters struggle. The Q&A session can feel unpredictable and expose gaps in knowledge. Professional presenters use a set of reliable strategies to manage this: restating the question to ensure they have understood it correctly and to give themselves thinking time, using hedging language ('That's a very interesting point — I'd suggest that…') when uncertain, and confidently deferring questions they cannot answer immediately ('That falls slightly outside today's scope, but I'd be happy to follow up with you directly'). The ability to manage a Q&A session with grace and confidence is widely regarded as the mark of a truly skilled communicator."
+    ],
+    questions: [
+      { q: "What does 'presentation anxiety' refer to?", opts: ["The fear of preparing slides", "The fear of speaking in front of an audience", "The difficulty of structuring content", "The challenge of managing time"], ans: 1 },
+      { q: "According to the text, what can a moderate level of nervousness do?", opts: ["It always reduces performance", "It has no effect on delivery", "It can sharpen focus and improve performance", "It makes the audience uncomfortable"], ans: 2 },
+      { q: "Which of the following is listed as a coping strategy for anxiety?", opts: ["Avoiding eye contact", "Reading from notes throughout", "Controlled breathing and positive visualisation", "Keeping the presentation very short"], ans: 2 },
+      { q: "What does the text say about a passive audience?", opts: ["They retain more information", "They are always more polite", "They will retain far less than an active audience", "They are easier to present to"], ans: 2 },
+      { q: "What is a rhetorical question used for in a presentation?", opts: ["To end the presentation", "To engage the audience and invite reflection", "To introduce new evidence", "To summarise the main points"], ans: 1 },
+      { q: "According to cognitive science, after how long does audience attention typically dip?", opts: ["Two minutes", "Five minutes", "Ten minutes", "Thirty minutes"], ans: 2 },
+      { q: "Why might a presenter restate a question from the audience?", opts: ["To avoid answering it entirely", "To give themselves thinking time and ensure understanding", "To disagree with the questioner", "To end the Q&A session"], ans: 1 },
+      { q: "What does hedging language help a presenter do?", opts: ["Appear more aggressive", "Express uncertainty professionally", "Introduce new information", "Speed up the presentation"], ans: 1 },
+      { q: "What is the professional way to handle a question outside your area of knowledge?", opts: ["Ignore it and move on", "Make up an answer", "Defer it and offer to follow up later", "Ask the audience for help"], ans: 2 },
+      { q: "What skill is regarded as the mark of a truly skilled communicator?", opts: ["Memorising the entire presentation", "Designing complex slides", "Managing a Q&A session with grace and confidence", "Speaking without any pauses"], ans: 2 }
+    ]
+  }
+];
+
+const vocabExercises = [
+  {
+    type: "mcq",
+    title: "Exercise 1: Multiple Choice",
+    instructions: "Choose the best word or phrase to complete each sentence.",
+    questions: [
+      { q: "She opened her presentation with a surprising statistic — this kind of opening technique is called a _____.", opts: ["handout", "hook", "hedge", "call to action"], ans: 1 },
+      { q: "The speaker said, 'Moving on to our third point…' — this is an example of _____ language.", opts: ["hedging", "signposting", "passive", "modal"], ans: 1 },
+      { q: "At the end of the presentation, the presenter asked the audience to sign up for the newsletter. This is a _____.", opts: ["visual aid", "hook", "call to action", "Q&A session"], ans: 2 },
+      { q: "The presenter used charts and infographics to display the sales data. This is an example of _____.", opts: ["data visualisation", "audience awareness", "rapport", "pace"], ans: 0 },
+      { q: "Speaking too fast can make it difficult for the audience to follow. A good presenter always controls their _____.", opts: ["handout", "agenda", "pace", "objective"], ans: 2 },
+      { q: "Before starting, the presenter outlined all the topics she would cover. This is called the _____.", opts: ["hook", "agenda", "conclusion", "call to action"], ans: 1 },
+      { q: "I'm not entirely certain about the exact figures — this type of careful language is called _____.", opts: ["delivery", "signposting", "hedging language", "rapport"], ans: 2 },
+      { q: "The investor _____ lasted just three minutes, but it was enough to secure the funding.", opts: ["Q&A", "pitch", "handout", "agenda"], ans: 1 },
+      { q: "The presenter made the audience laugh and feel comfortable, which helped build _____.", opts: ["time management", "rapport", "an objective", "pace"], ans: 1 },
+      { q: "The single idea the audience must leave with is called the _____ of the presentation.", opts: ["visual aid", "key message", "hook", "transition phrase"], ans: 1 }
+    ]
+  },
+  {
+    type: "gapfill",
+    title: "Exercise 2: Gap Fill",
+    instructions: "Complete each sentence using a word from the box.",
+    words: ["delivery", "structure", "clarification", "objective", "rapport", "transitions", "audience", "rehearsal", "conclusion", "Q&A"],
+    sentences: [
+      { before: "The ", blank: "objective", after: " of today's presentation is to introduce our new product strategy to the board." },
+      { before: "Good ", blank: "delivery", after: " includes clear pronunciation, varied tone, and confident body language." },
+      { before: "She asked for ", blank: "clarification", after: " on the third slide, as the data was not clearly labelled." },
+      { before: "A logical ", blank: "structure", after: " helps the audience follow your argument from beginning to end." },
+      { before: "After a final ", blank: "rehearsal", after: " the night before, he felt confident and well-prepared." },
+      { before: "Smooth ", blank: "transitions", after: " between sections prevent the presentation from feeling disjointed." },
+      { before: "Knowing your ", blank: "audience", after: " is essential — you must adapt your language and examples accordingly." },
+      { before: "Building ", blank: "rapport", after: " with your listeners makes them more willing to engage with your ideas." },
+      { before: "The ", blank: "Q&A", after: " session lasted 15 minutes and included some challenging questions." },
+      { before: "In the ", blank: "conclusion", after: ", she summarised the three main findings and issued a clear call to action." }
+    ]
+  },
+  {
+    type: "truefalse",
+    title: "Exercise 3: True / False",
+    instructions: "Read the statements and decide if they are TRUE or FALSE.",
+    statements: [
+      { text: "Signposting language helps the audience understand the structure of a presentation.", ans: true },
+      { text: "A 'hook' is used at the end of a presentation to summarise key points.", ans: false },
+      { text: "The Q&A session takes place before the presenter delivers the main content.", ans: false },
+      { text: "Hedging language is used to express caution or a degree of uncertainty.", ans: true },
+      { text: "A call to action asks the audience to take a specific step after the presentation.", ans: true },
+      { text: "Pace refers to the visual design of the slides used in a presentation.", ans: false },
+      { text: "Audience awareness means understanding the knowledge level and expectations of your listeners.", ans: true },
+      { text: "A pitch is typically a long, detailed presentation given to a general audience.", ans: false },
+      { text: "Eye contact with the audience is an important element of confident presentation delivery.", ans: true },
+      { text: "A handout is always given before the presentation begins so the audience can follow along.", ans: false }
+    ]
+  }
+];
+
+const grammarExercises = [
+  {
+    type: "mcq",
+    title: "Exercise 1: Modal Verbs in Presentations",
+    instructions: "Choose the correct modal verb to complete each presentation sentence.",
+    questions: [
+      { q: "As you can see from the data, sales _____ increase significantly next quarter if we implement this strategy.", opts: ["must", "could", "have to", "should have"], ans: 1 },
+      { q: "I _____ like to draw your attention to the chart on the right, which shows the year-on-year comparison.", opts: ["must", "would", "might", "can't"], ans: 1 },
+      { q: "This _____ be the most effective approach, but we will need to run a pilot programme to confirm it.", opts: ["will", "must", "may", "had to"], ans: 2 },
+      { q: "You _____ notice that the figures for Q3 are significantly higher than those for the same period last year.", opts: ["might", "will", "should", "could have"], ans: 2 },
+      { q: "If we don't act now, we _____ lose our competitive advantage in this market.", opts: ["might", "should", "would have", "must have"], ans: 0 },
+      { q: "I _____ answer that question in full right now, but I'll be happy to follow up with you afterwards.", opts: ["shouldn't", "can't", "won't have to", "wouldn't"], ans: 1 },
+      { q: "Based on current trends, the market _____ grow by 15% over the next five years.", opts: ["should", "can't", "had to", "must have"], ans: 0 },
+      { q: "Before I move on, you _____ want to note that this data was collected in the first half of the year only.", opts: ["might", "must", "had to", "should have"], ans: 0 },
+      { q: "We _____ consider all three options before making a final recommendation to the board.", opts: ["can't", "should", "must have", "might not"], ans: 1 },
+      { q: "The results _____ speak for themselves — the new approach has clearly outperformed expectations.", opts: ["might", "would", "can't", "should"], ans: 0 }
+    ]
+  },
+  {
+    type: "mcq",
+    title: "Exercise 2: Passive Voice in Presentations",
+    instructions: "Choose the correct passive voice form to complete each sentence.",
+    questions: [
+      { q: "The data _____ from a sample of 500 companies across six countries.", opts: ["collected", "was collected", "has collected", "collects"], ans: 1 },
+      { q: "As you can see, significant improvements _____ since the new process was introduced.", opts: ["made", "have been made", "had made", "was making"], ans: 1 },
+      { q: "The report _____ by an independent consultancy and submitted to the board last month.", opts: ["prepared", "was prepared", "has prepared", "prepares"], ans: 1 },
+      { q: "Three key recommendations _____ at the end of this presentation.", opts: ["will outline", "will be outlined", "outlined", "have outlined"], ans: 1 },
+      { q: "This strategy _____ in two pilot markets before being rolled out globally.", opts: ["tested", "was being tested", "has been tested", "had test"], ans: 2 },
+      { q: "You can see here that all figures _____ in US dollars for consistency.", opts: ["expressed", "are expressed", "have expressed", "expressing"], ans: 1 },
+      { q: "The decision _____ by the executive committee following a detailed review.", opts: ["has approved", "was approved", "approves", "approved"], ans: 1 },
+      { q: "The slides _____ using the most recent data available at the time of preparation.", opts: ["created", "were created", "have created", "is creating"], ans: 1 },
+      { q: "A further analysis _____ currently _____ to examine the long-term implications.", opts: ["is / being conducted", "was / conducted", "has / conducted", "will / conduct"], ans: 0 },
+      { q: "It _____ that the new approach will reduce operational costs by approximately 20%.", opts: ["estimates", "is estimated", "was estimating", "has estimated"], ans: 1 }
+    ]
+  },
+  {
+    type: "mcq",
+    title: "Exercise 3: Signposting Language",
+    instructions: "Choose the most appropriate signposting phrase to complete each sentence from a presentation.",
+    questions: [
+      { q: "Good morning, everyone. _____ I'll be presenting our Q3 performance results and our outlook for Q4.", opts: ["In conclusion,", "On the other hand,", "Today,", "However,"], ans: 2 },
+      { q: "_____ our sales figures, I'd like to highlight three key trends that emerged this quarter.", opts: ["Turning to", "In spite of", "Due to", "Since"], ans: 0 },
+      { q: "That covers the financial overview. _____ I'd like to discuss our marketing performance.", opts: ["For example,", "Moving on,", "In contrast,", "As a result,"], ans: 1 },
+      { q: "_____, the data clearly shows that our investment in digital channels has paid off.", opts: ["Moving on", "To summarise", "Although", "Previously"], ans: 1 },
+      { q: "_____ I showed earlier, customer satisfaction scores have risen by 12% year-on-year.", opts: ["As", "Although", "Moving on", "In conclusion"], ans: 0 },
+      { q: "This is a crucial point, so _____ for a moment.", opts: ["let's move on", "let me emphasise this", "I'll skip over it", "as I mentioned"], ans: 1 },
+      { q: "I'd _____ by thanking you all for your time and attention today.", opts: ["start", "like to open", "like to close", "mention"], ans: 2 },
+      { q: "If you look at the slide on the screen, you _____ that Q2 was our strongest quarter.", opts: ["will mention", "will see", "can summarise", "might close"], ans: 1 },
+      { q: "_____ any questions before I move on to the second part of the presentation?", opts: ["Are there", "Do I have", "Should I take", "Would you like"], ans: 0 },
+      { q: "_____, I'd like to invite you all to join us for a brief Q&A session.", opts: ["To start off", "Moving forward", "To close", "On the other hand"], ans: 2 }
+    ]
+  }
+];
+
+const grammarReview = [
+  {
+    title: "Grammar Reference 1: Modal Verbs in Business Presentations",
+    points: [
+      { title: "What are modal verbs?", body: "Modal verbs (can, could, will, would, may, might, should, must, shall) are auxiliary verbs used to express ability, possibility, certainty, advice, or obligation. In presentations, they help you sound measured and professional.", examples: [] },
+      { title: "Expressing Probability and Possibility", body: "Use modal verbs to present predictions and findings with the appropriate level of certainty:", examples: [
+        "will → certain: 'This will reduce costs by 20%.'",
+        "should → fairly certain: 'Results should improve in Q3.'",
+        "may / might → possible but uncertain: 'This may affect our projections.'",
+        "could → one of several possibilities: 'This could be the key factor.'"
+      ]},
+      { title: "Making Recommendations", body: "Use should, could, and would to propose next steps professionally:", examples: [
+        "We should consider expanding into new markets.",
+        "I would recommend a phased approach to implementation.",
+        "The board could review this proposal at the next meeting."
+      ]},
+      { title: "Polite Presentation Language", body: "Modal verbs are essential for polite, formal presentation language:", examples: [
+        "I would like to draw your attention to… (polite focus)",
+        "You may notice that… (inviting attention)",
+        "I can't answer that in full right now, but… (polite deferral)"
+      ]}
+    ]
+  },
+  {
+    title: "Grammar Reference 2: Passive Voice in Formal Presentations",
+    points: [
+      { title: "Why use the passive voice?", body: "The passive voice is preferred in formal presentations when the action is more important than the person who performed it, or when you want to sound objective and professional.", examples: [] },
+      { title: "Forming the Passive", body: "Form: subject + be (conjugated) + past participle", examples: [
+        "Active: We collected the data from 500 companies.",
+        "Passive: The data was collected from 500 companies.",
+        "Active: The team has completed the analysis.",
+        "Passive: The analysis has been completed."
+      ]},
+      { title: "Common Tenses in Presentation Passive", body: "Different tenses are used in different parts of a presentation:", examples: [
+        "Past simple passive: 'The research was conducted last year.'",
+        "Present simple passive: 'All figures are expressed in euros.'",
+        "Present perfect passive: 'Three recommendations have been identified.'",
+        "Future passive: 'Further details will be provided in the report.'"
+      ]},
+      { title: "Impersonal Passive Structures", body: "These structures allow you to report findings without attributing them to a specific person — very common in formal presentations:", examples: [
+        "It is estimated that… / It is expected that…",
+        "It has been reported that… / It has been shown that…",
+        "It is widely believed that… / It was found that…"
+      ]}
+    ]
+  },
+  {
+    title: "Grammar Reference 3: Signposting Language in Presentations",
+    points: [
+      { title: "What is signposting?", body: "Signposting language consists of phrases that tell the audience where you are in the presentation and what is coming next. It acts as a roadmap, improving clarity and comprehension significantly.", examples: [] },
+      { title: "Opening the Presentation", body: "Use these phrases to start clearly and professionally:", examples: [
+        "Today, I'm going to talk about… / The aim of today's presentation is…",
+        "I'd like to begin by… / Let me start by giving you an overview of…",
+        "This presentation is divided into three parts…"
+      ]},
+      { title: "Moving Through the Presentation", body: "Signal transitions between sections and ideas:", examples: [
+        "Moving on to… / Turning to our next point…",
+        "This brings me to… / Let me now focus on…",
+        "As I mentioned earlier… / Returning to the point I made about…",
+        "I'd like to emphasise that… / I want to draw your attention to…"
+      ]},
+      { title: "Closing and Summarising", body: "Bring the presentation to a clear, professional close:", examples: [
+        "To summarise… / In conclusion… / To wrap up…",
+        "The key takeaway from today is… / The main point I'd like to leave you with is…",
+        "I'd like to close by… / Thank you for your attention — I'm now happy to take any questions."
+      ]}
+    ]
+  }
+];
+
+const listeningActivities = [
+  {
+    title: "Activity 1: A Podcast on Effective Presentation Techniques",
+    subtitle: "Business coach and podcast host — Interview format",
+    level: "B1",
+    type: "Multiple Choice",
+    focus: "Listening for Main Ideas",
+    transcript: `Host: Welcome to the Business English Podcast. Today I'm speaking with Marcus Lee, a business communication coach who has trained executives at some of the world's largest companies. Marcus, what's the single biggest mistake people make when presenting? Marcus: Without question, it's overloading their slides with text. Presenters forget that slides are a visual aid, not a script. When the audience is reading your slides, they're not listening to you. The most effective slides have one idea, one image, or one piece of data — and nothing more. Host: What about nerves? So many people struggle with anxiety before presenting. Marcus: Nerves are completely normal and actually helpful if you manage them well. The key is preparation. I always say: know your opening thirty seconds by heart. If you nail those first thirty seconds, your confidence builds naturally from there. Also, remember that the audience wants you to succeed — they're not there to judge you. Host: What advice do you give about engaging a distracted audience? Marcus: First, vary your delivery. Don't speak in a monotone — change your pace, your volume, use pauses deliberately. Second, make it interactive. Ask a question, invite a show of hands, or use a quick poll. Even a simple rhetorical question reactivates attention. And finally, tell stories. A well-placed story or real example is far more memorable than any statistic. Host: And what about the Q&A? Many presenters dread it. Marcus: The Q&A is actually your biggest opportunity to build credibility. Listen carefully to each question, paraphrase it back, and take your time before answering. If you don't know the answer — say so honestly, and offer to follow up. That's far more impressive than bluffing.`,
+    questions: [
+      { q: "What does Marcus say is the single biggest mistake presenters make?", opts: ["Speaking too fast", "Overloading slides with text", "Not rehearsing enough", "Avoiding eye contact"], ans: 1 },
+      { q: "What does Marcus say happens when the audience reads slides?", opts: ["They remember more information", "They engage with the presenter more", "They stop listening to the presenter", "They become more confident"], ans: 2 },
+      { q: "What does Marcus recommend knowing by heart?", opts: ["The entire presentation", "Every slide", "The opening thirty seconds", "The conclusion only"], ans: 2 },
+      { q: "According to Marcus, how does the audience feel towards the presenter?", opts: ["They want the presenter to fail", "They are indifferent", "They want the presenter to succeed", "They are always critical"], ans: 2 },
+      { q: "What is one technique Marcus recommends for a distracted audience?", opts: ["Ending the presentation early", "Speaking more quickly", "Asking a question or using a poll", "Reducing the number of slides"], ans: 2 },
+      { q: "Why does Marcus recommend storytelling in presentations?", opts: ["Stories are easier to prepare", "Stories are more memorable than statistics", "Stories replace the need for data", "Stories shorten the presentation"], ans: 1 },
+      { q: "What does Marcus say about the Q&A session?", opts: ["It should be avoided when possible", "It is an opportunity to build credibility", "It is the least important part", "It should be kept under one minute"], ans: 1 },
+      { q: "What does Marcus advise if a presenter doesn't know an answer?", opts: ["Guess confidently", "Change the subject", "Say so honestly and offer to follow up", "Ask the audience for help"], ans: 2 }
+    ]
+  },
+  {
+    title: "Activity 2: A Sales Pitch at a Startup Conference",
+    subtitle: "Startup founder — Live pitch format",
+    level: "B2",
+    type: "Multiple Choice",
+    focus: "Listening for Specific Information",
+    transcript: `Good afternoon, everyone. My name is Priya Sharma, and I'm the founder of ClearRoute — a logistics optimisation platform that reduces delivery costs for e-commerce businesses by an average of 23%. Let me start with a problem I suspect many of you in this room have experienced. You've ordered something online, received a notification that it's on its way, and then waited — and waited — while the package bounced between three different sorting facilities before arriving two days late. This is not just a frustrating experience for customers. For businesses, late deliveries cost an average of 400 dollars per incident in refunds, replacements, and lost customer lifetime value. ClearRoute solves this by using real-time traffic data, predictive analytics, and machine learning to identify the fastest, most cost-effective delivery route at the moment of dispatch — not the night before. Since launching eighteen months ago, we've worked with fourteen clients, processed over two million deliveries, and achieved an average customer retention rate of 94%. We're now seeking 1.5 million dollars in Series A funding to expand our engineering team and enter two new markets: Brazil and Southeast Asia. The logistics market in these regions is growing at 18% annually, and there is currently no dominant player in the AI-driven optimisation space. We believe ClearRoute is uniquely positioned to capture that opportunity. Thank you. I'd welcome any questions.`,
+    questions: [
+      { q: "What is ClearRoute?", opts: ["A delivery company", "A logistics optimisation platform", "A packaging manufacturer", "An e-commerce retailer"], ans: 1 },
+      { q: "By how much does ClearRoute reduce delivery costs on average?", opts: ["13%", "18%", "23%", "30%"], ans: 2 },
+      { q: "How much does a late delivery cost businesses per incident on average?", opts: ["$100", "$200", "$400", "$1,000"], ans: 2 },
+      { q: "What technologies does ClearRoute use?", opts: ["Blockchain and IoT", "Real-time traffic data, predictive analytics, and machine learning", "GPS tracking and manual routing", "Satellite communication systems"], ans: 1 },
+      { q: "When is the optimal route identified in ClearRoute's system?", opts: ["A week before dispatch", "The night before dispatch", "At the moment of dispatch", "After the package is collected"], ans: 2 },
+      { q: "How many clients has ClearRoute worked with since launching?", opts: ["Four", "Fourteen", "Forty", "One hundred"], ans: 1 },
+      { q: "What is ClearRoute's customer retention rate?", opts: ["74%", "84%", "94%", "100%"], ans: 2 },
+      { q: "How much funding is ClearRoute seeking?", opts: ["$500,000", "$1 million", "$1.5 million", "$5 million"], ans: 2 }
+    ]
+  },
+  {
+    title: "Activity 3: A Training Workshop on Visual Aids",
+    subtitle: "Corporate trainer — Workshop format",
+    level: "B2",
+    type: "Multiple Choice",
+    focus: "Understanding Argument and Advice",
+    transcript: `Good morning, everyone, and welcome to today's workshop on using visual aids effectively in business presentations. I want to start with a question: when was the last time you attended a presentation where the slides were genuinely helpful — not just a wall of text that the speaker read aloud? I'd wager that for most of you, truly effective slides are rare. And yet the research is clear: when visual and verbal information are aligned and complementary, audience retention increases by up to 65%. So why do so many professionals still produce slide decks that work against them? The most common mistake is what I call 'slideument' syndrome — slides that are trying to be both a presentation aid and a standalone document. These slides have ten bullet points per page, dense paragraphs, and are completely unreadable from the back of the room. My first principle is this: one slide, one idea. Each slide should support a single point you are making verbally. If you feel you need more text, create a separate handout. My second principle concerns visuals themselves. Charts and graphs are powerful, but only if they are simple and clearly labelled. Always tell your audience what to look at — 'Notice the sharp increase between 2021 and 2022' — rather than leaving them to interpret a complex graphic independently. My third principle is contrast and hierarchy. Important information should look important. Use font size, colour, and white space deliberately. If everything is bold, nothing is bold. And finally, practise presenting with your slides, not from them. Your slides are a backdrop to your voice, not a substitute for it.`,
+    questions: [
+      { q: "What does the trainer say about effective slides?", opts: ["They are very common in business", "They are rare in most presentations", "They should contain lots of text", "They must always include videos"], ans: 1 },
+      { q: "By how much can audience retention increase when visual and verbal information are aligned?", opts: ["25%", "40%", "55%", "65%"], ans: 3 },
+      { q: "What is 'slideument' syndrome?", opts: ["Using too many animations", "Slides that try to be both a presentation aid and a standalone document", "Creating slides at the last minute", "Using only images without text"], ans: 1 },
+      { q: "What is the trainer's first principle?", opts: ["One presentation, one audience", "One slide, one idea", "One colour, one font", "One chart per section"], ans: 1 },
+      { q: "If a presenter needs more text, what should they create instead of putting it on slides?", opts: ["A second presentation", "A video recording", "A separate handout", "A larger font size"], ans: 2 },
+      { q: "What should a presenter do when showing a chart?", opts: ["Let the audience interpret it independently", "Tell the audience what to look at", "Read every data point aloud", "Skip charts in favour of text"], ans: 1 },
+      { q: "What does the trainer say about using bold text?", opts: ["Everything should be bold for clarity", "Bold should be avoided entirely", "If everything is bold, nothing is bold", "Bold text is outdated"], ans: 2 },
+      { q: "What is the trainer's final piece of advice?", opts: ["Memorise your slides completely", "Practise presenting with your slides, not from them", "Use as many slides as possible", "Always include a title on every slide"], ans: 1 }
+    ]
+  },
+  {
+    title: "Activity 4: A Q&A Session After a Board Presentation",
+    subtitle: "CFO and board members — Formal corporate setting",
+    level: "B1–B2",
+    type: "Multiple Choice",
+    focus: "Listening for Detail",
+    transcript: `Chair: Thank you for that comprehensive presentation. I'd like to open the floor to questions. Director Chen, please go ahead. Director Chen: Yes, thank you. I noticed that the projected growth figure for Q4 seems significantly more optimistic than your Q3 actuals. Could you walk us through the assumptions behind that forecast? CFO: Absolutely. That's an excellent point. The Q4 projection is based on three assumptions: first, the successful launch of the premium product line in October; second, the continuation of the current promotional campaign through to December; and third, a recovery in consumer spending in our core markets, which our economics team believes is likely given the recent interest rate cut. Director Chen: Thank you. And if those assumptions don't materialise? CFO: In that scenario, I would expect Q4 revenue to land approximately 12% below the central forecast. We have a contingency plan prepared, which I can circulate after the meeting. Chair: Thank you. Director Okafor, do you have a question? Director Okafor: Yes. Regarding the expansion into Southeast Asia — you mentioned 1.2 million in upfront investment. What's the expected payback period? CFO: Based on our modelling, we're looking at a payback period of between 18 and 24 months, assuming the market entry goes as planned. We consider that to be an acceptable risk profile given the growth potential in that region. Director Okafor: And has legal due diligence been completed on the regulatory environment there? CFO: It's currently underway. We expect to receive the full legal assessment within the next three weeks, at which point we'll be in a position to make a final go or no-go decision. Chair: Thank you. Any further questions? Then I'd like to thank our CFO for an excellent and thorough presentation.`,
+    questions: [
+      { q: "What concern does Director Chen raise?", opts: ["The Q3 figures seem too pessimistic", "The Q4 projection seems too optimistic compared to Q3 actuals", "The marketing budget is too large", "The board was not informed about Q3 results"], ans: 1 },
+      { q: "How many assumptions support the Q4 projection?", opts: ["One", "Two", "Three", "Four"], ans: 2 },
+      { q: "What is the third assumption behind the Q4 forecast?", opts: ["A new product launch", "A promotional campaign", "A recovery in consumer spending", "A reduction in operating costs"], ans: 2 },
+      { q: "By how much would Q4 revenue fall if the assumptions don't materialise?", opts: ["5%", "8%", "12%", "20%"], ans: 2 },
+      { q: "What does the CFO offer to do after the meeting?", opts: ["Present the full annual report", "Circulate the contingency plan", "Schedule a follow-up presentation", "Send the Q3 results"], ans: 1 },
+      { q: "What is the expected payback period for the Southeast Asia expansion?", opts: ["6–12 months", "12–18 months", "18–24 months", "24–36 months"], ans: 2 },
+      { q: "What is the status of the legal due diligence?", opts: ["It has been completed", "It has not yet started", "It is currently underway", "It was rejected"], ans: 2 },
+      { q: "When will the CFO be in a position to make a final go or no-go decision?", opts: ["Immediately after the meeting", "Within one week", "Within three weeks", "At the next board meeting"], ans: 2 }
+    ]
+  }
+];
+
+const caseStudies = [
+  {
+    title: "Steve Jobs and the Art of the Product Launch Presentation",
+    subtitle: "USA · Apple Inc. · Technology · Iconic Presentations",
+    intro: "What made Jobs' presentations legendary — and what business presenters can learn from them",
+    sections: [
+      { heading: "Background", text: "Steve Jobs, co-founder and longtime CEO of Apple Inc., is widely regarded as one of the greatest business presenters of his generation. His product launch events — particularly the introduction of the Macintosh in 1984, the iPod in 2001, and the iPhone in 2007 — became cultural events watched by millions worldwide. Jobs' presentations were not simply product demonstrations; they were carefully crafted theatrical performances that blended storytelling, showmanship, and strategic communication to create anticipation, desire, and loyalty among both consumers and investors alike." },
+      { heading: "Presentation Techniques", text: "Jobs employed a distinctive set of techniques that communication experts have since studied and codified. He opened every major presentation with a bold, memorable statement — the iPhone launch, for example, began with: 'Every once in a while, a revolutionary product comes along that changes everything.' He structured presentations around a simple narrative arc: identify a problem, present the solution dramatically, and demonstrate it live. His slides were famously minimalist — often just a single word or image — forcing the audience to focus entirely on his spoken words. He rehearsed obsessively, reportedly practising entire keynote presentations for weeks in advance, despite his reputation for effortless spontaneity." },
+      { heading: "Lessons for Business Presenters", text: "The lessons from Jobs' approach translate directly to everyday business presentations. First, simplicity is not weakness — stripping content to its essentials forces clarity of thinking and makes the message more memorable. Second, narrative structure engages the audience far more effectively than a list of features or facts; framing a presentation as a story with a problem and a solution is a universally effective technique. Third, the power of the 'one more thing' — Jobs' famous technique of appearing to conclude before surprising the audience with an additional reveal — demonstrates that controlling the audience's emotional journey is as important as the content itself. Finally, Jobs treated every presentation, regardless of audience size, as a performance worth practising to perfection." }
+    ],
+    questions: [
+      { q: "How is Steve Jobs described in the text?", opts: ["A financial analyst", "One of the greatest business presenters of his generation", "A software engineer", "A marketing director"], ans: 1 },
+      { q: "Which of the following was NOT mentioned as one of Jobs' major product launches?", opts: ["The Macintosh in 1984", "The iPod in 2001", "The iPhone in 2007", "The iPad in 2010"], ans: 3 },
+      { q: "How does the text describe Jobs' product launch events?", opts: ["Simple product demonstrations", "Carefully crafted theatrical performances", "Unscripted and spontaneous", "Primarily technical briefings"], ans: 1 },
+      { q: "What was distinctive about Jobs' slides?", opts: ["They were very detailed with lots of text", "They were famously minimalist — often a single word or image", "They were full of charts and graphs", "They were prepared by a large design team"], ans: 1 },
+      { q: "What does the text say about Jobs' rehearsal habits?", opts: ["He rarely practised his presentations", "He rehearsed for weeks in advance", "He improvised most of his content", "He used teleprompters throughout"], ans: 1 },
+      { q: "What is the narrative structure Jobs used for presentations?", opts: ["List all features, then demonstrate one", "Identify a problem, present the solution dramatically, and demonstrate it live", "Start with financial data, end with a story", "Open with Q&A, then present content"], ans: 1 },
+      { q: "What was Jobs' 'one more thing' technique designed to do?", opts: ["Summarise the main points", "Introduce the price of the product", "Control the audience's emotional journey", "Signal the end of the presentation"], ans: 2 },
+      { q: "According to the text, what does stripping content to its essentials do?", opts: ["Makes the presentation shorter", "Forces clarity of thinking and makes the message memorable", "Reduces the need for rehearsal", "Increases the number of slides needed"], ans: 1 },
+      { q: "What framing technique does the text describe as 'universally effective'?", opts: ["Opening with financial data", "Presenting a problem and its solution as a story", "Including a Q&A at the start", "Showing competitor comparisons"], ans: 1 },
+      { q: "How did Jobs treat every presentation, regardless of audience size?", opts: ["As a quick update not worth over-preparing", "As a performance worth practising to perfection", "As an opportunity to distribute handouts", "As a chance to test new technology"], ans: 1 }
+    ]
+  },
+  {
+    title: "Death by PowerPoint: A Case Study in Poor Presentation Design",
+    subtitle: "Global · Corporate Settings · Communication Failures",
+    intro: "How poorly designed presentations damage communication, decisions, and organisational culture",
+    sections: [
+      { heading: "The Problem", text: "The phrase 'Death by PowerPoint' has entered corporate vocabulary to describe presentations that are so dense, confusing, and poorly structured that they actively prevent effective communication. The phenomenon is remarkably widespread: surveys suggest that the average professional sits through more than 9,000 hours of presentations in their career, and a significant proportion describe the majority of these as either unhelpful or counterproductive. The core problem is the misuse of presentation software as a document-writing tool rather than a visual communication aid. The result is slides packed with bullet points, multi-paragraph text, and complex tables that are impossible to read and understand simultaneously while listening to a speaker." },
+      { heading: "Real-World Consequences", text: "The consequences of poor presentations extend beyond boredom. In a widely cited case, the US space agency NASA came under criticism following the Columbia Space Shuttle disaster in 2003, when investigators found that critical safety information had been buried in complex PowerPoint slides during engineering briefings. The information existed, but the format in which it was presented made it effectively invisible to decision-makers. In corporate settings, poor presentations have been linked to missed investment opportunities, failed change management programmes, and senior executives making decisions based on misunderstood data. The cost of unclear communication is estimated by some researchers to run into hundreds of billions of dollars annually across global businesses." },
+      { heading: "Solutions and Best Practices", text: "The antidote to Death by PowerPoint begins with a fundamental shift in thinking: the presenter is the presentation, and the slides are merely a supporting tool. Practitioners recommend what is sometimes called the 'SOS' approach: Simplify the slides, Organise the narrative, and Speak to — not from — the content. Organisations such as McKinsey and Bain are known for their discipline in creating clear, single-message slides with one visual per page and a clear 'so what?' headline that tells the audience the key takeaway before they have even processed the detail. Training professionals in effective visual communication and storytelling is increasingly seen not as a soft skill, but as a core business competency with measurable impact on organisational performance." }
+    ],
+    questions: [
+      { q: "What does 'Death by PowerPoint' describe?", opts: ["Presentations that are too short", "Presentations that are too entertaining", "Presentations that are so poor they prevent effective communication", "Presentations delivered without slides"], ans: 2 },
+      { q: "Approximately how many hours does the average professional spend in presentations during their career?", opts: ["900 hours", "3,000 hours", "9,000 hours", "15,000 hours"], ans: 2 },
+      { q: "What is the core problem identified in the text?", opts: ["Using too many images", "Misusing presentation software as a document-writing tool", "Making presentations too short", "Avoiding the use of data"], ans: 1 },
+      { q: "What role did poor presentations play in the NASA Columbia case?", opts: ["They caused the shuttle to launch late", "Critical safety information was buried in complex slides", "The presentation software crashed during the briefing", "Engineers refused to attend the briefings"], ans: 1 },
+      { q: "What have poor presentations been linked to in corporate settings?", opts: ["Higher employee engagement", "Missed investment opportunities and failed projects", "More efficient meetings", "Better decision-making"], ans: 1 },
+      { q: "What does the 'SOS' approach stand for?", opts: ["Simplify the Outline and Structure", "Simplify the slides, Organise the narrative, and Speak to the content", "Show Only Summary slides", "Structure, Outline, Signpost"], ans: 1 },
+      { q: "What do McKinsey and Bain use as a headline for their slides?", opts: ["A question for the audience to consider", "A clear 'so what?' that tells the audience the key takeaway", "A detailed paragraph explaining the data", "A quote from the CEO"], ans: 1 },
+      { q: "How is training in visual communication increasingly viewed?", opts: ["As an optional soft skill", "As a core business competency with measurable impact", "As only relevant for marketing teams", "As less important than technical skills"], ans: 1 },
+      { q: "What key mindset shift do practitioners recommend?", opts: ["The slides are the most important part of the presentation", "Data should always come first", "The presenter is the presentation; slides are a supporting tool", "Presentations should always be under ten minutes"], ans: 2 },
+      { q: "What does the text say about the cost of unclear communication?", opts: ["It is difficult to measure", "It is estimated in hundreds of billions of dollars annually", "It only affects small businesses", "It has decreased in recent years"], ans: 1 }
+    ]
+  }
+];
+
+const assessmentQs = [
+  { q: "What is the primary purpose of signposting language in a presentation?", opts: ["To make slides more colourful", "To guide the audience through the structure of the presentation", "To introduce new ideas at the end", "To replace visual aids"], ans: 1 },
+  { q: "A 'hook' in a business presentation is best described as:", opts: ["The final summary of the presentation", "An engaging opening technique to capture the audience's attention", "A phrase used to signal transitions", "A method of handling questions"], ans: 1 },
+  { q: "Which modal verb expresses the highest degree of certainty about a future outcome?", opts: ["might", "could", "may", "will"], ans: 3 },
+  { q: "Which sentence is correctly written in the passive voice?", opts: ["The team analysed the data carefully.", "The data was analysed by the team.", "They have collected the results.", "We will present the findings tomorrow."], ans: 1 },
+  { q: "What does 'hedging language' allow a presenter to do?", opts: ["Make strong, definitive claims", "Express uncertainty or caution professionally", "Introduce the agenda", "Close the presentation formally"], ans: 1 },
+  { q: "'Moving on to our next point…' is an example of:", opts: ["A call to action", "Hedging language", "Signposting / a transition phrase", "A modal verb construction"], ans: 2 },
+  { q: "What is a 'call to action' at the end of a presentation?", opts: ["A request for the audience to ask questions", "A clear instruction asking the audience to do something specific", "A summary of all the main points", "An introduction to the topic"], ans: 1 },
+  { q: "According to the texts, how many main points are recommended for a business presentation?", opts: ["One to two", "Three to five", "Seven to ten", "As many as needed"], ans: 1 },
+  { q: "What is the 'SOS' approach to better presentations?", opts: ["Speak, Outline, Summarise", "Simplify the slides, Organise the narrative, Speak to the content", "Show Only Summaries", "Start, Organise, Share"], ans: 1 },
+  { q: "Steve Jobs' slides were known for being:", opts: ["Detailed and text-heavy", "Minimalist — often a single word or image", "Filled with charts and graphs", "Prepared using multiple software tools"], ans: 1 },
+  { q: "Which phrase is most appropriate for politely deferring a question you cannot answer?", opts: ["I have no idea — let's move on.", "That's outside today's scope, but I'd be happy to follow up.", "Please speak to someone else about that.", "I already answered that earlier."], ans: 1 },
+  { q: "What does 'audience awareness' mean in the context of presentations?", opts: ["Knowing how many people are in the room", "Understanding the knowledge level and expectations of your listeners", "Ensuring the audience stays quiet", "Designing slides for large screens"], ans: 1 },
+  { q: "A presenter says: 'It is estimated that revenues will grow by 15%.' What structure is this?", opts: ["Modal verb construction", "Active voice statement", "Impersonal passive structure", "Signposting phrase"], ans: 2 },
+  { q: "What is the key lesson from the NASA Columbia case study regarding presentations?", opts: ["Visual aids should always be avoided", "Complex slide formats can hide critical information from decision-makers", "Presentations should always be under 10 minutes", "Slides should contain as much data as possible"], ans: 1 },
+  { q: "Which of the following is NOT listed as a technique for engaging a distracted audience?", opts: ["Asking a rhetorical question", "Varying pace and tone", "Reading directly from the slides", "Using a poll or show of hands"], ans: 2 },
+  { q: "What does the passive voice help a presenter achieve in formal contexts?", opts: ["A more personal and informal tone", "An objective and professional tone", "A more entertaining delivery", "Faster information delivery"], ans: 1 },
+  { q: "What is 'data visualisation' in a business presentation?", opts: ["Reading data aloud to the audience", "Using charts, graphs, and infographics to present information clearly", "Avoiding numbers in presentations", "Creating animated slides"], ans: 1 },
+  { q: "What is the main difference between a 'pitch' and a standard business presentation?", opts: ["A pitch is always longer", "A pitch is a short, persuasive presentation designed to sell an idea or product", "A pitch always uses more slides", "A pitch does not include a Q&A"], ans: 1 },
+  { q: "'We should consider expanding into new markets.' Which grammar point does this sentence illustrate?", opts: ["Passive voice", "Signposting language", "Modal verb for recommendation", "Hedging language"], ans: 2 },
+  { q: "What is the most important quality of a strong presentation conclusion?", opts: ["It introduces new data the audience hasn't seen", "It is the longest part of the presentation", "It restates the key message and ends with a clear call to action", "It lists all the sources used"], ans: 2 }
+];
+
+/* ═══════════════════════ NAVIGATION ═══════════════════════ */
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(`'${id}'`)) n.classList.add('active');
+  });
+  window.scrollTo(0, 0);
+}
+
+/* ═══════════════════════ RENDER SPEAKING ═══════════════════════ */
+function renderSpeaking() {
+  document.getElementById('speakingGrid').innerHTML = speakingQs.map((q, i) => `
+    <div class="speaking-card">
+      <div class="q-num">Q${String(i+1).padStart(2,'0')}</div>
+      <div class="q-text">${q}</div>
+    </div>`).join('');
+}
+
+/* ═══════════════════════ RENDER WORD BANK ═══════════════════════ */
+function renderWordBank() {
+  document.getElementById('wordbankGrid').innerHTML = wordBank.map(w => `
+    <div class="word-card">
+      <div class="word-emoji">${w.emoji}</div>
+      <div class="word-term">${w.term}</div>
+      <div class="word-def">${w.def}</div>
+    </div>`).join('');
+}
+
+/* ═══════════════════════ MCQ ENGINE ═══════════════════════ */
+const userAnswers = {};
+function renderMCQ(questions, containerId, darkMode=false) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const letters = ['A','B','C','D'];
+  let html = questions.map((item, qi) => `
+    <div class="mcq-block" id="${containerId}-q${qi}">
+      <div class="mcq-q">${qi+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((opt, oi) => `
+          <div class="mcq-option ${darkMode?'l-mcq-option':''}" onclick="selectOption('${containerId}',${qi},${oi},${item.ans})" id="${containerId}-q${qi}-o${oi}">
+            <span class="option-letter">${letters[oi]}</span>${opt}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+  html += `<button class="check-btn ${darkMode?'l-check-btn':''}" onclick="checkAll('${containerId}',${questions.length})">Check Answers</button>
+  <div id="${containerId}-score" style="display:none" class="score-display"></div>`;
+  container.innerHTML = html;
+}
+
+function selectOption(cid, qi, oi, correct) {
+  const key = `${cid}-q${qi}`;
+  if (userAnswers[key]?.checked) return;
+  userAnswers[key] = { selected: oi, correct };
+  document.querySelectorAll(`#${cid}-q${qi} .mcq-option`).forEach((o, i) => {
+    o.classList.remove('selected');
+    if (i === oi) o.classList.add('selected');
+  });
+}
+
+function checkAll(cid, count) {
+  let score = 0;
+  for (let qi = 0; qi < count; qi++) {
+    const key = `${cid}-q${qi}`;
+    const data = userAnswers[key];
+    if (!data) continue;
+    data.checked = true;
+    document.querySelectorAll(`#${cid}-q${qi} .mcq-option`).forEach((o, i) => {
+      o.classList.remove('selected');
+      if (i === data.correct) o.classList.add('correct');
+      if (i === data.selected && data.selected !== data.correct) o.classList.add('incorrect');
+    });
+    if (data.selected === data.correct) score++;
+  }
+  const scoreEl = document.getElementById(`${cid}-score`);
+  if (scoreEl) { scoreEl.style.display = 'inline-flex'; scoreEl.textContent = `Score: ${score} / ${count}`; }
+}
+
+/* ═══════════════════════ RENDER READING ═══════════════════════ */
+function renderReading() {
+  const content = document.getElementById('readingContent');
+  content.innerHTML = readingTexts.map((text, ti) => {
+    const cid = `reading-mcq-${ti}`;
+    return `<div class="card">
+      <div class="card-title">${text.title}</div>
+      <div class="card-title-bar"></div>
+      <div class="reading-text-box">
+        <h4>${text.subtitle}</h4>
+        ${text.paragraphs.map(p => `<p>${p}</p>`).join('')}
+      </div>
+      <h4 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:18px;">Comprehension Questions</h4>
+      <div id="${cid}"></div>
+    </div>`;
+  }).join('');
+  readingTexts.forEach((_, ti) => renderMCQ(readingTexts[ti].questions, `reading-mcq-${ti}`));
+}
+
+/* ═══════════════════════ RENDER VOCABULARY ═══════════════════════ */
+function renderVocabulary() {
+  // Ex 1: MCQ
+  document.getElementById('vocab-ex-0').innerHTML = `<div class="card"><div class="card-title">${vocabExercises[0].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${vocabExercises[0].instructions}</p>
+  <div id="vocab-mcq-0"></div></div>`;
+  renderMCQ(vocabExercises[0].questions, 'vocab-mcq-0');
+
+  // Ex 2: Gap Fill
+  const wordsHtml = vocabExercises[1].words.map(w => `<span style="display:inline-block;background:var(--navy);color:var(--gold-light);font-size:12px;font-weight:600;padding:3px 12px;border-radius:20px;margin:3px;">${w}</span>`).join('');
+  const gapHtml = vocabExercises[1].sentences.map((s, i) => `
+    <div class="gapfill-item">
+      <span>${i+1}. ${s.before}</span>
+      <input class="gap-input" id="gf-${i}" type="text" placeholder="…" data-ans="${s.blank}">
+      <span>${s.after}</span>
+    </div>`).join('');
+  document.getElementById('vocab-ex-1').innerHTML = `<div class="card"><div class="card-title">${vocabExercises[1].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:14px;">${vocabExercises[1].instructions}</p>
+  <div style="margin-bottom:20px;padding:14px 16px;background:var(--cream);border-radius:8px;">${wordsHtml}</div>
+  ${gapHtml}
+  <button class="check-btn" onclick="checkGapFill()">Check Answers</button>
+  <div id="gf-score" style="display:none" class="score-display"></div></div>`;
+
+  // Ex 3: True/False
+  const tfHtml = vocabExercises[2].statements.map((s, i) => `
+    <div class="tf-item">
+      <div class="tf-statement">${i+1}. ${s.text}</div>
+      <div class="tf-buttons">
+        <button class="tf-btn" id="tf-${i}-T" onclick="selectTF(${i},'T',${s.ans})">True</button>
+        <button class="tf-btn" id="tf-${i}-F" onclick="selectTF(${i},'F',${s.ans})">False</button>
+      </div>
+    </div>`).join('');
+  document.getElementById('vocab-ex-2').innerHTML = `<div class="card"><div class="card-title">${vocabExercises[2].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${vocabExercises[2].instructions}</p>
+  ${tfHtml}
+  <button class="check-btn" onclick="checkTF()">Check Answers</button>
+  <div id="tf-score" style="display:none" class="score-display"></div></div>`;
+}
+
+const tfAnswers = {};
+function selectTF(i, val, correct) {
+  if (tfAnswers[i]?.checked) return;
+  tfAnswers[i] = { selected: val, correct };
+  ['T','F'].forEach(v => document.getElementById(`tf-${i}-${v}`).classList.remove('selected-true','selected-false'));
+  document.getElementById(`tf-${i}-${val}`).classList.add(val==='T'?'selected-true':'selected-false');
+}
+function checkTF() {
+  let score = 0;
+  vocabExercises[2].statements.forEach((s, i) => {
+    const data = tfAnswers[i];
+    if (!data) return;
+    data.checked = true;
+    const cv = s.ans ? 'T' : 'F';
+    ['T','F'].forEach(v => document.getElementById(`tf-${i}-${v}`).classList.remove('selected-true','selected-false'));
+    const selBtn = document.getElementById(`tf-${i}-${data.selected}`);
+    const corrBtn = document.getElementById(`tf-${i}-${cv}`);
+    if (data.selected === cv) { selBtn.classList.add('correct-answer'); score++; }
+    else { selBtn.classList.add('wrong-answer'); corrBtn.classList.add('correct-answer'); }
+  });
+  const sc = document.getElementById('tf-score');
+  sc.style.display = 'inline-flex';
+  sc.textContent = `Score: ${score} / ${vocabExercises[2].statements.length}`;
+}
+function checkGapFill() {
+  let score = 0;
+  vocabExercises[1].sentences.forEach((s, i) => {
+    const input = document.getElementById(`gf-${i}`);
+    const val = input.value.trim().toLowerCase();
+    input.classList.remove('correct','incorrect');
+    if (val === s.blank.toLowerCase()) { input.classList.add('correct'); score++; }
+    else { input.classList.add('incorrect'); input.value = s.blank; }
+  });
+  const sc = document.getElementById('gf-score');
+  sc.style.display = 'inline-flex';
+  sc.textContent = `Score: ${score} / ${vocabExercises[1].sentences.length}`;
+}
+function showVocabEx(idx, el) {
+  document.querySelectorAll('.vocab-ex').forEach((e,i) => e.style.display = i===idx?'block':'none');
+  el.parentElement.querySelectorAll('.ex-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ═══════════════════════ RENDER GRAMMAR ═══════════════════════ */
+function renderGrammar() {
+  grammarExercises.forEach((ex, ei) => {
+    const cid = `grammar-mcq-${ei}`;
+    const div = document.getElementById(`grammar-ex-${ei}`);
+    div.innerHTML = `<div class="card"><div class="card-title">${ex.title}</div><div class="card-title-bar"></div>
+    <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${ex.instructions}</p>
+    <div id="${cid}"></div></div>`;
+    renderMCQ(ex.questions, cid);
+  });
+}
+function showGrammarEx(idx, el) {
+  document.querySelectorAll('.grammar-ex').forEach((e,i) => e.style.display = i===idx?'block':'none');
+  el.parentElement.querySelectorAll('.ex-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ═══════════════════════ RENDER GRAMMAR REVIEW ═══════════════════════ */
+function renderGrammarReview() {
+  document.getElementById('grammarReviewContent').innerHTML = grammarReview.map(ref => `
+    <div class="card">
+      <div class="card-title">${ref.title}</div>
+      <div class="card-title-bar"></div>
+      ${ref.points.map(pt => `
+        <div class="grammar-ref-box" style="margin-bottom:16px;">
+          <h4>${pt.title}</h4>
+          <div class="grammar-rule">
+            <p>${pt.body}</p>
+            ${pt.examples.length ? `<ul style="margin-top:10px">${pt.examples.map(e=>`<li style="margin-bottom:5px"><code>${e}</code></li>`).join('')}</ul>` : ''}
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+/* ═══════════════════════ RENDER WRITING ═══════════════════════ */
+function renderWriting() {
+  const tasks = [
+    {
+      activity: "Writing Activity 1", type: "Presentation Script",
+      title: "Script Your Opening Two Minutes",
+      prompt: "Write the opening two minutes of a business presentation you would give in your professional context. Your opening should include: a hook to capture attention (a question, statistic, or anecdote), a brief introduction of yourself and the topic, a clear agenda outline of what you will cover, and a sentence that establishes why the topic is relevant to your audience.",
+      tags: ["200–250 words", "Formal/semi-formal register", "Include: Hook, Introduction, Agenda, Relevance statement"],
+      id: "writing-1"
+    },
+    {
+      activity: "Writing Activity 2", type: "Follow-Up Email",
+      title: "Post-Presentation Follow-Up Email",
+      prompt: "After delivering a presentation to a group of potential investors, write a professional follow-up email. Your email should: thank them for attending and engaging, briefly summarise the key message of your presentation, address one question that was raised during the Q&A that you could not fully answer at the time, and suggest a next step (a meeting, a call, or sending additional materials).",
+      tags: ["180–220 words", "Formal email register", "Include: Subject line, greeting, body (3 paragraphs), professional close"],
+      id: "writing-2"
+    }
+  ];
+  document.getElementById('writingContent').innerHTML = tasks.map(t => `
+    <div class="card">
+      <div class="card-title">${t.activity}: ${t.type}</div>
+      <div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>${t.title}</h4>
+        <p>${t.prompt}</p>
+        <div class="writing-meta">${t.tags.map(tag=>`<span class="writing-tag">${tag}</span>`).join('')}</div>
+      </div>
+      <textarea class="writing-textarea" id="${t.id}-textarea" placeholder="Write your response here…" oninput="updateWordCount('${t.id}')"></textarea>
+      <div class="word-counter" id="${t.id}-counter">0 words</div>
+      <button class="submit-btn" onclick="submitWriting('${t.id}')">Submit Writing ✓</button>
+      <div class="submit-success" id="${t.id}-success">✅ <span>Your writing has been submitted successfully! Well done.</span></div>
+    </div>`).join('');
+}
+function updateWordCount(id) {
+  const ta = document.getElementById(`${id}-textarea`);
+  const wc = ta.value.trim() === '' ? 0 : ta.value.trim().split(/\s+/).length;
+  document.getElementById(`${id}-counter`).textContent = `${wc} words`;
+}
+function submitWriting(id) {
+  const ta = document.getElementById(`${id}-textarea`);
+  const suc = document.getElementById(`${id}-success`);
+  if (ta.value.trim().length < 20) { alert('Please write at least a few sentences before submitting.'); return; }
+  suc.style.display = 'flex';
+  ta.style.borderColor = 'var(--green-accent)';
+}
+
+/* ═══════════════════════ RENDER LISTENING ═══════════════════════ */
+function renderListening() {
+  const content = document.getElementById('listeningContent');
+  content.innerHTML = listeningActivities.map((act, ai) => {
+    const cid = `l-mcq-${ai}`;
+    return `
+    <div class="listening-activity">
+      <div class="listening-header">
+        <div class="listening-icon">📻</div>
+        <div>
+          <div class="listening-title">${act.title}</div>
+          <div class="listening-subtitle">${act.subtitle}</div>
+          <div class="listening-tags">
+            <span class="l-tag l-tag-level">LEVEL: ${act.level}</span>
+            <span class="l-tag l-tag-type">${act.type}</span>
+            <span class="l-tag l-tag-focus">FOCUS: ${act.focus}</span>
+          </div>
+        </div>
+      </div>
+      <div class="audio-player">
+        <div class="player-top">
+          <button class="play-btn" onclick="togglePlay(${ai})" id="play-${ai}">▶</button>
+          <div class="player-info">
+            <div class="player-title">🎧 ${act.title}</div>
+            <div class="player-desc">${act.subtitle}</div>
+          </div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="progress-audio"><div class="progress-audio-fill" id="prog-${ai}"></div></div>
+        <div class="speed-controls">
+          <span class="speed-label">SPEED:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7×</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2×</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">↩ Replay</button>
+        </div>
+        <div class="audio-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <div class="transcript-toggle" id="trans-toggle-${ai}" onclick="toggleTranscript(${ai})">
+        <span class="arrow">▼</span> Show / Hide Transcript
+      </div>
+      <div class="transcript-content" id="trans-${ai}">
+        <p>${act.transcript}</p>
+      </div>
+      <div class="listening-mcq">
+        <div class="instructions-box">
+          <span class="inst-icon">📋</span>
+          <span class="inst-text">Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</span>
+        </div>
+        <div id="${cid}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  listeningActivities.forEach((_, ai) => renderMCQ(listeningActivities[ai].questions, `l-mcq-${ai}`, true));
+}
+
+/* ═══════════════════════ AUDIO ENGINE — American Female Voice ═══════════════════════ */
+const speechInstances = {};
+let cachedAmericanFemaleVoice = null;
+
+const US_FEMALE_VOICE_NAMES = [
+  'Samantha','Karen','Victoria','Allison','Susan',
+  'Zira','Microsoft Zira','Microsoft Zira Desktop',
+  'Google US English','en-US-Neural2-F','en-US-Wavenet-F',
+  'Ava','Nova','Jenny','Aria'
+];
+
+function pickAmericanFemaleVoice() {
+  if (cachedAmericanFemaleVoice) return cachedAmericanFemaleVoice;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  for (const name of US_FEMALE_VOICE_NAMES) {
+    const v = voices.find(v => v.name === name);
+    if (v) { cachedAmericanFemaleVoice = v; return v; }
+  }
+  for (const name of US_FEMALE_VOICE_NAMES) {
+    const v = voices.find(v => v.name.toLowerCase().includes(name.toLowerCase()));
+    if (v) { cachedAmericanFemaleVoice = v; return v; }
+  }
+  const enUS = voices.filter(v => v.lang === 'en-US');
+  const female = enUS.find(v => /female|woman|girl|zira|samantha|ava|nova|jenny|aria/i.test(v.name));
+  if (female) { cachedAmericanFemaleVoice = female; return female; }
+  if (enUS.length) { cachedAmericanFemaleVoice = enUS[0]; return enUS[0]; }
+  const enAny = voices.find(v => v.lang.startsWith('en'));
+  if (enAny) { cachedAmericanFemaleVoice = enAny; return enAny; }
+  return voices[0];
+}
+
+function getVoiceThenSpeak(ai, onVoiceReady) {
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length) { onVoiceReady(pickAmericanFemaleVoice()); return; }
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.onvoiceschanged = null;
+    cachedAmericanFemaleVoice = null;
+    onVoiceReady(pickAmericanFemaleVoice());
+  };
+  setTimeout(() => {
+    if (!cachedAmericanFemaleVoice) { cachedAmericanFemaleVoice = null; onVoiceReady(pickAmericanFemaleVoice()); }
+  }, 600);
+}
+
+const progressIntervals = {};
+function startProgressAnimation(ai) {
+  const progEl = document.getElementById(`prog-${ai}`);
+  const timeEl = document.getElementById(`time-${ai}`);
+  if (!progEl) return;
+  const wordCount = listeningActivities[ai].transcript.split(/\s+/).length;
+  const rate = speechInstances[`${ai}-rate`] || 0.85;
+  const estimatedSec = Math.round((wordCount / 130) * 60 / rate);
+  let elapsed = 0;
+  progEl.style.width = '0%';
+  if (timeEl) timeEl.textContent = `0:00 / ${Math.floor(estimatedSec/60)}:${String(estimatedSec%60).padStart(2,'0')}`;
+  clearInterval(progressIntervals[ai]);
+  progressIntervals[ai] = setInterval(() => {
+    elapsed++;
+    const pct = Math.min((elapsed / estimatedSec) * 100, 99);
+    progEl.style.width = pct + '%';
+    const m = Math.floor(elapsed/60), s = elapsed%60;
+    const tm = Math.floor(estimatedSec/60), ts = estimatedSec%60;
+    if (timeEl) timeEl.textContent = `${m}:${String(s).padStart(2,'0')} / ${tm}:${String(ts).padStart(2,'0')}`;
+  }, 1000);
+}
+function stopProgressAnimation(ai, complete=false) {
+  clearInterval(progressIntervals[ai]);
+  const progEl = document.getElementById(`prog-${ai}`);
+  if (progEl && complete) progEl.style.width = '100%';
+}
+
+function togglePlay(ai) {
+  const btn = document.getElementById(`play-${ai}`);
+  if (speechInstances[ai]) {
+    window.speechSynthesis.cancel();
+    stopProgressAnimation(ai);
+    btn.textContent = '▶';
+    delete speechInstances[ai];
+    return;
+  }
+  getVoiceThenSpeak(ai, (voice) => {
+    const utterance = new SpeechSynthesisUtterance(listeningActivities[ai].transcript);
+    utterance.voice = voice;
+    utterance.lang = 'en-US';
+    utterance.rate = speechInstances[`${ai}-rate`] || 0.85;
+    utterance.pitch = 1.08;
+    utterance.volume = 1.0;
+    utterance.onstart = () => { btn.textContent = '⏸'; startProgressAnimation(ai); };
+    utterance.onend = () => { btn.textContent = '▶'; stopProgressAnimation(ai, true); delete speechInstances[ai]; };
+    utterance.onerror = (e) => {
+      if (e.error !== 'interrupted') { btn.textContent = '▶'; stopProgressAnimation(ai); delete speechInstances[ai]; }
+    };
+    window.speechSynthesis.speak(utterance);
+    speechInstances[ai] = utterance;
+  });
+}
+function setSpeed(ai, rate, el) {
+  speechInstances[`${ai}-rate`] = rate;
+  el.closest('.speed-controls').querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  if (speechInstances[ai]) {
+    window.speechSynthesis.cancel();
+    stopProgressAnimation(ai);
+    delete speechInstances[ai];
+    document.getElementById(`play-${ai}`).textContent = '▶';
+    setTimeout(() => togglePlay(ai), 150);
+  }
+}
+function replayAudio(ai) {
+  if (speechInstances[ai]) {
+    window.speechSynthesis.cancel();
+    stopProgressAnimation(ai);
+    delete speechInstances[ai];
+  }
+  document.getElementById(`play-${ai}`).textContent = '▶';
+  setTimeout(() => togglePlay(ai), 200);
+}
+function toggleTranscript(ai) {
+  document.getElementById(`trans-toggle-${ai}`).classList.toggle('open');
+  document.getElementById(`trans-${ai}`).classList.toggle('open');
+}
+
+/* ═══════════════════════ RENDER CASE STUDIES ═══════════════════════ */
+function renderCaseStudies() {
+  const content = document.getElementById('caseStudiesContent');
+  content.innerHTML = caseStudies.map((cs, ci) => {
+    const cid = `cs-mcq-${ci}`;
+    return `
+    <div style="margin-bottom:32px;">
+      <div class="case-header">
+        <div class="case-label">Case Study ${ci+1}</div>
+        <div class="case-title">${cs.title}</div>
+        <div class="case-sub">${cs.subtitle} &nbsp;·&nbsp; ${cs.intro}</div>
+      </div>
+      <div class="case-body">
+        ${cs.sections.map(s=>`<h5>${s.heading}</h5><p>${s.text}</p>`).join('')}
+        <div class="ex-divider"></div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:18px;">Comprehension Questions</h4>
+        <div id="${cid}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  caseStudies.forEach((_, ci) => renderMCQ(caseStudies[ci].questions, `cs-mcq-${ci}`));
+}
+
+/* ═══════════════════════ RENDER ASSESSMENT ═══════════════════════ */
+let assessmentAttempts = 0;
+function renderAssessment() {
+  document.getElementById('assessmentContent').innerHTML = `
+    <div class="assessment-banner">
+      <h3>Module 11 Final Assessment</h3>
+      <p>This assessment covers all areas of Module 11: Business Presentations.<br>Answer all 20 questions. You need 70% or above to pass. You have 2 attempts.</p>
+      <div class="assessment-meta">
+        <div class="a-meta-item"><div class="a-meta-num">20</div><div class="a-meta-label">Questions</div></div>
+        <div class="a-meta-item"><div class="a-meta-num">70%</div><div class="a-meta-label">Pass Mark</div></div>
+        <div class="a-meta-item"><div class="a-meta-num">2</div><div class="a-meta-label">Attempts</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="attempts-display">Attempts used: <span class="attempt-dot" id="att-0"></span><span class="attempt-dot" id="att-1"></span></div>
+      <div id="assessment-questions"></div>
+      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="submit-btn" id="submit-assessment-btn" onclick="submitAssessment()">Submit Assessment</button>
+        <button class="check-btn" id="retry-assessment-btn" onclick="resetAssessment()" style="display:none">Try Again</button>
+      </div>
+      <div class="final-result" id="final-result"></div>
+    </div>`;
+  renderAssessmentQuestions();
+}
+const finalAnswers = {};
+function renderAssessmentQuestions() {
+  const letters = ['A','B','C','D'];
+  document.getElementById('assessment-questions').innerHTML = assessmentQs.map((item, qi) => `
+    <div class="mcq-block" id="asmq-q${qi}">
+      <div class="mcq-q">${qi+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((opt, oi) => `
+          <div class="mcq-option" onclick="selectFinalOption(${qi},${oi},${item.ans})" id="asmq-q${qi}-o${oi}">
+            <span class="option-letter">${letters[oi]}</span>${opt}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function selectFinalOption(qi, oi, correct) {
+  if (finalAnswers[qi]?.checked) return;
+  finalAnswers[qi] = { selected: oi, correct };
+  document.querySelectorAll(`#asmq-q${qi} .mcq-option`).forEach((o,i) => { o.classList.remove('selected'); if (i===oi) o.classList.add('selected'); });
+}
+function submitAssessment() {
+  if (assessmentAttempts >= 2) return;
+  assessmentAttempts++;
+  document.getElementById(`att-${assessmentAttempts-1}`).classList.add('used');
+  let score = 0;
+  assessmentQs.forEach((item, qi) => {
+    const data = finalAnswers[qi];
+    const opts = document.querySelectorAll(`#asmq-q${qi} .mcq-option`);
+    opts.forEach(o => o.style.pointerEvents = 'none');
+    if (!data) return;
+    data.checked = true;
+    opts.forEach((o, i) => {
+      o.classList.remove('selected');
+      if (i === data.correct) o.classList.add('correct');
+      if (i === data.selected && data.selected !== data.correct) o.classList.add('incorrect');
+    });
+    if (data.selected === data.correct) score++;
+  });
+  const pct = Math.round((score/assessmentQs.length)*100);
+  const passed = pct >= 70;
+  const resultEl = document.getElementById('final-result');
+  resultEl.className = `final-result ${passed?'pass':'fail'}`;
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = `
+    <div class="final-score">${pct}%</div>
+    <div class="final-verdict">${passed ? '🎉 Congratulations! You passed!' : '❌ Not quite — keep studying!'}</div>
+    <div class="final-msg">${passed
+      ? `You scored ${score} out of ${assessmentQs.length}. Excellent work on Module 11: Business Presentations. You have demonstrated strong command of presentation language, grammar, and strategy.`
+      : `You scored ${score} out of ${assessmentQs.length}. You need 70% to pass (14/20). ${assessmentAttempts < 2 ? 'You have 1 attempt remaining. Review the module materials and try again.' : 'You have used both attempts. Please review the module and speak to your instructor.'}`
+    }</div>`;
+  document.getElementById('submit-assessment-btn').style.display = 'none';
+  if (assessmentAttempts < 2 && !passed) document.getElementById('retry-assessment-btn').style.display = 'inline-block';
+}
+function resetAssessment() {
+  Object.keys(finalAnswers).forEach(k => delete finalAnswers[k]);
+  renderAssessmentQuestions();
+  document.getElementById('final-result').style.display = 'none';
+  document.getElementById('submit-assessment-btn').style.display = 'inline-block';
+  document.getElementById('retry-assessment-btn').style.display = 'none';
+}
+
+/* ═══════════════════════ INIT ═══════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  renderSpeaking();
+  renderWordBank();
+  renderReading();
+  renderVocabulary();
+  renderGrammar();
+  renderGrammarReview();
+  renderWriting();
+  renderListening();
+  renderCaseStudies();
+  renderAssessment();
+  setTimeout(() => {
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('progressPct').textContent = '0%';
+  }, 600);
+});
+</script>
+</body>
+</html>

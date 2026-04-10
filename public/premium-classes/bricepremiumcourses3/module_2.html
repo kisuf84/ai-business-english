@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing &amp; Advertising English — Module 2: Market Research and Segmentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d1b2e; --navy-mid:#152337; --navy-light:#1e3352;
+  --gold:#c9952a; --gold-light:#e8b84b;
+  --cream:#f5f0e8; --cream-dark:#ece5d8;
+  --white:#ffffff; --text-muted:#8899aa;
+  --green:#2ecc8a; --red:#e05c5c;
+  --sidebar-w:260px; --radius:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;display:flex;}
+
+/* ── SIDEBAR ── */
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto;padding-bottom:32px;}
+.sidebar-brand{padding:24px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08);}
+.sidebar-brand h2{color:var(--gold);font-family:'Playfair Display',serif;font-size:1rem;line-height:1.3;}
+.sidebar-brand .sub{color:var(--text-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;}
+.level-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:10px;letter-spacing:1px;}
+.sidebar-section-label{color:var(--text-muted);font-size:.65rem;text-transform:uppercase;letter-spacing:2px;padding:20px 20px 6px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;color:rgba(255,255,255,.65);font-size:.85rem;cursor:pointer;border-left:3px solid transparent;transition:all .2s;user-select:none;}
+.nav-item:hover{color:var(--white);background:rgba(255,255,255,.05);}
+.nav-item.active{color:var(--white);background:rgba(201,149,42,.12);border-left-color:var(--gold);}
+.nav-item .nav-icon{font-size:1rem;width:20px;text-align:center;}
+.nav-badge{margin-left:auto;background:rgba(201,149,42,.2);color:var(--gold-light);font-size:.65rem;font-weight:600;padding:2px 7px;border-radius:10px;}
+
+/* ── MAIN ── */
+#main{margin-left:var(--sidebar-w);flex:1;}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#0d1b2e 0%,#152337 60%,#1a2d45 100%);padding:48px 56px 40px;position:relative;overflow:hidden;}
+.hero::after{content:'M2';position:absolute;right:40px;bottom:-20px;font-family:'Playfair Display',serif;font-size:160px;font-weight:800;color:rgba(255,255,255,.03);line-height:1;pointer-events:none;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);font-size:.72rem;text-transform:uppercase;letter-spacing:2px;padding:6px 14px;border-radius:20px;margin-bottom:20px;}
+.hero h1{font-family:'Playfair Display',serif;color:var(--white);font-size:2.8rem;line-height:1.15;}
+.hero h1 span{color:var(--gold);}
+.hero p{color:rgba(255,255,255,.65);margin-top:14px;max-width:680px;line-height:1.7;font-size:.95rem;}
+.hero-stats{display:flex;gap:36px;margin-top:32px;flex-wrap:wrap;}
+.stat .n{font-family:'Playfair Display',serif;color:var(--gold);font-size:2rem;font-weight:700;}
+.stat .l{color:rgba(255,255,255,.5);font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;margin-top:2px;}
+
+/* ── PROGRESS ── */
+.progress-bar-wrap{background:var(--navy-mid);padding:14px 56px;display:flex;align-items:center;gap:16px;}
+.progress-label{color:rgba(255,255,255,.7);font-size:.8rem;white-space:nowrap;}
+.progress-track{flex:1;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:4px;width:0%;transition:width .8s ease;}
+.progress-pct{color:var(--gold);font-size:.85rem;font-weight:600;}
+
+/* ── SECTIONS ── */
+.section{display:none;padding:48px 56px;}
+.section.active{display:block;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--navy);margin-bottom:6px;}
+.section-title::after{content:'';display:block;width:48px;height:3px;background:var(--gold);margin-top:10px;border-radius:2px;}
+.section-sub{color:#667;font-size:.9rem;margin-top:12px;margin-bottom:28px;}
+
+/* ── CARDS ── */
+.card{background:var(--white);border-radius:var(--radius);padding:28px;margin-bottom:20px;border:1px solid rgba(0,0,0,.07);}
+
+/* ── OVERVIEW ── */
+.outcome-list{list-style:none;display:grid;gap:10px;margin-top:16px;}
+.outcome-list li{display:flex;align-items:flex-start;gap:10px;font-size:.9rem;line-height:1.5;}
+.outcome-list li::before{content:'✦';color:var(--gold);font-size:.7rem;margin-top:3px;flex-shrink:0;}
+
+/* ── SPEAKING ── */
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.q-card{background:var(--white);border-radius:8px;padding:16px 18px;border-left:3px solid var(--gold);font-size:.88rem;line-height:1.5;display:flex;gap:12px;align-items:flex-start;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.q-num{font-family:'DM Mono',monospace;color:var(--gold);font-size:.75rem;font-weight:600;flex-shrink:0;margin-top:1px;}
+
+/* ── WORD BANK ── */
+.word-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.word-card{background:var(--white);border-radius:10px;padding:18px 16px;border:1px solid rgba(0,0,0,.08);transition:transform .2s,box-shadow .2s;}
+.word-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1);}
+.word-emoji{font-size:1.6rem;margin-bottom:8px;}
+.word-term{font-weight:700;font-size:.92rem;color:var(--navy);margin-bottom:4px;}
+.word-def{font-size:.78rem;color:#556;line-height:1.5;}
+
+/* ── READING ── */
+.reading-text{background:var(--white);border-radius:var(--radius);padding:28px 32px;margin-bottom:28px;border:1px solid rgba(0,0,0,.07);}
+.reading-text h3{font-family:'Playfair Display',serif;color:var(--navy);font-size:1.2rem;margin-bottom:16px;}
+.reading-text p{font-size:.9rem;line-height:1.8;color:#334;margin-bottom:14px;}
+.reading-text p:last-child{margin-bottom:0;}
+
+/* ── MCQ ── */
+.mcq-block{margin-bottom:28px;}
+.mcq-question{font-weight:600;font-size:.9rem;margin-bottom:12px;color:var(--navy);line-height:1.5;}
+.mcq-options{display:grid;gap:8px;}
+.mcq-option{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--cream);border-radius:7px;cursor:pointer;border:2px solid transparent;transition:all .2s;font-size:.88rem;user-select:none;}
+.mcq-option:hover{border-color:var(--gold);background:rgba(201,149,42,.08);}
+.mcq-option.correct{background:rgba(46,204,138,.12);border-color:var(--green);color:#1a6e4c;}
+.mcq-option.wrong{background:rgba(224,92,92,.1);border-color:var(--red);color:#8b1a1a;}
+.mcq-option.disabled{pointer-events:none;}
+.opt-letter{width:24px;height:24px;border-radius:50%;background:rgba(201,149,42,.2);color:var(--gold);font-weight:700;font-size:.72rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.feedback{margin-top:8px;font-size:.82rem;padding:8px 12px;border-radius:6px;display:none;}
+.feedback.show{display:block;}
+.feedback.correct{background:rgba(46,204,138,.1);color:#1a6e4c;}
+.feedback.wrong{background:rgba(224,92,92,.1);color:#8b1a1a;}
+
+/* ── DROPDOWN GAP FILL ── */
+.gap-sentence{font-size:.9rem;line-height:2.8;margin-bottom:2px;}
+.gap-select{display:inline-block;border:2px solid var(--gold);border-radius:6px;background:var(--cream);font-family:'DM Sans',sans-serif;font-size:.85rem;padding:3px 28px 3px 10px;color:var(--navy);outline:none;cursor:pointer;vertical-align:middle;margin:0 4px;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9952a' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;transition:border-color .2s,background-color .2s;min-width:170px;}
+.gap-select:hover{border-color:var(--gold-light);}
+.gap-select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(201,149,42,.15);}
+.gap-select.correct{border-color:var(--green);background-color:rgba(46,204,138,.1);color:#1a6e4c;}
+.gap-select.wrong{border-color:var(--red);background-color:rgba(224,92,92,.08);color:var(--red);}
+.gap-select:disabled{cursor:default;opacity:.9;}
+
+/* ── GRAMMAR REVIEW ── */
+.grammar-rule{background:var(--navy);color:var(--white);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;}
+.grammar-rule h4{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:10px;}
+.grammar-rule p{font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.82);margin-bottom:10px;}
+.grammar-rule .example{background:rgba(255,255,255,.08);border-left:3px solid var(--gold);padding:10px 14px;border-radius:4px;font-size:.85rem;font-style:italic;margin-top:8px;color:rgba(255,255,255,.87);}
+.grammar-rule table{width:100%;border-collapse:collapse;margin-top:12px;font-size:.82rem;}
+.grammar-rule th{background:rgba(201,149,42,.25);color:var(--gold-light);padding:8px 12px;text-align:left;}
+.grammar-rule td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.8);}
+
+/* ── LISTENING ── */
+.listen-card{background:var(--navy);border-radius:var(--radius);padding:24px;margin-bottom:28px;}
+.listen-card-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px;}
+.listen-icon{width:50px;height:50px;background:rgba(201,149,42,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
+.listen-title{color:var(--white);font-family:'Playfair Display',serif;font-size:1.05rem;line-height:1.35;}
+.listen-meta{color:rgba(255,255,255,.5);font-size:.78rem;margin-top:3px;}
+.listen-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.badge{font-size:.65rem;text-transform:uppercase;letter-spacing:1px;padding:3px 9px;border-radius:12px;font-weight:600;}
+.badge-gold{border:1px solid var(--gold);color:var(--gold);}
+.badge-outline{border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.7);}
+.audio-player{background:#0a1525;border-radius:10px;padding:16px 20px;}
+.audio-controls{display:flex;align-items:center;gap:14px;}
+.play-btn{width:46px;height:46px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--navy);flex-shrink:0;transition:background .2s;}
+.play-btn:hover{background:var(--gold-light);}
+.audio-info{flex:1;}
+.audio-title-sm{color:var(--white);font-size:.85rem;font-weight:600;}
+.audio-sub{color:rgba(255,255,255,.45);font-size:.75rem;margin-top:2px;}
+.progress-audio{margin-top:10px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;}
+.progress-audio-fill{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width .3s;}
+.audio-time{color:rgba(255,255,255,.4);font-size:.72rem;font-family:'DM Mono',monospace;display:flex;justify-content:flex-end;margin-top:4px;}
+.speed-btns{display:flex;gap:6px;margin-top:10px;}
+.speed-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.75rem;padding:3px 10px;border-radius:12px;cursor:pointer;transition:all .2s;}
+.speed-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700;}
+.audio-note{color:rgba(255,255,255,.3);font-size:.72rem;margin-top:8px;font-style:italic;}
+.transcript-toggle{margin-top:12px;background:none;border:none;color:var(--gold);font-size:.82rem;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:'DM Sans',sans-serif;}
+.transcript-box{background:rgba(255,255,255,.05);border-radius:8px;padding:14px 18px;margin-top:10px;font-size:.84rem;color:rgba(255,255,255,.72);line-height:1.78;display:none;border:1px solid rgba(255,255,255,.06);}
+.transcript-box.open{display:block;}
+
+/* ── WRITING ── */
+.writing-prompt{background:var(--navy);color:var(--white);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
+.writing-prompt h3{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:10px;}
+.writing-prompt p{font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.82);}
+.writing-prompt ul{margin:10px 0 0 18px;font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.9;}
+.writing-area{width:100%;min-height:210px;border:2px solid rgba(0,0,0,.12);border-radius:8px;padding:16px;font-family:'DM Sans',sans-serif;font-size:.9rem;resize:vertical;outline:none;transition:border-color .2s;color:var(--navy);}
+.writing-area:focus{border-color:var(--gold);}
+.word-count{color:var(--text-muted);font-size:.78rem;margin-top:6px;}
+.submit-btn{background:var(--gold);color:var(--navy);border:none;padding:11px 28px;border-radius:25px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;margin-top:12px;transition:background .2s;}
+.submit-btn:hover{background:var(--gold-light);}
+.submit-feedback{display:none;background:rgba(46,204,138,.1);border:1px solid var(--green);border-radius:8px;padding:12px 16px;margin-top:12px;font-size:.88rem;color:#1a6e4c;}
+
+/* ── CASE STUDY ── */
+.case-header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);border-radius:var(--radius);padding:26px 30px;margin-bottom:20px;}
+.case-header h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);margin-bottom:8px;}
+.case-header .case-meta{font-size:.78rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;}
+.case-header p{font-size:.88rem;line-height:1.75;color:rgba(255,255,255,.82);margin-bottom:12px;}
+
+/* ── ASSESSMENT ── */
+.assessment-info{background:var(--navy);color:var(--white);border-radius:var(--radius);padding:24px 28px;margin-bottom:28px;display:flex;gap:32px;flex-wrap:wrap;}
+.assessment-info .info-item{text-align:center;}
+.assessment-info .info-n{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);}
+.assessment-info .info-l{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.5);margin-top:2px;}
+.check-btn{background:var(--gold);color:var(--navy);border:none;padding:13px 36px;border-radius:25px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:24px;transition:all .2s;}
+.check-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+.result-box{display:none;border-radius:var(--radius);padding:28px;margin-top:20px;text-align:center;}
+.result-box.pass{background:rgba(46,204,138,.1);border:2px solid var(--green);}
+.result-box.fail{background:rgba(224,92,92,.08);border:2px solid var(--red);}
+.result-score{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;}
+.result-score.pass{color:var(--green);}
+.result-score.fail{color:var(--red);}
+.result-label{font-size:1rem;font-weight:600;margin-top:6px;}
+.result-detail{font-size:.85rem;color:#667;margin-top:8px;}
+
+/* ── EXERCISE HEADER ── */
+.ex-header{background:linear-gradient(90deg,var(--navy),var(--navy-light));border-radius:var(--radius);padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.ex-num{width:36px;height:36px;background:var(--gold);color:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0;}
+.ex-title{color:var(--white);font-size:.95rem;font-weight:600;}
+.ex-desc{color:rgba(255,255,255,.6);font-size:.78rem;margin-top:2px;}
+.check-mcq-btn{background:var(--navy);color:var(--white);border:none;padding:9px 22px;border-radius:20px;font-size:.82rem;font-weight:600;cursor:pointer;margin-top:16px;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.check-mcq-btn:hover{background:var(--navy-light);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  :root{--sidebar-w:0px;}
+  #sidebar{transform:translateX(-260px);width:260px;transition:transform .3s;}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0;}
+  .hero,.section{padding:28px 20px;}
+  .q-grid,.word-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:18px;}
+  .progress-bar-wrap{padding:12px 20px;}
+  .hero h1{font-size:1.8rem;}
+}
+@media(max-width:560px){
+  .word-grid{grid-template-columns:1fr 1fr;}
+  .assessment-info{flex-direction:column;gap:16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h2>Marketing &amp; Advertising English</h2>
+    <div class="sub">Professional Development</div>
+    <div class="level-badge">B1–B2 LEVEL</div>
+  </div>
+  <div class="sidebar-section-label">Module 2</div>
+  <div class="nav-item active" data-section="overview"><span class="nav-icon">🏠</span> Overview</div>
+  <div class="nav-item" data-section="speaking"><span class="nav-icon">💬</span> Speaking <span class="nav-badge">21Q</span></div>
+  <div class="nav-item" data-section="wordbank"><span class="nav-icon">📚</span> Word Bank <span class="nav-badge">21</span></div>
+  <div class="nav-item" data-section="reading"><span class="nav-icon">📖</span> Reading <span class="nav-badge">2T</span></div>
+  <div class="nav-item" data-section="vocabulary"><span class="nav-icon">✏️</span> Vocabulary <span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" data-section="grammar"><span class="nav-icon">📝</span> Grammar <span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" data-section="grammarreview"><span class="nav-icon">📋</span> Grammar Review</div>
+  <div class="nav-item" data-section="writing"><span class="nav-icon">✍️</span> Writing <span class="nav-badge">2</span></div>
+  <div class="nav-item" data-section="listening"><span class="nav-icon">🎧</span> Listening <span class="nav-badge">4</span></div>
+  <div class="nav-item" data-section="casestudies"><span class="nav-icon">🏢</span> Case Studies <span class="nav-badge">2</span></div>
+  <div class="nav-item" data-section="assessment"><span class="nav-icon">🏆</span> Final Assessment</div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">🎯 Module 2 · Marketing &amp; Advertising English</div>
+    <h1>Market Research<br><span>&amp; Segmentation</span></h1>
+    <p>Develop the professional English vocabulary and communication skills needed to conduct, discuss, and present market research findings and customer segmentation strategies in international business environments.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="n">21</div><div class="l">Speaking Q's</div></div>
+      <div class="stat"><div class="n">21</div><div class="l">Word Bank</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">Reading Texts</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">Listening Ex.</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">Exercises</div></div>
+      <div class="stat"><div class="n">20</div><div class="l">Final MCQs</div></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar-wrap">
+    <div class="progress-label">Module Progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-pct" id="progressPct">0%</div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section active" id="sec-overview">
+    <div class="section-title">Module Overview</div>
+    <div style="display:inline-block;background:var(--navy);color:var(--white);font-size:.72rem;padding:3px 12px;border-radius:12px;margin:12px 0 20px;letter-spacing:1px;">B1–B2</div>
+    <div class="card">
+      <p style="font-size:.93rem;line-height:1.8;"><strong>Welcome to Module 2: Market Research and Segmentation.</strong> This module develops the professional English you need to engage with one of the most critical areas of modern marketing practice. You will learn how to talk about research methodologies, interpret consumer data, describe target audiences, and present segmentation strategies with clarity and confidence. Whether you are briefing a research agency, presenting insights to a client, or writing a market analysis report, this module gives you the language tools to do it well in English.</p>
+    </div>
+    <div class="card" style="background:var(--navy);color:var(--white);">
+      <h3 style="color:var(--gold);font-family:'Playfair Display',serif;margin-bottom:16px;">🎯 Learning Outcomes</h3>
+      <ul class="outcome-list">
+        <li>Identify and correctly use key market research and segmentation vocabulary in professional contexts</li>
+        <li>Read and interpret texts about research methodologies, consumer behaviour, and segmentation strategies</li>
+        <li>Discuss target audiences, buyer personas, and market segmentation approaches with confidence</li>
+        <li>Use comparatives and superlatives accurately to compare segments, products, and research findings</li>
+        <li>Apply quantifiers and data language to describe survey results and statistical findings</li>
+        <li>Use the language of contrast and concession to present balanced research reports and recommendations</li>
+        <li>Listen to and comprehend English in research briefings, focus groups, and client presentations</li>
+        <li>Write a market research brief and a consumer segmentation report</li>
+        <li>Analyse real-world market research and segmentation case studies</li>
+      </ul>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:4px;">
+      <div class="card" style="text-align:center;padding:20px;">
+        <div style="font-size:2rem;margin-bottom:6px;">🔬</div>
+        <div style="font-weight:700;font-size:.9rem;">Research Methods</div>
+        <div style="color:#667;font-size:.8rem;margin-top:4px;">Surveys, focus groups, ethnography</div>
+      </div>
+      <div class="card" style="text-align:center;padding:20px;">
+        <div style="font-size:2rem;margin-bottom:6px;">👥</div>
+        <div style="font-weight:700;font-size:.9rem;">Segmentation</div>
+        <div style="color:#667;font-size:.8rem;margin-top:4px;">Demographic, psychographic, behavioural</div>
+      </div>
+      <div class="card" style="text-align:center;padding:20px;">
+        <div style="font-size:2rem;margin-bottom:6px;">🧭</div>
+        <div style="font-weight:700;font-size:.9rem;">Consumer Insights</div>
+        <div style="color:#667;font-size:.8rem;margin-top:4px;">Buyer personas, pain points, motivations</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPEAKING -->
+  <section class="section" id="sec-speaking">
+    <div class="section-title">Speaking Activities</div>
+    <div class="section-sub">21 discussion questions to develop fluency in market research and segmentation topics. Discuss with a partner or prepare individual structured responses.</div>
+    <div class="q-grid" id="speakingGrid"></div>
+  </section>
+
+  <!-- WORD BANK -->
+  <section class="section" id="sec-wordbank">
+    <div class="section-title">Word Bank</div>
+    <div class="section-sub">21 essential market research and segmentation terms. Study each definition carefully before completing the vocabulary exercises.</div>
+    <div class="word-grid" id="wordGrid"></div>
+  </section>
+
+  <!-- READING -->
+  <section class="section" id="sec-reading">
+    <div class="section-title">Reading</div>
+    <div class="section-sub">Two professional texts followed by comprehension questions. Read each text carefully before answering.</div>
+    <div id="readingContent"></div>
+  </section>
+
+  <!-- VOCABULARY -->
+  <section class="section" id="sec-vocabulary">
+    <div class="section-title">Vocabulary Exercises</div>
+    <div class="section-sub">Three exercises to practise the market research and segmentation vocabulary from this module.</div>
+    <div id="vocabContent"></div>
+  </section>
+
+  <!-- GRAMMAR -->
+  <section class="section" id="sec-grammar">
+    <div class="section-title">Grammar Exercises</div>
+    <div class="section-sub">Three grammar exercises focusing on comparatives and superlatives, data language and quantifiers, and contrast and concession.</div>
+    <div id="grammarContent"></div>
+  </section>
+
+  <!-- GRAMMAR REVIEW -->
+  <section class="section" id="sec-grammarreview">
+    <div class="section-title">Grammar Review</div>
+    <div class="section-sub">Detailed reference boxes covering all three grammar points from this module.</div>
+    <div id="grammarReviewContent"></div>
+  </section>
+
+  <!-- WRITING -->
+  <section class="section" id="sec-writing">
+    <div class="section-title">Writing Activities</div>
+    <div class="section-sub">Two professional writing tasks. Apply the vocabulary and grammar from this module in your responses.</div>
+    <div id="writingContent"></div>
+  </section>
+
+  <!-- LISTENING -->
+  <section class="section" id="sec-listening">
+    <div class="section-title">Listening Activities</div>
+    <div class="section-sub">4 audio activities — press ▶ Play, listen carefully, then answer the comprehension questions below.</div>
+    <div id="listeningContent"></div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section class="section" id="sec-casestudies">
+    <div class="section-title">Case Studies</div>
+    <div class="section-sub">Two real-world market research and segmentation scenarios. Read, analyse, and answer the comprehension questions.</div>
+    <div id="caseContent"></div>
+  </section>
+
+  <!-- FINAL ASSESSMENT -->
+  <section class="section" id="sec-assessment">
+    <div class="section-title">Final Assessment</div>
+    <div class="section-sub">Module 2 — Market Research and Segmentation</div>
+    <div class="assessment-info">
+      <div class="info-item"><div class="info-n">20</div><div class="info-l">Questions</div></div>
+      <div class="info-item"><div class="info-n">70%</div><div class="info-l">Pass Mark</div></div>
+      <div class="info-item"><div class="info-n">2</div><div class="info-l">Attempts</div></div>
+      <div class="info-item"><div class="info-n">B1–B2</div><div class="info-l">Level</div></div>
+    </div>
+    <div id="assessmentContent"></div>
+    <div id="assessmentResult" class="result-box"></div>
+  </section>
+
+</div><!-- /main -->
+
+<script>
+/* ═══════════════════════════════════
+   MODULE 2 — ALL DATA
+═══════════════════════════════════ */
+
+/* ── SPEAKING ── */
+const speakingQs = [
+  "What is market research and why is it important before launching a new product or service?",
+  "What is the difference between primary research and secondary research? Can you give an example of each?",
+  "What are the advantages and disadvantages of conducting a survey compared to a focus group?",
+  "Have you ever participated in a survey or focus group? What was the experience like?",
+  "What is market segmentation? Why do companies divide their customers into different groups?",
+  "What are the four main types of market segmentation? Can you briefly describe each one?",
+  "What is a buyer persona? How is it different from a demographic profile?",
+  "Why is it important for marketers to understand the 'pain points' of their target audience?",
+  "What is the difference between qualitative research and quantitative research? When would you use each?",
+  "What is an insight in a marketing context? How does a good insight differ from a simple data point?",
+  "What is a sample in market research? Why does the size and quality of a sample matter?",
+  "How do companies use social media data to conduct market research? What are the limitations of this approach?",
+  "What is a brand perception study? Why might a company commission one?",
+  "What is the difference between a target market and a target audience?",
+  "What is psychographic segmentation and how does it differ from demographic segmentation?",
+  "What is behavioural segmentation? Can you give a real-world example of a company using it effectively?",
+  "What is the STP model (Segmentation, Targeting, Positioning)? How do the three steps work together?",
+  "What ethical concerns can arise in market research, particularly when collecting data from consumers?",
+  "How has digital technology changed the way companies conduct market research?",
+  "What is a Net Promoter Score (NPS)? How is it used to measure customer satisfaction and loyalty?",
+  "If you were launching a new fitness app, how would you segment your market and define your primary target audience?",
+];
+
+/* ── WORD BANK ── */
+const wordBank = [
+  {emoji:"🔬", term:"Primary Research",    def:"Original data collected directly from consumers or the market through surveys, interviews, focus groups, or observations."},
+  {emoji:"📚", term:"Secondary Research",  def:"The use of existing data and published information — such as reports, statistics, or academic studies — to inform marketing decisions."},
+  {emoji:"📊", term:"Quantitative Research",def:"Research that collects numerical data to identify patterns, measure attitudes, or test hypotheses, typically using large samples."},
+  {emoji:"🗣️", term:"Qualitative Research", def:"Research that explores opinions, motivations, and experiences through open-ended methods such as interviews and focus groups."},
+  {emoji:"👥", term:"Focus Group",          def:"A small, moderated discussion with selected participants used to explore attitudes, perceptions, and reactions to a product or concept."},
+  {emoji:"📋", term:"Survey",               def:"A structured set of questions administered to a sample of respondents to collect data about opinions, behaviour, or demographics."},
+  {emoji:"🧩", term:"Market Segmentation",  def:"The process of dividing a broad target market into smaller, more homogeneous groups based on shared characteristics."},
+  {emoji:"👤", term:"Buyer Persona",        def:"A semi-fictional representation of an ideal customer, built from research data and used to guide marketing and product decisions."},
+  {emoji:"🎯", term:"Target Audience",      def:"The specific group of consumers a marketing campaign or message is designed to reach and influence."},
+  {emoji:"💡", term:"Consumer Insight",     def:"A deep, actionable understanding of consumer behaviour, motivations, or attitudes that can inform marketing strategy."},
+  {emoji:"📈", term:"Demographic Segmentation",def:"Dividing the market based on measurable characteristics such as age, gender, income, education, or occupation."},
+  {emoji:"🧠", term:"Psychographic Segmentation",def:"Dividing the market based on psychological traits such as lifestyle, values, personality, and attitudes."},
+  {emoji:"🛒", term:"Behavioural Segmentation",def:"Dividing the market based on consumer behaviour — including purchase history, usage rate, brand loyalty, and benefits sought."},
+  {emoji:"🌍", term:"Geographic Segmentation",def:"Dividing the market based on physical location — such as country, region, city, or climate."},
+  {emoji:"😣", term:"Pain Point",            def:"A specific problem or frustration experienced by potential customers that a product or service aims to solve."},
+  {emoji:"🧪", term:"Sample",               def:"A subset of the target population selected to participate in a research study, intended to represent the broader group."},
+  {emoji:"📌", term:"STP Model",            def:"A strategic marketing framework consisting of Segmentation (dividing the market), Targeting (selecting segments), and Positioning (defining the brand's place)."},
+  {emoji:"⭐", term:"NPS",                  def:"Net Promoter Score — a customer loyalty metric based on how likely respondents are to recommend a brand, product, or service."},
+  {emoji:"🔍", term:"Ethnographic Research", def:"An observational research method in which researchers study consumers in their natural environment to understand behaviour in context."},
+  {emoji:"📉", term:"Brand Perception",     def:"The way consumers think, feel, and form opinions about a brand based on their experiences and exposure to its communications."},
+  {emoji:"🗺️", term:"Positioning",          def:"The process of defining how a brand or product should be perceived by the target audience relative to competitors."},
+];
+
+/* ── READING ── */
+const readings = [
+  {
+    title: "Text 1: Market Research Methodologies — Choosing the Right Approach",
+    paragraphs: [
+      "Effective marketing begins not with a campaign or a message, but with a question: who are our customers, what do they need, and why do they choose us — or our competitors? Market research is the discipline that attempts to answer these questions systematically. At its most basic level, market research divides into two categories: primary research, which involves collecting original data directly from consumers or the market, and secondary research, which draws on existing published sources such as industry reports, government statistics, and academic studies. Both have an important role in a comprehensive research programme, and skilled marketing professionals understand when to use each approach and how to combine them effectively.",
+      "Within primary research, the distinction between quantitative and qualitative methods is fundamental. Quantitative research collects numerical data from large, representative samples — typically through surveys, questionnaires, or structured observation. Its strength lies in its ability to produce statistically significant findings that can be generalised across a wider population. A brand tracking survey completed by 2,000 consumers, for example, can provide reliable data on awareness, purchase intent, and satisfaction across different demographic groups. Qualitative research, by contrast, involves smaller groups and open-ended methods — such as in-depth interviews, focus groups, and ethnographic observation — that explore the 'why' behind consumer behaviour. The trade-off is depth versus breadth: qualitative methods produce rich, nuanced insights that cannot be easily reduced to a number, while quantitative methods generate data that can be measured, compared, and tracked over time.",
+      "The choice of research methodology should always be driven by the research objective. When a company wants to test the appeal of a new product concept among a broad audience, an online survey reaching thousands of respondents may be the most efficient approach. When it wants to understand the emotional associations consumers hold around a brand, or to explore why a product is underperforming in a specific market, a series of focus groups or in-depth interviews will yield far more actionable insights. In practice, the most sophisticated research programmes combine both approaches: qualitative research is used to generate hypotheses and explore territory, while quantitative research is used to measure and validate findings at scale. This combination — sometimes called a 'mixed methods' approach — is increasingly regarded as best practice in consumer research.",
+    ],
+    questions: [
+      {q:"How does the text define 'primary research'?",       opts:["Using existing published reports and statistics","Collecting original data directly from consumers or the market","Analysing competitors' marketing campaigns","Reviewing academic studies on consumer behaviour"],ans:1},
+      {q:"What is the main strength of quantitative research?", opts:["It explores emotional associations in depth","It produces statistically significant findings generalisable to a wider population","It requires only a small sample of participants","It is always cheaper than qualitative research"],ans:1},
+      {q:"Which of the following is an example of qualitative research?",opts:["A brand tracking survey of 2,000 respondents","A structured questionnaire sent by email to customers","An in-depth interview exploring why consumers prefer one brand over another","A statistical analysis of sales data by region"],ans:2},
+      {q:"What does the text say is the key trade-off between qualitative and quantitative methods?",opts:["Cost versus speed","Depth versus breadth","Accuracy versus simplicity","Online versus offline delivery"],ans:1},
+      {q:"What should always drive the choice of research methodology?",opts:["The available budget","The size of the marketing team","The research objective","The preferences of the research agency"],ans:2},
+      {q:"When is an online survey described as most appropriate?",opts:["When exploring the emotional associations around a brand","When understanding why a product is underperforming","When testing the broad appeal of a new product concept","When conducting ethnographic observation of consumers"],ans:2},
+      {q:"What is a 'mixed methods' approach?",opts:["Using only quantitative methods to save time","Combining primary and secondary research","Using qualitative research to explore hypotheses and quantitative research to validate findings at scale","Conducting research in multiple countries simultaneously"],ans:2},
+      {q:"What does an ethnographic approach involve?",opts:["Sending structured questionnaires to a large sample","Studying consumers in their natural environment","Tracking brand metrics over time using online surveys","Reviewing industry reports and market data"],ans:1},
+      {q:"What does the text say about secondary research?",opts:["It should always be conducted before primary research","It is less reliable than primary research and should be avoided","It draws on existing published sources and plays an important role alongside primary research","It is only useful for large companies with dedicated research budgets"],ans:2},
+      {q:"According to the text, what do focus groups and in-depth interviews produce?",opts:["Statistically significant data that can be compared over time","Rich, nuanced insights that cannot easily be reduced to a number","Large representative samples for quantitative analysis","Results that can be immediately generalised to the entire population"],ans:1},
+    ]
+  },
+  {
+    title: "Text 2: Market Segmentation — From Mass Markets to Meaningful Audiences",
+    paragraphs: [
+      "The era of mass marketing — when a single product and a single message could reach and satisfy an entire population — is largely over. Today's consumers are more diverse, more informed, and more demanding than ever before. They expect brands to understand them, speak to them relevantly, and offer solutions that fit their specific needs and preferences. Market segmentation is the strategic response to this reality: the process of dividing a broad and heterogeneous market into smaller, more homogeneous groups of consumers who share meaningful characteristics. By understanding the differences between these groups, marketers can design products, messages, and channels that resonate more powerfully with each audience.",
+      "The four classical bases of segmentation are demographic, psychographic, geographic, and behavioural. Demographic segmentation — dividing the market by age, gender, income, occupation, or education — is the most widely used and the easiest to measure, but it can also be the most limiting: knowing that a consumer is a 35-year-old woman tells you relatively little about her motivations or aspirations. Psychographic segmentation goes deeper, dividing consumers by lifestyle, values, interests, and personality traits. A premium outdoor clothing brand, for example, might target 'adventure seekers' who value self-reliance and sustainability over price, regardless of their income level. Behavioural segmentation focuses on what consumers actually do — their purchase frequency, brand loyalty, the benefits they seek, and how they use a product. Geographic segmentation acknowledges that location shapes needs: a consumer in a cold northern climate has different product requirements from one in a warm southern market.",
+      "In practice, effective segmentation rarely relies on a single dimension. The most powerful segmentation strategies combine multiple bases to create vivid, three-dimensional portraits of distinct consumer groups — what marketers call buyer personas. A buyer persona goes beyond a demographic profile to include a name, a backstory, specific goals and pain points, preferred information sources, and the emotional drivers behind purchase decisions. This level of specificity enables marketing teams to craft messages that feel personal and relevant rather than generic. The STP model — Segmentation, Targeting, Positioning — provides the overarching framework: once the market has been segmented, the marketer selects which segment or segments to target, and then determines the positioning — the specific place the brand should occupy in the minds of those consumers relative to competitors.",
+    ],
+    questions: [
+      {q:"What does the text say about the era of mass marketing?",opts:["It is growing in importance thanks to digital media","It is largely over because consumers are more diverse and demanding","It is still the most effective approach for most consumer goods companies","It has been replaced entirely by one-to-one personalised marketing"],ans:1},
+      {q:"How is market segmentation defined in the text?",opts:["The process of creating advertising campaigns for different regions","Dividing a broad market into smaller groups who share meaningful characteristics","The analysis of competitor brands in a specific market","The development of new products for underserved consumer groups"],ans:1},
+      {q:"What is described as the most widely used but potentially most limiting segmentation base?",opts:["Psychographic segmentation","Behavioural segmentation","Geographic segmentation","Demographic segmentation"],ans:3},
+      {q:"What does psychographic segmentation involve?",opts:["Dividing consumers by age, income, and gender","Segmenting by country, city, or region","Dividing consumers by lifestyle, values, interests, and personality traits","Segmenting based on purchase frequency and brand loyalty"],ans:2},
+      {q:"What example of psychographic segmentation does the text provide?",opts:["A children's toy brand targeting parents aged 25–40","A premium outdoor clothing brand targeting adventure seekers who value self-reliance","A supermarket segmenting customers by spending per visit","A bank segmenting customers by account balance and credit score"],ans:1},
+      {q:"What does behavioural segmentation focus on?",opts:["Consumer demographics such as age and income","Consumers' location and regional preferences","What consumers actually do — purchase frequency, loyalty, benefits sought, and usage","Consumers' values, interests, and personality traits"],ans:2},
+      {q:"What is a buyer persona?",opts:["A statistical profile of all consumers in a target market","A legal document defining the target audience for an advertising campaign","A vivid, three-dimensional portrait of a specific consumer segment including goals, pain points, and emotional drivers","A demographic profile produced by government census data"],ans:2},
+      {q:"What does the 'P' in the STP model stand for?",opts:["Profile","Promotion","Potential","Positioning"],ans:3},
+      {q:"What does the text say the most powerful segmentation strategies do?",opts:["Rely exclusively on demographic data for simplicity","Combine multiple segmentation bases to create three-dimensional consumer portraits","Use geographic segmentation as the primary driver","Focus on a single segment to maximise marketing efficiency"],ans:1},
+      {q:"Why does the text say buyer personas help marketing teams?",opts:["They reduce the cost of market research significantly","They enable teams to craft messages that feel personal and relevant rather than generic","They eliminate the need for ongoing consumer research","They are required by advertising regulators in most markets"],ans:1},
+    ]
+  }
+];
+
+/* ── VOCABULARY ── */
+const vocabEx1MCQ = {
+  title: "Exercise 1 — Multiple Choice: Choose the Best Word or Phrase",
+  questions: [
+    {q:"The agency conducted six _____ with groups of eight consumers to explore their attitudes towards the new packaging design.",opts:["surveys","focus groups","ethnographic studies","NPS scores"],ans:1},
+    {q:"The report divided the market into four distinct customer groups based on age, income, and family size — a classic _____ approach.",opts:["behavioural","psychographic","geographic","demographic"],ans:3},
+    {q:"The research team developed three _____ — fictional representations of their ideal customers — to guide the content strategy.",opts:["samples","surveys","buyer personas","pain points"],ans:2},
+    {q:"The questionnaire was completed by a _____ of 1,500 adults aged 18–65, representative of the national population.",opts:["focus group","target audience","sample","positioning"],ans:2},
+    {q:"The product was designed to address a clear _____ : consumers in urban areas had no quick, affordable way to access fresh vegetables.",opts:["buyer persona","pain point","NPS","sample"],ans:1},
+    {q:"The brand's _____ research revealed that most consumers perceived the product as 'expensive but unreliable' — a major concern for the marketing team.",opts:["demographic","ethnographic","brand perception","quantitative"],ans:2},
+    {q:"The company used _____ segmentation to identify that its most loyal customers were motivated by environmental values rather than price.",opts:["demographic","geographic","psychographic","behavioural"],ans:2},
+    {q:"The marketing director presented the _____ model to explain how the company would divide the market, select its priority segment, and define its brand position.",opts:["NPS","STP","KPI","CRM"],ans:1},
+    {q:"The _____ score of 72 indicated that a strong majority of customers would actively recommend the brand to friends and colleagues.",opts:["NPS","STP","focus group","sample"],ans:0},
+    {q:"The researchers spent two weeks embedded with families in three cities — a form of _____ research designed to observe real purchasing behaviour in context.",opts:["quantitative","secondary","ethnographic","demographic"],ans:2},
+  ]
+};
+
+const vocabEx2Dropdown = {
+  title: "Exercise 2 — Gap Fill: Choose the Correct Word or Phrase",
+  items: [
+    {
+      sentence:"The marketing team conducted _____ research by reviewing industry reports, competitor websites, and government census data.",
+      opts:["primary","secondary","qualitative","ethnographic"], answer:1
+    },
+    {
+      sentence:"A _____ is a detailed profile of an ideal customer, typically including their goals, challenges, and preferred communication channels.",
+      opts:["sample","focus group","buyer persona","pain point"], answer:2
+    },
+    {
+      sentence:"The _____ of dividing a market into subgroups with shared characteristics allows companies to tailor their messages more effectively.",
+      opts:["positioning","process","practice","persona"], answer:1
+    },
+    {
+      sentence:"The research design combined both _____ and quantitative methods, using focus groups first and then a large-scale survey.",
+      opts:["primary","secondary","qualitative","geographic"], answer:2
+    },
+    {
+      sentence:"The company used _____ segmentation to split its UK customer base by region, noting that preferences differed significantly between Scotland and the South East.",
+      opts:["demographic","behavioural","psychographic","geographic"], answer:3
+    },
+    {
+      sentence:"The team identified slow delivery as the main _____ for online shoppers, and used this finding to brief the logistics improvement project.",
+      opts:["NPS","sample","pain point","positioning"], answer:2
+    },
+    {
+      sentence:"The brand's _____ as the 'premium but accessible' option in the category was established through a combination of pricing, packaging, and advertising tone.",
+      opts:["segmentation","pain point","positioning","sample"], answer:2
+    },
+    {
+      sentence:"A reliable _____ should accurately represent the target population in terms of age, gender, and geographic spread.",
+      opts:["insight","sample","persona","perception"], answer:1
+    },
+    {
+      sentence:"The _____ revealed that over 68% of respondents were unaware of the brand, confirming the need for a major awareness campaign.",
+      opts:["focus group","survey","ethnography","NPS"], answer:1
+    },
+    {
+      sentence:"Strong _____ comes from understanding not just what consumers do, but why they do it — making it far more than a simple data point.",
+      opts:["NPS","sample","consumer insight","demographic segmentation"], answer:2
+    },
+  ]
+};
+
+const vocabEx3TF = {
+  title: "Exercise 3 — True or False",
+  items: [
+    {statement:"Primary research involves collecting data that was already published by third parties such as government agencies or industry bodies.", answer:false},
+    {statement:"Qualitative research typically uses large samples to produce statistically significant numerical data.", answer:false},
+    {statement:"Psychographic segmentation divides the market based on consumers' values, lifestyle, and personality traits.", answer:true},
+    {statement:"A buyer persona is a fictional but research-based representation of an ideal customer.", answer:true},
+    {statement:"Behavioural segmentation groups consumers based on their physical location, such as country or city.", answer:false},
+    {statement:"A focus group is a structured questionnaire administered to a large number of respondents.", answer:false},
+    {statement:"The STP model stands for Segmentation, Targeting, and Positioning.", answer:true},
+    {statement:"A pain point refers to a specific problem or frustration that a product or service aims to solve for the customer.", answer:true},
+    {statement:"The Net Promoter Score (NPS) measures how likely consumers are to recommend a brand to others.", answer:true},
+    {statement:"Geographic segmentation is considered the most useful approach for understanding consumer motivations and values.", answer:false},
+  ]
+};
+
+/* ── GRAMMAR ── */
+const grammarEx1 = {
+  title: "Exercise 1 — Comparatives and Superlatives in Market Research",
+  instructions: "Choose the correct comparative or superlative form to complete each sentence.",
+  questions: [
+    {q:"Focus groups provide _____ insights into consumer motivations than a standard online survey.",opts:["deeper","more deeper","deepest","the deepest"],ans:0},
+    {q:"Of all the segmentation bases we tested, psychographic segmentation proved _____ for predicting purchase behaviour.",opts:["more useful","the usefullest","the most useful","most usefuller"],ans:2},
+    {q:"The new questionnaire design resulted in _____ completion rates than the previous version.",opts:["highest","much higher","the most high","more highly"],ans:1},
+    {q:"Respondents in the 18–24 age group were _____ likely to share their opinions via social media than older participants.",opts:["most","more","much more","the most"],ans:2},
+    {q:"Our qualitative findings were _____ than expected — the emotional connection to the brand was far stronger than the data suggested.",opts:["much richer","more richer","the richest","most rich"],ans:0},
+    {q:"The western region showed _____ brand awareness of all markets surveyed, with only 12% recognition.",opts:["lower","the lowest","the most low","more low"],ans:1},
+    {q:"This segment's price sensitivity is _____ than in any other group we have studied.",opts:["high","the highest","higher","most high"],ans:2},
+    {q:"The _____ finding from the ethnographic study was that consumers rarely read product labels in-store.",opts:["surprising","more surprising","most surprising","the most surprisingly"],ans:2},
+    {q:"Urban consumers were _____ brand-loyal than rural consumers according to the behavioural data.",opts:["least","less","the least","lesser"],ans:1},
+    {q:"This is _____ research brief we have received from a client — it is extremely detailed and well-structured.",opts:["the most comprehensive","the comprehensivest","more comprehensive","most comprehensivest"],ans:0},
+  ]
+};
+
+const grammarEx2 = {
+  title: "Exercise 2 — Data Language and Quantifiers",
+  instructions: "Choose the most accurate and appropriate word or phrase to describe the data in each sentence.",
+  questions: [
+    {q:"_____ respondents — 89% — said they would consider purchasing the product in the next six months.",opts:["Few","A minority of","The majority of","The vast majority of"],ans:3},
+    {q:"Only _____ participants, around 3%, rated the brand as 'poor' — a very encouraging result.",opts:["a large number of","a significant proportion of","a tiny minority of","the majority of"],ans:2},
+    {q:"_____ 47% of the sample described themselves as frequent buyers, suggesting nearly half the market are regular customers.",opts:["Roughly","Mostly","Nearly all","The majority of"],ans:0},
+    {q:"The survey found that _____ consumers in this segment had switched brands in the past year, indicating high loyalty.",opts:["a vast majority","fewer than one in five","several","most of"],ans:1},
+    {q:"_____ participants in the focus group mentioned price as a barrier — eight out of ten — which is a significant finding.",opts:["A small number of","Almost all","The majority of","Few"],ans:1},
+    {q:"_____ the respondents — just over a third — were unaware of the brand's recent product launch.",opts:["The vast majority of","Few of","Approximately a third of","Nearly all of"],ans:2},
+    {q:"Customer satisfaction scores have increased _____ from 6.2 to 6.5 out of 10 — a modest but statistically significant improvement.",opts:["dramatically","marginally","enormously","massively"],ans:1},
+    {q:"_____ women surveyed said sustainability influenced their purchasing decisions, compared to 58% of men.",opts:["Roughly 72% of","Mostly","A large proportion","The vast majority"],ans:0},
+    {q:"There was _____ difference in brand preference between the two age groups — 64% versus 61%.",opts:["a dramatic","a massive","a negligible","an enormous"],ans:2},
+    {q:"The data shows that _____ consumers in urban areas use the app at least once a week.",opts:["few","nearly three-quarters of","the minority of","a tiny number of"],ans:1},
+  ]
+};
+
+const grammarEx3 = {
+  title: "Exercise 3 — Contrast and Concession in Research Reports",
+  instructions: "Choose the most appropriate contrast or concession expression to complete each sentence.",
+  questions: [
+    {q:"The product performed well in qualitative research; _____, the large-scale survey showed mixed results.",opts:["furthermore","therefore","however","in addition"],ans:2},
+    {q:"_____ most participants rated the packaging positively, several raised concerns about its environmental impact.",opts:["Although","Therefore","However","As a result"],ans:0},
+    {q:"The brand has strong awareness in urban markets. _____, it remains largely unknown in rural areas.",opts:["In addition","As a result","Furthermore","Nevertheless"],ans:3},
+    {q:"The segment shows high purchase frequency; _____ low average spend per transaction means overall revenue contribution is limited.",opts:["however","furthermore","although","therefore"],ans:0},
+    {q:"_____ the small sample size, the focus group findings provided valuable directional insight for the campaign brief.",opts:["Although","Despite","However","Nevertheless"],ans:1},
+    {q:"The survey data confirmed strong brand loyalty. _____, we recommend conducting further qualitative research to understand the emotional drivers.",opts:["Although","Despite","Nevertheless","However"],ans:3},
+    {q:"Brand awareness is highest among 18–24-year-olds; _____ purchase conversion in this group is the lowest of any segment.",opts:["in addition","furthermore","yet","as a result"],ans:2},
+    {q:"_____ price was identified as the main barrier, many participants said they would pay more for a premium version.",opts:["Despite","Although","Nevertheless","Therefore"],ans:1},
+    {q:"The eastern region delivered the strongest NPS scores. The western region, _____, continues to underperform.",opts:["therefore","on the other hand","furthermore","as a result"],ans:1},
+    {q:"The psychographic data is compelling. _____, we need quantitative validation before making major strategic decisions based on it.",opts:["As a result","In addition","That said","Furthermore"],ans:2},
+  ]
+};
+
+/* ── GRAMMAR REVIEW ── */
+const grammarReviewHTML = `
+<div class="grammar-rule">
+  <h4>📌 Grammar Point 1: Comparatives and Superlatives in Market Research</h4>
+  <p>Comparatives and superlatives are essential when presenting market research findings, comparing segments, and evaluating methodologies. Precision in form is critical in professional reports and presentations.</p>
+  <table>
+    <tr><th>Type</th><th>Formation</th><th>Examples</th></tr>
+    <tr><td>Short adjectives (1–2 syllables)</td><td>Add -er / -est</td><td>high → higher / the highest; deep → deeper / the deepest</td></tr>
+    <tr><td>Long adjectives (3+ syllables)</td><td>more / the most + adjective</td><td>more significant / the most significant; more reliable / the most reliable</td></tr>
+    <tr><td>Irregular forms</td><td>Must be memorised</td><td>good → better / the best; bad → worse / the worst; far → further / the furthest</td></tr>
+    <tr><td>Adverbs</td><td>more / the most + adverb</td><td>more accurately / the most accurately; more frequently / the most frequently</td></tr>
+  </table>
+  <div class="example">
+    "Focus groups provide <em>deeper</em> insights than surveys." (comparative — 1 syllable: deep → deeper)<br>
+    "Of all methods, ethnography is <em>the most time-consuming</em>." (superlative — long adjective)<br>
+    "The 25–34 segment showed <em>higher</em> brand loyalty than any other group." (comparative)<br>
+    "This was <em>the most comprehensive</em> research brief we have received." (superlative — long adjective)
+  </div>
+  <p><strong>Common errors to avoid:</strong> Never use both <em>more</em> and <em>-er</em> together ("more deeper" ✗). Always use <em>the</em> before superlatives ("the most useful" ✓, "most useful" ✗ when used attributively). Use <em>than</em> after comparatives when making explicit comparisons ("higher <em>than</em> expected").</p>
+</div>
+
+<div class="grammar-rule">
+  <h4>📌 Grammar Point 2: Data Language and Quantifiers</h4>
+  <p>When presenting research findings in English, quantifiers and data language allow you to convey exact or approximate proportions with precision and appropriate register. Using the right expression signals analytical sophistication.</p>
+  <table>
+    <tr><th>Expression</th><th>Approximate meaning</th><th>Example</th></tr>
+    <tr><td>the vast majority of / almost all</td><td>~85–99%</td><td>"The vast majority of respondents rated the brand positively."</td></tr>
+    <tr><td>the majority of / most</td><td>~51–84%</td><td>"The majority of participants preferred the new packaging."</td></tr>
+    <tr><td>approximately / roughly / around</td><td>Approximates any %</td><td>"Roughly 60% of consumers said price was a key factor."</td></tr>
+    <tr><td>nearly / almost / just under</td><td>Close to a round number</td><td>"Nearly three-quarters of respondents were brand-aware."</td></tr>
+    <tr><td>a significant minority of</td><td>~20–40%</td><td>"A significant minority of users reported dissatisfaction."</td></tr>
+    <tr><td>fewer than one in five / one in ten</td><td>Ratio-based expression</td><td>"Fewer than one in five consumers had heard of the brand."</td></tr>
+    <tr><td>a tiny minority of / very few</td><td>~1–5%</td><td>"Only a tiny minority rated the experience as poor."</td></tr>
+  </table>
+  <div class="example"><strong>Adverbs for describing change magnitude:</strong><br>
+    dramatically / significantly / considerably → large change<br>
+    marginally / slightly / modestly → small change<br>
+    "Satisfaction scores improved <em>marginally</em> from 6.2 to 6.5." | "Awareness <em>increased dramatically</em> following the campaign."
+  </div>
+</div>
+
+<div class="grammar-rule">
+  <h4>📌 Grammar Point 3: Contrast and Concession in Research Reports</h4>
+  <p>Research reports almost always contain mixed findings — areas of strength alongside areas of weakness, or data that seems to contradict itself. Contrast and concession language is essential for presenting these findings honestly and professionally.</p>
+  <table>
+    <tr><th>Function</th><th>Expressions</th><th>Notes</th></tr>
+    <tr><td>Simple contrast</td><td>however, nevertheless, on the other hand, yet, in contrast</td><td>Used between two clauses or at the start of a new sentence</td></tr>
+    <tr><td>Concession (despite a fact)</td><td>although, even though, while, whereas</td><td>Followed by subject + verb clause</td></tr>
+    <tr><td>Concession (despite a noun)</td><td>despite, in spite of, notwithstanding</td><td>Followed by noun or -ing form — NOT a full clause</td></tr>
+    <tr><td>Qualifying a positive finding</td><td>that said, nevertheless, even so, with that in mind</td><td>Introduces a reservation after a positive statement</td></tr>
+  </table>
+  <div class="example">
+    "The product tested well among 18–24s. <em>However</em>, purchase intent among 35–45s was significantly lower."<br>
+    "<em>Although</em> price was the main barrier, quality was cited almost as frequently."<br>
+    "<em>Despite</em> the small sample size, the focus group findings were highly consistent."<br>
+    "The data is encouraging. <em>That said</em>, we should validate these findings with a larger quantitative study."
+  </div>
+  <p><strong>Key distinction — Despite vs Although:</strong><br>
+  ✓ "Despite <em>the small sample</em>, the findings are reliable." (despite + noun)<br>
+  ✓ "Although <em>the sample was small</em>, the findings are reliable." (although + clause)<br>
+  ✗ "Despite <em>the sample was small</em>..." — this is incorrect grammar.</p>
+</div>`;
+
+/* ── WRITING ── */
+const writingActivities = [
+  {
+    title: "Writing Activity 1: Market Research Brief",
+    type: "Client-Facing Research Brief",
+    prompt: "You work at a marketing agency. A new client — a mid-sized company launching a plant-based snack range in the UK — has asked you to design a market research programme to understand their target consumers. Write a formal research brief outlining the objectives, recommended methodology, and key questions the research should answer.",
+    bullets: [
+      "Open with a clear statement of the research objectives",
+      "Recommend a specific methodology (primary or secondary, qualitative or quantitative) and justify your choice",
+      "Identify the target audience and explain how the sample will be selected",
+      "List at least four key research questions the study should address",
+      "Use at least five terms from the Word Bank",
+      "Close with a brief note on how the findings will be used to inform the marketing strategy",
+    ],
+    min: 200, max: 280
+  },
+  {
+    title: "Writing Activity 2: Consumer Segmentation Report",
+    type: "Internal Marketing Report",
+    prompt: "You are a market analyst at a streaming entertainment company. Based on recent research, you have identified three distinct consumer segments. Write a short internal report presenting the three segments and recommending which one should be the primary target for the next campaign.",
+    bullets: [
+      "Briefly introduce the purpose and scope of the report",
+      "Describe each of the three consumer segments using at least two segmentation bases (e.g. demographic + psychographic)",
+      "Create a brief buyer persona for the recommended primary segment",
+      "Use comparatives and superlatives to compare segments where appropriate",
+      "Use contrast language to acknowledge the strengths and weaknesses of your recommendation",
+      "Conclude with a clear recommendation and rationale",
+    ],
+    min: 220, max: 310
+  }
+];
+
+/* ── LISTENING ── */
+const listeningActivities = [
+  {
+    id:"l1",
+    title:"Activity 1: A Research Agency Briefing — Understanding the Client's Objectives",
+    meta:"Account Director & Client Marketing Manager — Agency briefing meeting",
+    level:"B1–B2",
+    type:"Multiple Choice",
+    focus:"Listening for Main Ideas and Specific Information",
+    transcript:`Account Director: Good morning, Emily. Thanks for coming in. I've read your initial brief, and before we start designing the research programme, I want to make sure I fully understand what you're trying to achieve.
+
+Client: Of course. So, we're about to relaunch our skincare range — it's been on the market for about three years, and sales have been flat. We want to understand why, and whether there's a way to reposition the brand to grow.
+
+Account Director: That's very helpful context. Can I ask — have you done any research on this before? Do you know what consumers currently think of the brand?
+
+Client: We've done some internal customer satisfaction surveys, but nothing really exploring brand perception in depth. We have a general sense that consumers see us as 'reliable but uninspiring'. That's what our sales team hears from retailers.
+
+Account Director: Right. So part of the brief is about brand perception — understanding how you're currently positioned in the market relative to competitors. That suggests we'll want some qualitative work as well as quantitative. You can't get to the emotional dimension of a brand purely from numbers.
+
+Client: Exactly. And we're also interested in understanding whether we're reaching the right people. We've always targeted women aged 35 to 55, but our digital analytics suggest a lot of engagement from younger women — 25 to 34 — who we haven't really spoken to directly.
+
+Account Director: So you may have a segment that you're not currently targeting but who are naturally attracted to the brand. That's a great insight to investigate.
+
+Client: Yes. And if that segment is commercially attractive, we might want to refocus the whole campaign.
+
+Account Director: What's your timeline? When do you need the findings?
+
+Client: We're presenting the new campaign strategy to the board in four months. So we'd need the research findings at least six weeks before that to give the creative team time to work.
+
+Account Director: That's workable. I'm thinking a two-phase approach: Phase one is qualitative — probably six to eight focus groups with existing and lapsed customers across the different age groups. Phase two would be a large-scale online survey — maybe 1,500 to 2,000 respondents — to quantify the key findings and test the appeal of potential repositioning territories. Does that sound like the right kind of approach?
+
+Client: Yes, that sounds good. I'm particularly interested in the focus groups — I'd love to observe a couple of them if that's possible.
+
+Account Director: Absolutely. We usually encourage clients to observe. You often hear things that change your perspective completely. Shall we walk through the research objectives in more detail?`,
+    questions:[
+      {q:"Why is the client relaunching their skincare range?",opts:["They are entering the US market for the first time","Sales have been flat and they want to understand why and possibly reposition","A competitor has launched a similar product at a lower price","They have received negative press coverage about the brand"],ans:1},
+      {q:"How does the client describe the current brand perception?",opts:["Premium and aspirational","Innovative and exciting","Reliable but uninspiring","Affordable but low quality"],ans:2},
+      {q:"What type of research does the Account Director say is needed to explore the emotional dimension of a brand?",opts:["Large-scale quantitative surveys only","Secondary research using published reports","Qualitative research alongside quantitative","Ethnographic observation in retail environments"],ans:2},
+      {q:"What unexpected consumer group has the client's digital analytics revealed?",opts:["Men aged 25 to 34","Women aged 55 to 65","Women aged 25 to 34","Teenagers aged 16 to 24"],ans:2},
+      {q:"When does the client need the research findings delivered?",opts:["In four months","In six months","At least six weeks before the board presentation in four months","Within two weeks"],ans:2},
+      {q:"What is Phase 1 of the proposed research programme?",opts:["A large-scale online survey of 2,000 respondents","Six to eight focus groups with existing and lapsed customers","An ethnographic study in retail environments","A secondary research review of competitor brand data"],ans:1},
+      {q:"How many respondents is the Account Director proposing for the online survey?",opts:["500 to 800","800 to 1,000","1,500 to 2,000","3,000 to 5,000"],ans:2},
+      {q:"What does the Account Director say about clients observing focus groups?",opts:["It is not recommended as it can influence participants","It requires special permission from the research ethics board","It is usually encouraged as clients often hear things that change their perspective","It is only permitted for senior clients"],ans:2},
+    ]
+  },
+  {
+    id:"l2",
+    title:"Activity 2: A Marketing Lecture — Introduction to Market Segmentation",
+    meta:"Marketing Professor — University marketing lecture",
+    level:"B1",
+    type:"Multiple Choice",
+    focus:"Understanding Main Ideas and Key Definitions",
+    transcript:`Good morning, everyone. Welcome to today's session on market segmentation — one of the most fundamental concepts in marketing strategy. By the end of this lecture, I want you to understand what segmentation is, why it matters, and how to apply the four main segmentation bases in a real marketing context.
+
+So let's start with the question: why do we segment at all? The answer is simple. Not all consumers are the same. A fifty-year-old executive and a twenty-year-old student may both buy coffee — but they want very different things from that coffee experience. If you try to appeal to everyone with the same message, you will probably appeal to no one very strongly. Segmentation allows you to focus your resources — your budget, your creative energy, your channel choices — on the consumers who are most likely to respond to what you're offering.
+
+Now, the four classical bases of segmentation. The first is demographic. Demographics are the basic descriptors: age, gender, income level, education, occupation, family status. They're the most straightforward to measure and the most widely used. If you're launching a retirement savings product, your demographic target is probably adults aged 45 to 60 with disposable income. Simple enough.
+
+The second base is geographic. Where do your consumers live? Country, city, region, climate? A company selling outdoor winter sports equipment will naturally focus on regions with mountains and cold winters. A fast food chain expanding internationally will need to adapt its menu based on local tastes and cultural norms.
+
+The third is psychographic. This is where it gets more interesting. Psychographics look at who consumers are on the inside — their values, attitudes, lifestyles, and personality. Are they risk-takers or cautious? Environmentally conscious or indifferent? Ambitious or content? A premium fitness brand might segment psychographically to target people who see exercise as a core part of their identity — not just a hobby.
+
+And the fourth — and increasingly important — base is behavioural. Behavioural segmentation focuses on what consumers actually do. How often do they buy? Are they loyal to one brand, or do they switch regularly? What benefits do they seek? A coffee subscription service, for example, might segment its market by consumption frequency — targeting heavy coffee drinkers who consume more than three cups a day.
+
+One important concept I want to introduce today is the idea of combining these bases. The most powerful segmentation strategies don't rely on just one dimension. They create what we call multi-dimensional segments — or buyer personas — that bring together demographic, psychographic, and behavioural information to paint a vivid picture of a real person. And it's that vivid picture that helps you write a message that actually connects.
+
+Any questions so far? Good. Let's move on to a case study.`,
+    questions:[
+      {q:"Why does the professor say we segment the market?",opts:["To reduce the cost of advertising","Because not all consumers are the same and segmentation allows focused resource allocation","To comply with data protection regulations","To make it easier to compare competitors"],ans:1},
+      {q:"What example does the professor give to illustrate why a one-size-fits-all approach fails?",opts:["A car brand trying to appeal to all age groups","A fifty-year-old executive and a twenty-year-old student both buying coffee","A supermarket trying to sell to both rich and poor consumers","A fashion brand targeting both men and women"],ans:1},
+      {q:"Which segmentation base does the professor describe as 'the most straightforward to measure'?",opts:["Psychographic","Behavioural","Geographic","Demographic"],ans:3},
+      {q:"What example of geographic segmentation does the professor give?",opts:["A coffee brand targeting heavy drinkers","A retirement savings product for 45 to 60-year-olds","A winter sports equipment company focusing on regions with mountains and cold winters","A premium fitness brand targeting people who see exercise as core to their identity"],ans:2},
+      {q:"How does the professor define psychographic segmentation?",opts:["Segmentation based on physical location and climate","Looking at who consumers are on the inside — their values, attitudes, lifestyles, and personality","Dividing the market by age, income, and occupation","Grouping consumers by how frequently they purchase a product"],ans:1},
+      {q:"What example of behavioural segmentation does the professor give?",opts:["A fast food chain adapting its menu for different countries","A premium fitness brand targeting people who identify as exercisers","A coffee subscription service targeting heavy coffee drinkers who consume over three cups a day","A retirement product targeting adults aged 45 to 60"],ans:2},
+      {q:"What does the professor say a 'multi-dimensional segment' or buyer persona combines?",opts:["Demographic, geographic, and secondary research data","Demographic, psychographic, and behavioural information","Primary and secondary research methodologies","Survey data and focus group findings"],ans:1},
+      {q:"What does the professor say a vivid buyer persona helps you do?",opts:["Reduce your advertising budget significantly","Write a message that actually connects with the target consumer","Select the right advertising platform automatically","Avoid the need for quantitative research"],ans:1},
+    ]
+  },
+  {
+    id:"l3",
+    title:"Activity 3: A Focus Group Moderation Session — Reactions to a New Concept",
+    meta:"Research Moderator & Focus Group Participants — Consumer research session",
+    level:"B1–B2",
+    type:"Multiple Choice",
+    focus:"Understanding Detail and Participant Opinions",
+    transcript:`Moderator: Good afternoon, everyone, and thank you so much for joining us today. My name is Sarah, and I'll be moderating our discussion. There are no right or wrong answers here — we're simply interested in your honest opinions. Everything you say will be treated as confidential.
+
+Today we're going to talk about a new concept for a meal planning and grocery delivery service. I'm going to show you a brief description, and then I'd like you to share your initial reactions. Please feel free to be completely honest — even if your reaction is negative, that's extremely valuable to us.
+
+[After showing the concept]
+
+Let's start with first impressions. Who wants to go first?
+
+Participant 1: I thought it was really interesting. I spend so much time every week trying to figure out what to cook, and then I go to the supermarket and half the things I want aren't there. So the idea of having everything planned and delivered sounds very appealing.
+
+Participant 2: I'm a bit sceptical, to be honest. I've tried two or three of these services before and I always end up cancelling after a month. The recipes are great at first, but they get repetitive, and I don't always want to eat what someone else has decided I should eat.
+
+Moderator: That's a really interesting point. Is variety a concern for others as well?
+
+Participant 3: Definitely. And I'd also want to know about the quality of the ingredients. I buy a lot of organic produce, and I've found that with delivery services the quality isn't always consistent.
+
+Moderator: So quality and consistency matter a lot. How about price? How does this concept feel in terms of value for money?
+
+Participant 1: I think it depends on what you're comparing it to. If you're comparing it to going out to restaurants three times a week, it seems very reasonable. But if you compare it to doing your own weekly shop, it feels expensive.
+
+Participant 4: I agree. The price point is the main barrier for me. I have two young children and we're quite careful about what we spend on food. I'd need to be convinced that the convenience is worth the extra cost.
+
+Moderator: What would make the price feel more justified to you?
+
+Participant 4: Probably flexibility. If I could choose exactly how many meals I want per week and easily skip a week when I'm on holiday, I'd feel more in control.
+
+Moderator: Great feedback. What about the environmental angle — the concept mentions using recyclable packaging and sourcing locally. Does that resonate with you?
+
+Participant 3: That's actually a big positive for me. That would genuinely influence my decision to try it.
+
+Participant 2: For me, it's nice to know, but it wouldn't be the deciding factor. The convenience and the taste would make or break it.
+
+Moderator: This is all incredibly valuable. Let me note the key themes we're hearing: variety, ingredient quality, price flexibility, and environmental credentials. We'll explore each of these in more detail as we go.`,
+    questions:[
+      {q:"What is the main purpose of this focus group?",opts:["To test consumers' reaction to a new meal planning and grocery delivery concept","To compare different meal delivery services already on the market","To understand general cooking habits among urban consumers","To train new moderators in focus group techniques"],ans:0},
+      {q:"What does Participant 1 say is appealing about the concept?",opts:["The environmental packaging","The low price","The solution to the weekly problem of deciding what to cook and finding ingredients","The flexibility to skip weeks"],ans:2},
+      {q:"Why is Participant 2 sceptical about the service?",opts:["They think it is too expensive","They have had bad experiences with previous services that became repetitive","They are worried about the quality of organic produce","They do not use grocery delivery services at all"],ans:1},
+      {q:"What concern does Participant 3 raise about delivery services?",opts:["They take too long to deliver","The price is always too high","The quality and consistency of ingredients is not always reliable","There are not enough recipe options"],ans:2},
+      {q:"How does Participant 1 justify the price?",opts:["By comparing it to cooking from scratch","By comparing it to eating at restaurants three times a week","By pointing out that organic ingredients are always expensive","By saying the price is the same as a regular supermarket shop"],ans:1},
+      {q:"What would make the price feel more justified to Participant 4?",opts:["Lower-cost ingredient options","More recipe variety","Flexibility to choose how many meals per week and skip weeks easily","Free delivery on the first order"],ans:2},
+      {q:"How does Participant 3 respond to the environmental angle?",opts:["It is irrelevant to their purchase decision","It is a big positive that would genuinely influence their decision to try it","It is nice but would not be the deciding factor","They are sceptical about the brand's environmental claims"],ans:1},
+      {q:"What four key themes does the moderator identify at the end of the session?",opts:["Price, delivery speed, recipe quantity, and packaging design","Variety, ingredient quality, price flexibility, and environmental credentials","Brand reputation, price, convenience, and taste","Organic sourcing, flexibility, convenience, and customer service"],ans:1},
+    ]
+  },
+  {
+    id:"l4",
+    title:"Activity 4: A Client Presentation — Presenting Segmentation Research Findings",
+    meta:"Research Director presenting to a client team — Agency presentation",
+    level:"B2",
+    type:"Multiple Choice",
+    focus:"Understanding Formal Presentation Language and Key Data",
+    transcript:`Good morning, everyone. Thank you for coming in today. My name is Dr. Rachel Turner, and I'm the Research Director at Insight Partners. Over the past eight weeks, our team has been conducting a comprehensive market research programme on your behalf, and today I'm delighted to share the findings.
+
+Before I get into the data, let me just recap the objectives we agreed at the briefing. The research set out to answer three questions: who are your current customers, who are your potential customers, and what does your brand mean to consumers relative to your key competitors?
+
+Let me start with what we found about your current customer base. Our online survey of 1,800 adults confirmed that your brand is predominantly purchased by women aged 35 to 54, with above-average household income and a strong interest in health and wellness. This demographic profile was broadly consistent with what your team already believed. However — and this is one of the most significant findings — a psychographic overlay revealed that your most loyal customers are not primarily motivated by health outcomes. They are motivated by what we have called a sense of 'informed indulgence' — the feeling that they are treating themselves to something premium while still making a responsible choice. This is a subtler and more powerful motivation than 'healthy eating', and it has significant implications for how you communicate.
+
+The second major finding relates to a growth opportunity. Among our qualitative sample — we conducted eight focus groups across four cities — a younger segment emerged very clearly: women aged 25 to 34, typically urban professionals, who are already engaged with the brand through social media but have never purchased. The barriers to conversion were not product-related. They were primarily about price perception — this group sees the brand as slightly out of reach — and about the fact that the current advertising does not feel relevant to their lives. It speaks to a slightly older, more domestic lifestyle that does not resonate with them.
+
+In terms of competitive positioning, your brand is currently perceived as 'trustworthy and established' — which is positive. However, the most frequent word used to describe you across the qualitative work was 'safe'. Safe is not inherently negative, but in a category where competitors are increasingly using bold, expressive, and values-driven communication, 'safe' risks becoming a liability rather than a strength.
+
+Our recommendation, which we will walk through in detail shortly, is a segmentation strategy built around two primary audiences: your core 35 to 54 loyalty segment, who should be deepened and retained through communication that celebrates 'informed indulgence'; and the emerging 25 to 34 segment, who should be activated through more aspirational, culturally relevant messaging and a clear entry-level pricing strategy.
+
+I'm happy to take questions at any point.`,
+    questions:[
+      {q:"What were the three research objectives agreed at the briefing?",opts:["Segmentation, targeting, and positioning","Who are current customers, who are potential customers, and what the brand means relative to competitors","Brand awareness, purchase intent, and customer satisfaction","Market size, share of voice, and competitor pricing"],ans:1},
+      {q:"What does the survey confirm about the current customer profile?",opts:["Predominantly men aged 25 to 45 with high incomes","Predominantly women aged 35 to 54 with above-average income and an interest in health and wellness","An even split across all age groups and genders","Predominantly older consumers aged 55 and above"],ans:1},
+      {q:"What does Rachel identify as the key motivation of the most loyal customers?",opts:["Getting the lowest possible price for a premium product","A sense of 'informed indulgence' — treating themselves while making a responsible choice","Purely health-related outcomes and nutritional benefits","A desire for convenience and time-saving solutions"],ans:1},
+      {q:"How many focus groups were conducted, and across how many cities?",opts:["Four focus groups across two cities","Six focus groups across three cities","Eight focus groups across four cities","Ten focus groups across five cities"],ans:2},
+      {q:"What are the two main barriers to conversion for the 25 to 34 segment?",opts:["Poor product quality and lack of availability in their preferred stores","Price perception and advertising that does not feel relevant to their lives","Lack of brand awareness and limited social media presence","Environmental concerns and lack of vegan options"],ans:1},
+      {q:"How is the brand currently positioned in consumers' minds according to the competitive research?",opts:["Bold, expressive, and values-driven","Premium and aspirational","Trustworthy and established — frequently described as 'safe'","Affordable and accessible"],ans:2},
+      {q:"Why does Rachel suggest that 'safe' positioning could become a liability?",opts:["Because competitors are using the same positioning strategy","Because the brand has had safety issues with its products","Because competitors are using bold, expressive, and values-driven communication, making 'safe' feel outdated","Because younger consumers actively avoid brands they perceive as safe"],ans:2},
+      {q:"What are the two primary audience segments in Rachel's recommended segmentation strategy?",opts:["Men aged 18 to 35 and women aged 36 to 55","Urban professionals and rural consumers","The core 35 to 54 loyalty segment and the emerging 25 to 34 growth segment","Health-conscious consumers and indulgent consumers"],ans:2},
+    ]
+  }
+];
+
+/* ── CASE STUDIES ── */
+const caseStudies = [
+  {
+    title: "Case Study 1: Volta Electric Bikes — Segmenting a New Market",
+    meta: "Sector: Consumer Goods / Sustainable Transport | Country: Netherlands | Difficulty: B2",
+    text: `Volta Electric Bikes was a Dutch start-up that launched its first range of urban electric bicycles in 2019. With a product price range of €1,800 to €3,200 and a strong focus on design and sustainability, the company initially targeted what it described as 'environmentally conscious urban commuters'. However, after twelve months on the market, sales were below expectations. While the brand had attracted strong interest on social media and favourable reviews in cycling press, conversion to actual purchase remained frustratingly low.
+
+The company commissioned a market research programme — combining eight focus groups and an online survey of 2,200 respondents — to understand who was actually buying their bikes, who was interested but not converting, and why. The research produced three surprising findings. First, the largest group of actual buyers were not young urban commuters — they were men and women aged 45 to 60, typically in middle management or senior professional roles, who used the bike primarily for leisure at weekends rather than daily commuting. This group valued quality, reliability, and the status signalling of the design, and were relatively price-insensitive. Second, the most digitally engaged group — people who followed the brand on social media and engaged with content — were younger, urban, and genuinely interested in sustainable commuting. However, price was a critical barrier: many earned well below the income level needed to justify the purchase without financial strain. Third, a largely overlooked group emerged from the data: retirees aged 60 to 75, often living in suburban or semi-rural areas, who were interested in e-bikes as a way to stay active but found the brand's urban, design-led positioning unappealing and the product unnecessarily complex.
+
+Armed with these insights, Volta's marketing team developed three buyer personas — 'The Weekend Enthusiast', 'The Aspirational Commuter', and 'The Active Retiree' — and redesigned their segmentation and targeting strategy accordingly. For the Weekend Enthusiast, premium lifestyle messaging was developed that emphasised heritage craftsmanship and weekend adventure. For the Aspirational Commuter, a new entry-level model at €1,199 was introduced alongside a financing option. For the Active Retiree, a simplified product range with step-through frames and a dedicated landing page was launched. By the end of 2022, total sales had increased by 76% compared to the pre-research baseline.`,
+    questions:[
+      {q:"What was the problem that led Volta to commission market research?",opts:["The company had received negative product reviews in the cycling press","Social media engagement was too low","Sales were below expectations despite strong interest and positive reviews","The company wanted to expand into new European markets"],ans:2},
+      {q:"What research methodology did Volta use?",opts:["Secondary research using existing industry reports","Ethnographic observation in retail stores","Eight focus groups combined with an online survey of 2,200 respondents","A large-scale postal questionnaire sent to registered cyclists"],ans:2},
+      {q:"Who were Volta's actual largest group of buyers, according to the research?",opts:["Young urban professionals aged 25 to 34","Environmentally conscious students aged 18 to 24","Men and women aged 45 to 60, typically in senior professional roles, using the bike for leisure","Retirees aged 60 to 75 living in suburban areas"],ans:2},
+      {q:"What was the main barrier preventing the digitally engaged younger group from purchasing?",opts:["Lack of brand awareness","Concerns about product quality","Price — the cost was too high relative to their income level","The bikes were not available in their preferred colour options"],ans:2},
+      {q:"What characteristic made the Active Retiree segment unappealing to Volta's existing positioning?",opts:["They preferred cars to bikes for all journeys","The brand's urban, design-led positioning felt unappealing and the product unnecessarily complex","They were not interested in environmentally friendly transport options","They lived too far from Volta's retail stores"],ans:1},
+      {q:"What three buyer personas did Volta's team develop?",opts:["The Urban Commuter, The Design Lover, and The Budget Buyer","The Weekend Enthusiast, The Aspirational Commuter, and The Active Retiree","The Eco-Warrior, The Fitness Enthusiast, and The Retired Professional","The City Explorer, The Green Commuter, and The Senior Cyclist"],ans:1},
+      {q:"What new product was introduced for the Aspirational Commuter segment?",opts:["A high-end limited edition model at €4,500","A step-through frame design for easier mounting","An entry-level model at €1,199 with a financing option","A children's e-bike accessory range"],ans:2},
+      {q:"By how much did total sales increase by the end of 2022?",opts:["28%","45%","62%","76%"],ans:3},
+      {q:"What does the case study demonstrate about the value of market research?",opts:["That digital marketing is more important than product quality","That research always confirms what a company already believes about its customers","That research can reveal that a company's actual customers are very different from its assumed target audience","That price is always the most important factor in consumer decision-making"],ans:2},
+      {q:"What did the research reveal about the retiree segment's interest in e-bikes?",opts:["They were not interested in electric bikes at all","They preferred cheaper, non-electric bicycles","They were interested in e-bikes for staying active but needed a different positioning and product approach","They were already loyal customers of a competitor brand"],ans:2},
+    ]
+  },
+  {
+    title: "Case Study 2: StreamPulse — Using Behavioural Data to Personalise Content Marketing",
+    meta: "Sector: Streaming Entertainment | Country: United States | Difficulty: B1–B2",
+    text: `StreamPulse was a US-based video streaming platform that had grown rapidly to 8 million subscribers since its launch in 2018. Unlike larger competitors, StreamPulse had built its brand around independent films, documentary content, and international cinema — a niche positioning that attracted a highly engaged but relatively small audience. By 2021, subscriber growth had begun to plateau, and the marketing team recognised that a more sophisticated understanding of their audience was needed to re-accelerate growth.
+
+The company's first step was to conduct an internal analysis of the behavioural data they already held — a form of secondary research using proprietary data. The analysis revealed four clearly distinct usage patterns among current subscribers. The first group — labelled 'Deep Divers' — watched content obsessively and were highly engaged with the platform's recommendation engine. They typically subscribed for more than eighteen months and referred friends regularly. The second group — 'Casual Browsers' — logged in infrequently, rarely watched more than one episode of any series, and had a much higher churn rate. The third group — 'Documentary Devotees' — watched almost exclusively non-fiction content and showed very high satisfaction scores in post-viewing surveys. The fourth group — 'International Cinema Fans' — consumed a disproportionate amount of foreign-language content and were particularly active in leaving reviews and ratings.
+
+Rather than continuing to market to all subscribers with the same content and messaging, StreamPulse implemented a behavioural segmentation strategy that personalised email communications, in-app recommendations, and social media content for each segment. Deep Divers received early-access previews and exclusive behind-the-scenes content. Casual Browsers received carefully curated 'best of' lists designed to reduce the effort of choosing. Documentary Devotees received tailored newsletters aligned to their specific interests — nature, history, society, or technology. International Cinema Fans received exclusive subtitled previews and were invited to join a community forum.
+
+Within twelve months, average session length had increased by 23%, churn rate had fallen by 18%, and the referral programme — primarily driven by Deep Divers — had contributed 140,000 new subscribers. The success of the programme led StreamPulse to invest further in data analytics capability and to hire a dedicated Audience Intelligence team. The case became a widely cited example of how behavioural segmentation, grounded in real usage data rather than demographic assumptions, can unlock significant commercial value.`,
+    questions:[
+      {q:"What challenge prompted StreamPulse to invest in better audience understanding?",opts:["Subscriber growth had plateaued","A major competitor had entered their niche","Subscribers were complaining about content quality","The company needed to raise additional investment"],ans:0},
+      {q:"What type of research did StreamPulse conduct as its first step?",opts:["Primary research through a large online survey","Focus groups with a sample of subscribers","Secondary research using their own proprietary behavioural data","Ethnographic observation of how subscribers used the platform"],ans:2},
+      {q:"Which segment had the highest churn rate?",opts:["Deep Divers","Documentary Devotees","Casual Browsers","International Cinema Fans"],ans:2},
+      {q:"What did the Deep Divers segment typically do beyond watching content?",opts:["Watched almost exclusively documentary content","Subscribed for a short period and then cancelled","Consumed mostly foreign-language films","Referred friends regularly and stayed subscribed for more than eighteen months"],ans:3},
+      {q:"What specific content did Casual Browsers receive under the new strategy?",opts:["Early-access previews and behind-the-scenes content","Exclusive subtitled previews and community forum invitations","Tailored newsletters aligned to specific content interests","Carefully curated 'best of' lists designed to reduce the effort of choosing"],ans:3},
+      {q:"What type of segmentation strategy did StreamPulse implement?",opts:["Demographic segmentation based on age and gender","Geographic segmentation by US region","Psychographic segmentation based on values and lifestyle","Behavioural segmentation based on actual usage patterns"],ans:3},
+      {q:"By how much did the churn rate fall within twelve months?",opts:["8%","12%","18%","25%"],ans:2},
+      {q:"How many new subscribers did the referral programme contribute?",opts:["14,000","40,000","100,000","140,000"],ans:3},
+      {q:"What does the case study say about the superiority of behavioural segmentation?",opts:["It is cheaper and faster than all other research methods","It works best when combined with large-scale qualitative research","It is grounded in real usage data rather than demographic assumptions, unlocking significant commercial value","It can only be used by large companies with advanced technology platforms"],ans:2},
+      {q:"What did StreamPulse invest in following the success of the programme?",opts:["A new content production studio and exclusive film rights","Mergers with competing streaming services","A dedicated Audience Intelligence team and further data analytics capability","A large-scale television advertising campaign"],ans:2},
+    ]
+  }
+];
+
+/* ── FINAL ASSESSMENT ── */
+const assessmentQs = [
+  {q:"What is 'primary research' in a marketing context?",opts:["Using published reports and industry statistics from third-party sources","Collecting original data directly from consumers through surveys, interviews, or observation","Reviewing competitors' marketing campaigns and communications","Analysing historical sales data from internal company records"],ans:1},
+  {q:"What is the main difference between qualitative and quantitative research?",opts:["Qualitative is more expensive; quantitative is cheaper","Qualitative explores opinions and motivations in depth; quantitative collects numerical data from large samples","Qualitative uses surveys; quantitative uses interviews","Qualitative is secondary research; quantitative is primary research"],ans:1},
+  {q:"Which sentence uses the comparative form correctly?",opts:["The results were more better than expected.","Focus groups provide deepest insights than surveys.","The online survey was more cost-effective than the focus group programme.","This segment is the most higher-value of all."],ans:2},
+  {q:"What is psychographic segmentation?",opts:["Dividing the market based on age, gender, and income","Dividing the market based on values, lifestyle, attitudes, and personality traits","Dividing the market based on purchase frequency and brand loyalty","Dividing the market based on country, city, or region"],ans:1},
+  {q:"Which sentence uses contrast language correctly?",opts:["Despite the sample was small, the results were useful.","Although the quantitative data showed strong awareness, purchase intent remained low.","However the brand has high recognition, sales are disappointing.","Nevertheless the focus groups confirmed the findings, we ran a survey."],ans:1},
+  {q:"What is a buyer persona?",opts:["A legal definition of the target market used in advertising regulation","A statistical profile of all consumers in a market","A semi-fictional, research-based representation of an ideal customer including goals and pain points","A demographic breakdown of a company's existing customer base"],ans:2},
+  {q:"What does NPS stand for and what does it measure?",opts:["Net Promotional Spend — total advertising budget","Net Promoter Score — the likelihood of consumers recommending a brand to others","New Product Score — consumer rating of a product launch","National Purchase Survey — quarterly consumer spending data"],ans:1},
+  {q:"Which quantifier is most appropriate for describing 89% of respondents?",opts:["A significant minority of","Few","The vast majority of","A small proportion of"],ans:2},
+  {q:"What is the STP model?",opts:["A sales forecasting framework: Sales, Trends, Projections","A digital marketing model: Search, Targeting, Performance","A strategic marketing framework: Segmentation, Targeting, Positioning","A research model: Sampling, Testing, Publishing"],ans:2},
+  {q:"What does behavioural segmentation focus on?",opts:["Consumers' lifestyle, values, and personality","Consumers' age, income, and education","Consumers' geographic location and climate","Consumers' actual actions — purchase frequency, loyalty, usage patterns, and benefits sought"],ans:3},
+  {q:"Which sentence uses a superlative correctly in a research context?",opts:["This is the more significant finding from the entire study.","Of all segments, the 25–34 group showed the highest brand engagement.","The qualitative research was the more useful than the survey.","The sample was the biger we had ever used."],ans:1},
+  {q:"What is a focus group?",opts:["A structured questionnaire sent to thousands of consumers","A small, moderated discussion with selected participants used to explore attitudes and reactions","A statistical analysis of sales performance by customer group","A one-on-one interview conducted in a consumer's home"],ans:1},
+  {q:"Which expression correctly describes approximately one third of respondents?",opts:["The vast majority of respondents","Almost all respondents","Approximately a third of respondents","Fewer than one in ten respondents"],ans:2},
+  {q:"What is a 'pain point' in a marketing context?",opts:["A negative review left by a dissatisfied customer","A flaw in a product's design identified during testing","A specific problem or frustration that a product or service aims to solve for the customer","A complaint received through a customer service channel"],ans:2},
+  {q:"Which of the following is an example of secondary research?",opts:["Conducting eight focus groups with existing customers","Commissioning a brand perception survey","Reviewing a published industry report on consumer trends in the organic food sector","Observing shoppers in a supermarket aisle"],ans:2},
+  {q:"What does 'positioning' mean in the context of the STP model?",opts:["Where a company's products are physically sold","Defining how a brand should be perceived by the target audience relative to competitors","The process of selecting which market segments to target","The budget allocation across different marketing channels"],ans:1},
+  {q:"Which is the correct use of concession language?",opts:["Despite of the small sample, the findings are valid.","Although the brand has strong awareness, it struggles to convert interest into purchase.","However the results were positive but we need more research.","Despite the brand was expensive, it had a loyal following."],ans:1},
+  {q:"What type of research method involves observing consumers in their natural environment?",opts:["A structured online survey","An NPS measurement exercise","A focus group conducted in a research facility","Ethnographic research"],ans:3},
+  {q:"What is 'consumer insight' as defined in this module?",opts:["A simple data point from a survey result","A deep, actionable understanding of consumer behaviour or motivations that can inform strategy","A summary of competitor activity","A demographic profile of the target market"],ans:1},
+  {q:"What does geographic segmentation involve?",opts:["Dividing the market by personality and values","Grouping consumers by their brand loyalty and usage frequency","Dividing the market based on physical location such as country, region, or city","Segmenting consumers by their income level and occupation"],ans:2},
+];
+
+/* ═══════════════════════════════════════
+   RENDER & INTERACTION FUNCTIONS
+═══════════════════════════════════════ */
+
+function renderSpeaking(){
+  const g=document.getElementById('speakingGrid');
+  speakingQs.forEach((q,i)=>{
+    g.innerHTML+=`<div class="q-card"><span class="q-num">Q${String(i+1).padStart(2,'0')}</span><span>${q}</span></div>`;
+  });
+}
+
+function renderWordBank(){
+  const g=document.getElementById('wordGrid');
+  wordBank.forEach(w=>{
+    g.innerHTML+=`<div class="word-card"><div class="word-emoji">${w.emoji}</div><div class="word-term">${w.term}</div><div class="word-def">${w.def}</div></div>`;
+  });
+}
+
+function renderReading(){
+  const c=document.getElementById('readingContent');
+  let html='';
+  readings.forEach((r,ri)=>{
+    html+=`<div class="reading-text"><h3>${r.title}</h3>`;
+    r.paragraphs.forEach(p=>{html+=`<p>${p}</p>`;});
+    html+=`</div><div class="card"><h4 style="font-family:'Playfair Display',serif;margin-bottom:20px;color:var(--navy);">Comprehension Questions — ${r.title.split(':')[0]}</h4>`;
+    r.questions.forEach((q,qi)=>{
+      const id=`read${ri}_${qi}`;
+      html+=`<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j)=>{html+=`<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;});
+      html+=`</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  c.innerHTML=html;
+}
+
+function selectMCQ(id,chosen,correct){
+  const opts=document.querySelectorAll(`[id^="${id}_opt"]`);
+  if(opts[0].classList.contains('disabled'))return;
+  opts.forEach((o,i)=>{
+    o.classList.add('disabled');
+    if(i===correct)o.classList.add('correct');
+    else if(i===chosen)o.classList.add('wrong');
+  });
+  const fb=document.getElementById(`${id}_fb`);
+  fb.classList.add('show');
+  if(chosen===correct){fb.classList.add('correct');fb.textContent='✓ Correct! Well done.';}
+  else{fb.classList.add('wrong');fb.textContent=`✗ The correct answer is: ${['A','B','C','D'][correct]}. ${document.getElementById(`${id}_opt${correct}`).textContent.trim()}`;}
+  updateProgress();
+}
+
+function renderVocab(){
+  const c=document.getElementById('vocabContent');
+  let html='';
+
+  // EX 1 — MCQ
+  html+=`<div class="ex-header"><div class="ex-num">1</div><div><div class="ex-title">${vocabEx1MCQ.title}</div><div class="ex-desc">Choose the word or phrase that best completes each sentence.</div></div></div><div class="card">`;
+  vocabEx1MCQ.questions.forEach((q,i)=>{
+    const id=`voc1_${i}`;
+    html+=`<div class="mcq-block"><div class="mcq-question">${i+1}. ${q.q}</div><div class="mcq-options">`;
+    ['A','B','C','D'].forEach((l,j)=>{html+=`<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;});
+    html+=`</div><div class="feedback" id="${id}_fb"></div></div>`;
+  });
+  html+=`</div>`;
+
+  // EX 2 — DROPDOWN GAP FILL
+  html+=`<div class="ex-header"><div class="ex-num">2</div><div><div class="ex-title">${vocabEx2Dropdown.title}</div><div class="ex-desc">Select the correct word or phrase from each dropdown to complete the sentences.</div></div></div><div class="card">`;
+  vocabEx2Dropdown.items.forEach((item,i)=>{
+    const parts=item.sentence.split('_____');
+    const optHTML=`<option value="" disabled selected>▼ choose</option>`+item.opts.map((o,idx)=>`<option value="${idx}">${o}</option>`).join('');
+    html+=`<div class="gap-sentence">${i+1}. ${parts[0]}<select class="gap-select" id="gap2_${i}" data-answer="${item.answer}">${optHTML}</select>${parts[1]||''}</div>`;
+  });
+  html+=`<div style="margin-top:20px;"><button class="check-mcq-btn" onclick="checkDropdownGapFill()">Check Answers</button></div></div>`;
+
+  // EX 3 — TRUE / FALSE
+  html+=`<div class="ex-header"><div class="ex-num">3</div><div><div class="ex-title">${vocabEx3TF.title}</div><div class="ex-desc">Read each statement carefully and decide whether it is True or False.</div></div></div><div class="card">`;
+  vocabEx3TF.items.forEach((item,i)=>{
+    html+=`<div class="mcq-block"><div class="mcq-question">${i+1}. ${item.statement}</div><div class="mcq-options">
+      <div class="mcq-option" onclick="selectTF('tf3_${i}',true,${item.answer})" id="tf3_${i}_optT"><span class="opt-letter">T</span>True</div>
+      <div class="mcq-option" onclick="selectTF('tf3_${i}',false,${item.answer})" id="tf3_${i}_optF"><span class="opt-letter">F</span>False</div>
+    </div><div class="feedback" id="tf3_${i}_fb"></div></div>`;
+  });
+  html+=`</div>`;
+  c.innerHTML=html;
+}
+
+function checkDropdownGapFill(){
+  const count=vocabEx2Dropdown.items.length;
+  let anyUnanswered=false;
+  for(let i=0;i<count;i++){
+    const sel=document.getElementById(`gap2_${i}`);
+    if(!sel)continue;
+    if(sel.value===''){anyUnanswered=true;continue;}
+    const chosen=parseInt(sel.value);
+    const correct=parseInt(sel.dataset.answer);
+    sel.classList.remove('correct','wrong');
+    sel.classList.add(chosen===correct?'correct':'wrong');
+    sel.disabled=true;
+  }
+  if(anyUnanswered)alert('Please answer all questions before checking.');
+  updateProgress();
+}
+
+function selectTF(id,chosen,correct){
+  const optT=document.getElementById(`${id}_optT`);
+  const optF=document.getElementById(`${id}_optF`);
+  if(optT.classList.contains('disabled'))return;
+  [optT,optF].forEach(o=>o.classList.add('disabled'));
+  const ok=chosen===correct;
+  if(chosen===true){optT.classList.add(ok?'correct':'wrong');if(!ok)optF.classList.add('correct');}
+  else{optF.classList.add(ok?'correct':'wrong');if(!ok)optT.classList.add('correct');}
+  const fb=document.getElementById(`${id}_fb`);
+  fb.classList.add('show',ok?'correct':'wrong');
+  fb.textContent=ok?'✓ Correct!':`✗ The correct answer is: ${correct?'True':'False'}.`;
+  updateProgress();
+}
+
+function renderGrammar(){
+  const c=document.getElementById('grammarContent');
+  let html='';
+  [grammarEx1,grammarEx2,grammarEx3].forEach((ex,ei)=>{
+    html+=`<div class="ex-header"><div class="ex-num">${ei+1}</div><div><div class="ex-title">${ex.title}</div><div class="ex-desc">${ex.instructions}</div></div></div><div class="card">`;
+    ex.questions.forEach((q,qi)=>{
+      const id=`gram${ei}_${qi}`;
+      html+=`<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j)=>{html+=`<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;});
+      html+=`</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  c.innerHTML=html;
+}
+
+function renderGrammarReview(){
+  document.getElementById('grammarReviewContent').innerHTML=grammarReviewHTML;
+}
+
+function renderWriting(){
+  const c=document.getElementById('writingContent');
+  let html='';
+  writingActivities.forEach((a,i)=>{
+    html+=`<div class="writing-prompt">
+      <h3>${a.title}</h3>
+      <p style="margin-bottom:10px;"><strong>Task type:</strong> ${a.type}</p>
+      <p>${a.prompt}</p>
+      <ul>${a.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+      <p style="margin-top:12px;color:rgba(255,255,255,.5);font-size:.8rem;">Word count: ${a.min}–${a.max} words</p>
+    </div>
+    <div class="card">
+      <textarea class="writing-area" id="write${i}" placeholder="Write your response here..." oninput="countWords('write${i}','wc${i}','${a.min}','${a.max}')"></textarea>
+      <div class="word-count" id="wc${i}">0 words (target: ${a.min}–${a.max})</div>
+      <button class="submit-btn" onclick="submitWriting(${i})">Submit Response ✓</button>
+      <div class="submit-feedback" id="wfb${i}">✓ Your response has been submitted successfully. Great work on completing this writing task!</div>
+    </div>`;
+  });
+  c.innerHTML=html;
+}
+
+function countWords(id,wcId,min,max){
+  const txt=document.getElementById(id).value.trim();
+  const words=txt?txt.split(/\s+/).length:0;
+  const wc=document.getElementById(wcId);
+  wc.textContent=`${words} words (target: ${min}–${max})`;
+  wc.style.color=words>=min&&words<=max?'var(--green)':words>max?'var(--red)':'var(--text-muted)';
+}
+
+function submitWriting(i){
+  const txt=document.getElementById(`write${i}`).value.trim();
+  if(txt.length<20){alert('Please write your response before submitting.');return;}
+  document.getElementById(`wfb${i}`).style.display='block';
+  document.getElementById(`write${i}`).disabled=true;
+  updateProgress();
+}
+
+/* ── LISTENING ── */
+let ttsState={};
+
+function renderListening(){
+  const c=document.getElementById('listeningContent');
+  let html='';
+  listeningActivities.forEach((act,ai)=>{
+    html+=`<div class="listen-card">
+      <div class="listen-card-header">
+        <div class="listen-icon">🎙️</div>
+        <div>
+          <div class="listen-title">${act.title}</div>
+          <div class="listen-meta">${act.meta}</div>
+          <div class="listen-badges">
+            <span class="badge badge-gold">LEVEL: ${act.level}</span>
+            <span class="badge badge-outline">${act.type}</span>
+            <span class="badge badge-outline">FOCUS: ${act.focus}</span>
+          </div>
+        </div>
+      </div>
+      <div class="audio-player">
+        <div class="audio-controls">
+          <button class="play-btn" onclick="togglePlay(${ai})" id="playBtn${ai}">▶</button>
+          <div class="audio-info">
+            <div class="audio-title-sm">${act.title.split(':').slice(1).join(':').trim()}</div>
+            <div class="audio-sub">${act.meta}</div>
+          </div>
+        </div>
+        <div class="progress-audio"><div class="progress-audio-fill" id="prog${ai}"></div></div>
+        <div class="audio-time" id="time${ai}">0:00 / 0:00</div>
+        <div class="speed-btns">
+          <button class="speed-btn" onclick="setSpeed(${ai},0.75,this)">0.75×</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2×</button>
+        </div>
+        <div class="audio-note">Uses your browser's built-in speech engine. Best in Chrome or Edge for a US English female voice.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">▼ Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans${ai}">${act.transcript.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</div>
+    </div>
+    <div class="card" style="padding-top:24px;">
+      <h4 style="font-family:'Playfair Display',serif;margin-bottom:20px;">Comprehension Questions — Activity ${ai+1}</h4>`;
+    act.questions.forEach((q,qi)=>{
+      const id=`lis${ai}_${qi}`;
+      html+=`<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j)=>{html+=`<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;});
+      html+=`</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  c.innerHTML=html;
+}
+
+function toggleTranscript(ai){
+  document.getElementById(`trans${ai}`).classList.toggle('open');
+}
+
+function togglePlay(ai){
+  const act=listeningActivities[ai];
+  const btn=document.getElementById(`playBtn${ai}`);
+  if(ttsState[ai]?.playing){speechSynthesis.cancel();ttsState[ai].playing=false;btn.textContent='▶';return;}
+  speechSynthesis.cancel();
+  const utter=new SpeechSynthesisUtterance(act.transcript);
+  utter.rate=ttsState[ai]?.rate||0.85;
+  utter.pitch=1.05;
+  const voices=speechSynthesis.getVoices();
+  const preferred=voices.find(v=>v.lang==='en-US'&&/samantha|zira|google us english|aria|jenny|female/i.test(v.name))
+    ||voices.find(v=>v.lang==='en-US')
+    ||voices.find(v=>v.lang.startsWith('en'));
+  if(preferred)utter.voice=preferred;
+  ttsState[ai]={playing:true,rate:utter.rate};
+  btn.textContent='⏸';
+  const words=act.transcript.split(' ').length;
+  const estDuration=(words/130)/utter.rate*60000;
+  const startTime=Date.now();
+  const prog=document.getElementById(`prog${ai}`);
+  const timeEl=document.getElementById(`time${ai}`);
+  const interval=setInterval(()=>{
+    if(!ttsState[ai]?.playing){clearInterval(interval);return;}
+    const elapsed=Date.now()-startTime;
+    const pct=Math.min((elapsed/estDuration)*100,100);
+    prog.style.width=pct+'%';
+    const elSec=Math.floor(elapsed/1000),totSec=Math.floor(estDuration/1000);
+    timeEl.textContent=`${Math.floor(elSec/60)}:${String(elSec%60).padStart(2,'0')} / ${Math.floor(totSec/60)}:${String(totSec%60).padStart(2,'0')}`;
+  },300);
+  utter.onend=()=>{if(ttsState[ai])ttsState[ai].playing=false;btn.textContent='▶';prog.style.width='100%';clearInterval(interval);};
+  speechSynthesis.speak(utter);
+}
+
+function setSpeed(ai,rate,btn){
+  btn.closest('.speed-btns').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(ttsState[ai]){
+    ttsState[ai].rate=rate;
+    if(ttsState[ai].playing){speechSynthesis.cancel();ttsState[ai].playing=false;document.getElementById(`playBtn${ai}`).textContent='▶';}
+  }else{ttsState[ai]={rate};}
+}
+
+/* ── CASE STUDIES ── */
+function renderCaseStudies(){
+  const c=document.getElementById('caseContent');
+  let html='';
+  caseStudies.forEach((cs,ci)=>{
+    html+=`<div class="case-header"><div class="case-meta">${cs.meta}</div><h3>${cs.title}</h3>
+      ${cs.text.split('\n\n').map(p=>`<p>${p}</p>`).join('')}
+    </div><div class="card"><h4 style="font-family:'Playfair Display',serif;margin-bottom:20px;">Comprehension Questions</h4>`;
+    cs.questions.forEach((q,qi)=>{
+      const id=`cs${ci}_${qi}`;
+      html+=`<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j)=>{html+=`<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;});
+      html+=`</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  c.innerHTML=html;
+}
+
+/* ── ASSESSMENT ── */
+let assessmentAttempts=0;
+
+function renderAssessment(){
+  const c=document.getElementById('assessmentContent');
+  let html='';
+  assessmentQs.forEach((q,i)=>{
+    const id=`ass_${i}`;
+    html+=`<div class="mcq-block"><div class="mcq-question">${i+1}. ${q.q}</div><div class="mcq-options">`;
+    ['A','B','C','D'].forEach((l,j)=>{html+=`<div class="mcq-option" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;});
+    html+=`</div></div>`;
+  });
+  html+=`<button class="check-btn" onclick="submitAssessment()">Submit Assessment →</button>`;
+  c.innerHTML=html;
+  // attach click handlers
+  assessmentQs.forEach((q,i)=>{
+    const id=`ass_${i}`;
+    ['A','B','C','D'].forEach((l,j)=>{
+      document.getElementById(`${id}_opt${j}`).onclick=()=>{
+        if(document.getElementById(`${id}_opt0`).classList.contains('disabled'))return;
+        document.querySelectorAll(`[id^="${id}_opt"]`).forEach(o=>o.classList.remove('selected-opt'));
+        document.getElementById(`${id}_opt${j}`).classList.add('selected-opt');
+      };
+    });
+  });
+}
+
+function submitAssessment(){
+  if(assessmentAttempts>=2){alert('You have used both attempts for this assessment.');return;}
+  let score=0;
+  assessmentQs.forEach((q,i)=>{
+    const id=`ass_${i}`;
+    let chosen=-1;
+    document.querySelectorAll(`[id^="${id}_opt"]`).forEach((o,j)=>{if(o.classList.contains('selected-opt'))chosen=j;});
+    document.querySelectorAll(`[id^="${id}_opt"]`).forEach((o,j)=>{
+      o.classList.add('disabled');o.classList.remove('selected-opt');
+      if(j===q.ans)o.classList.add('correct');
+      else if(j===chosen)o.classList.add('wrong');
+    });
+    if(chosen===q.ans)score++;
+  });
+  assessmentAttempts++;
+  const pct=Math.round((score/assessmentQs.length)*100);
+  const pass=pct>=70;
+  const rb=document.getElementById('assessmentResult');
+  rb.className=`result-box ${pass?'pass':'fail'}`;
+  rb.style.display='block';
+  rb.innerHTML=`<div class="result-score ${pass?'pass':'fail'}">${pct}%</div>
+    <div class="result-label">${pass?'🏆 Congratulations — You Passed Module 2!':'📚 Keep Studying — You Can Retake!'}</div>
+    <div class="result-detail">Score: ${score}/${assessmentQs.length} correct &nbsp;·&nbsp; ${pass?'✅ Pass':'❌ Fail'} &nbsp;·&nbsp; Attempts used: ${assessmentAttempts}/2</div>
+    ${assessmentAttempts<2&&!pass?`<button class="check-btn" style="margin-top:16px;" onclick="retakeAssessment()">Retake Assessment</button>`:''}`;
+  rb.scrollIntoView({behavior:'smooth'});
+  updateProgress();
+}
+
+function retakeAssessment(){
+  assessmentQs.forEach((q,i)=>{
+    const id=`ass_${i}`;
+    document.querySelectorAll(`[id^="${id}_opt"]`).forEach(o=>o.classList.remove('disabled','correct','wrong','selected-opt'));
+  });
+  document.getElementById('assessmentResult').style.display='none';
+}
+
+/* ── NAV ── */
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const sec=item.dataset.section;
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    item.classList.add('active');
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(`sec-${sec}`).classList.add('active');
+    window.scrollTo(0,0);
+    speechSynthesis.cancel();
+    Object.keys(ttsState).forEach(k=>{
+      if(ttsState[k])ttsState[k].playing=false;
+      const pb=document.getElementById(`playBtn${k}`);
+      if(pb)pb.textContent='▶';
+    });
+  });
+});
+
+function updateProgress(){
+  const answered=document.querySelectorAll('.mcq-option.correct,.mcq-option.wrong,.gap-select.correct,.gap-select.wrong').length;
+  const pct=Math.min(Math.round((answered/130)*100),100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressPct').textContent=pct+'%';
+}
+
+/* ── INIT ── */
+window.addEventListener('load',()=>{
+  renderSpeaking();
+  renderWordBank();
+  renderReading();
+  renderVocab();
+  renderGrammar();
+  renderGrammarReview();
+  renderWriting();
+  renderListening();
+  renderCaseStudies();
+  renderAssessment();
+  speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();
+});
+
+/* ── SELECTED OPTION STYLE ── */
+const selStyle=document.createElement('style');
+selStyle.textContent=`.selected-opt{border-color:var(--gold)!important;background:rgba(201,149,42,.12)!important;}`;
+document.head.appendChild(selStyle);
+</script>
+</body>
+</html>

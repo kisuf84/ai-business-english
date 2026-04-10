@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Budgeting and Forecasting — Finance & Accounting English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0d1e35; --navy-mid:#152e4d; --navy-light:#1e4068;
+  --gold:#b8860b; --gold-light:#d4a820;
+  --cream:#f4f1eb; --cream-dark:#e8e2d6;
+  --white:#ffffff; --text-light:#a0b4cc; --text-mid:#5e7a99;
+  --red-accent:#c0392b; --green-accent:#1a8a4a; --teal:#0e7490;
+  --sidebar-w:265px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);display:flex;min-height:100vh;overflow-x:hidden;}
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:100;overflow-y:auto;}
+.sidebar-brand{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.sidebar-brand h1{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--gold-light);line-height:1.35;margin-bottom:4px;}
+.sidebar-brand .subtitle{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);font-weight:500;}
+.level-badge{display:inline-block;margin-top:10px;background:var(--gold);color:#fff;font-size:10px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:20px;}
+.sidebar-section-label{padding:18px 20px 8px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-mid);font-weight:600;}
+.nav-item{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;cursor:pointer;transition:all 0.2s;border-left:3px solid transparent;}
+.nav-item:hover{background:rgba(255,255,255,0.05);}
+.nav-item.active{background:rgba(212,168,32,0.13);border-left-color:var(--gold-light);}
+.nav-item .nav-left{display:flex;align-items:center;gap:10px;}
+.nav-icon{font-size:15px;}
+.nav-label{font-size:13px;color:var(--text-light);font-weight:400;}
+.nav-item.active .nav-label{color:var(--white);font-weight:500;}
+.nav-badge{font-size:10px;font-weight:700;color:var(--navy);background:var(--gold-light);padding:1px 7px;border-radius:10px;}
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;}
+.section{display:none;} .section.active{display:block;}
+.hero{background:linear-gradient(135deg,#0d1e35 0%,#152e4d 55%,#0e3055 100%);padding:60px 60px 52px;position:relative;overflow:hidden;}
+.hero::before{content:'M4';position:absolute;right:-10px;bottom:-50px;font-family:'Playfair Display',serif;font-size:320px;font-weight:900;color:rgba(255,255,255,0.025);line-height:1;pointer-events:none;}
+.hero::after{content:'';position:absolute;top:0;right:0;width:340px;height:100%;background:linear-gradient(135deg,transparent 0%,rgba(14,116,144,0.08) 100%);pointer-events:none;}
+.module-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.14);padding:6px 16px;border-radius:30px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-light);font-weight:500;margin-bottom:28px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(34px,4.8vw,56px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:4px;}
+.hero h2 span{color:var(--gold-light);}
+.hero p{font-size:15px;color:var(--text-light);max-width:640px;line-height:1.75;margin-top:18px;font-weight:300;}
+.hero-stats{display:flex;gap:38px;margin-top:42px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;gap:4px;}
+.stat-num{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--gold-light);line-height:1;}
+.stat-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);font-weight:500;}
+.progress-bar-wrap{background:var(--navy-mid);padding:15px 60px;display:flex;align-items:center;gap:20px;}
+.progress-label{font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--text-light);white-space:nowrap;}
+.progress-track{flex:1;height:6px;background:rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:10px;width:0%;transition:width 0.9s ease;}
+.progress-pct{font-size:13px;font-weight:700;color:var(--gold-light);min-width:34px;}
+.content-area{padding:50px 60px;}
+.card{background:var(--white);border-radius:14px;padding:30px 34px;margin-bottom:26px;border:1px solid var(--cream-dark);box-shadow:0 2px 16px rgba(13,30,53,0.06);}
+.card-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.card-title-bar{width:42px;height:3px;background:var(--gold);border-radius:2px;margin-bottom:22px;}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px;}
+.outcome-item{display:flex;align-items:flex-start;gap:12px;background:var(--cream);border-radius:10px;padding:14px 16px;border-left:3px solid var(--gold);}
+.outcome-num{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--gold);line-height:1;min-width:24px;}
+.outcome-text{font-size:13.5px;color:var(--navy);line-height:1.5;font-weight:400;}
+.speaking-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.speaking-card{background:var(--cream);border-radius:10px;padding:18px 20px;border-top:3px solid var(--gold);transition:transform 0.2s,box-shadow 0.2s;}
+.speaking-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(13,30,53,0.1);}
+.q-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);font-weight:500;margin-bottom:8px;letter-spacing:1px;}
+.q-text{font-size:13.5px;color:var(--navy);line-height:1.55;}
+.wordbank-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.word-card{background:var(--navy);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:transform 0.2s;}
+.word-card:hover{transform:translateY(-2px);}
+.word-emoji{font-size:24px;}
+.word-term{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--gold-light);}
+.word-def{font-size:12.5px;color:var(--text-light);line-height:1.5;}
+.reading-text-box{background:var(--cream);border-radius:12px;padding:28px 32px;margin-bottom:28px;border-left:4px solid var(--gold);}
+.reading-text-box h4{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--navy);margin-bottom:16px;}
+.reading-text-box p{font-size:14px;color:var(--navy);line-height:1.82;margin-bottom:14px;}
+.reading-text-box p:last-child{margin-bottom:0;}
+.mcq-block{margin-bottom:22px;}
+.mcq-q{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:12px;line-height:1.5;}
+.mcq-options{display:flex;flex-direction:column;gap:8px;}
+.mcq-option{display:flex;align-items:center;gap:10px;background:var(--cream);border:2px solid var(--cream-dark);border-radius:8px;padding:10px 14px;cursor:pointer;transition:all 0.2s;font-size:13.5px;color:var(--navy);user-select:none;}
+.mcq-option:hover{border-color:var(--gold);background:#fdf6e3;}
+.mcq-option.selected{border-color:var(--gold);background:#fdf0c8;}
+.mcq-option.correct{border-color:var(--green-accent);background:#e8f8ee;color:#145e32;}
+.mcq-option.incorrect{border-color:var(--red-accent);background:#fdecea;color:#7b1a14;}
+.option-letter{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;width:22px;height:22px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy);}
+.mcq-option.correct .option-letter{background:var(--green-accent);color:white;}
+.mcq-option.incorrect .option-letter{background:var(--red-accent);color:white;}
+.check-btn{margin-top:14px;background:var(--navy);color:var(--gold-light);border:none;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;font-family:'DM Sans',sans-serif;}
+.check-btn:hover{background:var(--navy-light);}
+.score-display{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--gold-light);font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;margin-top:16px;}
+.ex-tabs{display:flex;gap:4px;margin-bottom:28px;background:var(--cream-dark);border-radius:10px;padding:4px;}
+.ex-tab{flex:1;text-align:center;padding:9px 12px;border-radius:7px;font-size:12.5px;font-weight:500;cursor:pointer;color:var(--text-mid);transition:all 0.2s;}
+.ex-tab.active{background:var(--navy);color:var(--gold-light);}
+.grammar-ref-box{background:var(--navy);border-radius:14px;padding:28px 32px;margin-bottom:18px;color:var(--white);}
+.grammar-ref-box h4{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold-light);margin-bottom:16px;}
+.grammar-rule{background:rgba(255,255,255,0.07);border-radius:8px;padding:14px 18px;margin-bottom:12px;border-left:3px solid var(--gold);}
+.grammar-rule .rule-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold-light);margin-bottom:8px;}
+.grammar-rule p,.grammar-rule li{font-size:13px;color:var(--text-light);line-height:1.65;}
+.grammar-rule code{font-family:'DM Mono',monospace;background:rgba(212,168,32,0.18);color:var(--gold-light);padding:1px 6px;border-radius:4px;font-size:12px;}
+.grammar-rule ul{padding-left:18px;}
+.gapfill-item{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:14px;color:var(--navy);line-height:2.1;margin-bottom:12px;}
+.gap-input{border:none;border-bottom:2px solid var(--gold);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);padding:2px 6px;width:155px;outline:none;text-align:center;}
+.gap-input.correct{border-color:var(--green-accent);color:var(--green-accent);}
+.gap-input.incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.tf-item{background:var(--cream);border-radius:8px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.tf-statement{font-size:13.5px;color:var(--navy);flex:1;line-height:1.5;}
+.tf-buttons{display:flex;gap:8px;flex-shrink:0;}
+.tf-btn{padding:6px 16px;border-radius:6px;border:2px solid var(--cream-dark);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:white;font-family:'DM Sans',sans-serif;}
+.tf-btn:hover{border-color:var(--gold);}
+.tf-btn.selected-true{background:var(--navy);color:white;border-color:var(--navy);}
+.tf-btn.selected-false{background:var(--navy);color:white;border-color:var(--navy);}
+.tf-btn.correct-answer{background:var(--green-accent);color:white;border-color:var(--green-accent);}
+.tf-btn.wrong-answer{background:var(--red-accent);color:white;border-color:var(--red-accent);}
+.writing-prompt{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:14px;padding:28px 32px;margin-bottom:20px;color:var(--white);}
+.writing-prompt h4{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold-light);margin-bottom:10px;}
+.writing-prompt p{font-size:13.5px;color:var(--text-light);line-height:1.75;}
+.writing-meta{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.writing-tag{background:rgba(212,168,32,0.18);color:var(--gold-light);font-size:11px;font-weight:600;letter-spacing:0.8px;padding:4px 12px;border-radius:20px;text-transform:uppercase;border:1px solid rgba(212,168,32,0.3);}
+.writing-textarea{width:100%;min-height:185px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.75;margin-bottom:12px;}
+.writing-textarea:focus{border-color:var(--gold);background:white;}
+.word-counter{font-size:12px;color:var(--text-mid);text-align:right;margin-bottom:12px;}
+.submit-btn{background:var(--gold);color:var(--navy);border:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.submit-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+.submit-success{display:none;align-items:center;gap:10px;background:#e8f8ee;border:1px solid var(--green-accent);border-radius:8px;padding:12px 18px;font-size:13.5px;color:#145e32;font-weight:500;margin-top:12px;}
+.listening-activity{background:linear-gradient(135deg,#152e4d 0%,#0d1e35 100%);border-radius:14px;margin-bottom:28px;overflow:hidden;}
+.listening-header{padding:22px 28px 18px;display:flex;align-items:flex-start;gap:16px;}
+.listening-icon{font-size:32px;margin-top:2px;}
+.listening-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.listening-subtitle{font-size:13px;color:var(--text-mid);}
+.listening-tags{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.l-tag{font-size:10px;font-weight:700;letter-spacing:0.8px;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.l-tag-level{background:rgba(212,168,32,0.2);color:var(--gold-light);border:1px solid rgba(212,168,32,0.3);}
+.l-tag-type{color:#e8a0a0;background:rgba(192,57,43,0.2);border:1px solid rgba(192,57,43,0.3);}
+.l-tag-focus{color:var(--text-light);}
+.audio-player{background:rgba(0,0,0,0.35);margin:0 20px 18px;border-radius:12px;padding:18px 20px;}
+.player-top{display:flex;align-items:center;gap:16px;margin-bottom:14px;}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--teal);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:white;flex-shrink:0;transition:background 0.2s,transform 0.15s;}
+.play-btn:hover{background:#0e8aaa;transform:scale(1.07);}
+.player-info{flex:1;}
+.player-title{font-size:13px;font-weight:600;color:var(--white);}
+.player-desc{font-size:11.5px;color:var(--text-mid);}
+.player-time{font-family:'DM Mono',monospace;font-size:12px;color:var(--text-mid);white-space:nowrap;}
+.progress-audio{width:100%;height:4px;background:rgba(255,255,255,0.15);border-radius:4px;margin-bottom:12px;}
+.progress-audio-fill{height:100%;background:var(--teal);border-radius:4px;width:0%;transition:width 0.4s;}
+.speed-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.speed-label{font-size:10px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;text-transform:uppercase;}
+.speed-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:var(--text-light);font-size:11px;font-weight:600;padding:3px 10px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+.speed-btn:hover{background:rgba(255,255,255,0.18);}
+.speed-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+.replay-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:var(--text-light);font-size:11px;font-weight:600;padding:3px 12px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.audio-note{font-size:11px;color:var(--text-mid);font-style:italic;margin-top:8px;}
+.transcript-toggle{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-mid);cursor:pointer;padding:10px 28px;border-top:1px solid rgba(255,255,255,0.07);user-select:none;transition:color 0.2s;}
+.transcript-toggle:hover{color:var(--text-light);}
+.transcript-toggle .arrow{transition:transform 0.2s;font-size:11px;}
+.transcript-toggle.open .arrow{transform:rotate(180deg);}
+.transcript-content{display:none;padding:16px 28px 20px;background:rgba(255,255,255,0.03);}
+.transcript-content.open{display:block;}
+.transcript-content p{font-size:13px;color:var(--text-light);line-height:1.8;font-style:italic;}
+.listening-mcq{padding:20px 28px 24px;}
+.instructions-box{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px 16px;margin-bottom:20px;display:flex;gap:10px;align-items:flex-start;}
+.inst-icon{font-size:14px;color:var(--gold-light);margin-top:1px;}
+.inst-text{font-size:12.5px;color:var(--text-mid);line-height:1.5;}
+.l-mcq-option{background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);color:var(--white);}
+.l-mcq-option:hover{border-color:var(--gold-light);background:rgba(212,168,32,0.1);color:var(--white);}
+.l-mcq-option.selected{border-color:var(--gold-light);background:rgba(212,168,32,0.15);color:var(--white);}
+.l-mcq-option.correct{border-color:var(--green-accent);background:rgba(26,138,74,0.15);color:#7dddaa;}
+.l-mcq-option.incorrect{border-color:var(--red-accent);background:rgba(192,57,43,0.15);color:#f1948a;}
+.listening-mcq .mcq-q{color:var(--white);}
+.listening-mcq .score-display{background:rgba(255,255,255,0.1);color:var(--gold-light);}
+.listening-mcq .option-letter{background:rgba(255,255,255,0.12);color:var(--white);}
+.l-check-btn{background:var(--teal);color:white;}
+.l-check-btn:hover{background:#0e8aaa;}
+.case-header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%);border-radius:14px 14px 0 0;padding:28px 32px;border-bottom:3px solid var(--gold);}
+.case-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);font-weight:600;margin-bottom:8px;}
+.case-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.3;}
+.case-sub{font-size:13.5px;color:var(--text-light);}
+.case-body{background:white;border-radius:0 0 14px 14px;padding:28px 32px;margin-bottom:24px;border:1px solid var(--cream-dark);border-top:none;}
+.case-body p{font-size:14px;color:var(--navy);line-height:1.82;margin-bottom:14px;}
+.case-body h5{font-family:'Playfair Display',serif;font-size:16px;color:var(--navy);margin:20px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--cream-dark);}
+.assessment-banner{background:linear-gradient(135deg,var(--navy),var(--navy-light));border-radius:14px;padding:32px 36px;color:white;margin-bottom:28px;text-align:center;}
+.assessment-banner h3{font-family:'Playfair Display',serif;font-size:26px;color:var(--gold-light);margin-bottom:8px;}
+.assessment-banner p{font-size:14px;color:var(--text-light);margin-bottom:20px;line-height:1.6;}
+.assessment-meta{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;}
+.a-meta-item{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.a-meta-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--gold-light);}
+.a-meta-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);}
+.attempts-display{display:flex;align-items:center;gap:8px;justify-content:flex-end;margin-bottom:20px;font-size:13px;color:var(--text-mid);}
+.attempt-dot{width:10px;height:10px;border-radius:50%;background:var(--cream-dark);}
+.attempt-dot.used{background:var(--gold);}
+.final-result{display:none;background:var(--navy);border-radius:12px;padding:28px 32px;text-align:center;color:white;margin-top:20px;}
+.final-result.pass{border:2px solid var(--green-accent);}
+.final-result.fail{border:2px solid var(--red-accent);}
+.final-score{font-family:'Playfair Display',serif;font-size:52px;font-weight:700;margin-bottom:4px;}
+.final-result.pass .final-score{color:#7dddaa;}
+.final-result.fail .final-score{color:#f1948a;}
+.final-verdict{font-size:18px;font-weight:600;margin-bottom:8px;}
+.final-msg{font-size:14px;color:var(--text-light);line-height:1.6;}
+.ex-divider{height:1px;background:var(--cream-dark);margin:28px 0;}
+@media(max-width:960px){:root{--sidebar-w:220px;}.content-area{padding:32px 28px;}.hero{padding:40px 28px 36px;}.progress-bar-wrap{padding:14px 28px;}.speaking-grid{grid-template-columns:1fr 1fr;}.wordbank-grid{grid-template-columns:1fr 1fr;}.outcomes-grid{grid-template-columns:1fr;}}
+@media(max-width:620px){#sidebar{display:none;}#main{margin-left:0;}.speaking-grid,.wordbank-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h1>Finance &amp; Accounting English</h1>
+    <div class="subtitle">Professional Development</div>
+    <span class="level-badge">B1–B2 LEVEL</span>
+  </div>
+  <div class="sidebar-section-label">Module 4</div>
+  <div class="nav-item active" onclick="showSection('overview')"><div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div></div>
+  <div class="nav-item" onclick="showSection('speaking')"><div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div><span class="nav-badge">21Q</span></div>
+  <div class="nav-item" onclick="showSection('wordbank')"><div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="showSection('reading')"><div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div><span class="nav-badge">2T</span></div>
+  <div class="nav-item" onclick="showSection('vocabulary')"><div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span></div><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar')"><div class="nav-left"><span class="nav-icon">📝</span><span class="nav-label">Grammar</span></div><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar-review')"><div class="nav-left"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div></div>
+  <div class="nav-item" onclick="showSection('writing')"><div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div><span class="nav-badge">2W</span></div>
+  <div class="nav-item" onclick="showSection('listening')"><div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div><span class="nav-badge">4Ex</span></div>
+  <div class="nav-item" onclick="showSection('casestudies')"><div class="nav-left"><span class="nav-icon">🏢</span><span class="nav-label">Case Studies</span></div><span class="nav-badge">2CS</span></div>
+  <div class="nav-item" onclick="showSection('assessment')"><div class="nav-left"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span></div><span class="nav-badge">20Q</span></div>
+</nav>
+
+<main id="main">
+
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="module-tag">💼 MODULE 4 · FINANCE &amp; ACCOUNTING ENGLISH</div>
+    <h2>Budgeting and<br><span>Forecasting</span></h2>
+    <p>Develop the professional English skills to plan, present, and discuss budgets and financial forecasts — from building annual budgets and rolling forecasts to explaining variances and communicating financial assumptions with precision.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <span class="progress-label">Module Progress</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:14px;line-height:1.85;color:#1a2e4a;margin-bottom:14px;"><strong>Welcome to Module 4: Budgeting and Forecasting.</strong> This module focuses on the language and analytical skills needed to plan, communicate, and challenge financial budgets and forecasts. Building on the financial statement knowledge developed in Modules 1–3, you will now explore how organisations use budgets to set targets, allocate resources, and measure performance — and how forecasts are updated throughout the year to reflect changing business conditions.</p>
+      <p style="font-size:14px;line-height:1.85;color:#1a2e4a;">You will learn the vocabulary of the full budget cycle — from zero-based and incremental budgeting to rolling forecasts and variance analysis — and develop the grammar skills to discuss assumptions, explain deviations from plan, and present financial projections confidently. This module is essential for finance business partners, FP&A analysts, controllers, and any manager who participates in planning and review processes.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">By the end of this module, you will be able to:</p>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-num">1</div><div class="outcome-text">Explain the purpose and structure of the annual budget cycle and describe the roles of different stakeholders in the budgeting process.</div></div>
+        <div class="outcome-item"><div class="outcome-num">2</div><div class="outcome-text">Distinguish between different budgeting approaches — zero-based, incremental, activity-based, and rolling forecasts — and discuss the advantages and limitations of each.</div></div>
+        <div class="outcome-item"><div class="outcome-num">3</div><div class="outcome-text">Use future forms correctly — will, going to, present continuous, and shall — to present financial projections, plans, and intentions in a professional context.</div></div>
+        <div class="outcome-item"><div class="outcome-num">4</div><div class="outcome-text">Apply hedging and tentative language correctly to express uncertainty in financial forecasts and to qualify assumptions and projections appropriately.</div></div>
+        <div class="outcome-item"><div class="outcome-num">5</div><div class="outcome-text">Perform and explain variance analysis — identifying favourable and adverse variances between budget and actual results — using precise and professional English.</div></div>
+        <div class="outcome-item"><div class="outcome-num">6</div><div class="outcome-text">Form and use advanced budgeting and forecasting collocations correctly — including budget headroom, sensitivity analysis, and bottom-up forecasting.</div></div>
+        <div class="outcome-item"><div class="outcome-num">7</div><div class="outcome-text">Write a formal budget commentary and a variance analysis report that communicates financial performance against plan clearly and professionally.</div></div>
+        <div class="outcome-item"><div class="outcome-num">8</div><div class="outcome-text">Listen to and understand budget review meetings, planning presentations, and FP&A briefings focused on budget setting, forecast updates, and variance explanations.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="speaking" class="section">
+  <div class="hero" style="padding-bottom:42px"><div class="module-tag">🎙️ SPEAKING ACTIVITIES</div><h2>Discussion <span>Questions</span></h2><p>21 questions to practise speaking about budgeting, forecasting, variance analysis, and financial planning at B1–B2 level.</p></div>
+  <div class="content-area"><div class="card"><div class="card-title">Speaking Questions</div><div class="card-title-bar"></div><p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">Discuss these questions with a partner or prepare a spoken response of 2–3 minutes each.</p><div class="speaking-grid" id="speakingGrid"></div></div></div>
+</div>
+
+<div id="wordbank" class="section">
+  <div class="hero" style="padding-bottom:42px"><div class="module-tag">📚 WORD BANK</div><h2>Key <span>Vocabulary</span></h2><p>21 essential terms for reading and discussing budgeting and forecasting at B1–B2 level.</p></div>
+  <div class="content-area"><div class="card"><div class="card-title">Module Vocabulary</div><div class="card-title-bar"></div><div class="wordbank-grid" id="wordbankGrid"></div></div></div>
+</div>
+
+<div id="reading" class="section">
+  <div class="hero" style="padding-bottom:42px"><div class="module-tag">📖 READING</div><h2>Reading <span>Texts</span></h2><p>Two professional texts followed by 10 multiple-choice comprehension questions each.</p></div>
+  <div class="content-area" id="readingContent"></div>
+</div>
+
+<div id="vocabulary" class="section">
+  <div class="hero" style="padding-bottom:42px"><div class="module-tag">✏️ VOCABULARY EXERCISES</div><h2>Vocabulary <span>Practice</span></h2><p>Three exercises to consolidate your understanding of key budgeting and forecasting vocabulary.</p></div>
+  <div class="content-area">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocabEx(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocabEx(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocabEx(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vocab-ex-0" class="vocab-ex"></div>
+    <div id="vocab-ex-1" class="vocab-ex" style="display:none"></div>
+    <div id="vocab-ex-2" class="vocab-ex" style="display:none"></div>
+  </div>
+</div>
+
+<div id="grammar" class="section">
+  <div class="hero" style="padding-bottom:42px"><div class="module-tag">📝 GRAMMAR EXERCISES</div><h2>Grammar <span>Practice</span></h2><p>Three grammar exercises covering future forms, hedging language, and budgeting collocations.</p></div>
+  <div class="content-area">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGrammarEx(0,this)">Exercise 1 · Future Forms</div>
+      <div class="ex-tab" onclick="showGrammarEx(1,this)">Exercise 2 · Hedging Language</div>
+      <div class="ex-tab" onclick="showGrammarEx(2,this)">Exercise 3 · Collocations</div>
+    </div>
+    <div id="grammar-ex-0" class="grammar-ex"></div>
+    <div id="grammar-ex-1" class="grammar-ex" style="display:none"></div>
+    <div id="grammar-ex-2" class="grammar-ex" style="display:none"></div>
+  </div>
+</div>
+
+<div id="grammar-review" class="section">
+  <div class="hero" style="padding-bottom:42px"><div class="module-tag">🔍 GRAMMAR REVIEW</div><h2>Grammar <span>Reference</span></h2><p>Detailed reference boxes covering all three grammar points in this module.</p></div>
+  <div class="content-area" id="grammarReviewContent"></div>
+</div>
+
+<div id="writing" class="section">
+  <div class="hero" style="padding-bottom:42px"><div class="module-tag">✍️ WRITING ACTIVITIES</div><h2>Writing <span>Tasks</span></h2><p>Two structured writing tasks to practise budget commentary and variance analysis reporting.</p></div>
+  <div class="content-area" id="writingContent"></div>
+</div>
+
+<div id="listening" class="section">
+  <div class="hero" style="padding-bottom:42px"><div class="module-tag">🎧 LISTENING ACTIVITIES</div><h2>Listening <span>Activities</span></h2><p>4 audio activities with built-in speech players — press ▶ Play, listen, then answer the questions.</p></div>
+  <div class="content-area" id="listeningContent"></div>
+</div>
+
+<div id="casestudies" class="section">
+  <div class="hero" style="padding-bottom:42px"><div class="module-tag">🏢 CASE STUDIES</div><h2>Real-World <span>Cases</span></h2><p>Two in-depth case studies on budgeting culture and forecasting practice, with comprehension questions.</p></div>
+  <div class="content-area" id="caseStudiesContent"></div>
+</div>
+
+<div id="assessment" class="section">
+  <div class="hero" style="padding-bottom:42px"><div class="module-tag">🎯 FINAL ASSESSMENT</div><h2>Module 4 <span>Assessment</span></h2><p>20 multiple-choice questions covering all areas of the module. Pass mark: 70%. Two attempts allowed.</p></div>
+  <div class="content-area" id="assessmentContent"></div>
+</div>
+
+</main>
+<script>
+/* ═══════════════════ DATA ═══════════════════ */
+
+const speakingQs = [
+  "What is the purpose of a budget in a business organisation? How does it differ from a financial forecast?",
+  "Can you describe the typical annual budget cycle at your company or a company you know? Who is involved and when does it take place?",
+  "What is the difference between a top-down budget and a bottom-up budget? What are the advantages and disadvantages of each approach?",
+  "What is zero-based budgeting? When might a company choose to use it instead of incremental budgeting?",
+  "What is a rolling forecast and how does it differ from a traditional annual budget? Why are rolling forecasts becoming more popular?",
+  "What is variance analysis and why is it important? Can you give an example of a favourable and an adverse variance?",
+  "What is the difference between a volume variance and a price variance? How would each affect the budget outcome differently?",
+  "How do you distinguish between a variance that is within management's control and one that is caused by external factors?",
+  "What is sensitivity analysis in the context of budgeting? Why do finance teams prepare best-case and worst-case scenarios?",
+  "What is a budget holder and what responsibilities does the role typically carry in a large organisation?",
+  "Have you ever been involved in a budget challenge meeting? What happens at these meetings and how are disagreements resolved?",
+  "What does 'budget gaming' mean? Why do some managers try to build slack into their budgets and how can organisations prevent this?",
+  "What is the difference between a fixed budget and a flexible budget? When would a flexible budget be more appropriate?",
+  "What role does FP&A (Financial Planning and Analysis) play in an organisation? How does it differ from the role of the accounting function?",
+  "What assumptions do companies typically need to make when building a revenue forecast? What data sources do they use?",
+  "What is the difference between a capital budget and an operating budget? What items would typically appear in each?",
+  "How do external factors — such as inflation, exchange rates, or interest rate changes — affect the budgeting process?",
+  "Why might a company revise its full-year forecast mid-year? What triggers a forecast revision?",
+  "What is the 'beyond budgeting' movement? What does it propose as an alternative to traditional annual budgeting?",
+  "In your opinion, what is the biggest challenge in the budgeting process — technical, organisational, or political? Explain your reasoning.",
+  "If you were a CFO, what changes would you make to improve the quality and efficiency of your company's budgeting process?"
+];
+
+const wordBank = [
+  {emoji:"📅",term:"Annual budget",def:"A detailed financial plan covering expected revenues, costs, and cash flows for a full twelve-month period, typically approved by senior management before the financial year begins."},
+  {emoji:"🔄",term:"Rolling forecast",def:"A continuously updated financial forecast that extends a set number of periods ahead — typically 12 or 18 months — and is revised at regular intervals as new information becomes available."},
+  {emoji:"🔢",term:"Zero-based budgeting (ZBB)",def:"A budgeting approach in which every expense must be justified from scratch each period, with no automatic carry-forward of prior year spending. Resources are allocated based on current need rather than historical precedent."},
+  {emoji:"📈",term:"Incremental budgeting",def:"The most common budgeting method, in which the prior year's budget or actuals are used as a starting point and adjusted by a percentage or fixed amount for the new period."},
+  {emoji:"⚖️",term:"Variance analysis",def:"The process of comparing actual financial results to budgeted or forecast figures, identifying the size and cause of differences — known as variances — and determining whether they are favourable or adverse."},
+  {emoji:"✅",term:"Favourable variance",def:"A variance in which actual results are better than budget — for example, actual revenue exceeding budgeted revenue, or actual costs coming in below budget."},
+  {emoji:"❌",term:"Adverse variance",def:"A variance in which actual results are worse than budget — for example, actual costs exceeding the budgeted figure, or revenue falling short of target."},
+  {emoji:"🎯",term:"Budget holder",def:"A manager or department head who is assigned responsibility for controlling spending or revenue performance against an agreed budget within their area of the business."},
+  {emoji:"📊",term:"Flexible budget",def:"A budget that adjusts automatically to reflect the actual level of activity or volume achieved, allowing more meaningful comparisons between budgeted and actual costs at different output levels."},
+  {emoji:"🔍",term:"Sensitivity analysis",def:"A technique used to assess how changes in key assumptions — such as revenue growth rate, input costs, or exchange rates — affect financial outcomes. Used to stress-test a forecast or budget."},
+  {emoji:"🏗️",term:"Capital budget",def:"A financial plan for significant long-term investments in assets such as property, equipment, or technology. Separate from the operating budget and typically subject to a formal approval process."},
+  {emoji:"📋",term:"Operating budget",def:"A financial plan covering the day-to-day revenues and expenses of a business — including salaries, marketing, and overhead — for a given period. Feeds directly into the projected income statement."},
+  {emoji:"🔺",term:"Budget slack",def:"The deliberate understatement of expected revenues or overstatement of expected costs in a budget submission, creating a cushion that makes it easier for a manager to meet their targets."},
+  {emoji:"🧩",term:"FP&A",def:"Financial Planning and Analysis — the function within a finance team responsible for budgeting, forecasting, financial modelling, and providing analytical support to management decision-making."},
+  {emoji:"📐",term:"Bottom-up budgeting",def:"A budgeting process in which individual departments or business units build their own detailed budget estimates, which are then aggregated and reviewed at the organisational level."},
+  {emoji:"🏛️",term:"Top-down budgeting",def:"A budgeting process in which senior management or the board sets overall financial targets, which are then communicated down to individual business units or departments."},
+  {emoji:"💡",term:"Assumptions",def:"The key estimates and judgements that underpin a financial budget or forecast — such as revenue growth rates, cost inflation, headcount, and exchange rate expectations."},
+  {emoji:"🔁",term:"Reforecast",def:"A revised version of the financial forecast produced mid-year or mid-period to reflect updated information about trading conditions, cost pressures, or strategic changes."},
+  {emoji:"📉",term:"Underspend",def:"A situation in which actual expenditure is lower than the budgeted amount, resulting in a favourable cost variance. May indicate efficient cost management or incomplete delivery of planned activities."},
+  {emoji:"📌",term:"Budget cycle",def:"The complete annual process of preparing, submitting, challenging, approving, monitoring, and reviewing the budget — typically running from initial guidance through to post-year-end analysis."},
+  {emoji:"🌐",term:"Driver-based forecasting",def:"A forecasting approach in which financial outcomes are modelled using a small number of key business drivers — such as units sold, headcount, or utilisation rates — rather than line-by-line cost estimates."}
+];
+
+const readingTexts = [
+  {
+    title:"Text 1: The Budget Cycle — Purpose, Process, and Pitfalls",
+    subtitle:"How organisations plan financially and the challenges they face",
+    paragraphs:[
+      "The annual budget is one of the most important management tools in any organisation. At its core, it serves three interconnected purposes: it communicates strategic priorities by translating the company's goals into financial targets; it coordinates activity across departments by ensuring that plans are aligned and resources are allocated efficiently; and it provides a performance benchmark against which actual results can be measured throughout the year. Without a budget, organisations risk operating without clear financial direction — spending without limits, failing to identify early warning signals, and making resource decisions without a common reference point. The budget process typically begins several months before the financial year starts, with senior management issuing guidance on key targets and assumptions — the expected growth rate, cost inflation assumptions, and capital expenditure envelope.",
+      "There are two primary approaches to building a budget. In top-down budgeting, senior management or the board sets overall financial targets — for example, a 10% revenue growth target and a 2% reduction in operating costs — which are then communicated to divisional and departmental managers to work within. In bottom-up budgeting, individual departments build their own detailed estimates from the ground up, which are then consolidated, challenged, and adjusted at a senior level. In practice, most organisations use a hybrid approach: senior management provides strategic direction and financial constraints, while budget holders develop detailed plans within those parameters. Either way, the process typically involves multiple rounds of submission, review, and revision before a final budget is approved.",
+      "Despite its importance, the traditional annual budgeting process is widely criticised. The most common complaints are that it is too time-consuming — often consuming six to eight weeks of management attention — too rigid to adapt to rapidly changing business conditions, and prone to gaming, where managers deliberately understate revenue expectations or overstate cost requirements to create budget slack that protects them from missing targets. These criticisms have led some organisations to adopt alternative approaches, including rolling forecasts — which update projections on a continuous basis rather than fixing them once per year — and zero-based budgeting, which requires every line of expenditure to be justified from first principles rather than simply rolled forward from the prior year."
+    ],
+    questions:[
+      {q:"What are the three interconnected purposes of the annual budget described in the text?",opts:["Planning, reporting, and auditing","Communicating priorities, coordinating activity, and providing a performance benchmark","Cost reduction, revenue growth, and cash management","Forecasting, analysing, and presenting results"],ans:1},
+      {q:"When does the budget process typically begin?",opts:["On the first day of the financial year","At the end of the financial year","Several months before the financial year starts","Immediately after year-end results are published"],ans:2},
+      {q:"What is top-down budgeting?",opts:["Departments build estimates from the ground up","Senior management sets overall targets communicated downward","The FP&A team prepares all budgets centrally","Budgets are set by external auditors"],ans:1},
+      {q:"What is bottom-up budgeting?",opts:["The board sets the final budget without consultation","Individual departments build detailed estimates from the ground up","Costs are reduced each year by a fixed percentage","Only revenue targets are set centrally"],ans:1},
+      {q:"What approach do most organisations use in practice?",opts:["Purely top-down","Purely bottom-up","A hybrid of both approaches","Only rolling forecasts"],ans:2},
+      {q:"How long does the budgeting process typically consume in management time?",opts:["One to two weeks","Three to four weeks","Six to eight weeks","Several months"],ans:2},
+      {q:"What is 'budget gaming'?",opts:["A software tool used for financial modelling","Deliberately understating revenue or overstating costs to create budget slack","A method of comparing actual results to budget","A technique for sensitivity testing"],ans:1},
+      {q:"What is a rolling forecast?",opts:["A budget that is set once per year and never revised","A forecast that updates projections continuously rather than fixing them annually","A budget built entirely from first principles","A forecast prepared only for the capital budget"],ans:1},
+      {q:"What does zero-based budgeting require?",opts:["Carrying forward prior year budgets automatically","Reducing all costs by 5% each year","Justifying every line of expenditure from first principles","Approving only capital expenditure through a formal process"],ans:2},
+      {q:"What is budget slack?",opts:["The gap between the current year and prior year budget","The unused portion of the capital budget","Deliberately understating revenues or overstating costs to create a safety cushion","The time taken to complete the budget process"],ans:2}
+    ]
+  },
+  {
+    title:"Text 2: Variance Analysis — Measuring Performance Against Plan",
+    subtitle:"How to identify, classify, and explain budget variances professionally",
+    paragraphs:[
+      "Variance analysis is the process of comparing actual financial results to the budgeted or forecast figures and understanding why differences — or variances — have arisen. It is one of the most fundamental tools in management accounting, serving as both an early warning system and a diagnostic framework. When actuals diverge from budget, the finance team is expected not only to quantify the size of the variance but also to diagnose its root cause, determine whether it is likely to persist, and recommend corrective action if necessary. Variances are classified as either favourable — when actuals are better than budget, such as revenue exceeding target or costs coming in below plan — or adverse — when actuals are worse than budget, such as a cost overrun or a revenue shortfall.",
+      "Within this framework, variances are further decomposed into their underlying drivers. A revenue variance, for example, may be caused by a volume variance — selling more or fewer units than planned — and a price variance — selling at a higher or lower average price than assumed in the budget. Similarly, a cost variance may reflect a volume effect — producing more or fewer units than budgeted — or an efficiency effect, where the cost per unit differs from the budgeted rate. This decomposition is essential because the management response differs significantly depending on the cause: a favourable price variance might justify maintaining the current pricing strategy, while an adverse efficiency variance would likely trigger an operational review.",
+      "Effective variance reporting requires not only technical accuracy but also clear professional communication. Finance business partners and FP&A analysts are increasingly expected to tell the story behind the numbers — presenting variance explanations in plain, concise English that a non-finance audience can understand, supported by quantitative analysis. A well-written variance commentary will state the size of the variance, identify the primary driver, explain whether it is controllable or external in nature, and indicate whether it is expected to continue or reverse in future periods. The language of variance analysis has its own professional vocabulary — phrases such as 'driven primarily by', 'partially offset by', 'reflecting a timing difference', and 'expected to normalise in Q3' are standard tools of the craft."
+    ],
+    questions:[
+      {q:"What is variance analysis?",opts:["The process of preparing the annual budget","Comparing actual financial results to budgeted figures and understanding why differences arose","A method for calculating EBITDA margins","The process of updating financial forecasts each quarter"],ans:1},
+      {q:"What is the dual role of variance analysis described in the text?",opts:["An audit tool and a legal requirement","An early warning system and a diagnostic framework","A planning tool and a tax compliance process","A communication tool and a marketing analysis"],ans:1},
+      {q:"What is a favourable variance?",opts:["When costs exceed budget","When revenue falls short of target","When actuals are better than budget","When the budget process takes longer than expected"],ans:2},
+      {q:"What is an adverse variance?",opts:["When actual results are better than planned","When the budget is approved without changes","When actual results are worse than budget","When a forecast is revised upwards"],ans:2},
+      {q:"What is a volume variance?",opts:["Selling at a different price than planned","The difference caused by producing or selling more or fewer units than budgeted","An efficiency difference in cost per unit","A variance caused by changes in exchange rates"],ans:1},
+      {q:"What is a price variance?",opts:["Selling at a higher or lower average price than assumed in the budget","Producing more units than planned","A difference in headcount from budget","Underspending on operating costs"],ans:0},
+      {q:"Why is decomposing variances into their drivers important?",opts:["It is required by IFRS reporting standards","The management response differs significantly depending on the cause","It reduces the time needed for the budget process","It allows managers to hide adverse results"],ans:1},
+      {q:"What would a favourable price variance likely justify?",opts:["Increasing capital expenditure","Triggering an operational review","Maintaining the current pricing strategy","Requesting additional budget headroom"],ans:2},
+      {q:"What does effective variance reporting require beyond technical accuracy?",opts:["Approval from external auditors","Clear professional communication that a non-finance audience can understand","A full reforecast for the year","Presentation to the board only"],ans:1},
+      {q:"What does the phrase 'reflecting a timing difference' mean in a variance commentary?",opts:["The variance is permanent and will not reverse","The variance arose because a transaction occurred in a different period than planned","The variance is caused by an external factor","The budget assumption was incorrect"],ans:1}
+    ]
+  }
+];
+
+const vocabExercises = [
+  {
+    type:"mcq",
+    title:"Exercise 1: Multiple Choice",
+    instructions:"Choose the best word or phrase to complete each sentence.",
+    questions:[
+      {q:"The finance team updated the _____ to reflect the impact of the new contract win, extending the projection twelve months forward.",opts:["annual budget","rolling forecast","capital budget","zero-based budget"],ans:1},
+      {q:"Revenue came in $2.4 million below target — this is an _____ variance that requires an explanation.",opts:["favourable","incremental","adverse","activity-based"],ans:2},
+      {q:"The head of marketing was the _____ responsible for the promotional spend, which had exceeded the approved amount by 18%.",opts:["FP&A analyst","budget holder","external auditor","rolling forecaster"],ans:1},
+      {q:"Rather than simply adding 3% to last year's figures, the board decided to implement _____ and start each cost line from zero.",opts:["incremental budgeting","driver-based forecasting","zero-based budgeting","rolling forecasting"],ans:2},
+      {q:"The _____ showed that if input costs rose by 10%, the EBITDA margin would fall by approximately 2.5 percentage points.",opts:["variance report","sensitivity analysis","budget cycle","reforecast"],ans:1},
+      {q:"The _____ budget covered the planned investment in the new distribution centre and required board-level sign-off.",opts:["operating","rolling","capital","flexible"],ans:2},
+      {q:"The _____ uses units sold and average selling price as the main inputs to project total revenue.",opts:["incremental budget","driver-based forecast","variance analysis","budget cycle"],ans:1},
+      {q:"Many managers build _____ into their budgets, deliberately overstating cost requirements to create a safety margin.",opts:["reforecast","budget slack","sensitivity analysis","capital headroom"],ans:1},
+      {q:"The Q2 results were reviewed at the monthly _____ meeting, where each divisional head was asked to explain any significant deviations from plan.",opts:["budget cycle","variance analysis","FP&A","reforecast"],ans:1},
+      {q:"The FP&A team prepares a full _____ each quarter to update management's view of the full-year financial outcome.",opts:["zero-based budget","capital budget","reforecast","budget slack"],ans:2}
+    ]
+  },
+  {
+    type:"gapfill",
+    title:"Exercise 2: Gap Fill",
+    instructions:"Complete each sentence using the correct word or phrase from the box.",
+    words:["assumptions","underspend","bottom-up","headroom","variance","adverse","flexible","incremental","cycle","benchmarks"],
+    sentences:[
+      {before:"The budget is built on a number of key ",blank:"assumptions",after:", including a 5% growth in volume and no significant changes in exchange rates."},
+      {before:"There was a $340,000 ",blank:"underspend",after:" in the IT department, mainly because the software project was delayed until Q1 next year."},
+      {before:"The company moved from a traditional ",blank:"incremental",after:" budget to a zero-based approach in order to challenge long-standing cost assumptions."},
+      {before:"The ",blank:"variance",after:" between budgeted and actual revenue was $1.8 million, driven by weaker than expected demand in the export markets."},
+      {before:"Divisional managers submitted their ",blank:"bottom-up",after:" budget estimates to the finance team for consolidation and review."},
+      {before:"The team had very little budget ",blank:"headroom",after:" remaining after the unexpected increase in raw material costs in Q3."},
+      {before:"The cost variance in the manufacturing division was ",blank:"adverse",after:", as actual costs exceeded the budgeted figure by 12%."},
+      {before:"A ",blank:"flexible",after:" budget adjusts the cost allowances based on the actual volume of activity achieved in the period."},
+      {before:"The board sets performance ",blank:"benchmarks",after:" at the start of each year against which divisional results are measured monthly."},
+      {before:"The full budget ",blank:"cycle",after:", from initial guidance to final board approval, typically takes three to four months."}
+    ]
+  },
+  {
+    type:"truefalse",
+    title:"Exercise 3: True / False",
+    instructions:"Read the statements and decide if they are TRUE or FALSE.",
+    statements:[
+      {text:"Zero-based budgeting uses the prior year budget as its starting point and adds a percentage uplift.",ans:false},
+      {text:"A rolling forecast is updated at regular intervals and extends a fixed number of periods into the future.",ans:true},
+      {text:"A favourable variance means that actual results are worse than the budgeted figure.",ans:false},
+      {text:"Budget slack is the deliberate overstatement of costs or understatement of revenues by budget holders.",ans:true},
+      {text:"A flexible budget adjusts automatically to reflect the actual level of activity achieved.",ans:true},
+      {text:"FP&A stands for Financial Planning and Accounting.",ans:false},
+      {text:"Sensitivity analysis tests how financial outcomes change when key assumptions are varied.",ans:true},
+      {text:"Top-down budgeting is when departments build their own estimates from the ground up.",ans:false},
+      {text:"A price variance arises when the actual selling price differs from the budgeted price.",ans:true},
+      {text:"A capital budget covers day-to-day operating expenses such as salaries and marketing.",ans:false}
+    ]
+  }
+];
+
+const grammarExercises = [
+  {
+    type:"mcq",
+    title:"Exercise 1: Future Forms in Financial Planning",
+    instructions:"Choose the most appropriate future form to complete each sentence from a budgeting context.",
+    questions:[
+      {q:"Based on current trading, revenue _____ exceed the full-year budget by approximately $3 million.",opts:["is going to","shall","will","would"],ans:2},
+      {q:"We _____ presenting the revised forecast to the board at next week's meeting. It's already in the diary.",opts:["will","are going to","shall","would"],ans:1},
+      {q:"The finance team _____ complete the budget model by Friday — it's already 90% finished.",opts:["will","is going to","shall","would"],ans:1},
+      {q:"_____ we circulate the budget templates to division heads on Monday?",opts:["Will","Are we going to","Shall","Would"],ans:2},
+      {q:"If the raw material prices continue to rise, the gross margin _____ come under significant pressure.",opts:["shall","is going to","will","would going to"],ans:2},
+      {q:"We _____ submit the final budget to the board by the 15th — it's a firm deadline.",opts:["are submitting","will be submitting","are going to submit","shall submit"],ans:2},
+      {q:"The new forecast model _____ allow the FP&A team to run scenarios much more quickly than before.",opts:["shall","is going to","will","would"],ans:2},
+      {q:"Look at these Q3 figures — costs _____ exceed the full-year budget if this trend continues.",opts:["shall","will","are going to","would"],ans:2},
+      {q:"_____ you be reviewing the capital expenditure assumptions before the submission deadline?",opts:["Shall","Are","Will","Do"],ans:2},
+      {q:"Management has confirmed that the company _____ implement zero-based budgeting from next financial year.",opts:["shall","is going to","would","has gone to"],ans:1}
+    ]
+  },
+  {
+    type:"mcq",
+    title:"Exercise 2: Hedging Language in Financial Forecasting",
+    instructions:"Choose the most appropriate hedging expression to complete each sentence.",
+    questions:[
+      {q:"Revenue is _____ to reach approximately $180 million for the full year, based on current run rates.",opts:["certainly","guaranteed","expected","confirmed"],ans:2},
+      {q:"The margin improvement _____ be partially offset by higher distribution costs in H2.",opts:["certainly will","could","is guaranteed to","must"],ans:1},
+      {q:"It _____ that operating expenses will come in broadly in line with the revised forecast.",opts:["is certain","appears likely","guarantees","confirms"],ans:1},
+      {q:"We _____ that the revenue shortfall will reverse in Q4, but this is subject to market conditions.",opts:["guarantee","are certain","anticipate","confirm"],ans:2},
+      {q:"The restructuring charge _____ result in annual savings of around $4 million, although the exact figure is still being finalised.",opts:["will certainly","is expected to","must","has to"],ans:1},
+      {q:"These projections _____ some key assumptions about exchange rates that could change.",opts:["avoid","ignore","rely on","guarantee"],ans:2},
+      {q:"While there is _____ that Q3 volumes will recover, the team remains cautious about the full-year outlook.",opts:["a certainty","no chance","some indication","a guarantee"],ans:2},
+      {q:"Costs _____ increase by between 3% and 5% next year, depending on how energy prices develop.",opts:["will certainly","are guaranteed to","are likely to","must"],ans:2},
+      {q:"The board _____ that the new strategy will deliver results within eighteen months.",opts:["guarantees","is cautious about","is confident","is certain of"],ans:2},
+      {q:"These numbers should be treated as _____ at this stage, as several key assumptions have not yet been finalised.",opts:["confirmed","indicative","audited","guaranteed"],ans:1}
+    ]
+  },
+  {
+    type:"mcq",
+    title:"Exercise 3: Budgeting & Forecasting Collocations",
+    instructions:"Choose the word that correctly completes each budgeting or forecasting collocation.",
+    questions:[
+      {q:"The finance team will _____ the budget to all divisional managers by the end of the week.",opts:["circulate","spread","send over","post"],ans:0},
+      {q:"The board asked the FP&A team to _____ a range of scenarios for the next financial year.",opts:["make","produce","model","build up"],ans:2},
+      {q:"The revenue shortfall was partially _____ by lower than expected operating costs.",opts:["reduced","offset","cancelled","cut"],ans:1},
+      {q:"Management _____ the full-year guidance from $95 million to $88 million after the weaker Q2 results.",opts:["reduced","revised down","cut back","dropped"],ans:1},
+      {q:"The actual results were broadly _____ with the budget, with only minor variances in two cost lines.",opts:["aligned","matched","equal","same"],ans:0},
+      {q:"The adverse variance was _____ by a one-off equipment repair charge that was not anticipated in the budget.",opts:["driven","caused from","resulted","started"],ans:0},
+      {q:"The team was asked to _____ the assumptions underpinning the revenue forecast for next year.",opts:["justify","explain","challenge","validate"],ans:2},
+      {q:"After three rounds of review, the board _____ the final budget for the coming year.",opts:["made","approved","confirmed from","accepted up"],ans:1},
+      {q:"The division _____ its cost budget by $220,000, driven by the delay in the IT project.",opts:["underspent","missed","reduced","underperformed"],ans:0},
+      {q:"The FP&A team _____ the annual budget into monthly and quarterly targets for each business unit.",opts:["divided","broke down","separated","split apart"],ans:1}
+    ]
+  }
+];
+
+const grammarReview = [
+  {
+    title:"Grammar Reference 1: Future Forms in Financial Planning",
+    points:[
+      {title:"Why future forms matter in finance",body:"Financial planning constantly involves discussing what will, is going to, or might happen. Choosing the correct future form signals the speaker's degree of certainty, whether they are reporting a prediction or a plan, and whether something is a commitment or a possibility.",examples:[]},
+      {title:"will — predictions and spontaneous decisions",body:"Use 'will' for predictions based on current knowledge, general future facts, or decisions made at the moment of speaking. Very common in financial commentary.",examples:["Revenue will exceed budget by approximately $2 million.","If costs continue to rise, margins will come under pressure.","I'll send you the forecast model after this call."]},
+      {title:"going to — plans already decided and evidence-based predictions",body:"Use 'going to' for plans or intentions that have already been decided, or for predictions based on clear current evidence.",examples:["We are going to present the revised forecast to the board next Monday. (planned)","Look at these cost trends — we are going to overspend the budget. (evidence-based prediction)","The FP&A team is going to implement a new rolling forecast model."]},
+      {title:"Present continuous — fixed arrangements",body:"Use the present continuous for scheduled events that are firmly arranged, especially those involving other people.",examples:["The CFO is presenting the budget to the board on Thursday.","We are meeting the divisional heads next week to challenge their assumptions.","The finance team is submitting the final numbers on Friday."]},
+      {title:"shall — formal offers, suggestions, and questions",body:"Use 'shall' in formal business English for first person questions seeking agreement or offering assistance. Less common than will but still found in professional written communication.",examples:["Shall we circulate the budget templates by Monday?","Shall I prepare a sensitivity analysis for the board presentation?"]},
+    ]
+  },
+  {
+    title:"Grammar Reference 2: Hedging Language in Financial Forecasts",
+    points:[
+      {title:"What is hedging and why does it matter?",body:"Hedging language expresses degrees of certainty and allows speakers and writers to qualify their claims appropriately. In financial forecasting, it is irresponsible to present uncertain projections as facts. Professional hedging signals intellectual honesty and manages stakeholder expectations.",examples:[]},
+      {title:"Modal verbs for uncertainty",body:"Use modal verbs to show varying degrees of confidence about future outcomes:",examples:["will → high confidence: 'Revenue will exceed $100 million.'","should → fairly likely: 'Costs should come in below budget.'","may / might / could → possible but uncertain: 'Margins may come under pressure in H2.'","would → hypothetical: 'If volumes fall, EBITDA would decline by around $3 million.'"]},
+      {title:"Hedging adverbs and adjectives",body:"These expressions soften claims and indicate that figures are estimates rather than certainties:",examples:["approximately / around / broadly → for imprecise figures: 'Revenue of approximately $95 million'","likely / expected / anticipated → for qualified predictions","indicative / provisional / subject to change → for preliminary estimates","broadly in line with → for approximate agreement with a target"]},
+      {title:"Hedging phrases in forecasting commentary",body:"These phrases are standard in professional financial forecasting language:",examples:["'Based on current trading, we expect...'","'Subject to market conditions, we anticipate...'","'These projections are subject to a number of assumptions, including...'","'While there is some uncertainty around X, we remain confident that...'"]},
+    ]
+  },
+  {
+    title:"Grammar Reference 3: Budgeting & Forecasting Collocations",
+    points:[
+      {title:"Why collocations matter in planning language",body:"In professional budgeting and forecasting contexts, specific verb-noun and adjective-noun combinations are fixed. Using them correctly signals fluency and credibility; wrong combinations sound unnatural even if grammatically correct.",examples:[]},
+      {title:"Verb + Noun collocations: budget actions",body:"These verb-noun pairs are standard in budget discussions:",examples:["set / approve / submit → a budget, targets, guidance","challenge / review / revise → assumptions, forecasts, estimates","circulate / distribute / issue → budget templates, guidance notes","miss / exceed / underspend / overspend → a budget, targets, cost lines"]},
+      {title:"Verb + Noun collocations: variance and forecast",body:"Essential combinations for reporting and forecast language:",examples:["identify / quantify / explain → a variance, a deviation, an overrun","revise / update / restate → a forecast, guidance, projections","model / run / stress-test → a scenario, sensitivities, assumptions","offset / compensate for → a variance, an overrun, a shortfall"]},
+      {title:"Adjective + Noun combinations",body:"Fixed pairings used in budgeting and planning commentary:",examples:["adverse / favourable → variance, outcome","revised / updated / full-year → forecast, guidance","detailed / high-level / granular → budget, analysis","rolling / annual / zero-based → forecast, budget"]}
+    ]
+  }
+];
+
+const listeningActivities = [
+  {
+    title:"Activity 1: Introduction to the Budget Cycle",
+    subtitle:"FP&A manager — Graduate finance induction session",
+    level:"B1",
+    type:"Multiple Choice",
+    focus:"Listening for Main Ideas",
+    transcript:`Good morning, everyone, and welcome to your finance induction. My name is Claire Novak and I'm the FP&A manager here. Today I want to give you an overview of how our budget cycle works. We run on a calendar-year basis, so our financial year runs from January to December. The budget process starts every year in September, when the executive team issues what we call strategic guidance — this is the top-down steer on the growth expectations, cost assumptions, and key strategic priorities for the following year. From October onwards, each division starts building its bottom-up budget — revenue forecasts by product line, headcount plans, operating cost budgets, and capital expenditure requests. These are submitted to the FP&A team by the end of October. November is challenge month. Every divisional head has a one-hour budget challenge meeting with the CFO and the FP&A team, where the key assumptions are scrutinised, numbers are tested for robustness, and any inconsistencies with the strategic guidance are addressed. It can be a tough process — the CFO doesn't accept numbers she doesn't believe in. Once all the challenges are resolved, the consolidated budget goes to the board for approval in early December. After approval, the budget becomes the performance benchmark for the entire next year. Each month, the actual results are compared to the budget, and any significant variances are explained in a management pack that goes to the leadership team. If trading conditions change significantly — which they often do — we update our forecast on a quarterly basis, maintaining a rolling twelve-month view of where we think the business is heading. Any questions on that overview before we go into more detail?`,
+    questions:[
+      {q:"On what basis does the company run its financial year?",opts:["April to March","July to June","January to December","October to September"],ans:2},
+      {q:"When does the budget process begin each year?",opts:["January","July","September","November"],ans:2},
+      {q:"What is 'strategic guidance' as described by Claire?",opts:["The final approved budget document","A monthly management report","The top-down steer on growth expectations and cost assumptions","A sensitivity analysis prepared by the FP&A team"],ans:2},
+      {q:"When must divisions submit their bottom-up budgets to the FP&A team?",opts:["By the end of September","By the end of October","By the end of November","By early December"],ans:1},
+      {q:"What happens during 'challenge month'?",opts:["The budget is approved by the board","Each division submits its capital expenditure requests","Budget assumptions are scrutinised in meetings with the CFO","The annual results are published"],ans:2},
+      {q:"When does the board approve the budget?",opts:["September","October","November","Early December"],ans:3},
+      {q:"What happens each month after approval?",opts:["A new forecast is prepared from scratch","Actual results are compared to the budget and variances are explained","The budget is resubmitted to the board","Division heads present new strategic plans"],ans:1},
+      {q:"How frequently is the forecast updated during the year?",opts:["Monthly","Every two months","Quarterly","Annually only"],ans:2}
+    ]
+  },
+  {
+    title:"Activity 2: A Budget Review Meeting",
+    subtitle:"FP&A director and division head — Monthly performance review",
+    level:"B2",
+    type:"Multiple Choice",
+    focus:"Listening for Specific Information",
+    transcript:`FP&A Director: Thank you for joining us, Marcus. Let's go through the November results for your division. Revenue came in at $12.4 million against a budget of $13.8 million — that's an adverse variance of $1.4 million, or about 10%. Can you walk us through the main drivers? Marcus: Yes. The shortfall is almost entirely in our industrial segment, where a major customer delayed a large order that we were expecting to ship in November. The order has since been confirmed and will ship in December, so we expect to recover the majority of that variance in the last month of the year. The services revenue, which is the recurring part of our business, was actually ahead of budget by $200,000 — so the underlying business is performing well. FP&A Director: OK. And on the cost side, I see your total operating costs were $8.6 million versus a budget of $9.1 million — a favourable variance of $500,000. What's behind that? Marcus: Two main things. First, we've had a $300,000 underspend in headcount because two senior hires are running about six weeks behind schedule. Those roles are still being filled, so we'll see most of that cost come through in Q1 next year. Second, travel and entertainment was $200,000 below budget, partly due to more virtual meetings and partly because a team conference was postponed to January. FP&A Director: Understood. So on a net basis, the adverse revenue variance is partially offset by the favourable cost variance, leaving a net shortfall of about $900,000 against budget. What's your revised view for the full year? Marcus: Based on the December order confirmation, we now expect to finish the year approximately $300,000 below our revenue budget, which is within the tolerance we discussed at the last board meeting. EBITDA for the full year should be broadly in line with budget.`,
+    questions:[
+      {q:"What was the revenue adverse variance in November?",opts:["$200,000","$500,000","$900,000","$1.4 million"],ans:3},
+      {q:"What caused the revenue shortfall in the industrial segment?",opts:["A lost customer contract","A pricing error","A major customer delayed a large order","Weaker than expected market demand"],ans:2},
+      {q:"What was the performance of services revenue against budget?",opts:["$200,000 adverse","In line with budget","$200,000 favourable","$1.4 million adverse"],ans:2},
+      {q:"What was the favourable cost variance in November?",opts:["$200,000","$300,000","$500,000","$900,000"],ans:2},
+      {q:"What caused the headcount underspend?",opts:["Redundancies in the division","Two senior hires running six weeks behind schedule","A hiring freeze imposed by HR","Budget cuts approved by the board"],ans:1},
+      {q:"What was the net shortfall against budget after netting revenue and cost variances?",opts:["$500,000","$700,000","$900,000","$1.4 million"],ans:2},
+      {q:"What is the revised full-year revenue expectation?",opts:["In line with budget","$300,000 below revenue budget","$900,000 below budget","$1.4 million below budget"],ans:1},
+      {q:"What does Marcus say about full-year EBITDA?",opts:["It will be significantly below budget","It will exceed budget due to cost savings","It should be broadly in line with budget","It will be revised down in Q1"],ans:2}
+    ]
+  },
+  {
+    title:"Activity 3: Zero-Based Budgeting — A CFO Explains the Approach",
+    subtitle:"CFO interview — Business finance podcast",
+    level:"B2",
+    type:"Multiple Choice",
+    focus:"Understanding Argument and Reasoning",
+    transcript:`Host: Welcome. Today I'm joined by Paula Reyes, CFO of a large consumer goods company, to talk about zero-based budgeting. Paula, you implemented ZBB three years ago. What drove that decision? Paula: The honest answer is that we had a real problem with cost creep. Every year, divisions would add 2% or 3% to their prior year spend, and nobody seriously challenged why those costs existed in the first place. Over time, we ended up with a cost base that was full of legacy spending that no longer served a business purpose. ZBB forced everyone to justify every pound from scratch. Host: How did you implement it practically? Paula: We started by mapping all of our spending into activity packages — grouping costs around the business activities they support. Each budget holder then had to rank these activities and justify the resource required for each one. Activities that couldn't demonstrate a clear link to business value were cut or significantly scaled back. It was a significant cultural challenge, not just a financial one. Host: What were the outcomes? Paula: In the first year, we reduced our operating cost base by 14%, which was significantly above what an incremental approach would have achieved. But more importantly, we reallocated resources — we cut costs in areas that weren't creating value and reinvested in growth activities. The quality of our budget conversations improved dramatically because people had to think hard about what they were actually doing with the money. Host: What are the limitations? Paula: ZBB is expensive to run. It requires significant management time and strong analytical capability. We found that it couldn't be done every year without causing serious management fatigue. So now we run a full ZBB exercise every three years and use incremental adjustments in the intervening years. It also doesn't work as well for businesses where most of the cost base is fixed or contractual — it's best suited to organisations with a high proportion of discretionary spending.`,
+    questions:[
+      {q:"What problem drove Paula's company to adopt ZBB?",opts:["Revenue decline over several years","Cost creep from incremental budget increases that were never challenged","A board mandate from shareholders","New IFRS accounting requirements"],ans:1},
+      {q:"What happened to prior-year costs without ZBB challenge?",opts:["They fell automatically each year","They were benchmarked against competitors","They were carried forward with 2–3% increases without serious challenge","They were reviewed by external auditors"],ans:2},
+      {q:"How did Paula implement ZBB practically?",opts:["By cutting all costs by a fixed percentage","By mapping spending into activity packages and requiring budget holders to justify each one","By outsourcing the budget to an external consultant","By using only top-down targets from the board"],ans:1},
+      {q:"How much did operating costs reduce in the first year of ZBB?",opts:["5%","8%","14%","20%"],ans:2},
+      {q:"What did the company do with the savings from ZBB?",opts:["They returned them to shareholders as dividends","They built up cash reserves","They reallocated resources into growth activities","They reduced long-term debt"],ans:2},
+      {q:"What did Paula say about the quality of budget conversations after implementing ZBB?",opts:["They became shorter and less detailed","They became more difficult and unproductive","They improved dramatically because people had to justify spending","They were delegated to the FP&A team"],ans:2},
+      {q:"How often does Paula's company now run a full ZBB exercise?",opts:["Every year","Every two years","Every three years","Every five years"],ans:2},
+      {q:"For what type of business is ZBB least suitable according to Paula?",opts:["Businesses with high revenue growth","Businesses where most costs are fixed or contractual","Businesses that operate internationally","Businesses that use rolling forecasts"],ans:1}
+    ]
+  },
+  {
+    title:"Activity 4: Driver-Based Forecasting and the Future of FP&A",
+    subtitle:"Finance technology consultant — FP&A conference keynote",
+    level:"B1–B2",
+    type:"Multiple Choice",
+    focus:"Listening for Opinion and Detail",
+    transcript:`Good afternoon, everyone. I want to talk about what I believe is the single most important evolution in financial planning practice over the past decade — the shift from line-by-line budgeting to driver-based forecasting. Traditional budgets are built line by line. Someone estimates how much they'll spend on travel, on marketing, on headcount — line by line, month by month, for the whole year. The result is a highly detailed document that takes weeks to build and is often outdated within months of being approved. Driver-based forecasting takes a completely different approach. Instead of forecasting every line item individually, it identifies the key business drivers that determine financial outcomes — things like units sold, average selling price, headcount, utilisation rates, or customer acquisition costs — and builds the financial model around those drivers. When a driver changes, the entire P&L and cash flow forecast updates automatically. This has three major advantages. First, it dramatically reduces the time needed to build and update forecasts. Second, it focuses management attention on the metrics that actually drive performance rather than on the details of how money is spent. And third, it enables genuinely useful scenario analysis — if I want to know what happens to EBITDA if I lose my largest customer, I change the driver and the answer is instant. Now, the practical challenge is identifying the right drivers. Most businesses actually run on fewer than ten key drivers. Revenue is typically driven by volume and price. Costs are typically driven by headcount and activity levels. The key insight is that you don't need to model everything — you need to model what matters. The organisations that have made this shift are spending 40 to 50% less time on forecast preparation and more time on analysis and decision support. That is the future of FP&A.`,
+    questions:[
+      {q:"What does the speaker describe as the most important evolution in FP&A practice?",opts:["The adoption of zero-based budgeting","The shift from line-by-line to driver-based forecasting","The introduction of rolling forecasts","The outsourcing of budget preparation"],ans:1},
+      {q:"What is the main problem with traditional line-by-line budgets according to the speaker?",opts:["They are too short","They take weeks to build and are often outdated quickly","They ignore capital expenditure","They cannot be approved by the board"],ans:1},
+      {q:"What are business drivers as described in the talk?",opts:["The key assumptions that all finance teams make about inflation","Line items in the operating budget","Key metrics like units sold, price, and headcount that determine financial outcomes","Management targets set by the board"],ans:2},
+      {q:"What happens in a driver-based model when a driver changes?",opts:["A manual recalculation is required","The FP&A team is notified by email","The entire P&L and cash flow forecast updates automatically","A new budget must be submitted"],ans:2},
+      {q:"What is the first advantage of driver-based forecasting mentioned?",opts:["More detailed line-item analysis","It reduces the time to build and update forecasts dramatically","It eliminates the need for variance analysis","It removes the need for board approval"],ans:1},
+      {q:"Approximately how many key drivers does the speaker say most businesses actually run on?",opts:["Two or three","Fewer than ten","Between fifteen and twenty","More than thirty"],ans:1},
+      {q:"What does the speaker say is the key insight of driver-based forecasting?",opts:["You need to model everything to be accurate","You need to model what matters, not everything","All drivers must be revenue-related","Only external drivers should be modelled"],ans:1},
+      {q:"By how much are organisations that use driver-based forecasting reducing their forecast preparation time?",opts:["10 to 20%","20 to 30%","30 to 40%","40 to 50%"],ans:3}
+    ]
+  }
+];
+
+const caseStudies = [
+  {
+    title:"The Rise and Fall of Beyond Budgeting at Statoil",
+    subtitle:"Norway · Energy · 2005–Present · Planning Transformation",
+    intro:"How one of Europe's largest energy companies abandoned the traditional budget — and what happened next",
+    sections:[
+      {heading:"Background",text:"Statoil, the Norwegian state energy company (now Equinor), made headlines in the finance world in 2005 when it became one of the first large organisations to fully abandon the traditional annual budget. The decision was driven by the recognition that fixed annual budgets were fundamentally ill-suited to the volatile, commodity-driven environment of the oil and gas industry, where prices could move by 30% or more in a single year. A budget built on a specific oil price assumption could become meaningless within months of approval. Management found that the budget was consuming enormous resources to produce, creating perverse behavioural incentives — particularly budget gaming and year-end spending sprees — and failing to provide genuinely useful guidance for decision-making."},
+      {heading:"The Alternative — Ambition to Action",text:"Statoil replaced its annual budget with a management system called Ambition to Action. Rather than fixed annual financial targets, the company used dynamic performance targets that were expressed as relative metrics — such as performance relative to peers or relative to a rolling benchmark — rather than absolute numbers. This meant that a division could be performing well even if its absolute profit fell in a year when oil prices dropped sharply, as long as it was outperforming its reference group. Rolling forecasts replaced the annual budget as the primary tool for financial planning, updated every quarter to reflect current market conditions. Resource allocation decisions were decentralised and based on clear investment criteria rather than pre-allocated annual envelopes."},
+      {heading:"Outcomes and Lessons",text:"Statoil's experience yielded several important lessons for the finance profession. The elimination of the fixed budget did not mean the elimination of financial discipline — on the contrary, the company found that relative performance targets and clear investment criteria created stronger accountability than fixed budget numbers. However, the approach was not universally successful: some business units struggled without the clear short-term financial targets that budgets provide, and the transition required significant investment in management capability and cultural change. The case demonstrates that there is no one-size-fits-all approach to financial planning — the right method depends on the volatility of the environment, the maturity of the finance function, and the culture of the organisation."}
+    ],
+    questions:[
+      {q:"When did Statoil abandon its traditional annual budget?",opts:["1995","2005","2010","2015"],ans:1},
+      {q:"Why was a fixed annual budget seen as unsuitable for Statoil's industry?",opts:["It was too expensive to prepare","Oil prices could move by 30% or more, making assumptions quickly outdated","The budget process took too long to complete","The company was too small to need a formal budget"],ans:1},
+      {q:"What was 'Ambition to Action'?",opts:["A new cost reduction programme","A management system using dynamic performance targets","A zero-based budgeting approach","An external benchmarking exercise"],ans:1},
+      {q:"What type of metrics did the dynamic performance targets use?",opts:["Fixed absolute numbers set annually","Only cash flow targets","Relative metrics such as performance compared to peers","Only revenue growth targets"],ans:2},
+      {q:"What did rolling forecasts do in Statoil's new system?",opts:["They replaced variance analysis","They replaced the annual budget as the primary planning tool","They were used only for capital expenditure","They were prepared annually by the board"],ans:1},
+      {q:"How were resource allocation decisions made in the new system?",opts:["Based on pre-allocated annual budget envelopes","Entirely by the board of directors","Decentralised and based on clear investment criteria","By the FP&A team only"],ans:2},
+      {q:"What did Statoil find about financial discipline without a fixed budget?",opts:["Financial discipline completely broke down","Costs rose uncontrollably","The elimination of the budget did not mean elimination of financial discipline","Managers spent more time on budget preparation"],ans:2},
+      {q:"What challenge did some business units face?",opts:["They couldn't access the rolling forecast system","They had too much budget headroom","They struggled without the clear short-term financial targets that budgets provide","They exceeded their capital expenditure limits"],ans:2},
+      {q:"What does the case demonstrate about financial planning approaches?",opts:["Rolling forecasts are always better than fixed budgets","Zero-based budgeting should be used by all organisations","There is no one-size-fits-all approach — the right method depends on context","Annual budgets are always more accurate than rolling forecasts"],ans:2},
+      {q:"What investment was required to make the transition successful?",opts:["New ERP technology and software","External consultants only","Significant management capability development and cultural change","Additional FP&A headcount"],ans:2}
+    ]
+  },
+  {
+    title:"Netflix: Driver-Based Forecasting at Scale",
+    subtitle:"USA · Technology & Media · Ongoing · FP&A Excellence",
+    intro:"How Netflix uses business drivers and scenario planning to navigate one of the most complex financial planning environments in the world",
+    sections:[
+      {heading:"The Complexity of Netflix's Planning Environment",text:"Netflix operates in one of the most financially complex planning environments imaginable. Its revenues depend on subscriber growth, pricing, and geographic mix across more than 190 countries. Its costs include enormous content investment — often running at $15–17 billion per year in recent years — as well as technology, marketing, and general and administrative expenses. Content spending is particularly challenging to forecast because the value of a commissioned show or film is uncertain, the timing of production and delivery is difficult to predict, and the competitive environment for content rights is constantly changing. Traditional line-by-line annual budgets would be completely inadequate for managing this level of complexity and uncertainty."},
+      {heading:"Driver-Based Approach",text:"Netflix's finance and FP&A teams rely heavily on driver-based forecasting, where financial projections are built from a small number of key business metrics. On the revenue side, the key drivers are paying subscribers, average revenue per membership, and churn rate — the percentage of subscribers who cancel in a given period. On the cost side, content amortisation — the rate at which content investments are expensed through the income statement — is driven primarily by the content release schedule. Technology and marketing costs are modelled as a percentage of revenue or per subscriber. By building the financial model around these drivers, the finance team can rapidly update the full-year P&L, cash flow, and free cash flow forecast as trading conditions evolve, without rebuilding the model from scratch each time. Scenario planning is a core part of the process: the FP&A team regularly models bull case, base case, and bear case scenarios to prepare management for a range of outcomes."},
+      {heading:"Lessons for Finance Professionals",text:"Netflix's approach offers three key lessons for FP&A professionals. First, simplicity beats complexity: a model with ten well-chosen drivers that are updated in real time is far more useful than a 5,000-line spreadsheet that takes a month to update. Second, scenario planning is not optional in high-uncertainty environments — it is a fundamental requirement for sound financial management. Presenting management with only a single forecast creates false precision and fails to prepare the organisation for adverse outcomes. Third, the role of FP&A is increasingly analytical and strategic rather than primarily data-gathering and model-building. The professionals who deliver most value are those who can connect financial modelling to business decisions, communicate insights clearly to non-finance leaders, and challenge assumptions constructively and with evidence."}
+    ],
+    questions:[
+      {q:"Approximately how much does Netflix spend on content per year in recent years?",opts:["$5–7 billion","$10–12 billion","$15–17 billion","$20–25 billion"],ans:2},
+      {q:"Why is content spending particularly challenging to forecast?",opts:["Because all content is produced internally","Because content costs are always fixed","Because the value of content is uncertain and production timing is unpredictable","Because content spending is not included in the budget"],ans:2},
+      {q:"What are the key revenue drivers used in Netflix's model?",opts:["Revenue per country, product category, and marketing spend","Paying subscribers, average revenue per membership, and churn rate","Total hours watched, subscriber age, and device type","Advertising revenue, licensing fees, and partner payments"],ans:1},
+      {q:"What is churn rate?",opts:["The rate at which new subscribers join","The rate at which content is produced","The percentage of subscribers who cancel in a given period","The growth rate of average revenue per user"],ans:2},
+      {q:"What is content amortisation driven primarily by?",opts:["The number of subscribers","The content release schedule","The size of the marketing budget","The interest rate on Netflix's debt"],ans:1},
+      {q:"What does Netflix's scenario planning regularly model?",opts:["Only the base case forecast","Bull case, base case, and bear case scenarios","Only worst-case scenarios for risk management","Annual budget versus prior year actuals"],ans:1},
+      {q:"What is the first lesson Netflix's approach offers?",opts:["Complexity is essential for accuracy","Scenario planning is unnecessary for large companies","Simplicity beats complexity — a model with well-chosen drivers is far more useful than a massive spreadsheet","Annual budgets should always be used alongside driver-based forecasts"],ans:2},
+      {q:"What does the text say about presenting only a single forecast?",opts:["It is always the best practice in financial planning","It creates false precision and fails to prepare for adverse outcomes","It is required by IFRS reporting standards","It is preferred by investors and analysts"],ans:1},
+      {q:"What does the text say FP&A professionals who deliver most value are able to do?",opts:["Build the largest and most detailed financial models","Prepare the most accurate line-by-line budgets","Connect financial modelling to business decisions and communicate insights clearly","Process the most financial transactions per month"],ans:2},
+      {q:"What has the role of FP&A increasingly become?",opts:["Primarily focused on transaction processing","More analytical and strategic rather than data-gathering","Mainly concerned with external audit preparation","Less important than traditional accounting functions"],ans:1}
+    ]
+  }
+];
+
+const assessmentQs = [
+  {q:"What is the primary purpose of an annual budget?",opts:["To report historical financial performance","To set financial targets, allocate resources, and provide a performance benchmark","To satisfy external audit requirements","To replace the need for variance analysis"],ans:1},
+  {q:"What is zero-based budgeting?",opts:["Budgeting that carries forward prior year figures with a small adjustment","Budgeting where every cost must be justified from scratch each period","Budgeting based only on revenue targets","Budgeting that uses only driver-based models"],ans:1},
+  {q:"Which future form is most appropriate for a decision made at the moment of speaking?",opts:["going to","present continuous","will","shall"],ans:2},
+  {q:"'We _____ presenting the full-year forecast to the board on Tuesday' — which form completes this correctly?",opts:["will","shall","are","going to be"],ans:2},
+  {q:"What is an adverse variance?",opts:["A variance where actual results exceed budget","A variance where costs come in below budget","A variance where actual results are worse than budget","A variance caused by volume differences only"],ans:2},
+  {q:"Which hedging expression best qualifies an uncertain financial projection?",opts:["'Revenue will definitely reach $100 million.'","'Revenue is guaranteed to exceed budget.'","'Revenue is expected to be approximately $100 million, subject to market conditions.'","'Revenue must be exactly $100 million.'"],ans:2},
+  {q:"What is a rolling forecast?",opts:["A fixed annual budget that never changes","A forecast updated at regular intervals extending a set number of periods ahead","A budget prepared once every three years","A forecast approved only by the board"],ans:1},
+  {q:"In the Statoil case, what replaced the annual budget as the primary planning tool?",opts:["Zero-based budgeting","Line-by-line incremental budgets","Rolling forecasts updated quarterly","Static annual financial targets"],ans:2},
+  {q:"What is the correct collocation? 'Management _____ the full-year guidance after the weak Q2 results.'",opts:["lowered down","revised down","cut below","dropped off"],ans:1},
+  {q:"What is budget slack?",opts:["The time remaining before the budget deadline","Extra cash held in reserve on the balance sheet","The deliberate understatement of revenues or overstatement of costs to create a safety cushion","The difference between the capital and operating budget"],ans:2},
+  {q:"What is a volume variance?",opts:["Selling at a different price than planned","A difference caused by producing or selling more or fewer units than budgeted","An efficiency difference in cost per unit","A variance caused by exchange rate movements"],ans:1},
+  {q:"In driver-based forecasting, what happens when a key driver changes?",opts:["The entire model must be rebuilt from scratch","The variance report is updated manually","The full P&L and cash flow forecast updates automatically","The FP&A team must resubmit the budget"],ans:2},
+  {q:"What is sensitivity analysis?",opts:["The comparison of actual to budget figures","A technique that tests how outcomes change when key assumptions are varied","The process of justifying each cost from scratch","The analysis of historical cost trends"],ans:1},
+  {q:"Which is the correct use of hedging language for a forecast?",opts:["'These projections are based on assumptions that could change.'","'This forecast is 100% accurate.'","'All figures are confirmed and guaranteed.'","'The budget cannot be revised once approved.'"],ans:0},
+  {q:"What is FP&A?",opts:["Financial Procedures and Administration","Financial Planning and Analysis","Fixed Period Accounting","Fiscal Planning and Auditing"],ans:1},
+  {q:"'Shall we _____ the budget templates to the divisions by Monday?' — what word completes this correctly?",opts:["spread","circulate","send over","post"],ans:1},
+  {q:"In Netflix's model, what is the churn rate?",opts:["The rate at which new subscribers join","The rate at which content costs are amortised","The percentage of subscribers who cancel in a given period","The average revenue per paying subscriber"],ans:2},
+  {q:"What does a favourable variance indicate?",opts:["Actual costs exceeded budget","Actual revenue fell short of target","Actual results are better than the budgeted figure","A timing difference in the recognition of income"],ans:2},
+  {q:"What type of budget adjusts automatically to the actual level of activity achieved?",opts:["Zero-based budget","Rolling forecast","Flexible budget","Capital budget"],ans:2},
+  {q:"What is the key insight of driver-based forecasting according to the Module 4 content?",opts:["You need to model every line item in detail","You need to model what matters, not everything","Rolling forecasts must always replace annual budgets","Scenario planning is only needed for large companies"],ans:1}
+];
+
+/* ═══════════════════ NAVIGATION ═══════════════════ */
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes(`'${id}'`))n.classList.add('active');});
+  window.scrollTo(0,0);
+}
+
+/* ═══════════════════ MCQ ENGINE ═══════════════════ */
+const userAnswers={};
+function renderMCQ(questions,containerId,darkMode=false){
+  const container=document.getElementById(containerId);
+  if(!container)return;
+  const L=['A','B','C','D'];
+  let html=questions.map((item,qi)=>`
+    <div class="mcq-block" id="${containerId}-q${qi}">
+      <div class="mcq-q">${qi+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((opt,oi)=>`
+          <div class="mcq-option ${darkMode?'l-mcq-option':''}" onclick="selectOption('${containerId}',${qi},${oi},${item.ans})" id="${containerId}-q${qi}-o${oi}">
+            <span class="option-letter">${L[oi]}</span>${opt}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+  html+=`<button class="check-btn ${darkMode?'l-check-btn':''}" onclick="checkAll('${containerId}',${questions.length})">Check Answers</button>
+  <div id="${containerId}-score" style="display:none" class="score-display"></div>`;
+  container.innerHTML=html;
+}
+function selectOption(cid,qi,oi,correct){
+  const key=`${cid}-q${qi}`;
+  if(userAnswers[key]?.checked)return;
+  userAnswers[key]={selected:oi,correct};
+  document.querySelectorAll(`#${cid}-q${qi} .mcq-option`).forEach((o,i)=>{o.classList.remove('selected');if(i===oi)o.classList.add('selected');});
+}
+function checkAll(cid,count){
+  let score=0;
+  for(let qi=0;qi<count;qi++){
+    const key=`${cid}-q${qi}`;
+    const data=userAnswers[key];
+    if(!data)continue;
+    data.checked=true;
+    document.querySelectorAll(`#${cid}-q${qi} .mcq-option`).forEach((o,i)=>{
+      o.classList.remove('selected');
+      if(i===data.correct)o.classList.add('correct');
+      if(i===data.selected&&data.selected!==data.correct)o.classList.add('incorrect');
+    });
+    if(data.selected===data.correct)score++;
+  }
+  const el=document.getElementById(`${cid}-score`);
+  if(el){el.style.display='inline-flex';el.textContent=`Score: ${score} / ${count}`;}
+}
+
+/* ═══════════════════ RENDER FUNCTIONS ═══════════════════ */
+function renderSpeaking(){
+  document.getElementById('speakingGrid').innerHTML=speakingQs.map((q,i)=>`
+    <div class="speaking-card"><div class="q-num">Q${String(i+1).padStart(2,'0')}</div><div class="q-text">${q}</div></div>`).join('');
+}
+function renderWordBank(){
+  document.getElementById('wordbankGrid').innerHTML=wordBank.map(w=>`
+    <div class="word-card"><div class="word-emoji">${w.emoji}</div><div class="word-term">${w.term}</div><div class="word-def">${w.def}</div></div>`).join('');
+}
+function renderReading(){
+  document.getElementById('readingContent').innerHTML=readingTexts.map((text,ti)=>{
+    const cid=`reading-mcq-${ti}`;
+    return`<div class="card"><div class="card-title">${text.title}</div><div class="card-title-bar"></div>
+    <div class="reading-text-box"><h4>${text.subtitle}</h4>${text.paragraphs.map(p=>`<p>${p}</p>`).join('')}</div>
+    <h4 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:18px;">Comprehension Questions</h4>
+    <div id="${cid}"></div></div>`;
+  }).join('');
+  readingTexts.forEach((t,ti)=>renderMCQ(t.questions,`reading-mcq-${ti}`));
+}
+function renderVocabulary(){
+  document.getElementById('vocab-ex-0').innerHTML=`<div class="card"><div class="card-title">${vocabExercises[0].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${vocabExercises[0].instructions}</p><div id="vocab-mcq-0"></div></div>`;
+  renderMCQ(vocabExercises[0].questions,'vocab-mcq-0');
+  const wordsHtml=vocabExercises[1].words.map(w=>`<span style="display:inline-block;background:var(--navy);color:var(--gold-light);font-size:12px;font-weight:600;padding:3px 12px;border-radius:20px;margin:3px;">${w}</span>`).join('');
+  const gapHtml=vocabExercises[1].sentences.map((s,i)=>`
+    <div class="gapfill-item"><span>${i+1}. ${s.before}</span><input class="gap-input" id="gf-${i}" type="text" placeholder="…"><span>${s.after}</span></div>`).join('');
+  document.getElementById('vocab-ex-1').innerHTML=`<div class="card"><div class="card-title">${vocabExercises[1].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:14px;">${vocabExercises[1].instructions}</p>
+  <div style="margin-bottom:20px;padding:14px 16px;background:var(--cream);border-radius:8px;line-height:2;">${wordsHtml}</div>
+  ${gapHtml}<button class="check-btn" onclick="checkGapFill()">Check Answers</button>
+  <div id="gf-score" style="display:none" class="score-display"></div></div>`;
+  const tfHtml=vocabExercises[2].statements.map((s,i)=>`
+    <div class="tf-item"><div class="tf-statement">${i+1}. ${s.text}</div>
+    <div class="tf-buttons"><button class="tf-btn" id="tf-${i}-T" onclick="selectTF(${i},'T',${s.ans})">True</button>
+    <button class="tf-btn" id="tf-${i}-F" onclick="selectTF(${i},'F',${s.ans})">False</button></div></div>`).join('');
+  document.getElementById('vocab-ex-2').innerHTML=`<div class="card"><div class="card-title">${vocabExercises[2].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${vocabExercises[2].instructions}</p>
+  ${tfHtml}<button class="check-btn" onclick="checkTF()">Check Answers</button>
+  <div id="tf-score" style="display:none" class="score-display"></div></div>`;
+}
+const tfAnswers={};
+function selectTF(i,val,correct){
+  if(tfAnswers[i]?.checked)return;
+  tfAnswers[i]={selected:val,correct};
+  ['T','F'].forEach(v=>document.getElementById(`tf-${i}-${v}`).classList.remove('selected-true','selected-false'));
+  document.getElementById(`tf-${i}-${val}`).classList.add(val==='T'?'selected-true':'selected-false');
+}
+function checkTF(){
+  let score=0;
+  vocabExercises[2].statements.forEach((s,i)=>{
+    const data=tfAnswers[i];if(!data)return;data.checked=true;
+    const cv=s.ans?'T':'F';
+    ['T','F'].forEach(v=>document.getElementById(`tf-${i}-${v}`).classList.remove('selected-true','selected-false'));
+    const selBtn=document.getElementById(`tf-${i}-${data.selected}`);
+    const corrBtn=document.getElementById(`tf-${i}-${cv}`);
+    if(data.selected===cv){selBtn.classList.add('correct-answer');score++;}
+    else{selBtn.classList.add('wrong-answer');corrBtn.classList.add('correct-answer');}
+  });
+  const sc=document.getElementById('tf-score');sc.style.display='inline-flex';sc.textContent=`Score: ${score} / ${vocabExercises[2].statements.length}`;
+}
+function checkGapFill(){
+  let score=0;
+  vocabExercises[1].sentences.forEach((s,i)=>{
+    const input=document.getElementById(`gf-${i}`);
+    const val=input.value.trim().toLowerCase();
+    input.classList.remove('correct','incorrect');
+    if(val===s.blank.toLowerCase()){input.classList.add('correct');score++;}
+    else{input.classList.add('incorrect');input.value=s.blank;}
+  });
+  const sc=document.getElementById('gf-score');sc.style.display='inline-flex';sc.textContent=`Score: ${score} / ${vocabExercises[1].sentences.length}`;
+}
+function showVocabEx(idx,el){
+  document.querySelectorAll('.vocab-ex').forEach((e,i)=>e.style.display=i===idx?'block':'none');
+  el.parentElement.querySelectorAll('.ex-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');
+}
+function renderGrammar(){
+  grammarExercises.forEach((ex,ei)=>{
+    const cid=`grammar-mcq-${ei}`;
+    document.getElementById(`grammar-ex-${ei}`).innerHTML=`<div class="card"><div class="card-title">${ex.title}</div><div class="card-title-bar"></div>
+    <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${ex.instructions}</p><div id="${cid}"></div></div>`;
+    renderMCQ(ex.questions,cid);
+  });
+}
+function showGrammarEx(idx,el){
+  document.querySelectorAll('.grammar-ex').forEach((e,i)=>e.style.display=i===idx?'block':'none');
+  el.parentElement.querySelectorAll('.ex-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');
+}
+function renderGrammarReview(){
+  document.getElementById('grammarReviewContent').innerHTML=grammarReview.map(ref=>`
+    <div class="card"><div class="card-title">${ref.title}</div><div class="card-title-bar"></div>
+    ${ref.points.map(pt=>`
+      <div class="grammar-ref-box" style="margin-bottom:16px;"><h4>${pt.title}</h4>
+      <div class="grammar-rule"><p>${pt.body}</p>
+      ${pt.examples.length?`<ul style="margin-top:10px">${pt.examples.map(e=>`<li style="margin-bottom:6px"><code>${e}</code></li>`).join('')}</ul>`:''}</div>
+      </div>`).join('')}
+    </div>`).join('');
+}
+function renderWriting(){
+  const tasks=[
+    {activity:"Writing Activity 1",type:"Budget Commentary",title:"Write a Full-Year Budget Commentary for the Board",
+     prompt:"You are the FP&A Manager at Meridian Retail Group. For the full financial year, the company delivered the following results versus budget: Revenue: $142m actual vs $148m budget (adverse $6m). Gross margin: 39% actual vs 40% budget (adverse 1pp). EBITDA: $24m actual vs $26m budget (adverse $2m). However, free cash flow was $12m vs $10m budget (favourable $2m). Write a formal budget commentary of 250–280 words suitable for the annual board report. Explain the revenue shortfall, the margin compression, the EBITDA undershoot, and the favourable cash flow — using appropriate variance language and professional hedging where needed.",
+     tags:["250–280 words","Formal board-level register","Use: variance language, hedging, cause/effect structures"],id:"writing-1"},
+    {activity:"Writing Activity 2",type:"Variance Analysis Report",title:"Quarterly Variance Analysis — Q2 Internal Report",
+     prompt:"Write a professional variance analysis report for Q2 for the technology division of a manufacturing company. Key figures: Revenue: $18.2m actual vs $21.0m budget (adverse $2.8m) — driven by two delayed customer orders and a price renegotiation on a major contract. Operating costs: $14.8m actual vs $16.1m budget (favourable $1.3m) — mainly from lower headcount costs due to two unfilled roles, and a delayed marketing campaign. EBIT: $3.4m actual vs $4.9m budget (adverse $1.5m). Provide a concise Q2 variance analysis of 200–240 words with a brief outlook for Q3.",
+     tags:["200–240 words","Internal management report register","Include: revenue variance, cost variance, EBIT outcome, Q3 outlook"],id:"writing-2"}
+  ];
+  document.getElementById('writingContent').innerHTML=tasks.map(t=>`
+    <div class="card"><div class="card-title">${t.activity}: ${t.type}</div><div class="card-title-bar"></div>
+    <div class="writing-prompt"><h4>${t.title}</h4><p>${t.prompt}</p>
+    <div class="writing-meta">${t.tags.map(tag=>`<span class="writing-tag">${tag}</span>`).join('')}</div></div>
+    <textarea class="writing-textarea" id="${t.id}-textarea" placeholder="Write your response here…" oninput="updateWordCount('${t.id}')"></textarea>
+    <div class="word-counter" id="${t.id}-counter">0 words</div>
+    <button class="submit-btn" onclick="submitWriting('${t.id}')">Submit Writing ✓</button>
+    <div class="submit-success" id="${t.id}-success">✅ <span>Submitted successfully! Your response has been recorded.</span></div>
+    </div>`).join('');
+}
+function updateWordCount(id){
+  const ta=document.getElementById(`${id}-textarea`);
+  const wc=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  document.getElementById(`${id}-counter`).textContent=`${wc} words`;
+}
+function submitWriting(id){
+  const ta=document.getElementById(`${id}-textarea`);
+  const suc=document.getElementById(`${id}-success`);
+  if(ta.value.trim().length<20){alert('Please write at least a few sentences before submitting.');return;}
+  suc.style.display='flex';ta.style.borderColor='var(--green-accent)';
+}
+function renderListening(){
+  document.getElementById('listeningContent').innerHTML=listeningActivities.map((act,ai)=>{
+    const cid=`l-mcq-${ai}`;
+    return`<div class="listening-activity">
+      <div class="listening-header"><div class="listening-icon">📊</div>
+        <div><div class="listening-title">${act.title}</div><div class="listening-subtitle">${act.subtitle}</div>
+        <div class="listening-tags"><span class="l-tag l-tag-level">LEVEL: ${act.level}</span><span class="l-tag l-tag-type">${act.type}</span><span class="l-tag l-tag-focus">FOCUS: ${act.focus}</span></div></div>
+      </div>
+      <div class="audio-player">
+        <div class="player-top">
+          <button class="play-btn" onclick="togglePlay(${ai})" id="play-${ai}">▶</button>
+          <div class="player-info"><div class="player-title">🎧 ${act.title}</div><div class="player-desc">${act.subtitle}</div></div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="progress-audio"><div class="progress-audio-fill" id="prog-${ai}"></div></div>
+        <div class="speed-controls">
+          <span class="speed-label">SPEED:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7×</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2×</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">↩ Replay</button>
+        </div>
+        <div class="audio-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <div class="transcript-toggle" id="trans-toggle-${ai}" onclick="toggleTranscript(${ai})"><span class="arrow">▼</span> Show / Hide Transcript</div>
+      <div class="transcript-content" id="trans-${ai}"><p>${act.transcript}</p></div>
+      <div class="listening-mcq">
+        <div class="instructions-box"><span class="inst-icon">📋</span><span class="inst-text">Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</span></div>
+        <div id="${cid}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  listeningActivities.forEach((_,ai)=>renderMCQ(listeningActivities[ai].questions,`l-mcq-${ai}`,true));
+}
+function renderCaseStudies(){
+  document.getElementById('caseStudiesContent').innerHTML=caseStudies.map((cs,ci)=>{
+    const cid=`cs-mcq-${ci}`;
+    return`<div style="margin-bottom:34px;">
+      <div class="case-header"><div class="case-label">Case Study ${ci+1}</div><div class="case-title">${cs.title}</div><div class="case-sub">${cs.subtitle} &nbsp;·&nbsp; ${cs.intro}</div></div>
+      <div class="case-body">
+        ${cs.sections.map(s=>`<h5>${s.heading}</h5><p>${s.text}</p>`).join('')}
+        <div class="ex-divider"></div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:18px;">Comprehension Questions</h4>
+        <div id="${cid}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  caseStudies.forEach((_,ci)=>renderMCQ(caseStudies[ci].questions,`cs-mcq-${ci}`));
+}
+
+/* ═══════════════════ AUDIO ENGINE ═══════════════════ */
+const speechInstances={};
+let cachedAmericanFemaleVoice=null;
+const US_FEMALE_VOICE_NAMES=['Samantha','Karen','Victoria','Allison','Susan','Zira','Microsoft Zira','Microsoft Zira Desktop','Google US English','en-US-Neural2-F','en-US-Wavenet-F','Ava','Nova','Jenny','Aria'];
+function pickAmericanFemaleVoice(){
+  if(cachedAmericanFemaleVoice)return cachedAmericanFemaleVoice;
+  const voices=window.speechSynthesis.getVoices();
+  if(!voices.length)return null;
+  for(const name of US_FEMALE_VOICE_NAMES){const v=voices.find(v=>v.name===name);if(v){cachedAmericanFemaleVoice=v;return v;}}
+  for(const name of US_FEMALE_VOICE_NAMES){const v=voices.find(v=>v.name.toLowerCase().includes(name.toLowerCase()));if(v){cachedAmericanFemaleVoice=v;return v;}}
+  const enUS=voices.filter(v=>v.lang==='en-US');
+  const female=enUS.find(v=>/female|woman|girl|zira|samantha|ava|nova|jenny|aria/i.test(v.name));
+  if(female){cachedAmericanFemaleVoice=female;return female;}
+  if(enUS.length){cachedAmericanFemaleVoice=enUS[0];return enUS[0];}
+  const enAny=voices.find(v=>v.lang.startsWith('en'));
+  if(enAny){cachedAmericanFemaleVoice=enAny;return enAny;}
+  return voices[0];
+}
+function getVoiceThenSpeak(ai,cb){
+  const voices=window.speechSynthesis.getVoices();
+  if(voices.length){cb(pickAmericanFemaleVoice());return;}
+  window.speechSynthesis.onvoiceschanged=()=>{window.speechSynthesis.onvoiceschanged=null;cachedAmericanFemaleVoice=null;cb(pickAmericanFemaleVoice());};
+  setTimeout(()=>{if(!cachedAmericanFemaleVoice){cachedAmericanFemaleVoice=null;cb(pickAmericanFemaleVoice());}},600);
+}
+const progressIntervals={};
+function startProgressAnimation(ai){
+  const progEl=document.getElementById(`prog-${ai}`);const timeEl=document.getElementById(`time-${ai}`);
+  if(!progEl)return;
+  const wordCount=listeningActivities[ai].transcript.split(/\s+/).length;
+  const rate=speechInstances[`${ai}-rate`]||0.85;
+  const estimatedSec=Math.round((wordCount/130)*60/rate);
+  let elapsed=0;progEl.style.width='0%';
+  const fmt=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  if(timeEl)timeEl.textContent=`0:00 / ${fmt(estimatedSec)}`;
+  clearInterval(progressIntervals[ai]);
+  progressIntervals[ai]=setInterval(()=>{elapsed++;progEl.style.width=Math.min((elapsed/estimatedSec)*100,99)+'%';if(timeEl)timeEl.textContent=`${fmt(elapsed)} / ${fmt(estimatedSec)}`;},1000);
+}
+function stopProgressAnimation(ai,complete=false){
+  clearInterval(progressIntervals[ai]);
+  const progEl=document.getElementById(`prog-${ai}`);
+  if(progEl&&complete)progEl.style.width='100%';
+}
+function togglePlay(ai){
+  const btn=document.getElementById(`play-${ai}`);
+  if(speechInstances[ai]){window.speechSynthesis.cancel();stopProgressAnimation(ai);btn.textContent='▶';delete speechInstances[ai];return;}
+  getVoiceThenSpeak(ai,(voice)=>{
+    const utterance=new SpeechSynthesisUtterance(listeningActivities[ai].transcript);
+    utterance.voice=voice;utterance.lang='en-US';utterance.rate=speechInstances[`${ai}-rate`]||0.85;utterance.pitch=1.08;utterance.volume=1.0;
+    utterance.onstart=()=>{btn.textContent='⏸';startProgressAnimation(ai);};
+    utterance.onend=()=>{btn.textContent='▶';stopProgressAnimation(ai,true);delete speechInstances[ai];};
+    utterance.onerror=(e)=>{if(e.error!=='interrupted'){btn.textContent='▶';stopProgressAnimation(ai);delete speechInstances[ai];}};
+    window.speechSynthesis.speak(utterance);speechInstances[ai]=utterance;
+  });
+}
+function setSpeed(ai,rate,el){
+  speechInstances[`${ai}-rate`]=rate;
+  el.closest('.speed-controls').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');
+  if(speechInstances[ai]){window.speechSynthesis.cancel();stopProgressAnimation(ai);delete speechInstances[ai];document.getElementById(`play-${ai}`).textContent='▶';setTimeout(()=>togglePlay(ai),150);}
+}
+function replayAudio(ai){
+  if(speechInstances[ai]){window.speechSynthesis.cancel();stopProgressAnimation(ai);delete speechInstances[ai];}
+  document.getElementById(`play-${ai}`).textContent='▶';setTimeout(()=>togglePlay(ai),200);
+}
+function toggleTranscript(ai){
+  document.getElementById(`trans-toggle-${ai}`).classList.toggle('open');
+  document.getElementById(`trans-${ai}`).classList.toggle('open');
+}
+
+/* ═══════════════════ ASSESSMENT ═══════════════════ */
+let assessmentAttempts=0;
+function renderAssessment(){
+  document.getElementById('assessmentContent').innerHTML=`
+    <div class="assessment-banner"><h3>Module 4 Final Assessment</h3>
+    <p>This assessment covers all areas of Module 4: Budgeting and Forecasting.<br>Answer all 20 questions. You need 70% or above to pass. You have 2 attempts.</p>
+    <div class="assessment-meta">
+      <div class="a-meta-item"><div class="a-meta-num">20</div><div class="a-meta-label">Questions</div></div>
+      <div class="a-meta-item"><div class="a-meta-num">70%</div><div class="a-meta-label">Pass Mark</div></div>
+      <div class="a-meta-item"><div class="a-meta-num">2</div><div class="a-meta-label">Attempts</div></div>
+    </div></div>
+    <div class="card">
+      <div class="attempts-display">Attempts used: <span class="attempt-dot" id="att-0"></span><span class="attempt-dot" id="att-1"></span></div>
+      <div id="assessment-questions"></div>
+      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="submit-btn" id="submit-assessment-btn" onclick="submitAssessment()">Submit Assessment</button>
+        <button class="check-btn" id="retry-assessment-btn" onclick="resetAssessment()" style="display:none">Try Again</button>
+      </div>
+      <div class="final-result" id="final-result"></div>
+    </div>`;
+  renderAssessmentQuestions();
+}
+const finalAnswers={};
+function renderAssessmentQuestions(){
+  const L=['A','B','C','D'];
+  document.getElementById('assessment-questions').innerHTML=assessmentQs.map((item,qi)=>`
+    <div class="mcq-block" id="asmq-q${qi}">
+      <div class="mcq-q">${qi+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((opt,oi)=>`
+          <div class="mcq-option" onclick="selectFinalOption(${qi},${oi},${item.ans})" id="asmq-q${qi}-o${oi}">
+            <span class="option-letter">${L[oi]}</span>${opt}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function selectFinalOption(qi,oi,correct){
+  if(finalAnswers[qi]?.checked)return;
+  finalAnswers[qi]={selected:oi,correct};
+  document.querySelectorAll(`#asmq-q${qi} .mcq-option`).forEach((o,i)=>{o.classList.remove('selected');if(i===oi)o.classList.add('selected');});
+}
+function submitAssessment(){
+  if(assessmentAttempts>=2)return;
+  assessmentAttempts++;
+  document.getElementById(`att-${assessmentAttempts-1}`).classList.add('used');
+  let score=0;
+  assessmentQs.forEach((item,qi)=>{
+    const data=finalAnswers[qi];
+    const opts=document.querySelectorAll(`#asmq-q${qi} .mcq-option`);
+    opts.forEach(o=>o.style.pointerEvents='none');
+    if(!data)return;data.checked=true;
+    opts.forEach((o,i)=>{o.classList.remove('selected');if(i===data.correct)o.classList.add('correct');if(i===data.selected&&data.selected!==data.correct)o.classList.add('incorrect');});
+    if(data.selected===data.correct)score++;
+  });
+  const pct=Math.round((score/assessmentQs.length)*100);
+  const passed=pct>=70;
+  const resultEl=document.getElementById('final-result');
+  resultEl.className=`final-result ${passed?'pass':'fail'}`;
+  resultEl.style.display='block';
+  resultEl.innerHTML=`
+    <div class="final-score">${pct}%</div>
+    <div class="final-verdict">${passed?'🎉 Congratulations! You passed!':'❌ Not quite — keep studying!'}</div>
+    <div class="final-msg">${passed
+      ?`You scored ${score} out of ${assessmentQs.length}. Excellent work on Module 4: Budgeting and Forecasting. You have demonstrated strong command of planning language, variance analysis, and professional grammar.`
+      :`You scored ${score} out of ${assessmentQs.length}. You need 70% to pass (14/20). ${assessmentAttempts<2?'You have 1 attempt remaining. Review the module and try again.':'You have used both attempts. Please review the module and speak to your instructor.'}`
+    }</div>`;
+  document.getElementById('submit-assessment-btn').style.display='none';
+  if(assessmentAttempts<2&&!passed)document.getElementById('retry-assessment-btn').style.display='inline-block';
+}
+function resetAssessment(){
+  Object.keys(finalAnswers).forEach(k=>delete finalAnswers[k]);
+  renderAssessmentQuestions();
+  document.getElementById('final-result').style.display='none';
+  document.getElementById('submit-assessment-btn').style.display='inline-block';
+  document.getElementById('retry-assessment-btn').style.display='none';
+}
+
+/* ═══════════════════ INIT ═══════════════════ */
+window.addEventListener('DOMContentLoaded',()=>{
+  renderSpeaking();renderWordBank();renderReading();renderVocabulary();
+  renderGrammar();renderGrammarReview();renderWriting();renderListening();
+  renderCaseStudies();renderAssessment();
+  setTimeout(()=>{document.getElementById('progressFill').style.width='0%';document.getElementById('progressPct').textContent='0%';},600);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7: Influencer and Affiliate Marketing</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2744;--navy-dark:#111b33;--navy-mid:#243055;--navy-light:#2d3d6b;
+  --gold:#f0a830;--gold-light:#f5c55a;--gold-pale:#fef3d0;
+  --cream:#faf7f2;--cream-dark:#f0ebe0;
+  --white:#fff;--text-dark:#1a2744;--text-mid:#3d4f6e;--text-light:#6b7a99;
+  --success:#2d7a4f;--error:#b83232;
+  --sidebar-w:260px;--radius:10px;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh}
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--navy-dark);display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:4px}.sidebar::-webkit-scrollbar-thumb{background:var(--navy-light);border-radius:2px}
+.sidebar-brand{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand-title{font-family:'Fraunces',serif;font-size:13px;font-weight:600;color:var(--gold);line-height:1.3}
+.brand-sub{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:3px}
+.level-badge{display:inline-block;background:var(--gold);color:var(--navy-dark);font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 8px;border-radius:20px;margin-top:10px}
+.sidebar-module-label{padding:18px 20px 8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:600}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;color:rgba(255,255,255,.65);font-size:13px;font-weight:400;transition:all .18s;border-left:3px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:rgba(240,168,48,.12);color:#fff;border-left-color:var(--gold)}
+.nav-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.nav-label{flex:1}
+.nav-badge{background:var(--gold);color:var(--navy-dark);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.section{display:none}.section.active{display:block}
+.hero{background:var(--navy);padding:28px 52px 36px;position:relative;overflow:hidden;min-height:280px}
+.hero::before{content:'';position:absolute;right:-40px;top:-30px;width:460px;height:460px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='10' y='320' font-size='280' opacity='.04' fill='%23fff' font-family='serif'%3EM7%3C/text%3E%3C/svg%3E") center/contain no-repeat}
+.section-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:22px;font-family:'DM Mono',monospace}
+.hero-title{font-family:'Fraunces',serif;font-size:54px;font-weight:700;line-height:1.05;color:#fff;margin-bottom:16px}
+.hero-title span{color:var(--gold)}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.65);max-width:620px;line-height:1.65;margin-bottom:28px}
+.stats-row{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:24px}
+.stat-num{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.stat-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.progress-track{height:4px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .6s ease;width:0%}
+.content-area{background:var(--cream);padding:40px 52px}
+.card{background:#fff;border-radius:var(--radius);padding:32px;margin-bottom:24px;border:1px solid rgba(26,39,68,.08);box-shadow:0 2px 12px rgba(26,39,68,.06)}
+.card-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--text-dark);margin-bottom:6px}
+.card-title-bar{width:40px;height:3px;background:var(--gold);border-radius:2px;margin-bottom:18px}
+.prose{font-size:15px;line-height:1.75;color:var(--text-mid)}
+.prose strong{color:var(--text-dark);font-weight:600}
+.prose p+p{margin-top:12px}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.outcome-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--cream);border-radius:8px;border:1px solid var(--cream-dark)}
+.outcome-icon{color:var(--gold);flex-shrink:0;margin-top:1px}
+.outcome-text{font-size:13.5px;color:var(--text-mid);line-height:1.5}
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.q-card{background:#fff;border:1px solid rgba(26,39,68,.1);border-radius:8px;padding:16px;display:flex;gap:12px;align-items:flex-start;transition:box-shadow .2s}
+.q-card:hover{box-shadow:0 4px 16px rgba(26,39,68,.1)}
+.q-num{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--gold-light);flex-shrink:0;min-width:28px;line-height:1}
+.q-text{font-size:14px;color:var(--text-mid);line-height:1.55}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.wb-card{background:#fff;border:1px solid rgba(26,39,68,.1);border-radius:10px;padding:18px 16px;display:flex;flex-direction:column;gap:6px;transition:transform .2s,box-shadow .2s}
+.wb-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,39,68,.1)}
+.wb-emoji{font-size:24px}
+.wb-term{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--text-dark)}
+.wb-pos{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.wb-def{font-size:13px;color:var(--text-mid);line-height:1.5}
+.reading-text{background:var(--cream);border-left:4px solid var(--gold);padding:24px 28px;border-radius:0 8px 8px 0;margin-bottom:28px}
+.reading-text h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--text-dark);margin-bottom:14px}
+.reading-text p{font-size:14.5px;line-height:1.75;color:var(--text-mid);margin-bottom:10px}
+.reading-text strong{color:var(--text-dark);font-weight:600}
+.mcq-section{margin-top:24px}
+.mcq-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--text-dark);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--cream-dark)}
+.mcq-item{margin-bottom:20px}
+.mcq-q{font-size:14.5px;font-weight:600;color:var(--text-dark);margin-bottom:10px;line-height:1.5}
+.mcq-options{display:grid;gap:7px}
+.mcq-option{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1.5px solid rgba(26,39,68,.15);cursor:pointer;transition:all .18s;font-size:13.5px;color:var(--text-mid);background:#fff}
+.mcq-option:hover{border-color:var(--gold);background:var(--gold-pale)}
+.mcq-option.selected{border-color:var(--navy);background:rgba(26,39,68,.06);color:var(--text-dark)}
+.mcq-option.correct{border-color:var(--success)!important;background:rgba(45,122,79,.08)!important;color:var(--success)!important}
+.mcq-option.wrong{border-color:var(--error)!important;background:rgba(184,50,50,.07)!important;color:var(--error)!important}
+.opt-letter{width:22px;height:22px;border-radius:50%;background:rgba(26,39,68,.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'DM Mono',monospace}
+.check-btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 22px;background:var(--navy);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;transition:background .18s}
+.check-btn:hover{background:var(--navy-light)}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;display:none}
+.feedback.show{display:block}
+.feedback.good{background:rgba(45,122,79,.1);color:var(--success);border:1px solid rgba(45,122,79,.2)}
+.feedback.bad{background:rgba(184,50,50,.08);color:var(--error);border:1px solid rgba(184,50,50,.2)}
+.score-display{background:var(--cream);border-radius:8px;padding:14px 18px;margin-top:16px;display:none}
+.score-display.show{display:flex;align-items:center;justify-content:space-between}
+.score-val{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--text-dark)}
+.score-label{font-size:13px;color:var(--text-light)}
+.ex-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ex-badge{background:var(--navy);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.06em}
+.ex-type{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.ex-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--text-dark);margin-bottom:4px}
+.ex-instruction{font-size:13.5px;color:var(--text-light);margin-bottom:20px;font-style:italic}
+.word-box{background:var(--cream);border-radius:8px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:20px}
+.word-chip{background:#fff;border:1px solid rgba(26,39,68,.15);border-radius:5px;padding:3px 10px;font-size:13px;color:var(--text-mid)}
+.gap-sentence{font-size:14.5px;color:var(--text-dark);line-height:2.5;margin-bottom:6px}
+.gap-input{border:none;border-bottom:2px solid var(--gold);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);padding:2px 6px;width:170px;outline:none;text-align:center;transition:border-color .18s}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.tf-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--cream-dark)}
+.tf-stmt{flex:1;font-size:14.5px;color:var(--text-mid);line-height:1.55}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+.tf-btn{padding:5px 14px;border-radius:6px;border:1.5px solid rgba(26,39,68,.2);cursor:pointer;font-size:12px;font-weight:600;background:#fff;color:var(--text-mid);transition:all .18s;font-family:'DM Sans',sans-serif}
+.tf-btn:hover{border-color:var(--gold);color:var(--gold)}
+.tf-btn.sel-t{background:#dcfce7;border-color:var(--success);color:var(--success)}
+.tf-btn.sel-f{background:#fee2e2;border-color:var(--error);color:var(--error)}
+.gr-box{background:var(--navy);color:#fff;border-radius:10px;padding:28px;margin-bottom:24px}
+.gr-box-title{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--gold);margin-bottom:6px}
+.gr-box-sub{font-size:12px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px}
+.gr-rule{background:rgba(255,255,255,.08);border-radius:8px;padding:16px;margin-bottom:12px}
+.gr-rule-title{font-size:13px;font-weight:600;color:var(--gold-light);margin-bottom:6px}
+.gr-rule-text{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.6}
+.gr-example{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--gold-pale);background:rgba(255,255,255,.05);padding:8px 12px;border-radius:6px;margin-top:8px;line-height:1.6}
+.gr-table{width:100%;border-collapse:collapse;margin-top:14px}
+.gr-table th{background:rgba(255,255,255,.1);padding:8px 12px;font-size:12px;text-align:left;color:var(--gold-light);letter-spacing:.06em;text-transform:uppercase}
+.gr-table td{padding:8px 12px;font-size:13px;color:rgba(255,255,255,.75);border-top:1px solid rgba(255,255,255,.08)}
+.gr-table tr:hover td{background:rgba(255,255,255,.04)}
+.writing-prompt{background:rgba(240,168,48,.08);border:1px solid rgba(240,168,48,.35);border-radius:8px;padding:18px 20px;margin-bottom:16px}
+.writing-prompt h4{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--text-dark);margin-bottom:8px}
+.writing-prompt p{font-size:13.5px;color:var(--text-mid);line-height:1.6}
+.writing-focus{background:rgba(26,39,68,.04);border:1px solid rgba(26,39,68,.12);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--text-light)}
+.writing-focus strong{color:var(--text-mid)}
+.writing-textarea{width:100%;min-height:180px;border:1.5px solid rgba(26,39,68,.2);border-radius:8px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);resize:vertical;outline:none;background:#fff;line-height:1.65;transition:border-color .18s}
+.writing-textarea:focus{border-color:var(--gold)}
+.writing-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.word-count{font-size:12px;color:var(--text-light);font-family:'DM Mono',monospace}
+.submit-btn{padding:10px 24px;background:var(--gold);color:var(--navy-dark);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .18s}
+.submit-btn:hover{background:var(--gold-light)}
+.submit-success{display:none;padding:12px 16px;background:rgba(45,122,79,.1);border:1px solid rgba(45,122,79,.25);border-radius:8px;color:var(--success);font-size:13.5px;font-weight:500;margin-top:12px}
+/* ── AUDIO CARDS ── */
+.audio-card{background:var(--navy-mid);border-radius:12px;padding:24px;margin-bottom:28px}
+.audio-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
+.audio-emoji{font-size:30px;background:rgba(255,255,255,.1);border-radius:8px;padding:9px;flex-shrink:0;line-height:1}
+.audio-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#fff;margin-bottom:4px}
+.audio-sub{font-size:12px;color:rgba(255,255,255,.5)}
+.audio-tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.audio-tag{font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 9px;border-radius:10px;text-transform:uppercase}
+.tag-level{background:rgba(240,168,48,.3);color:var(--gold-light)}
+.tag-type{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
+.tag-focus{color:rgba(255,255,255,.45);font-size:10px}
+.player-box{background:var(--navy-dark);border-radius:10px;padding:16px 18px;margin-bottom:12px}
+.player-row{display:flex;align-items:center;gap:14px}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:background .18s;color:var(--navy-dark)}
+.play-btn:hover{background:var(--gold-light)}
+.player-info{flex:1}
+.player-title-sm{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px}
+.player-sub-sm{font-size:11px;color:rgba(255,255,255,.4)}
+.player-time{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.5);white-space:nowrap}
+.player-progress{width:100%;height:3px;background:rgba(255,255,255,.12);border-radius:2px;margin-top:10px;overflow:hidden}
+.player-progress-fill{height:100%;width:0%;background:var(--gold);border-radius:2px;transition:width .5s linear}
+.speed-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase}
+.speed-btn{padding:3px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:all .18s}
+.speed-btn.active,.speed-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-dark);font-weight:700}
+.replay-btn{padding:3px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.6);font-size:11px;cursor:pointer;transition:all .18s}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light)}
+.tts-note{font-size:11px;color:rgba(255,255,255,.3);font-style:italic;margin-top:6px}
+.transcript-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;color:rgba(255,255,255,.6);font-size:12.5px;padding:8px 0;border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:color .18s}
+.transcript-toggle:hover{color:var(--gold-light)}
+.transcript-box{display:none;background:rgba(255,255,255,.06);border-radius:8px;padding:16px;margin-top:6px;margin-bottom:14px}
+.transcript-box.open{display:block}
+.transcript-box p{font-size:13px;color:rgba(255,255,255,.7);line-height:1.75;margin-bottom:8px}
+/* ── LISTENING MCQs — all text WHITE ── */
+.listen-instruction{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.08);border-radius:8px;font-size:13px;color:#fff;margin-bottom:18px;font-weight:500}
+.listen-mcq-wrap .mcq-title{color:#fff;border-bottom-color:rgba(255,255,255,.2)}
+.listen-mcq-wrap .mcq-q{color:#fff}
+.listen-mcq-wrap .mcq-option{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2);color:#fff}
+.listen-mcq-wrap .mcq-option:hover{border-color:var(--gold);background:rgba(240,168,48,.15);color:#fff}
+.listen-mcq-wrap .mcq-option.selected{border-color:var(--gold);background:rgba(240,168,48,.2);color:#fff}
+.listen-mcq-wrap .mcq-option.correct{border-color:#4ade80!important;background:rgba(74,222,128,.15)!important;color:#4ade80!important}
+.listen-mcq-wrap .mcq-option.wrong{border-color:#f87171!important;background:rgba(248,113,113,.12)!important;color:#f87171!important}
+.listen-mcq-wrap .opt-letter{background:rgba(255,255,255,.15);color:#fff}
+.listen-mcq-wrap .check-btn{background:var(--gold);color:var(--navy-dark)}
+.listen-mcq-wrap .check-btn:hover{background:var(--gold-light)}
+.listen-mcq-wrap .feedback.good{background:rgba(74,222,128,.15);color:#4ade80;border-color:rgba(74,222,128,.3)}
+.listen-mcq-wrap .feedback.bad{background:rgba(248,113,113,.12);color:#f87171;border-color:rgba(248,113,113,.25)}
+.listen-mcq-wrap .score-display{background:rgba(255,255,255,.08)}
+.listen-mcq-wrap .score-val{color:#fff}
+.listen-mcq-wrap .score-label{color:rgba(255,255,255,.6)}
+/* ── CASE STUDIES ── */
+.case-header{background:var(--navy);border-radius:10px 10px 0 0;padding:22px 28px}
+.case-header h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#fff;margin-bottom:4px}
+.case-header p{font-size:13px;color:rgba(255,255,255,.5)}
+.case-body{background:#fff;border:1px solid rgba(26,39,68,.1);border-top:none;border-radius:0 0 10px 10px;padding:24px 28px;margin-bottom:28px}
+.case-section-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.case-text{font-size:14.5px;color:var(--text-mid);line-height:1.75;margin-bottom:20px}
+.case-text strong{color:var(--text-dark)}
+/* ── ASSESSMENT ── */
+.assessment-header{background:linear-gradient(135deg,var(--navy-dark),var(--navy-mid));border-radius:12px;padding:28px 32px;margin-bottom:28px;text-align:center}
+.assessment-header h2{font-family:'Fraunces',serif;font-size:28px;color:#fff;margin-bottom:8px}
+.assessment-header p{color:rgba(255,255,255,.6);font-size:14px}
+.assessment-meta{display:flex;justify-content:center;gap:28px;margin-top:16px;flex-wrap:wrap}
+.assessment-meta-item{text-align:center}
+.assessment-meta-num{font-family:'Fraunces',serif;font-size:22px;color:var(--gold);font-weight:700}
+.assessment-meta-label{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em}
+.attempt-badge{display:inline-block;padding:4px 12px;border-radius:10px;font-size:11px;font-weight:600;background:rgba(240,168,48,.2);color:var(--gold-light);margin-top:8px}
+.assessment-result{display:none;text-align:center;padding:28px;background:#fff;border-radius:12px;border:2px solid var(--cream-dark);margin-bottom:24px}
+.result-score{font-family:'Fraunces',serif;font-size:56px;font-weight:700}
+.result-score.pass{color:var(--success)}.result-score.fail{color:var(--error)}
+.result-msg{font-size:16px;color:var(--text-mid);margin-top:8px}
+.retake-btn{padding:10px 24px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-top:16px;font-family:'DM Sans',sans-serif}
+
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-title">Marketing &amp; Advertising English</div>
+    <div class="brand-sub">Professional Development</div>
+    <div class="level-badge">B1&ndash;B2 LEVEL</div>
+  </div>
+  <div class="sidebar-module-label">Module 7</div>
+  <div class="nav-item active" onclick="showSection('overview')"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  <div class="nav-item" onclick="showSection('speaking')"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span><span class="nav-badge">21Q</span></div>
+  <div class="nav-item" onclick="showSection('wordbank')"><span class="nav-icon">🟩</span><span class="nav-label">Word Bank</span><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="showSection('reading')"><span class="nav-icon">📄</span><span class="nav-label">Reading</span><span class="nav-badge">2T</span></div>
+  <div class="nav-item" onclick="showSection('vocabulary')"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar')"><span class="nav-icon">📘</span><span class="nav-label">Grammar</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar-review')"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  <div class="nav-item" onclick="showSection('writing')"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span><span class="nav-badge">2W</span></div>
+  <div class="nav-item" onclick="showSection('listening')"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span><span class="nav-badge">4Ex</span></div>
+  <div class="nav-item" onclick="showSection('casestudies')"><span class="nav-icon">📊</span><span class="nav-label">Case Studies</span><span class="nav-badge">2CS</span></div>
+  <div class="nav-item" onclick="showSection('assessment')"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span><span class="nav-badge">20Q</span></div>
+</nav>
+<div class="main">
+
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="section-tag">🏛️ Module 7 &middot; Marketing &amp; Advertising English</div>
+    <div class="hero-title">Influencer &amp;<br><span>Affiliate Marketing</span></div>
+    <p class="hero-desc">Develop the professional English skills to discuss, plan, and evaluate influencer partnerships and affiliate programmes &mdash; two of the fastest-growing channels in modern marketing &mdash; with confidence and precision.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+    <div>
+      <div class="progress-label"><span>Module Progress</span><span id="progress-pct">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div><div class="card-title-bar"></div>
+      <div class="prose">
+        <p><strong>Welcome to Module 7: Influencer and Affiliate Marketing.</strong> These two channels have transformed the way brands reach new audiences and drive revenue online. Influencer marketing &mdash; the practice of partnering with content creators who have established audiences &mdash; has grown into a multi-billion-pound industry, with brands investing in everyone from global celebrities to highly targeted niche micro-influencers. Affiliate marketing, meanwhile, enables brands to build performance-based partnerships where publishers, bloggers, and comparison sites earn a commission only when they drive a measurable result.</p>
+        <p>This module builds the vocabulary and communication skills you need to operate professionally in both areas. You will learn how to evaluate influencer profiles, negotiate partnership terms, brief creators in English, interpret campaign metrics such as earned media value and engagement rate, and discuss the ethical and regulatory dimensions of paid partnerships. You will also master the vocabulary of affiliate networks, commission structures, tracking technology, and programme management.</p>
+        <p>By the end of this module, you will be able to discuss influencer and affiliate strategy confidently in meetings and presentations, write professional briefs and outreach emails, interpret campaign performance data, and apply the grammar structures used in professional marketing negotiations and evaluations.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div><div class="card-title-bar"></div>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use 21+ influencer and affiliate marketing terms accurately in professional contexts</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Evaluate influencer profiles using engagement rate, audience fit, and authenticity criteria</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Explain affiliate marketing models, commission structures, and tracking mechanisms</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use gerunds and infinitives correctly in marketing proposals and briefs</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Apply discourse markers to structure arguments in presentations and reports</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use quantifying expressions accurately when discussing campaign reach and performance</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Write a professional influencer brief and an affiliate programme pitch in English</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Analyse case studies involving real-world influencer and affiliate campaigns</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="speaking" class="section">
+  <div class="hero">
+    <div class="section-tag">🎙️ Speaking Activities</div>
+    <div class="hero-title">Speaking <span>Discussion</span></div>
+    <p class="hero-desc">21 discussion questions on influencer and affiliate marketing &mdash; build professional fluency, evaluate strategies, and discuss ethical dimensions in English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Discussion Questions</div><div class="card-title-bar"></div>
+      <div class="q-grid"><div class="q-card"><div class="q-num">1</div><div class="q-text">Have you ever bought a product because an influencer or content creator recommended it? What made you trust their opinion?</div></div><div class="q-card"><div class="q-num">2</div><div class="q-text">What is the difference between a mega-influencer, a macro-influencer, a micro-influencer, and a nano-influencer? Which do you think is most effective for brands?</div></div><div class="q-card"><div class="q-num">3</div><div class="q-text">Why do you think some influencer collaborations feel authentic and trustworthy, while others feel forced and promotional?</div></div><div class="q-card"><div class="q-num">4</div><div class="q-text">What does engagement rate mean, and why is it considered more important than follower count alone when evaluating an influencer?</div></div><div class="q-card"><div class="q-num">5</div><div class="q-text">What ethical obligations do influencers have when promoting products for payment? Should all paid partnerships be disclosed?</div></div><div class="q-card"><div class="q-num">6</div><div class="q-text">How does affiliate marketing differ from influencer marketing in terms of structure, payment model, and measurement?</div></div><div class="q-card"><div class="q-num">7</div><div class="q-text">What is a commission-based payment model and why does it appeal to brands launching affiliate programmes?</div></div><div class="q-card"><div class="q-num">8</div><div class="q-text">Have you ever clicked a referral link from a blog, comparison site, or social media post? Did you know you were using affiliate marketing at the time?</div></div><div class="q-card"><div class="q-num">9</div><div class="q-text">What is an affiliate network and what role does it play between brands and affiliate publishers?</div></div><div class="q-card"><div class="q-num">10</div><div class="q-text">How do brands ensure that affiliates represent their brand accurately and do not use misleading promotional tactics?</div></div><div class="q-card"><div class="q-num">11</div><div class="q-text">What is a cookie window in affiliate marketing and why does its length affect the attractiveness of a programme to affiliates?</div></div><div class="q-card"><div class="q-num">12</div><div class="q-text">What types of content creators work as affiliates, and what makes a blog or comparison website a particularly effective affiliate channel?</div></div><div class="q-card"><div class="q-num">13</div><div class="q-text">What is earned media value (EMV) and how is it used to measure the impact of an influencer campaign?</div></div><div class="q-card"><div class="q-num">14</div><div class="q-text">How do gifting campaigns differ from paid influencer campaigns, and what are the advantages and risks of each?</div></div><div class="q-card"><div class="q-num">15</div><div class="q-text">What is a brand ambassador and how does this role differ from a one-off sponsored post collaboration?</div></div><div class="q-card"><div class="q-num">16</div><div class="q-text">How do brands decide which influencers to partner with? What criteria do you think are most important in the selection process?</div></div><div class="q-card"><div class="q-num">17</div><div class="q-text">What regulations govern influencer marketing in your country? Do you think these regulations are clear and well-enforced?</div></div><div class="q-card"><div class="q-num">18</div><div class="q-text">How has TikTok changed the landscape of influencer marketing compared to Instagram and YouTube?</div></div><div class="q-card"><div class="q-num">19</div><div class="q-text">What is influencer fraud and how can brands protect themselves from paying for inauthentic reach and engagement?</div></div><div class="q-card"><div class="q-num">20</div><div class="q-text">If you were launching an affiliate programme for a new sustainable fashion brand, how would you structure the commission model and recruit your first affiliates?</div></div><div class="q-card"><div class="q-num">21</div><div class="q-text">Do you think influencer and affiliate marketing will become more or less important over the next five years? What trends support your view?</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="wordbank" class="section">
+  <div class="hero">
+    <div class="section-tag">🟩 Word Bank</div>
+    <div class="hero-title">Word <span>Bank</span></div>
+    <p class="hero-desc">21 essential terms for influencer and affiliate marketing &mdash; with professional definitions and usage context for every key concept.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Key Vocabulary &mdash; 21 Terms</div><div class="card-title-bar"></div>
+      <div class="wb-grid"><div class="wb-card"><div class="wb-emoji">🌟</div><div class="wb-term">Influencer marketing</div><div class="wb-pos">noun phrase</div><div class="wb-def">A marketing strategy that involves partnering with content creators who have an established, engaged audience to promote products or services to their followers.</div></div><div class="wb-card"><div class="wb-emoji">📊</div><div class="wb-term">Engagement rate</div><div class="wb-pos">noun phrase</div><div class="wb-def">A metric measuring the level of interaction an influencer's audience has with their content, calculated by dividing total interactions by total followers and expressing the result as a percentage.</div></div><div class="wb-card"><div class="wb-emoji">🔗</div><div class="wb-term">Affiliate marketing</div><div class="wb-pos">noun phrase</div><div class="wb-def">A performance-based marketing model where publishers, bloggers, or comparison sites earn a commission for each sale, lead, or click they generate for a brand via a tracked link.</div></div><div class="wb-card"><div class="wb-emoji">💸</div><div class="wb-term">Commission</div><div class="wb-pos">noun</div><div class="wb-def">The payment an affiliate receives for driving a specific action, typically calculated as a percentage of the sale value or a fixed fee per lead or click.</div></div><div class="wb-card"><div class="wb-emoji">🍪</div><div class="wb-term">Cookie window</div><div class="wb-pos">noun phrase</div><div class="wb-def">The period of time after a user clicks an affiliate link during which a completed purchase or action is attributed to that affiliate and earns them a commission.</div></div><div class="wb-card"><div class="wb-emoji">🏢</div><div class="wb-term">Affiliate network</div><div class="wb-pos">noun phrase</div><div class="wb-def">A third-party platform that connects brands with potential affiliate publishers, managing tracking technology, payment processing, and reporting for all parties.</div></div><div class="wb-card"><div class="wb-emoji">🧑</div><div class="wb-term">Micro-influencer</div><div class="wb-pos">noun</div><div class="wb-def">A content creator with a relatively small but highly engaged following, typically between 10,000 and 100,000, known for niche expertise and strong audience trust.</div></div><div class="wb-card"><div class="wb-emoji">💼</div><div class="wb-term">Brand ambassador</div><div class="wb-pos">noun phrase</div><div class="wb-def">A long-term influencer or public figure contracted to consistently represent a brand across multiple campaigns and contexts, embodying the brand's values.</div></div><div class="wb-card"><div class="wb-emoji">💡</div><div class="wb-term">Earned media value (EMV)</div><div class="wb-pos">noun phrase</div><div class="wb-def">An estimate of the monetary value of organic coverage and influencer content, calculated by comparing it to the equivalent cost of paid advertising with the same reach and engagement.</div></div><div class="wb-card"><div class="wb-emoji">🎁</div><div class="wb-term">Gifting campaign</div><div class="wb-pos">noun phrase</div><div class="wb-def">An influencer marketing strategy where brands send free products to creators in exchange for an honest review or feature, without guaranteeing paid content.</div></div><div class="wb-card"><div class="wb-emoji">📋</div><div class="wb-term">Influencer brief</div><div class="wb-pos">noun phrase</div><div class="wb-def">A document provided by a brand to an influencer that outlines the campaign objectives, key messages, content requirements, deadlines, usage rights, and disclosure obligations.</div></div><div class="wb-card"><div class="wb-emoji">🔍</div><div class="wb-term">Audience fit</div><div class="wb-pos">noun phrase</div><div class="wb-def">The degree to which an influencer's followers match the demographics, interests, and purchasing behaviours of a brand's target customer.</div></div><div class="wb-card"><div class="wb-emoji">🚫</div><div class="wb-term">Influencer fraud</div><div class="wb-pos">noun phrase</div><div class="wb-def">The practice of artificially inflating follower counts, engagement metrics, or reach through the use of bots, purchased followers, or engagement pods.</div></div><div class="wb-card"><div class="wb-emoji">📈</div><div class="wb-term">Cost per engagement (CPE)</div><div class="wb-pos">noun phrase</div><div class="wb-def">A pricing model in which a brand pays for each measurable interaction (like, comment, share, or save) generated by an influencer's content, rather than a flat fee.</div></div><div class="wb-card"><div class="wb-emoji">🔑</div><div class="wb-term">Affiliate link</div><div class="wb-pos">noun phrase</div><div class="wb-def">A unique, trackable URL assigned to each affiliate that records which publisher drove a visitor to the brand's website, enabling accurate attribution of commissions.</div></div><div class="wb-card"><div class="wb-emoji">📣</div><div class="wb-term">Paid partnership</div><div class="wb-pos">noun phrase</div><div class="wb-def">A commercial collaboration between a brand and a content creator where the creator is compensated financially for promoting the brand to their audience.</div></div><div class="wb-card"><div class="wb-emoji">🏷️</div><div class="wb-term">Disclosure</div><div class="wb-pos">noun</div><div class="wb-def">The legal and ethical requirement for influencers to clearly communicate to their audience that a post or piece of content is sponsored or paid for by a brand.</div></div><div class="wb-card"><div class="wb-emoji">⭐</div><div class="wb-term">Nano-influencer</div><div class="wb-pos">noun</div><div class="wb-def">A content creator with a very small following, typically between 1,000 and 10,000, whose high trust level and close community relationships often produce outstanding engagement rates.</div></div><div class="wb-card"><div class="wb-emoji">📉</div><div class="wb-term">Chargeback</div><div class="wb-pos">noun</div><div class="wb-def">In affiliate marketing, a reversal of a previously paid commission, typically occurring when the sale that triggered the commission is later cancelled or refunded.</div></div><div class="wb-card"><div class="wb-emoji">🌐</div><div class="wb-term">Publisher</div><div class="wb-pos">noun</div><div class="wb-def">In affiliate marketing, any website, blog, comparison platform, or content creator that promotes a brand's products via affiliate links in exchange for commission.</div></div><div class="wb-card"><div class="wb-emoji">🔁</div><div class="wb-term">Revenue share</div><div class="wb-pos">noun phrase</div><div class="wb-def">An affiliate commission model in which the affiliate earns a percentage of the total revenue generated by customers they refer, often used for subscription or high-value products.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="reading" class="section">
+  <div class="hero">
+    <div class="section-tag">📄 Reading Activities</div>
+    <div class="hero-title">Reading <span>Texts</span></div>
+    <p class="hero-desc">Two professional texts on influencer marketing strategy and affiliate programme management. Read carefully, then answer the comprehension questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Text 1: The Rise of Influencer Marketing &mdash; Strategy and Evaluation</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; What Influencer Marketing Is and Why It Works</h3>
+        <p>Influencer marketing is built on a principle that predates social media by centuries: people trust recommendations from individuals they admire, respect, or relate to far more than they trust advertising from brands. What social media has done is scale this principle dramatically. A fitness creator with 800,000 YouTube subscribers can recommend a protein supplement and generate more sales in 48 hours than a television advertisement costing ten times as much. The reason is <strong>authenticity</strong>: the creator has built a relationship of trust with their audience over years, and when they recommend something, their followers believe it represents a genuine opinion rather than a paid message.</p>
+        <p>This authenticity advantage is the central value proposition of influencer marketing, and it is also its central challenge. The moment an audience perceives an influencer as purely transactional &mdash; recommending anything that pays enough &mdash; the trust evaporates and the marketing value with it. The most effective influencer partnerships are those where the product genuinely fits the creator's content and lifestyle, where the creator is given creative freedom to present it in their own voice, and where the audience cannot easily distinguish where the creator's genuine enthusiasm ends and the paid promotion begins.</p>
+        <h3>Paragraph 2 &mdash; Influencer Tiers and Audience Fit</h3>
+        <p>The influencer landscape has become highly segmented. At the top are <strong>mega-influencers</strong>: celebrities, athletes, and global content creators with followings in the millions. They offer enormous reach but typically lower engagement rates and less precise audience targeting. Below them are <strong>macro-influencers</strong> (100,000&ndash;1 million followers), who balance significant reach with stronger niche credibility. <strong>Micro-influencers</strong> (10,000&ndash;100,000 followers) are increasingly favoured by sophisticated marketers because their communities are typically more engaged, their audiences more precisely defined, and their content more trusted. <strong>Nano-influencers</strong> (under 10,000 followers) generate the highest engagement rates of all tiers, but the small absolute reach means they are typically used in large groups rather than individually.</p>
+        <p>Selecting the right influencer requires more than simply matching follower counts to budget. The most critical criterion is <strong>audience fit</strong>: the degree to which the influencer's followers match the demographics, interests, and purchasing behaviours of the brand's target customer. An influencer with 50,000 followers who are predominantly female, aged 25&ndash;35, interested in sustainable living, and located in the UK is a far more valuable partner for a sustainable homeware brand than an influencer with 500,000 followers whose audience is diffuse and unqualified. Follower count is a measure of scale; audience fit is a measure of relevance.</p>
+        <h3>Paragraph 3 &mdash; Metrics and Measurement</h3>
+        <p>Measuring the success of influencer campaigns has historically been challenging, but a growing set of metrics now allows marketers to evaluate performance with more precision. <strong>Engagement rate</strong> &mdash; the ratio of likes, comments, saves, and shares to total followers &mdash; is the most widely used indicator of content resonance and audience quality. An engagement rate above 3% is generally considered strong for larger accounts; micro-influencers regularly achieve rates of 5&ndash;10%. Beyond engagement, brands increasingly track <strong>reach</strong> (the total number of unique users who saw the content), <strong>impressions</strong> (the total number of times the content was displayed), and <strong>earned media value (EMV)</strong> &mdash; an estimate of the equivalent cost to achieve the same reach and engagement through paid advertising.</p>
+        <p>For campaigns with a direct sales objective, <strong>unique discount codes</strong> and <strong>trackable affiliate links</strong> allow brands to attribute specific revenue directly to individual influencer partners, transforming influencer marketing from a brand-building exercise into a measurable, performance-based channel. This convergence of influencer marketing and affiliate mechanics &mdash; sometimes called <strong>performance influencer marketing</strong> &mdash; is one of the most significant trends in the industry today.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 1 (10 Questions)</div>
+        <div id="r1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r1')">Check Answers</button>
+        <div id="r1-feedback" class="feedback"></div>
+        <div id="r1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Text 2: Affiliate Marketing &mdash; Structure, Models, and Programme Management</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; How Affiliate Marketing Works</h3>
+        <p>Affiliate marketing is one of the oldest performance-based marketing models in digital commerce. Its fundamental logic is simple: a brand (the merchant) allows third-party publishers (the affiliates) to promote its products in exchange for a commission on any sales or leads they generate. Each affiliate is given a unique tracking link. When a user clicks that link and subsequently completes a purchase within a defined time window &mdash; the <strong>cookie window</strong> or <strong>attribution window</strong> &mdash; the affiliate earns their commission. The entire system is tracked automatically through the affiliate network or a brand's own tracking technology.</p>
+        <p>The appeal of affiliate marketing from the brand's perspective is that it is almost entirely performance-based. Unlike paid advertising, where brands pay for impressions or clicks regardless of whether they convert, affiliate commissions are only paid when a real commercial result is achieved. This makes it a highly capital-efficient channel: the cost is incurred only after the revenue has been generated. For affiliates, the appeal is passive income potential: well-positioned content can generate commission from purchases made weeks or months after the content was originally published.</p>
+        <h3>Paragraph 2 &mdash; Commission Structures and Affiliate Networks</h3>
+        <p>Affiliate commissions are structured in several different ways depending on the brand's objectives and the nature of the product. <strong>Cost per sale (CPS)</strong> &mdash; where the affiliate earns a percentage of the sale value &mdash; is the most common model for e-commerce brands. <strong>Cost per lead (CPL)</strong> &mdash; where the affiliate earns a fixed fee for each qualified lead generated, such as a form submission or free trial sign-up &mdash; is widely used in financial services, insurance, and SaaS. <strong>Cost per click (CPC)</strong> models, in which affiliates are paid per click rather than per conversion, are less common due to the potential for click fraud, but are used in specific contexts.</p>
+        <p><strong>Affiliate networks</strong> play a central role in connecting brands and publishers. They provide the technological infrastructure for link generation and click tracking, handle payment processing for commissions, offer a marketplace where brands can list their programmes and publishers can discover new opportunities, and provide reporting dashboards for both parties. Major networks in the UK include AWIN, Commission Junction (CJ), and Rakuten Advertising. Brands can also operate <strong>in-house affiliate programmes</strong> using platforms such as Impact or Partnerstack, giving them greater control over partner selection, commission structures, and creative assets but requiring more internal resource to manage.</p>
+        <h3>Paragraph 3 &mdash; Programme Management and Optimisation</h3>
+        <p>Running a successful affiliate programme requires active management rather than passive oversight. Key responsibilities include recruiting high-quality affiliate partners, reviewing and approving applications, providing affiliates with up-to-date creative assets and promotional materials, monitoring for fraudulent traffic or misattributed sales, and optimising commission rates to remain competitive with other programmes affiliates can promote. <strong>Affiliate fraud</strong> &mdash; attempts by unscrupulous publishers to manipulate tracking systems, generate fake clicks, or claim commission for sales they did not genuinely influence &mdash; is a significant concern that requires robust monitoring and clear programme terms.</p>
+        <p>The most important driver of affiliate programme performance is the commission rate. Affiliates operate rationally: they promote the programmes that offer the best combination of commission rate, average order value, and conversion rate. A brand that pays 5% commission on a product with an average order value of &pound;200 (generating &pound;10 per sale) will struggle to attract premium publishers if a competitor offers 8% on a similar product. Understanding the economics of the programme from the affiliate's perspective &mdash; and pricing it accordingly &mdash; is one of the most critical skills in affiliate programme management.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 2 (10 Questions)</div>
+        <div id="r2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r2')">Check Answers</button>
+        <div id="r2-feedback" class="feedback"></div>
+        <div id="r2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="vocabulary" class="section">
+  <div class="hero">
+    <div class="section-tag">✏️ Vocabulary Exercises</div>
+    <div class="hero-title">Vocabulary <span>Practice</span></div>
+    <p class="hero-desc">Three vocabulary exercises to consolidate your command of influencer and affiliate marketing English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Multiple Choice</div></div>
+      <div class="ex-title">Choosing the Right Term</div>
+      <p class="ex-instruction">Select the best word or phrase to complete each sentence in a professional influencer or affiliate marketing context.</p>
+      <div id="v1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('v1')">Check Answers</button>
+      <div id="v1-feedback" class="feedback"></div>
+      <div id="v1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Gap-Fill</div></div>
+      <div class="ex-title">Complete the Sentences</div>
+      <p class="ex-instruction">Type the correct word from the box to complete each sentence. Check your spelling carefully.</p>
+      <div class="word-box">
+        <strong style="color:var(--text-dark);margin-right:6px">Word Box:</strong>
+        <span class="word-chip">commission</span><span class="word-chip">disclosure</span><span class="word-chip">ambassador</span>
+        <span class="word-chip">engagement</span><span class="word-chip">gifting</span><span class="word-chip">publisher</span>
+        <span class="word-chip">chargeback</span><span class="word-chip">nano</span><span class="word-chip">cookie</span>
+        <span class="word-chip">authenticity</span>
+      </div>
+      <div id="v2-gaps"></div>
+      <button class="check-btn" onclick="checkGaps()">Check Answers</button>
+      <div id="v2-feedback" class="feedback"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">True / False</div></div>
+      <div class="ex-title">True or False?</div>
+      <p class="ex-instruction">Read each statement about influencer and affiliate marketing. Decide whether it is TRUE or FALSE and click your answer.</p>
+      <div id="v3-tf"></div>
+      <button class="check-btn" onclick="checkTF()">Check Answers</button>
+      <div id="v3-feedback" class="feedback"></div>
+    </div>
+  </div>
+</div>
+
+<div id="grammar" class="section">
+  <div class="hero">
+    <div class="section-tag">📘 Grammar Exercises</div>
+    <div class="hero-title">Grammar <span>Practice</span></div>
+    <p class="hero-desc">Three grammar exercises covering gerunds and infinitives in marketing proposals, discourse markers for presenting arguments, and quantifying expressions for describing reach and performance.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Gerunds &amp; Infinitives</div></div>
+      <div class="ex-title">Gerunds &amp; Infinitives in Marketing Proposals</div>
+      <p class="ex-instruction">Choose the correct gerund or infinitive form to complete each sentence in a professional influencer or affiliate marketing context.</p>
+      <div id="g1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g1')">Check Answers</button>
+      <div id="g1-feedback" class="feedback"></div>
+      <div id="g1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Discourse Markers</div></div>
+      <div class="ex-title">Structuring Arguments with Discourse Markers</div>
+      <p class="ex-instruction">Select the most appropriate discourse marker to connect ideas clearly and professionally in each marketing context.</p>
+      <div id="g2-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g2')">Check Answers</button>
+      <div id="g2-feedback" class="feedback"></div>
+      <div id="g2-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">Quantifying Expressions</div></div>
+      <div class="ex-title">Quantifying Reach, Engagement &amp; Performance</div>
+      <p class="ex-instruction">Choose the correct quantifying expression for each sentence about influencer and affiliate campaign results.</p>
+      <div id="g3-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g3')">Check Answers</button>
+      <div id="g3-feedback" class="feedback"></div>
+      <div id="g3-score" class="score-display"></div>
+    </div>
+  </div>
+</div>
+
+<div id="grammar-review" class="section">
+  <div class="hero">
+    <div class="section-tag">🔍 Grammar Reference</div>
+    <div class="hero-title">Grammar <span>Review</span></div>
+    <p class="hero-desc">Three reference boxes covering gerunds and infinitives, discourse markers, and quantifying expressions as used in professional marketing proposals, presentations, and reports.</p>
+  </div>
+  <div class="content-area">
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 1</div>
+      <div class="gr-box-title">Gerunds &amp; Infinitives in Marketing Writing</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why this matters in professional marketing</div>
+        <div class="gr-rule-text">Marketing proposals, briefs, and presentations frequently use gerunds and infinitives to describe strategies, goals, and actions. Choosing the wrong form is a common error that makes writing sound unnatural. The choice is often determined by the verb or expression that precedes it.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Pattern</th><th>Verb/Expression</th><th>Marketing Example</th></tr>
+        <tr><td>Gerund (verb + -ing)</td><td>consider, avoid, recommend, suggest, involve, risk, enjoy</td><td>We recommend partnering with micro-influencers for this campaign.</td></tr>
+        <tr><td>Infinitive (to + verb)</td><td>want, plan, decide, agree, aim, need, refuse, expect</td><td>We plan to launch the affiliate programme in Q3.</td></tr>
+        <tr><td>Both (meaning changes)</td><td>remember, forget, stop, try</td><td>Stop using follower count as the only metric. / Stop to evaluate the engagement data.</td></tr>
+        <tr><td>Both (meaning same)</td><td>begin, start, continue, prefer, like, love, hate</td><td>We prefer working with creators who have organic audience growth.</td></tr>
+        <tr><td>Gerund as subject</td><td>&mdash;</td><td>Measuring ROI on gifting campaigns remains difficult.</td></tr>
+        <tr><td>Gerund after preposition</td><td>for, in, by, before, after, without</td><td>Before briefing the influencer, ensure the creative assets are ready.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Examples in influencer and affiliate contexts</div>
+        <div class="gr-example">We considered working with a mega-influencer, but decided to invest in twenty micro-influencers instead.</div>
+        <div class="gr-example">Avoid selecting influencers based solely on follower count without examining the engagement rate.</div>
+        <div class="gr-example">The brand aims to recruit fifty affiliates before the end of the financial year.</div>
+        <div class="gr-example">By partnering with niche publishers, the brand improved its conversion rate significantly.</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 2</div>
+      <div class="gr-box-title">Discourse Markers in Marketing Presentations</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">What are discourse markers and why do they matter?</div>
+        <div class="gr-rule-text">Discourse markers are words and phrases that signal the relationship between ideas. They help a speaker or writer guide their audience through a presentation or report with clarity. In marketing meetings, pitches, and strategy documents, strong use of discourse markers is a hallmark of professional communication.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Function</th><th>Discourse Markers</th><th>Example</th></tr>
+        <tr><td>Adding information</td><td>furthermore, in addition, moreover, what is more</td><td>Furthermore, micro-influencers generate a higher engagement rate.</td></tr>
+        <tr><td>Contrasting</td><td>however, on the other hand, by contrast, nevertheless</td><td>However, the reach of nano-influencers is limited in absolute terms.</td></tr>
+        <tr><td>Giving a reason</td><td>because of this, as a result, consequently, therefore</td><td>The cookie window was extended; consequently, affiliate revenue increased.</td></tr>
+        <tr><td>Giving an example</td><td>for example, for instance, such as, to illustrate</td><td>For example, travel bloggers make highly effective affiliate publishers.</td></tr>
+        <tr><td>Summarising</td><td>in summary, to conclude, overall, in short</td><td>In summary, the influencer campaign exceeded all key performance targets.</td></tr>
+        <tr><td>Sequencing</td><td>first, secondly, then, next, finally, lastly</td><td>First, identify the target audience; then select the influencer tier.</td></tr>
+        <tr><td>Emphasising</td><td>in particular, above all, especially, notably</td><td>Above all, audience fit is the most important selection criterion.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">In presentations and reports</div>
+        <div class="gr-example">There are several reasons to prefer micro-influencers for this campaign. First, their engagement rates are significantly higher. Furthermore, their audiences are more precisely defined. However, the limited absolute reach means we will need to activate a larger number of creators to achieve the desired total impressions.</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 3</div>
+      <div class="gr-box-title">Quantifying Expressions for Reach &amp; Performance</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why precise quantifying language matters</div>
+        <div class="gr-rule-text">Digital marketing is a data-rich discipline. Being able to express quantities, proportions, and approximations accurately in English is essential for interpreting reports, presenting results, and making data-driven recommendations. The following expressions are used constantly in professional marketing contexts.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Expression</th><th>Use</th><th>Marketing Example</th></tr>
+        <tr><td>the majority of</td><td>more than half</td><td>The majority of the influencer's audience is aged 18&ndash;34.</td></tr>
+        <tr><td>a significant proportion of</td><td>a large but unspecified share</td><td>A significant proportion of clicks came from mobile devices.</td></tr>
+        <tr><td>roughly / approximately</td><td>an approximation</td><td>Roughly 40% of affiliates generate 80% of total revenue.</td></tr>
+        <tr><td>nearly / almost</td><td>just below a number</td><td>Nearly half of the campaign impressions were on Instagram.</td></tr>
+        <tr><td>over / more than</td><td>above a threshold</td><td>The campaign generated over 2 million impressions in one week.</td></tr>
+        <tr><td>fewer than / less than</td><td>below a threshold</td><td>Fewer than 5% of affiliates accounted for the fraud incidents.</td></tr>
+        <tr><td>as many as</td><td>emphasising a high number</td><td>As many as 30% of sales were attributed to the top five affiliates.</td></div>
+        <tr><td>a small minority of</td><td>a very small proportion</td><td>Only a small minority of influencers disclosed all paid content clearly.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Common errors to avoid</div>
+        <div class="gr-example">❌ "The majority of influencers is micro-influencers." (subject-verb agreement error)<br>✅ "The majority of influencers are micro-influencers."<br><br>❌ "Less than 50 affiliates drove the most sales." (use 'fewer than' for countable nouns)<br>✅ "Fewer than 50 affiliates drove the majority of sales."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="writing" class="section">
+  <div class="hero">
+    <div class="section-tag">✍️ Writing Activities</div>
+    <div class="hero-title">Writing <span>Tasks</span></div>
+    <p class="hero-desc">Two professional writing tasks &mdash; practise producing influencer briefs and affiliate programme pitches in clear, accurate marketing English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Writing Activity 1 &mdash; Influencer Campaign Brief</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a professional influencer campaign brief (170&ndash;210 words) for a fictional UK skincare brand called <em>Glowhaus</em>. The campaign promotes a new SPF moisturiser targeting women aged 22&ndash;38. You are briefing a micro-influencer called <em>Zara Okonkwo</em> (180,000 Instagram followers, beauty and wellness niche). The brief should include: campaign objective, key messages (at least two), content requirements, posting schedule, disclosure requirements, and one KPI. Use gerunds and infinitives appropriately and maintain a professional, collaborative tone.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Clear brief structure &middot; Gerunds and infinitives &middot; Professional collaborative tone &middot; Marketing vocabulary &middot; Disclosure requirement included
+      </div>
+      <textarea class="writing-textarea" id="w1-text" placeholder="INFLUENCER CAMPAIGN BRIEF&#10;Brand: Glowhaus | Campaign: SPF Moisturiser Launch&#10;Influencer: Zara Okonkwo&#10;&#10;Campaign Objective:&#10;...&#10;&#10;Key Messages:&#10;...&#10;&#10;Content Requirements:&#10;...&#10;&#10;Posting Schedule:&#10;...&#10;&#10;Disclosure:&#10;...&#10;&#10;KPI:&#10;..." oninput="updateWordCount('w1',210)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w1-wc">0 / 210 words</span>
+        <button class="submit-btn" onclick="submitWriting('w1')">Submit ✓</button>
+      </div>
+      <div id="w1-success" class="submit-success">✅ Brief submitted! Excellent work practising this essential influencer marketing skill.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Writing Activity 2 &mdash; Affiliate Programme Pitch</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write an outreach email (180&ndash;220 words) from a fictional travel accessories brand called <em>Roamwell</em> to a travel blogger called <em>The Packed Light</em>, inviting them to join the brand's affiliate programme. The email should explain the commission structure (8% per sale, 30-day cookie window, average order value &pound;85), highlight the benefits of joining, include at least one discourse marker, use quantifying expressions to make the offer concrete, and end with a clear call to action.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Persuasive professional tone &middot; Commission details clearly stated &middot; Discourse markers &middot; Quantifying expressions &middot; Clear CTA &middot; Correct register for outreach
+      </div>
+      <textarea class="writing-textarea" id="w2-text" placeholder="Subject: Join the Roamwell Affiliate Programme &mdash; Earn 8% Commission&#10;&#10;Hi [Name],&#10;&#10;..." oninput="updateWordCount('w2',220)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w2-wc">0 / 220 words</span>
+        <button class="submit-btn" onclick="submitWriting('w2')">Submit ✓</button>
+      </div>
+      <div id="w2-success" class="submit-success">✅ Email submitted! Great work applying affiliate marketing vocabulary and discourse markers in a real outreach context.</div>
+    </div>
+  </div>
+</div>
+
+<div id="listening" class="section">
+  <div class="hero">
+    <div class="section-tag">🎧 Listening Activities</div>
+    <div class="hero-title">Listening <span>Activities</span></div>
+    <p class="hero-desc">4 audio activities with built-in speech players &mdash; press &#9654; Play, listen, then answer the questions.</p>
+  </div>
+  <div class="content-area"><div id="listening-cards"></div></div>
+</div>
+
+<div id="casestudies" class="section">
+  <div class="hero">
+    <div class="section-tag">📊 Case Studies</div>
+    <div class="hero-title">Case <span>Studies</span></div>
+    <p class="hero-desc">Two real-world inspired case studies on influencer and affiliate marketing. Read carefully and answer the analysis questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="case-header">
+      <h3>Case Study 1: How Blossom Teas Built a Micro-Influencer Programme That Outperformed Paid Social</h3>
+      <p>Influencer Marketing &middot; Micro-Influencer Strategy &middot; Performance Measurement</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Blossom Teas is a UK premium tea brand founded in 2018, selling a range of loose-leaf teas, blends, and accessories online and in independent retailers. In early 2022, the marketing team was spending &pound;18,000 per month on Instagram and Facebook paid social advertising, achieving a ROAS of approximately 2.4x. While profitable, the team believed the paid social strategy was beginning to reach diminishing returns as audience fatigue set in and CPCs climbed. They decided to explore influencer marketing as a complementary channel.</p>
+        <p>Rather than partnering with one or two large influencers, the team made a deliberate strategic choice to build a programme of <strong>fifty micro-influencers</strong> across three niches: wellness and self-care, sustainability and eco-living, and home lifestyle. Each influencer had between 15,000 and 80,000 followers. The total monthly fee for the programme was &pound;12,000 &mdash; significantly less than the paid social budget &mdash; with each influencer receiving a flat fee per post plus a unique discount code through which sales could be directly attributed to them.</p>
+      </div>
+      <div class="case-section-label">Results &amp; Analysis</div>
+      <div class="case-text">
+        <p>Within three months, the influencer programme was generating results that surprised even the optimistic members of the team. The average <strong>engagement rate</strong> across the fifty influencer accounts was 5.8% &mdash; nearly four times the industry average for Instagram at the time. The unique discount codes generated &pound;41,000 in directly attributable revenue per month, representing an effective ROAS of 3.4x on the influencer investment. Additionally, the brand observed a 22% uplift in organic search traffic for brand name terms in the months following each wave of influencer posts &mdash; an indirect benefit that the team attributed to increased brand awareness and word-of-mouth.</p>
+        <p>Perhaps most significantly, the <strong>cost per new customer</strong> acquired through the influencer programme was &pound;8.40, compared to &pound;19.80 through paid social. The lower cost reflected both the higher conversion rates driven by trusted recommendations and the lower baseline cost of the programme relative to the media spend it replaced. By month six, Blossom Teas had increased the influencer programme to eighty creators and reduced its paid social budget by 35%. The case illustrated a principle that sophisticated marketers had long suspected: at the right scale and with the right audience fit, micro-influencers can outperform paid media on both ROAS and cost per acquisition.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 1 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs1')">Check Answers</button>
+        <div id="cs1-feedback" class="feedback"></div>
+        <div id="cs1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="case-header">
+      <h3>Case Study 2: Wanderpack Luggage &mdash; Building a High-Revenue Affiliate Programme from Scratch</h3>
+      <p>Affiliate Marketing &middot; Programme Design &middot; Commission Optimisation</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Wanderpack is a direct-to-consumer luggage and travel accessories brand that launched in the UK in 2021. The founding team had strong experience in product design and supply chain but limited knowledge of digital marketing. In their first year, they relied almost entirely on paid search and paid social, achieving solid but expensive customer acquisition. In year two, the head of growth proposed building an affiliate programme as a way to generate performance-based revenue from content creators, comparison sites, and travel publications without the upfront cost of paid media.</p>
+        <p>The programme launched on the AWIN affiliate network with an initial commission rate of 6% per sale and a 30-day cookie window. The average order value was &pound;195. In the first month, the programme attracted 34 affiliates and generated &pound;4,200 in affiliate-attributed revenue. These results were disappointing relative to expectations. An audit of the network revealed the problem: several competing travel luggage brands were offering commission rates of 9&ndash;12% on similar products. Wanderpack was simply not competitive enough to attract the high-quality publishers who drove the majority of affiliate revenue in the travel category.</p>
+      </div>
+      <div class="case-section-label">Optimisation &amp; Results</div>
+      <div class="case-text">
+        <p>Based on the audit findings, the team made three changes. First, the base commission rate was raised from 6% to 10%. Second, a <strong>tiered commission structure</strong> was introduced: affiliates generating more than &pound;2,000 per month in sales earned 12%, creating a strong incentive for top performers to promote Wanderpack more actively. Third, the cookie window was extended from 30 to 60 days &mdash; an important change for a travel accessories brand, where the purchase cycle can be long as customers research and compare before buying.</p>
+        <p>The team also invested in actively recruiting high-value affiliates: travel bloggers with proven conversion track records, comparison sites with strong domain authority, and travel-focused email newsletters. Within six months of the programme relaunch, the affiliate count had grown from 34 to 312. Monthly affiliate-attributed revenue had risen from &pound;4,200 to &pound;67,000. The top twenty affiliates &mdash; representing just 6% of the total partner base &mdash; accounted for 74% of total affiliate revenue, a pattern consistent with the Pareto principle commonly observed in affiliate marketing. The cost of affiliate revenue (commission paid as a percentage of sales) was 10.3%, well below the cost of acquiring equivalent customers through paid search.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 2 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs2')">Check Answers</button>
+        <div id="cs2-feedback" class="feedback"></div>
+        <div id="cs2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="assessment" class="section">
+  <div class="hero">
+    <div class="section-tag">🎯 Final Assessment</div>
+    <div class="hero-title">Final <span>Assessment</span></div>
+    <p class="hero-desc">20 multiple choice questions covering all module sections. Score 70% or above to pass. You have two attempts.</p>
+  </div>
+  <div class="content-area">
+    <div class="assessment-header">
+      <h2>Module 7 &mdash; Final Assessment</h2>
+      <p>Influencer &amp; Affiliate Marketing</p>
+      <div class="assessment-meta">
+        <div class="assessment-meta-item"><div class="assessment-meta-num">20</div><div class="assessment-meta-label">Questions</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">70%</div><div class="assessment-meta-label">Pass Mark</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">2</div><div class="assessment-meta-label">Attempts</div></div>
+      </div>
+      <div class="attempt-badge" id="attempt-badge">Attempt 1 of 2</div>
+    </div>
+    <div id="assessment-result" class="assessment-result">
+      <div class="result-score" id="result-score-text"></div>
+      <div class="result-msg" id="result-msg"></div>
+      <div id="retake-wrap"></div>
+    </div>
+    <div class="card" id="assessment-form">
+      <div class="mcq-title">📝 Assessment Questions</div>
+      <div id="fa-mcqs"></div>
+      <button class="check-btn" onclick="submitAssessment()" style="margin-top:8px;padding:12px 32px;font-size:14px">Submit Assessment</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const DATA={
+r1:{questions:[
+  {q:"What does the text say is the central value proposition of influencer marketing?",opts:["The ability to reach millions of people simultaneously at low cost","The authenticity and trust that content creators have built with their audiences","The precise demographic targeting that influencers offer compared to paid advertising","The speed with which influencer campaigns can be set up and launched"],ans:1},
+  {q:"According to Text 1, what happens when an audience perceives an influencer as purely transactional?",opts:["The influencer's following increases as more brands promote them","The trust evaporates and the marketing value disappears with it","The engagement rate typically improves as more people are exposed to the content","The brand receives more authentic testimonials from real customers"],ans:1},
+  {q:"What three conditions does the text say make influencer partnerships most effective?",opts:["Large following, professional photography, and a signed contract","Product fit with the creator's content, creative freedom for the creator, and genuine audience trust","High engagement rate, verified account status, and previous brand experience","A long-term contract, exclusivity clause, and minimum posting frequency"],ans:1},
+  {q:"Which influencer tier does the text say is increasingly favoured by sophisticated marketers?",opts:["Mega-influencers because of their enormous reach","Macro-influencers because they balance reach with credibility","Micro-influencers because of higher engagement, more defined audiences, and greater trust","Nano-influencers because they have the highest absolute reach"],ans:2},
+  {q:"What does Text 1 describe as the most critical criterion in influencer selection?",opts:["Total follower count relative to the campaign budget","The influencer's previous experience with similar brands","Audience fit: the degree to which the influencer's followers match the brand's target customer","The influencer's engagement rate on their most recent three posts"],ans:2},
+  {q:"According to the text, what engagement rate is generally considered strong for larger accounts?",opts:["Above 1%","Above 3%","Above 7%","Above 10%"],ans:1},
+  {q:"What is earned media value (EMV), according to Text 1?",opts:["The total revenue generated by an influencer campaign after deducting fees","The number of unique users who saw the influencer's content during the campaign","An estimate of the equivalent cost to achieve the same reach and engagement through paid advertising","The total number of comments and shares received on sponsored posts"],ans:2},
+  {q:"What does the text say unique discount codes and trackable affiliate links allow brands to do?",opts:["Generate organic traffic from search engines without paid advertising","Attribute specific revenue directly to individual influencer partners","Automatically enforce disclosure requirements across all influencer posts","Monitor the influencer's posting frequency and engagement rate in real time"],ans:1},
+  {q:"What does the text call the convergence of influencer marketing and affiliate mechanics?",opts:["Performance-based content marketing","Social commerce integration","Performance influencer marketing","Creator-led affiliate commerce"],ans:2},
+  {q:"According to the text, nano-influencers typically have how many followers?",opts:["Under 1,000","Under 10,000","Between 10,000 and 100,000","Between 100,000 and 1 million"],ans:1}
+]},
+r2:{questions:[
+  {q:"What is the fundamental logic of affiliate marketing, as described in Text 2?",opts:["Brands pay publishers upfront for content creation and promotion","Publishers promote a brand and earn commission only when they generate a sale or lead","Brands pay a fixed monthly retainer to maintain a network of affiliate partners","Publishers create branded content in exchange for free products and exclusive discounts"],ans:1},
+  {q:"What does the cookie window determine in affiliate marketing?",opts:["The time allowed for an affiliate to create and submit their content","The period during which a completed purchase is attributed to the affiliate who drove the click","The duration of the affiliate's contract with the brand","The number of tracking pixels installed on the affiliate website"],ans:1},
+  {q:"According to Text 2, why is affiliate marketing appealing to brands from a financial perspective?",opts:["It requires no technology infrastructure to implement","Commissions are only paid when a real commercial result is achieved, making it capital-efficient","It consistently generates higher conversion rates than paid advertising","It builds brand awareness more effectively than any other digital channel"],ans:1},
+  {q:"What does CPL stand for and when is it commonly used?",opts:["Cost Per Launch, used by new brands entering the market for the first time","Cost Per Lead, used in financial services, insurance, and SaaS for fixed fees per qualified lead","Cost Per Link, used by affiliate networks to charge for link generation services","Cost Per Listing, used by comparison sites to charge for product placement"],ans:1},
+  {q:"Which affiliate network does the text mention as an example of a major UK network?",opts:["ClickBank","ShareASale","AWIN","Amazon Associates"],ans:2},
+  {q:"What is the difference between an affiliate network and an in-house affiliate programme, according to Text 2?",opts:["Affiliate networks are free to use; in-house programmes always require a monthly subscription","Networks provide infrastructure and marketplace access; in-house programmes offer more control but require more internal resource","In-house programmes are better for small brands; networks are only suitable for large retailers","Networks handle creative assets; in-house programmes focus only on tracking and payments"],ans:1},
+  {q:"What does the text describe as a significant concern requiring robust monitoring in affiliate management?",opts:["Low commission rates that discourage high-quality publisher applications","Affiliate fraud: manipulation of tracking systems, fake clicks, or claiming commission for sales not genuinely influenced","Excessive disclosure requirements that make affiliate content less persuasive","Publishers promoting the brand to audiences that do not match the target demographic"],ans:1},
+  {q:"What does Text 2 say is the most important driver of affiliate programme performance?",opts:["The quality of the creative assets provided to affiliates","The length of the cookie window","The commission rate","The reputation and size of the affiliate network used"],ans:2},
+  {q:"How do affiliates decide which programmes to promote, according to the text?",opts:["They promote programmes with the most recognisable brand names","They choose programmes based on the best combination of commission rate, average order value, and conversion rate","They select programmes recommended by the affiliate network's account managers","They promote exclusively programmes where they have personally used the product"],ans:1},
+  {q:"What does CPS stand for and what does it measure?",opts:["Cost Per Session: the average revenue per website visit","Cost Per Sale: the commission earned as a percentage of the sale value","Cost Per Subscriber: the fee paid per new email subscriber generated","Cost Per Search: the payment for each organic search click driven"],ans:1}
+]},
+v1:{questions:[
+  {q:"The brand decided to work with twenty _______ rather than two or three large influencers, prioritising engaged niche communities over raw reach.",opts:["mega-influencers","brand ambassadors","micro-influencers","nano-influencers"],ans:2},
+  {q:"Before finalising the partnership, the team analysed the influencer's _______ to check that her audience matched the target demographic for the skincare campaign.",opts:["engagement rate","earned media value","affiliate link","cookie window"],ans:0},
+  {q:"Each affiliate partner was given a unique _______ link so the brand could track exactly which publisher had generated each sale.",opts:["disclosure","chargeback","affiliate","gifting"],ans:2},
+  {q:"Regulations in the UK require influencers to include a clear _______ whenever content has been paid for by a brand, using language such as 'Ad' or 'Paid partnership'.",opts:["disclosure","commission","cookie window","gifting"],ans:0},
+  {q:"The travel brand calculated that the _______ of the three-month influencer campaign &mdash; measured against the equivalent cost of paid advertising &mdash; was over GBP200,000.",opts:["commission rate","earned media value","affiliate link","cost per engagement"],ans:1},
+  {q:"After a customer returned the product, the affiliate received a _______ and the previously paid commission was deducted from their next monthly payment.",opts:["disclosure","chargeback","cookie window","revenue share"],ans:1},
+  {q:"The brand chose not to pursue a paid collaboration, instead sending products to fifty bloggers as a _______ campaign in the hope of generating organic reviews.",opts:["micro-influencer","gifting","affiliate network","brand ambassador"],ans:1},
+  {q:"The fitness brand signed a twelve-month contract with a well-known athlete to serve as their _______, representing the brand across all campaigns, events, and social channels.",opts:["publisher","nano-influencer","brand ambassador","affiliate"],ans:2},
+  {q:"The team joined an affiliate _______ to access a marketplace of publishers and benefit from the platform's tracking technology and payment processing.",opts:["brief","disclosure","network","cookie"],ans:2},
+  {q:"The affiliate programme offered a _______ model where publishers earned 7% of the sale value for every customer they referred who completed a purchase.",opts:["cost per lead","revenue share","cost per click","cost per engagement"],ans:1}
+]},
+v2gaps:[
+  {sent:"The affiliate earns a _______ of 8% on every sale they generate through their unique tracking link.",ans:"commission"},
+  {sent:"All sponsored posts must include a clear _______ such as the word 'Ad' or 'Paid Partnership' so the audience knows the content has been paid for.",ans:"disclosure"},
+  {sent:"The athlete signed a one-year contract to become the brand's global _______, appearing in all campaigns and representing the brand at major events.",ans:"ambassador"},
+  {sent:"The micro-influencer had an outstanding _______ rate of 7.2%, meaning her audience was actively liking, commenting on, and saving her posts.",ans:"engagement"},
+  {sent:"The brand ran a _______ campaign, sending products to forty bloggers and hoping they would post honest reviews without any payment.",ans:"gifting"},
+  {sent:"The travel comparison website was one of the most effective _______ in the affiliate programme, consistently driving high-quality traffic that converted well.",ans:"publisher"},
+  {sent:"When the customer cancelled their order, the brand issued a _______ and reversed the commission that had already been paid to the affiliate.",ans:"chargeback"},
+  {sent:"The brand partnered with a group of _______ influencers, each with fewer than 8,000 followers, to reach hyper-local communities with highly targeted content.",ans:"nano"},
+  {sent:"The 30-day _______ window meant that any purchase made within a month of clicking the affiliate link would be credited to that affiliate.",ans:"cookie"},
+  {sent:"The campaign succeeded because the influencers were given creative freedom, which preserved the _______ that made their recommendations believable to their audiences.",ans:"authenticity"}
+],
+v3tf:[
+  {stmt:"A nano-influencer typically has more than one million followers and is considered equivalent to a celebrity endorsement.",ans:false},
+  {stmt:"Engagement rate measures the proportion of an influencer's audience that actively interacts with their content through likes, comments, shares, or saves.",ans:true},
+  {stmt:"In affiliate marketing, the publisher earns commission regardless of whether the user who clicked their link actually completes a purchase.",ans:false},
+  {stmt:"A cookie window is the time period during which a completed purchase is attributed to the affiliate who drove the initial click.",ans:true},
+  {stmt:"Influencer fraud refers to the practice of artificially inflating follower counts or engagement metrics using bots or purchased interactions.",ans:true},
+  {stmt:"A brand ambassador is typically contracted for a single sponsored post and has no ongoing relationship with the brand.",ans:false},
+  {stmt:"Earned media value (EMV) estimates the monetary worth of influencer coverage compared to the equivalent cost of paid advertising with the same reach.",ans:true},
+  {stmt:"Disclosure is optional for influencers in the UK if the product was gifted rather than paid for with a direct fee.",ans:false},
+  {stmt:"Cost per lead (CPL) is a commission structure where the affiliate earns a fixed fee for each qualified lead generated, such as a form submission.",ans:true},
+  {stmt:"In affiliate marketing, a chargeback occurs when a commission is reversed because the sale that triggered it was later cancelled or refunded.",ans:true}
+],
+g1:{questions:[
+  {q:"We recommend _______ with micro-influencers for this campaign rather than investing in a single mega-influencer.",opts:["to partner","partnering","partner","partnered"],ans:1},
+  {q:"The brand plans _______ its affiliate commission rate from 6% to 10% in order to attract more premium publishers.",opts:["raising","to raise","raise","having raised"],ans:1},
+  {q:"Avoid _______ influencers based solely on their follower count without first examining their engagement rate and audience demographics.",opts:["to select","select","selecting","having selected"],ans:2},
+  {q:"The agency suggested _______ a gifting campaign first to build authentic reviews before committing to a paid influencer programme.",opts:["to run","run","running","having run"],ans:2},
+  {q:"The marketing director decided _______ a tiered commission structure to incentivise top-performing affiliates to promote the brand more actively.",opts:["introducing","to introduce","introduce","having introduce"],ans:1},
+  {q:"_______ the right publisher partners is the most time-consuming part of launching a new affiliate programme.",opts:["To recruit","Recruiting","Recruit","Having recruited"],ans:1},
+  {q:"Before _______ any influencer for the campaign, the team spent two weeks auditing their audience data and past brand collaborations.",opts:["to brief","briefs","briefing","briefed"],ans:2},
+  {q:"The brand stopped _______ exclusively on paid social advertising and began investing in influencer and affiliate channels instead.",opts:["to rely","rely","relying","having relied"],ans:2},
+  {q:"The affiliate programme aims _______ over 200 active publishers within the first six months of launch.",opts:["recruiting","recruit","to recruit","having recruited"],ans:2},
+  {q:"By _______ unique discount codes to each influencer, the brand was able to attribute revenue directly to individual creators.",opts:["assign","to assign","assigning","having assign"],ans:2}
+]},
+g2:{questions:[
+  {q:"Micro-influencers tend to generate higher engagement rates. _______, their absolute reach is significantly smaller than that of macro-influencers.",opts:["Furthermore","Therefore","However","In summary"],ans:2},
+  {q:"_______, there are three main reasons to invest in influencer marketing: authenticity, audience trust, and cost efficiency relative to paid advertising.",opts:["However","In summary","First of all","Overall"],ans:2},
+  {q:"The commission rate was too low to attract premium publishers. _______, the affiliate programme failed to generate meaningful revenue in its first quarter.",opts:["Furthermore","As a result","However","On the other hand"],ans:1},
+  {q:"The campaign delivered strong engagement metrics. _______, the conversion rate from influencer traffic was lower than expected.",opts:["Furthermore","Moreover","Nevertheless","In summary"],ans:2},
+  {q:"We selected micro-influencers for three reasons. _______, they had highly engaged, niche audiences. _______, their cost per post was significantly lower than for macro-influencers.",opts:["Firstly / Secondly","However / Therefore","In addition / Although","Overall / Furthermore"],ans:0},
+  {q:"The brand invested in twenty influencer partnerships. _______, it ran a simultaneous gifting campaign with a further thirty creators.",opts:["However","In addition","As a result","In summary"],ans:1},
+  {q:"_______, the influencer programme outperformed paid social on both ROAS and cost per acquisition. We recommend scaling it in Q3.",opts:["However","On the other hand","In summary","In addition"],ans:2},
+  {q:"The affiliate rejected the partnership because of the low commission rate. _______, the cookie window of only 14 days was also considered insufficient.",opts:["As a result","Furthermore","However","In summary"],ans:1},
+  {q:"The initial results were disappointing. _______, after raising the commission rate and extending the cookie window, the programme grew rapidly.",opts:["Furthermore","Therefore","However","In addition"],ans:2},
+  {q:"Above all, audience fit &mdash; the match between the influencer's followers and the brand's target customer &mdash; is _______ the most important selection criterion.",opts:["however","by contrast","arguably","as a result"],ans:2}
+]},
+g3:{questions:[
+  {q:"_______ the campaign impressions came from Instagram, with the remainder split across TikTok and YouTube.",opts:["Almost half of","As many as all","Fewer than none of","The minority of"],ans:0},
+  {q:"_______ the top twenty affiliates generated nearly three-quarters of the total affiliate revenue for the month.",opts:["As many as","Fewer than","Just","Roughly speaking"],ans:2},
+  {q:"The influencer's audience is made up of _______ women aged 25 to 40, making her an excellent fit for the brand's target demographic.",opts:["fewer than","as many as all","the majority of","a small minority of"],ans:2},
+  {q:"_______ 5% of affiliates were responsible for the fraudulent activity identified during the audit.",opts:["The majority of","Fewer than","As many as all","More than half"],ans:1},
+  {q:"The campaign reached _______ 4 million unique users across all platforms during the four-week activation period.",opts:["fewer than","less than","over","a small minority of"],ans:2},
+  {q:"_______ the affiliates in the programme generated fewer than five sales per month, confirming the Pareto distribution commonly seen in affiliate marketing.",opts:["Over","Nearly half of","The majority of","As many as all"],ans:2},
+  {q:"The average order value for affiliate-referred customers was _______ GBP20 higher than for customers acquired through paid search.",opts:["roughly","as many as","fewer than","the majority of"],ans:0},
+  {q:"_______ the influencers who were gifted products chose to post about them, with the remainder not mentioning the brand at all.",opts:["Fewer than one third of","As many as all of","The majority of","Less than none of"],ans:0},
+  {q:"The brand activated _______ 80 influencers in the first campaign wave, reaching a combined audience of approximately 6 million followers.",opts:["fewer than","as many as","the majority of","a small minority of"],ans:1},
+  {q:"_______ the affiliates who joined in the first month were still active twelve months later, highlighting the importance of ongoing engagement and communication.",opts:["Fewer than a third of","As many as all","The majority of over","Less of"],ans:0}
+]},
+listening:[
+{
+  emoji:"🌟",
+  title:"Activity 1: What Makes Influencer Marketing Work?",
+  sub:"Priya Sharma, Influencer Marketing Director — Agency client presentation",
+  level:"B1",type:"Multiple Choice",focus:"Listening for main ideas",
+  transcript:`Good morning everyone. I am Priya Sharma, and I lead influencer marketing at the agency. I want to start today by asking a simple question: why does influencer marketing work? Because if we understand that, everything else we do in this space follows naturally.
+
+The short answer is trust. People trust recommendations from people they follow far more than they trust advertising from brands. This is not a new phenomenon. Word of mouth is the oldest form of marketing. What social media has done is scale it. An influencer with 200,000 followers has essentially built a media channel of their own, but one that feels personal, authentic, and conversational rather than broadcast and commercial.
+
+The second reason influencer marketing works is specificity. A well-chosen influencer gives you access to a very precisely defined audience. A macro-influencer in the sustainable fashion space does not just have followers; she has followers who are specifically interested in sustainable fashion. That level of audience definition is almost impossible to replicate through traditional paid advertising without extremely granular targeting.
+
+But here is the thing: these advantages only exist when the partnership is right. The moment an influencer promotes something that does not fit their content or their values, their audience notices. And the moment an audience notices that an influencer is promoting for money rather than genuine belief, the trust that makes the channel valuable collapses. So the most important thing we do as marketers is not negotiate the fee or agree the posting schedule. It is find the right partner. And the right partner is someone for whom your product is genuinely a fit, and who will present it in a way that feels natural to their community.
+
+When we get that right, the results can be remarkable. We recently ran a campaign for a UK premium skincare brand with twenty-five micro-influencers across the wellness and self-care space. The average engagement rate across the campaign was 6.1%. The brand saw a 34% increase in direct website traffic in the weeks following the campaign. And the cost per new customer was less than half what they were achieving through paid social. That is the power of the right influencer partnership.`,
+  questions:[
+    {q:"According to Priya, what is the short answer to why influencer marketing works?",opts:["Scale: the ability to reach millions of people simultaneously","Specificity: the precise audience targeting that influencers offer","Trust: people trust recommendations from people they follow more than brand advertising","Cost: influencer marketing is cheaper than paid advertising"],ans:2},
+    {q:"What does Priya say social media has done to word-of-mouth marketing?",opts:["Replaced it entirely with paid advertising formats","Scaled it, giving influencers their own personal media channels","Made it less effective as audiences have become more sceptical","Regulated it, requiring disclosure on all recommendations"],ans:1},
+    {q:"What does Priya say a well-chosen influencer gives a brand access to?",opts:["A very precisely defined audience with specific shared interests","The largest possible reach at the lowest possible cost","Guaranteed sales based on the influencer's conversion history","A long-term brand ambassador relationship at a fixed monthly fee"],ans:0},
+    {q:"What does Priya say is the most important thing marketers do in influencer partnerships?",opts:["Negotiate the fee and agree a competitive rate","Set a detailed posting schedule and content approval process","Find the right partner for whom the product is genuinely a fit","Measure the ROAS and compare it to paid social benchmarks"],ans:2},
+    {q:"What happens when an audience notices that an influencer is promoting something for money rather than genuine belief?",opts:["The engagement rate typically increases as more people comment","The trust that makes the channel valuable collapses","The brand receives more sales as curiosity is generated","The influencer gains more followers from brand-aware consumers"],ans:1},
+    {q:"How many micro-influencers did the skincare campaign Priya describes involve?",opts:["Ten","Twenty-five","Fifty","One hundred"],ans:1},
+    {q:"What was the average engagement rate across the campaign Priya describes?",opts:["1.2%","3.4%","6.1%","12.5%"],ans:2},
+    {q:"What was the cost per new customer in the skincare campaign compared to paid social?",opts:["The same as paid social","Twice as much as paid social","Less than half of what paid social was achieving","Three times higher than paid social"],ans:2}
+  ]
+},
+{
+  emoji:"🔗",
+  title:"Activity 2: Understanding Affiliate Marketing from the Publisher Side",
+  sub:"Leo Brennan, Travel Blogger and Affiliate Marketer — Podcast interview",
+  level:"B1",type:"Multiple Choice",focus:"Listening for specific information",
+  transcript:`Welcome back to the show. Today I am speaking with Leo Brennan, who runs one of the most popular UK travel blogs and earns a significant portion of his income through affiliate marketing. Leo, thanks for joining us.
+
+Thanks for having me. So yes, affiliate marketing is a big part of what I do. Probably around 40% of my total income comes from affiliate commissions at this point.
+
+That is a significant percentage. Can you explain, for listeners who are new to this, how affiliate marketing actually works from your side?
+
+Sure. So basically, a brand will invite me to join their affiliate programme, usually through a network like AWIN or Commission Junction. Once I am accepted, I get a unique link, and I include that link in relevant blog posts or email newsletters. Every time someone clicks that link and then buys something from the brand's website within a set period of time, which is called the cookie window, I earn a commission. So it is truly passive income in the sense that I write the content once and it can generate commissions for months or even years afterwards.
+
+And what do you look for when deciding whether to join an affiliate programme?
+
+A few things. First, relevance. I only promote brands that my audience would genuinely find useful. I am a travel blogger, so I work with luggage brands, travel insurance companies, booking platforms, and gear brands. I would never promote something completely unrelated to travel, because my audience would not be interested and I would lose their trust.
+
+Second, the commission rate. If a brand is offering 2% commission and their competitor in the same category is offering 8%, there is simply no reason for me to prioritise the lower-paying brand. My time and content space have a finite value, and I allocate them to programmes that compensate me fairly.
+
+Third, the cookie window. A 7-day cookie window is often too short for expensive purchases, because people research and compare for longer than that. When I see a 30 or 60-day window, I know the brand understands how their customers actually behave.
+
+And have you ever had issues with brands in terms of payments or chargebacks?
+
+Yes, chargebacks happen. Sometimes a customer cancels their order or returns the product, and the commission I earned gets reversed. Good brands are transparent about this and have clear terms. The ones to watch out for are those with very high chargeback rates, which can significantly reduce the actual income you receive.`,
+  questions:[
+    {q:"What percentage of Leo's income comes from affiliate marketing?",opts:["Around 10%","Around 25%","Around 40%","Around 60%"],ans:2},
+    {q:"How does Leo receive his affiliate links?",opts:["He creates them himself using tracking software","He negotiates them directly with each brand by email","He receives unique links from the brand after joining their programme through an affiliate network","He purchases them from a specialist affiliate link marketplace"],ans:2},
+    {q:"What does Leo say is genuinely passive about affiliate income?",opts:["He never has to communicate with brands once he joins a programme","The links automatically update to show the best available commission rate","He writes the content once and it can generate commissions for months or years afterwards","The affiliate network handles all content creation on his behalf"],ans:2},
+    {q:"What is the FIRST criterion Leo uses when deciding whether to join an affiliate programme?",opts:["The commission rate offered by the brand","Relevance: whether the brand is something his audience would genuinely find useful","The length of the cookie window","The reputation and size of the affiliate network"],ans:1},
+    {q:"Why does Leo say he would never promote something unrelated to travel?",opts:["It would violate his affiliate network contract","His audience would not be interested and he would lose their trust","The commission rates for non-travel products are always too low","He does not have the technical knowledge to create content outside his niche"],ans:1},
+    {q:"What does Leo say about the cookie window when evaluating a programme?",opts:["Any window length is acceptable as long as the commission rate is high enough","A 7-day window is often too short for expensive purchases because customers research for longer","A 60-day window is the maximum legally allowed in the UK","The cookie window does not affect his earnings significantly"],ans:1},
+    {q:"What is a chargeback, according to Leo?",opts:["A fee charged by the affiliate network for each new publisher application","A reversal of commission when a customer cancels their order or returns a product","An additional commission paid to high-performing affiliates as a bonus","A penalty charged to affiliates who violate the programme terms"],ans:1},
+    {q:"What does Leo say about brands with very high chargeback rates?",opts:["They are the most desirable partners because it shows they have high sales volume","They should be prioritised as the chargebacks are usually reversed within 30 days","They can significantly reduce the actual income an affiliate receives","They are prohibited from operating within major affiliate networks"],ans:2}
+  ]
+},
+{
+  emoji:"📋",
+  title:"Activity 3: How to Brief an Influencer Effectively",
+  sub:"Hannah Reid, Head of Creator Partnerships — Agency training workshop",
+  level:"B2",type:"Multiple Choice",focus:"Understanding professional explanations",
+  transcript:`Good afternoon. I want to spend this session talking about influencer briefs, because in my experience, a badly written brief is one of the most common reasons that influencer campaigns underperform. The brief is the document that communicates everything the influencer needs to know to create content that serves the campaign goals while feeling authentic to their audience. Get it wrong, and you get content that feels scripted and inauthentic. Get it right, and the influencer produces something that feels genuine and resonates powerfully.
+
+A good brief has six essential components. Let me walk through each one.
+
+First, the campaign objective. Be specific. "Increase brand awareness" is not a campaign objective. "Drive 50,000 impressions among UK women aged 25 to 40 who are interested in sustainable beauty" is a campaign objective. The influencer needs to understand what success looks like so they can make creative decisions that serve that goal.
+
+Second, the key messages. These are the two or three things you most want the audience to take away from the content. Keep them concise and prioritised. Not every detail about the product needs to be communicated in a single post. Trust the influencer to make the content compelling; your job is to give them the right information in the right order of priority.
+
+Third, content requirements. Be clear about what you need: how many posts, which platforms, what format, and what creative direction. But avoid being so prescriptive that you remove the influencer's voice. The brief should feel like creative direction, not a script.
+
+Fourth, the posting schedule. Be specific about dates and times, but build in enough lead time for revisions. Include the deadline for submitting content for approval and the target go-live date.
+
+Fifth, and this is legally critical: disclosure requirements. In the UK, the ASA and the FTC in the US both require that paid content is clearly labelled. Specify exactly what disclosure language you require: "Ad", "Paid partnership with [brand]", or whichever is required. Failure to disclose is a legal risk for both the brand and the influencer.
+
+Sixth, usage rights. Specify whether the brand has the right to repurpose the influencer's content across paid advertising, owned channels, and for how long. This is frequently overlooked in briefs and becomes a source of dispute later.
+
+Get these six elements right, and your brief becomes a tool that empowers the influencer to create great content rather than constraining them to create mediocre content.`,
+  questions:[
+    {q:"According to Hannah, why do influencer campaigns frequently underperform?",opts:["Because the influencers chosen do not have a large enough following","Because the commission rates offered are too low to motivate quality content","Because a badly written brief fails to communicate what the campaign needs","Because social media algorithms limit the reach of branded content"],ans:2},
+    {q:"What does Hannah say is wrong with the campaign objective 'increase brand awareness'?",opts:["It is too ambitious for a micro-influencer campaign to achieve","It is not specific enough; a proper objective defines audience, metric, and scale","It focuses on awareness when brands should always focus on conversion","It is not measurable within the typical campaign duration of four weeks"],ans:1},
+    {q:"How many key messages does Hannah recommend including in a brief?",opts:["One single, highly memorable message only","Between two and three, concise and prioritised","As many as necessary to convey all the product benefits","At least five to give the influencer creative options"],ans:1},
+    {q:"What does Hannah say about content requirements in a brief?",opts:["Be as prescriptive as possible to ensure brand consistency","Do not include any creative direction and trust the influencer entirely","Be clear about format and platform but avoid being so prescriptive that you remove the influencer's voice","Content requirements are optional if the influencer is experienced"],ans:2},
+    {q:"What does Hannah describe as legally critical in the brief?",opts:["Usage rights for repurposing content across paid advertising","The posting schedule with specific go-live dates","Disclosure requirements specifying the exact labelling language required for paid content","The key messages that must be included in every post"],ans:2},
+    {q:"Which regulatory bodies does Hannah mention as requiring disclosure of paid content?",opts:["OFCOM and the EU Advertising Council","The ASA in the UK and the FTC in the US","The CMA in the UK and the SEC in the US","The CAP Committee and the Digital Advertising Authority"],ans:1},
+    {q:"What are usage rights, and why does Hannah say they are important to include in a brief?",opts:["Rights that determine how long the influencer can keep the gifted products","The brand's right to repurpose influencer content across paid advertising and owned channels, often overlooked and a source of disputes","The influencer's right to promote competing brands during the campaign period","Rights specifying which social media platforms the influencer is permitted to post on"],ans:1},
+    {q:"What does Hannah say a good brief should feel like to the influencer?",opts:["A legal contract that protects the brand from reputational risk","A script to ensure the brand message is delivered word for word","Creative direction that empowers the influencer rather than constraining them","A performance management document measuring posting frequency"],ans:2}
+  ]
+},
+{
+  emoji:"⭐",
+  title:"Activity 4: The Future of Influencer and Affiliate Marketing",
+  sub:"Dr Amara Osei, Marketing Futurist — Conference keynote address",
+  level:"B2",type:"Multiple Choice",focus:"Listening for detail and implication",
+  transcript:`Thank you. I want to talk today about where influencer and affiliate marketing are heading, because I think these two channels are converging in ways that will fundamentally change how brands think about creator partnerships.
+
+Let me start with what I call the professionalisation of creator commerce. Five years ago, most influencer partnerships were relatively informal: a brand sent a product, the influencer posted about it, the brand hoped for a sales uplift. Today, the most sophisticated influencer programmes look more like performance marketing operations. Creators are given unique tracking links and discount codes. Revenue is attributed directly to individual partners. Commission structures are negotiated. Contracts specify performance floors. The boundary between influencer marketing and affiliate marketing has largely dissolved, and I think this is a very good thing for the industry.
+
+Why? Because performance-based economics create better incentives for everyone. When an influencer earns commission on sales rather than simply a flat fee for content, they have a financial incentive to create content that actually converts, not just content that looks good. This aligns creator incentives with brand outcomes in a way that traditional paid partnerships often do not.
+
+The second trend I want to highlight is the rise of the creator economy at scale. We now have creators at every level of the follower spectrum building sustainable businesses. Nano-influencers with five thousand followers are earning meaningful commission income from a portfolio of affiliate programmes. Macro-influencers are launching their own product lines with brands rather than simply promoting existing ones. The role of the creator in the commercial ecosystem has expanded dramatically, and brands that understand this will find far more creative and effective ways to collaborate.
+
+Third, and perhaps most significantly, artificial intelligence is beginning to transform every aspect of creator marketing. AI tools can now analyse an influencer's audience with extraordinary precision, identifying not just demographic data but psychographic signals, purchase intent, and brand affinity. This makes audience fit analysis, which used to require hours of manual research, something that can be done in minutes. AI can also identify potential influencer fraud far more effectively than human audits, protecting brands from wasted spend on inauthentic reach.
+
+The brands that will win in this environment are those that treat creator partnerships as a long-term strategic asset rather than a short-term tactical channel. Building genuine relationships with a portfolio of creators who genuinely love your brand and your products, compensating them fairly for the value they generate, and giving them creative freedom within a clear brand framework: that is the formula. And the brands that get it right will find that their creator programmes become one of the most valuable and defensible competitive advantages they have.`,
+  questions:[
+    {q:"What does Dr Osei call the merging of influencer and affiliate marketing models?",opts:["Social commerce integration","The professionalisation of creator commerce","Performance-based brand partnership","Creator-led digital marketing"],ans:1},
+    {q:"According to Dr Osei, how do sophisticated influencer programmes look today compared to five years ago?",opts:["Less formal, with brands relying entirely on the influencer's creative judgement","Similar to traditional advertising with predetermined scripts and brand messaging","More like performance marketing operations with tracking links, revenue attribution, and performance contracts","Entirely automated using AI tools that remove the need for human relationship management"],ans:2},
+    {q:"Why does Dr Osei say performance-based economics create better incentives?",opts:["Because they reduce the total cost of influencer marketing for brands","Because when influencers earn commission on sales, they have a financial incentive to create content that actually converts","Because performance contracts eliminate the need for lengthy creative approval processes","Because commission-based models prevent influencers from working with competing brands"],ans:1},
+    {q:"What does Dr Osei say nano-influencers with five thousand followers are doing?",opts:["Struggling to attract brand partnerships due to their small audience size","Demanding higher per-post fees than macro-influencers due to their engagement rates","Earning meaningful commission income from portfolios of affiliate programmes","Exclusively using gifting campaigns rather than paid partnerships"],ans:2},
+    {q:"What has happened to macro-influencers in the creator economy, according to Dr Osei?",opts:["They have lost relevance as brands shift entirely to micro-influencers","They are launching their own product lines with brands rather than simply promoting existing ones","They have moved away from social media to focus on traditional media appearances","They have formed unions to negotiate minimum fees from brand partners"],ans:1},
+    {q:"How does Dr Osei say AI is changing audience fit analysis?",opts:["AI tools make it more expensive and time-consuming than manual research","AI can analyse demographic and psychographic signals in minutes rather than hours","AI eliminates the need for audience fit analysis by targeting all influencers equally","AI tools are primarily used to generate influencer content rather than to analyse audiences"],ans:1},
+    {q:"What does Dr Osei say AI can do more effectively than human audits?",opts:["Negotiate commission rates and contract terms with creator representatives","Identify influencer fraud and inauthentic reach","Create influencer briefs that guarantee high conversion rates","Manage posting schedules and content approval across all platforms"],ans:1},
+    {q:"According to Dr Osei, what is the formula for winning with creator partnerships?",opts:["Maximising reach by working with the largest number of influencers at the lowest possible cost","Using AI to automate all influencer selection, briefing, and commission management","Building genuine long-term relationships with creators who love the brand, paying them fairly, and giving creative freedom within a brand framework","Focusing exclusively on performance-based commission models and eliminating all flat-fee partnerships"],ans:2}
+  ]
+}
+],
+cs1:{questions:[
+  {q:"How much was Blossom Teas spending on paid social advertising per month before the influencer programme?",opts:["GBP8,000","GBP12,000","GBP18,000","GBP41,000"],ans:2},
+  {q:"What ROAS was the paid social campaign achieving before the influencer programme was introduced?",opts:["Approximately 1.8x","Approximately 2.4x","Approximately 3.4x","Approximately 4.2x"],ans:1},
+  {q:"How many micro-influencers did the Blossom Teas programme involve?",opts:["Twenty","Thirty","Fifty","Eighty"],ans:2},
+  {q:"What three niches did the selected micro-influencers belong to?",opts:["Food and drink, travel, and technology","Fashion, beauty, and fitness","Wellness and self-care, sustainability and eco-living, and home lifestyle","Parenting, cooking, and interior design"],ans:2},
+  {q:"What was the monthly total cost of the influencer programme?",opts:["GBP4,200","GBP8,000","GBP12,000","GBP18,000"],ans:2},
+  {q:"What was the average engagement rate across the fifty influencer accounts?",opts:["1.4%","2.8%","5.8%","9.2%"],ans:2},
+  {q:"How much revenue did the unique discount codes generate per month?",opts:["GBP12,000","GBP18,000","GBP28,000","GBP41,000"],ans:3},
+  {q:"What indirect benefit did the brand observe following each wave of influencer posts?",opts:["A reduction in paid social CPC by 22%","A 22% uplift in organic search traffic for brand name terms","An increase in email newsletter sign-ups of 22%","A 22% improvement in the engagement rate on the brand's own social posts"],ans:1},
+  {q:"What was the cost per new customer through the influencer programme compared to paid social?",opts:["GBP8.40 vs GBP19.80 through paid social","GBP19.80 vs GBP8.40 through paid social","GBP12.00 vs GBP12.00 through paid social (no difference)","GBP8.40 vs GBP8.40 through paid social (same cost)"],ans:0},
+  {q:"What does the Blossom Teas case study illustrate about micro-influencer marketing?",opts:["Micro-influencer programmes always outperform paid social regardless of the niche or execution","At the right scale and with the right audience fit, micro-influencers can outperform paid media on both ROAS and cost per acquisition","Micro-influencers should always replace paid social advertising completely once a brand reaches a certain size","The number of influencers in a programme is always more important than their individual engagement rates"],ans:1}
+]},
+cs2:{questions:[
+  {q:"What was the initial commission rate Wanderpack offered when launching their affiliate programme?",opts:["3%","6%","10%","12%"],ans:1},
+  {q:"What was the initial cookie window duration?",opts:["7 days","14 days","30 days","60 days"],ans:2},
+  {q:"How much affiliate-attributed revenue did the programme generate in its first month?",opts:["GBP4,200","GBP12,000","GBP42,000","GBP67,000"],ans:0},
+  {q:"Why was the initial programme performance disappointing, according to the audit?",opts:["The AWIN network did not have enough travel-category publishers","The brand name was not well-known enough to attract affiliates","Competing brands were offering commission rates of 9 to 12%, making Wanderpack uncompetitive","The average order value of GBP195 was too low to generate meaningful commission income"],ans:2},
+  {q:"What base commission rate did Wanderpack raise to after the audit?",opts:["7%","8%","10%","12%"],ans:2},
+  {q:"What commission rate did the tiered structure offer to affiliates generating more than GBP2,000 per month in sales?",opts:["10%","11%","12%","15%"],ans:2},
+  {q:"To how many days was the cookie window extended?",opts:["30 days","45 days","60 days","90 days"],ans:2},
+  {q:"How many affiliates had joined the programme six months after the relaunch?",opts:["34","88","180","312"],ans:3},
+  {q:"What monthly affiliate-attributed revenue was generated six months after the relaunch?",opts:["GBP12,000","GBP28,000","GBP42,000","GBP67,000"],ans:3},
+  {q:"What Pareto principle pattern did the case study observe in the affiliate programme?",opts:["All affiliates contributed equally to total revenue regardless of their size or niche","The top 20% of affiliates generated 80% of revenue, with the top 20 affiliates generating 74% of total revenue","Nano-influencer affiliates consistently outperformed comparison site publishers","The first affiliates to join always generate the most revenue over the life of the programme"],ans:1}
+]},
+fa:{questions:[
+  {q:"What is the central value proposition of influencer marketing, according to the module?",opts:["The ability to reach millions of people at a lower cost than television advertising","The authenticity and trust that content creators have built with their audiences over time","The precise demographic targeting data that influencer platforms provide to brands","The guarantee of a specific number of impressions for a fixed fee"],ans:1},
+  {q:"Which influencer tier typically generates the highest engagement rate?",opts:["Mega-influencers with over one million followers","Macro-influencers with 100,000 to 1 million followers","Micro-influencers with 10,000 to 100,000 followers","Nano-influencers with under 10,000 followers"],ans:3},
+  {q:"What is audience fit?",opts:["The total number of followers an influencer has in the target country","The degree to which the influencer's followers match the demographics and interests of the brand's target customer","The engagement rate of the influencer's most recent ten posts","The percentage of the influencer's audience that has previously purchased from the brand"],ans:1},
+  {q:"What is a cookie window in affiliate marketing?",opts:["A period during which the affiliate must post their content after receiving the product","The time the affiliate network takes to process commission payments","The period after a user clicks an affiliate link during which a completed purchase is attributed to that affiliate","The duration of the brand's exclusive partnership with the affiliate"],ans:2},
+  {q:"Which sentence correctly uses a gerund after the verb 'recommend'?",opts:["We recommend to partner with micro-influencers for this campaign.","We recommend partner with micro-influencers for this campaign.","We recommend partnering with micro-influencers for this campaign.","We recommend that partnering with micro-influencers for this campaign."],ans:2},
+  {q:"Which discourse marker correctly introduces a contrasting point?",opts:["Furthermore, the commission rate was too low to attract quality publishers.","However, the engagement rate was lower than the industry benchmark.","In summary, we recommend scaling the influencer programme in Q3.","As a result, the affiliate programme grew rapidly after the relaunch."],ans:1},
+  {q:"Which quantifying expression is used CORRECTLY?",opts:["Less than fifty affiliates drove the majority of revenue. (for countable noun)","Fewer than half of the impressions came from Instagram.","As many as all the influencers disclosed their paid partnerships.","The majority of affiliate was from comparison sites."],ans:1},
+  {q:"What is earned media value (EMV)?",opts:["The total revenue generated by an influencer campaign net of all fees","An estimate of the monetary value of influencer content measured against equivalent paid advertising cost","The total number of unique users who saw the influencer's content","The agreed fee paid to an influencer for a single sponsored post"],ans:1},
+  {q:"What is influencer fraud?",opts:["An influencer promoting a competing brand without the brand's knowledge","The practice of inflating follower counts or engagement metrics using bots or purchased interactions","An influencer failing to submit content for brand approval before posting","An affiliate generating commission from fraudulent sales that are later refunded"],ans:1},
+  {q:"What is disclosure in influencer marketing?",opts:["A brand's obligation to disclose the influencer's fee to the public","The legal requirement for influencers to clearly communicate that content is sponsored or paid for","A document provided to influencers listing all creative requirements for the campaign","The process of disclosing audience demographic data to the brand before the partnership begins"],ans:1},
+  {q:"In the Blossom Teas case study, what was the cost per new customer through the influencer programme?",opts:["GBP19.80","GBP12.00","GBP8.40","GBP41.00"],ans:2},
+  {q:"Which commission structure awards affiliates a percentage of the sale value?",opts:["Cost per lead (CPL)","Cost per click (CPC)","Cost per sale (CPS)","Cost per engagement (CPE)"],ans:2},
+  {q:"What is an affiliate network?",opts:["A group of brands that share affiliate partners to reduce recruitment costs","A third-party platform connecting brands and publishers while managing tracking, payments, and reporting","A social media group where affiliates share tips and programme recommendations","A type of influencer agency that specialises in performance-based partnerships"],ans:1},
+  {q:"Which sentence correctly uses an infinitive after 'plan'?",opts:["The brand plans recruiting 200 affiliates before the year end.","The brand plans to recruit 200 affiliates before the year end.","The brand plans recruit 200 affiliates before the year end.","The brand plans having recruited 200 affiliates before the year end."],ans:1},
+  {q:"In the Wanderpack case study, why did the initial affiliate programme fail to attract quality publishers?",opts:["The brand was not listed on the AWIN network","The cookie window was too long at 90 days","The commission rate of 6% was uncompetitive compared to the 9 to 12% offered by similar brands","The average order value of GBP195 was considered too high by comparison site publishers"],ans:2},
+  {q:"What is a chargeback in affiliate marketing?",opts:["An additional bonus paid to top-performing affiliates at the end of the quarter","A fee charged by the affiliate network for each publisher application processed","A reversal of a previously paid commission when the original sale is cancelled or refunded","A penalty deducted from affiliate earnings for missing performance targets"],ans:2},
+  {q:"What does the text say distinguishes an influencer brief from a script?",opts:["A brief is always shorter than a script and covers fewer topics","A brief provides creative direction that empowers the influencer rather than dictating every word","A brief is legally binding while a script is only advisory","A brief is written by the influencer while a script is written by the brand"],ans:1},
+  {q:"What is a brand ambassador?",opts:["Any influencer who has ever posted about the brand, paid or unpaid","A content creator contracted for a single sponsored post during a product launch","An influencer or public figure contracted long-term to consistently represent the brand across multiple campaigns","A macro-influencer who also operates as an affiliate partner for the brand"],ans:2},
+  {q:"Which of the following correctly uses a discourse marker to add information?",opts:["However, the engagement rate exceeded the industry benchmark by a significant margin.","Furthermore, the influencer programme generated a 22% uplift in organic brand search traffic.","As a result, the brand decided not to invest in influencer marketing.","In summary, the commission rate was the main barrier to publisher recruitment."],ans:1},
+  {q:"According to Dr Osei in the listening activities, what does AI enable that used to require hours of manual research?",opts:["Writing influencer briefs that guarantee specific engagement rates","Generating influencer content automatically without creator involvement","Analysing an influencer's audience for demographic and psychographic signals in minutes","Automating commission payments across all affiliate networks simultaneously"],ans:2}
+]}
+};
+
+function renderMCQ(containerId,questions,prefix,isListening){
+  const c=document.getElementById(containerId);if(!c)return;
+  const wrap=isListening?'<div class="listen-mcq-wrap">':'';
+  const wrapClose=isListening?'</div>':'';
+  c.innerHTML=wrap+questions.map((item,i)=>`
+    <div class="mcq-item" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((o,j)=>`<div class="mcq-option" onclick="selectOpt('${prefix}',${i},${j})" id="${prefix}-q${i}-o${j}"><span class="opt-letter">${['A','B','C','D'][j]}</span>${o}</div>`).join('')}
+      </div>
+    </div>`).join('')+wrapClose;
+}
+function selectOpt(prefix,qi,oi){
+  const item=DATA[prefix].questions[qi];
+  for(let j=0;j<item.opts.length;j++){const el=document.getElementById(`${prefix}-q${qi}-o${j}`);if(el)el.classList.remove('selected');}
+  const el=document.getElementById(`${prefix}-q${qi}-o${oi}`);if(el)el.classList.add('selected');
+}
+function checkMCQ(prefix){
+  const qs=DATA[prefix].questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#${prefix}-q${i} .mcq-option`);
+    let chosen=-1;opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+    if(chosen===item.ans)score++;
+  });
+  const fb=document.getElementById(`${prefix}-feedback`);
+  if(fb){fb.className='feedback show '+(score>=Math.ceil(total*0.7)?'good':'bad');fb.textContent=score>=Math.ceil(total*0.7)?`Well done! You scored ${score}/${total}.`:`You scored ${score}/${total}. Review the relevant sections and try again.`;}
+  const sc=document.getElementById(`${prefix}-score`);
+  if(sc){sc.className='score-display show';sc.innerHTML=`<div><div class="score-label">Your Score</div><div class="score-val">${score}/${total}</div></div><div style="font-size:13px;color:var(--text-light)">${Math.round(score/total*100)}%</div>`;}
+}
+function renderGaps(){
+  const c=document.getElementById('v2-gaps');if(!c)return;
+  c.innerHTML=DATA.v2gaps.map((g,i)=>`<div class="gap-sentence">${i+1}. ${g.sent.replace('_______',`<input class="gap-input" id="gap-${i}" placeholder="?" autocomplete="off">`)}</div>`).join('');
+}
+function checkGaps(){
+  let score=0;
+  DATA.v2gaps.forEach((g,i)=>{
+    const el=document.getElementById(`gap-${i}`);if(!el)return;
+    const val=el.value.trim().toLowerCase();
+    if(val===g.ans.toLowerCase()){score++;el.style.borderBottomColor='var(--success)';el.style.color='var(--success)';}
+    else{el.style.borderBottomColor='var(--error)';el.style.color='var(--error)';el.value=g.ans;}
+  });
+  const fb=document.getElementById('v2-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`Great work! ${score}/10 correct.`:`${score}/10 correct. Correct answers are shown in red.`;
+}
+const tfAnswers={};
+function renderTF(){
+  const c=document.getElementById('v3-tf');if(!c)return;
+  c.innerHTML=DATA.v3tf.map((item,i)=>`
+    <div class="tf-item" id="tf-${i}">
+      <div class="tf-stmt">${i+1}. ${item.stmt}</div>
+      <div class="tf-btns"><button class="tf-btn" onclick="selectTF(${i},true,this)">True</button><button class="tf-btn" onclick="selectTF(${i},false,this)">False</button></div>
+    </div>`).join('');
+}
+function selectTF(i,val,btn){
+  tfAnswers[i]=val;const row=document.getElementById(`tf-${i}`);
+  row.querySelectorAll('.tf-btn').forEach(b=>b.className='tf-btn');
+  btn.className='tf-btn '+(val?'sel-t':'sel-f');
+}
+function checkTF(){
+  let score=0;
+  DATA.v3tf.forEach((item,i)=>{
+    if(tfAnswers[i]===undefined)return;
+    const row=document.getElementById(`tf-${i}`);
+    row.querySelectorAll('.tf-btn').forEach(b=>{
+      const isTrue=b.textContent.trim()==='True';b.className='tf-btn';
+      if(isTrue===item.ans){b.style.background=item.ans?'#dcfce7':'#fee2e2';b.style.borderColor=item.ans?'var(--success)':'var(--error)';b.style.color=item.ans?'var(--success)':'var(--error)';b.textContent=(isTrue?'True':'False')+' ✓';}
+    });
+    if(tfAnswers[i]===item.ans)score++;
+  });
+  const fb=document.getElementById('v3-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`Excellent! ${score}/10 correct.`:`${score}/10 correct. Review the vocabulary definitions.`;
+}
+function renderListening(){
+  const c=document.getElementById('listening-cards');if(!c)return;
+  c.innerHTML=DATA.listening.map((act,ai)=>`
+    <div class="audio-card">
+      <div class="audio-header">
+        <div class="audio-emoji">${act.emoji}</div>
+        <div><div class="audio-title">${act.title}</div><div class="audio-sub">${act.sub}</div>
+          <div class="audio-tags"><span class="audio-tag tag-level">Level: ${act.level}</span><span class="audio-tag tag-type">${act.type}</span><span class="audio-tag tag-focus">Focus: ${act.focus}</span></div>
+        </div>
+      </div>
+      <div class="player-box">
+        <div class="player-row">
+          <button class="play-btn" id="play-${ai}" onclick="handlePlay(${ai})">&#9654;</button>
+          <div class="player-info"><div class="player-title-sm">${act.title}</div><div class="player-sub-sm">${act.sub}</div></div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="player-progress"><div class="player-progress-fill" id="pf-${ai}"></div></div>
+        <div class="speed-row">
+          <span class="speed-label">Speed:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7&times;</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2&times;</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">&#8617; Replay</button>
+        </div>
+        <div class="tts-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">&#9660; Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans-${ai}">${act.transcript.split('\n\n').map(p=>`<p>${p.trim()}</p>`).join('')}</div>
+      <div class="listen-instruction">&#128203; Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</div>
+      <div class="listen-mcq-wrap">
+        <div class="mcq-title">Questions &mdash; Activity ${ai+1}</div>
+        <div id="la${ai}-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('la${ai}')">Check Answers</button>
+        <div id="la${ai}-feedback" class="feedback"></div>
+        <div id="la${ai}-score" class="score-display"></div>
+      </div>
+    </div>`).join('');
+  DATA.listening.forEach((act,ai)=>{DATA[`la${ai}`]={questions:act.questions};renderMCQ(`la${ai}-mcqs`,act.questions,`la${ai}`,true);});
+}
+const audioState={};
+function handlePlay(ai){
+  const act=DATA.listening[ai];
+  if(!audioState[ai])audioState[ai]={playing:false,speed:0.85};
+  const st=audioState[ai];const btn=document.getElementById(`play-${ai}`);
+  if(st.playing){window.speechSynthesis.cancel();st.playing=false;btn.innerHTML='&#9654;';if(st.timer)clearInterval(st.timer);return;}
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.lang='en-GB';utt.rate=st.speed;utt.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const chosen=voices.find(v=>v.name==='Google UK English Female')||voices.find(v=>v.lang==='en-GB'&&v.name.toLowerCase().includes('female'))||voices.find(v=>v.lang==='en-GB');
+  if(chosen)utt.voice=chosen;
+  const words=act.transcript.split(/\s+/).length;const dur=Math.round(words/(st.speed*2.6));
+  const fmt=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  document.getElementById(`time-${ai}`).textContent=`0:00 / ${fmt(dur)}`;
+  let elapsed=0;
+  st.timer=setInterval(()=>{
+    if(!audioState[ai].playing){clearInterval(st.timer);return;}
+    elapsed++;
+    document.getElementById(`pf-${ai}`).style.width=Math.min(elapsed/dur*100,100)+'%';
+    document.getElementById(`time-${ai}`).textContent=`${fmt(elapsed)} / ${fmt(dur)}`;
+  },1000);
+  utt.onend=()=>{st.playing=false;btn.innerHTML='&#9654;';clearInterval(st.timer);document.getElementById(`pf-${ai}`).style.width='100%';};
+  window.speechSynthesis.speak(utt);st.playing=true;btn.innerHTML='&#9646;&#9646;';
+}
+function setSpeed(ai,spd,btn){
+  if(!audioState[ai])audioState[ai]={playing:false,speed:spd};audioState[ai].speed=spd;
+  btn.closest('.audio-card').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  if(audioState[ai].playing){window.speechSynthesis.cancel();audioState[ai].playing=false;document.getElementById(`play-${ai}`).innerHTML='&#9654;';if(audioState[ai].timer)clearInterval(audioState[ai].timer);setTimeout(()=>handlePlay(ai),80);}
+}
+function replayAudio(ai){
+  if(audioState[ai]){audioState[ai].playing=false;if(audioState[ai].timer)clearInterval(audioState[ai].timer);}
+  window.speechSynthesis.cancel();const pf=document.getElementById(`pf-${ai}`);if(pf)pf.style.width='0%';
+  document.getElementById(`play-${ai}`).innerHTML='&#9654;';setTimeout(()=>handlePlay(ai),80);
+}
+function toggleTranscript(ai){document.getElementById(`trans-${ai}`).classList.toggle('open');}
+function updateWordCount(id,max){
+  const ta=document.getElementById(`${id}-text`);const wc=document.getElementById(`${id}-wc`);if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  wc.textContent=`${words} / ${max} words`;wc.style.color=words>max?'var(--error)':'var(--text-light)';
+}
+function submitWriting(id){
+  const ta=document.getElementById(`${id}-text`);if(!ta||ta.value.trim().length<30){alert('Please write your response before submitting.');return;}
+  const s=document.getElementById(`${id}-success`);s.style.display='block';s.scrollIntoView({behavior:'smooth'});
+}
+let attemptCount=0;
+function renderAssessment(){renderMCQ('fa-mcqs',DATA.fa.questions,'fa',false);}
+function submitAssessment(){
+  attemptCount++;const qs=DATA.fa.questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#fa-q${i} .mcq-option`);let chosen=-1;
+    opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    if(chosen===item.ans)score++;
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+  });
+  const pct=Math.round(score/total*100);const pass=pct>=70;
+  const res=document.getElementById('assessment-result');res.style.display='block';res.scrollIntoView({behavior:'smooth'});
+  document.getElementById('result-score-text').className='result-score '+(pass?'pass':'fail');
+  document.getElementById('result-score-text').textContent=`${pct}% — ${score}/${total}`;
+  document.getElementById('result-msg').textContent=pass?'Congratulations! You have passed Module 7. Excellent work on Influencer and Affiliate Marketing.':'You did not reach the 70% pass mark. Please review the module content and try again.';
+  const wrap=document.getElementById('retake-wrap');
+  if(!pass&&attemptCount<2)wrap.innerHTML=`<button class="retake-btn" onclick="retakeAssessment()">Retake Assessment (Attempt ${attemptCount+1} of 2)</button>`;
+  else if(attemptCount>=2&&!pass){wrap.innerHTML=`<p style="color:var(--error);font-size:14px;margin-top:12px">You have used both attempts. Please review the module content.</p>`;document.getElementById('assessment-form').style.display='none';}
+  document.getElementById('attempt-badge').textContent=`Attempt ${attemptCount} of 2`;
+}
+function retakeAssessment(){
+  document.getElementById('assessment-result').style.display='none';
+  document.querySelectorAll('#fa-mcqs .mcq-option').forEach(o=>o.classList.remove('selected','correct','wrong'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(id);if(sec)sec.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{if((n.getAttribute('onclick')||'').includes(`'${id}'`))n.classList.add('active');});
+  window.scrollTo({top:0,behavior:'smooth'});trackProgress(id);
+}
+function trackProgress(id){
+  let v=JSON.parse(sessionStorage.getItem('mkt7v')||'[]');
+  if(!v.includes(id)){v.push(id);sessionStorage.setItem('mkt7v',JSON.stringify(v));}
+  const pct=Math.round(v.length/11*100);
+  const pf=document.getElementById('progress-fill');const pp=document.getElementById('progress-pct');
+  if(pf)pf.style.width=pct+'%';if(pp)pp.textContent=pct+'%';
+}
+window.addEventListener('load',()=>{
+  if(window.speechSynthesis){window.speechSynthesis.getVoices();if(window.speechSynthesis.onvoiceschanged!==undefined)window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();}
+  renderMCQ('r1-mcqs',DATA.r1.questions,'r1',false);
+  renderMCQ('r2-mcqs',DATA.r2.questions,'r2',false);
+  renderMCQ('v1-mcqs',DATA.v1.questions,'v1',false);
+  renderGaps();renderTF();
+  renderMCQ('g1-mcqs',DATA.g1.questions,'g1',false);
+  renderMCQ('g2-mcqs',DATA.g2.questions,'g2',false);
+  renderMCQ('g3-mcqs',DATA.g3.questions,'g3',false);
+  renderListening();
+  renderMCQ('cs1-mcqs',DATA.cs1.questions,'cs1',false);
+  renderMCQ('cs2-mcqs',DATA.cs2.questions,'cs2',false);
+  renderAssessment();
+  trackProgress('overview');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing &amp; Advertising English — Module 9: Customer Personas and Storytelling</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d1b2e; --navy-mid:#152337; --navy-light:#1e3352;
+  --gold:#e8a020; --gold-light:#f5c040;
+  --cream:#f5f0e8; --cream-dark:#ece5d8;
+  --white:#ffffff; --text-muted:#8899aa;
+  --green:#2ecc8a; --red:#e05c5c;
+  --sidebar-w:260px; --radius:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;display:flex;}
+
+/* ── SIDEBAR ── */
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;z-index:200;display:flex;flex-direction:column;overflow-y:auto;padding-bottom:40px;transition:transform .3s;}
+.sidebar-brand{padding:24px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08);}
+.sidebar-brand h2{color:var(--gold);font-family:'Playfair Display',serif;font-size:1rem;line-height:1.3;}
+.sidebar-brand .sub{color:var(--text-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;}
+.level-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:10px;letter-spacing:1px;}
+.sidebar-section-label{color:var(--text-muted);font-size:.65rem;text-transform:uppercase;letter-spacing:2px;padding:20px 20px 6px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;color:rgba(255,255,255,.65);font-size:.85rem;cursor:pointer;border-left:3px solid transparent;transition:all .2s;user-select:none;}
+.nav-item:hover{color:var(--white);background:rgba(255,255,255,.06);}
+.nav-item.active{color:var(--white);background:rgba(232,160,32,.15);border-left-color:var(--gold);}
+.nav-item .nav-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0;}
+.nav-badge{margin-left:auto;background:rgba(232,160,32,.22);color:var(--gold-light);font-size:.65rem;font-weight:600;padding:2px 8px;border-radius:10px;}
+
+/* ── MOBILE MENU BUTTON ── */
+.menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:300;width:40px;height:40px;background:var(--navy);border:none;border-radius:8px;cursor:pointer;align-items:center;justify-content:center;color:var(--gold-light);font-size:1.2rem;}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150;}
+
+/* ── MAIN ── */
+#main{margin-left:var(--sidebar-w);flex:1;min-width:0;}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#0d1b2e 0%,#152337 55%,#1a2d45 100%);padding:52px 60px 44px;position:relative;overflow:hidden;}
+.hero::after{content:'M9';position:absolute;right:36px;bottom:-16px;font-family:'Playfair Display',serif;font-size:148px;font-weight:800;color:rgba(255,255,255,.03);line-height:1;pointer-events:none;user-select:none;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.88);font-size:.7rem;text-transform:uppercase;letter-spacing:2px;padding:6px 16px;border-radius:20px;margin-bottom:22px;}
+.hero h1{font-family:'Playfair Display',serif;color:var(--white);font-size:2.9rem;line-height:1.13;}
+.hero h1 span{color:var(--gold-light);}
+.hero p{color:rgba(255,255,255,.65);margin-top:14px;max-width:700px;line-height:1.75;font-size:.95rem;}
+.hero-stats{display:flex;gap:38px;margin-top:34px;flex-wrap:wrap;}
+.stat{text-align:center;}
+.stat .n{font-family:'Playfair Display',serif;color:var(--gold-light);font-size:2.1rem;font-weight:700;line-height:1;}
+.stat .l{color:rgba(255,255,255,.5);font-size:.67rem;text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;}
+
+/* ── PROGRESS ── */
+.progress-bar-wrap{background:var(--navy-mid);padding:14px 60px;display:flex;align-items:center;gap:16px;}
+.progress-label{color:rgba(255,255,255,.7);font-size:.8rem;white-space:nowrap;}
+.progress-track{flex:1;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:4px;width:0%;transition:width .8s ease;}
+.progress-pct{color:var(--gold-light);font-size:.85rem;font-weight:600;min-width:36px;text-align:right;}
+
+/* ── SECTIONS ── */
+.section{display:none;padding:44px 60px;}
+.section.active{display:block;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--navy);margin-bottom:6px;}
+.section-title::after{content:'';display:block;width:50px;height:3px;background:var(--gold);margin-top:10px;border-radius:2px;}
+.section-sub{color:#667;font-size:.9rem;margin-top:12px;margin-bottom:30px;line-height:1.6;}
+
+/* ── CARDS ── */
+.card{background:var(--white);border-radius:var(--radius);padding:28px;margin-bottom:22px;border:1px solid rgba(0,0,0,.07);box-shadow:0 1px 6px rgba(0,0,0,.04);}
+
+/* ── OVERVIEW ── */
+.outcome-list{list-style:none;display:grid;gap:11px;margin-top:16px;}
+.outcome-list li{display:flex;align-items:flex-start;gap:10px;font-size:.9rem;line-height:1.55;}
+.outcome-list li::before{content:'✦';color:var(--gold);font-size:.7rem;margin-top:4px;flex-shrink:0;}
+.topic-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px;}
+.topic-card{background:var(--white);border-radius:var(--radius);padding:22px 18px;border:1px solid rgba(0,0,0,.08);text-align:center;transition:transform .2s,box-shadow .2s;}
+.topic-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.09);}
+.topic-card .tc-icon{font-size:2.1rem;margin-bottom:8px;}
+.topic-card .tc-title{font-weight:700;font-size:.9rem;color:var(--navy);}
+.topic-card .tc-sub{color:#778;font-size:.78rem;margin-top:5px;line-height:1.4;}
+
+/* ── SPEAKING ── */
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.q-card{background:var(--white);border-radius:10px;padding:16px 18px;border-left:3px solid var(--gold);font-size:.88rem;line-height:1.55;display:flex;gap:12px;align-items:flex-start;box-shadow:0 1px 5px rgba(0,0,0,.06);transition:box-shadow .2s;}
+.q-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.1);}
+.q-num{font-family:'DM Mono',monospace;color:var(--gold);font-size:.74rem;font-weight:600;flex-shrink:0;margin-top:2px;}
+
+/* ── WORD BANK ── */
+.word-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.word-card{background:var(--white);border-radius:var(--radius);padding:18px 16px;border:1px solid rgba(0,0,0,.08);transition:transform .2s,box-shadow .2s;}
+.word-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.1);}
+.word-emoji{font-size:1.7rem;margin-bottom:9px;}
+.word-term{font-weight:700;font-size:.92rem;color:var(--navy);margin-bottom:5px;}
+.word-def{font-size:.78rem;color:#556;line-height:1.55;}
+
+/* ── READING ── */
+.reading-text{background:var(--white);border-radius:var(--radius);padding:30px 34px;margin-bottom:28px;border:1px solid rgba(0,0,0,.07);box-shadow:0 1px 6px rgba(0,0,0,.04);}
+.reading-text h3{font-family:'Playfair Display',serif;color:var(--navy);font-size:1.2rem;margin-bottom:18px;}
+.reading-text p{font-size:.9rem;line-height:1.82;color:#334;margin-bottom:15px;}
+.reading-text p:last-child{margin-bottom:0;}
+
+/* ── MCQ – LIGHT CONTEXT ── */
+.mcq-block{margin-bottom:28px;}
+.mcq-question{font-weight:600;font-size:.9rem;margin-bottom:12px;color:var(--navy);line-height:1.5;}
+.mcq-options{display:grid;gap:8px;}
+.mcq-option{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--cream);border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all .2s;font-size:.87rem;user-select:none;line-height:1.4;}
+.mcq-option:hover{border-color:var(--gold);background:rgba(232,160,32,.09);}
+.mcq-option.correct{background:rgba(46,204,138,.12);border-color:var(--green);color:#1a6e4c;}
+.mcq-option.wrong{background:rgba(224,92,92,.1);border-color:var(--red);color:#8b1a1a;}
+.mcq-option.disabled{pointer-events:none;}
+.opt-letter{width:26px;height:26px;border-radius:50%;background:rgba(232,160,32,.2);color:var(--gold);font-weight:700;font-size:.72rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.feedback{margin-top:8px;font-size:.82rem;padding:9px 13px;border-radius:7px;display:none;line-height:1.5;}
+.feedback.show{display:block;}
+.feedback.correct{background:rgba(46,204,138,.1);color:#1a6e4c;}
+.feedback.wrong{background:rgba(224,92,92,.1);color:#8b1a1a;}
+
+/* ── LISTENING MCQ – DARK CONTEXT (white text) ── */
+.listen-mcq-wrap .mcq-question{color:#ffffff;}
+.listen-mcq-wrap .mcq-option{background:rgba(255,255,255,.09);color:rgba(255,255,255,.9);border-color:rgba(255,255,255,.13);}
+.listen-mcq-wrap .mcq-option:hover{border-color:var(--gold-light);background:rgba(232,160,32,.18);}
+.listen-mcq-wrap .mcq-option.correct{background:rgba(46,204,138,.2);border-color:var(--green);color:#b0ffdd;}
+.listen-mcq-wrap .mcq-option.wrong{background:rgba(224,92,92,.2);border-color:var(--red);color:#ffc8c8;}
+.listen-mcq-wrap .opt-letter{background:rgba(232,160,32,.28);color:var(--gold-light);}
+.listen-mcq-wrap .feedback.correct{background:rgba(46,204,138,.15);color:#b0ffdd;}
+.listen-mcq-wrap .feedback.wrong{background:rgba(224,92,92,.15);color:#ffc8c8;}
+
+/* ── DROPDOWN GAP FILL ── */
+.gap-sentence{font-size:.9rem;line-height:3;margin-bottom:2px;}
+.gap-select{display:inline-block;border:2px solid var(--gold);border-radius:7px;background:var(--cream);font-family:'DM Sans',sans-serif;font-size:.84rem;padding:4px 30px 4px 11px;color:var(--navy);outline:none;cursor:pointer;vertical-align:middle;margin:0 4px;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23e8a020' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;transition:border-color .2s,background-color .2s;min-width:170px;max-width:100%;}
+.gap-select:hover{border-color:var(--gold-light);}
+.gap-select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(232,160,32,.15);}
+.gap-select.correct{border-color:var(--green);background-color:rgba(46,204,138,.1);color:#1a6e4c;}
+.gap-select.wrong{border-color:var(--red);background-color:rgba(224,92,92,.08);color:var(--red);}
+.gap-select:disabled{cursor:default;opacity:.9;}
+
+/* ── GRAMMAR REVIEW ── */
+.grammar-rule{background:var(--navy);color:var(--white);border-radius:var(--radius);padding:26px 30px;margin-bottom:20px;}
+.grammar-rule h4{color:var(--gold-light);font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:11px;}
+.grammar-rule p{font-size:.88rem;line-height:1.75;color:rgba(255,255,255,.83);margin-bottom:10px;}
+.grammar-rule .example{background:rgba(255,255,255,.08);border-left:3px solid var(--gold);padding:11px 15px;border-radius:5px;font-size:.85rem;font-style:italic;margin-top:10px;color:rgba(255,255,255,.87);line-height:1.7;}
+.grammar-rule table{width:100%;border-collapse:collapse;margin-top:13px;font-size:.82rem;}
+.grammar-rule th{background:rgba(232,160,32,.26);color:var(--gold-light);padding:9px 13px;text-align:left;}
+.grammar-rule td{padding:9px 13px;border-bottom:1px solid rgba(255,255,255,.09);color:rgba(255,255,255,.82);line-height:1.5;}
+
+/* ── LISTENING ── */
+.listen-card{background:var(--navy);border-radius:var(--radius) var(--radius) 0 0;padding:26px;margin-bottom:0;}
+.listen-mcq-wrap{background:var(--navy);border-radius:0 0 var(--radius) var(--radius);padding:22px 26px 30px;margin-bottom:30px;border-top:1px solid rgba(255,255,255,.08);}
+.listen-mcq-wrap h4{font-family:'Playfair Display',serif;margin-bottom:22px;color:var(--white);font-size:1.05rem;}
+.listen-card-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px;}
+.listen-icon{width:52px;height:52px;background:rgba(232,160,32,.22);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
+.listen-title{color:var(--white);font-family:'Playfair Display',serif;font-size:1.05rem;line-height:1.38;}
+.listen-meta{color:rgba(255,255,255,.5);font-size:.78rem;margin-top:4px;}
+.listen-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px;}
+.badge{font-size:.64rem;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:12px;font-weight:600;}
+.badge-gold{border:1px solid var(--gold);color:var(--gold-light);}
+.badge-outline{border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.72);}
+.audio-player{background:#0a1525;border-radius:10px;padding:17px 22px;}
+.audio-controls{display:flex;align-items:center;gap:14px;}
+.play-btn{width:48px;height:48px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.15rem;color:var(--navy);flex-shrink:0;transition:background .2s,transform .15s;}
+.play-btn:hover{background:var(--gold-light);transform:scale(1.06);}
+.audio-info{flex:1;min-width:0;}
+.audio-title-sm{color:var(--white);font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.audio-sub{color:rgba(255,255,255,.45);font-size:.74rem;margin-top:3px;}
+.progress-audio{margin-top:11px;height:5px;background:rgba(255,255,255,.15);border-radius:3px;}
+.progress-audio-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:3px;width:0%;transition:width .3s;}
+.audio-time{color:rgba(255,255,255,.4);font-size:.72rem;font-family:'DM Mono',monospace;display:flex;justify-content:flex-end;margin-top:5px;}
+.speed-btns{display:flex;gap:7px;margin-top:11px;flex-wrap:wrap;}
+.speed-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.72);font-size:.74rem;padding:4px 11px;border-radius:12px;cursor:pointer;transition:all .2s;}
+.speed-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700;}
+.audio-note{color:rgba(255,255,255,.3);font-size:.71rem;margin-top:8px;font-style:italic;}
+.transcript-toggle{margin-top:13px;background:none;border:none;color:var(--gold-light);font-size:.82rem;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:'DM Sans',sans-serif;transition:opacity .2s;}
+.transcript-toggle:hover{opacity:.8;}
+.transcript-box{background:rgba(255,255,255,.05);border-radius:9px;padding:15px 19px;margin-top:10px;font-size:.84rem;color:rgba(255,255,255,.73);line-height:1.8;display:none;border:1px solid rgba(255,255,255,.07);}
+.transcript-box.open{display:block;}
+
+/* ── WRITING ── */
+.writing-prompt{background:var(--navy);color:var(--white);border-radius:var(--radius);padding:26px;margin-bottom:20px;}
+.writing-prompt h3{color:var(--gold-light);font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:11px;}
+.writing-prompt p{font-size:.88rem;line-height:1.75;color:rgba(255,255,255,.83);}
+.writing-prompt ul{margin:11px 0 0 18px;font-size:.85rem;color:rgba(255,255,255,.72);line-height:1.95;}
+.writing-area{width:100%;min-height:220px;border:2px solid rgba(0,0,0,.13);border-radius:9px;padding:16px;font-family:'DM Sans',sans-serif;font-size:.9rem;resize:vertical;outline:none;transition:border-color .2s;color:var(--navy);line-height:1.65;}
+.writing-area:focus{border-color:var(--gold);}
+.word-count{color:var(--text-muted);font-size:.78rem;margin-top:7px;}
+.submit-btn{background:var(--gold);color:var(--navy);border:none;padding:12px 30px;border-radius:25px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;margin-top:13px;transition:background .2s,transform .15s;}
+.submit-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+.submit-feedback{display:none;background:rgba(46,204,138,.1);border:1px solid var(--green);border-radius:9px;padding:13px 17px;margin-top:13px;font-size:.88rem;color:#1a6e4c;}
+
+/* ── CASE STUDY ── */
+.case-header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);border-radius:var(--radius);padding:28px 32px;margin-bottom:22px;}
+.case-header h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold-light);margin-bottom:9px;}
+.case-header .case-meta{font-size:.77rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:15px;}
+.case-header p{font-size:.88rem;line-height:1.78;color:rgba(255,255,255,.83);margin-bottom:13px;}
+
+/* ── ASSESSMENT ── */
+.assessment-info{background:var(--navy);color:var(--white);border-radius:var(--radius);padding:26px 30px;margin-bottom:28px;display:flex;gap:32px;flex-wrap:wrap;}
+.assessment-info .info-item{text-align:center;}
+.assessment-info .info-n{font-family:'Playfair Display',serif;font-size:2.1rem;color:var(--gold-light);}
+.assessment-info .info-l{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.5);margin-top:3px;}
+.check-btn{background:var(--gold);color:var(--navy);border:none;padding:13px 38px;border-radius:25px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:24px;transition:all .2s;}
+.check-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+.result-box{display:none;border-radius:var(--radius);padding:30px;margin-top:22px;text-align:center;}
+.result-box.pass{background:rgba(46,204,138,.1);border:2px solid var(--green);}
+.result-box.fail{background:rgba(224,92,92,.08);border:2px solid var(--red);}
+.result-score{font-family:'Playfair Display',serif;font-size:3.2rem;font-weight:700;}
+.result-score.pass{color:var(--green);}
+.result-score.fail{color:var(--red);}
+.result-label{font-size:1rem;font-weight:600;margin-top:7px;}
+.result-detail{font-size:.85rem;color:#667;margin-top:9px;}
+
+/* ── EXERCISE HEADER ── */
+.ex-header{background:linear-gradient(90deg,var(--navy),var(--navy-light));border-radius:var(--radius);padding:18px 24px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.ex-num{width:38px;height:38px;background:var(--gold);color:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.86rem;flex-shrink:0;}
+.ex-title{color:var(--white);font-size:.95rem;font-weight:600;}
+.ex-desc{color:rgba(255,255,255,.62);font-size:.78rem;margin-top:3px;}
+.check-mcq-btn{background:var(--gold);color:var(--navy);border:none;padding:10px 24px;border-radius:22px;font-size:.83rem;font-weight:700;cursor:pointer;margin-top:20px;font-family:'DM Sans',sans-serif;transition:background .2s,transform .15s;}
+.check-mcq-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+
+/* ── RESPONSIVE – TABLET ── */
+@media(max-width:960px){
+  :root{--sidebar-w:0px;}
+  #sidebar{transform:translateX(-260px);width:260px;}
+  #sidebar.open{transform:translateX(0);}
+  .sidebar-overlay.show{display:block;}
+  .menu-btn{display:flex;}
+  #main{margin-left:0;}
+  .hero{padding:56px 24px 40px;}
+  .section{padding:32px 20px;}
+  .progress-bar-wrap{padding:13px 20px;}
+  .hero h1{font-size:2rem;}
+  .hero-stats{gap:20px;}
+  .topic-cards{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:640px){
+  .hero h1{font-size:1.7rem;}
+  .q-grid{grid-template-columns:1fr;}
+  .word-grid{grid-template-columns:1fr 1fr;}
+  .topic-cards{grid-template-columns:1fr;}
+  .assessment-info{flex-direction:column;gap:16px;align-items:flex-start;}
+  .hero-stats{gap:16px;}
+  .audio-controls{flex-wrap:nowrap;}
+  .gap-select{min-width:140px;}
+}
+@media(max-width:400px){
+  .word-grid{grid-template-columns:1fr;}
+  .hero h1{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU BUTTON -->
+<button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h2>Marketing &amp; Advertising English</h2>
+    <div class="sub">Professional Development</div>
+    <div class="level-badge">B1–B2 LEVEL</div>
+  </div>
+  <div class="sidebar-section-label">Module 9</div>
+  <div class="nav-item active" data-section="overview"><span class="nav-icon">🏠</span> Overview</div>
+  <div class="nav-item" data-section="speaking"><span class="nav-icon">💬</span> Speaking <span class="nav-badge">21Q</span></div>
+  <div class="nav-item" data-section="wordbank"><span class="nav-icon">📚</span> Word Bank <span class="nav-badge">21</span></div>
+  <div class="nav-item" data-section="reading"><span class="nav-icon">📖</span> Reading <span class="nav-badge">2T</span></div>
+  <div class="nav-item" data-section="vocabulary"><span class="nav-icon">✏️</span> Vocabulary <span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" data-section="grammar"><span class="nav-icon">📝</span> Grammar <span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" data-section="grammarreview"><span class="nav-icon">📋</span> Grammar Review</div>
+  <div class="nav-item" data-section="writing"><span class="nav-icon">✍️</span> Writing <span class="nav-badge">2</span></div>
+  <div class="nav-item" data-section="listening"><span class="nav-icon">🎧</span> Listening <span class="nav-badge">4</span></div>
+  <div class="nav-item" data-section="casestudies"><span class="nav-icon">🏢</span> Case Studies <span class="nav-badge">2</span></div>
+  <div class="nav-item" data-section="assessment"><span class="nav-icon">🏆</span> Final Assessment</div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">🧭 Module 9 · Marketing &amp; Advertising English</div>
+    <h1>Customer Personas<br><span>&amp; Storytelling</span></h1>
+    <p>Develop the professional English skills to build vivid customer personas, craft compelling brand narratives, and use the power of storytelling to connect with audiences in meaningful and memorable ways.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="n">21</div><div class="l">Speaking Q's</div></div>
+      <div class="stat"><div class="n">21</div><div class="l">Word Bank</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">Reading Texts</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">Listening Ex.</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">Exercises</div></div>
+      <div class="stat"><div class="n">20</div><div class="l">Final MCQs</div></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar-wrap">
+    <div class="progress-label">Module Progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-pct" id="progressPct">0%</div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section active" id="sec-overview">
+    <div class="section-title">Module Overview</div>
+    <div style="display:inline-block;background:var(--navy);color:var(--white);font-size:.72rem;padding:3px 13px;border-radius:12px;margin:12px 0 22px;letter-spacing:1px;">B1–B2</div>
+    <div class="card"><p style="font-size:.93rem;line-height:1.85;"><strong>Welcome to Module 9: Customer Personas and Storytelling.</strong> This module develops the professional English you need to understand customers deeply and communicate with them powerfully. You will learn how to build detailed customer personas that go beyond demographics, how to identify and articulate customer journeys, and how to use storytelling frameworks to create narratives that resonate emotionally. Whether you are writing a brand story, presenting a persona to a client, or using the hero's journey to shape campaign content, this module gives you the vocabulary and language skills to do it with confidence and precision.</p></div>
+    <div class="card" style="background:var(--navy);color:var(--white);">
+      <h3 style="color:var(--gold-light);font-family:'Playfair Display',serif;margin-bottom:16px;">🎯 Learning Outcomes</h3>
+      <ul class="outcome-list">
+        <li>Identify and use key customer persona and storytelling vocabulary with precision</li>
+        <li>Read and interpret texts on persona development, customer journey mapping, and narrative strategy</li>
+        <li>Build and present detailed customer personas using professional marketing language</li>
+        <li>Understand and apply tense consistency in narrative and storytelling contexts</li>
+        <li>Use descriptive adjective and adverb patterns to bring personas and brand stories to life</li>
+        <li>Apply discourse markers for sequence and narrative flow in storytelling presentations</li>
+        <li>Listen to and comprehend English in persona workshops, storytelling seminars, and brand narrative sessions</li>
+        <li>Write a customer persona profile and a brand storytelling brief</li>
+        <li>Analyse real-world persona-driven campaigns and storytelling case studies</li>
+      </ul>
+    </div>
+    <div class="topic-cards">
+      <div class="topic-card"><div class="tc-icon">👤</div><div class="tc-title">Customer Personas</div><div class="tc-sub">Demographics, psychographics, motivations, goals</div></div>
+      <div class="topic-card"><div class="tc-icon">🗺️</div><div class="tc-title">Customer Journey</div><div class="tc-sub">Touchpoints, pain points, moments of truth</div></div>
+      <div class="topic-card"><div class="tc-icon">📖</div><div class="tc-title">Brand Storytelling</div><div class="tc-sub">Hero's journey, narrative arc, emotional connection</div></div>
+    </div>
+  </section>
+
+  <!-- SPEAKING -->
+  <section class="section" id="sec-speaking">
+    <div class="section-title">Speaking Activities</div>
+    <div class="section-sub">21 discussion questions to build fluency in customer personas and storytelling topics. Discuss with a partner or prepare structured individual responses.</div>
+    <div class="q-grid" id="speakingGrid"></div>
+  </section>
+
+  <!-- WORD BANK -->
+  <section class="section" id="sec-wordbank">
+    <div class="section-title">Word Bank</div>
+    <div class="section-sub">21 essential terms for customer personas and storytelling. Study each definition carefully before completing the exercises.</div>
+    <div class="word-grid" id="wordGrid"></div>
+  </section>
+
+  <!-- READING -->
+  <section class="section" id="sec-reading">
+    <div class="section-title">Reading</div>
+    <div class="section-sub">Two professional texts followed by comprehension questions. Read each text carefully before answering.</div>
+    <div id="readingContent"></div>
+  </section>
+
+  <!-- VOCABULARY -->
+  <section class="section" id="sec-vocabulary">
+    <div class="section-title">Vocabulary Exercises</div>
+    <div class="section-sub">Three exercises to practise the customer personas and storytelling vocabulary from this module.</div>
+    <div id="vocabContent"></div>
+  </section>
+
+  <!-- GRAMMAR -->
+  <section class="section" id="sec-grammar">
+    <div class="section-title">Grammar Exercises</div>
+    <div class="section-sub">Three grammar exercises focusing on tense consistency in narratives, descriptive adjective and adverb patterns, and discourse markers for sequence and narrative flow.</div>
+    <div id="grammarContent"></div>
+  </section>
+
+  <!-- GRAMMAR REVIEW -->
+  <section class="section" id="sec-grammarreview">
+    <div class="section-title">Grammar Review</div>
+    <div class="section-sub">Detailed reference boxes covering all three grammar points from this module.</div>
+    <div id="grammarReviewContent"></div>
+  </section>
+
+  <!-- WRITING -->
+  <section class="section" id="sec-writing">
+    <div class="section-title">Writing Activities</div>
+    <div class="section-sub">Two professional writing tasks. Apply the vocabulary and grammar from this module in your responses.</div>
+    <div id="writingContent"></div>
+  </section>
+
+  <!-- LISTENING -->
+  <section class="section" id="sec-listening">
+    <div class="section-title">Listening Activities</div>
+    <div class="section-sub">4 audio activities — press ▶ Play, listen carefully, then answer the questions below.</div>
+    <div id="listeningContent"></div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section class="section" id="sec-casestudies">
+    <div class="section-title">Case Studies</div>
+    <div class="section-sub">Two real-world persona-driven and storytelling case studies. Read, analyse, and answer the comprehension questions.</div>
+    <div id="caseContent"></div>
+  </section>
+
+  <!-- FINAL ASSESSMENT -->
+  <section class="section" id="sec-assessment">
+    <div class="section-title">Final Assessment</div>
+    <div class="section-sub">Module 9 — Customer Personas and Storytelling</div>
+    <div class="assessment-info">
+      <div class="info-item"><div class="info-n">20</div><div class="info-l">Questions</div></div>
+      <div class="info-item"><div class="info-n">70%</div><div class="info-l">Pass Mark</div></div>
+      <div class="info-item"><div class="info-n">2</div><div class="info-l">Attempts</div></div>
+      <div class="info-item"><div class="info-n">B1–B2</div><div class="info-l">Level</div></div>
+    </div>
+    <div id="assessmentContent"></div>
+    <div id="assessmentResult" class="result-box"></div>
+  </section>
+
+</div><!-- /main -->
+
+<script>
+/* ═══════════════════════════════════
+   MODULE 9 — DATA
+═══════════════════════════════════ */
+
+/* ── SPEAKING ── */
+const speakingQs = [
+  "What is a customer persona? How is it different from a simple demographic profile?",
+  "Why do you think building detailed customer personas is important before creating a marketing campaign?",
+  "Think of a brand you admire. Can you describe the kind of person you think they have built their main persona around?",
+  "What is the difference between a customer's 'goals' and their 'pain points'? Why do both matter to marketers?",
+  "What is a customer journey? Can you describe the stages of a customer journey for a product you use?",
+  "What is a 'touchpoint' in the context of the customer journey? Can you give three examples?",
+  "What is a 'moment of truth'? Why is it important for brands to identify these moments in the customer journey?",
+  "What do you understand by the term 'empathy map'? How might a marketing team use one in a workshop?",
+  "What is the difference between what a customer says, thinks, feels, and does? Why might these be different?",
+  "What is brand storytelling? Can you think of a brand that tells its story particularly well?",
+  "What is the hero's journey and how can it be applied to brand communications?",
+  "Who is the 'hero' in most brand storytelling — the brand or the customer? What difference does this make?",
+  "What is a narrative arc? What are the key elements of a compelling story structure?",
+  "What is 'emotional resonance' in storytelling? Why do stories that trigger emotion tend to be more memorable?",
+  "What is user-generated content (UGC) and how can it be used as a form of authentic storytelling?",
+  "What is an 'origin story' in the context of brand marketing? Can you think of a well-known brand origin story?",
+  "How does storytelling in marketing differ from storytelling in fiction? What are the key similarities?",
+  "What is the role of conflict in a good story? How is 'conflict' represented in brand narratives?",
+  "How do brands use social media to tell ongoing stories rather than one-off campaigns?",
+  "What ethical considerations should marketers keep in mind when using real customer stories in campaigns?",
+  "If you were developing a persona for a new sustainable fashion brand targeting urban professionals, what would be the three most important things to include in that persona profile?",
+];
+
+/* ── WORD BANK ── */
+const wordBank = [
+  {emoji:"👤", term:"Customer Persona",      def:"A semi-fictional, research-based representation of an ideal customer, including their demographics, goals, challenges, and behaviours."},
+  {emoji:"🗺️", term:"Customer Journey",       def:"The complete sequence of experiences and interactions a customer has with a brand from initial awareness to post-purchase loyalty."},
+  {emoji:"🎯", term:"Touchpoint",             def:"Any point of interaction between a customer and a brand — including ads, website visits, customer service calls, and in-store experiences."},
+  {emoji:"😣", term:"Pain Point",             def:"A specific frustration or problem a customer experiences that a product or service can solve."},
+  {emoji:"🏆", term:"Goal",                   def:"The desired outcome or aspiration that motivates a customer's behaviour and purchasing decisions."},
+  {emoji:"🧠", term:"Empathy Map",            def:"A visual tool that captures what a customer says, thinks, feels, and does, used to develop deeper understanding and more relevant communications."},
+  {emoji:"💡", term:"Moment of Truth",        def:"A critical interaction in the customer journey that significantly influences the customer's perception of and relationship with a brand."},
+  {emoji:"📖", term:"Narrative Arc",          def:"The structured progression of a story through a beginning, rising tension, climax, and resolution that gives it shape and emotional momentum."},
+  {emoji:"🦸", term:"Hero's Journey",         def:"A storytelling framework in which a hero faces a challenge, receives guidance, overcomes obstacles, and returns transformed — widely used in brand narratives."},
+  {emoji:"❤️", term:"Emotional Resonance",    def:"The degree to which a story or communication connects with the audience's feelings, values, or experiences, making it memorable and impactful."},
+  {emoji:"🌱", term:"Origin Story",           def:"A brand narrative that explains how and why the company was founded, often used to establish authenticity and human connection."},
+  {emoji:"🤳", term:"UGC",                    def:"User-Generated Content — content created by customers or users rather than the brand, used as authentic social proof and storytelling material."},
+  {emoji:"🎭", term:"Brand Narrative",        def:"The overarching story a brand tells about itself — its purpose, values, and the role it plays in customers' lives."},
+  {emoji:"⚡", term:"Conflict",               def:"The central challenge or tension in a story that creates drama and drives the narrative forward; in brand stories, often represented by the customer's pain point."},
+  {emoji:"🧭", term:"Archetype",              def:"A universally recognisable character type or symbolic figure — such as the Hero, the Rebel, or the Caregiver — used to define brand personality."},
+  {emoji:"🔄", term:"Customer Lifecycle",     def:"The stages a customer moves through in their relationship with a brand: awareness, consideration, purchase, retention, and advocacy."},
+  {emoji:"📣", term:"Advocacy",               def:"The stage in the customer lifecycle where satisfied customers actively recommend and promote the brand to others."},
+  {emoji:"🔍", term:"Jobs to Be Done",        def:"A framework that focuses on the functional, social, and emotional tasks a customer is trying to accomplish when they use a product or service."},
+  {emoji:"🗣️", term:"Voice of the Customer",  def:"A research process that captures customers' expectations, preferences, and aversions through direct feedback, used to inform persona development."},
+  {emoji:"📐", term:"Storyboard",             def:"A sequence of visual panels outlining the key scenes and narrative moments of an advertisement, video, or campaign before production begins."},
+  {emoji:"🌟", term:"Social Proof",           def:"Evidence that other customers have used and valued a product or service — such as reviews, testimonials, or UGC — used to build trust and influence decisions."},
+];
+
+/* ── READING ── */
+const readings = [
+  {
+    title: "Text 1: Building Customer Personas That Actually Work",
+    paragraphs: [
+      "A customer persona is only as useful as the research and empathy behind it. At their weakest, personas are nothing more than demographic labels — a name, an age range, and an income bracket that tells a marketer very little about what actually motivates the people they are trying to reach. At their strongest, personas are vivid, three-dimensional portraits of real human beings: what they care about, what frustrates them, what they aspire to, and how they spend their days. The difference between a weak persona and a strong one is the depth of the research that underpins it and the quality of the empathy that brings it to life.",
+      "The most effective way to build a persona is to start with real data rather than assumptions. This means combining quantitative research — survey data, analytics, purchase records — with qualitative insight gathered through interviews, focus groups, and direct customer observation. The goal is to understand not just what customers do but why they do it. The 'jobs to be done' framework, developed by Clayton Christensen, is particularly useful here: rather than asking who the customer is, it asks what task or outcome the customer is trying to achieve when they turn to your product or service. A customer buying a drill, in this framework, is not buying a drill at all — they are buying a hole. Understanding the 'job' being done leads to far more relevant and persuasive marketing communications than understanding the demographic profile of the typical drill purchaser.",
+      "A well-constructed persona profile typically includes a name and a representative photograph, a demographic overview, a psychographic description covering values and lifestyle, a set of specific goals and pain points, a description of preferred information channels, and a summary of key behavioural patterns. Many teams also include an empathy map — a visual representation of what the persona says, thinks, feels, and does — to ensure that all team members develop a genuinely human understanding of the person they are designing for. The persona should be displayed visibly in the workspace and referenced in every creative briefing, campaign review, and product development discussion. It is not a document to be written and filed — it is a living lens through which all marketing decisions should be viewed.",
+    ],
+    questions: [
+      {q:"What does the text say is the difference between a weak persona and a strong one?",       opts:["The number of demographic variables it includes","The depth of research behind it and the quality of empathy that brings it to life","Whether it includes a photograph of the target customer","The length of the document and the number of sections it contains"],ans:1},
+      {q:"What does the text recommend as the starting point for building a persona?",              opts:["Assumptions based on the marketing team's experience","Starting with the brand's existing advertising strategy","Combining quantitative research with qualitative insight from interviews and observation","Reviewing competitor personas to identify gaps in the market"],ans:2},
+      {q:"What is the 'jobs to be done' framework focused on?",                                    opts:["The demographic profile of the average customer","The emotional journey a customer takes from awareness to purchase","Understanding what task or outcome the customer is trying to achieve","Mapping the touchpoints in the customer journey"],ans:2},
+      {q:"What does the drill example in the text illustrate?",                                    opts:["That customers always prefer functional benefits over emotional ones","That understanding the 'job' being done leads to more relevant marketing than understanding demographics","That hardware brands should focus on professional builders rather than DIY consumers","That the price of a product matters less than its functional performance"],ans:1},
+      {q:"Which of the following is listed as a component of a well-constructed persona profile?", opts:["A detailed competitor analysis","The persona's preferred social media advertising format","A set of specific goals and pain points","The customer's lifetime value calculation"],ans:2},
+      {q:"What is an empathy map designed to capture?",                                            opts:["The customer's purchase history and spending patterns","What the persona says, thinks, feels, and does","The touchpoints where the brand and customer interact","The customer's NPS score and loyalty level"],ans:1},
+      {q:"How does the text say the persona should be treated once it is created?",                opts:["Filed securely as a confidential strategic document","Updated annually during the brand planning cycle","Displayed visibly and referenced in every creative briefing and campaign review","Shared only with senior leadership and the strategy team"],ans:2},
+      {q:"What does the text describe a persona as?",                                              opts:["A marketing compliance document","A demographic segmentation report","A living lens through which all marketing decisions should be viewed","A creative brief template for the agency"],ans:2},
+      {q:"What does the text say the goal of combining quantitative and qualitative research is?",  opts:["To build the largest possible sample for statistical significance","To understand not just what customers do but why they do it","To reduce the cost of the research programme","To replace the need for ongoing customer feedback"],ans:1},
+      {q:"What does the text say about personas described as 'nothing more than demographic labels'?", opts:["They are the most efficient type to build for large organisations","They tell a marketer very little about what actually motivates people","They are sufficient for direct response campaigns","They are the standard recommended by most marketing frameworks"],ans:1},
+    ]
+  },
+  {
+    title: "Text 2: The Art of Brand Storytelling — Why Stories Sell",
+    paragraphs: [
+      "Human beings are, at their core, storytelling creatures. Long before the invention of writing — and long before the arrival of advertising — people used stories to make sense of the world, transmit knowledge, build communities, and create meaning. This deep evolutionary relationship with narrative is precisely why storytelling has become one of the most powerful tools available to modern marketers. When a brand tells a story rather than simply stating a product claim, it activates a fundamentally different cognitive and emotional response in its audience. Research in cognitive neuroscience has shown that a well-told story synchronises the brain of the listener with the brain of the storyteller — a phenomenon called 'neural coupling' — creating a level of understanding and empathy that factual information alone cannot achieve.",
+      "The most effective brand stories follow a recognisable structure. Many draw on the 'hero's journey' — a narrative framework identified by mythologist Joseph Campbell that appears across cultures and centuries. In the classical hero's journey, a hero begins in an ordinary world, is called to adventure or faces an unexpected challenge, encounters a guide or mentor who provides tools and wisdom, confronts and overcomes a series of obstacles, and ultimately returns transformed. Applied to brand storytelling, this structure is typically reframed: the customer is the hero, not the brand. The brand's role is that of the mentor — the guide who appears at the moment of greatest need, provides the tools or insight the hero requires, and enables them to overcome their challenge. This reframing is critical. A brand that positions itself as the hero of its own story risks appearing self-aggrandising and irrelevant. A brand that positions its customer as the hero, and itself as the enabler, creates a story the customer wants to be part of.",
+      "Authentic storytelling requires three elements above all others: truth, specificity, and emotional resonance. A story that is vague and generic — 'we help people live better lives' — connects with no one because it lacks the specific, concrete detail that makes a story believable and immersive. The most compelling brand stories are built on real moments, real people, and real outcomes. User-generated content has become an important vehicle for this authenticity: when real customers share their own experiences with a brand, they become both the storyteller and the story, and the resulting content carries a credibility that no brand-produced narrative can fully replicate. The origin story — the account of how and why the brand came to exist — is another powerful tool: when told honestly and with human vulnerability, it transforms a commercial entity into something a customer can believe in and belong to.",
+    ],
+    questions: [
+      {q:"What does the text say about the relationship between human beings and stories?",        opts:["It is a modern phenomenon driven by digital media and social networks","It is a deep evolutionary relationship that existed long before advertising","It is primarily a cultural phenomenon that varies significantly between societies","It is driven by the commercial need to communicate product benefits"],ans:1},
+      {q:"What is 'neural coupling' according to the text?",                                       opts:["A technique for synchronising brand messaging across multiple channels","A phenomenon where a story synchronises the listener's brain with the storyteller's","A method for measuring the emotional impact of advertising on consumers","The process by which brands align their visual and verbal identity"],ans:1},
+      {q:"Who is identified as the creator of the hero's journey framework?",                      opts:["Donald Cressey","Clayton Christensen","Joseph Campbell","Philip Kotler"],ans:2},
+      {q:"What does the hero do at the end of the classical hero's journey?",                      opts:["Abandons their original world in search of a new identity","Defeats the antagonist and claims their reward","Returns transformed to their original world","Discovers that the mentor was the real hero"],ans:2},
+      {q:"How should the hero's journey be adapted for brand storytelling, according to the text?",opts:["The brand should be positioned as the hero who solves the problem","The product should be the central character of the narrative","The customer should be the hero and the brand should play the role of guide or mentor","The brand should tell the story from the perspective of its founders"],ans:2},
+      {q:"What risk does a brand face if it positions itself as the hero of its own story?",       opts:["Consumers may not recognise the brand archetype being used","It risks appearing self-aggrandising and irrelevant","It confuses the audience about the product's functional benefits","It may alienate customers who prefer rational appeals"],ans:1},
+      {q:"What three elements does the text say authentic storytelling requires?",                  opts:["Creativity, budget, and distribution","Truth, specificity, and emotional resonance","Brevity, clarity, and a strong call to action","Research, data, and a compelling visual identity"],ans:1},
+      {q:"Why does the text say a vague story like 'we help people live better lives' connects with no one?",opts:["Because it lacks a clear call to action","Because it uses informal language inappropriate for professional audiences","Because it lacks the specific, concrete detail that makes a story believable and immersive","Because it is too long and loses the audience's attention"],ans:2},
+      {q:"What does the text say about user-generated content as a storytelling vehicle?",         opts:["It is less credible than brand-produced content because it lacks professional quality","It carries a credibility that no brand-produced narrative can fully replicate","It is useful only for social media campaigns targeted at younger audiences","It requires significant editorial investment to be effective"],ans:1},
+      {q:"What does the text say an origin story can do for a brand when told honestly?",          opts:["Replace the need for an advertising campaign","Transform a commercial entity into something a customer can believe in and belong to","Demonstrate product superiority over competitors","Establish the brand's credentials with investors and stakeholders"],ans:2},
+    ]
+  }
+];
+
+/* ── VOCABULARY ── */
+const vocabEx1MCQ = {
+  title: "Exercise 1 — Multiple Choice: Choose the Best Word or Phrase",
+  questions: [
+    {q:"The _____ map the team created showed that 'Sophie' — their primary persona — consistently felt anxious during the payment stage of the checkout process.",
+     opts:["storyboard","empathy map","narrative arc","customer lifecycle"],ans:1},
+    {q:"The marketing director argued that understanding the customer's _____ — what they are ultimately trying to accomplish — was more valuable than knowing their age or income.",
+     opts:["touchpoint","advocacy","jobs to be done","archetype"],ans:2},
+    {q:"The _____ captured in the focus groups revealed that the biggest frustration was not the product itself but the difficulty of finding reliable technical support.",
+     opts:["social proof","voice of the customer","brand narrative","narrative arc"],ans:1},
+    {q:"The campaign used the _____ framework: the customer faced a challenge, the brand's product appeared as a guide, and the customer emerged successfully transformed.",
+     opts:["customer lifecycle","hero's journey","jobs to be done","empathy map"],ans:1},
+    {q:"The agency identified four key _____ in the customer journey — the moment of first contact, the trial experience, the first renewal, and the referral decision.",
+     opts:["personas","moments of truth","archetypes","origin stories"],ans:1},
+    {q:"The brand's _____ positioned it as the Rebel archetype — challenging the conventions of the skincare industry with brutal honesty about ingredients.",
+     opts:["customer journey","empathy map","brand narrative","social proof"],ans:2},
+    {q:"Hundreds of customer photos shared on Instagram served as powerful _____, showing real people enjoying real experiences with the product.",
+     opts:["UGC","pain points","storyboards","lifecycles"],ans:0},
+    {q:"The _____ was so compelling — a founder who had lost her job and remortgaged her home to create the product — that the press picked it up without any PR prompting.",
+     opts:["touchpoint","narrative arc","origin story","archetype"],ans:2},
+    {q:"The customer _____ in the first stage — awareness — was through organic social media content; by the purchase stage it had shifted entirely to search.",
+     opts:["persona","touchpoint","advocacy","conflict"],ans:1},
+    {q:"At the _____ stage of the customer lifecycle, satisfied customers began recommending the brand to colleagues and family, generating a 28% increase in referral sign-ups.",
+     opts:["conflict","empathy","advocacy","goals"],ans:2},
+  ]
+};
+
+/* NOTE: answer index = position in opts array (0-based). All verified. */
+const vocabEx2Dropdown = {
+  title: "Exercise 2 — Gap Fill: Choose the Correct Word or Phrase",
+  items: [
+    {
+      sentence: "The _____ shows a sequence of panels illustrating the key moments of the video campaign before any production begins.",
+      opts: ["empathy map","customer journey","storyboard","narrative arc"],
+      answer: 2
+    },
+    {
+      sentence: "The team built three distinct _____ based on qualitative and quantitative research, each representing a different type of user.",
+      opts: ["origin stories","customer personas","brand narratives","archetypes"],
+      answer: 1
+    },
+    {
+      sentence: "The brand used the _____ archetype — positioned as a nurturing, supportive guide who helped customers navigate a stressful financial situation.",
+      opts: ["Hero","Rebel","Caregiver","Explorer"],
+      answer: 2
+    },
+    {
+      sentence: "The most common _____ reported by users was the difficulty of comparing products — there was simply too much information to process.",
+      opts: ["goal","touchpoint","pain point","moment of truth"],
+      answer: 2
+    },
+    {
+      sentence: "The _____ the brand told — from a single kitchen-table experiment to a global certified B-Corp — gave the company a human face that resonated deeply with consumers.",
+      opts: ["empathy map","storyboard","origin story","customer journey"],
+      answer: 2
+    },
+    {
+      sentence: "Every _____ in the story — the protagonist's initial failure, the turning point, the eventual success — was grounded in real customer experience data.",
+      opts: ["narrative arc","customer lifecycle","pain point","touchpoint"],
+      answer: 0
+    },
+    {
+      sentence: "The _____ section of the customer journey analysis identified search advertising as the primary channel by which customers first discovered the brand.",
+      opts: ["advocacy","awareness","retention","purchase"],
+      answer: 1
+    },
+    {
+      sentence: "The product team used _____ to clarify that customers were not buying a meditation app — they were buying relief from anxiety and a sense of daily control.",
+      opts: ["social proof","the hero's journey","jobs to be done","voice of the customer"],
+      answer: 2
+    },
+    {
+      sentence: "Over two thousand authentic reviews and testimonials provided powerful _____ that reduced purchase hesitation significantly among new visitors.",
+      opts: ["brand narratives","archetypes","social proof","empathy maps"],
+      answer: 2
+    },
+    {
+      sentence: "The _____ showed that the customer was saying 'I want to eat healthily' but thinking 'I don't have time to cook' — a critical tension the brand could directly address.",
+      opts: ["storyboard","narrative arc","empathy map","customer lifecycle"],
+      answer: 2
+    },
+  ]
+};
+
+const vocabEx3TF = {
+  title: "Exercise 3 — True or False",
+  items: [
+    {statement:"A customer persona is a demographic profile listing only the target customer's age, income, and gender.",                 answer:false},
+    {statement:"A 'moment of truth' is a critical interaction that significantly influences how a customer feels about a brand.",         answer:true},
+    {statement:"In brand storytelling using the hero's journey, the brand should be positioned as the hero of the story.",               answer:false},
+    {statement:"The 'jobs to be done' framework focuses on understanding the outcome or task a customer is trying to achieve.",          answer:true},
+    {statement:"An empathy map captures what a customer says, thinks, feels, and does.",                                                answer:true},
+    {statement:"User-generated content (UGC) is content created by the brand's marketing team and published on behalf of customers.",   answer:false},
+    {statement:"Emotional resonance in storytelling makes a story more memorable and impactful for the audience.",                      answer:true},
+    {statement:"A brand's origin story is primarily a legal document about the company's founding history.",                            answer:false},
+    {statement:"Social proof refers to evidence that other customers have used and valued a product or service.",                       answer:true},
+    {statement:"Advocacy is the stage in the customer lifecycle where customers recommend and actively promote the brand to others.",    answer:true},
+  ]
+};
+
+/* ── GRAMMAR ── */
+const grammarEx1 = {
+  title: "Exercise 1 — Tense Consistency in Persona Narratives",
+  instructions: "Choose the correct tense to maintain consistency in each narrative description.",
+  questions: [
+    {q:"Every morning, Sophie _____ her phone before she gets out of bed, checking emails and scrolling through her social feeds.",
+     opts:["checked","checks","has checked","was checking"],ans:1},
+    {q:"Last year, the team _____ their primary persona after new research revealed a significant shift in the target audience's media habits.",
+     opts:["is revising","revises","revised","has revising"],ans:2},
+    {q:"When Marcus arrives at the checkout page, he often _____ because he is unsure whether his discount code will be accepted.",
+     opts:["hesitated","hesitates","has hesitated","was hesitating"],ans:1},
+    {q:"The hero _____ her ordinary world behind and embarked on a journey she had never anticipated.",
+     opts:["leaves","is leaving","left","has left"],ans:2},
+    {q:"Over the past six months, the persona data _____ significantly as more customer interviews have been completed.",
+     opts:["evolved","evolves","was evolving","has evolved"],ans:3},
+    {q:"The story begins when James _____ his job and decides to start the business he had always dreamed of.",
+     opts:["has lost","loses","lost","was losing"],ans:1},
+    {q:"At the discovery stage, the customer typically _____ the brand through organic social media rather than paid advertising.",
+     opts:["encountered","encounters","has encounter","is encountering"],ans:1},
+    {q:"By the time the campaign launched, the team _____ the persona profile more than fifteen times.",
+     opts:["revised","revises","had revised","has revised"],ans:2},
+    {q:"The brand _____ its origin story in 2019 and immediately saw a 40% increase in website time-on-page.",
+     opts:["publishes","published","has publishing","is publishing"],ans:1},
+    {q:"Sarah _____ the product three times before she finally decided to buy — a classic consideration-phase behaviour.",
+     opts:["considers","has consider","considered","is considering"],ans:2},
+  ]
+};
+
+const grammarEx2 = {
+  title: "Exercise 2 — Descriptive Adjective and Adverb Patterns in Persona Language",
+  instructions: "Choose the most precise and natural descriptive word to complete each sentence.",
+  questions: [
+    {q:"Sophie is a _____ professional who manages complex projects while simultaneously trying to maintain a healthy work-life balance.",
+     opts:["tired","stressed","high-achieving","difficult"],ans:2},
+    {q:"The persona is _____ motivated by social recognition — she shares her purchases widely and responds strongly to peer recommendations.",
+     opts:["strongly","highly","deeply","very much"],ans:1},
+    {q:"James makes _____ deliberate choices about where he spends his money, researching every significant purchase for at least two weeks.",
+     opts:["carelessly","slightly","remarkably","rather"],ans:2},
+    {q:"The brand's origin story was _____ authentic — it featured real footage of the founders working from their garage in the early days.",
+     opts:["vaguely","genuinely","fairly","somewhat"],ans:1},
+    {q:"The customer journey for this segment is _____ complex, involving up to twelve separate touchpoints before a purchase decision is made.",
+     opts:["surprisingly","nicely","basically","partly"],ans:0},
+    {q:"Clara is _____ sceptical of traditional advertising — she trusts peer reviews and independent comparisons far more than branded content.",
+     opts:["a little","deeply","slightly","a bit"],ans:1},
+    {q:"The empathy map revealed a _____ gap between what customers said they wanted and what their actual behaviour demonstrated.",
+     opts:["wide","big","nice","fine"],ans:0},
+    {q:"The hero's journey framework proved _____ effective when applied to the brand's email nurture sequence, significantly improving open rates.",
+     opts:["very much","totally","remarkably","quite nicely"],ans:2},
+    {q:"Michael is an _____ ambitious early adopter who upgrades his technology every year and enjoys recommending new products to his network.",
+     opts:["intense","incredibly","intensive","strongly"],ans:1},
+    {q:"The storytelling approach felt _____ natural because it was built entirely around real customer experiences rather than invented scenarios.",
+     opts:["a bit","deeply","completely","nicely"],ans:2},
+  ]
+};
+
+const grammarEx3 = {
+  title: "Exercise 3 — Discourse Markers for Sequence and Narrative Flow",
+  instructions: "Choose the most appropriate discourse marker to connect the ideas in each sentence or paragraph.",
+  questions: [
+    {q:"_____ the hero receives the call to adventure, she is reluctant — she fears change and clings to the familiarity of her current situation.",
+     opts:["Eventually","At first","Finally","By then"],ans:1},
+    {q:"The customer discovers the brand through a friend's recommendation. _____, she visits the website and spends twenty minutes reading reviews.",
+     opts:["Eventually","Finally","Next","Before that"],ans:2},
+    {q:"The persona went through months of frustration with competitor products. _____, she found a solution that genuinely addressed her core need.",
+     opts:["At first","Eventually","Meanwhile","Next"],ans:1},
+    {q:"The brand was founded in a small apartment with a $2,000 loan. _____ the years, it grew into a company with over 500 employees across twelve countries.",
+     opts:["In","During","Over","Through"],ans:2},
+    {q:"The story opens with Marcus struggling to manage his finances. _____, his situation deteriorates until a critical moment forces him to act.",
+     opts:["Eventually","Meanwhile","Gradually","At first"],ans:2},
+    {q:"First, the team mapped the customer journey. _____, they identified the three most critical pain points at each stage.",
+     opts:["Finally","Then","Eventually","Meanwhile"],ans:1},
+    {q:"The campaign began with a powerful video telling the founder's story. _____, the team built a social media series sharing individual customer journeys.",
+     opts:["At first","Before that","Following this","Meanwhile"],ans:2},
+    {q:"The hero faces her greatest challenge at this point. _____, with guidance from her mentor, she finds the confidence to act.",
+     opts:["At first","Eventually","However","Before that"],ans:1},
+    {q:"The customer lifecycle begins at awareness. _____, the customer moves through consideration, purchase, retention, and — ideally — advocacy.",
+     opts:["At first","Meanwhile","From there","Eventually"],ans:2},
+    {q:"The brand tested three versions of the origin story. _____, the version that featured the founder's personal struggle generated the highest engagement.",
+     opts:["At first","Ultimately","Meanwhile","Next"],ans:1},
+  ]
+};
+
+/* ── GRAMMAR REVIEW ── */
+const grammarReviewHTML = `
+<div class="grammar-rule">
+  <h4>📌 Grammar Point 1: Tense Consistency in Persona Narratives and Brand Stories</h4>
+  <p>When writing persona profiles and brand narratives, maintaining consistent tense is essential for clarity and professionalism. The choice of tense depends on the <em>type</em> of content being written.</p>
+  <table>
+    <tr><th>Context</th><th>Tense to use</th><th>Example</th></tr>
+    <tr><td>Describing a persona's typical behaviour (habitual present)</td><td>Present simple</td><td>"Sophie <em>checks</em> her phone every morning and <em>reads</em> three newsletters over coffee."</td></tr>
+    <tr><td>Describing a past event in a brand story</td><td>Past simple</td><td>"The company <em>started</em> in a small apartment with a $2,000 loan."</td></tr>
+    <tr><td>Describing an action that happened before another past action</td><td>Past perfect</td><td>"By the time the campaign <em>launched</em>, the team <em>had revised</em> the persona fifteen times."</td></tr>
+    <tr><td>Describing a recent event with present relevance</td><td>Present perfect</td><td>"The persona data <em>has evolved</em> significantly over the past six months."</td></tr>
+    <tr><td>Telling a story in vivid present tense (narrative present)</td><td>Present simple throughout</td><td>"James <em>loses</em> his job. He <em>feels</em> desperate. Then he <em>discovers</em> the product."</td></tr>
+  </table>
+  <div class="example"><strong>Common error:</strong> Mixing tenses within a single narrative without reason. Once you choose a tense for a story, be consistent unless there is a deliberate reason to shift (e.g. moving from background to current action).<br><br>✗ "Sophie <em>gets</em> up at 6am and <em>checked</em> her emails before going to work." (inconsistent)<br>✓ "Sophie <em>gets</em> up at 6am and <em>checks</em> her emails before going to work." (consistent present)</div>
+</div>
+
+<div class="grammar-rule">
+  <h4>📌 Grammar Point 2: Descriptive Adjective and Adverb Patterns in Persona Language</h4>
+  <p>Vivid, precise description is the hallmark of well-written persona profiles and brand stories. Choosing the right adjective and adverb patterns makes personas feel real and narratives feel authentic. Vague or overused descriptors weaken professional marketing writing.</p>
+  <table>
+    <tr><th>Type</th><th>Strong options</th><th>Weak / vague options to avoid</th></tr>
+    <tr><td>Describing motivation</td><td>deeply motivated, strongly driven, intrinsically motivated, highly goal-oriented</td><td>very motivated, quite driven, really interested</td></tr>
+    <tr><td>Describing behaviour</td><td>meticulously researches, consistently chooses, deliberately avoids</td><td>always does, usually buys, often looks</td></tr>
+    <tr><td>Describing personality</td><td>high-achieving, values-driven, analytically minded, purpose-led</td><td>good, nice, careful, smart</td></tr>
+    <tr><td>Modifying extent</td><td>remarkably, genuinely, surprisingly, deeply, acutely</td><td>very, quite, pretty, really</td></tr>
+  </table>
+  <div class="example">
+    Weak: "Sophie is a very busy person who really cares about health."<br>
+    Strong: "Sophie is a <em>high-achieving</em> professional who is <em>deeply committed</em> to her wellbeing and <em>meticulously</em> researches every health product before purchasing."<br><br>
+    <strong>Tip:</strong> When writing persona descriptions, aim for compound adjectives that paint a specific picture: <em>values-driven</em>, <em>time-poor</em>, <em>digitally-native</em>, <em>brand-conscious</em>, <em>socially-aware</em>.
+  </div>
+</div>
+
+<div class="grammar-rule">
+  <h4>📌 Grammar Point 3: Discourse Markers for Sequence and Narrative Flow</h4>
+  <p>Discourse markers guide the reader through a story or a customer journey description. They signal the order of events, the passage of time, and the relationship between stages. Choosing the right marker keeps the narrative clear and engaging.</p>
+  <table>
+    <tr><th>Function</th><th>Discourse Markers</th><th>Example</th></tr>
+    <tr><td>Starting a sequence</td><td>At first, Initially, To begin with, First</td><td>"<em>At first</em>, the hero resists the call to change."</td></tr>
+    <tr><td>Moving to the next stage</td><td>Then, Next, After that, Following this</td><td>"<em>Next</em>, she discovers the brand through a friend's recommendation."</td></tr>
+    <tr><td>Showing gradual change</td><td>Gradually, Over time, Over the years, Little by little</td><td>"<em>Over time</em>, her scepticism gave way to genuine loyalty."</td></tr>
+    <tr><td>Reaching the outcome</td><td>Eventually, Finally, Ultimately, In the end</td><td>"<em>Eventually</em>, she found a solution that genuinely worked."</td></tr>
+    <tr><td>Simultaneous actions</td><td>Meanwhile, At the same time, In parallel</td><td>"<em>Meanwhile</em>, the brand was building its community online."</td></tr>
+    <tr><td>Looking back (past before past)</td><td>Before that, Prior to this, Up until then</td><td>"<em>Before that</em>, she had tried every alternative without success."</td></tr>
+  </table>
+  <div class="example"><strong>Tip:</strong> In a customer journey description, use a clear sequence: <em>Initially</em> (awareness) → <em>Then</em> (consideration) → <em>Following this</em> (first purchase) → <em>Over time</em> (growing loyalty) → <em>Eventually</em> (advocacy). This creates a narrative arc that feels natural and purposeful.</div>
+</div>`;
+
+/* ── WRITING ── */
+const writingActivities = [
+  {
+    title: "Writing Activity 1: Customer Persona Profile",
+    type: "Strategic Marketing Document",
+    prompt: "You are a marketing strategist at a digital agency. Your client is a new subscription-based language learning app called 'Fluent' targeting ambitious adults aged 25–45 who want to advance their careers. Create a detailed customer persona profile for the app's primary target user.",
+    bullets: [
+      "Give your persona a name, age, job title, and location",
+      "Describe their key psychographic traits — values, lifestyle, and personality — using precise adjective patterns from this module",
+      "Identify three specific goals and two key pain points related to language learning",
+      "Describe a typical day in their life using consistent present tense",
+      "Explain which channels they use to discover new products and what type of content they trust",
+      "Include a brief empathy map summary: what they say, think, feel, and do about language learning",
+    ],
+    min: 210, max: 290
+  },
+  {
+    title: "Writing Activity 2: Brand Storytelling Brief",
+    type: "Internal Creative Brief for Storytelling Campaign",
+    prompt: "You work in the brand team of an ethical outdoor clothing company called 'Summit'. The company wants to launch a storytelling campaign built around real customers and the hero's journey framework. Write a brief for the creative team explaining the storytelling strategy.",
+    bullets: [
+      "Open by explaining the role of storytelling in this campaign and why it has been chosen over a traditional product-led approach",
+      "Define who the 'hero' is in the story and what challenge they face — using the Jobs to Be Done framework",
+      "Explain the brand's role as the mentor or guide in the story",
+      "Describe the narrative arc the campaign should follow (beginning, challenge, guidance, transformation)",
+      "Use discourse markers for sequence and narrative flow throughout",
+      "Specify the type of content to be created (UGC, video stories, social series, etc.) and why",
+      "Close with a note on emotional resonance — what should the audience feel at the end of the campaign?",
+    ],
+    min: 230, max: 320
+  }
+];
+
+/* ── LISTENING ── */
+const listeningActivities = [
+  {
+    id:"l1",
+    title:"Activity 1: A Persona Workshop — Building 'Sophie'",
+    meta:"Brand Strategist & Marketing Team — Internal workshop session",
+    level:"B1–B2", type:"Multiple Choice", focus:"Understanding Main Ideas and Specific Information",
+    transcript:`Brand Strategist: Good morning, everyone. Welcome to today's persona workshop. My name is Kate Wilson, and over the next two hours we are going to build the primary persona for the Bloom skincare brand. Before we start, I want to make something very clear: a persona is not a guess. It is a research-based portrait of a real type of person. Everything we put on this page should be grounded in something we have learned from actual customers. So let us start with what we know.
+
+Team Member 1: We know from our survey data that sixty-two percent of our customers are women aged between twenty-eight and forty-two. Most of them are in professional or managerial roles, and a significant number have children.
+
+Brand Strategist: Good. That is a start. But I want to go deeper than demographics. What do we know about their lives? From the focus groups last month — what did we hear?
+
+Team Member 2: There was a strong theme of feeling overwhelmed. A lot of the women we spoke to said they were juggling a lot — work, family, social commitments — and that they felt guilty about not having more time for self-care. One participant said, and I remember this clearly: 'I feel like I should look after myself better, but by the time I have dealt with everything else, I just do not have the energy.'
+
+Brand Strategist: That is gold. That is a real insight. That feeling — the guilt about self-care combined with genuine time pressure — is at the heart of what we need our persona to feel. So let us call her Sophie. Sophie is thirty-five, she works as a marketing manager, she has two children under ten, and she is time-poor but highly motivated. What are her goals?
+
+Team Member 1: She wants to feel good about herself. She wants to look professional and feel confident. But she also wants to feel that the products she is using are genuinely good for her skin — not just marketed as such.
+
+Brand Strategist: So her goals are confidence, professional presentation, and genuine efficacy. And her pain points?
+
+Team Member 2: The main one is that she does not have time to research products properly. She gets overwhelmed by choice and ends up defaulting to whatever her friends recommend. Authenticity and peer recommendation are huge for her. And price is a factor — she is not price-sensitive in the way a budget consumer is, but she needs to feel that what she is spending is justified.
+
+Brand Strategist: Excellent. So now we are getting to something useful. Sophie trusts peer recommendation. She is influenced by real results rather than brand claims. She is skeptical of advertising but open to authentic stories. She is the kind of person who reads reviews obsessively before buying anything new. She is not brand loyal by instinct — she is loyalty-possible if the product delivers and if the brand feels honest. Let us capture all of this on the empathy map and then talk about how we reach her.`,
+    questions:[
+      {q:"What does Kate say about the foundation of a good persona?",
+       opts:["It should be based on the marketing team's collective instinct","It is a guess built from broad market trends","It is a research-based portrait grounded in real customer learning","It should be created by the CEO to ensure strategic alignment"],ans:2},
+      {q:"What percentage of the brand's customers are women aged 28 to 42?",
+       opts:["42%","52%","62%","72%"],ans:2},
+      {q:"What was the dominant theme from the focus groups?",
+       opts:["Concern about product ingredients and sustainability","Feeling overwhelmed and guilty about not having enough time for self-care","Frustration with product prices being too high","Dissatisfaction with the brand's packaging and visual identity"],ans:1},
+      {q:"What does Kate call the focus group insight about guilt and time pressure?",
+       opts:["A demographic finding","A survey result","Gold — a real insight","A secondary data point"],ans:2},
+      {q:"What are Sophie's three goals as defined in the workshop?",
+       opts:["Speed, convenience, and low price","Confidence, professional presentation, and genuine product efficacy","Social status, self-expression, and sustainability","Time-saving, affordability, and variety"],ans:1},
+      {q:"What is Sophie's main pain point according to the team?",
+       opts:["She cannot afford premium skincare products","She does not trust any skincare brands","She does not have time to research products properly and gets overwhelmed by choice","She is highly brand loyal and resistant to trying new products"],ans:2},
+      {q:"What type of content does Sophie trust most?",
+       opts:["Celebrity endorsements and sponsored posts","Television and national press advertising","Peer recommendations and authentic stories based on real results","Brand-produced how-to videos and tutorials"],ans:2},
+      {q:"How does Kate describe Sophie's relationship with brand loyalty?",
+       opts:["She is strongly brand loyal and rarely switches","She is not loyal by instinct but loyalty-possible if the product delivers and feels honest","She is completely indifferent to brand and only buys on price","She is very sceptical of all brands and prefers to make her own products"],ans:1},
+    ]
+  },
+  {
+    id:"l2",
+    title:"Activity 2: A Storytelling Seminar — The Hero Is Your Customer, Not Your Brand",
+    meta:"Storytelling Coach — Professional marketing seminar",
+    level:"B1", type:"Multiple Choice", focus:"Listening for Key Arguments and Examples",
+    transcript:`Good afternoon, everyone. I want to begin today's seminar by asking you a question that sounds simple but is surprisingly hard to answer honestly: in your brand's story, who is the hero? Take a moment and think about it.
+
+If your answer is 'our brand', or 'our founders', or 'our product' — then you have identified the most common mistake in brand storytelling. And I say this with absolute certainty, because I have reviewed hundreds of brand campaigns over the past twenty years, and the pattern is remarkably consistent: brands that make themselves the hero almost always produce communications that feel self-congratulatory, irrelevant, or — at best — forgettable.
+
+Let me explain why. A hero is someone we root for. A hero is someone whose challenges we recognise, whose fears we share, whose victories we celebrate as if they were our own. When a brand makes itself the hero, it is essentially asking its audience to root for a corporation. And unless you are a sports team or a startup with an extraordinarily compelling founder story, most people simply do not care enough about your company's journey to invest emotionally in it.
+
+Now, think about how this changes when you make your customer the hero. Suddenly, the story is about someone the audience knows intimately — because they are that person. Their struggles with confidence, their desire to provide for their family, their ambition to learn something new, their frustration with a product that never quite worked — these are the tensions that make a story gripping. And your brand's role? You are the guide. You are the mentor. You are the wise figure who appears at the right moment with exactly the tool or insight the hero needs to overcome their challenge. 
+
+Think about Nike. Nike does not tell you Nike is great. Nike tells you that you — yes, you, the person on the sofa at seven in the morning not wanting to go for a run — you have something extraordinary inside you. Nike just helps you find it. That is the hero's journey applied with almost perfect consistency across every piece of communication they produce.
+
+Or think about Dove. Dove's entire brand platform for twenty years has been built on the insight that women do not see their own beauty — and Dove's role is simply to hold up the mirror. Dove is not the hero. Real women are the heroes of that story. Dove is the enabler.
+
+So the next time you are writing a brief, or reviewing a script, or evaluating a campaign concept, ask yourself this one question: in this story, who is the hero? If the answer is not your customer, start over.`,
+    questions:[
+      {q:"What does the speaker say is the most common mistake in brand storytelling?",
+       opts:["Using too much data and not enough emotion","Making the campaign too long and complex","Making the brand, the founders, or the product the hero","Focusing too heavily on the customer's pain points"],ans:2},
+      {q:"According to the speaker, what is a hero in storytelling?",
+       opts:["Someone who is morally perfect and always makes the right choice","Someone whose challenges we recognise, whose fears we share, whose victories we celebrate","The protagonist who appears in every piece of communication","The founder of the company whose journey inspired the brand"],ans:1},
+      {q:"What does the speaker say happens when a brand makes itself the hero?",
+       opts:["The campaign is more memorable because it tells a focused story","Consumers become confused about the brand's purpose","The communications feel self-congratulatory, irrelevant, or forgettable","The brand loses credibility with professional audiences"],ans:2},
+      {q:"What role should the brand play in a well-structured brand story?",
+       opts:["The hero who overcomes challenges to deliver the product","The antagonist who creates tension in the customer's journey","The guide or mentor who appears with the right tool at the right moment","The narrator who explains the customer's situation objectively"],ans:2},
+      {q:"How does the speaker describe Nike's storytelling approach?",
+       opts:["Nike constantly tells customers that its products are the best on the market","Nike builds its story around the founder's personal athletic journey","Nike tells customers they have something extraordinary inside them — Nike just helps them find it","Nike focuses entirely on product performance data and technical specifications"],ans:2},
+      {q:"How does the speaker describe Dove's brand platform?",
+       opts:["Dove positions itself as the most innovative skincare brand in the world","Dove's story is built on the insight that women do not see their own beauty — Dove's role is to hold up the mirror","Dove focuses on sustainability and ethical sourcing as its central narrative","Dove uses celebrity endorsement to validate its beauty positioning"],ans:1},
+      {q:"What question does the speaker say you should ask when evaluating any campaign concept?",
+       opts:["Does this campaign have a clear call to action?","Is the budget proportional to the reach objective?","In this story, who is the hero?","Does this campaign use the hero's journey framework?"],ans:2},
+      {q:"What does the speaker say you should do if the answer to that question is not 'your customer'?",
+       opts:["Adjust the tone to make the brand feel more human","Add a customer testimonial to balance the brand-centred narrative","Increase the media budget to improve the campaign's impact","Start over"],ans:3},
+    ]
+  },
+  {
+    id:"l3",
+    title:"Activity 3: A Client Presentation — Presenting the Customer Journey Map",
+    meta:"UX Strategist & Client Team — Strategy presentation",
+    level:"B2", type:"Multiple Choice", focus:"Understanding Detail and Professional Presentations",
+    transcript:`Good morning. Thank you for having us in today. My name is Rachel Park, and I lead the Customer Experience Strategy team at Navigate Agency. Over the past six weeks, we have conducted a comprehensive customer journey mapping exercise for your brand, and today I want to walk you through the key findings and what they mean for your marketing and product strategy.
+
+Before I get into the detail, I want to frame why we did this. Your brief to us was simple but important: you knew customers were visiting your website in large numbers but converting at a lower rate than the industry average. The question was why. Our hypothesis was that the problem was not the product — your NPS scores are strong and your retention among buyers is excellent. The problem, we suspected, was in the journey that leads to the first purchase. And the data confirmed this.
+
+Let me walk you through the five stages we mapped. Stage one is awareness. This is where the customer first encounters your brand, typically through an organic social media post, a peer recommendation, or a search result. At this stage, customers told us they felt curious but also slightly uncertain — they had heard of the brand but were not clear on what made it different from the many competitors in the category. This is the first pain point: there is insufficient clarity about your unique value at the point of first contact.
+
+Stage two is consideration. The customer visits your website, typically more than once before making a decision. Here, the journey data revealed a critical problem. The website presents a large volume of product information, but customers told us in our interviews that they felt overwhelmed rather than informed. Several described the experience as 'confusing' and 'too much work'. This is where the drop-off occurs. Customers who cannot quickly find the answer to the question 'which product is right for me?' do not stay on the site long enough to reach the purchase decision.
+
+Stage three is the moment of truth — the point at which the customer decides whether to purchase or leave. Our data shows that fifty-eight percent of those who abandon the site at this stage do so because they cannot find a clear, credible, and personalised recommendation. They want to be told what to buy, not given a hundred options.
+
+Stage four is purchase and onboarding. Among customers who do buy, the experience is largely positive. The packaging creates a strong first impression, and the follow-up email sequence scores well in terms of both open rates and reported usefulness. The main improvement opportunity here is the delivery experience — tracking communications are functional but not emotionally engaging.
+
+Stage five is retention and advocacy. This is where your brand genuinely excels. Customers who have been with you for six months or more are extraordinarily loyal — your retention rate at twelve months is thirty-two percentage points above the category average. And these customers are highly vocal advocates. The opportunity here is simply to systematise and amplify what is already happening naturally.
+
+My overall recommendation, which we will explore in detail in the second half of this presentation, is to focus investment on stages two and three. Simplifying the consideration experience and building a personalised recommendation tool at the moment of truth would, in our estimate, deliver a significant improvement in conversion rate without requiring any changes to the product itself.`,
+    questions:[
+      {q:"What was the client's core problem as described in the brief?",
+       opts:["Customer satisfaction and NPS scores were declining","Large volumes of website traffic were not converting into purchases at the expected rate","The brand had low awareness among the target audience","Customer retention after the first purchase was poor"],ans:1},
+      {q:"What did Rachel's team suspect was the cause of the problem?",
+       opts:["The product quality was below competitor standards","The pricing was too high for the target segment","The journey leading to the first purchase was problematic, not the product itself","The brand had poor SEO and was not being found in search"],ans:2},
+      {q:"What pain point did customers report during the awareness stage?",
+       opts:["The brand's social media content was unprofessional","There was insufficient clarity about what made the brand different from competitors","The brand was unknown — customers had never heard of it","The advertising was intrusive and created a negative first impression"],ans:1},
+      {q:"What problem occurred during the consideration stage on the website?",
+       opts:["The website loaded slowly and had technical errors","Products were out of stock too frequently","Customers felt overwhelmed by too much product information and could not quickly identify the right product","The checkout process was too long and asked for too much information"],ans:2},
+      {q:"What did 58% of customers who abandoned the site at the moment of truth say was the reason?",
+       opts:["They found a cheaper option on a competitor website","They could not find a clear, credible, and personalised product recommendation","The website experience felt untrustworthy","The delivery times were too long"],ans:1},
+      {q:"What aspect of stage four (purchase and onboarding) was identified as an improvement opportunity?",
+       opts:["The quality of the packaging","The content of the follow-up email sequence","The delivery tracking communications, which were functional but not emotionally engaging","The speed of the checkout process"],ans:2},
+      {q:"How does Rachel describe the brand's performance at stage five (retention and advocacy)?",
+       opts:["It is the weakest stage with poor retention rates","Performance is average compared to competitors","The brand excels — retention is 32 percentage points above the category average and customers are highly vocal advocates","Advocacy is strong but retention is declining"],ans:2},
+      {q:"What does Rachel recommend as the priority investment for the brand?",
+       opts:["Increasing the advertising budget to build awareness at stage one","Improving product quality to reduce post-purchase returns","Simplifying the consideration experience and building a personalised recommendation tool at the moment of truth","Redesigning the packaging to create a stronger emotional impression at stage four"],ans:2},
+    ]
+  },
+  {
+    id:"l4",
+    title:"Activity 4: A Marketing Podcast — Storytelling That Sells Without Selling",
+    meta:"Host & Content Marketing Director — Marketing podcast interview",
+    level:"B2", type:"Multiple Choice", focus:"Understanding Arguments, Examples, and Inference",
+    transcript:`Host: Welcome to Story Matters, the podcast about the art and science of narrative in modern marketing. I am your host, Emma Clarke, and today I am joined by Daniel Reeves, Content Marketing Director at a fast-growing consumer health brand. Daniel, thank you for being here.
+
+Guest: Thank you, Emma. This topic is close to my heart — I have spent the last decade thinking about nothing else, essentially.
+
+Host: Let us start with a provocative question. Does storytelling actually sell, or is it just a nice way of saying 'we make interesting content'?
+
+Guest: It absolutely sells, but the mechanism is indirect — and that is where most brands lose patience. Here is what I mean. When you tell a story rather than make a claim, you are doing two things. First, you are activating the listener's imagination and their emotional memory — they are not just processing information, they are feeling something, and feeling creates memory. Second, you are not triggering the defensive 'I am being sold to' response that most advertising provokes. A story about a real person's struggle with anxiety is not trying to sell you anything. It is just a story. And that is precisely why it is so effective — because the audience lowers their guard and lets the message in.
+
+Host: Can you give me a concrete example from your own brand?
+
+Guest: Absolutely. About two years ago, we were struggling with a classic problem: lots of website traffic, very low conversion. We had very strong clinical data on our product — peer-reviewed studies, impressive efficacy numbers. And we were leading with all of that, because we thought that was what our audience wanted. They are health-conscious, educated people — of course they want the science. And they do, but only once they are already interested. The science was not getting them interested. So we completely changed our approach.
+
+We launched a series called 'Real Stories' — genuinely unscripted video testimonials from customers who had used the product. Each one followed a loose story arc: what the customer's life was like before, the moment they decided to try something new, what happened after. Some of them were quite emotional — people talking about anxiety, sleep problems, how it had affected their relationships. We did not script any of it. We just created the conditions for an honest conversation and pointed a camera at it.
+
+Host: What happened?
+
+Guest: Conversion rate went up by thirty-one percent in the three months after launch. But what was more interesting to me was what happened with the people who did not convert immediately. Our email open rates increased. Our social engagement increased. Our brand tracking scores for 'trust' and 'feels like a brand that gets me' went up significantly. The stories had built a relationship that the data alone never could.
+
+Host: There is a risk, of course, with real stories — people sharing things that are sensitive or unexpected.
+
+Guest: Absolutely, and you have to approach it with genuine care and respect. We always give customers complete editorial control over their own story. If they watch the footage back and want to remove something, that is their right, no question. And we are very careful about which stories we choose to share and how we frame them — not exploitatively, not sensationally, but with genuine dignity and humanity. The moment a brand starts using someone's vulnerability for commercial gain without real care for that person, it loses exactly the thing that made the story valuable in the first place.
+
+Host: Daniel, this has been a genuinely compelling conversation. Thank you.
+
+Guest: My pleasure, Emma.`,
+    questions:[
+      {q:"How does Daniel describe the mechanism by which storytelling sells?",
+       opts:["It directly persuades customers by presenting evidence in an engaging format","The mechanism is indirect — stories create emotional memory and bypass the defensive 'I am being sold to' response","It works by repeating the brand message more frequently through content","It replaces the need for advertising by generating organic social shares"],ans:1},
+      {q:"What was Daniel's brand doing wrong with its content before the change?",
+       opts:["It was focusing only on emotional stories without any factual information","It was spending too much of its budget on paid advertising","It was leading with clinical data and science that failed to get people interested first","It was producing content that was too long and detailed for its audience"],ans:2},
+      {q:"What was the format of the 'Real Stories' campaign?",
+       opts:["Scripted dramatisations performed by professional actors","Animated explainer videos based on clinical research data","Genuinely unscripted video testimonials from real customers following a loose story arc","Short-form social media content created by influencers"],ans:2},
+      {q:"What three elements did each customer story in the series include?",
+       opts:["Product features, pricing information, and a final recommendation","The customer's demographics, purchase history, and loyalty status","What their life was like before, the moment they decided to try something new, and what happened after","An introduction to the brand, a product demonstration, and a call to action"],ans:2},
+      {q:"By how much did the conversion rate increase in the three months after the 'Real Stories' launch?",
+       opts:["11%","21%","31%","41%"],ans:2},
+      {q:"Beyond conversion rate, what other positive changes did Daniel observe?",
+       opts:["A significant reduction in customer service enquiries","An increase in email open rates, social engagement, and brand trust scores","A large increase in direct sales from social media","A reduction in the cost per click for paid advertising"],ans:1},
+      {q:"What ethical principle does Daniel say the brand follows with customer stories?",
+       opts:["All customer stories are reviewed and approved by the legal team before publication","Stories are only shared if the customer can demonstrate measurable health improvement","Customers are given complete editorial control over their own story","The brand only uses stories from customers who have signed formal endorsement contracts"],ans:2},
+      {q:"What does Daniel say happens when a brand uses customer vulnerability exploitatively?",
+       opts:["It generates short-term sales but long-term brand damage","It violates advertising regulations in most markets","It loses exactly the thing that made the story valuable — trust and authenticity","It causes the brand to lose its social media following"],ans:2},
+    ]
+  }
+];
+
+/* ── CASE STUDIES ── */
+const caseStudies = [
+  {
+    title: "Case Study 1: Headspace — Persona-Driven Growth Through Empathetic Storytelling",
+    meta: "Sector: Digital Health / Wellbeing | Country: United States | Difficulty: B2",
+    text: `Headspace, the mindfulness and meditation app, launched in 2012 at a time when the idea of a commercial meditation product would have seemed niche at best. Its founders — Andy Puddicombe, a former Buddhist monk, and Rich Pierson, a marketing professional — had a compelling origin story: Puddicombe had spent years as a monk before returning to the west and discovering that no accessible, modern framework existed to share what he had learned. Headspace was the answer to that gap.
+
+From the outset, the brand made a strategic decision that would prove foundational to its growth: it defined its primary persona not as 'meditators' — a tiny, already-converted audience — but as 'curious sceptics': busy, educated adults who were experiencing stress, sleep problems, or a sense of disconnection, but who associated meditation with incense, robes, and impracticality. These were people who wanted the outcomes of meditation without the cultural baggage. They were resistant to being 'sold' wellness, but genuinely open to an honest conversation about mental health.
+
+The brand's storytelling approach matched this persona with remarkable consistency. Andy Puddicombe's personal narrative — monk-turned-entrepreneur, bringing ancient wisdom into modern life — served as a powerful origin story that simultaneously established credibility and demolished the cultural barriers the target persona felt. The product was positioned not as a spiritual practice but as a tool for training the mind: deliberately using language from the world of fitness and performance — 'mental gym', 'brain training', 'sleep workout' — to make meditation feel accessible and practical to a goal-oriented, achievement-focused audience.
+
+Content at every stage of the customer journey was designed around the persona's specific emotional state. At the awareness stage, Headspace used short animated videos that normalised the experience of a distracted, racing mind rather than implying the audience was broken or in need of fixing. At the consideration stage, the free ten-day starter course removed the financial barrier and demonstrated value before asking for commitment. At the retention stage, the app's storytelling features — themed packs for anxiety, sleep, relationships, and focus — mapped directly onto the persona's specific goals and pain points, ensuring that every subsequent use felt personally relevant.
+
+By 2021, Headspace had over 65 million users in 190 countries and was generating annual revenues in excess of $100 million. The brand's success is widely attributed to the quality of its persona thinking: a deeply empathetic understanding of a specific audience that shaped every product, content, and marketing decision the company made. In 2021, Headspace merged with mental health provider Ginger to form Headspace Health, expanding into the corporate wellness market — a strategic move that reflected a natural extension of the core persona's professional context.`,
+    questions:[
+      {q:"Who were Headspace's founders, and what was their background?",
+       opts:["Two technology entrepreneurs who had built fitness apps","Andy Puddicombe, a former Buddhist monk, and Rich Pierson, a marketing professional","A team of psychologists and UX designers from Silicon Valley","A venture capital-backed startup team with no prior connection to meditation"],ans:1},
+      {q:"Who did Headspace define as its primary persona?",
+       opts:["Experienced meditators looking for a more structured practice","Spiritual seekers interested in Eastern philosophy","Curious sceptics — busy, educated adults experiencing stress or disconnection who were resistant to traditional meditation","Corporate wellness managers looking for employee health programmes"],ans:2},
+      {q:"What role did Andy Puddicombe's personal story play in the brand strategy?",
+       opts:["It was kept private to avoid over-relying on a single individual's identity","It served as an origin story that built credibility and demolished cultural barriers around meditation","It was used exclusively for public relations and media interviews","It was the sole focus of the brand's advertising campaigns"],ans:1},
+      {q:"How did Headspace reposition meditation to appeal to its target persona?",
+       opts:["As a spiritual practice rooted in authentic Buddhist tradition","As a luxury wellness experience for premium consumers","As a tool for training the mind using language from fitness and performance — 'mental gym', 'brain training'","As a medical treatment backed by peer-reviewed clinical research"],ans:2},
+      {q:"What did the awareness-stage animated videos aim to do?",
+       opts:["Explain the science behind mindfulness to an educated audience","Demonstrate the app's full feature range to encourage immediate sign-up","Normalise the experience of a distracted, racing mind without implying the audience was broken","Showcase celebrity users to build social proof and aspirational appeal"],ans:2},
+      {q:"What was the purpose of the free ten-day starter course at the consideration stage?",
+       opts:["To collect user data for retargeting campaigns","To remove the financial barrier and demonstrate value before asking for commitment","To introduce advanced meditation techniques to differentiate from competitors","To build brand awareness among users who had never heard of Headspace"],ans:1},
+      {q:"How were the app's themed content packs designed?",
+       opts:["Around different meditation traditions from various cultures","To introduce users to the history and philosophy of mindfulness","Mapped directly onto the persona's specific goals and pain points — anxiety, sleep, relationships, focus","Based on academic research into the most effective meditation techniques"],ans:2},
+      {q:"What does the case study say is the primary reason for Headspace's success?",
+       opts:["Its first-mover advantage in the meditation app market","Its superior technology and user experience design","The quality of its persona thinking — a deeply empathetic understanding of a specific audience","Its aggressive paid advertising strategy across digital channels"],ans:2},
+      {q:"How many users did Headspace have by 2021?",
+       opts:["Over 10 million","Over 30 million","Over 65 million","Over 100 million"],ans:2},
+      {q:"What did the merger with Ginger in 2021 represent?",
+       opts:["A diversification away from the core meditation product into social media","A response to declining user numbers in the consumer market","A strategic extension of the core persona's professional context into corporate wellness","A pivot from a subscription model to an advertising-funded model"],ans:2},
+    ]
+  },
+  {
+    title: "Case Study 2: Warby Parker — Disrupting Eyewear Through Origin Story and Authentic Narrative",
+    meta: "Sector: Retail / Consumer Goods | Country: United States | Difficulty: B1–B2",
+    text: `Warby Parker launched in 2010 with a clear mission: to make high-quality eyewear affordable and accessible. The four founders — all MBA students at Wharton — had identified a compelling consumer pain point: prescription glasses were unnecessarily expensive, with a single pair often costing over $500. The reason was market dominance by a single company, Luxottica, which owned most of the major brands and controlled most of the retail distribution. Warby Parker decided to disrupt this system by designing glasses in-house, manufacturing them at a fraction of the cost, and selling them directly to consumers online — a model that allowed them to offer stylish frames at $95 per pair, including prescription lenses.
+
+The brand's origin story was the foundation of its marketing strategy from day one. Rather than hiding the disruptive business model in corporate language, Warby Parker told it plainly, with warmth and a degree of self-deprecating humour. The founding story — four students who were frustrated with the eyewear market and decided to fix it — was exactly the kind of human, relatable narrative that resonated powerfully with a millennial audience that had grown deeply sceptical of corporate communication. The story contained all the elements of a compelling narrative arc: a clear problem, a moment of decision, a challenging journey, and a resolution that felt both personal and socially meaningful.
+
+Central to the brand's persona strategy was the 'buy a pair, give a pair' programme: for every pair of glasses sold, Warby Parker funded the distribution of a pair to someone in need through partnerships with non-profit organisations. This programme served a dual purpose. It aligned directly with the values of the brand's primary persona — educated, socially conscious urban professionals who wanted their purchases to mean something — and it gave customers a story to tell when someone admired their glasses. Every pair of Warby Parker glasses came with a built-in social narrative that the customer could share, turning each purchase into a piece of user-generated advocacy.
+
+The brand also pioneered a 'Home Try-On' programme — a direct response to the persona's key pain point about buying glasses online without being able to try them first. Customers could select five frames, receive them by post, keep them for five days, and return them for free before making a purchase decision. This removed the primary barrier to conversion, and the physical experience of trying frames at home, combined with the social experience of asking friends and family for opinions, generated enormous organic word-of-mouth.
+
+By 2021, Warby Parker had grown to over 140 physical retail stores, was generating approximately $541 million in annual revenue, and was valued at over $3 billion at its IPO. The brand's success demonstrated how a clearly defined persona, combined with an authentic origin story and genuine respect for the customer's intelligence and values, can build a category-defining company from a standing start.`,
+    questions:[
+      {q:"What consumer pain point did Warby Parker identify as the foundation of its business?",
+       opts:["A lack of stylish eyewear options for younger consumers","Prescription glasses were unnecessarily expensive — often over $500 per pair","Most glasses were made with environmentally damaging materials","There were too few online retailers selling eyewear"],ans:1},
+      {q:"Why were prescription glasses so expensive before Warby Parker's arrival?",
+       opts:["The cost of prescription lenses had increased due to new health regulations","Market dominance by Luxottica, which owned most major brands and controlled distribution","High import tariffs on eyewear components","A shortage of skilled opticians in the United States"],ans:1},
+      {q:"How much did Warby Parker charge for a pair of frames including prescription lenses?",
+       opts:["$195","$145","$95","$75"],ans:2},
+      {q:"What was the tone of Warby Parker's founding story in its marketing?",
+       opts:["Formal and corporate — emphasising financial performance and investor backing","Technical — focusing on the manufacturing innovation that made lower prices possible","Warm and self-deprecating — a relatable human narrative about four students who decided to fix a problem","Aspirational and luxury-focused — emphasising design heritage and craftsmanship"],ans:2},
+      {q:"What was the 'buy a pair, give a pair' programme designed to do?",
+       opts:["Increase product sales by offering a buy-one-get-one discount","Align with the primary persona's values and give customers a social story to share","Build brand awareness through charitable partnerships with major NGOs","Create a loyalty programme rewarding repeat purchases"],ans:1},
+      {q:"How did the 'buy a pair, give a pair' programme generate user advocacy?",
+       opts:["It offered financial rewards for customers who recommended the brand","Every pair came with a built-in social narrative that customers could share when someone admired their glasses","It created an exclusive membership community for programme participants","It provided customers with digital content to share on social media"],ans:1},
+      {q:"What customer pain point did the Home Try-On programme address?",
+       opts:["The difficulty of choosing between too many frame styles","The high cost of prescription lenses","The inability to try glasses on before purchasing them online","The slow delivery times of online orders"],ans:2},
+      {q:"How did the Home Try-On programme generate organic word-of-mouth?",
+       opts:["Customers posted unboxing videos on YouTube","The physical experience at home led customers to ask friends and family for opinions, creating natural social sharing","The programme included a referral incentive for every friend who made a purchase","Customers were invited to share their try-on experience on Warby Parker's social channels"],ans:1},
+      {q:"What was Warby Parker's approximate annual revenue by 2021?",
+       opts:["$141 million","$341 million","$541 million","$741 million"],ans:2},
+      {q:"What does the case study say the brand's success demonstrated?",
+       opts:["That digital-first brands always outperform traditional retail","That price is the most important factor in all consumer purchasing decisions","How a clearly defined persona, authentic origin story, and genuine respect for customer values can build a category-defining company","That social responsibility programmes always generate superior returns on investment"],ans:2},
+    ]
+  }
+];
+
+/* ── FINAL ASSESSMENT ── */
+const assessmentQs = [
+  {q:"What is a 'customer persona'?",
+   opts:["A legal profile of the target customer used in advertising regulation","A semi-fictional, research-based representation of an ideal customer including their goals, challenges, and behaviours","A demographic report produced from government census data","A social media analytics profile of the brand's most active followers"],ans:1},
+  {q:"What is the 'jobs to be done' framework focused on?",
+   opts:["Mapping which employees are responsible for each marketing task","Understanding the task or outcome a customer is trying to achieve","Identifying which job roles should use customer data","Tracking whether marketing objectives have been completed"],ans:1},
+  {q:"Which sentence maintains correct tense consistency in a persona narrative?",
+   opts:["Sophie gets up at 6am and checked her emails before going to work.","Sophie gets up at 6am and checks her emails before going to work.","Sophie got up at 6am and checks her emails before going to work.","Sophie gets up at 6am and will check her emails before going to work."],ans:1},
+  {q:"What is an 'empathy map'?",
+   opts:["A visual map showing where a brand's advertising is placed","A tool capturing what a customer says, thinks, feels, and does","A chart tracking customer satisfaction over time","A segmentation framework based on emotional responses to advertising"],ans:1},
+  {q:"Which descriptive phrase best fits a professional persona description?",
+   opts:["A very busy person who really cares about things","A nice professional who is quite interested in health","A high-achieving, values-driven professional who is deeply committed to wellbeing","A good person who tries hard and spends a lot of money"],ans:2},
+  {q:"What is the 'hero's journey' in brand storytelling?",
+   opts:["A storytelling framework where the brand's founders are the central characters","A framework where the customer faces a challenge, receives guidance from the brand, and emerges transformed","A narrative technique that focuses on the brand's product development history","A content calendar structure for planning a year of brand communications"],ans:1},
+  {q:"Which discourse marker is most appropriate for introducing the resolution of a story?",
+   opts:["At first","Meanwhile","Eventually","Following this"],ans:2},
+  {q:"What is 'emotional resonance' in marketing storytelling?",
+   opts:["The process of repeating a message until it is remembered","The degree to which a story connects with the audience's feelings and values, making it memorable","The matching of emotional tone across all advertising channels","A metric measuring how many emotional responses a campaign generates"],ans:1},
+  {q:"In the hero's journey applied to branding, what role should the brand play?",
+   opts:["The hero who overcomes all challenges","The villain who represents the problem","The guide or mentor who enables the customer hero to succeed","The narrator who explains the customer's journey"],ans:2},
+  {q:"What is a 'moment of truth' in the customer journey?",
+   opts:["The point at which the customer first sees an advertisement","A moment in a brand story where the hero makes a key decision","A critical interaction that significantly influences the customer's perception of the brand","The stage at which a customer becomes a brand advocate"],ans:2},
+  {q:"Which sentence correctly uses a discourse marker for narrative sequence?",
+   opts:["At first, the customer became a loyal advocate after one purchase.","Eventually, the customer first discovered the brand through social media.","Initially, she was sceptical; gradually, her trust in the brand grew.","Meanwhile, the story began with the hero facing her challenge."],ans:2},
+  {q:"What is 'social proof' in a marketing context?",
+   opts:["Advertising that has been approved by a government regulatory body","The number of followers a brand has on social media","Evidence — through reviews, testimonials, or UGC — that other customers have valued a product","The process of generating press coverage through public relations activity"],ans:2},
+  {q:"What is an 'origin story' in brand marketing?",
+   opts:["A legal account of the company's founding documents and initial investors","A narrative explaining how and why the company was founded, used to establish authenticity","A demographic study of the brand's original customer base","The first advertising campaign a brand ever ran"],ans:1},
+  {q:"Which adverb best completes this persona description: 'Marcus is _____ sceptical of branded content and relies heavily on peer reviews.'",
+   opts:["a bit","somewhat","deeply","fairly"],ans:2},
+  {q:"What is the 'customer lifecycle'?",
+   opts:["The period during which a product is sold before it is discontinued","The stages a customer moves through in their relationship with a brand — from awareness to advocacy","The average length of time a customer takes to make a purchase decision","The sequence of marketing campaigns used to acquire and retain customers"],ans:1},
+  {q:"What does UGC stand for and why is it valuable in storytelling?",
+   opts:["Universal Growth Content — content that appeals to all demographic segments","User-Generated Content — valued because it carries authenticity that brand-produced content cannot replicate","Unified Global Campaign — a coordinated international marketing initiative","User Goal Capture — a research method for identifying customer motivations"],ans:1},
+  {q:"Which sentence correctly uses a discourse marker for showing gradual change?",
+   opts:["At first, she became a loyal customer after years of trying the product.","Over time, her scepticism gave way to genuine loyalty.","Eventually, she first encountered the brand through a friend.","Meanwhile, the story began with the brand's founding."],ans:1},
+  {q:"What is 'advocacy' in the customer lifecycle?",
+   opts:["The awareness stage, where customers first encounter the brand","The consideration stage, where customers compare options","The stage where satisfied customers actively recommend and promote the brand to others","The retention stage, where customers make repeat purchases"],ans:2},
+  {q:"What is a 'touchpoint' in customer journey mapping?",
+   opts:["A metric measuring how many times a customer contacts customer service","A sensory element of a physical product experience","Any point of interaction between a customer and a brand","The most important moment in the customer's purchase decision"],ans:2},
+  {q:"What does the text in this module say a persona should be used as?",
+   opts:["A confidential document filed away after the planning cycle","A compliance document required for advertising regulation","A living lens through which all marketing decisions should be viewed","A data report updated annually by the market research team"],ans:2},
+];
+
+/* ═══════════════════════════════════════
+   RENDER & INTERACTION FUNCTIONS
+═══════════════════════════════════════ */
+
+function renderSpeaking(){
+  const g=document.getElementById('speakingGrid');
+  speakingQs.forEach((q,i)=>{
+    g.innerHTML+=`<div class="q-card"><span class="q-num">Q${String(i+1).padStart(2,'0')}</span><span>${q}</span></div>`;
+  });
+}
+
+function renderWordBank(){
+  const g=document.getElementById('wordGrid');
+  wordBank.forEach(w=>{
+    g.innerHTML+=`<div class="word-card"><div class="word-emoji">${w.emoji}</div><div class="word-term">${w.term}</div><div class="word-def">${w.def}</div></div>`;
+  });
+}
+
+function renderReading(){
+  const c=document.getElementById('readingContent');
+  let html='';
+  readings.forEach((r,ri)=>{
+    html+=`<div class="reading-text"><h3>${r.title}</h3>`;
+    r.paragraphs.forEach(p=>{html+=`<p>${p}</p>`;});
+    html+=`</div><div class="card"><h4 style="font-family:'Playfair Display',serif;margin-bottom:20px;color:var(--navy);">Comprehension Questions — ${r.title.split(':')[0]}</h4>`;
+    r.questions.forEach((q,qi)=>{
+      const id=`read${ri}_${qi}`;
+      html+=`<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j)=>{html+=`<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;});
+      html+=`</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  c.innerHTML=html;
+}
+
+function selectMCQ(id,chosen,correct){
+  const opts=document.querySelectorAll(`[id^="${id}_opt"]`);
+  if(opts[0].classList.contains('disabled'))return;
+  opts.forEach((o,i)=>{
+    o.classList.add('disabled');
+    if(i===correct)o.classList.add('correct');
+    else if(i===chosen)o.classList.add('wrong');
+  });
+  const fb=document.getElementById(`${id}_fb`);
+  fb.classList.add('show');
+  if(chosen===correct){
+    fb.classList.add('correct');
+    fb.textContent='✓ Correct! Well done.';
+  } else {
+    fb.classList.add('wrong');
+    fb.textContent=`✗ The correct answer is: ${['A','B','C','D'][correct]}. ${document.getElementById(`${id}_opt${correct}`).textContent.trim()}`;
+  }
+  updateProgress();
+}
+
+function renderVocab(){
+  const c=document.getElementById('vocabContent');
+  let html='';
+
+  /* EX 1 — MCQ */
+  html+=`<div class="ex-header"><div class="ex-num">1</div><div><div class="ex-title">${vocabEx1MCQ.title}</div><div class="ex-desc">Choose the word or phrase that best completes each sentence.</div></div></div><div class="card">`;
+  vocabEx1MCQ.questions.forEach((q,i)=>{
+    const id=`voc1_${i}`;
+    html+=`<div class="mcq-block"><div class="mcq-question">${i+1}. ${q.q}</div><div class="mcq-options">`;
+    ['A','B','C','D'].forEach((l,j)=>{html+=`<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;});
+    html+=`</div><div class="feedback" id="${id}_fb"></div></div>`;
+  });
+  html+=`</div>`;
+
+  /* EX 2 — DROPDOWN */
+  html+=`<div class="ex-header"><div class="ex-num">2</div><div><div class="ex-title">${vocabEx2Dropdown.title}</div><div class="ex-desc">Select the correct word or phrase from each dropdown to complete the sentences.</div></div></div><div class="card">`;
+  vocabEx2Dropdown.items.forEach((item,i)=>{
+    const parts=item.sentence.split('_____');
+    const optHTML=`<option value="" disabled selected>▼ choose</option>`+item.opts.map((o,idx)=>`<option value="${idx}">${o}</option>`).join('');
+    html+=`<div class="gap-sentence">${i+1}. ${parts[0]}<select class="gap-select" id="gap2_${i}" data-answer="${item.answer}">${optHTML}</select>${parts[1]||''}</div>`;
+  });
+  html+=`<div style="margin-top:22px;"><button class="check-mcq-btn" onclick="checkDropdownGapFill()">Check Answers</button></div></div>`;
+
+  /* EX 3 — TRUE/FALSE */
+  html+=`<div class="ex-header"><div class="ex-num">3</div><div><div class="ex-title">${vocabEx3TF.title}</div><div class="ex-desc">Read each statement carefully and decide whether it is True or False.</div></div></div><div class="card">`;
+  vocabEx3TF.items.forEach((item,i)=>{
+    html+=`<div class="mcq-block"><div class="mcq-question">${i+1}. ${item.statement}</div><div class="mcq-options">
+      <div class="mcq-option" onclick="selectTF('tf3_${i}',true,${item.answer})" id="tf3_${i}_optT"><span class="opt-letter">T</span>True</div>
+      <div class="mcq-option" onclick="selectTF('tf3_${i}',false,${item.answer})" id="tf3_${i}_optF"><span class="opt-letter">F</span>False</div>
+    </div><div class="feedback" id="tf3_${i}_fb"></div></div>`;
+  });
+  html+=`</div>`;
+  c.innerHTML=html;
+}
+
+function checkDropdownGapFill(){
+  const count=vocabEx2Dropdown.items.length;
+  let anyUnanswered=false;
+  for(let i=0;i<count;i++){
+    const sel=document.getElementById(`gap2_${i}`);
+    if(!sel)continue;
+    if(sel.value===''){anyUnanswered=true;continue;}
+    const chosen=parseInt(sel.value);
+    const correct=parseInt(sel.dataset.answer);
+    sel.classList.remove('correct','wrong');
+    sel.classList.add(chosen===correct?'correct':'wrong');
+    sel.disabled=true;
+  }
+  if(anyUnanswered)alert('Please answer all questions before checking.');
+  updateProgress();
+}
+
+function selectTF(id,chosen,correct){
+  const optT=document.getElementById(`${id}_optT`);
+  const optF=document.getElementById(`${id}_optF`);
+  if(optT.classList.contains('disabled'))return;
+  [optT,optF].forEach(o=>o.classList.add('disabled'));
+  const ok=chosen===correct;
+  if(chosen===true){optT.classList.add(ok?'correct':'wrong');if(!ok)optF.classList.add('correct');}
+  else{optF.classList.add(ok?'correct':'wrong');if(!ok)optT.classList.add('correct');}
+  const fb=document.getElementById(`${id}_fb`);
+  fb.classList.add('show',ok?'correct':'wrong');
+  fb.textContent=ok?'✓ Correct!':`✗ The correct answer is: ${correct?'True':'False'}.`;
+  updateProgress();
+}
+
+function renderGrammar(){
+  const c=document.getElementById('grammarContent');
+  let html='';
+  [grammarEx1,grammarEx2,grammarEx3].forEach((ex,ei)=>{
+    html+=`<div class="ex-header"><div class="ex-num">${ei+1}</div><div><div class="ex-title">${ex.title}</div><div class="ex-desc">${ex.instructions}</div></div></div><div class="card">`;
+    ex.questions.forEach((q,qi)=>{
+      const id=`gram${ei}_${qi}`;
+      html+=`<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j)=>{html+=`<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;});
+      html+=`</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  c.innerHTML=html;
+}
+
+function renderGrammarReview(){
+  document.getElementById('grammarReviewContent').innerHTML=grammarReviewHTML;
+}
+
+function renderWriting(){
+  const c=document.getElementById('writingContent');
+  let html='';
+  writingActivities.forEach((a,i)=>{
+    html+=`<div class="writing-prompt">
+      <h3>${a.title}</h3>
+      <p style="margin-bottom:11px;"><strong>Task type:</strong> ${a.type}</p>
+      <p>${a.prompt}</p>
+      <ul>${a.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+      <p style="margin-top:13px;color:rgba(255,255,255,.48);font-size:.8rem;">Word count: ${a.min}–${a.max} words</p>
+    </div>
+    <div class="card">
+      <textarea class="writing-area" id="write${i}" placeholder="Write your response here..." oninput="countWords('write${i}','wc${i}','${a.min}','${a.max}')"></textarea>
+      <div class="word-count" id="wc${i}">0 words (target: ${a.min}–${a.max})</div>
+      <button class="submit-btn" onclick="submitWriting(${i})">Submit Response ✓</button>
+      <div class="submit-feedback" id="wfb${i}">✓ Your response has been submitted. Excellent work on this writing task!</div>
+    </div>`;
+  });
+  c.innerHTML=html;
+}
+
+function countWords(id,wcId,min,max){
+  const txt=document.getElementById(id).value.trim();
+  const words=txt?txt.split(/\s+/).length:0;
+  const wc=document.getElementById(wcId);
+  wc.textContent=`${words} words (target: ${min}–${max})`;
+  wc.style.color=words>=min&&words<=max?'var(--green)':words>max?'var(--red)':'var(--text-muted)';
+}
+
+function submitWriting(i){
+  const txt=document.getElementById(`write${i}`).value.trim();
+  if(txt.length<20){alert('Please write your response before submitting.');return;}
+  document.getElementById(`wfb${i}`).style.display='block';
+  document.getElementById(`write${i}`).disabled=true;
+  updateProgress();
+}
+
+/* ── LISTENING ── */
+let ttsState={};
+
+function renderListening(){
+  const c=document.getElementById('listeningContent');
+  let html='';
+  listeningActivities.forEach((act,ai)=>{
+    html+=`
+    <div class="listen-card">
+      <div class="listen-card-header">
+        <div class="listen-icon">🎙️</div>
+        <div style="flex:1;min-width:0;">
+          <div class="listen-title">${act.title}</div>
+          <div class="listen-meta">${act.meta}</div>
+          <div class="listen-badges">
+            <span class="badge badge-gold">LEVEL: ${act.level}</span>
+            <span class="badge badge-outline">${act.type}</span>
+            <span class="badge badge-outline">FOCUS: ${act.focus}</span>
+          </div>
+        </div>
+      </div>
+      <div class="audio-player">
+        <div class="audio-controls">
+          <button class="play-btn" onclick="togglePlay(${ai})" id="playBtn${ai}" aria-label="Play audio">▶</button>
+          <div class="audio-info">
+            <div class="audio-title-sm">${act.title.split(':').slice(1).join(':').trim()}</div>
+            <div class="audio-sub">${act.meta}</div>
+          </div>
+        </div>
+        <div class="progress-audio"><div class="progress-audio-fill" id="prog${ai}"></div></div>
+        <div class="audio-time" id="time${ai}">0:00 / 0:00</div>
+        <div class="speed-btns">
+          <button class="speed-btn" onclick="setSpeed(${ai},0.75,this)">0.75×</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2×</button>
+        </div>
+        <div class="audio-note">Uses your browser's built-in speech engine. Best in Chrome or Edge for a US English female voice.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">▼ Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans${ai}">${act.transcript.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</div>
+    </div>
+    <div class="listen-mcq-wrap">
+      <h4>Comprehension Questions — Activity ${ai+1}</h4>`;
+    act.questions.forEach((q,qi)=>{
+      const id=`lis${ai}_${qi}`;
+      html+=`<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j)=>{html+=`<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;});
+      html+=`</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  c.innerHTML=html;
+}
+
+function toggleTranscript(ai){
+  document.getElementById(`trans${ai}`).classList.toggle('open');
+}
+
+function togglePlay(ai){
+  const act=listeningActivities[ai];
+  const btn=document.getElementById(`playBtn${ai}`);
+  if(ttsState[ai]?.playing){speechSynthesis.cancel();ttsState[ai].playing=false;btn.textContent='▶';return;}
+  speechSynthesis.cancel();
+  const utter=new SpeechSynthesisUtterance(act.transcript);
+  utter.rate=ttsState[ai]?.rate||0.85;
+  utter.pitch=1.05;
+  const voices=speechSynthesis.getVoices();
+  const preferred=voices.find(v=>v.lang==='en-US'&&/samantha|zira|google us english|aria|jenny|female/i.test(v.name))
+    ||voices.find(v=>v.lang==='en-US')
+    ||voices.find(v=>v.lang.startsWith('en'));
+  if(preferred)utter.voice=preferred;
+  ttsState[ai]={playing:true,rate:utter.rate};
+  btn.textContent='⏸';
+  const words=act.transcript.split(' ').length;
+  const estDuration=(words/130)/utter.rate*60000;
+  const startTime=Date.now();
+  const prog=document.getElementById(`prog${ai}`);
+  const timeEl=document.getElementById(`time${ai}`);
+  const interval=setInterval(()=>{
+    if(!ttsState[ai]?.playing){clearInterval(interval);return;}
+    const elapsed=Date.now()-startTime;
+    const pct=Math.min((elapsed/estDuration)*100,100);
+    prog.style.width=pct+'%';
+    const elSec=Math.floor(elapsed/1000),totSec=Math.floor(estDuration/1000);
+    timeEl.textContent=`${Math.floor(elSec/60)}:${String(elSec%60).padStart(2,'0')} / ${Math.floor(totSec/60)}:${String(totSec%60).padStart(2,'0')}`;
+  },300);
+  utter.onend=()=>{if(ttsState[ai])ttsState[ai].playing=false;btn.textContent='▶';prog.style.width='100%';clearInterval(interval);};
+  speechSynthesis.speak(utter);
+}
+
+function setSpeed(ai,rate,btn){
+  btn.closest('.speed-btns').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(ttsState[ai]){
+    ttsState[ai].rate=rate;
+    if(ttsState[ai].playing){speechSynthesis.cancel();ttsState[ai].playing=false;document.getElementById(`playBtn${ai}`).textContent='▶';}
+  }else{ttsState[ai]={rate};}
+}
+
+/* ── CASE STUDIES ── */
+function renderCaseStudies(){
+  const c=document.getElementById('caseContent');
+  let html='';
+  caseStudies.forEach((cs,ci)=>{
+    html+=`<div class="case-header"><div class="case-meta">${cs.meta}</div><h3>${cs.title}</h3>
+      ${cs.text.split('\n\n').map(p=>`<p>${p}</p>`).join('')}
+    </div><div class="card"><h4 style="font-family:'Playfair Display',serif;margin-bottom:20px;color:var(--navy);">Comprehension Questions</h4>`;
+    cs.questions.forEach((q,qi)=>{
+      const id=`cs${ci}_${qi}`;
+      html+=`<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j)=>{html+=`<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;});
+      html+=`</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  c.innerHTML=html;
+}
+
+/* ── ASSESSMENT ── */
+let assessmentAttempts=0;
+
+function renderAssessment(){
+  const c=document.getElementById('assessmentContent');
+  let html='';
+  assessmentQs.forEach((q,i)=>{
+    const id=`ass_${i}`;
+    html+=`<div class="mcq-block"><div class="mcq-question">${i+1}. ${q.q}</div><div class="mcq-options">`;
+    ['A','B','C','D'].forEach((l,j)=>{html+=`<div class="mcq-option" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;});
+    html+=`</div></div>`;
+  });
+  html+=`<button class="check-btn" onclick="submitAssessment()">Submit Assessment →</button>`;
+  c.innerHTML=html;
+  assessmentQs.forEach((q,i)=>{
+    const id=`ass_${i}`;
+    ['A','B','C','D'].forEach((l,j)=>{
+      document.getElementById(`${id}_opt${j}`).onclick=()=>{
+        if(document.getElementById(`${id}_opt0`).classList.contains('disabled'))return;
+        document.querySelectorAll(`[id^="${id}_opt"]`).forEach(o=>o.classList.remove('selected-opt'));
+        document.getElementById(`${id}_opt${j}`).classList.add('selected-opt');
+      };
+    });
+  });
+}
+
+function submitAssessment(){
+  if(assessmentAttempts>=2){alert('You have used both attempts for this assessment.');return;}
+  let score=0;
+  assessmentQs.forEach((q,i)=>{
+    const id=`ass_${i}`;
+    let chosen=-1;
+    document.querySelectorAll(`[id^="${id}_opt"]`).forEach((o,j)=>{if(o.classList.contains('selected-opt'))chosen=j;});
+    document.querySelectorAll(`[id^="${id}_opt"]`).forEach((o,j)=>{
+      o.classList.add('disabled');o.classList.remove('selected-opt');
+      if(j===q.ans)o.classList.add('correct');
+      else if(j===chosen)o.classList.add('wrong');
+    });
+    if(chosen===q.ans)score++;
+  });
+  assessmentAttempts++;
+  const pct=Math.round((score/assessmentQs.length)*100);
+  const pass=pct>=70;
+  const rb=document.getElementById('assessmentResult');
+  rb.className=`result-box ${pass?'pass':'fail'}`;
+  rb.style.display='block';
+  rb.innerHTML=`<div class="result-score ${pass?'pass':'fail'}">${pct}%</div>
+    <div class="result-label">${pass?'🏆 Congratulations — You Passed Module 9!':'📚 Keep Studying — You Can Retake!'}</div>
+    <div class="result-detail">Score: ${score}/${assessmentQs.length} correct &nbsp;·&nbsp; ${pass?'✅ Pass':'❌ Fail'} &nbsp;·&nbsp; Attempts used: ${assessmentAttempts}/2</div>
+    ${assessmentAttempts<2&&!pass?`<button class="check-btn" style="margin-top:18px;" onclick="retakeAssessment()">Retake Assessment</button>`:''}`;
+  rb.scrollIntoView({behavior:'smooth'});
+  updateProgress();
+}
+
+function retakeAssessment(){
+  assessmentQs.forEach((q,i)=>{
+    const id=`ass_${i}`;
+    document.querySelectorAll(`[id^="${id}_opt"]`).forEach(o=>o.classList.remove('disabled','correct','wrong','selected-opt'));
+  });
+  document.getElementById('assessmentResult').style.display='none';
+}
+
+/* ── NAV ── */
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const sec=item.dataset.section;
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    item.classList.add('active');
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(`sec-${sec}`).classList.add('active');
+    window.scrollTo(0,0);
+    // close mobile sidebar
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('show');
+    // stop audio
+    speechSynthesis.cancel();
+    Object.keys(ttsState).forEach(k=>{
+      if(ttsState[k])ttsState[k].playing=false;
+      const pb=document.getElementById(`playBtn${k}`);
+      if(pb)pb.textContent='▶';
+    });
+  });
+});
+
+/* ── MOBILE MENU ── */
+document.getElementById('menuBtn').addEventListener('click',()=>{
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('show');
+});
+document.getElementById('sidebarOverlay').addEventListener('click',()=>{
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('show');
+});
+
+/* ── PROGRESS ── */
+function updateProgress(){
+  const answered=document.querySelectorAll('.mcq-option.correct,.mcq-option.wrong,.gap-select.correct,.gap-select.wrong').length;
+  const pct=Math.min(Math.round((answered/130)*100),100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressPct').textContent=pct+'%';
+}
+
+/* ── INIT ── */
+window.addEventListener('load',()=>{
+  renderSpeaking();
+  renderWordBank();
+  renderReading();
+  renderVocab();
+  renderGrammar();
+  renderGrammarReview();
+  renderWriting();
+  renderListening();
+  renderCaseStudies();
+  renderAssessment();
+  speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();
+});
+
+/* ── SELECTED OPTION STYLE ── */
+const selStyle=document.createElement('style');
+selStyle.textContent=`.selected-opt{border-color:var(--gold)!important;background:rgba(232,160,32,.15)!important;}`;
+document.head.appendChild(selStyle);
+</script>
+</body>
+</html>

@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: Understanding Balance Sheets — Finance & Accounting English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d1e35;
+  --navy-mid: #152e4d;
+  --navy-light: #1e4068;
+  --gold: #b8860b;
+  --gold-light: #d4a820;
+  --cream: #f4f1eb;
+  --cream-dark: #e8e2d6;
+  --white: #ffffff;
+  --text-light: #a0b4cc;
+  --text-mid: #5e7a99;
+  --red-accent: #c0392b;
+  --green-accent: #1a8a4a;
+  --teal: #0e7490;
+  --sidebar-w: 265px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--navy); display:flex; min-height:100vh; overflow-x:hidden; }
+
+/* ─── SIDEBAR ─── */
+#sidebar { width:var(--sidebar-w); min-height:100vh; background:var(--navy); position:fixed; top:0; left:0; display:flex; flex-direction:column; z-index:100; overflow-y:auto; }
+.sidebar-brand { padding:22px 20px 16px; border-bottom:1px solid rgba(255,255,255,0.08); }
+.sidebar-brand h1 { font-family:'Playfair Display',serif; font-size:14px; font-weight:700; color:var(--gold-light); line-height:1.35; margin-bottom:4px; }
+.sidebar-brand .subtitle { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-mid); font-weight:500; }
+.level-badge { display:inline-block; margin-top:10px; background:var(--gold); color:#fff; font-size:10px; font-weight:700; letter-spacing:1px; padding:3px 10px; border-radius:20px; }
+.sidebar-section-label { padding:18px 20px 8px; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--text-mid); font-weight:600; }
+.nav-item { display:flex; align-items:center; justify-content:space-between; padding:10px 20px; cursor:pointer; transition:all 0.2s; border-left:3px solid transparent; }
+.nav-item:hover { background:rgba(255,255,255,0.05); }
+.nav-item.active { background:rgba(212,168,32,0.13); border-left-color:var(--gold-light); }
+.nav-item .nav-left { display:flex; align-items:center; gap:10px; }
+.nav-icon { font-size:15px; }
+.nav-label { font-size:13px; color:var(--text-light); font-weight:400; }
+.nav-item.active .nav-label { color:var(--white); font-weight:500; }
+.nav-badge { font-size:10px; font-weight:700; color:var(--navy); background:var(--gold-light); padding:1px 7px; border-radius:10px; }
+
+/* ─── MAIN ─── */
+#main { margin-left:var(--sidebar-w); flex:1; min-height:100vh; }
+.section { display:none; }
+.section.active { display:block; }
+
+/* ─── HERO ─── */
+.hero { background:linear-gradient(135deg,#0d1e35 0%,#152e4d 55%,#0e3055 100%); padding:60px 60px 52px; position:relative; overflow:hidden; }
+.hero::before { content:'M2'; position:absolute; right:-10px; bottom:-50px; font-family:'Playfair Display',serif; font-size:320px; font-weight:900; color:rgba(255,255,255,0.025); line-height:1; pointer-events:none; }
+.hero::after { content:''; position:absolute; top:0; right:0; width:340px; height:100%; background:linear-gradient(135deg,transparent 0%,rgba(14,116,144,0.08) 100%); pointer-events:none; }
+.module-tag { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.09); border:1px solid rgba(255,255,255,0.14); padding:6px 16px; border-radius:30px; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-light); font-weight:500; margin-bottom:28px; }
+.hero h2 { font-family:'Playfair Display',serif; font-size:clamp(34px,4.8vw,56px); font-weight:900; color:var(--white); line-height:1.1; margin-bottom:4px; }
+.hero h2 span { color:var(--gold-light); }
+.hero p { font-size:15px; color:var(--text-light); max-width:640px; line-height:1.75; margin-top:18px; font-weight:300; }
+.hero-stats { display:flex; gap:38px; margin-top:42px; flex-wrap:wrap; }
+.stat { display:flex; flex-direction:column; gap:4px; }
+.stat-num { font-family:'Playfair Display',serif; font-size:30px; font-weight:700; color:var(--gold-light); line-height:1; }
+.stat-label { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-mid); font-weight:500; }
+
+/* ─── PROGRESS BAR ─── */
+.progress-bar-wrap { background:var(--navy-mid); padding:15px 60px; display:flex; align-items:center; gap:20px; }
+.progress-label { font-size:12px; font-weight:600; letter-spacing:0.5px; color:var(--text-light); white-space:nowrap; }
+.progress-track { flex:1; height:6px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:10px; width:0%; transition:width 0.9s ease; }
+.progress-pct { font-size:13px; font-weight:700; color:var(--gold-light); min-width:34px; }
+
+/* ─── CONTENT ─── */
+.content-area { padding:50px 60px; }
+.card { background:var(--white); border-radius:14px; padding:30px 34px; margin-bottom:26px; border:1px solid var(--cream-dark); box-shadow:0 2px 16px rgba(13,30,53,0.06); }
+.card-title { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--navy); margin-bottom:6px; }
+.card-title-bar { width:42px; height:3px; background:var(--gold); border-radius:2px; margin-bottom:22px; }
+
+/* ─── OUTCOMES ─── */
+.outcomes-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px; }
+.outcome-item { display:flex; align-items:flex-start; gap:12px; background:var(--cream); border-radius:10px; padding:14px 16px; border-left:3px solid var(--gold); }
+.outcome-num { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:var(--gold); line-height:1; min-width:24px; }
+.outcome-text { font-size:13.5px; color:var(--navy); line-height:1.5; font-weight:400; }
+
+/* ─── SPEAKING ─── */
+.speaking-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+.speaking-card { background:var(--cream); border-radius:10px; padding:18px 20px; border-top:3px solid var(--gold); transition:transform 0.2s,box-shadow 0.2s; }
+.speaking-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(13,30,53,0.1); }
+.q-num { font-family:'DM Mono',monospace; font-size:11px; color:var(--gold); font-weight:500; margin-bottom:8px; letter-spacing:1px; }
+.q-text { font-size:13.5px; color:var(--navy); line-height:1.55; }
+
+/* ─── WORD BANK ─── */
+.wordbank-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.word-card { background:var(--navy); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:8px; transition:transform 0.2s; }
+.word-card:hover { transform:translateY(-2px); }
+.word-emoji { font-size:24px; }
+.word-term { font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:var(--gold-light); }
+.word-def { font-size:12.5px; color:var(--text-light); line-height:1.5; }
+
+/* ─── READING ─── */
+.reading-text-box { background:var(--cream); border-radius:12px; padding:28px 32px; margin-bottom:28px; border-left:4px solid var(--gold); }
+.reading-text-box h4 { font-family:'Playfair Display',serif; font-size:19px; font-weight:700; color:var(--navy); margin-bottom:16px; }
+.reading-text-box p { font-size:14px; color:var(--navy); line-height:1.82; margin-bottom:14px; }
+.reading-text-box p:last-child { margin-bottom:0; }
+
+/* ─── MCQ ─── */
+.mcq-block { margin-bottom:22px; }
+.mcq-q { font-size:14px; font-weight:600; color:var(--navy); margin-bottom:12px; line-height:1.5; }
+.mcq-options { display:flex; flex-direction:column; gap:8px; }
+.mcq-option { display:flex; align-items:center; gap:10px; background:var(--cream); border:2px solid var(--cream-dark); border-radius:8px; padding:10px 14px; cursor:pointer; transition:all 0.2s; font-size:13.5px; color:var(--navy); user-select:none; }
+.mcq-option:hover { border-color:var(--gold); background:#fdf6e3; }
+.mcq-option.selected { border-color:var(--gold); background:#fdf0c8; }
+.mcq-option.correct { border-color:var(--green-accent); background:#e8f8ee; color:#145e32; }
+.mcq-option.incorrect { border-color:var(--red-accent); background:#fdecea; color:#7b1a14; }
+.option-letter { font-family:'DM Mono',monospace; font-size:11px; font-weight:700; width:22px; height:22px; border-radius:50%; background:var(--cream-dark); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--navy); }
+.mcq-option.correct .option-letter { background:var(--green-accent); color:white; }
+.mcq-option.incorrect .option-letter { background:var(--red-accent); color:white; }
+.check-btn { margin-top:14px; background:var(--navy); color:var(--gold-light); border:none; padding:10px 24px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:background 0.2s; font-family:'DM Sans',sans-serif; }
+.check-btn:hover { background:var(--navy-light); }
+.score-display { display:inline-flex; align-items:center; gap:8px; background:var(--navy); color:var(--gold-light); font-size:13px; font-weight:600; padding:8px 18px; border-radius:20px; margin-top:16px; }
+
+/* ─── TABS ─── */
+.ex-tabs { display:flex; gap:4px; margin-bottom:28px; background:var(--cream-dark); border-radius:10px; padding:4px; }
+.ex-tab { flex:1; text-align:center; padding:9px 12px; border-radius:7px; font-size:12.5px; font-weight:500; cursor:pointer; color:var(--text-mid); transition:all 0.2s; }
+.ex-tab.active { background:var(--navy); color:var(--gold-light); }
+
+/* ─── GRAMMAR REF ─── */
+.grammar-ref-box { background:var(--navy); border-radius:14px; padding:28px 32px; margin-bottom:18px; color:var(--white); }
+.grammar-ref-box h4 { font-family:'Playfair Display',serif; font-size:18px; color:var(--gold-light); margin-bottom:16px; }
+.grammar-rule { background:rgba(255,255,255,0.07); border-radius:8px; padding:14px 18px; margin-bottom:12px; border-left:3px solid var(--gold); }
+.grammar-rule .rule-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gold-light); margin-bottom:8px; }
+.grammar-rule p,.grammar-rule li { font-size:13px; color:var(--text-light); line-height:1.65; }
+.grammar-rule code { font-family:'DM Mono',monospace; background:rgba(212,168,32,0.18); color:var(--gold-light); padding:1px 6px; border-radius:4px; font-size:12px; }
+.grammar-rule ul { padding-left:18px; }
+
+/* ─── GAP FILL ─── */
+.gapfill-item { display:flex; flex-wrap:wrap; align-items:center; gap:4px; font-size:14px; color:var(--navy); line-height:2.1; margin-bottom:12px; }
+.gap-input { border:none; border-bottom:2px solid var(--gold); background:transparent; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--navy); padding:2px 6px; width:155px; outline:none; text-align:center; }
+.gap-input.correct { border-color:var(--green-accent); color:var(--green-accent); }
+.gap-input.incorrect { border-color:var(--red-accent); color:var(--red-accent); }
+
+/* ─── TRUE FALSE ─── */
+.tf-item { background:var(--cream); border-radius:8px; padding:14px 18px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.tf-statement { font-size:13.5px; color:var(--navy); flex:1; line-height:1.5; }
+.tf-buttons { display:flex; gap:8px; flex-shrink:0; }
+.tf-btn { padding:6px 16px; border-radius:6px; border:2px solid var(--cream-dark); font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s; background:white; font-family:'DM Sans',sans-serif; }
+.tf-btn:hover { border-color:var(--gold); }
+.tf-btn.selected-true { background:var(--navy); color:white; border-color:var(--navy); }
+.tf-btn.selected-false { background:var(--navy); color:white; border-color:var(--navy); }
+.tf-btn.correct-answer { background:var(--green-accent); color:white; border-color:var(--green-accent); }
+.tf-btn.wrong-answer { background:var(--red-accent); color:white; border-color:var(--red-accent); }
+
+/* ─── WRITING ─── */
+.writing-prompt { background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%); border-radius:14px; padding:28px 32px; margin-bottom:20px; color:var(--white); }
+.writing-prompt h4 { font-family:'Playfair Display',serif; font-size:18px; color:var(--gold-light); margin-bottom:10px; }
+.writing-prompt p { font-size:13.5px; color:var(--text-light); line-height:1.75; }
+.writing-meta { display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; }
+.writing-tag { background:rgba(212,168,32,0.18); color:var(--gold-light); font-size:11px; font-weight:600; letter-spacing:0.8px; padding:4px 12px; border-radius:20px; text-transform:uppercase; border:1px solid rgba(212,168,32,0.3); }
+.writing-textarea { width:100%; min-height:185px; border:2px solid var(--cream-dark); border-radius:10px; padding:16px 18px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--navy); background:var(--cream); outline:none; resize:vertical; transition:border-color 0.2s; line-height:1.75; margin-bottom:12px; }
+.writing-textarea:focus { border-color:var(--gold); background:white; }
+.word-counter { font-size:12px; color:var(--text-mid); text-align:right; margin-bottom:12px; }
+.submit-btn { background:var(--gold); color:var(--navy); border:none; padding:12px 28px; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; font-family:'DM Sans',sans-serif; }
+.submit-btn:hover { background:var(--gold-light); transform:translateY(-1px); }
+.submit-success { display:none; align-items:center; gap:10px; background:#e8f8ee; border:1px solid var(--green-accent); border-radius:8px; padding:12px 18px; font-size:13.5px; color:#145e32; font-weight:500; margin-top:12px; }
+
+/* ─── LISTENING ─── */
+.listening-activity { background:linear-gradient(135deg,#152e4d 0%,#0d1e35 100%); border-radius:14px; margin-bottom:28px; overflow:hidden; }
+.listening-header { padding:22px 28px 18px; display:flex; align-items:flex-start; gap:16px; }
+.listening-icon { font-size:32px; margin-top:2px; }
+.listening-title { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--white); margin-bottom:4px; }
+.listening-subtitle { font-size:13px; color:var(--text-mid); }
+.listening-tags { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+.l-tag { font-size:10px; font-weight:700; letter-spacing:0.8px; padding:3px 10px; border-radius:20px; text-transform:uppercase; }
+.l-tag-level { background:rgba(212,168,32,0.2); color:var(--gold-light); border:1px solid rgba(212,168,32,0.3); }
+.l-tag-type { color:#e8a0a0; background:rgba(192,57,43,0.2); border:1px solid rgba(192,57,43,0.3); }
+.l-tag-focus { color:var(--text-light); }
+.audio-player { background:rgba(0,0,0,0.35); margin:0 20px 18px; border-radius:12px; padding:18px 20px; }
+.player-top { display:flex; align-items:center; gap:16px; margin-bottom:14px; }
+.play-btn { width:44px; height:44px; border-radius:50%; background:var(--teal); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:16px; color:white; flex-shrink:0; transition:background 0.2s,transform 0.15s; }
+.play-btn:hover { background:#0e8aaa; transform:scale(1.07); }
+.player-info { flex:1; }
+.player-title { font-size:13px; font-weight:600; color:var(--white); }
+.player-desc { font-size:11.5px; color:var(--text-mid); }
+.player-time { font-family:'DM Mono',monospace; font-size:12px; color:var(--text-mid); white-space:nowrap; }
+.progress-audio { width:100%; height:4px; background:rgba(255,255,255,0.15); border-radius:4px; margin-bottom:12px; }
+.progress-audio-fill { height:100%; background:var(--teal); border-radius:4px; width:0%; transition:width 0.4s; }
+.speed-controls { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.speed-label { font-size:10px; font-weight:700; color:var(--text-mid); letter-spacing:0.5px; text-transform:uppercase; }
+.speed-btn { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); color:var(--text-light); font-size:11px; font-weight:600; padding:3px 10px; border-radius:6px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
+.speed-btn:hover { background:rgba(255,255,255,0.18); }
+.speed-btn.active { background:var(--gold); color:var(--navy); border-color:var(--gold); }
+.replay-btn { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); color:var(--text-light); font-size:11px; font-weight:600; padding:3px 12px; border-radius:6px; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.audio-note { font-size:11px; color:var(--text-mid); font-style:italic; margin-top:8px; }
+.transcript-toggle { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text-mid); cursor:pointer; padding:10px 28px; border-top:1px solid rgba(255,255,255,0.07); user-select:none; transition:color 0.2s; }
+.transcript-toggle:hover { color:var(--text-light); }
+.transcript-toggle .arrow { transition:transform 0.2s; font-size:11px; }
+.transcript-toggle.open .arrow { transform:rotate(180deg); }
+.transcript-content { display:none; padding:16px 28px 20px; background:rgba(255,255,255,0.03); }
+.transcript-content.open { display:block; }
+.transcript-content p { font-size:13px; color:var(--text-light); line-height:1.8; font-style:italic; }
+.listening-mcq { padding:20px 28px 24px; }
+.instructions-box { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:12px 16px; margin-bottom:20px; display:flex; gap:10px; align-items:flex-start; }
+.inst-icon { font-size:14px; color:var(--gold-light); margin-top:1px; }
+.inst-text { font-size:12.5px; color:var(--text-mid); line-height:1.5; }
+
+/* ─── LISTENING MCQ — WHITE ─── */
+.l-mcq-option { background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.1); color:var(--white); }
+.l-mcq-option:hover { border-color:var(--gold-light); background:rgba(212,168,32,0.1); color:var(--white); }
+.l-mcq-option.selected { border-color:var(--gold-light); background:rgba(212,168,32,0.15); color:var(--white); }
+.l-mcq-option.correct { border-color:var(--green-accent); background:rgba(26,138,74,0.15); color:#7dddaa; }
+.l-mcq-option.incorrect { border-color:var(--red-accent); background:rgba(192,57,43,0.15); color:#f1948a; }
+.listening-mcq .mcq-q { color:var(--white); }
+.listening-mcq .score-display { background:rgba(255,255,255,0.1); color:var(--gold-light); }
+.listening-mcq .option-letter { background:rgba(255,255,255,0.12); color:var(--white); }
+.l-check-btn { background:var(--teal); color:white; }
+.l-check-btn:hover { background:#0e8aaa; }
+
+/* ─── CASE STUDY ─── */
+.case-header { background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%); border-radius:14px 14px 0 0; padding:28px 32px; border-bottom:3px solid var(--gold); }
+.case-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gold-light); font-weight:600; margin-bottom:8px; }
+.case-title { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--white); margin-bottom:8px; line-height:1.3; }
+.case-sub { font-size:13.5px; color:var(--text-light); }
+.case-body { background:white; border-radius:0 0 14px 14px; padding:28px 32px; margin-bottom:24px; border:1px solid var(--cream-dark); border-top:none; }
+.case-body p { font-size:14px; color:var(--navy); line-height:1.82; margin-bottom:14px; }
+.case-body h5 { font-family:'Playfair Display',serif; font-size:16px; color:var(--navy); margin:20px 0 10px; padding-bottom:6px; border-bottom:2px solid var(--cream-dark); }
+
+/* ─── ASSESSMENT ─── */
+.assessment-banner { background:linear-gradient(135deg,var(--navy),var(--navy-light)); border-radius:14px; padding:32px 36px; color:white; margin-bottom:28px; text-align:center; }
+.assessment-banner h3 { font-family:'Playfair Display',serif; font-size:26px; color:var(--gold-light); margin-bottom:8px; }
+.assessment-banner p { font-size:14px; color:var(--text-light); margin-bottom:20px; line-height:1.6; }
+.assessment-meta { display:flex; justify-content:center; gap:32px; flex-wrap:wrap; }
+.a-meta-item { display:flex; flex-direction:column; align-items:center; gap:4px; }
+.a-meta-num { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:var(--gold-light); }
+.a-meta-label { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-mid); }
+.attempts-display { display:flex; align-items:center; gap:8px; justify-content:flex-end; margin-bottom:20px; font-size:13px; color:var(--text-mid); }
+.attempt-dot { width:10px; height:10px; border-radius:50%; background:var(--cream-dark); }
+.attempt-dot.used { background:var(--gold); }
+.final-result { display:none; background:var(--navy); border-radius:12px; padding:28px 32px; text-align:center; color:white; margin-top:20px; }
+.final-result.pass { border:2px solid var(--green-accent); }
+.final-result.fail { border:2px solid var(--red-accent); }
+.final-score { font-family:'Playfair Display',serif; font-size:52px; font-weight:700; margin-bottom:4px; }
+.final-result.pass .final-score { color:#7dddaa; }
+.final-result.fail .final-score { color:#f1948a; }
+.final-verdict { font-size:18px; font-weight:600; margin-bottom:8px; }
+.final-msg { font-size:14px; color:var(--text-light); line-height:1.6; }
+.ex-divider { height:1px; background:var(--cream-dark); margin:28px 0; }
+
+@media (max-width:960px) {
+  :root { --sidebar-w:220px; }
+  .content-area { padding:32px 28px; }
+  .hero { padding:40px 28px 36px; }
+  .progress-bar-wrap { padding:14px 28px; }
+  .speaking-grid { grid-template-columns:1fr 1fr; }
+  .wordbank-grid { grid-template-columns:1fr 1fr; }
+  .outcomes-grid { grid-template-columns:1fr; }
+}
+@media (max-width:620px) {
+  #sidebar { display:none; }
+  #main { margin-left:0; }
+  .speaking-grid,.wordbank-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h1>Finance &amp; Accounting English</h1>
+    <div class="subtitle">Professional Development</div>
+    <span class="level-badge">B1–B2 LEVEL</span>
+  </div>
+  <div class="sidebar-section-label">Module 2</div>
+  <div class="nav-item active" onclick="showSection('overview')">
+    <div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  </div>
+  <div class="nav-item" onclick="showSection('speaking')">
+    <div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div>
+    <span class="nav-badge">21Q</span>
+  </div>
+  <div class="nav-item" onclick="showSection('wordbank')">
+    <div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div>
+    <span class="nav-badge">21</span>
+  </div>
+  <div class="nav-item" onclick="showSection('reading')">
+    <div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div>
+    <span class="nav-badge">2T</span>
+  </div>
+  <div class="nav-item" onclick="showSection('vocabulary')">
+    <div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span></div>
+    <span class="nav-badge">3Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('grammar')">
+    <div class="nav-left"><span class="nav-icon">📝</span><span class="nav-label">Grammar</span></div>
+    <span class="nav-badge">3Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('grammar-review')">
+    <div class="nav-left"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  </div>
+  <div class="nav-item" onclick="showSection('writing')">
+    <div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div>
+    <span class="nav-badge">2W</span>
+  </div>
+  <div class="nav-item" onclick="showSection('listening')">
+    <div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div>
+    <span class="nav-badge">4Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('casestudies')">
+    <div class="nav-left"><span class="nav-icon">🏢</span><span class="nav-label">Case Studies</span></div>
+    <span class="nav-badge">2CS</span>
+  </div>
+  <div class="nav-item" onclick="showSection('assessment')">
+    <div class="nav-left"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span></div>
+    <span class="nav-badge">20Q</span>
+  </div>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main id="main">
+
+<!-- OVERVIEW -->
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="module-tag">💼 MODULE 2 · FINANCE &amp; ACCOUNTING ENGLISH</div>
+    <h2>Understanding<br><span>Balance Sheets</span></h2>
+    <p>Develop the professional English skills to read, analyse, and discuss balance sheets in depth — from classifying assets and liabilities to interpreting equity, leverage, and liquidity ratios with precision.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <span class="progress-label">Module Progress</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:14px;line-height:1.85;color:#1a2e4a;margin-bottom:14px;">
+        <strong>Welcome to Module 2: Understanding Balance Sheets.</strong> This module takes a deep dive into the balance sheet — one of the three core financial statements and arguably the most comprehensive window into a company's financial health. You will learn how to classify and describe every major section of the balance sheet, from current and non-current assets to short-term and long-term liabilities and shareholders' equity, using accurate and professional English.
+      </p>
+      <p style="font-size:14px;line-height:1.85;color:#1a2e4a;">
+        Building on Module 1, this module goes beyond basic definitions to explore how analysts interpret the balance sheet — assessing solvency, leverage, liquidity ratios, and capital structure. You will practise the specific grammar and vocabulary used by finance professionals when discussing balance sheet items, trends, and what the numbers reveal about a company's strategic position and financial resilience.
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">By the end of this module, you will be able to:</p>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-num">1</div><div class="outcome-text">Classify and accurately describe all major balance sheet line items — current assets, non-current assets, current liabilities, non-current liabilities, and equity — in professional English.</div></div>
+        <div class="outcome-item"><div class="outcome-num">2</div><div class="outcome-text">Explain the accounting equation (Assets = Liabilities + Equity) and articulate why the balance sheet must always balance, including in complex reporting scenarios.</div></div>
+        <div class="outcome-item"><div class="outcome-num">3</div><div class="outcome-text">Use comparative adjectives and language of contrast correctly to compare balance sheet figures across periods and between companies.</div></div>
+        <div class="outcome-item"><div class="outcome-num">4</div><div class="outcome-text">Apply reported speech and indirect reporting structures to summarise and present balance sheet findings from analyst reports and board briefings.</div></div>
+        <div class="outcome-item"><div class="outcome-num">5</div><div class="outcome-text">Form and use advanced balance sheet collocations and noun phrases correctly — including goodwill impairment, net tangible assets, and capital structure.</div></div>
+        <div class="outcome-item"><div class="outcome-num">6</div><div class="outcome-text">Calculate and interpret key balance sheet ratios — including the current ratio, quick ratio, and debt-to-equity ratio — and discuss what they indicate about financial health.</div></div>
+        <div class="outcome-item"><div class="outcome-num">7</div><div class="outcome-text">Write a formal balance sheet analysis report and a professional memo summarising balance sheet changes for a senior management audience.</div></div>
+        <div class="outcome-item"><div class="outcome-num">8</div><div class="outcome-text">Listen to and understand analyst briefings, investor calls, and finance training sessions focused on balance sheet interpretation and capital structure analysis.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPEAKING -->
+<div id="speaking" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🎙️ SPEAKING ACTIVITIES</div>
+    <h2>Discussion <span>Questions</span></h2>
+    <p>21 questions to practise speaking about balance sheets, assets, liabilities, equity, and financial analysis at B1–B2 level.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Speaking Questions</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">Discuss these questions with a partner or prepare a spoken response of 2–3 minutes each.</p>
+      <div class="speaking-grid" id="speakingGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- WORD BANK -->
+<div id="wordbank" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">📚 WORD BANK</div>
+    <h2>Key <span>Vocabulary</span></h2>
+    <p>21 essential terms for reading and discussing balance sheets at B1–B2 level.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Vocabulary</div>
+      <div class="card-title-bar"></div>
+      <div class="wordbank-grid" id="wordbankGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- READING -->
+<div id="reading" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">📖 READING</div>
+    <h2>Reading <span>Texts</span></h2>
+    <p>Two professional texts followed by 10 multiple-choice comprehension questions each.</p>
+  </div>
+  <div class="content-area" id="readingContent"></div>
+</div>
+
+<!-- VOCABULARY -->
+<div id="vocabulary" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">✏️ VOCABULARY EXERCISES</div>
+    <h2>Vocabulary <span>Practice</span></h2>
+    <p>Three exercises to consolidate your understanding of key balance sheet vocabulary.</p>
+  </div>
+  <div class="content-area">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocabEx(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocabEx(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocabEx(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vocab-ex-0" class="vocab-ex"></div>
+    <div id="vocab-ex-1" class="vocab-ex" style="display:none"></div>
+    <div id="vocab-ex-2" class="vocab-ex" style="display:none"></div>
+  </div>
+</div>
+
+<!-- GRAMMAR -->
+<div id="grammar" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">📝 GRAMMAR EXERCISES</div>
+    <h2>Grammar <span>Practice</span></h2>
+    <p>Three grammar exercises covering comparative language, reported speech, and balance sheet collocations.</p>
+  </div>
+  <div class="content-area">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGrammarEx(0,this)">Exercise 1 · Comparative Language</div>
+      <div class="ex-tab" onclick="showGrammarEx(1,this)">Exercise 2 · Reported Speech</div>
+      <div class="ex-tab" onclick="showGrammarEx(2,this)">Exercise 3 · Collocations</div>
+    </div>
+    <div id="grammar-ex-0" class="grammar-ex"></div>
+    <div id="grammar-ex-1" class="grammar-ex" style="display:none"></div>
+    <div id="grammar-ex-2" class="grammar-ex" style="display:none"></div>
+  </div>
+</div>
+
+<!-- GRAMMAR REVIEW -->
+<div id="grammar-review" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🔍 GRAMMAR REVIEW</div>
+    <h2>Grammar <span>Reference</span></h2>
+    <p>Detailed reference boxes covering all three grammar points in this module.</p>
+  </div>
+  <div class="content-area" id="grammarReviewContent"></div>
+</div>
+
+<!-- WRITING -->
+<div id="writing" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">✍️ WRITING ACTIVITIES</div>
+    <h2>Writing <span>Tasks</span></h2>
+    <p>Two structured writing tasks to practise balance sheet analysis and professional reporting communication.</p>
+  </div>
+  <div class="content-area" id="writingContent"></div>
+</div>
+
+<!-- LISTENING -->
+<div id="listening" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🎧 LISTENING ACTIVITIES</div>
+    <h2>Listening <span>Activities</span></h2>
+    <p>4 audio activities with built-in speech players — press ▶ Play, listen, then answer the questions.</p>
+  </div>
+  <div class="content-area" id="listeningContent"></div>
+</div>
+
+<!-- CASE STUDIES -->
+<div id="casestudies" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🏢 CASE STUDIES</div>
+    <h2>Real-World <span>Cases</span></h2>
+    <p>Two in-depth case studies on balance sheet analysis and capital structure, with comprehension questions.</p>
+  </div>
+  <div class="content-area" id="caseStudiesContent"></div>
+</div>
+
+<!-- ASSESSMENT -->
+<div id="assessment" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🎯 FINAL ASSESSMENT</div>
+    <h2>Module 2 <span>Assessment</span></h2>
+    <p>20 multiple-choice questions covering all areas of the module. Pass mark: 70%. Two attempts allowed.</p>
+  </div>
+  <div class="content-area" id="assessmentContent"></div>
+</div>
+
+</main>
+
+<script>
+/* ══════════════════════ DATA ══════════════════════ */
+
+const speakingQs = [
+  "Can you describe the three main sections of a balance sheet? What does each one tell us about a company?",
+  "Why is it important that a balance sheet 'balances'? What would it mean if the two sides did not equal each other?",
+  "What is the difference between current assets and non-current assets? Can you give two examples of each?",
+  "If a company has a large amount of goodwill on its balance sheet, what does that suggest about its history?",
+  "How would you explain the difference between accounts receivable and accounts payable to a non-finance colleague?",
+  "What is the current ratio, and what does a current ratio below 1.0 suggest about a company's financial health?",
+  "What is the difference between short-term debt and long-term debt? Why does this distinction matter to investors?",
+  "How can two companies have the same total assets but very different financial risk profiles? What balance sheet items would explain this?",
+  "What does shareholders' equity represent? How can it increase or decrease over time?",
+  "What is the debt-to-equity ratio and why do creditors and investors pay close attention to it?",
+  "What is goodwill and how is it created? What risks are associated with a very high goodwill balance?",
+  "How does depreciation affect the balance sheet? Which specific line items change when depreciation is recorded?",
+  "What is the difference between book value and market value? Why might they differ significantly for the same company?",
+  "What does it mean when a company has 'negative equity'? What are the possible causes and consequences?",
+  "How do share buybacks affect the equity section of the balance sheet? Why do companies choose to do this?",
+  "What is intangible asset value, and why can it be difficult to measure accurately on a balance sheet?",
+  "Why might an analyst be concerned if a company's inventory is growing much faster than its revenue?",
+  "What is the quick ratio and how does it differ from the current ratio? When would the quick ratio be more useful?",
+  "How does issuing new shares affect the balance sheet? What about taking on new debt?",
+  "What is net tangible asset value (NTA) and why do some investors prefer it over total book value?",
+  "In your opinion, what is the most important ratio derived from the balance sheet, and why?"
+];
+
+const wordBank = [
+  { emoji:"⚖️", term:"Accounting equation", def:"The fundamental equation: Assets = Liabilities + Equity. This must always hold true and is the foundation of double-entry bookkeeping." },
+  { emoji:"🏠", term:"Non-current assets", def:"Assets that a company does not expect to convert into cash within twelve months. Includes property, plant and equipment, intangibles, and long-term investments." },
+  { emoji:"💵", term:"Cash and cash equivalents", def:"The most liquid assets on the balance sheet: cash on hand, bank deposits, and highly liquid short-term instruments such as treasury bills." },
+  { emoji:"📦", term:"Inventory", def:"Goods held by a company for sale in the ordinary course of business, including raw materials, work-in-progress, and finished goods." },
+  { emoji:"🔄", term:"Accounts receivable", def:"Amounts owed to the company by customers who have purchased goods or services on credit. A current asset." },
+  { emoji:"📋", term:"Accounts payable", def:"Amounts the company owes to suppliers for goods or services received but not yet paid for. A current liability." },
+  { emoji:"🏗️", term:"Property, plant & equipment (PP&E)", def:"Tangible long-term assets used in operations, recorded at cost less accumulated depreciation. Also called fixed assets." },
+  { emoji:"✨", term:"Intangible assets", def:"Non-physical assets with economic value, such as patents, trademarks, customer lists, and software. Includes goodwill from acquisitions." },
+  { emoji:"💡", term:"Goodwill", def:"An intangible asset arising when a company pays more than the fair value of an acquired business's net assets. Represents brand value, customer relationships, and synergies." },
+  { emoji:"📉", term:"Accumulated depreciation", def:"The total depreciation charged against a tangible fixed asset since it was placed into service. Shown as a deduction from gross PP&E." },
+  { emoji:"💳", term:"Current liabilities", def:"Obligations due for payment within twelve months, including accounts payable, short-term borrowings, and the current portion of long-term debt." },
+  { emoji:"🏦", term:"Long-term debt", def:"Borrowings and financial obligations that are not due for repayment within the next twelve months. Recorded under non-current liabilities." },
+  { emoji:"📊", term:"Shareholders' equity", def:"The residual interest in the assets of a company after deducting all liabilities. Comprises share capital, share premium, retained earnings, and reserves." },
+  { emoji:"💼", term:"Retained earnings", def:"Cumulative net profits that have been kept in the business rather than distributed as dividends. Part of shareholders' equity." },
+  { emoji:"🔢", term:"Current ratio", def:"Current assets divided by current liabilities. A liquidity ratio measuring a company's ability to pay short-term obligations. A ratio above 1.0 is generally considered healthy." },
+  { emoji:"⚡", term:"Quick ratio", def:"(Current assets minus inventory) divided by current liabilities. A stricter liquidity measure than the current ratio, also called the acid-test ratio." },
+  { emoji:"📐", term:"Debt-to-equity ratio", def:"Total debt divided by total shareholders' equity. Measures financial leverage and indicates how much the company is financed by debt versus equity." },
+  { emoji:"🌐", term:"Net tangible assets (NTA)", def:"Total assets minus intangible assets and total liabilities. Represents the tangible net worth of a company, excluding goodwill and other intangibles." },
+  { emoji:"📑", term:"Capital structure", def:"The mix of debt and equity a company uses to finance its assets and operations. A key determinant of financial risk and cost of capital." },
+  { emoji:"🔻", term:"Goodwill impairment", def:"A write-down of goodwill when its carrying value on the balance sheet exceeds its recoverable amount. Results in an expense on the income statement." },
+  { emoji:"🔁", term:"Working capital", def:"Current assets minus current liabilities. A measure of day-to-day operational liquidity. Positive working capital indicates the company can meet short-term obligations." }
+];
+
+const readingTexts = [
+  {
+    title: "Text 1: Assets on the Balance Sheet — Classification and Analysis",
+    subtitle: "How to read and interpret the assets side of a balance sheet",
+    paragraphs: [
+      "The assets section of a balance sheet is divided into two broad categories: current assets and non-current assets. Current assets are resources that a company expects to convert into cash, sell, or consume within twelve months. The most liquid of these — cash and cash equivalents — appears first and represents the company's immediately available funds, including bank balances and short-term instruments such as treasury bills. Following cash, accounts receivable reflects amounts owed by customers who have purchased goods or services on credit. The speed at which a company collects these receivables — measured by the debtor days ratio — is an important indicator of operational efficiency. Inventory, the third major current asset, represents goods awaiting sale and must be carefully managed to avoid tying up excessive working capital.",
+      "Non-current assets, sometimes called fixed or long-term assets, are those that provide economic benefit over a period longer than twelve months. Property, plant and equipment (PP&E) is typically the largest component for manufacturing and infrastructure companies. It is recorded at historical cost less accumulated depreciation — the systematic reduction in carrying value over the asset's useful life. Intangible assets form a second important non-current category and include items such as patents, trademarks, brand names, and customer relationships. These assets can be difficult to value objectively. Goodwill, a specific and often significant intangible asset, arises when one company acquires another for a price exceeding the fair value of the acquired company's identifiable net assets.",
+      "Analysts scrutinise the asset composition of a balance sheet to understand both the nature of the business and the risks it carries. A company with a high proportion of intangible assets — particularly goodwill — faces the risk of impairment charges if acquisitions fail to deliver expected value. A company with large receivables but slow collection may face cash flow stress even if it appears profitable. High inventory levels relative to sales can signal poor demand, excess production, or obsolescence risk. Conversely, a company with strong cash balances and well-managed receivables demonstrates financial discipline and operational resilience, characteristics that investors and creditors value highly."
+    ],
+    questions: [
+      { q: "What is the defining characteristic of current assets?", opts: ["They are owned outright with no debt", "They are expected to convert to cash, be sold, or consumed within twelve months", "They are only recorded at market value", "They include all intangible items"], ans: 1 },
+      { q: "Which current asset appears first on a balance sheet and why?", opts: ["Inventory, because it is the largest asset", "Accounts receivable, because customers always pay first", "Cash and cash equivalents, because they are the most liquid", "Goodwill, because it is the most valuable"], ans: 2 },
+      { q: "What does the debtor days ratio measure?", opts: ["The number of days inventory is held", "How quickly a company collects money from customers", "The rate of depreciation on fixed assets", "How long it takes to pay suppliers"], ans: 1 },
+      { q: "How is PP&E recorded on the balance sheet?", opts: ["At its current market value", "At replacement cost", "At historical cost less accumulated depreciation", "At the lower of cost or net realisable value"], ans: 2 },
+      { q: "When does goodwill arise on a balance sheet?", opts: ["When a company invests in new machinery", "When a company acquires another for more than the fair value of its net assets", "When a brand is internally developed", "When patents are registered"], ans: 1 },
+      { q: "What risk does a high proportion of goodwill on the balance sheet create?", opts: ["Higher tax obligations", "Risk of impairment charges if acquisitions fail to deliver value", "Lower working capital efficiency", "Reduced accounts receivable"], ans: 1 },
+      { q: "What might large receivables combined with slow collection indicate?", opts: ["Strong profitability", "Cash flow stress", "Excellent working capital management", "High inventory turnover"], ans: 1 },
+      { q: "What can high inventory levels relative to sales suggest?", opts: ["Strong demand and fast growth", "Poor demand, excess production, or obsolescence risk", "High gross margins", "Efficient supply chain management"], ans: 1 },
+      { q: "What does accumulated depreciation represent?", opts: ["Cash set aside to replace assets", "The total depreciation charged against an asset since it was put into service", "The annual depreciation charge only", "The current market value of fixed assets"], ans: 1 },
+      { q: "What does a company with strong cash and well-managed receivables demonstrate?", opts: ["High leverage and financial risk", "Financial discipline and operational resilience", "Low profitability", "Excessive investment in intangibles"], ans: 1 }
+    ]
+  },
+  {
+    title: "Text 2: Liabilities, Equity, and Reading Capital Structure",
+    subtitle: "Understanding the financing side of the balance sheet",
+    paragraphs: [
+      "The liabilities and equity sections of the balance sheet reveal how a company has financed its assets — whether through borrowing, through shareholders' investment, or through retained profits. Liabilities are divided into current liabilities, due within twelve months, and non-current liabilities, due beyond twelve months. Current liabilities typically include accounts payable — the amounts owed to suppliers — along with accrued expenses, the current portion of long-term debt, and short-term borrowings. Managing current liabilities effectively is critical: companies that allow accounts payable to become overdue risk damaging supplier relationships, while those that repay borrowings too quickly may sacrifice liquidity. The relationship between current assets and current liabilities — expressed as the current ratio — is one of the most commonly used indicators of short-term financial health.",
+      "Non-current liabilities are the long-term obligations of the company, primarily long-term debt such as bonds and bank loans maturing beyond twelve months, along with deferred tax liabilities and pension obligations. The level of long-term debt relative to equity — measured by the debt-to-equity ratio — determines a company's financial leverage. High leverage amplifies returns for shareholders when times are good, but it also increases financial risk: a highly indebted company must service its debt regardless of performance, reducing flexibility during downturns. Lenders and bond investors pay close attention to debt covenants — contractual conditions that restrict how much debt a company can carry relative to its earnings — as a form of protection against overleveraging.",
+      "Shareholders' equity, the third section, comprises share capital (the par value of shares issued), share premium (the amount received above par value), retained earnings, and other reserves. Retained earnings are the engine of organic equity growth: each profitable year in which dividends are kept below net profit increases the retained earnings balance. However, equity can also decrease through share buybacks — when a company purchases its own shares on the open market, the cost is recorded as treasury stock and reduces total equity. Understanding the capital structure — the mix of debt and equity financing — is essential for assessing a company's risk profile, its cost of capital, and its capacity to absorb financial shocks."
+    ],
+    questions: [
+      { q: "What do the liabilities and equity sections of the balance sheet reveal?", opts: ["The company's revenue performance over the year", "How the company has financed its assets", "The market value of the company's shares", "The efficiency of the company's operations"], ans: 1 },
+      { q: "What are current liabilities?", opts: ["All financial obligations of the company", "Liabilities due within twelve months", "Long-term borrowings from banks", "Amounts owed by customers"], ans: 1 },
+      { q: "What is the current ratio?", opts: ["Total debt divided by total equity", "Non-current assets divided by current assets", "Current assets divided by current liabilities", "Net profit divided by revenue"], ans: 2 },
+      { q: "What are debt covenants?", opts: ["Insurance policies taken out by lenders", "Contractual conditions restricting how much debt a company can carry", "Agreements to pay dividends", "Rules about depreciation methods"], ans: 1 },
+      { q: "What does high financial leverage do during a downturn?", opts: ["It protects the company from losses", "It increases financial risk by requiring debt servicing regardless of performance", "It reduces the company's tax obligations", "It improves working capital management"], ans: 1 },
+      { q: "What is share premium?", opts: ["A bonus payment to shareholders", "Dividends declared but not yet paid", "The amount received above par value when shares are issued", "The total market capitalisation of the company"], ans: 2 },
+      { q: "How do retained earnings increase over time?", opts: ["When the company issues new debt", "When profitable years result in dividends kept below net profit", "When PP&E is revalued upwards", "When goodwill increases"], ans: 1 },
+      { q: "What is the effect of share buybacks on total equity?", opts: ["They increase total equity", "They have no effect on equity", "They decrease total equity", "They increase retained earnings"], ans: 2 },
+      { q: "What does the debt-to-equity ratio measure?", opts: ["A company's profitability relative to its assets", "The company's ability to pay current obligations", "Financial leverage — how much the company is financed by debt vs equity", "The market premium over book value"], ans: 2 },
+      { q: "What does understanding capital structure help analysts assess?", opts: ["The company's product pricing strategy", "Risk profile, cost of capital, and capacity to absorb financial shocks", "The quality of the management team", "The effectiveness of the sales force"], ans: 1 }
+    ]
+  }
+];
+
+const vocabExercises = [
+  {
+    type: "mcq",
+    title: "Exercise 1: Multiple Choice",
+    instructions: "Choose the best word or phrase to complete each sentence.",
+    questions: [
+      { q: "The company's unsold stock of finished products is recorded on the balance sheet as _____.", opts: ["accounts receivable", "goodwill", "inventory", "share premium"], ans: 2 },
+      { q: "After buying a competitor for more than the value of its net assets, the company recorded $45m of _____ on its balance sheet.", opts: ["depreciation", "goodwill", "retained earnings", "working capital"], ans: 1 },
+      { q: "The _____ ratio is calculated by dividing current assets by current liabilities.", opts: ["debt-to-equity", "quick", "current", "leverage"], ans: 2 },
+      { q: "Total debt divided by total shareholders' equity gives the _____.", opts: ["current ratio", "quick ratio", "debt-to-equity ratio", "net tangible asset value"], ans: 2 },
+      { q: "The _____ ratio excludes inventory from current assets, giving a stricter test of short-term liquidity.", opts: ["current", "leverage", "interest coverage", "quick"], ans: 3 },
+      { q: "Long-term borrowings that mature in five years would appear under _____ on the balance sheet.", opts: ["current liabilities", "shareholders' equity", "non-current liabilities", "current assets"], ans: 2 },
+      { q: "Total assets minus intangible assets and total liabilities equals _____.", opts: ["EBITDA", "net tangible assets", "working capital", "share capital"], ans: 1 },
+      { q: "When a company buys back its own shares, the cost is recorded as _____ and reduces total equity.", opts: ["retained earnings", "share premium", "treasury stock", "goodwill"], ans: 2 },
+      { q: "The _____ of a company describes the mix of debt and equity used to finance its assets.", opts: ["working capital", "capital structure", "current ratio", "net profit margin"], ans: 1 },
+      { q: "The factory equipment is recorded at its original purchase price less _____ charged to date.", opts: ["goodwill", "impairment", "accumulated depreciation", "amortisation of intangibles"], ans: 2 }
+    ]
+  },
+  {
+    type: "gapfill",
+    title: "Exercise 2: Gap Fill",
+    instructions: "Complete each sentence using the correct word or phrase from the box.",
+    words: ["impairment", "non-current", "solvency", "leverage", "net assets", "covenant", "deferred tax", "equity", "liquidity", "par value"],
+    sentences: [
+      { before: "The company's ", blank: "net assets", after: " were calculated by subtracting total liabilities from total assets." },
+      { before: "The board reviewed the company's ", blank: "solvency", after: " position to assess its ability to meet long-term obligations." },
+      { before: "Property, plant and equipment is classified as a ", blank: "non-current", after: " asset because it provides value over several years." },
+      { before: "Following the failed acquisition, the company recorded a goodwill ", blank: "impairment", after: " charge of $28 million." },
+      { before: "The bank loan agreement contained a ", blank: "covenant", after: " requiring the company to maintain a minimum interest coverage ratio." },
+      { before: "The analyst warned that the company's high ", blank: "leverage", after: " could become unsustainable if interest rates continued to rise." },
+      { before: "Each share was issued at a ", blank: "par value", after: " of $1, with the remainder of the proceeds recorded as share premium." },
+      { before: "Shareholders' ", blank: "equity", after: " grew by $12 million during the year, driven entirely by retained profits." },
+      { before: "A ", blank: "deferred tax", after: " liability arises when a company's accounting profits exceed its taxable profits in a given period." },
+      { before: "The company's strong cash position provided excellent ", blank: "liquidity", after: ", allowing it to meet all short-term obligations comfortably." }
+    ]
+  },
+  {
+    type: "truefalse",
+    title: "Exercise 3: True / False",
+    instructions: "Read the statements and decide if they are TRUE or FALSE.",
+    statements: [
+      { text: "Goodwill can only appear on the balance sheet if it was purchased through an acquisition.", ans: true },
+      { text: "The quick ratio includes inventory in its calculation.", ans: false },
+      { text: "A current ratio above 1.0 means current assets exceed current liabilities.", ans: true },
+      { text: "Long-term debt is classified under current liabilities on the balance sheet.", ans: false },
+      { text: "Share buybacks reduce the total shareholders' equity on the balance sheet.", ans: true },
+      { text: "Accumulated depreciation is added to the gross value of PP&E on the balance sheet.", ans: false },
+      { text: "A high debt-to-equity ratio indicates a company is heavily financed by debt.", ans: true },
+      { text: "Retained earnings represent dividends that have been declared but not yet paid.", ans: false },
+      { text: "Net tangible assets exclude goodwill and other intangible assets from the calculation.", ans: true },
+      { text: "Accounts payable is a current asset because it represents money owed to the company.", ans: false }
+    ]
+  }
+];
+
+const grammarExercises = [
+  {
+    type: "mcq",
+    title: "Exercise 1: Comparative Language in Balance Sheet Analysis",
+    instructions: "Choose the correct comparative form or structure to complete each sentence.",
+    questions: [
+      { q: "The company's current ratio is significantly _____ than it was twelve months ago, reflecting improved liquidity.", opts: ["more high", "highest", "higher", "most high"], ans: 2 },
+      { q: "Non-current liabilities were _____ in the prior year than in the current year, following the debt repayment.", opts: ["higher", "more high", "the highest", "as high"], ans: 0 },
+      { q: "The quick ratio is a _____ measure of liquidity than the current ratio because it excludes inventory.", opts: ["strictest", "more strictly", "stricter", "strict"], ans: 2 },
+      { q: "Goodwill on the balance sheet is _____ now than at the time of the acquisition due to partial impairment.", opts: ["lower", "more low", "lowest", "less low"], ans: 0 },
+      { q: "The company's leverage is far _____ than its peers, which makes investors nervous about its debt burden.", opts: ["higher", "more higher", "highest", "most high"], ans: 0 },
+      { q: "Although revenue grew, the equity base was _____ at year end than at the start of the period.", opts: ["smaller", "more small", "smallest", "small"], ans: 0 },
+      { q: "The _____ the debt-to-equity ratio, the greater the financial risk the company is taking.", opts: ["more high", "higher", "highest", "most higher"], ans: 1 },
+      { q: "This year's working capital position is not _____ strong _____ last year's due to the increase in short-term debt.", opts: ["so / as", "as / than", "more / as", "less / that"], ans: 0 },
+      { q: "The balance sheet looks considerably _____ now that the long-term loan has been refinanced.", opts: ["most healthy", "healthier", "more healthier", "healthiest"], ans: 1 },
+      { q: "Retained earnings were _____ than expected because the company paid out a special dividend.", opts: ["low", "lower", "lowest", "more lower"], ans: 1 }
+    ]
+  },
+  {
+    type: "mcq",
+    title: "Exercise 2: Reported Speech in Financial Reporting",
+    instructions: "Choose the correct reported speech form to complete each sentence.",
+    questions: [
+      { q: "The CFO said: 'The balance sheet is very strong.' → The CFO said that the balance sheet _____ very strong.", opts: ["is", "was", "were", "has been"], ans: 1 },
+      { q: "The analyst reported: 'Goodwill has been impaired.' → The analyst reported that goodwill _____ impaired.", opts: ["has been", "had been", "will be", "is being"], ans: 1 },
+      { q: "The auditors stated: 'We will review the intangible assets.' → The auditors stated that they _____ review the intangible assets.", opts: ["will", "would", "are going to", "shall"], ans: 1 },
+      { q: "The finance director explained: 'Our debt-to-equity ratio is 2.1.' → The finance director explained that their debt-to-equity ratio _____ 2.1.", opts: ["is", "was", "has been", "will be"], ans: 1 },
+      { q: "The board announced: 'We have approved a share buyback.' → The board announced that they _____ a share buyback.", opts: ["have approved", "had approved", "approved", "will approve"], ans: 1 },
+      { q: "Management warned: 'Inventories may rise next quarter.' → Management warned that inventories _____ rise next quarter.", opts: ["may", "might", "must", "shall"], ans: 1 },
+      { q: "The investor stated: 'I believe the book value is understated.' → The investor stated that he _____ the book value was understated.", opts: ["believes", "believed", "had believe", "is believing"], ans: 1 },
+      { q: "The report noted: 'Net tangible assets fell by 8%.' → The report noted that net tangible assets _____ by 8%.", opts: ["fell", "fall", "had fallen", "have fallen"], ans: 2 },
+      { q: "The CEO confirmed: 'We are reducing long-term debt.' → The CEO confirmed that they _____ long-term debt.", opts: ["are reducing", "were reducing", "reduced", "have reduced"], ans: 1 },
+      { q: "The credit agency warned: 'The covenants may be breached.' → The credit agency warned that the covenants _____ be breached.", opts: ["may", "might", "will", "had"], ans: 1 }
+    ]
+  },
+  {
+    type: "mcq",
+    title: "Exercise 3: Balance Sheet Collocations",
+    instructions: "Choose the word that correctly completes the balance sheet collocation.",
+    questions: [
+      { q: "The company was forced to _____ a goodwill impairment charge of $35 million following the acquisition review.", opts: ["make", "record", "do", "put"], ans: 1 },
+      { q: "The board decided to _____ a share buyback programme to return value to shareholders.", opts: ["record", "launch", "write", "post"], ans: 1 },
+      { q: "The acquisition was _____ at a significant premium to the target's book value.", opts: ["launched", "made", "completed", "posted"], ans: 2 },
+      { q: "The company _____ its debt by refinancing at a lower interest rate.", opts: ["cut down", "reduced", "wrote", "cancelled"], ans: 1 },
+      { q: "Total assets _____ $520 million at the end of the financial year.", opts: ["stood at", "resulted in", "amounted from", "were resulted"], ans: 0 },
+      { q: "The finance team was asked to _____ a detailed balance sheet analysis for the board.", opts: ["make", "do", "prepare", "build"], ans: 2 },
+      { q: "The company has a _____ capital structure, with roughly equal amounts of debt and equity.", opts: ["balanced", "flat", "even", "neutral"], ans: 0 },
+      { q: "Following the rights issue, shareholders' equity _____ significantly.", opts: ["increased", "grew up", "expanded by", "rose up"], ans: 0 },
+      { q: "The quick ratio _____ a more conservative picture of liquidity than the current ratio.", opts: ["gives", "makes", "provides", "does"], ans: 2 },
+      { q: "Analysts were concerned that the company might _____ its debt covenants if earnings continued to fall.", opts: ["miss", "break", "breach", "fail over"], ans: 2 }
+    ]
+  }
+];
+
+const grammarReview = [
+  {
+    title: "Grammar Reference 1: Comparative Language in Financial Analysis",
+    points: [
+      { title: "Why comparative language matters in finance", body: "Financial analysts constantly compare figures — across periods (year-on-year), across companies (peer analysis), and across scenarios (actual vs budget). Using the correct comparative form is essential for clarity and professionalism.", examples: [] },
+      { title: "Comparative adjectives — regular forms", body: "For one-syllable adjectives: add -er. For adjectives with two or more syllables: use more/less. Always use 'than' after a comparative.", examples: [
+        "The current ratio is higher than last year. (one syllable: high → higher)",
+        "The balance sheet is more transparent than before.",
+        "Leverage is less significant than analysts expected."
+      ]},
+      { title: "As ... as / not as ... as — expressing equality or inequality", body: "Use 'as + adjective + as' to show that two things are equal or to show they are not equal.", examples: [
+        "The quick ratio is not as high as the current ratio.",
+        "This year's equity base is not as strong as it was in 2022.",
+        "The debt level is approximately as large as total equity."
+      ]},
+      { title: "The ... the ... — expressing proportional change", body: "This structure expresses that two changes happen in proportion. Very common in financial commentary.", examples: [
+        "The higher the debt-to-equity ratio, the greater the financial risk.",
+        "The lower the current ratio, the more concerned lenders tend to be.",
+        "The faster inventory turns, the less working capital the company needs."
+      ]}
+    ]
+  },
+  {
+    title: "Grammar Reference 2: Reported Speech in Financial Reporting",
+    points: [
+      { title: "What is reported speech?", body: "Reported speech (indirect speech) is used to summarise or report what someone said, wrote, or announced. It is essential in financial reporting — when presenting analyst findings, board decisions, or management comments in meetings, emails, and reports.", examples: [] },
+      { title: "Tense backshift rules", body: "When the reporting verb is in the past tense, the verb in the reported clause typically shifts back one tense:", examples: [
+        "Direct: 'The balance sheet is strong.' → Reported: She said the balance sheet was strong.",
+        "Direct: 'We have reduced debt.' → Reported: They announced they had reduced debt.",
+        "Direct: 'We will review covenants.' → Reported: The bank stated they would review covenants."
+      ]},
+      { title: "Reporting verbs in financial contexts", body: "Choose your reporting verb carefully — each one carries a different meaning:", examples: [
+        "said / stated → neutral reporting",
+        "warned / cautioned → negative or risk-related news",
+        "confirmed / announced → formal, official statements",
+        "explained / noted → added context or clarification",
+        "argued / contended → expressing a position or opinion"
+      ]},
+      { title: "Modal verb backshift", body: "Modal verbs also shift in reported speech:", examples: [
+        "will → would: 'We will launch a buyback' → They said they would launch a buyback.",
+        "can → could: 'Covenants can be tightened' → She warned covenants could be tightened.",
+        "may → might: 'Equity may fall' → Management warned equity might fall."
+      ]}
+    ]
+  },
+  {
+    title: "Grammar Reference 3: Balance Sheet Collocations & Fixed Expressions",
+    points: [
+      { title: "Why collocations matter", body: "In professional finance English, specific verbs, adjectives, and nouns combine in fixed, natural-sounding ways. Using the wrong word, even with the right meaning, sounds unnatural to native speakers and damages professional credibility.", examples: [] },
+      { title: "Verb + Noun collocations: assets and liabilities", body: "These combinations are fixed and should be memorised:", examples: [
+        "record / recognise / carry → an asset, a liability, goodwill",
+        "write down / write off / impair → an asset, goodwill, inventory",
+        "discharge / settle / repay → a liability, a loan, debt",
+        "hold / maintain / carry → a cash balance, reserves"
+      ]},
+      { title: "Verb + Noun collocations: equity and structure", body: "Use these standard combinations when discussing equity and capital:", examples: [
+        "issue / allot → shares",
+        "launch / conduct / complete → a share buyback / buyback programme",
+        "strengthen / erode / rebuild → the equity base",
+        "breach / comply with / satisfy → debt covenants"
+      ]},
+      { title: "Fixed prepositional phrases with balance sheet items", body: "These prepositional patterns are fixed in professional finance writing:", examples: [
+        "at cost / at fair value / at carrying value → how assets are measured",
+        "net of depreciation / net of tax → after deductions",
+        "on the balance sheet / off the balance sheet → whether recorded or not",
+        "in excess of / below / in line with → for comparisons"
+      ]}
+    ]
+  }
+];
+
+const listeningActivities = [
+  {
+    title: "Activity 1: Reading a Balance Sheet — A Training Session",
+    subtitle: "Finance trainer and graduate trainees — Corporate training format",
+    level: "B1",
+    type: "Multiple Choice",
+    focus: "Listening for Main Ideas",
+    transcript: `Good morning and welcome to today's session. My name is Claire Donovan and I'll be walking you through how to read and interpret a basic balance sheet. Let's start with the structure. Every balance sheet has three sections: assets, liabilities, and equity. The assets side lists everything the company owns or controls. Assets are divided into current assets — those expected to become cash within twelve months — and non-current assets, which provide value over a longer period. Current assets include cash, accounts receivable — which is money owed by customers — and inventory, which is unsold stock. Non-current assets include property and equipment, intangible assets like patents and brand names, and goodwill, which arises when you acquire another company for more than its net asset value. Now let's move to the other side. Liabilities are everything the company owes. Current liabilities — due within twelve months — include accounts payable to suppliers, short-term loans, and accrued expenses. Non-current liabilities are the longer-term obligations, mainly long-term bank loans or bonds. Finally, equity is what is left for the shareholders after you subtract all liabilities from all assets. It includes share capital, the money originally invested by shareholders, and retained earnings, the profits kept in the business over the years. The golden rule is this: total assets must always equal total liabilities plus total equity. If they do not balance, there is an error. This is why it is called the balance sheet. Any questions before we look at a real example?`,
+    questions: [
+      { q: "Who is delivering the training session?", opts: ["A senior partner from an audit firm", "Claire Donovan, a finance trainer", "A graduate trainee", "The company's CFO"], ans: 1 },
+      { q: "How many sections does every balance sheet have?", opts: ["Two", "Three", "Four", "Five"], ans: 1 },
+      { q: "What are current assets expected to do within twelve months?", opts: ["Increase in value", "Be sold to other companies", "Become cash, be sold, or be consumed", "Be written off"], ans: 2 },
+      { q: "What is accounts receivable?", opts: ["Money owed to suppliers", "Unsold stock held by the company", "Money owed to the company by its customers", "Cash held in a reserve fund"], ans: 2 },
+      { q: "When does goodwill arise on a balance sheet?", opts: ["When a company buys new machinery", "When a brand is developed internally", "When a company acquires another for more than its net asset value", "When patents are registered"], ans: 2 },
+      { q: "What are non-current liabilities?", opts: ["Amounts owed to suppliers within a month", "Obligations due within twelve months", "Longer-term obligations like bank loans or bonds", "All liabilities on the balance sheet"], ans: 2 },
+      { q: "What does equity represent?", opts: ["Total revenue earned in the year", "What is left for shareholders after subtracting liabilities from assets", "The market price of the company's shares", "The company's borrowing capacity"], ans: 1 },
+      { q: "What is the 'golden rule' of the balance sheet?", opts: ["Assets must exceed liabilities at all times", "Equity must always be positive", "Total assets must equal total liabilities plus total equity", "Current assets must exceed current liabilities"], ans: 2 }
+    ]
+  },
+  {
+    title: "Activity 2: An Analyst Presents a Balance Sheet Review",
+    subtitle: "Investment analyst — Institutional investor briefing",
+    level: "B2",
+    type: "Multiple Choice",
+    focus: "Listening for Specific Information",
+    transcript: `Good afternoon. Thank you for joining this balance sheet deep-dive on Hartwell Manufacturing. I want to take you through the key figures and highlight a few areas of concern and strength. Starting with assets. Total assets at year end were $742 million. The largest component is PP&E at $391 million, reflecting the company's heavy investment in its production facilities over the past three years. Goodwill stands at $88 million, unchanged from the prior year, which suggests no impairment has been required so far. Current assets total $183 million, of which $76 million is inventory and $71 million is accounts receivable. Cash is relatively thin at $36 million, which brings me to my first concern. Moving to liabilities. Total liabilities are $498 million. Long-term debt accounts for $312 million of this, representing a debt-to-equity ratio of 1.28 times — which is above the sector average of approximately 0.9 times. This is not alarming in itself, but it does mean the company has limited headroom to take on additional debt without approaching its covenant limits. Current liabilities are $186 million, giving a current ratio of 0.98 — which is just below 1.0. This is a yellow flag: it means current liabilities marginally exceed current assets. The quick ratio, which excludes inventory, is 0.58 — that is quite low and suggests the company would struggle to meet its short-term obligations without liquidating inventory. On the equity side, shareholders' equity is $244 million, supported mainly by $198 million in retained earnings, which reflects a long history of profitability. However, there has been no growth in equity over the past two years, largely because of the share buyback programme. In summary, Hartwell is a profitable business with a solid asset base, but its liquidity position warrants close monitoring.`,
+    questions: [
+      { q: "What is Hartwell Manufacturing's total asset value at year end?", opts: ["$498 million", "$183 million", "$742 million", "$312 million"], ans: 2 },
+      { q: "What is the largest asset on Hartwell's balance sheet?", opts: ["Goodwill", "Inventory", "Accounts receivable", "PP&E at $391 million"], ans: 3 },
+      { q: "What is the value of goodwill and what does the analyst note about it?", opts: ["$76 million, and it has increased from last year", "$88 million, unchanged, suggesting no impairment required", "$71 million, and it has been partially written down", "$36 million, and it is at risk of impairment"], ans: 1 },
+      { q: "What is the company's debt-to-equity ratio?", opts: ["0.9 times", "0.98 times", "1.28 times", "1.58 times"], ans: 2 },
+      { q: "What is the company's current ratio and why is it a concern?", opts: ["1.28, because it is too high", "0.58, because inventory cannot be liquidated", "0.98, because current liabilities marginally exceed current assets", "1.0, because equity is too small"], ans: 2 },
+      { q: "What is the company's quick ratio?", opts: ["0.98", "0.58", "1.28", "0.36"], ans: 1 },
+      { q: "What is the total shareholders' equity?", opts: ["$198 million", "$312 million", "$244 million", "$183 million"], ans: 2 },
+      { q: "Why has equity not grown over the past two years?", opts: ["Because the company has been making losses", "Because of impairment charges on goodwill", "Because of the share buyback programme", "Because dividends have been very high"], ans: 2 }
+    ]
+  },
+  {
+    title: "Activity 3: A CFO Explains the Capital Structure Decision",
+    subtitle: "CFO in interview — Business media format",
+    level: "B2",
+    type: "Multiple Choice",
+    focus: "Understanding Argument and Reasoning",
+    transcript: `Interviewer: Welcome. Our topic today is capital structure — how companies decide on the right mix of debt and equity. I have with me Sophie Marchand, CFO of a mid-market retail group. Sophie, let me start with the basics — why does capital structure matter? Sophie: It matters enormously. The mix of debt and equity you choose affects your cost of capital, your financial flexibility, and ultimately your risk profile. Debt is generally cheaper than equity — because lenders require a lower return than shareholders — and interest payments are tax-deductible. So in theory, using more debt can lower your overall cost of capital. That is what we call the tax shield. Interviewer: But surely there is a limit to how much debt is sensible? Sophie: Absolutely. The problem is financial risk. Every pound of debt you take on comes with an obligation to pay interest and eventually repay principal — regardless of whether business conditions are good or bad. If your earnings fall and you cannot service the debt, you can very quickly find yourself in a covenant breach or, in extreme cases, insolvency. Interviewer: How do you decide on the right level for your company? Sophie: We think about it in terms of the debt-to-EBITDA ratio — we want to stay comfortably below three times. We also look at interest coverage — we want earnings to cover interest payments at least four times over, so there is a substantial buffer. And we look at the debt maturity profile to make sure we are not facing a wall of refinancing risk at any one point. Interviewer: What about equity financing — issuing new shares? Sophie: We only go to shareholders for new equity when we have a specific, value-creating use for the capital. Diluting existing shareholders without a compelling reason is something we try very hard to avoid. Buybacks, on the other hand, are a tool we use when we believe our shares are undervalued and we have excess cash.`,
+    questions: [
+      { q: "What is Sophie Marchand's role?", opts: ["Head of Investor Relations", "CFO of a mid-market retail group", "Managing Director of a bank", "Senior equity analyst"], ans: 1 },
+      { q: "Why is debt generally cheaper than equity as a source of financing?", opts: ["Debt has no repayment obligations", "Lenders require a lower return than shareholders, and interest is tax-deductible", "Debt increases the company's credit rating", "Equity dividends are always higher than interest rates"], ans: 1 },
+      { q: "What is the 'tax shield' referenced in the interview?", opts: ["A government subsidy for borrowing", "The ability to write off interest payments against taxable profits", "A legal protection against creditors", "The tax-free status of dividends"], ans: 1 },
+      { q: "What risk does Sophie highlight when taking on debt?", opts: ["The risk of issuing too many shares", "The obligation to pay interest and principal regardless of business conditions", "The risk of goodwill impairment", "The risk of inventory becoming obsolete"], ans: 1 },
+      { q: "What debt-to-EBITDA level does Sophie's company aim to stay below?", opts: ["Two times", "Three times", "Four times", "Five times"], ans: 1 },
+      { q: "What is Sophie's minimum interest coverage target?", opts: ["Earnings cover interest at least two times over", "Earnings cover interest at least four times over", "Earnings cover interest at least six times over", "Earnings cover interest at least one time over"], ans: 1 },
+      { q: "What is the debt maturity profile used to assess?", opts: ["When goodwill needs to be impaired", "The refinancing risk at any given point in time", "The quality of accounts receivable", "The level of inventory days"], ans: 1 },
+      { q: "When does Sophie's company consider share buybacks?", opts: ["When the company wants to raise new capital", "When covenant limits are about to be breached", "When shares are believed to be undervalued and there is excess cash", "When retained earnings fall below target"], ans: 2 }
+    ]
+  },
+  {
+    title: "Activity 4: A Podcast on Balance Sheet Red Flags",
+    subtitle: "Senior credit analyst — Finance podcast format",
+    level: "B1–B2",
+    type: "Multiple Choice",
+    focus: "Listening for Opinion and Detail",
+    transcript: `Host: Welcome back to Credit Perspectives. Today I am joined by Diana Walsh, a senior credit analyst with twenty years of experience in corporate lending. Diana, when you review a balance sheet, what red flags make you most nervous? Diana: The first one is a sudden and unexplained jump in goodwill. If goodwill has risen significantly without a corresponding announcement of an acquisition, you start to wonder about the accounting. Or if goodwill has been at a very high level for a long time without any impairment, that can mean management has been avoiding writing it down to protect reported earnings. Host: What else? Diana: Rising inventory relative to sales. If inventory days are increasing, it can mean the company is struggling to sell its products, which will eventually pressure margins and cash flow. I also look very carefully at accounts receivable. If receivable days are lengthening significantly, it can indicate that customers are in financial difficulty, or that the company is becoming more aggressive in recognising revenue. Host: What about the liabilities side? Diana: I look at the debt maturity profile. If a large amount of debt matures in a short window — what we call a maturity wall — that creates significant refinancing risk. I also look at the proportion of short-term versus long-term debt. A company that is very reliant on short-term borrowing is more vulnerable to a sudden change in credit market conditions. And I always check for covenant headroom — how close is the company to breaching its lending agreements? Host: What would give you confidence, on the positive side? Diana: Strong and growing equity, consistently above-one current ratio, a debt-to-equity ratio trending downwards, and clean, transparent disclosures in the notes to the accounts. Transparency is everything in credit analysis.`,
+    questions: [
+      { q: "What is Diana Walsh's professional role?", opts: ["A company CFO", "A junior accountant", "A senior credit analyst", "An equity fund manager"], ans: 2 },
+      { q: "What does a sudden jump in goodwill without an acquisition announcement suggest to Diana?", opts: ["Strong financial performance", "Questions about the accounting", "Improved brand value", "A healthy capital structure"], ans: 1 },
+      { q: "What might a prolonged high goodwill balance without impairment indicate?", opts: ["That the acquisition was very successful", "That management may be avoiding write-downs to protect reported earnings", "That the company has no intangible assets", "That retained earnings are growing strongly"], ans: 1 },
+      { q: "What does rising inventory relative to sales suggest?", opts: ["Growing demand and strong order books", "Efficient inventory management", "Difficulty selling products, with pressure on margins and cash flow", "Improving accounts receivable collection"], ans: 2 },
+      { q: "What can lengthening receivable days indicate?", opts: ["Customers are paying faster", "The company is very liquid", "Customers may be in financial difficulty or revenue recognition is aggressive", "Margins are improving"], ans: 2 },
+      { q: "What is a 'maturity wall'?", opts: ["A covenant in a lending agreement", "A large amount of debt maturing in a short period", "The maximum permitted debt-to-equity ratio", "The limit on how much goodwill can be recorded"], ans: 1 },
+      { q: "What does reliance on short-term borrowing make a company vulnerable to?", opts: ["Changes in inventory levels", "A sudden change in credit market conditions", "Rising receivable days", "Goodwill impairment"], ans: 1 },
+      { q: "What does Diana say gives her confidence on the positive side?", opts: ["High goodwill and strong leverage", "Rapidly growing inventory and long receivable days", "Strong equity growth, a current ratio above one, and transparent disclosures", "A maturity wall within two years"], ans: 2 }
+    ]
+  }
+];
+
+const caseStudies = [
+  {
+    title: "Toys R Us: A Leveraged Buyout and a Balance Sheet Destroyed",
+    subtitle: "USA · Retail · 2017 Bankruptcy · Debt Overload",
+    intro: "How an excessive debt burden placed on the balance sheet in a leveraged buyout led to inevitable collapse",
+    sections: [
+      { heading: "Background", text: "Toys R Us was the world's largest dedicated toy retailer, operating over 1,700 stores across more than 30 countries at its peak. In 2005, the company was taken private in a leveraged buyout (LBO) by a consortium of private equity firms — Bain Capital, KKR, and Vornado Realty Trust — for approximately $6.6 billion. In a leveraged buyout, the acquirers use a relatively small amount of equity and a very large amount of borrowed money — typically secured against the assets of the company being acquired — to complete the purchase. As a result of this transaction, Toys R Us's balance sheet was transformed overnight: what had been a modestly indebted retail business became one carrying approximately $5 billion in long-term debt." },
+      { heading: "The Balance Sheet Under Pressure", text: "The consequences of this capital structure decision became progressively more severe over the following decade. With $400 to $500 million in annual interest payments, the company had almost no financial flexibility. While competitors such as Amazon and Walmart invested heavily in e-commerce infrastructure, supply chain efficiency, and customer experience, Toys R Us was unable to make equivalent investments because the majority of its operating cash flow was consumed by debt servicing. The balance sheet ratio that tells this story most clearly is the interest coverage ratio: in multiple years, the company's EBITDA barely covered its interest expense, leaving a razor-thin margin for capital expenditure, restructuring, or unexpected downturns. Working capital was also under constant strain, as the company struggled to finance its seasonal inventory build in the months before Christmas." },
+      { heading: "Collapse and Lessons", text: "Toys R Us filed for bankruptcy protection in September 2017, eventually liquidating all its US and UK stores by 2018. The bankruptcy eliminated thousands of jobs and wiped out the equity of the private equity owners entirely. The primary lesson from the Toys R Us case is that capital structure decisions have profound and lasting consequences. Debt that is placed on a balance sheet in pursuit of short-term financial engineering can destroy a company's ability to compete, invest, and adapt over the long term. The case is also a reminder that a company can be operationally viable — generating reasonable revenues and even positive EBITDA — while being financially unviable due to an unsustainable debt load on its balance sheet." }
+    ],
+    questions: [
+      { q: "What type of transaction was used to take Toys R Us private in 2005?", opts: ["An initial public offering", "A management buyout", "A leveraged buyout", "A merger with a competitor"], ans: 2 },
+      { q: "Which private equity firms were involved in the buyout?", opts: ["Blackstone, Apollo, and Carlyle", "Bain Capital, KKR, and Vornado Realty Trust", "Goldman Sachs, JP Morgan, and Warburg Pincus", "TPG, Advent, and Silver Lake"], ans: 1 },
+      { q: "Approximately how much long-term debt did Toys R Us carry after the buyout?", opts: ["$1 billion", "$2.5 billion", "$5 billion", "$6.6 billion"], ans: 2 },
+      { q: "How much did Toys R Us pay annually in interest expenses?", opts: ["$100–150 million", "$200–250 million", "$400–500 million", "$700–800 million"], ans: 2 },
+      { q: "Why was Toys R Us unable to invest in e-commerce and supply chain improvements?", opts: ["The management lacked technical expertise", "The stores were in poor locations", "Most operating cash flow was consumed by debt servicing", "Shareholders blocked new investment"], ans: 2 },
+      { q: "Which ratio best illustrates the company's financial pressure according to the text?", opts: ["Current ratio", "Debt-to-equity ratio", "Gross profit margin", "Interest coverage ratio"], ans: 3 },
+      { q: "What additional balance sheet strain did the company face seasonally?", opts: ["Rising goodwill impairment charges", "Difficulty financing its inventory build before Christmas", "Declining accounts receivable collections", "Rapidly depreciating fixed assets"], ans: 1 },
+      { q: "When did Toys R Us file for bankruptcy protection?", opts: ["2012", "2015", "2017", "2019"], ans: 2 },
+      { q: "What key lesson does the text draw from the Toys R Us case?", opts: ["Retail businesses should never borrow money", "Capital structure decisions have profound and lasting consequences", "Private equity firms always destroy value in acquisitions", "Leveraged buyouts are always approved by regulators"], ans: 1 },
+      { q: "What does the text say about a company that is operationally viable but financially unviable?", opts: ["It will always be rescued by the government", "It will always find new investors quickly", "It can be generating revenue and EBITDA but still collapse due to unsustainable debt", "It is not possible — profitability guarantees survival"], ans: 2 }
+    ]
+  },
+  {
+    title: "Berkshire Hathaway: A Masterclass in Balance Sheet Management",
+    subtitle: "USA · Conglomerate · Ongoing · Exemplary Capital Allocation",
+    intro: "How Warren Buffett uses the balance sheet as a strategic weapon — and what finance professionals can learn",
+    sections: [
+      { heading: "The Fortress Balance Sheet", text: "Berkshire Hathaway, the conglomerate controlled by legendary investor Warren Buffett, is frequently cited as one of the most conservatively and intelligently managed balance sheets in corporate history. At virtually any point over the past four decades, Berkshire has maintained an extraordinary cash and short-term investment position — often exceeding $100 billion — that the company deliberately chooses not to deploy unless an exceptional acquisition or investment opportunity presents itself. This 'fortress balance sheet' strategy is the exact opposite of the Toys R Us approach: rather than using leverage to amplify returns, Buffett has consistently prioritised financial resilience, optionality, and the ability to act decisively when others cannot." },
+      { heading: "Equity, Earnings, and Intrinsic Value", text: "The equity section of Berkshire's balance sheet tells a remarkable story of compounding retained earnings. Berkshire has not paid a cash dividend since 1967, instead reinvesting all profits back into the business. Over decades, this has resulted in a retained earnings balance that now runs into the hundreds of billions of dollars. The book value per share — total equity divided by the number of shares outstanding — grew from approximately $19 in 1965 to over $300,000 in the 2020s, reflecting an annualised compound growth rate of approximately 20%. Buffett himself has argued that reported book value understates the intrinsic value of Berkshire because the balance sheet carries many assets — particularly equity holdings in great businesses — at historical cost rather than current market value." },
+      { heading: "Lessons for Balance Sheet Analysis", text: "Berkshire Hathaway's approach offers several critical lessons for finance professionals and analysts. First, cash on the balance sheet is not idle — it is strategic optionality. A company that holds substantial cash can acquire distressed assets, make opportunistic investments, or weather economic storms that destroy competitors. Second, retained earnings compounded over long periods create extraordinary wealth — the decision of whether to retain or distribute profits is one of the most consequential capital allocation choices any board makes. Third, balance sheet analysis requires understanding both what is on the balance sheet and what the accounting obscures: book value is a starting point, not a conclusion. The gap between book value and intrinsic value is where sophisticated financial analysis begins." }
+    ],
+    questions: [
+      { q: "What type of company is Berkshire Hathaway?", opts: ["A technology startup", "A conglomerate controlled by Warren Buffett", "A commercial bank", "A retail chain"], ans: 1 },
+      { q: "What is Berkshire's 'fortress balance sheet' strategy?", opts: ["Using maximum leverage to amplify returns", "Maintaining a large cash reserve and prioritising financial resilience", "Paying large dividends each year", "Minimising fixed assets on the balance sheet"], ans: 1 },
+      { q: "How does Berkshire's approach differ from the Toys R Us approach?", opts: ["Berkshire uses more leverage than Toys R Us did", "Berkshire prioritises resilience over leverage, unlike Toys R Us", "Both companies had similar capital structures", "Berkshire avoids acquisitions entirely"], ans: 1 },
+      { q: "When did Berkshire Hathaway last pay a cash dividend?", opts: ["2010", "1990", "1967", "Never — it has never paid dividends"], ans: 2 },
+      { q: "What does book value per share measure?", opts: ["The market price of each share", "Total equity divided by the number of shares outstanding", "Annual earnings per share", "Cash per share held at the company"], ans: 1 },
+      { q: "What was the approximate annualised compound growth rate of Berkshire's book value per share?", opts: ["8% per year", "12% per year", "20% per year", "35% per year"], ans: 2 },
+      { q: "Why does Buffett argue that reported book value understates Berkshire's intrinsic value?", opts: ["Because goodwill is understated", "Because many assets are held at historical cost rather than current market value", "Because liabilities are overstated", "Because revenues are not fully recognised"], ans: 1 },
+      { q: "What does the text say about cash on the balance sheet?", opts: ["It is idle capital that should always be returned to shareholders", "It is a sign of poor management", "It is strategic optionality enabling opportunistic investments", "It reduces the company's return on assets unnecessarily"], ans: 2 },
+      { q: "What does the text identify as one of the most consequential capital allocation choices any board makes?", opts: ["Whether to take on more debt", "Whether to retain or distribute profits", "Whether to acquire intangible assets", "Whether to issue new shares"], ans: 1 },
+      { q: "Where does the text say sophisticated financial analysis begins?", opts: ["At the revenue line of the income statement", "In the footnotes to the cash flow statement", "In the gap between book value and intrinsic value", "At the level of gross profit margins"], ans: 2 }
+    ]
+  }
+];
+
+const assessmentQs = [
+  { q: "Which of the following is classified as a non-current asset?", opts: ["Accounts receivable", "Cash and cash equivalents", "Inventory", "Property, plant and equipment"], ans: 3 },
+  { q: "The current ratio is calculated as:", opts: ["Total assets divided by total liabilities", "Current assets divided by current liabilities", "Net profit divided by total assets", "Total debt divided by total equity"], ans: 1 },
+  { q: "What does the quick ratio exclude from its calculation?", opts: ["Cash and cash equivalents", "Accounts receivable", "Inventory", "Accounts payable"], ans: 2 },
+  { q: "Which sentence uses the comparative form correctly?", opts: ["The ratio is more higher than expected.", "The ratio is highest than expected.", "The ratio is higher than expected.", "The ratio is more high than expected."], ans: 2 },
+  { q: "What is goodwill impairment?", opts: ["Annual depreciation charged on intangible assets", "A write-down of goodwill when its carrying value exceeds its recoverable amount", "The increase in goodwill following an acquisition", "Amortisation of patents and trademarks"], ans: 1 },
+  { q: "The CFO said: 'We have reduced our debt.' In reported speech, this becomes:", opts: ["The CFO said that they reduce their debt.", "The CFO said that they had reduced their debt.", "The CFO said that they will reduce their debt.", "The CFO said that they are reducing their debt."], ans: 1 },
+  { q: "What does the debt-to-equity ratio measure?", opts: ["Short-term liquidity", "The profitability of the business", "Financial leverage — how much is financed by debt vs equity", "How quickly inventory is sold"], ans: 2 },
+  { q: "What are retained earnings?", opts: ["Dividends declared but not yet paid", "Cumulative net profits kept in the business rather than distributed", "The original capital invested by shareholders", "The amount received above par value when shares are issued"], ans: 1 },
+  { q: "Which of the following best completes this sentence: 'Total assets _____ $520 million at year end.'?", opts: ["resulted in", "amounted from", "stood at", "came to from"], ans: 2 },
+  { q: "What is a debt covenant?", opts: ["A type of intangible asset", "A contractual condition restricting how much debt a company can carry", "A method of calculating depreciation", "A type of equity instrument"], ans: 1 },
+  { q: "In the Toys R Us case, what was the primary cause of the company's bankruptcy?", opts: ["Poor product range", "An excessive long-term debt load from a leveraged buyout", "Competition from Amazon only", "Goodwill impairment charges"], ans: 1 },
+  { q: "What is share capital?", opts: ["The total dividends paid over the company's history", "The par value of shares issued to shareholders", "The market capitalisation of the company", "Total accumulated retained earnings"], ans: 1 },
+  { q: "What does Berkshire Hathaway's large cash position represent according to the case study?", opts: ["Poor financial management", "Idle funds earning no return", "Strategic optionality for future investments", "Retained earnings paid as dividends"], ans: 2 },
+  { q: "Net tangible assets (NTA) is calculated as:", opts: ["Total assets minus total liabilities", "Total assets minus intangible assets minus total liabilities", "Equity minus retained earnings", "Current assets minus current liabilities"], ans: 1 },
+  { q: "A current ratio of 0.85 indicates:", opts: ["The company has more current assets than current liabilities", "Current liabilities exceed current assets", "The company has no short-term debt", "The quick ratio is above 1.0"], ans: 1 },
+  { q: "Which reporting verb is most appropriate for presenting a risk-related finding?", opts: ["confirmed", "celebrated", "warned", "congratulated"], ans: 2 },
+  { q: "What does 'accumulated depreciation' show on the balance sheet?", opts: ["The current replacement cost of assets", "Cash set aside for future asset purchases", "The total depreciation charged against an asset since it was put into service", "Annual depreciation expense for the current year only"], ans: 2 },
+  { q: "Share buybacks have what effect on shareholders' equity?", opts: ["They increase shareholders' equity", "They have no effect on equity", "They decrease shareholders' equity", "They increase retained earnings"], ans: 2 },
+  { q: "What does capital structure refer to?", opts: ["The hierarchy of management within a company", "The mix of debt and equity used to finance a company's assets", "The number of shares issued by the company", "The breakdown of assets between current and non-current"], ans: 1 },
+  { q: "'The higher the debt-to-equity ratio, _____ the financial risk.' Which option correctly completes this sentence?", opts: ["more great", "greater", "the greater", "most great"], ans: 2 }
+];
+
+/* ══════════════════════ NAVIGATION ══════════════════════ */
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(`'${id}'`)) n.classList.add('active');
+  });
+  window.scrollTo(0, 0);
+}
+
+/* ══════════════════════ MCQ ENGINE ══════════════════════ */
+const userAnswers = {};
+function renderMCQ(questions, containerId, darkMode=false) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const L = ['A','B','C','D'];
+  let html = questions.map((item, qi) => `
+    <div class="mcq-block" id="${containerId}-q${qi}">
+      <div class="mcq-q">${qi+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((opt, oi) => `
+          <div class="mcq-option ${darkMode?'l-mcq-option':''}" onclick="selectOption('${containerId}',${qi},${oi},${item.ans})" id="${containerId}-q${qi}-o${oi}">
+            <span class="option-letter">${L[oi]}</span>${opt}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+  html += `<button class="check-btn ${darkMode?'l-check-btn':''}" onclick="checkAll('${containerId}',${questions.length})">Check Answers</button>
+  <div id="${containerId}-score" style="display:none" class="score-display"></div>`;
+  container.innerHTML = html;
+}
+function selectOption(cid, qi, oi, correct) {
+  const key = `${cid}-q${qi}`;
+  if (userAnswers[key]?.checked) return;
+  userAnswers[key] = { selected: oi, correct };
+  document.querySelectorAll(`#${cid}-q${qi} .mcq-option`).forEach((o,i) => {
+    o.classList.remove('selected');
+    if (i===oi) o.classList.add('selected');
+  });
+}
+function checkAll(cid, count) {
+  let score = 0;
+  for (let qi=0; qi<count; qi++) {
+    const key = `${cid}-q${qi}`;
+    const data = userAnswers[key];
+    if (!data) continue;
+    data.checked = true;
+    document.querySelectorAll(`#${cid}-q${qi} .mcq-option`).forEach((o,i) => {
+      o.classList.remove('selected');
+      if (i===data.correct) o.classList.add('correct');
+      if (i===data.selected && data.selected!==data.correct) o.classList.add('incorrect');
+    });
+    if (data.selected===data.correct) score++;
+  }
+  const el = document.getElementById(`${cid}-score`);
+  if (el) { el.style.display='inline-flex'; el.textContent=`Score: ${score} / ${count}`; }
+}
+
+/* ══════════════════════ RENDER FUNCTIONS ══════════════════════ */
+function renderSpeaking() {
+  document.getElementById('speakingGrid').innerHTML = speakingQs.map((q,i) => `
+    <div class="speaking-card">
+      <div class="q-num">Q${String(i+1).padStart(2,'0')}</div>
+      <div class="q-text">${q}</div>
+    </div>`).join('');
+}
+
+function renderWordBank() {
+  document.getElementById('wordbankGrid').innerHTML = wordBank.map(w => `
+    <div class="word-card">
+      <div class="word-emoji">${w.emoji}</div>
+      <div class="word-term">${w.term}</div>
+      <div class="word-def">${w.def}</div>
+    </div>`).join('');
+}
+
+function renderReading() {
+  const content = document.getElementById('readingContent');
+  content.innerHTML = readingTexts.map((text,ti) => {
+    const cid = `reading-mcq-${ti}`;
+    return `<div class="card">
+      <div class="card-title">${text.title}</div>
+      <div class="card-title-bar"></div>
+      <div class="reading-text-box">
+        <h4>${text.subtitle}</h4>
+        ${text.paragraphs.map(p=>`<p>${p}</p>`).join('')}
+      </div>
+      <h4 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:18px;">Comprehension Questions</h4>
+      <div id="${cid}"></div>
+    </div>`;
+  }).join('');
+  readingTexts.forEach((t,ti) => renderMCQ(t.questions, `reading-mcq-${ti}`));
+}
+
+function renderVocabulary() {
+  // Ex 1
+  document.getElementById('vocab-ex-0').innerHTML = `<div class="card"><div class="card-title">${vocabExercises[0].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${vocabExercises[0].instructions}</p>
+  <div id="vocab-mcq-0"></div></div>`;
+  renderMCQ(vocabExercises[0].questions, 'vocab-mcq-0');
+
+  // Ex 2 Gap Fill
+  const wordsHtml = vocabExercises[1].words.map(w =>
+    `<span style="display:inline-block;background:var(--navy);color:var(--gold-light);font-size:12px;font-weight:600;padding:3px 12px;border-radius:20px;margin:3px;">${w}</span>`).join('');
+  const gapHtml = vocabExercises[1].sentences.map((s,i) => `
+    <div class="gapfill-item">
+      <span>${i+1}. ${s.before}</span>
+      <input class="gap-input" id="gf-${i}" type="text" placeholder="…">
+      <span>${s.after}</span>
+    </div>`).join('');
+  document.getElementById('vocab-ex-1').innerHTML = `<div class="card"><div class="card-title">${vocabExercises[1].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:14px;">${vocabExercises[1].instructions}</p>
+  <div style="margin-bottom:20px;padding:14px 16px;background:var(--cream);border-radius:8px;line-height:2;">${wordsHtml}</div>
+  ${gapHtml}
+  <button class="check-btn" onclick="checkGapFill()">Check Answers</button>
+  <div id="gf-score" style="display:none" class="score-display"></div></div>`;
+
+  // Ex 3 T/F
+  const tfHtml = vocabExercises[2].statements.map((s,i) => `
+    <div class="tf-item">
+      <div class="tf-statement">${i+1}. ${s.text}</div>
+      <div class="tf-buttons">
+        <button class="tf-btn" id="tf-${i}-T" onclick="selectTF(${i},'T',${s.ans})">True</button>
+        <button class="tf-btn" id="tf-${i}-F" onclick="selectTF(${i},'F',${s.ans})">False</button>
+      </div>
+    </div>`).join('');
+  document.getElementById('vocab-ex-2').innerHTML = `<div class="card"><div class="card-title">${vocabExercises[2].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${vocabExercises[2].instructions}</p>
+  ${tfHtml}
+  <button class="check-btn" onclick="checkTF()">Check Answers</button>
+  <div id="tf-score" style="display:none" class="score-display"></div></div>`;
+}
+
+const tfAnswers = {};
+function selectTF(i, val, correct) {
+  if (tfAnswers[i]?.checked) return;
+  tfAnswers[i] = { selected: val, correct };
+  ['T','F'].forEach(v => document.getElementById(`tf-${i}-${v}`).classList.remove('selected-true','selected-false'));
+  document.getElementById(`tf-${i}-${val}`).classList.add(val==='T'?'selected-true':'selected-false');
+}
+function checkTF() {
+  let score = 0;
+  vocabExercises[2].statements.forEach((s,i) => {
+    const data = tfAnswers[i];
+    if (!data) return;
+    data.checked = true;
+    const cv = s.ans ? 'T' : 'F';
+    ['T','F'].forEach(v => document.getElementById(`tf-${i}-${v}`).classList.remove('selected-true','selected-false'));
+    const selBtn = document.getElementById(`tf-${i}-${data.selected}`);
+    const corrBtn = document.getElementById(`tf-${i}-${cv}`);
+    if (data.selected===cv) { selBtn.classList.add('correct-answer'); score++; }
+    else { selBtn.classList.add('wrong-answer'); corrBtn.classList.add('correct-answer'); }
+  });
+  const sc = document.getElementById('tf-score');
+  sc.style.display='inline-flex';
+  sc.textContent=`Score: ${score} / ${vocabExercises[2].statements.length}`;
+}
+function checkGapFill() {
+  let score = 0;
+  vocabExercises[1].sentences.forEach((s,i) => {
+    const input = document.getElementById(`gf-${i}`);
+    const val = input.value.trim().toLowerCase();
+    input.classList.remove('correct','incorrect');
+    if (val===s.blank.toLowerCase()) { input.classList.add('correct'); score++; }
+    else { input.classList.add('incorrect'); input.value=s.blank; }
+  });
+  const sc = document.getElementById('gf-score');
+  sc.style.display='inline-flex';
+  sc.textContent=`Score: ${score} / ${vocabExercises[1].sentences.length}`;
+}
+function showVocabEx(idx, el) {
+  document.querySelectorAll('.vocab-ex').forEach((e,i) => e.style.display=i===idx?'block':'none');
+  el.parentElement.querySelectorAll('.ex-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function renderGrammar() {
+  grammarExercises.forEach((ex,ei) => {
+    const cid = `grammar-mcq-${ei}`;
+    document.getElementById(`grammar-ex-${ei}`).innerHTML = `<div class="card"><div class="card-title">${ex.title}</div><div class="card-title-bar"></div>
+    <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${ex.instructions}</p>
+    <div id="${cid}"></div></div>`;
+    renderMCQ(ex.questions, cid);
+  });
+}
+function showGrammarEx(idx, el) {
+  document.querySelectorAll('.grammar-ex').forEach((e,i) => e.style.display=i===idx?'block':'none');
+  el.parentElement.querySelectorAll('.ex-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function renderGrammarReview() {
+  document.getElementById('grammarReviewContent').innerHTML = grammarReview.map(ref => `
+    <div class="card">
+      <div class="card-title">${ref.title}</div>
+      <div class="card-title-bar"></div>
+      ${ref.points.map(pt => `
+        <div class="grammar-ref-box" style="margin-bottom:16px;">
+          <h4>${pt.title}</h4>
+          <div class="grammar-rule">
+            <p>${pt.body}</p>
+            ${pt.examples.length ? `<ul style="margin-top:10px">${pt.examples.map(e=>`<li style="margin-bottom:6px"><code>${e}</code></li>`).join('')}</ul>` : ''}
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function renderWriting() {
+  const tasks = [
+    {
+      activity: "Writing Activity 1", type: "Balance Sheet Analysis Report",
+      title: "Write a Balance Sheet Analysis for Senior Management",
+      prompt: "You have reviewed the balance sheet of Vantage Industrial Ltd for the year ended 31 December. Key figures: Total assets: $618m. PP&E: $340m. Goodwill: $74m. Current assets: $164m (inventory $62m, receivables $68m, cash $34m). Total liabilities: $408m. Long-term debt: $265m. Current liabilities: $143m. Shareholders' equity: $210m (retained earnings $172m). Write a formal balance sheet analysis report for the CFO. Calculate and comment on the current ratio, quick ratio, and debt-to-equity ratio. Highlight two areas of strength and two areas of concern.",
+      tags: ["250–300 words", "Formal report register", "Include: Introduction, Ratio Analysis, Strengths, Concerns, Conclusion"],
+      id: "writing-1"
+    },
+    {
+      activity: "Writing Activity 2", type: "Management Memo",
+      title: "Memo Explaining Balance Sheet Changes to Non-Finance Managers",
+      prompt: "The company's balance sheet has changed significantly compared to last year: long-term debt has increased by $80m following a new acquisition, goodwill has risen by $45m, and shareholders' equity has fallen by $15m due to a share buyback programme. Write a professional internal memo to non-finance department heads explaining these three changes in plain English. Explain what each change means, why it happened, and what impact it may have on the business going forward.",
+      tags: ["200–250 words", "Semi-formal memo register", "Include: Purpose, three clear explanations, brief conclusion"],
+      id: "writing-2"
+    }
+  ];
+  document.getElementById('writingContent').innerHTML = tasks.map(t => `
+    <div class="card">
+      <div class="card-title">${t.activity}: ${t.type}</div>
+      <div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>${t.title}</h4>
+        <p>${t.prompt}</p>
+        <div class="writing-meta">${t.tags.map(tag=>`<span class="writing-tag">${tag}</span>`).join('')}</div>
+      </div>
+      <textarea class="writing-textarea" id="${t.id}-textarea" placeholder="Write your response here…" oninput="updateWordCount('${t.id}')"></textarea>
+      <div class="word-counter" id="${t.id}-counter">0 words</div>
+      <button class="submit-btn" onclick="submitWriting('${t.id}')">Submit Writing ✓</button>
+      <div class="submit-success" id="${t.id}-success">✅ <span>Submitted successfully! Your response has been recorded.</span></div>
+    </div>`).join('');
+}
+function updateWordCount(id) {
+  const ta = document.getElementById(`${id}-textarea`);
+  const wc = ta.value.trim()==='' ? 0 : ta.value.trim().split(/\s+/).length;
+  document.getElementById(`${id}-counter`).textContent=`${wc} words`;
+}
+function submitWriting(id) {
+  const ta = document.getElementById(`${id}-textarea`);
+  const suc = document.getElementById(`${id}-success`);
+  if (ta.value.trim().length<20) { alert('Please write at least a few sentences before submitting.'); return; }
+  suc.style.display='flex';
+  ta.style.borderColor='var(--green-accent)';
+}
+
+function renderListening() {
+  document.getElementById('listeningContent').innerHTML = listeningActivities.map((act,ai) => {
+    const cid = `l-mcq-${ai}`;
+    return `
+    <div class="listening-activity">
+      <div class="listening-header">
+        <div class="listening-icon">📊</div>
+        <div>
+          <div class="listening-title">${act.title}</div>
+          <div class="listening-subtitle">${act.subtitle}</div>
+          <div class="listening-tags">
+            <span class="l-tag l-tag-level">LEVEL: ${act.level}</span>
+            <span class="l-tag l-tag-type">${act.type}</span>
+            <span class="l-tag l-tag-focus">FOCUS: ${act.focus}</span>
+          </div>
+        </div>
+      </div>
+      <div class="audio-player">
+        <div class="player-top">
+          <button class="play-btn" onclick="togglePlay(${ai})" id="play-${ai}">▶</button>
+          <div class="player-info">
+            <div class="player-title">🎧 ${act.title}</div>
+            <div class="player-desc">${act.subtitle}</div>
+          </div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="progress-audio"><div class="progress-audio-fill" id="prog-${ai}"></div></div>
+        <div class="speed-controls">
+          <span class="speed-label">SPEED:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7×</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2×</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">↩ Replay</button>
+        </div>
+        <div class="audio-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <div class="transcript-toggle" id="trans-toggle-${ai}" onclick="toggleTranscript(${ai})">
+        <span class="arrow">▼</span> Show / Hide Transcript
+      </div>
+      <div class="transcript-content" id="trans-${ai}">
+        <p>${act.transcript}</p>
+      </div>
+      <div class="listening-mcq">
+        <div class="instructions-box">
+          <span class="inst-icon">📋</span>
+          <span class="inst-text">Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</span>
+        </div>
+        <div id="${cid}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  listeningActivities.forEach((_,ai) => renderMCQ(listeningActivities[ai].questions, `l-mcq-${ai}`, true));
+}
+
+function renderCaseStudies() {
+  document.getElementById('caseStudiesContent').innerHTML = caseStudies.map((cs,ci) => {
+    const cid = `cs-mcq-${ci}`;
+    return `
+    <div style="margin-bottom:34px;">
+      <div class="case-header">
+        <div class="case-label">Case Study ${ci+1}</div>
+        <div class="case-title">${cs.title}</div>
+        <div class="case-sub">${cs.subtitle} &nbsp;·&nbsp; ${cs.intro}</div>
+      </div>
+      <div class="case-body">
+        ${cs.sections.map(s=>`<h5>${s.heading}</h5><p>${s.text}</p>`).join('')}
+        <div class="ex-divider"></div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:18px;">Comprehension Questions</h4>
+        <div id="${cid}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  caseStudies.forEach((_,ci) => renderMCQ(caseStudies[ci].questions, `cs-mcq-${ci}`));
+}
+
+/* ══════════════════════ AUDIO ENGINE — American Female Voice ══════════════════════ */
+const speechInstances = {};
+let cachedAmericanFemaleVoice = null;
+const US_FEMALE_VOICE_NAMES = ['Samantha','Karen','Victoria','Allison','Susan','Zira','Microsoft Zira','Microsoft Zira Desktop','Google US English','en-US-Neural2-F','en-US-Wavenet-F','Ava','Nova','Jenny','Aria'];
+
+function pickAmericanFemaleVoice() {
+  if (cachedAmericanFemaleVoice) return cachedAmericanFemaleVoice;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  for (const name of US_FEMALE_VOICE_NAMES) {
+    const v = voices.find(v => v.name===name);
+    if (v) { cachedAmericanFemaleVoice=v; return v; }
+  }
+  for (const name of US_FEMALE_VOICE_NAMES) {
+    const v = voices.find(v => v.name.toLowerCase().includes(name.toLowerCase()));
+    if (v) { cachedAmericanFemaleVoice=v; return v; }
+  }
+  const enUS = voices.filter(v => v.lang==='en-US');
+  const female = enUS.find(v => /female|woman|girl|zira|samantha|ava|nova|jenny|aria/i.test(v.name));
+  if (female) { cachedAmericanFemaleVoice=female; return female; }
+  if (enUS.length) { cachedAmericanFemaleVoice=enUS[0]; return enUS[0]; }
+  const enAny = voices.find(v => v.lang.startsWith('en'));
+  if (enAny) { cachedAmericanFemaleVoice=enAny; return enAny; }
+  return voices[0];
+}
+function getVoiceThenSpeak(ai, onVoiceReady) {
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length) { onVoiceReady(pickAmericanFemaleVoice()); return; }
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.onvoiceschanged = null;
+    cachedAmericanFemaleVoice = null;
+    onVoiceReady(pickAmericanFemaleVoice());
+  };
+  setTimeout(() => { if (!cachedAmericanFemaleVoice) { cachedAmericanFemaleVoice=null; onVoiceReady(pickAmericanFemaleVoice()); }}, 600);
+}
+const progressIntervals = {};
+function startProgressAnimation(ai) {
+  const progEl = document.getElementById(`prog-${ai}`);
+  const timeEl = document.getElementById(`time-${ai}`);
+  if (!progEl) return;
+  const wordCount = listeningActivities[ai].transcript.split(/\s+/).length;
+  const rate = speechInstances[`${ai}-rate`] || 0.85;
+  const estimatedSec = Math.round((wordCount/130)*60/rate);
+  let elapsed = 0;
+  progEl.style.width = '0%';
+  const fmt = s => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  if (timeEl) timeEl.textContent = `0:00 / ${fmt(estimatedSec)}`;
+  clearInterval(progressIntervals[ai]);
+  progressIntervals[ai] = setInterval(() => {
+    elapsed++;
+    progEl.style.width = Math.min((elapsed/estimatedSec)*100,99)+'%';
+    if (timeEl) timeEl.textContent = `${fmt(elapsed)} / ${fmt(estimatedSec)}`;
+  }, 1000);
+}
+function stopProgressAnimation(ai, complete=false) {
+  clearInterval(progressIntervals[ai]);
+  const progEl = document.getElementById(`prog-${ai}`);
+  if (progEl && complete) progEl.style.width='100%';
+}
+function togglePlay(ai) {
+  const btn = document.getElementById(`play-${ai}`);
+  if (speechInstances[ai]) {
+    window.speechSynthesis.cancel();
+    stopProgressAnimation(ai);
+    btn.textContent='▶';
+    delete speechInstances[ai];
+    return;
+  }
+  getVoiceThenSpeak(ai, (voice) => {
+    const utterance = new SpeechSynthesisUtterance(listeningActivities[ai].transcript);
+    utterance.voice = voice;
+    utterance.lang = 'en-US';
+    utterance.rate = speechInstances[`${ai}-rate`] || 0.85;
+    utterance.pitch = 1.08;
+    utterance.volume = 1.0;
+    utterance.onstart = () => { btn.textContent='⏸'; startProgressAnimation(ai); };
+    utterance.onend = () => { btn.textContent='▶'; stopProgressAnimation(ai,true); delete speechInstances[ai]; };
+    utterance.onerror = (e) => { if (e.error!=='interrupted') { btn.textContent='▶'; stopProgressAnimation(ai); delete speechInstances[ai]; }};
+    window.speechSynthesis.speak(utterance);
+    speechInstances[ai] = utterance;
+  });
+}
+function setSpeed(ai, rate, el) {
+  speechInstances[`${ai}-rate`] = rate;
+  el.closest('.speed-controls').querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  if (speechInstances[ai]) {
+    window.speechSynthesis.cancel();
+    stopProgressAnimation(ai);
+    delete speechInstances[ai];
+    document.getElementById(`play-${ai}`).textContent='▶';
+    setTimeout(() => togglePlay(ai), 150);
+  }
+}
+function replayAudio(ai) {
+  if (speechInstances[ai]) { window.speechSynthesis.cancel(); stopProgressAnimation(ai); delete speechInstances[ai]; }
+  document.getElementById(`play-${ai}`).textContent='▶';
+  setTimeout(() => togglePlay(ai), 200);
+}
+function toggleTranscript(ai) {
+  document.getElementById(`trans-toggle-${ai}`).classList.toggle('open');
+  document.getElementById(`trans-${ai}`).classList.toggle('open');
+}
+
+/* ══════════════════════ ASSESSMENT ══════════════════════ */
+let assessmentAttempts = 0;
+function renderAssessment() {
+  document.getElementById('assessmentContent').innerHTML = `
+    <div class="assessment-banner">
+      <h3>Module 2 Final Assessment</h3>
+      <p>This assessment covers all areas of Module 2: Understanding Balance Sheets.<br>Answer all 20 questions. You need 70% or above to pass. You have 2 attempts.</p>
+      <div class="assessment-meta">
+        <div class="a-meta-item"><div class="a-meta-num">20</div><div class="a-meta-label">Questions</div></div>
+        <div class="a-meta-item"><div class="a-meta-num">70%</div><div class="a-meta-label">Pass Mark</div></div>
+        <div class="a-meta-item"><div class="a-meta-num">2</div><div class="a-meta-label">Attempts</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="attempts-display">Attempts used: <span class="attempt-dot" id="att-0"></span><span class="attempt-dot" id="att-1"></span></div>
+      <div id="assessment-questions"></div>
+      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="submit-btn" id="submit-assessment-btn" onclick="submitAssessment()">Submit Assessment</button>
+        <button class="check-btn" id="retry-assessment-btn" onclick="resetAssessment()" style="display:none">Try Again</button>
+      </div>
+      <div class="final-result" id="final-result"></div>
+    </div>`;
+  renderAssessmentQuestions();
+}
+const finalAnswers = {};
+function renderAssessmentQuestions() {
+  const L = ['A','B','C','D'];
+  document.getElementById('assessment-questions').innerHTML = assessmentQs.map((item,qi) => `
+    <div class="mcq-block" id="asmq-q${qi}">
+      <div class="mcq-q">${qi+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((opt,oi) => `
+          <div class="mcq-option" onclick="selectFinalOption(${qi},${oi},${item.ans})" id="asmq-q${qi}-o${oi}">
+            <span class="option-letter">${L[oi]}</span>${opt}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function selectFinalOption(qi, oi, correct) {
+  if (finalAnswers[qi]?.checked) return;
+  finalAnswers[qi] = { selected:oi, correct };
+  document.querySelectorAll(`#asmq-q${qi} .mcq-option`).forEach((o,i) => { o.classList.remove('selected'); if (i===oi) o.classList.add('selected'); });
+}
+function submitAssessment() {
+  if (assessmentAttempts>=2) return;
+  assessmentAttempts++;
+  document.getElementById(`att-${assessmentAttempts-1}`).classList.add('used');
+  let score = 0;
+  assessmentQs.forEach((item,qi) => {
+    const data = finalAnswers[qi];
+    const opts = document.querySelectorAll(`#asmq-q${qi} .mcq-option`);
+    opts.forEach(o => o.style.pointerEvents='none');
+    if (!data) return;
+    data.checked = true;
+    opts.forEach((o,i) => {
+      o.classList.remove('selected');
+      if (i===data.correct) o.classList.add('correct');
+      if (i===data.selected && data.selected!==data.correct) o.classList.add('incorrect');
+    });
+    if (data.selected===data.correct) score++;
+  });
+  const pct = Math.round((score/assessmentQs.length)*100);
+  const passed = pct>=70;
+  const resultEl = document.getElementById('final-result');
+  resultEl.className = `final-result ${passed?'pass':'fail'}`;
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = `
+    <div class="final-score">${pct}%</div>
+    <div class="final-verdict">${passed?'🎉 Congratulations! You passed!':'❌ Not quite — keep studying!'}</div>
+    <div class="final-msg">${passed
+      ? `You scored ${score} out of ${assessmentQs.length}. Excellent work on Module 2: Understanding Balance Sheets. You have demonstrated strong command of balance sheet language, ratios, and analysis.`
+      : `You scored ${score} out of ${assessmentQs.length}. You need 70% to pass (14/20). ${assessmentAttempts<2?'You have 1 attempt remaining. Review the module and try again.':'You have used both attempts. Please review the module and speak to your instructor.'}`
+    }</div>`;
+  document.getElementById('submit-assessment-btn').style.display='none';
+  if (assessmentAttempts<2 && !passed) document.getElementById('retry-assessment-btn').style.display='inline-block';
+}
+function resetAssessment() {
+  Object.keys(finalAnswers).forEach(k => delete finalAnswers[k]);
+  renderAssessmentQuestions();
+  document.getElementById('final-result').style.display='none';
+  document.getElementById('submit-assessment-btn').style.display='inline-block';
+  document.getElementById('retry-assessment-btn').style.display='none';
+}
+
+/* ══════════════════════ INIT ══════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  renderSpeaking();
+  renderWordBank();
+  renderReading();
+  renderVocabulary();
+  renderGrammar();
+  renderGrammarReview();
+  renderWriting();
+  renderListening();
+  renderCaseStudies();
+  renderAssessment();
+  setTimeout(() => {
+    document.getElementById('progressFill').style.width='0%';
+    document.getElementById('progressPct').textContent='0%';
+  }, 600);
+});
+</script>
+</body>
+</html>

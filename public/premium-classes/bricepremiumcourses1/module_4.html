@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4 · Conducting and Participating in Meetings</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d1b2a;--navy2:#162032;--navy3:#1e2d42;
+  --gold:#c9a84c;--gold2:#e8c86d;--gold-light:#fdf3da;
+  --cream:#f5f0e8;--cream2:#faf7f2;
+  --ink:#1a2332;--text:#2c3e50;--muted:#6b7a8d;
+  --border:#ddd8ce;--border2:#e8e4dc;
+  --mint:#1a8a6e;--rose:#c0392b;--sky:#2a6496;
+  --radius:10px;--shadow:0 2px 20px rgba(13,27,42,.10);
+  --sidebar:260px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream2);color:var(--text);min-height:100vh;display:flex}
+.sidebar{width:var(--sidebar);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:200;display:flex;flex-direction:column}
+.sb-brand{padding:28px 22px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand h2{font-family:'Fraunces',serif;color:var(--gold2);font-size:17px;line-height:1.3}
+.sb-brand p{color:rgba(255,255,255,.4);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-family:'DM Mono',monospace}
+.sb-badge{display:inline-block;margin-top:8px;background:var(--gold);color:var(--navy);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-family:'DM Mono',monospace}
+.sb-section{padding:16px 14px 4px;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.25);text-transform:uppercase;font-family:'DM Mono',monospace}
+.sb-nav{list-style:none;padding:0 10px 20px}
+.sb-nav li a{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,.6);font-size:13px;text-decoration:none;transition:.2s;gap:8px}
+.sb-nav li a:hover{background:rgba(255,255,255,.07);color:#fff}
+.sb-nav li a.active{background:rgba(201,168,76,.15);color:var(--gold2);font-weight:600}
+.sb-nav li a .nav-icon{font-size:15px;flex-shrink:0}
+.sb-nav li a .nav-count{font-size:9px;background:rgba(255,255,255,.1);border-radius:20px;padding:2px 7px;font-family:'DM Mono',monospace;color:rgba(255,255,255,.45);flex-shrink:0}
+.sb-nav li a.active .nav-count{background:rgba(201,168,76,.25);color:var(--gold2)}
+.main{margin-left:var(--sidebar);flex:1;min-height:100vh}
+.hero{background:var(--navy);min-height:320px;padding:0;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--navy) 0%,#1a2f4a 60%,#0f2035 100%)}
+.hero-pattern{position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(201,168,76,1) 39px,rgba(201,168,76,1) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(201,168,76,1) 39px,rgba(201,168,76,1) 40px)}
+.hero-letter{position:absolute;right:-20px;bottom:-40px;font-family:'Fraunces',serif;font-size:300px;font-weight:900;color:rgba(255,255,255,.02);line-height:1;pointer-events:none;user-select:none}
+.hero-content{position:relative;z-index:1;padding:44px 52px 36px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold2);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:30px;font-family:'DM Mono',monospace;margin-bottom:18px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,54px);line-height:1.08;color:#fff;font-weight:900;max-width:700px}
+.hero h1 em{color:var(--gold2);font-style:normal}
+.hero-desc{color:rgba(255,255,255,.55);font-size:15px;max-width:580px;line-height:1.75;margin-top:14px;font-weight:300}
+.hero-stats{display:flex;gap:0;border-top:1px solid rgba(255,255,255,.08);margin-top:32px;padding-top:0}
+.stat-item{padding:22px 32px 22px 0;border-right:1px solid rgba(255,255,255,.07);margin-right:32px}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Fraunces',serif;font-size:36px;color:var(--gold2);font-weight:700;line-height:1}
+.stat-label{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-family:'DM Mono',monospace}
+.progress-bar-wrap{background:var(--navy2);padding:14px 52px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:18px}
+.progress-label{color:rgba(255,255,255,.45);font-size:12px;font-family:'DM Mono',monospace;white-space:nowrap}
+.progress-track{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:10px;width:0%;transition:width 1.2s ease}
+.progress-pct{color:var(--gold2);font-size:12px;font-family:'DM Mono',monospace;font-weight:600;white-space:nowrap}
+.content{padding:44px 52px;max-width:1000px}
+.sec-header{margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.sec-header-inner{display:flex;align-items:flex-start;gap:16px}
+.sec-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.sec-title{font-family:'Fraunces',serif;font-size:30px;color:var(--navy);font-weight:700}
+.sec-sub{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:3px}
+.divider{height:1px;background:var(--border);margin:52px 0}
+.card{background:#fff;border-radius:var(--radius);border:1px solid var(--border2);padding:28px;margin-bottom:18px;box-shadow:var(--shadow)}
+.info-box{background:linear-gradient(135deg,#fffbf0,#fdf5e0);border:1px solid rgba(201,168,76,.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;font-size:13px;color:#6b4e00;line-height:1.7}
+.speaking-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px}
+.sq{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:18px 20px;display:flex;gap:14px;box-shadow:var(--shadow);transition:.2s}
+.sq:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(13,27,42,.12);border-color:var(--gold)}
+.sq-num{width:32px;height:32px;border-radius:8px;background:var(--navy);color:var(--gold2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;flex-shrink:0}
+.sq-text{font-size:13.5px;line-height:1.65;color:var(--text)}
+.wb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:10px}
+.wb-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:14px 16px;display:flex;gap:12px;box-shadow:var(--shadow);transition:.15s}
+.wb-card:hover{border-color:var(--gold);transform:translateY(-1px)}
+.wb-icon{font-size:28px;flex-shrink:0;width:38px;text-align:center;line-height:1}
+.wb-info .wb-word{font-weight:700;font-size:14px;color:var(--navy);font-family:'Fraunces',serif}
+.wb-info .wb-pos{font-size:9px;color:var(--sky);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.wb-info .wb-def{font-size:12px;color:var(--muted);line-height:1.5}
+.reading-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:34px;margin-bottom:18px;box-shadow:var(--shadow)}
+.reading-card h3{font-family:'Fraunces',serif;font-size:22px;color:var(--navy);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border2)}
+.reading-card p{font-size:14.5px;line-height:1.95;color:var(--text);margin-bottom:14px;font-weight:300}
+.quiz-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:14px}
+.quiz-title{font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:var(--navy);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border2)}
+.q-item{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border2)}
+.q-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.q-stem{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px;line-height:1.55}
+.options{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:center;gap:10px;padding:9px 13px;border-radius:8px;border:1.5px solid var(--border2);cursor:pointer;font-size:13px;transition:.15s;background:#fff;font-family:'DM Sans',sans-serif}
+.opt:hover{border-color:var(--gold);background:var(--gold-light)}
+.opt input[type=radio]{accent-color:var(--navy);width:14px;height:14px;flex-shrink:0}
+.opt.correct{border-color:var(--mint)!important;background:#e8f8f3!important;color:#0d6b4f!important}
+.opt.wrong{border-color:var(--rose)!important;background:#fdf0ef!important;color:#8b1a12!important}
+.btn-row{display:flex;gap:10px;margin-top:16px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;border:none;transition:.18s;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--navy);color:#fff}.btn-primary:hover{background:var(--navy3)}
+.btn-gold{background:var(--gold);color:var(--navy)}.btn-gold:hover{background:var(--gold2)}
+.btn-outline{background:transparent;border:1.5px solid var(--navy);color:var(--navy)}.btn-outline:hover{background:var(--navy);color:#fff}
+.score-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-weight:700;font-size:13px;font-family:'DM Mono',monospace}
+.sb-good{background:#e8f8f3;color:#0d6b4f;border:1px solid #86c9b0}
+.sb-ok{background:#fffbeb;color:#7c5c00;border:1px solid #e8c86d}
+.sb-bad{background:#fdf0ef;color:#8b1a12;border:1px solid #e8a09a}
+.gap-input{border:none;border-bottom:2px solid var(--gold);outline:none;padding:2px 6px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--navy);background:transparent;min-width:150px;transition:.15s}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.gap-input.correct{border-bottom-color:var(--mint);color:var(--mint)}
+.gap-input.wrong{border-bottom-color:var(--rose);color:var(--rose)}
+.drag-bank{display:flex;flex-wrap:wrap;gap:7px;padding:12px;background:#f5f2ec;border-radius:8px;margin-bottom:12px;min-height:46px}
+.drag-chip{padding:5px 13px;border-radius:20px;background:var(--navy);color:#fff;font-size:12px;cursor:pointer;user-select:none;font-family:'DM Mono',monospace;transition:.15s;border:2px solid transparent}
+.drag-chip.selected-chip{border-color:var(--gold);background:var(--navy3)}
+.drag-chip.used{opacity:.25;pointer-events:none}
+.drop-zone{border:2px dashed var(--gold);border-radius:7px;padding:6px 12px;min-width:130px;min-height:34px;display:inline-flex;align-items:center;justify-content:center;background:#fffbf0;font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;vertical-align:middle;margin:0 3px;cursor:pointer;transition:.15s}
+.drop-zone.filled{border-style:solid;border-color:var(--mint);background:#e8f8f3;color:var(--navy);font-weight:600}
+.drop-zone.wrong-drop{border-color:var(--rose);background:#fdf0ef;color:var(--rose)}
+.tf-row{display:flex;gap:8px;margin-top:7px;flex-wrap:wrap}
+.tf-btn{padding:5px 16px;border-radius:20px;border:1.5px solid var(--border2);cursor:pointer;font-size:12px;font-weight:600;background:#fff;transition:.15s;font-family:'DM Sans',sans-serif}
+.tf-btn:hover{border-color:var(--gold);color:var(--navy)}
+.tf-btn.sel-t{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tf-btn.sel-f{background:var(--navy3);color:#fff;border-color:var(--navy3)}
+.tf-btn.ok-tf{background:var(--mint);color:#fff;border-color:var(--mint)}
+.tf-btn.nok-tf{background:var(--rose);color:#fff;border-color:var(--rose)}
+.ak-wrap{margin-top:12px}
+.ak-toggle{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--navy);color:#fff;border-radius:8px;cursor:pointer;font-size:12px;font-family:'DM Mono',monospace;border:none;width:100%;text-align:left;transition:.18s}
+.ak-toggle:hover{background:var(--navy3)}
+.ak-icon{transition:.3s;font-size:13px}
+.ak-toggle.open .ak-icon{transform:rotate(90deg)}
+.ak-content{display:none;padding:16px;background:#f8f6f2;border:1px solid var(--border2);border-top:none;border-radius:0 0 8px 8px;font-size:12.5px;line-height:1.9}
+.ak-content.visible{display:block}
+.ak-content ol{padding-left:16px}
+.ak-content li{margin-bottom:4px}
+.ak-content strong{color:var(--navy)}
+.grammar-box{background:#fff;border-left:4px solid var(--gold);border-radius:0 10px 10px 0;padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow)}
+.grammar-box h4{font-family:'Fraunces',serif;font-weight:700;color:var(--navy);font-size:15px;margin-bottom:8px}
+.grammar-box p,.grammar-box li{font-size:13px;line-height:1.8;color:var(--text);font-weight:300}
+.grammar-box ul{padding-left:14px;margin-top:5px}
+.grammar-box .ex{background:#f5f2ec;border-radius:6px;padding:8px 12px;font-family:'DM Mono',monospace;font-size:11.5px;color:var(--sky);margin-top:8px;line-height:1.8}
+.writing-card{background:linear-gradient(135deg,#f5f3ee,#faf8f4);border:1px solid var(--border2);border-radius:var(--radius);padding:24px;margin-bottom:18px}
+.writing-card h4{font-family:'Fraunces',serif;font-size:17px;color:var(--navy);margin-bottom:8px}
+.writing-task{font-size:13px;color:var(--text);line-height:1.75;margin-bottom:12px;font-weight:300}
+.writing-area{width:100%;min-height:180px;border:1.5px solid var(--border2);border-radius:8px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);resize:vertical;outline:none;transition:.18s;background:#fff;line-height:1.7}
+.writing-area:focus{border-color:var(--gold)}
+.wc{font-size:11px;color:var(--muted);margin-top:4px;font-family:'DM Mono',monospace}
+.tag{display:inline-block;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.4px;margin-right:5px;margin-bottom:8px}
+.tag-navy{background:rgba(13,27,42,.1);color:var(--navy)}
+.tag-gold{background:rgba(201,168,76,.15);color:#7c5c00}
+.listen-block{margin-bottom:28px}
+.listen-header{background:var(--navy);border-radius:var(--radius) var(--radius) 0 0;padding:20px 24px;display:flex;gap:16px;align-items:flex-start}
+.listen-icon{font-size:32px;flex-shrink:0}
+.listen-meta h4{font-family:'Fraunces',serif;font-size:17px;color:#fff;font-weight:700}
+.listen-meta .track-sub{font-size:12px;color:rgba(255,255,255,.45);margin-top:3px}
+.listen-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.ltag{font-size:9px;border:1px solid;padding:2px 8px;border-radius:20px;font-family:'DM Mono',monospace;letter-spacing:.5px;text-transform:uppercase}
+.ltag-gold{border-color:var(--gold);color:var(--gold)}
+.ltag-outline{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.5)}
+.player-wrap{background:#0a1520;border:1px solid rgba(255,255,255,.06);padding:18px 22px}
+.player-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.play-pause-btn{width:44px;height:44px;border-radius:50%;background:var(--rose);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0;transition:.18s}
+.play-pause-btn:hover{background:#d44;transform:scale(1.05)}
+.player-track-info{flex:1;min-width:0}
+.track-title-sm{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track-sub-sm{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.time-display{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.5);white-space:nowrap}
+.progress-audio{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:4px;margin-bottom:10px;cursor:pointer;position:relative;overflow:hidden}
+.progress-audio-fill{height:100%;background:linear-gradient(90deg,var(--rose),#ff6b6b);border-radius:4px;width:0%;transition:.1s linear;pointer-events:none}
+.speed-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace}
+.speed-btn{padding:3px 10px;border-radius:4px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.5);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:.15s}
+.speed-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700}
+.speed-btn:hover:not(.active){background:rgba(255,255,255,.08);color:#fff}
+.replay-btn{padding:3px 10px;border-radius:4px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.4);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:.15s;display:flex;align-items:center;gap:5px}
+.replay-btn:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.player-note{font-size:10.5px;color:rgba(255,255,255,.25);font-style:italic;margin-top:8px;font-family:'DM Sans',sans-serif}
+.transcript-toggle-btn{width:100%;padding:11px 18px;background:rgba(255,255,255,.04);border:none;border-top:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.5);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:8px;text-align:left;transition:.15s;font-family:'DM Sans',sans-serif}
+.transcript-toggle-btn:hover{background:rgba(255,255,255,.07);color:#fff}
+.transcript-toggle-btn .tt-arrow{transition:.25s;display:inline-block;font-size:10px}
+.transcript-toggle-btn.open .tt-arrow{transform:rotate(90deg)}
+.transcript-box{display:none;padding:16px 22px;background:#0d1e2e;border-top:1px solid rgba(255,255,255,.05)}
+.transcript-box.visible{display:block}
+.transcript-box p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.85;font-weight:300}
+.listen-body{background:#fff;border:1px solid var(--border2);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:22px}
+.instructions-box{background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:10px 14px;font-size:13px;color:var(--text);margin-bottom:18px;line-height:1.6}
+.instructions-box strong{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:3px;color:var(--muted)}
+.case-hd{background:linear-gradient(135deg,var(--navy),#1e3054);color:#fff;border-radius:var(--radius) var(--radius) 0 0;padding:22px 26px}
+.case-hd .case-company{font-size:10px;color:var(--gold);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.case-hd h3{font-family:'Fraunces',serif;font-size:20px;font-weight:700}
+.case-body{background:#fff;border:1px solid var(--border2);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:26px;box-shadow:var(--shadow)}
+.case-body p{font-size:14px;line-height:1.9;margin-bottom:14px;font-weight:300}
+.final-wrap{background:linear-gradient(160deg,var(--navy) 0%,#1a2f4a 100%);border-radius:14px;padding:36px;color:#fff}
+.final-wrap .quiz-title{color:#fff;border-bottom-color:rgba(255,255,255,.12);font-size:19px}
+.final-wrap .q-stem{color:rgba(255,255,255,.88)}
+.final-wrap .opt{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.75)}
+.final-wrap .opt:hover{background:rgba(201,168,76,.12);border-color:var(--gold)}
+.final-wrap .opt.correct{border-color:var(--mint)!important;background:rgba(26,138,110,.15)!important;color:#7ee8c8!important}
+.final-wrap .opt.wrong{border-color:var(--rose)!important;background:rgba(192,57,43,.15)!important;color:#f1a49d!important}
+.final-result{text-align:center;padding:28px;background:rgba(255,255,255,.05);border-radius:10px;margin-top:22px;display:none}
+.final-result h2{font-family:'Fraunces',serif;font-size:48px;color:var(--gold2)}
+.final-result p{color:rgba(255,255,255,.6);font-size:14px;margin-top:8px;line-height:1.6}
+.final-prog-wrap{background:rgba(255,255,255,.08);border-radius:20px;height:6px;margin:10px auto;max-width:280px;overflow:hidden}
+.final-prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:20px;transition:.8s}
+.overview-intro{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+.overview-intro p{font-size:14.5px;line-height:1.9;font-weight:300;color:var(--text)}
+.overview-intro p strong{font-weight:600;color:var(--navy)}
+.lo-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.lo-list li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text);line-height:1.6;font-weight:300}
+.lo-list li::before{content:'✓';color:var(--mint);font-weight:700;font-size:14px;flex-shrink:0;margin-top:1px}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sb-brand">
+    <h2>Business Management English</h2>
+    <p>Professional Development</p>
+    <span class="sb-badge">B1–B2 Level</span>
+  </div>
+  <div class="sb-section">Module 4</div>
+  <ul class="sb-nav">
+    <li><a href="#overview" class="active" onclick="setActive(this)"><span class="nav-icon">🏠</span><span>Overview</span></a></li>
+    <li><a href="#speaking" onclick="setActive(this)"><span class="nav-icon">💬</span><span>Speaking</span><span class="nav-count">20Q</span></a></li>
+    <li><a href="#wordbank" onclick="setActive(this)"><span class="nav-icon">📖</span><span>Word Bank</span><span class="nav-count">30+</span></a></li>
+    <li><a href="#reading" onclick="setActive(this)"><span class="nav-icon">📄</span><span>Reading</span><span class="nav-count">2T</span></a></li>
+    <li><a href="#vocabulary" onclick="setActive(this)"><span class="nav-icon">✏️</span><span>Vocabulary</span><span class="nav-count">4Ex</span></a></li>
+    <li><a href="#grammar" onclick="setActive(this)"><span class="nav-icon">📐</span><span>Grammar</span><span class="nav-count">4Ex</span></a></li>
+    <li><a href="#grammarreview" onclick="setActive(this)"><span class="nav-icon">📘</span><span>Grammar Review</span></a></li>
+    <li><a href="#writing" onclick="setActive(this)"><span class="nav-icon">✍️</span><span>Writing</span><span class="nav-count">2Ex</span></a></li>
+    <li><a href="#listening" onclick="setActive(this)"><span class="nav-icon">🎧</span><span>Listening</span><span class="nav-count">4Ex</span></a></li>
+    <li><a href="#casestudy" onclick="setActive(this)"><span class="nav-icon">🏢</span><span>Case Studies</span><span class="nav-count">2Ex</span></a></li>
+    <li><a href="#final" onclick="setActive(this)"><span class="nav-icon">🏆</span><span>Final Assessment</span></a></li>
+  </ul>
+</aside>
+
+<main class="main">
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-letter">M4</div>
+  <div class="hero-content">
+    <div class="hero-badge">📋 Module 4 · Business Management English</div>
+    <h1>Conducting and <em>Participating in Meetings</em></h1>
+    <p class="hero-desc">Master the professional English skills to lead, facilitate, and contribute to meetings with confidence — from setting agendas and managing discussions to summarising decisions and following up effectively.</p>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Grammar Ex.</div></div>
+      <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat-item"><div class="stat-num">30+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+  </div>
+</div>
+<div class="progress-bar-wrap">
+  <span class="progress-label">Module Progress</span>
+  <div class="progress-track"><div class="progress-fill" id="modprog"></div></div>
+  <span class="progress-pct" id="modpct">0%</span>
+</div>
+
+<div class="content">
+
+<section id="overview">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#e8f0fb">🏠</div>
+      <div><div class="sec-title">Module Overview</div><div class="sec-sub">B1–B2 · Conducting and Participating in Meetings</div></div>
+    </div>
+  </div>
+  <div class="overview-intro">
+    <p><strong>Welcome to Module 4: Conducting and Participating in Meetings.</strong> This module develops the professional English language skills you need to perform confidently in the full range of business meeting contexts — from one-to-one catch-ups to formal board presentations. You will build vocabulary for meeting structure and facilitation, practise the grammar of discussion and negotiation, and develop the listening and writing skills required to document and follow up on meetings effectively.</p>
+    <p style="margin-top:12px">By the end of this module, you will be able to:</p>
+    <ul class="lo-list">
+      <li>Use precise vocabulary to describe meeting roles, procedures, and outcomes.</li>
+      <li>Open, facilitate, and close meetings in clear, professional English.</li>
+      <li>Interrupt politely, clarify points, and manage disagreement in meetings.</li>
+      <li>Write professional meeting agendas, minutes, and action point summaries.</li>
+      <li>Apply grammar structures — including passive voice, discourse markers, and indirect questions — in authentic meeting contexts.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+<section id="speaking">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#dbeafe">💬</div>
+      <div><div class="sec-title">Speaking Activities</div><div class="sec-sub">20 Discussion Questions · Meetings & Business Communication</div></div>
+    </div>
+  </div>
+  <div class="info-box">Work in pairs or small groups. Discuss each question in detail, using specific examples from your own professional experience or from organisations you know well. Try to use vocabulary from the Word Bank in your answers.</div>
+  <div class="speaking-grid">
+    <div class="sq"><div class="sq-num">01</div><div class="sq-text">What types of business meetings have you attended or facilitated? How do they differ in purpose and format?</div></div>
+    <div class="sq"><div class="sq-num">02</div><div class="sq-text">What makes a business meeting effective? What are the most common reasons meetings fail to achieve their objectives?</div></div>
+    <div class="sq"><div class="sq-num">03</div><div class="sq-text">How important is it to circulate an agenda before a meeting? What should a well-structured agenda always include?</div></div>
+    <div class="sq"><div class="sq-num">04</div><div class="sq-text">What strategies can a chairperson use to keep a meeting on track when participants go off-topic or over time?</div></div>
+    <div class="sq"><div class="sq-num">05</div><div class="sq-text">How do you politely interrupt or contribute to a discussion when someone else is already speaking?</div></div>
+    <div class="sq"><div class="sq-num">06</div><div class="sq-text">What is the difference between a formal board meeting and a less formal team stand-up? When is each format most appropriate?</div></div>
+    <div class="sq"><div class="sq-num">07</div><div class="sq-text">How has the rise of remote and hybrid working changed the way business meetings are conducted?</div></div>
+    <div class="sq"><div class="sq-num">08</div><div class="sq-text">Describe a time when you experienced or observed a difficult participant in a meeting. How was the situation managed?</div></div>
+    <div class="sq"><div class="sq-num">09</div><div class="sq-text">What is the role of the minute-taker in a formal meeting? What information should meeting minutes always record?</div></div>
+    <div class="sq"><div class="sq-num">10</div><div class="sq-text">How do you ensure that action points agreed in a meeting are actually followed up and completed?</div></div>
+    <div class="sq"><div class="sq-num">11</div><div class="sq-text">What language can you use to ask for clarification in a meeting without appearing rude or undermining the speaker?</div></div>
+    <div class="sq"><div class="sq-num">12</div><div class="sq-text">How would you manage a situation where a meeting reaches a deadlock — when participants cannot agree on a decision?</div></div>
+    <div class="sq"><div class="sq-num">13</div><div class="sq-text">What are the advantages and disadvantages of decision-making by consensus versus majority vote in a business meeting?</div></div>
+    <div class="sq"><div class="sq-num">14</div><div class="sq-text">How should a meeting chairperson deal with a participant who consistently dominates the discussion?</div></div>
+    <div class="sq"><div class="sq-num">15</div><div class="sq-text">What follow-up communication should always be sent after a formal meeting, and who is responsible for sending it?</div></div>
+    <div class="sq"><div class="sq-num">16</div><div class="sq-text">How would you present a proposal in a meeting in a way that is persuasive but also professionally appropriate?</div></div>
+    <div class="sq"><div class="sq-num">17</div><div class="sq-text">What does it mean to "table an item" in a meeting? Are there other meeting expressions in your language that could cause misunderstanding between cultures?</div></div>
+    <div class="sq"><div class="sq-num">18</div><div class="sq-text">In your experience, is it better for meetings to have strict time limits, or should discussions continue until a decision is reached?</div></div>
+    <div class="sq"><div class="sq-num">19</div><div class="sq-text">How do cultural differences affect meeting behaviour — for example, in relation to punctuality, turn-taking, or disagreeing with a superior?</div></div>
+    <div class="sq"><div class="sq-num">20</div><div class="sq-text">Could many business meetings be replaced by emails or written updates? What types of meetings genuinely require face-to-face interaction?</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="wordbank">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fef3c7">📖</div>
+      <div><div class="sec-title">Word Bank</div><div class="sec-sub">32 Key Terms · Meetings & Business Communication</div></div>
+    </div>
+  </div>
+  <div class="wb-grid">
+    <div class="wb-card"><div class="wb-icon">📋</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Agenda</div><div class="wb-def">A structured list of topics, items, and discussion points to be addressed during a meeting, typically circulated in advance to all participants.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🪑</div><div class="wb-info"><div class="wb-pos">noun / verb</div><div class="wb-word">Chairperson / to Chair</div><div class="wb-def">The person who leads, facilitates, and controls the flow and procedure of a formal meeting, ensuring all agenda items are addressed.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📝</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Minutes</div><div class="wb-def">The official written record of the proceedings, discussions, decisions, and action points of a formal meeting.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">✅</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Action Point</div><div class="wb-def">A specific task or responsibility assigned to a named individual during a meeting, with an agreed deadline for completion.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔢</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Quorum</div><div class="wb-def">The minimum number of members required to be present for a meeting to be formally valid and for its decisions to carry authority.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📊</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Proposal</div><div class="wb-def">A formal suggestion or plan put forward for consideration and discussion by the participants of a meeting.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🤝</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Consensus</div><div class="wb-def">A general agreement reached by all or most participants in a meeting, without a formal vote being required.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🗳️</div><div class="wb-info"><div class="wb-pos">noun / verb</div><div class="wb-word">Motion / to Move a Motion</div><div class="wb-def">A formal proposal put to a vote in a meeting; to "move" a motion means to formally put it forward for discussion and voting.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">⏸️</div><div class="wb-info"><div class="wb-pos">verb</div><div class="wb-word">To Table an Item</div><div class="wb-def">In British English: to add an item to the agenda for discussion. In American English: to postpone an item for discussion at a later meeting.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔄</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Matters Arising</div><div class="wb-def">Items or issues that have emerged as a result of discussions or decisions from the previous meeting and require follow-up or clarification.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📤</div><div class="wb-info"><div class="wb-pos">noun / verb</div><div class="wb-word">AOB (Any Other Business)</div><div class="wb-def">The final item on a meeting agenda that allows participants to raise any additional topics not included in the original agenda.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">💬</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Point of Order</div><div class="wb-def">A formal objection raised in a meeting when a participant believes that procedures are not being followed correctly or fairly.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🚧</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Deadlock</div><div class="wb-def">A situation in a meeting or negotiation where parties cannot reach agreement and progress has completely stalled.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🖊️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Minute-taker</div><div class="wb-def">The person designated to record the official written minutes of a meeting, capturing all key decisions and action points accurately.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🗺️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Briefing</div><div class="wb-def">A short, focused meeting or session in which key information, instructions, or updates are communicated to a group before they begin a task.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔔</div><div class="wb-info"><div class="wb-pos">verb</div><div class="wb-word">To Call a Meeting to Order</div><div class="wb-def">The formal declaration by the chairperson that a meeting has officially begun and that formal proceedings are now in effect.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🏳️</div><div class="wb-info"><div class="wb-pos">verb</div><div class="wb-word">To Adjourn</div><div class="wb-def">To officially bring a meeting to an end or to suspend it temporarily, with the intention of resuming at a later time or date.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔁</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Follow-up</div><div class="wb-def">Actions, communications, or tasks that must be completed after a meeting to ensure that agreed decisions and outcomes are implemented.</div></div></div>
+    <div class="wb-card"><div class="wb-info"><div class="wb-icon">🧭</div><div class="wb-pos">noun</div><div class="wb-word">Facilitation</div><div class="wb-def">The skill of guiding a meeting or group discussion effectively, ensuring balanced participation, productive dialogue, and clear outcomes.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📎</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Circulate</div><div class="wb-def">To distribute documents such as agendas, reports, or minutes to all relevant participants before or after a meeting.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🗣️</div><div class="wb-info"><div class="wb-pos">verb</div><div class="wb-word">To Raise a Point</div><div class="wb-def">To introduce a new topic, issue, or concern for discussion during a meeting, either by the chair or any participant.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📣</div><div class="wb-info"><div class="wb-pos">verb</div><div class="wb-word">To Take the Floor</div><div class="wb-def">To begin speaking in a formal meeting after being given, or assertively taking, the opportunity to address the group.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🎯</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Standing Item</div><div class="wb-def">A recurring agenda item that appears on the meeting agenda every time the group meets, such as a review of previous minutes or financial update.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📑</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Resolution</div><div class="wb-def">A formal decision or commitment reached and recorded in a meeting, often as a result of a vote or collective agreement.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🙋</div><div class="wb-info"><div class="wb-pos">verb</div><div class="wb-word">To Second a Motion</div><div class="wb-def">To formally support a motion that has been proposed by another participant, indicating that it deserves to be put to a vote.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">⏱️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Time-boxing</div><div class="wb-def">A meeting facilitation technique in which each agenda item is assigned a fixed time limit to ensure efficiency and prevent overrunning.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">❌</div><div class="wb-info"><div class="wb-pos">verb</div><div class="wb-word">To Defer</div><div class="wb-def">To postpone discussion of an agenda item to a future meeting because of time constraints, insufficient information, or lack of quorum.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📧</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Action Log</div><div class="wb-def">A tracking document listing all agreed action points from a meeting, including the responsible person, deadline, and current status of each task.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🎙️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Casting Vote</div><div class="wb-def">An additional vote given to the chairperson to use only when the votes of participants are equally divided, breaking a tie.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔎</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Apologies for Absence</div><div class="wb-def">A formal statement read at the beginning of a meeting to record the names of invited participants who were unable to attend.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📐</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Terms of Reference</div><div class="wb-def">A formal document that defines the scope, purpose, authority, and responsibilities of a committee or meeting group.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔓</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Open Forum</div><div class="wb-def">A section of a meeting in which all participants are invited to contribute freely, raise questions, and discuss topics without a fixed structure.</div></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<section id="reading">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#dcfce7">📄</div>
+      <div><div class="sec-title">Reading Comprehension</div><div class="sec-sub">2 Texts · 3 Paragraphs Each · 10 MCQs Each · Auto-graded</div></div>
+    </div>
+  </div>
+
+  <div class="reading-card">
+    <h3>Text 1 — The Anatomy of an Effective Business Meeting</h3>
+    <p>A business meeting is one of the most powerful — and most frequently wasted — resources in any organisation. Research consistently estimates that professionals spend between a quarter and a third of their working week in meetings, yet surveys repeatedly show that the majority of participants consider a significant proportion of those meetings to be unnecessary, unproductive, or poorly managed. The most common complaints are familiar: no clear purpose was stated, the discussion drifted far from the original agenda, and the meeting ended without anyone being certain what had been decided or what action was expected of them. The root of this dysfunction is almost always inadequate preparation. An effective meeting begins not when participants enter the room, but when the chairperson first asks: what is the specific outcome we need to achieve, and is a meeting genuinely the best way to achieve it?</p>
+    <p>The practical architecture of an effective meeting rests on three interconnected pillars: structure, participation, and documentation. Structure begins with a well-constructed agenda — a document that goes far beyond a simple list of topics. A professionally written agenda includes a clear statement of the meeting's purpose, the name of the item owner for each point, an estimated time allocation for each item, and an indication of whether the item requires a decision, discussion, or simply an update. Participation is equally critical: the most productive meetings are those in which the chairperson actively manages the distribution of contributions, drawing out quieter participants, politely redirecting those who dominate, and ensuring that all relevant perspectives are heard before any decision is made. Documentation closes the loop — a meeting whose outcomes are not accurately recorded in formal minutes is a meeting that exists only in the imperfect and diverging memories of those who attended.</p>
+    <p>Technology has introduced both opportunities and complications for business meetings in the modern workplace. Video conferencing tools have made it possible for globally distributed teams to meet instantaneously regardless of geography, significantly reducing travel costs and enabling faster decision-making across time zones. However, virtual meetings present their own distinct facilitation challenges: maintaining engagement across a screen is significantly harder than in a physical room, the informal social dynamics that build trust and rapport in face-to-face interactions are largely absent, and the risk of technical disruption adds an additional layer of uncertainty. Hybrid meetings — in which some participants attend in person while others join remotely — are widely regarded as the most challenging format of all, as they require the chairperson to simultaneously manage two different participation environments. Organisations that invest in training their meeting leaders to navigate these complexities consistently report higher meeting satisfaction scores and more durable decision-making outcomes.</p>
+  </div>
+
+  <div id="r1" class="quiz-card">
+    <div class="quiz-title">Reading 1 — 10 Multiple-Choice Questions</div>
+    <div class="q-item"><div class="q-stem">1. What does the text say about how professionals spend their working time?</div><div class="options"><label class="opt"><input type="radio" name="r1q1" value="a"> A. Most professionals spend less than 10% of their week in meetings</label><label class="opt"><input type="radio" name="r1q1" value="b"> B. Professionals spend between a quarter and a third of their working week in meetings</label><label class="opt"><input type="radio" name="r1q1" value="c"> C. The majority of professionals refuse to attend meetings they consider unnecessary</label><label class="opt"><input type="radio" name="r1q1" value="d"> D. Professionals only attend meetings when a formal agenda has been circulated in advance</label></div></div>
+    <div class="q-item"><div class="q-stem">2. According to Paragraph 1, what is the root cause of dysfunctional meetings?</div><div class="options"><label class="opt"><input type="radio" name="r1q2" value="a"> A. Participants arriving late and disrupting the meeting's momentum</label><label class="opt"><input type="radio" name="r1q2" value="b"> B. A lack of technology and appropriate meeting tools</label><label class="opt"><input type="radio" name="r1q2" value="c"> C. Inadequate preparation, including failure to define a clear purpose</label><label class="opt"><input type="radio" name="r1q2" value="d"> D. Meeting rooms that are too small for the number of attendees</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What does the text say a professionally written agenda should include beyond a simple list of topics?</div><div class="options"><label class="opt"><input type="radio" name="r1q3" value="a"> A. A seating plan and dress code for all participants</label><label class="opt"><input type="radio" name="r1q3" value="b"> B. A clear purpose, item owners, time allocations, and the nature of each item (decision, discussion, or update)</label><label class="opt"><input type="radio" name="r1q3" value="c"> C. A historical review of all decisions made in previous meetings</label><label class="opt"><input type="radio" name="r1q3" value="d"> D. A summary of each participant's key responsibilities and current workload</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What does "closing the loop" mean in the context of Paragraph 2?</div><div class="options"><label class="opt"><input type="radio" name="r1q4" value="a"> A. Ending the meeting promptly before the scheduled time is reached</label><label class="opt"><input type="radio" name="r1q4" value="b"> B. Ensuring that meeting outcomes are accurately documented in formal minutes</label><label class="opt"><input type="radio" name="r1q4" value="c"> C. Arranging the next meeting immediately at the end of the current one</label><label class="opt"><input type="radio" name="r1q4" value="d"> D. Asking all participants to confirm they understand their action points verbally</label></div></div>
+    <div class="q-item"><div class="q-stem">5. How does the text describe the chairperson's role in managing participation?</div><div class="options"><label class="opt"><input type="radio" name="r1q5" value="a"> A. The chairperson should allow all discussions to proceed without intervention</label><label class="opt"><input type="radio" name="r1q5" value="b"> B. The chairperson should prioritise the views of the most senior participants</label><label class="opt"><input type="radio" name="r1q5" value="c"> C. The chairperson should draw out quieter voices, redirect those who dominate, and ensure all perspectives are heard</label><label class="opt"><input type="radio" name="r1q5" value="d"> D. The chairperson should only speak to introduce agenda items and announce decisions</label></div></div>
+    <div class="q-item"><div class="q-stem">6. According to the text, what is a primary advantage of video conferencing for business meetings?</div><div class="options"><label class="opt"><input type="radio" name="r1q6" value="a"> A. It eliminates all technical disruptions and connectivity issues</label><label class="opt"><input type="radio" name="r1q6" value="b"> B. It fully replicates the trust and rapport of face-to-face interaction</label><label class="opt"><input type="radio" name="r1q6" value="c"> C. It enables globally distributed teams to meet instantly, reducing travel costs and accelerating decisions</label><label class="opt"><input type="radio" name="r1q6" value="d"> D. It automatically generates meeting minutes and action point lists</label></div></div>
+    <div class="q-item"><div class="q-stem">7. Why does the text describe hybrid meetings as the most challenging format?</div><div class="options"><label class="opt"><input type="radio" name="r1q7" value="a"> A. Because they require significantly more expensive technology than other formats</label><label class="opt"><input type="radio" name="r1q7" value="b"> B. Because the chairperson must simultaneously manage participants in two different environments</label><label class="opt"><input type="radio" name="r1q7" value="c"> C. Because remote participants are always less engaged than those attending in person</label><label class="opt"><input type="radio" name="r1q7" value="d"> D. Because decisions made in hybrid meetings are not legally binding</label></div></div>
+    <div class="q-item"><div class="q-stem">8. What does the text identify as absent in virtual meetings compared to face-to-face ones?</div><div class="options"><label class="opt"><input type="radio" name="r1q8" value="a"> A. Structured agendas and clear decision-making processes</label><label class="opt"><input type="radio" name="r1q8" value="b"> B. The informal social dynamics that build trust and rapport</label><label class="opt"><input type="radio" name="r1q8" value="c"> C. The ability to record and share the meeting with absent participants</label><label class="opt"><input type="radio" name="r1q8" value="d"> D. Any effective form of participation from remote team members</label></div></div>
+    <div class="q-item"><div class="q-stem">9. What do organisations that invest in meeting leadership training reportedly achieve?</div><div class="options"><label class="opt"><input type="radio" name="r1q9" value="a"> A. Significantly fewer meetings overall and lower salary costs</label><label class="opt"><input type="radio" name="r1q9" value="b"> B. Higher meeting satisfaction and more durable decision-making outcomes</label><label class="opt"><input type="radio" name="r1q9" value="c"> C. The ability to eliminate virtual meetings from their communication strategy</label><label class="opt"><input type="radio" name="r1q9" value="d"> D. Faster promotion of junior staff into management positions</label></div></div>
+    <div class="q-item"><div class="q-stem">10. What is the overall argument of this text?</div><div class="options"><label class="opt"><input type="radio" name="r1q10" value="a"> A. Meetings are an unnecessary drain on organisational resources and should be replaced by written communication wherever possible</label><label class="opt"><input type="radio" name="r1q10" value="b"> B. Virtual meetings are always less productive than traditional face-to-face formats</label><label class="opt"><input type="radio" name="r1q10" value="c"> C. Effective meetings require careful preparation, skilled facilitation, accurate documentation, and adaptive leadership</label><label class="opt"><input type="radio" name="r1q10" value="d"> D. The chairperson is the only person responsible for the success or failure of a business meeting</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('r1',{r1q1:'b',r1q2:'c',r1q3:'b',r1q4:'b',r1q5:'c',r1q6:'c',r1q7:'b',r1q8:'b',r1q9:'b',r1q10:'c'})">✅ Submit Answers</button><div id="r1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Reading 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>C</strong></li><li>3. <strong>B</strong></li><li>4. <strong>B</strong></li><li>5. <strong>C</strong></li><li>6. <strong>C</strong></li><li>7. <strong>B</strong></li><li>8. <strong>B</strong></li><li>9. <strong>B</strong></li><li>10. <strong>C</strong></li></ol></div></div>
+
+  <div style="height:32px"></div>
+
+  <div class="reading-card">
+    <h3>Text 2 — The Language of Meetings: Participation, Diplomacy, and Decision-Making</h3>
+    <p>Professional competence in business meetings extends far beyond subject-matter expertise. The language used in meetings — how participants open discussions, challenge ideas, signal agreement, manage disagreement, and seek clarification — determines not only whether communication is effective but also how a professional is perceived and respected by their peers and superiors. Research in business communication consistently shows that professionals who speak with precision and diplomatic confidence in meetings are disproportionately likely to be judged as capable, authoritative, and promotable — regardless of the technical content of what they say. This observation underlines the critical importance of developing a sophisticated repertoire of meeting language: the specific phrases, discourse markers, and interpersonal strategies that allow a professional to contribute purposefully and persuasively without alienating colleagues or overstepping the boundaries of the meeting's formal procedure.</p>
+    <p>Several key language functions are particularly important in meeting contexts. Interrupting politely — a skill that many non-native speakers find especially challenging — requires specific softening phrases such as "If I could just come in here…" or "Could I add something at this point?" that signal the intention to speak without being abrupt or dismissive. Challenging or disagreeing with a colleague's view requires equally careful formulation: direct contradiction ("That's wrong.") is almost never appropriate in a professional setting, whereas hedged disagreement ("I take your point, but I would argue that…") allows for robust intellectual exchange while preserving the relationship. Seeking clarification, when done using appropriate language such as "Could you expand on what you mean by…?" or "Just to make sure I've understood correctly…", signals engagement and intellectual rigour rather than confusion. All of these language functions share a common principle: they must be precise enough to communicate clearly and courteous enough to maintain the collaborative atmosphere that effective meetings depend upon.</p>
+    <p>The decision-making phase of a meeting is frequently where professional language is under the greatest scrutiny. When a chairperson summarises a discussion and moves toward a resolution, precise language is essential to avoid ambiguity about what has actually been agreed. Phrases such as "So the consensus appears to be…", "Could we confirm that we are all in agreement that…", and "The motion is carried — this will be recorded in the minutes as…" give clarity and finality to what might otherwise be fuzzy or contested conclusions. Similarly, when a decision cannot be reached, the language used to defer or adjourn must be professional and forward-looking: "I suggest we table this item and return to it at the next meeting with additional data" is significantly more constructive than expressing frustration at the lack of agreement. The most effective meeting participants understand that every word they use in a meeting is, in some sense, a professional self-presentation — and they choose those words accordingly.</p>
+  </div>
+
+  <div id="r2" class="quiz-card">
+    <div class="quiz-title">Reading 2 — 10 Multiple-Choice Questions</div>
+    <div class="q-item"><div class="q-stem">1. What does research in business communication show about professionals who speak with precision in meetings?</div><div class="options"><label class="opt"><input type="radio" name="r2q1" value="a"> A. They are more likely to be promoted than those with superior technical knowledge</label><label class="opt"><input type="radio" name="r2q1" value="b"> B. They are disproportionately perceived as capable, authoritative, and promotable</label><label class="opt"><input type="radio" name="r2q1" value="c"> C. They tend to speak for longer and make more contributions per meeting</label><label class="opt"><input type="radio" name="r2q1" value="d"> D. They are less likely to experience conflict with colleagues in meetings</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What does the text describe as a "repertoire of meeting language"?</div><div class="options"><label class="opt"><input type="radio" name="r2q2" value="a"> A. A personal script that professionals memorise before attending important meetings</label><label class="opt"><input type="radio" name="r2q2" value="b"> B. The set of technical vocabulary required in a specific industry sector</label><label class="opt"><input type="radio" name="r2q2" value="c"> C. The phrases, discourse markers, and interpersonal strategies that enable purposeful, persuasive contribution</label><label class="opt"><input type="radio" name="r2q2" value="d"> D. A formal register restricted to senior management levels within an organisation</label></div></div>
+    <div class="q-item"><div class="q-stem">3. According to Paragraph 2, why is interrupting politely particularly challenging for non-native speakers?</div><div class="options"><label class="opt"><input type="radio" name="r2q3" value="a"> A. Because they do not have the vocabulary needed to describe complex technical topics</label><label class="opt"><input type="radio" name="r2q3" value="b"> B. Because it requires specific softening phrases that must signal intent without being abrupt</label><label class="opt"><input type="radio" name="r2q3" value="c"> C. Because interrupting is considered extremely rude in all business cultures</label><label class="opt"><input type="radio" name="r2q3" value="d"> D. Because non-native speakers are not permitted to interrupt a chairperson</label></div></div>
+    <div class="q-item"><div class="q-stem">4. How does the text suggest professionals should disagree with a colleague in a meeting?</div><div class="options"><label class="opt"><input type="radio" name="r2q4" value="a"> A. By waiting until after the meeting to raise disagreements privately via email</label><label class="opt"><input type="radio" name="r2q4" value="b"> B. By using direct contradiction to make the point forcefully and clearly</label><label class="opt"><input type="radio" name="r2q4" value="c"> C. By using hedged disagreement, such as "I take your point, but I would argue that…"</label><label class="opt"><input type="radio" name="r2q4" value="d"> D. By raising a formal point of order and asking the chairperson to intervene</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What does the text say about asking for clarification in a meeting?</div><div class="options"><label class="opt"><input type="radio" name="r2q5" value="a"> A. It should be avoided as it may make the speaker appear unprepared</label><label class="opt"><input type="radio" name="r2q5" value="b"> B. It is only appropriate when the point being made is completely unclear</label><label class="opt"><input type="radio" name="r2q5" value="c"> C. When done with appropriate language, it signals engagement and intellectual rigour rather than confusion</label><label class="opt"><input type="radio" name="r2q5" value="d"> D. It should always be done in writing rather than verbally during the meeting</label></div></div>
+    <div class="q-item"><div class="q-stem">6. What common principle do all the key language functions described in Paragraph 2 share?</div><div class="options"><label class="opt"><input type="radio" name="r2q6" value="a"> A. They are all designed to help the speaker dominate the meeting discussion</label><label class="opt"><input type="radio" name="r2q6" value="b"> B. They must be precise enough to communicate clearly and courteous enough to maintain collaboration</label><label class="opt"><input type="radio" name="r2q6" value="c"> C. They are only appropriate in formal board-level meetings, not team meetings</label><label class="opt"><input type="radio" name="r2q6" value="d"> D. They are universal across all languages and require no cultural adaptation</label></div></div>
+    <div class="q-item"><div class="q-stem">7. Why does the text say precise language is especially important when a chairperson moves toward a resolution?</div><div class="options"><label class="opt"><input type="radio" name="r2q7" value="a"> A. Because all meeting resolutions must be submitted to a legal team for review</label><label class="opt"><input type="radio" name="r2q7" value="b"> B. To avoid ambiguity about what has been agreed, which could otherwise lead to contested conclusions</label><label class="opt"><input type="radio" name="r2q7" value="c"> C. Because participants tend to be less attentive at the end of a meeting</label><label class="opt"><input type="radio" name="r2q7" value="d"> D. Because decisions made without precise language cannot be recorded in the minutes</label></div></div>
+    <div class="q-item"><div class="q-stem">8. What example does the text give of constructive language when a decision cannot be reached?</div><div class="options"><label class="opt"><input type="radio" name="r2q8" value="a"> A. "I'm afraid we have completely run out of time and will have to end here."</label><label class="opt"><input type="radio" name="r2q8" value="b"> B. "This is clearly too complex an issue to be resolved in a single meeting."</label><label class="opt"><input type="radio" name="r2q8" value="c"> C. "I suggest we table this item and return to it at the next meeting with additional data."</label><label class="opt"><input type="radio" name="r2q8" value="d"> D. "We appear to have a fundamental disagreement that requires senior management intervention."</label></div></div>
+    <div class="q-item"><div class="q-stem">9. What does the text mean by saying every word used in a meeting is "a professional self-presentation"?</div><div class="options"><label class="opt"><input type="radio" name="r2q9" value="a"> A. Professionals should always prepare formal speeches before attending any meeting</label><label class="opt"><input type="radio" name="r2q9" value="b"> B. Meeting participants are constantly being evaluated on the quality and precision of their communication</label><label class="opt"><input type="radio" name="r2q9" value="c"> C. The way you dress for a meeting is as important as the language you use</label><label class="opt"><input type="radio" name="r2q9" value="d"> D. Only senior professionals need to be conscious of how they communicate in meetings</label></div></div>
+    <div class="q-item"><div class="q-stem">10. What is the central message of this text?</div><div class="options"><label class="opt"><input type="radio" name="r2q10" value="a"> A. Non-native English speakers face insuperable disadvantages in professional meeting environments</label><label class="opt"><input type="radio" name="r2q10" value="b"> B. Decision-making in meetings is primarily a procedural matter rather than a linguistic one</label><label class="opt"><input type="radio" name="r2q10" value="c"> C. Mastering the precise, diplomatic language of meeting participation is a critical and developable professional skill</label><label class="opt"><input type="radio" name="r2q10" value="d"> D. The best meeting participants are those who say the least and listen the most</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('r2',{r2q1:'b',r2q2:'c',r2q3:'b',r2q4:'c',r2q5:'c',r2q6:'b',r2q7:'b',r2q8:'c',r2q9:'b',r2q10:'c'})">✅ Submit Answers</button><div id="r2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Reading 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>C</strong></li><li>3. <strong>B</strong></li><li>4. <strong>C</strong></li><li>5. <strong>C</strong></li><li>6. <strong>B</strong></li><li>7. <strong>B</strong></li><li>8. <strong>C</strong></li><li>9. <strong>B</strong></li><li>10. <strong>C</strong></li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<section id="vocabulary">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fef3c7">✏️</div>
+      <div><div class="sec-title">Vocabulary Exercises</div><div class="sec-sub">4 Exercises · Multiple Choice · Gap-Fill · True/False · Drag-and-Drop</div></div>
+    </div>
+  </div>
+
+  <div id="v1" class="quiz-card">
+    <div class="quiz-title">Exercise 1 — Multiple Choice: Meetings Vocabulary in Context</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the word or phrase that best completes each sentence.</p>
+    <div class="q-item"><div class="q-stem">1. Before the board meeting, the company secretary sent an ________ to all directors, listing the five items to be discussed.</div><div class="options"><label class="opt"><input type="radio" name="v1q1" value="a"> A. action log</label><label class="opt"><input type="radio" name="v1q1" value="b"> B. agenda</label><label class="opt"><input type="radio" name="v1q1" value="c"> C. quorum</label><label class="opt"><input type="radio" name="v1q1" value="d"> D. resolution</label></div></div>
+    <div class="q-item"><div class="q-stem">2. The meeting had to be abandoned because not enough members were present to form a ________ — only four of the required seven directors had arrived.</div><div class="options"><label class="opt"><input type="radio" name="v1q2" value="a"> A. consensus</label><label class="opt"><input type="radio" name="v1q2" value="b"> B. casting vote</label><label class="opt"><input type="radio" name="v1q2" value="c"> C. quorum</label><label class="opt"><input type="radio" name="v1q2" value="d"> D. motion</label></div></div>
+    <div class="q-item"><div class="q-stem">3. Since the vote was tied at five to five, the chairperson used her ________ to approve the proposed budget revision.</div><div class="options"><label class="opt"><input type="radio" name="v1q3" value="a"> A. point of order</label><label class="opt"><input type="radio" name="v1q3" value="b"> B. casting vote</label><label class="opt"><input type="radio" name="v1q3" value="c"> C. quorum</label><label class="opt"><input type="radio" name="v1q3" value="d"> D. resolution</label></div></div>
+    <div class="q-item"><div class="q-stem">4. The final item of the meeting was ________, which gave all participants a brief opportunity to raise any issues not included in the original agenda.</div><div class="options"><label class="opt"><input type="radio" name="v1q4" value="a"> A. matters arising</label><label class="opt"><input type="radio" name="v1q4" value="b"> B. apologies for absence</label><label class="opt"><input type="radio" name="v1q4" value="c"> C. AOB</label><label class="opt"><input type="radio" name="v1q4" value="d"> D. terms of reference</label></div></div>
+    <div class="q-item"><div class="q-stem">5. As they could not reach agreement that afternoon, the committee decided to ________ the budget discussion and revisit it at the following month's meeting.</div><div class="options"><label class="opt"><input type="radio" name="v1q5" value="a"> A. second</label><label class="opt"><input type="radio" name="v1q5" value="b"> B. defer</label><label class="opt"><input type="radio" name="v1q5" value="c"> C. circulate</label><label class="opt"><input type="radio" name="v1q5" value="d"> D. adjourn</label></div></div>
+    <div class="q-item"><div class="q-stem">6. The HR director put forward a ________ to revise the company's flexible working policy, which was then formally supported by the Finance Director.</div><div class="options"><label class="opt"><input type="radio" name="v1q6" value="a"> A. resolution</label><label class="opt"><input type="radio" name="v1q6" value="b"> B. briefing</label><label class="opt"><input type="radio" name="v1q6" value="c"> C. motion</label><label class="opt"><input type="radio" name="v1q6" value="d"> D. deadlock</label></div></div>
+    <div class="q-item"><div class="q-stem">7. The company secretary was responsible for recording the official ________ of the AGM, including all resolutions passed and action points assigned.</div><div class="options"><label class="opt"><input type="radio" name="v1q7" value="a"> A. minutes</label><label class="opt"><input type="radio" name="v1q7" value="b"> B. proposal</label><label class="opt"><input type="radio" name="v1q7" value="c"> C. agenda</label><label class="opt"><input type="radio" name="v1q7" value="d"> D. follow-up</label></div></div>
+    <div class="q-item"><div class="q-stem">8. After weeks of negotiation, the two departments reached a complete ________ — neither side was willing to compromise, and outside mediation was required.</div><div class="options"><label class="opt"><input type="radio" name="v1q8" value="a"> A. consensus</label><label class="opt"><input type="radio" name="v1q8" value="b"> B. facilitation</label><label class="opt"><input type="radio" name="v1q8" value="c"> C. open forum</label><label class="opt"><input type="radio" name="v1q8" value="d"> D. deadlock</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('v1',{v1q1:'b',v1q2:'c',v1q3:'b',v1q4:'c',v1q5:'b',v1q6:'c',v1q7:'a',v1q8:'d'})">✅ Submit</button><div id="v1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — agenda</li><li>2. <strong>C</strong> — quorum</li><li>3. <strong>B</strong> — casting vote</li><li>4. <strong>C</strong> — AOB</li><li>5. <strong>B</strong> — defer</li><li>6. <strong>C</strong> — motion</li><li>7. <strong>A</strong> — minutes</li><li>8. <strong>D</strong> — deadlock</li></ol></div></div>
+
+  <div id="v2" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 2 — Gap-Fill: Complete the Meeting Sentences</div>
+    <div style="background:#f5f2ec;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;font-family:'DM Mono',monospace;color:var(--sky);display:flex;flex-wrap:wrap;gap:8px">
+      <span>action point</span> | <span>facilitation</span> | <span>resolution</span> | <span>matters arising</span> | <span>adjourn</span> | <span>standing item</span> | <span>circulate</span> | <span>open forum</span>
+    </div>
+    <div class="q-item"><div class="q-stem">1. The first substantive item on every monthly agenda is the financial update — it is a ________ that always appears, regardless of any other topics to be discussed.</div><div style="margin-top:8px"><input class="gap-input" id="g2i1" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">2. The chair asked the secretary to ________ the revised budget proposal to all committee members at least 72 hours before the meeting.</div><div style="margin-top:8px"><input class="gap-input" id="g2i2" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">3. Under ________, the director raised the question of whether the action points from the March meeting had all been completed satisfactorily.</div><div style="margin-top:8px"><input class="gap-input" id="g2i3" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">4. The ________ was passed unanimously: the company would invest in three new regional offices by the end of the financial year.</div><div style="margin-top:8px"><input class="gap-input" id="g2i4" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">5. It was agreed as an ________ that the Operations Director would prepare a full cost-benefit analysis and present it at the next board meeting.</div><div style="margin-top:8px"><input class="gap-input" id="g2i5" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">6. As there was no further business and the time had exceeded the scheduled slot, the chair moved to ________ the meeting at 4:45 pm.</div><div style="margin-top:8px"><input class="gap-input" id="g2i6" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">7. The quality of the ________ was widely praised — the external consultant had managed to draw out contributions from even the quietest participants.</div><div style="margin-top:8px"><input class="gap-input" id="g2i7" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">8. The final thirty minutes of the strategy day were reserved for an ________, during which any employee could raise a question directly to the CEO.</div><div style="margin-top:8px"><input class="gap-input" id="g2i8" placeholder="type answer…"></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeGap2()">✅ Check Answers</button><div id="v2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>standing item</strong></li><li>2. <strong>circulate</strong></li><li>3. <strong>matters arising</strong></li><li>4. <strong>resolution</strong></li><li>5. <strong>action point</strong></li><li>6. <strong>adjourn</strong></li><li>7. <strong>facilitation</strong></li><li>8. <strong>open forum</strong></li></ol></div></div>
+
+  <div id="v3" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 3 — True or False: Meeting Procedures and Language</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Read each statement carefully. Select <strong>True</strong> or <strong>False</strong> based on the correct meaning of the meetings vocabulary and concepts in this module.</p>
+    <div class="q-item" id="tfr1"><div class="q-stem">1. "AOB" stands for "Any Outstanding Business" and is placed at the beginning of a meeting agenda.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'1','T')">True</button><button class="tf-btn" onclick="pickTF(this,'1','F')">False</button></div></div>
+    <div class="q-item" id="tfr2"><div class="q-stem">2. A casting vote is an additional vote given exclusively to the chairperson, used only when votes are equally divided.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'2','T')">True</button><button class="tf-btn" onclick="pickTF(this,'2','F')">False</button></div></div>
+    <div class="q-item" id="tfr3"><div class="q-stem">3. In British English, "to table an item" means to postpone it for discussion at a future meeting.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'3','T')">True</button><button class="tf-btn" onclick="pickTF(this,'3','F')">False</button></div></div>
+    <div class="q-item" id="tfr4"><div class="q-stem">4. Meeting minutes are the official written record of the discussions, decisions, and action points of a formal meeting.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'4','T')">True</button><button class="tf-btn" onclick="pickTF(this,'4','F')">False</button></div></div>
+    <div class="q-item" id="tfr5"><div class="q-stem">5. A quorum refers to the maximum number of participants that may attend a formal meeting.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'5','T')">True</button><button class="tf-btn" onclick="pickTF(this,'5','F')">False</button></div></div>
+    <div class="q-item" id="tfr6"><div class="q-stem">6. "Matters arising" refers to issues that have emerged from the previous meeting and require follow-up at the current meeting.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'6','T')">True</button><button class="tf-btn" onclick="pickTF(this,'6','F')">False</button></div></div>
+    <div class="q-item" id="tfr7"><div class="q-stem">7. Time-boxing is a facilitation technique in which each agenda item is assigned a fixed time limit to ensure efficiency.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'7','T')">True</button><button class="tf-btn" onclick="pickTF(this,'7','F')">False</button></div></div>
+    <div class="q-item" id="tfr8"><div class="q-stem">8. "To second a motion" means to formally oppose or vote against a proposal put forward by another participant.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'8','T')">True</button><button class="tf-btn" onclick="pickTF(this,'8','F')">False</button></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeTF()">✅ Submit Answers</button><div id="v3-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>False</strong> — AOB stands for "Any Other Business" and appears at the end of the agenda.</li><li>2. <strong>True</strong></li><li>3. <strong>False</strong> — In British English, tabling an item means adding it for discussion; postponing is the American English meaning.</li><li>4. <strong>True</strong></li><li>5. <strong>False</strong> — A quorum is the minimum (not maximum) number required.</li><li>6. <strong>True</strong></li><li>7. <strong>True</strong></li><li>8. <strong>False</strong> — To second a motion means to support it, not oppose it.</li></ol></div></div>
+
+  <div id="v4" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 4 — Match: Meeting Function to Language Phrase (Click to Select & Place)</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Click a phrase in the bank to select it, then click the correct meeting function box to place it there.</p>
+    <div class="drag-bank" id="v4bank">
+      <div class="drag-chip" data-w="Could I add something here?" onclick="pickDrag(this)">Could I add something here?</div>
+      <div class="drag-chip" data-w="The motion is carried." onclick="pickDrag(this)">The motion is carried.</div>
+      <div class="drag-chip" data-w="I suggest we table this." onclick="pickDrag(this)">I suggest we table this.</div>
+      <div class="drag-chip" data-w="Could you expand on that?" onclick="pickDrag(this)">Could you expand on that?</div>
+      <div class="drag-chip" data-w="I take your point, but..." onclick="pickDrag(this)">I take your point, but...</div>
+      <div class="drag-chip" data-w="Shall we move to the next item?" onclick="pickDrag(this)">Shall we move to the next item?</div>
+      <div class="drag-chip" data-w="I'd like to raise a concern." onclick="pickDrag(this)">I'd like to raise a concern.</div>
+      <div class="drag-chip" data-w="So the consensus appears to be..." onclick="pickDrag(this)">So the consensus appears to be...</div>
+    </div>
+    <div class="q-item"><div class="q-stem">1. Interrupting politely to make a contribution → <span class="drop-zone" data-ans="Could I add something here?" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">2. Announcing that a vote has been passed → <span class="drop-zone" data-ans="The motion is carried." onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">3. Deferring an item to a future meeting → <span class="drop-zone" data-ans="I suggest we table this." onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">4. Asking a speaker to elaborate or clarify → <span class="drop-zone" data-ans="Could you expand on that?" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">5. Disagreeing diplomatically with a colleague → <span class="drop-zone" data-ans="I take your point, but..." onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">6. Moving the discussion on to the next agenda item → <span class="drop-zone" data-ans="Shall we move to the next item?" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">7. Introducing a new topic or issue for discussion → <span class="drop-zone" data-ans="I'd like to raise a concern." onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">8. Summarising the group's agreed position → <span class="drop-zone" data-ans="So the consensus appears to be..." onclick="doDrop(this)">Place here</span></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeDrop()">✅ Check Matches</button><button class="btn btn-outline" style="font-size:12px" onclick="resetDrop()">↺ Reset</button><div id="v4-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 4</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>Could I add something here?</strong></li><li>2. <strong>The motion is carried.</strong></li><li>3. <strong>I suggest we table this.</strong></li><li>4. <strong>Could you expand on that?</strong></li><li>5. <strong>I take your point, but...</strong></li><li>6. <strong>Shall we move to the next item?</strong></li><li>7. <strong>I'd like to raise a concern.</strong></li><li>8. <strong>So the consensus appears to be...</strong></li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<section id="grammar">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#dcfce7">📐</div>
+      <div><div class="sec-title">Grammar Exercises</div><div class="sec-sub">4 Exercises · Passive Voice · Discourse Markers · Indirect Questions · Hedging Language</div></div>
+    </div>
+  </div>
+
+  <div id="g1" class="quiz-card">
+    <div class="quiz-title">Grammar 1 — Passive Voice in Meeting Contexts</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the correct passive form to complete each sentence as it would appear in professional meeting minutes or business communication.</p>
+    <div class="q-item"><div class="q-stem">1. A formal resolution ________ at the end of the meeting, committing the organisation to a full strategic review by Q3.</div><div class="options"><label class="opt"><input type="radio" name="g1q1" value="a"> A. was passed</label><label class="opt"><input type="radio" name="g1q1" value="b"> B. passed</label><label class="opt"><input type="radio" name="g1q1" value="c"> C. has passing</label><label class="opt"><input type="radio" name="g1q1" value="d"> D. is passing</label></div></div>
+    <div class="q-item"><div class="q-stem">2. It ________ that the revised budget would be circulated to all committee members no later than Friday morning.</div><div class="options"><label class="opt"><input type="radio" name="g1q2" value="a"> A. agreed</label><label class="opt"><input type="radio" name="g1q2" value="b"> B. was agreed</label><label class="opt"><input type="radio" name="g1q2" value="c"> C. is agreeing</label><label class="opt"><input type="radio" name="g1q2" value="d"> D. has been agreeing</label></div></div>
+    <div class="q-item"><div class="q-stem">3. The following action points ________ during the meeting and must be completed before the next scheduled session.</div><div class="options"><label class="opt"><input type="radio" name="g1q3" value="a"> A. are identified</label><label class="opt"><input type="radio" name="g1q3" value="b"> B. identified</label><label class="opt"><input type="radio" name="g1q3" value="c"> C. were identified</label><label class="opt"><input type="radio" name="g1q3" value="d"> D. had identifying</label></div></div>
+    <div class="q-item"><div class="q-stem">4. The agenda for the quarterly review meeting ________ to all board members at least five working days before the meeting date.</div><div class="options"><label class="opt"><input type="radio" name="g1q4" value="a"> A. should circulate</label><label class="opt"><input type="radio" name="g1q4" value="b"> B. should be circulated</label><label class="opt"><input type="radio" name="g1q4" value="c"> C. should circulating</label><label class="opt"><input type="radio" name="g1q4" value="d"> D. will circulate</label></div></div>
+    <div class="q-item"><div class="q-stem">5. It has ________ that the company will conduct a full review of its remote working policy in the coming financial year.</div><div class="options"><label class="opt"><input type="radio" name="g1q5" value="a"> A. been announcing</label><label class="opt"><input type="radio" name="g1q5" value="b"> B. been announced</label><label class="opt"><input type="radio" name="g1q5" value="c"> C. announced</label><label class="opt"><input type="radio" name="g1q5" value="d"> D. been announce</label></div></div>
+    <div class="q-item"><div class="q-stem">6. The minutes from last month's extraordinary general meeting ________ and formally approved at the start of today's session.</div><div class="options"><label class="opt"><input type="radio" name="g1q6" value="a"> A. were read out</label><label class="opt"><input type="radio" name="g1q6" value="b"> B. read out</label><label class="opt"><input type="radio" name="g1q6" value="c"> C. are reading out</label><label class="opt"><input type="radio" name="g1q6" value="d"> D. have read out</label></div></div>
+    <div class="q-item"><div class="q-stem">7. The proposal to expand into three new markets ________ by the majority of board members, and a working group has now been formed.</div><div class="options"><label class="opt"><input type="radio" name="g1q7" value="a"> A. has supported</label><label class="opt"><input type="radio" name="g1q7" value="b"> B. was supporting</label><label class="opt"><input type="radio" name="g1q7" value="c"> C. has been supported</label><label class="opt"><input type="radio" name="g1q7" value="d"> D. have been supported</label></div></div>
+    <div class="q-item"><div class="q-stem">8. No decision ________ on the restructuring proposal, as additional financial modelling was required before any commitment could be made.</div><div class="options"><label class="opt"><input type="radio" name="g1q8" value="a"> A. was reached</label><label class="opt"><input type="radio" name="g1q8" value="b"> B. reached</label><label class="opt"><input type="radio" name="g1q8" value="c"> C. were reached</label><label class="opt"><input type="radio" name="g1q8" value="d"> D. have reached</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g1',{g1q1:'a',g1q2:'b',g1q3:'c',g1q4:'b',g1q5:'b',g1q6:'a',g1q7:'c',g1q8:'a'})">✅ Submit</button><div id="g1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>A</strong> — "was passed" (simple past passive)</li><li>2. <strong>B</strong> — "was agreed" (impersonal passive: It was agreed that…)</li><li>3. <strong>C</strong> — "were identified" (past passive)</li><li>4. <strong>B</strong> — "should be circulated" (modal passive)</li><li>5. <strong>B</strong> — "been announced" (present perfect passive: has been announced)</li><li>6. <strong>A</strong> — "were read out" (past passive)</li><li>7. <strong>C</strong> — "has been supported" (present perfect passive)</li><li>8. <strong>A</strong> — "was reached" (past passive with negative: No decision was reached)</li></ol></div></div>
+
+  <div id="g2" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Grammar 2 — Discourse Markers for Meeting Communication</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Select the most appropriate discourse marker to complete each professional meeting expression.</p>
+    <div class="q-item"><div class="q-stem">1. "________, I think it is important to acknowledge that the team has made significant progress before we turn to the areas that still need attention."</div><div class="options"><label class="opt"><input type="radio" name="g2q1" value="a"> A. However</label><label class="opt"><input type="radio" name="g2q1" value="b"> B. First and foremost</label><label class="opt"><input type="radio" name="g2q1" value="c"> C. In contrast</label><label class="opt"><input type="radio" name="g2q1" value="d"> D. In spite of</label></div></div>
+    <div class="q-item"><div class="q-stem">2. "The marketing spend was significantly higher this quarter. ________, revenue figures have exceeded the original forecast by 18%."</div><div class="options"><label class="opt"><input type="radio" name="g2q2" value="a"> A. Despite this</label><label class="opt"><input type="radio" name="g2q2" value="b"> B. Nevertheless</label><label class="opt"><input type="radio" name="g2q2" value="c"> C. Therefore</label><label class="opt"><input type="radio" name="g2q2" value="d"> D. For instance</label></div></div>
+    <div class="q-item"><div class="q-stem">3. "I take your point entirely. ________, I believe we need to consider the reputational risk before making a final decision."</div><div class="options"><label class="opt"><input type="radio" name="g2q3" value="a"> A. Similarly</label><label class="opt"><input type="radio" name="g2q3" value="b"> B. Consequently</label><label class="opt"><input type="radio" name="g2q3" value="c"> C. That said</label><label class="opt"><input type="radio" name="g2q3" value="d"> D. In addition</label></div></div>
+    <div class="q-item"><div class="q-stem">4. "We have looked at the budget data. ________, I'd like to move to the staffing proposal that was submitted by the HR team last week."</div><div class="options"><label class="opt"><input type="radio" name="g2q4" value="a"> A. On the contrary</label><label class="opt"><input type="radio" name="g2q4" value="b"> B. Moving on</label><label class="opt"><input type="radio" name="g2q4" value="c"> C. In contrast</label><label class="opt"><input type="radio" name="g2q4" value="d"> D. Nonetheless</label></div></div>
+    <div class="q-item"><div class="q-stem">5. "Three concerns have been raised regarding the timeline. ________, the team lacks sufficient resources to meet the original deadline."</div><div class="options"><label class="opt"><input type="radio" name="g2q5" value="a"> A. In summary</label><label class="opt"><input type="radio" name="g2q5" value="b"> B. On the other hand</label><label class="opt"><input type="radio" name="g2q5" value="c"> C. First of all</label><label class="opt"><input type="radio" name="g2q5" value="d"> D. Whereas</label></div></div>
+    <div class="q-item"><div class="q-stem">6. "We have agreed on the budget allocation and the timeline. ________, could we confirm who will be responsible for stakeholder communication?"</div><div class="options"><label class="opt"><input type="radio" name="g2q6" value="a"> A. In the meantime</label><label class="opt"><input type="radio" name="g2q6" value="b"> B. Finally</label><label class="opt"><input type="radio" name="g2q6" value="c"> C. Conversely</label><label class="opt"><input type="radio" name="g2q6" value="d"> D. As such</label></div></div>
+    <div class="q-item"><div class="q-stem">7. "Our competitor has launched a very similar product. ________, we need to accelerate our own go-to-market strategy."</div><div class="options"><label class="opt"><input type="radio" name="g2q7" value="a"> A. In contrast</label><label class="opt"><input type="radio" name="g2q7" value="b"> B. On balance</label><label class="opt"><input type="radio" name="g2q7" value="c"> C. As a result</label><label class="opt"><input type="radio" name="g2q7" value="d"> D. Above all</label></div></div>
+    <div class="q-item"><div class="q-stem">8. "________, before we close, I would like to confirm the date and agenda items for our next scheduled meeting."</div><div class="options"><label class="opt"><input type="radio" name="g2q8" value="a"> A. To wrap up</label><label class="opt"><input type="radio" name="g2q8" value="b"> B. In contrast</label><label class="opt"><input type="radio" name="g2q8" value="c"> C. Given that</label><label class="opt"><input type="radio" name="g2q8" value="d"> D. Notwithstanding</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g2',{g2q1:'b',g2q2:'b',g2q3:'c',g2q4:'b',g2q5:'c',g2q6:'b',g2q7:'c',g2q8:'a'})">✅ Submit</button><div id="g2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — "First and foremost" (prioritising / sequencing)</li><li>2. <strong>B</strong> — "Nevertheless" (contrast / unexpected result)</li><li>3. <strong>C</strong> — "That said" (concessive contrast: acknowledging the point, then qualifying it)</li><li>4. <strong>B</strong> — "Moving on" (transitioning to the next topic)</li><li>5. <strong>C</strong> — "First of all" (listing multiple points)</li><li>6. <strong>B</strong> — "Finally" (last item in a sequence)</li><li>7. <strong>C</strong> — "As a result" (cause and effect)</li><li>8. <strong>A</strong> — "To wrap up" (summarising / closing)</li></ol></div></div>
+
+  <div id="g3" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Grammar 3 — Indirect Questions in Professional Meeting Contexts</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the correctly formed indirect question for each meeting situation.</p>
+    <div class="q-item"><div class="q-stem">1. You want to ask the presenter when the new system will be ready. Which is the most professional phrasing?</div><div class="options"><label class="opt"><input type="radio" name="g3q1" value="a"> A. "When will the new system be ready?"</label><label class="opt"><input type="radio" name="g3q1" value="b"> B. "Could you tell us when the new system will be ready?"</label><label class="opt"><input type="radio" name="g3q1" value="c"> C. "Do you know when will the system be ready?"</label><label class="opt"><input type="radio" name="g3q1" value="d"> D. "I'm wondering when will the system be ready?"</label></div></div>
+    <div class="q-item"><div class="q-stem">2. "I'd like to know ________ the budget increase has already been approved by the Finance Committee."</div><div class="options"><label class="opt"><input type="radio" name="g3q2" value="a"> A. whether</label><label class="opt"><input type="radio" name="g3q2" value="b"> B. when does</label><label class="opt"><input type="radio" name="g3q2" value="c"> C. if was</label><label class="opt"><input type="radio" name="g3q2" value="d"> D. what has</label></div></div>
+    <div class="q-item"><div class="q-stem">3. "Could you clarify ________ this proposal affects the existing service level agreements?"</div><div class="options"><label class="opt"><input type="radio" name="g3q3" value="a"> A. how does</label><label class="opt"><input type="radio" name="g3q3" value="b"> B. how</label><label class="opt"><input type="radio" name="g3q3" value="c"> C. that how</label><label class="opt"><input type="radio" name="g3q3" value="d"> D. does how</label></div></div>
+    <div class="q-item"><div class="q-stem">4. "I'd appreciate it if you could explain ________ led to the project timeline being revised for the third time this quarter."</div><div class="options"><label class="opt"><input type="radio" name="g3q4" value="a"> A. why did it</label><label class="opt"><input type="radio" name="g3q4" value="b"> B. why it has</label><label class="opt"><input type="radio" name="g3q4" value="c"> C. what</label><label class="opt"><input type="radio" name="g3q4" value="d"> D. that what</label></div></div>
+    <div class="q-item"><div class="q-stem">5. "I wonder ________ the Operations Director has had an opportunity to review the proposal we submitted last month."</div><div class="options"><label class="opt"><input type="radio" name="g3q5" value="a"> A. that</label><label class="opt"><input type="radio" name="g3q5" value="b"> B. whether</label><label class="opt"><input type="radio" name="g3q5" value="c"> C. does</label><label class="opt"><input type="radio" name="g3q5" value="d"> D. when has</label></div></div>
+    <div class="q-item"><div class="q-stem">6. "Could someone confirm ________ the minutes of the last meeting were distributed to all board members?"</div><div class="options"><label class="opt"><input type="radio" name="g3q6" value="a"> A. did</label><label class="opt"><input type="radio" name="g3q6" value="b"> B. were they</label><label class="opt"><input type="radio" name="g3q6" value="c"> C. whether</label><label class="opt"><input type="radio" name="g3q6" value="d"> D. that did</label></div></div>
+    <div class="q-item"><div class="q-stem">7. "I'd like to ask ________ you envisage the restructuring being completed, given the current staffing constraints."</div><div class="options"><label class="opt"><input type="radio" name="g3q7" value="a"> A. when do</label><label class="opt"><input type="radio" name="g3q7" value="b"> B. when</label><label class="opt"><input type="radio" name="g3q7" value="c"> C. that when</label><label class="opt"><input type="radio" name="g3q7" value="d"> D. where do</label></div></div>
+    <div class="q-item"><div class="q-stem">8. "Could you tell me ________ the action points from the March meeting have all been completed?"</div><div class="options"><label class="opt"><input type="radio" name="g3q8" value="a"> A. if has</label><label class="opt"><input type="radio" name="g3q8" value="b"> B. whether</label><label class="opt"><input type="radio" name="g3q8" value="c"> C. have they</label><label class="opt"><input type="radio" name="g3q8" value="d"> D. that they</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g3',{g3q1:'b',g3q2:'a',g3q3:'b',g3q4:'c',g3q5:'b',g3q6:'c',g3q7:'b',g3q8:'b'})">✅ Submit</button><div id="g3-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — "Could you tell us when the new system will be ready?" (polite indirect; statement word order after "when")</li><li>2. <strong>A</strong> — "whether" (indirect yes/no question: I'd like to know whether…)</li><li>3. <strong>B</strong> — "how" (no inversion after embedded question word: Could you clarify how this…)</li><li>4. <strong>C</strong> — "what" (I'd appreciate it if you could explain what led to…)</li><li>5. <strong>B</strong> — "whether" (I wonder whether…)</li><li>6. <strong>C</strong> — "whether" (Could someone confirm whether…)</li><li>7. <strong>B</strong> — "when" (I'd like to ask when you envisage… — no inversion)</li><li>8. <strong>B</strong> — "whether" (Could you tell me whether…)</li></ol></div></div>
+
+  <div id="g4" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Grammar 4 — Hedging Language in Professional Meetings</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the most appropriate hedging expression to complete each meeting statement. Hedging language is used to soften claims, show uncertainty, or make proposals less direct.</p>
+    <div class="q-item"><div class="q-stem">1. "The data ________ suggest that customer retention has improved significantly, though we will need to wait for the full quarter's figures to be certain."</div><div class="options"><label class="opt"><input type="radio" name="g4q1" value="a"> A. definitively</label><label class="opt"><input type="radio" name="g4q1" value="b"> B. appear to</label><label class="opt"><input type="radio" name="g4q1" value="c"> C. obviously</label><label class="opt"><input type="radio" name="g4q1" value="d"> D. certainly do not</label></div></div>
+    <div class="q-item"><div class="q-stem">2. "________ the budget constraint was a contributing factor, but I think there may have been other operational issues at play as well."</div><div class="options"><label class="opt"><input type="radio" name="g4q2" value="a"> A. Without doubt</label><label class="opt"><input type="radio" name="g4q2" value="b"> B. It is my view that</label><label class="opt"><input type="radio" name="g4q2" value="c"> C. It would seem that</label><label class="opt"><input type="radio" name="g4q2" value="d"> D. It is a fact that</label></div></div>
+    <div class="q-item"><div class="q-stem">3. "This is ________ a complex decision, and I think we would benefit from taking additional time to gather more evidence before committing."</div><div class="options"><label class="opt"><input type="radio" name="g4q3" value="a"> A. entirely</label><label class="opt"><input type="radio" name="g4q3" value="b"> B. quite clearly</label><label class="opt"><input type="radio" name="g4q3" value="c"> C. arguably</label><label class="opt"><input type="radio" name="g4q3" value="d"> D. in no way</label></div></div>
+    <div class="q-item"><div class="q-stem">4. "I ________ a delay in the implementation timeline would negatively impact client confidence, based on the feedback we received last quarter."</div><div class="options"><label class="opt"><input type="radio" name="g4q4" value="a"> A. know for certain that</label><label class="opt"><input type="radio" name="g4q4" value="b"> B. would tend to think</label><label class="opt"><input type="radio" name="g4q4" value="c"> C. cannot possibly agree that</label><label class="opt"><input type="radio" name="g4q4" value="d"> D. definitively state that</label></div></div>
+    <div class="q-item"><div class="q-stem">5. "The proposal ________ resolve the short-term cash flow issue, but I'm not yet convinced it addresses the underlying structural problem."</div><div class="options"><label class="opt"><input type="radio" name="g4q5" value="a"> A. will definitely</label><label class="opt"><input type="radio" name="g4q5" value="b"> B. might</label><label class="opt"><input type="radio" name="g4q5" value="c"> C. undoubtedly will</label><label class="opt"><input type="radio" name="g4q5" value="d"> D. obviously</label></div></div>
+    <div class="q-item"><div class="q-stem">6. "________, the restructuring could take longer than the six months originally projected — perhaps closer to nine or ten months."</div><div class="options"><label class="opt"><input type="radio" name="g4q6" value="a"> A. Evidently</label><label class="opt"><input type="radio" name="g4q6" value="b"> B. Inevitably</label><label class="opt"><input type="radio" name="g4q6" value="c"> C. It is conceivable that</label><label class="opt"><input type="radio" name="g4q6" value="d"> D. It has been proven that</label></div></div>
+    <div class="q-item"><div class="q-stem">7. "I'm ________ that the client will accept the revised proposal at this stage — the relationship has been under some strain recently."</div><div class="options"><label class="opt"><input type="radio" name="g4q7" value="a"> A. completely sure</label><label class="opt"><input type="radio" name="g4q7" value="b"> B. not entirely convinced</label><label class="opt"><input type="radio" name="g4q7" value="c"> C. absolutely certain</label><label class="opt"><input type="radio" name="g4q7" value="d"> D. fully confident</label></div></div>
+    <div class="q-item"><div class="q-stem">8. "These figures ________ there is a correlation between employee engagement and team productivity, although causation has not been established."</div><div class="options"><label class="opt"><input type="radio" name="g4q8" value="a"> A. prove conclusively that</label><label class="opt"><input type="radio" name="g4q8" value="b"> B. would tend to indicate that</label><label class="opt"><input type="radio" name="g4q8" value="c"> C. make it entirely clear that</label><label class="opt"><input type="radio" name="g4q8" value="d"> D. definitively confirm that</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g4',{g4q1:'b',g4q2:'c',g4q3:'c',g4q4:'b',g4q5:'b',g4q6:'c',g4q7:'b',g4q8:'b'})">✅ Submit</button><div id="g4-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 4</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — "appear to" (hedges the claim; softens certainty)</li><li>2. <strong>C</strong> — "It would seem that" (tentative hedge; presents inference rather than fact)</li><li>3. <strong>C</strong> — "arguably" (marks the claim as one possible view, not an absolute fact)</li><li>4. <strong>B</strong> — "would tend to think" (hedges personal opinion)</li><li>5. <strong>B</strong> — "might" (modal hedge expressing possibility rather than certainty)</li><li>6. <strong>C</strong> — "It is conceivable that" (expresses possibility without commitment)</li><li>7. <strong>B</strong> — "not entirely convinced" (hedged expression of doubt)</li><li>8. <strong>B</strong> — "would tend to indicate that" (careful, hedged interpretation of data)</li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<section id="grammarreview">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#e0e7ff">📘</div>
+      <div><div class="sec-title">Grammar Review</div><div class="sec-sub">Summary of all grammar points covered in Module 4 exercises</div></div>
+    </div>
+  </div>
+  <div class="grammar-box">
+    <h4>1. Passive Voice in Meeting and Business Communication Contexts</h4>
+    <p>The passive voice is used extensively in formal meeting minutes, business reports, and official communications because it is impersonal, objective, and places emphasis on the action or decision rather than on who performed it.</p>
+    <ul>
+      <li><strong>Simple past passive:</strong> Subject + was/were + past participle — <em>"A resolution was passed."</em></li>
+      <li><strong>Present perfect passive:</strong> Subject + has/have been + past participle — <em>"The proposal has been supported."</em></li>
+      <li><strong>Modal passive:</strong> Subject + modal + be + past participle — <em>"The agenda should be circulated."</em></li>
+      <li><strong>Impersonal "It" passive:</strong> "It was agreed that…" / "It has been noted that…" / "It is recommended that…" — extremely common in formal minutes</li>
+    </ul>
+    <div class="ex">✔ A formal resolution was passed at the end of the meeting. (simple past passive)<br>✔ It was agreed that the revised budget would be circulated by Friday. (impersonal passive)<br>✔ The following action points were identified during the meeting. (past passive)<br>✔ The agenda should be circulated at least five days in advance. (modal passive)</div>
+  </div>
+  <div class="grammar-box">
+    <h4>2. Discourse Markers for Professional Meeting Communication</h4>
+    <p>Discourse markers are words and phrases that connect ideas, structure spoken and written communication, and signal the relationship between different parts of an argument or discussion. They are essential for clear, professional meeting facilitation.</p>
+    <ul>
+      <li><strong>Sequencing/ordering:</strong> First and foremost / First of all / Secondly / Finally / To begin with</li>
+      <li><strong>Adding information:</strong> In addition / Furthermore / Moreover / Also</li>
+      <li><strong>Contrast and concession:</strong> However / That said / Nevertheless / On the other hand / Despite this</li>
+      <li><strong>Cause and effect:</strong> As a result / Therefore / Consequently / For this reason</li>
+      <li><strong>Transitioning to a new point:</strong> Moving on / Turning to / Shall we turn to…</li>
+      <li><strong>Summarising and closing:</strong> To sum up / To wrap up / In conclusion / To summarise</li>
+    </ul>
+    <div class="ex">✔ "First and foremost, I'd like to acknowledge the team's progress." (prioritising)<br>✔ "That said, we still need to address the timeline concerns." (concessive contrast)<br>✔ "As a result, we need to accelerate our go-to-market strategy." (cause and effect)<br>✔ "To wrap up, could we confirm the action points and next meeting date?" (closing)</div>
+  </div>
+  <div class="grammar-box">
+    <h4>3. Indirect Questions in Professional Meeting Contexts</h4>
+    <p>Indirect questions are considerably more polite and diplomatic than direct questions, making them the preferred form in formal business and meeting environments. They are introduced by a polite phrase and use statement (not question) word order.</p>
+    <ul>
+      <li><strong>Structure:</strong> Polite opener + question word / whether/if + subject + verb (statement order)</li>
+      <li><strong>Common polite openers:</strong> "Could you tell us…" / "I'd like to know…" / "Could you clarify…" / "I wonder…" / "Could someone confirm…"</li>
+      <li><strong>Yes/No indirect questions:</strong> Use whether or if — <em>"I'd like to know whether the budget has been approved."</em> (NOT: <em>…if has the budget been approved</em>)</li>
+      <li><strong>Wh- indirect questions:</strong> Use the question word + statement order — <em>"Could you clarify how this affects current contracts?"</em> (NOT: <em>…how does this affect</em>)</li>
+      <li><strong>Key rule:</strong> Never use inversion (auxiliary before subject) inside an indirect question</li>
+    </ul>
+    <div class="ex">✔ "Could you tell us when the new system will be ready?" (NOT: when will the system be ready)<br>✔ "I'd like to know whether the committee has reached a decision." (NOT: if has the committee)<br>✔ "Could you clarify how this proposal affects the timeline?" (NOT: how does this affect)</div>
+  </div>
+  <div class="grammar-box">
+    <h4>4. Hedging Language: Expressing Uncertainty and Caution in Meetings</h4>
+    <p>Hedging language is used to soften claims, express uncertainty, and avoid making absolute or overconfident statements — a critical skill in professional and diplomatic business communication.</p>
+    <ul>
+      <li><strong>Modal verbs:</strong> might / could / may / would — <em>"This might resolve the issue."</em></li>
+      <li><strong>Adverbs:</strong> arguably / possibly / perhaps / conceivably / potentially</li>
+      <li><strong>Introductory phrases:</strong> "It would seem that…" / "It appears that…" / "It is conceivable that…" / "There is a possibility that…"</li>
+      <li><strong>Tentative verbs:</strong> "appear to" / "tend to" / "seem to" / "would suggest"</li>
+      <li><strong>Hedged personal opinion:</strong> "I would tend to think…" / "I'm not entirely convinced that…" / "I'm inclined to believe…"</li>
+      <li><strong>Hedged data interpretation:</strong> "The figures would tend to indicate…" / "The data appears to suggest…"</li>
+    </ul>
+    <div class="ex">✔ "The data appears to suggest an improvement, though we await the full figures." (tentative hedge)<br>✔ "It would seem that the budget constraint was a factor, but there may be other issues." (tentative + possibility)<br>✔ "The proposal might resolve the short-term issue." (modal hedge)<br>✔ "I'm not entirely convinced the client will accept this at this stage." (hedged negative opinion)</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="writing">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fef3c7">✍️</div>
+      <div><div class="sec-title">Writing Activities</div><div class="sec-sub">2 Professional Writing Tasks · Meeting Agenda & Meeting Minutes</div></div>
+    </div>
+  </div>
+  <div class="writing-card">
+    <h4>✍️ Writing Task 1 — Professional Meeting Agenda</h4>
+    <div><span class="tag tag-navy">Formal Agenda</span><span class="tag tag-gold">180–240 words</span></div>
+    <p class="writing-task"><strong>Context:</strong> You are the Operations Director at a mid-sized logistics company. You have called an extraordinary board meeting to discuss three urgent issues: (1) a significant delay in a major client delivery contract; (2) a request from the HR team to approve an emergency staffing budget increase; and (3) a proposal from the IT department to implement a new project management system before the end of the financial year.<br><br>Write a professionally formatted meeting agenda. Your agenda must include: <strong>(1)</strong> A clear meeting title, date, time, and location (or platform if virtual). <strong>(2)</strong> A list of expected attendees and any noted apologies for absence. <strong>(3)</strong> At least five agenda items, numbered and structured correctly, including the standard opening items (apologies, minutes of previous meeting, matters arising) and your three substantive discussion items. <strong>(4)</strong> A clear indication for each item whether it requires a decision, discussion, or is for information only. <strong>(5)</strong> A time allocation for each item. <strong>(6)</strong> A closing item for AOB and confirmation of the next meeting date.</p>
+    <textarea class="writing-area" id="w1ta" placeholder="Write your professional meeting agenda here…" oninput="wc('w1ta','w1wc',240)"></textarea>
+    <div class="wc" id="w1wc">Words: 0 / 240</div>
+    <div class="btn-row"><button class="btn btn-gold" onclick="alert('Agenda submitted for teacher review.')">📤 Submit Agenda</button></div>
+  </div>
+  <div class="writing-card">
+    <h4>✍️ Writing Task 2 — Meeting Minutes Extract</h4>
+    <div><span class="tag tag-navy">Formal Minutes</span><span class="tag tag-gold">240–300 words</span></div>
+    <p class="writing-task"><strong>Context:</strong> You are the minute-taker for a board meeting that took place yesterday. The meeting discussed two key items: (1) the board voted on and approved a proposal to expand into two new regional markets by Q2 of next year; and (2) a heated discussion took place about the company's current pricing strategy, during which no decision was reached — it was agreed to defer the matter pending a detailed market analysis.<br><br>Write a formal extract of meeting minutes for these two agenda items. Your minutes must: <strong>(1)</strong> Use the correct formal structure and impersonal passive voice throughout (e.g., "It was agreed that…", "The motion was carried…", "It was resolved that…"). <strong>(2)</strong> Record any key points of discussion for each item, without detailed attribution to individual speakers. <strong>(3)</strong> Record the formal decision or outcome of each item clearly. <strong>(4)</strong> Include at least two named action points (with responsible person and agreed deadline) arising from the discussion. <strong>(5)</strong> Use appropriate, objective, and formal language throughout — avoid contractions, informal vocabulary, and first-person pronouns.</p>
+    <textarea class="writing-area" id="w2ta" placeholder="Write your formal meeting minutes extract here…" oninput="wc('w2ta','w2wc',300)"></textarea>
+    <div class="wc" id="w2wc">Words: 0 / 300</div>
+    <div class="btn-row"><button class="btn btn-gold" onclick="alert('Minutes submitted for teacher review.')">📤 Submit Minutes</button></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<section id="listening">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#e0e7ff">🎧</div>
+      <div><div class="sec-title">Listening Activities</div><div class="sec-sub">4 Activities with built-in audio players — press ▶ Play, listen, then answer the questions</div></div>
+    </div>
+  </div>
+  <div class="info-box" style="background:#fffbf0;border-color:rgba(201,168,76,.3)">🔊 <strong>Audio:</strong> Click ▶ to listen via your browser's text-to-speech engine. Adjust speed as needed. Show the transcript after listening to review key vocabulary.</div>
+
+  <!-- L1 -->
+  <div class="listen-block">
+    <div class="listen-header">
+      <div class="listen-icon">🏢</div>
+      <div class="listen-meta">
+        <h4>Activity 1: Opening a Formal Board Meeting</h4>
+        <div class="track-sub">Chairperson — Formal corporate meeting opening</div>
+        <div class="listen-tags"><span class="ltag ltag-gold">LEVEL: B1–B2</span><span class="ltag ltag-outline">MULTIPLE CHOICE</span><span class="ltag ltag-outline">FOCUS: PROCEDURE & STRUCTURE</span></div>
+      </div>
+    </div>
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp1" onclick="togglePlay('pp1','prog1','tm1','st1','','ls1')">▶</button>
+        <div class="player-track-info"><div class="track-title-sm">Opening a Formal Board Meeting</div><div class="track-sub-sm">Chairperson — Corporate meeting opening</div></div>
+        <div class="time-display"><span id="tm1">0:00</span> / <span id="dur1">0:00</span></div>
+      </div>
+      <div class="progress-audio" onclick="seekTrack(event,'prog1','ls1')"><div class="progress-audio-fill" id="prog1"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpeed('ls1',0.7,this,'sg1')">0.7×</button>
+        <button class="speed-btn active" id="sg1" onclick="setSpeed('ls1',0.85,this,'sg1')">0.85×</button>
+        <button class="speed-btn" onclick="setSpeed('ls1',1.0,this,'sg1')">1.0×</button>
+        <button class="speed-btn" onclick="setSpeed('ls1',1.2,this,'sg1')">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls1','prog1','tm1','pp1','st1')">↺ Replay</button>
+        <span id="st1" style="font-size:11px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace">Ready</span>
+      </div>
+      <div class="player-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+    </div>
+    <button class="transcript-toggle-btn" onclick="togTranscript(this)"><span class="tt-arrow">▶</span> Show / Hide Transcript</button>
+    <div class="transcript-box">
+      <p id="ls1">Good morning, everyone. I would like to call this meeting to order. Thank you all for attending today's extraordinary board meeting. Before we proceed, I would like to note the apologies for absence received from our Non-Executive Director, Mr Hartley, who is travelling on company business and has asked for his apologies to be recorded. That gives us twelve members present today, which does meet our required quorum of ten, so we are able to proceed. I would ask everyone to ensure their mobile devices are silenced for the duration of the meeting. First and foremost, I would like to draw your attention to the agenda that was circulated to all board members on Monday. We have five substantive items for discussion today, along with our standard standing items. The meeting has been time-boxed, with forty-five minutes allocated to Item Three, which is the one we anticipate will generate the most discussion. I would like to remind everyone that we are here to reach decisions, not simply to have conversations — so I will be keeping us to schedule. Before we turn to the first agenda item, could the company secretary please confirm that the minutes of last month's board meeting have been reviewed and signed off as an accurate record? Thank you. Are there any matters arising from those minutes that are not already covered on today's agenda? If not, let us proceed to Item One.</p>
+    </div>
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the chairperson opening a formal board meeting, then answer the questions below.</div>
+      <div id="l1" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. Why is the board meeting able to proceed despite the absence of one member?</div><div class="options"><label class="opt"><input type="radio" name="l1q1" value="a"> A. The missing member has delegated his vote to another director</label><label class="opt"><input type="radio" name="l1q1" value="b"> B. There are twelve members present, which meets the required quorum of ten</label><label class="opt"><input type="radio" name="l1q1" value="c"> C. A quorum is not required for this type of extraordinary meeting</label><label class="opt"><input type="radio" name="l1q1" value="d"> D. The absent member has approved the agenda in writing in advance</label></div></div>
+        <div class="q-item"><div class="q-stem">2. What is the reason given for the absence of Mr Hartley?</div><div class="options"><label class="opt"><input type="radio" name="l1q2" value="a"> A. He has a prior personal commitment he was unable to cancel</label><label class="opt"><input type="radio" name="l1q2" value="b"> B. He is attending a training programme for non-executive directors</label><label class="opt"><input type="radio" name="l1q2" value="c"> C. He is travelling on company business</label><label class="opt"><input type="radio" name="l1q2" value="d"> D. He is unwell and has requested the meeting be postponed</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What does the chairperson say about Item Three on the agenda?</div><div class="options"><label class="opt"><input type="radio" name="l1q3" value="a"> A. It will be deferred to a future meeting as more information is needed</label><label class="opt"><input type="radio" name="l1q3" value="b"> B. Forty-five minutes has been allocated because it is expected to generate the most discussion</label><label class="opt"><input type="radio" name="l1q3" value="c"> C. It has been removed from the agenda at the last minute</label><label class="opt"><input type="radio" name="l1q3" value="d"> D. It requires a unanimous vote rather than a simple majority decision</label></div></div>
+        <div class="q-item"><div class="q-stem">4. What does the chairperson ask the company secretary to confirm?</div><div class="options"><label class="opt"><input type="radio" name="l1q4" value="a"> A. That all action points from the last meeting have been completed</label><label class="opt"><input type="radio" name="l1q4" value="b"> B. That all board members have received a copy of today's agenda</label><label class="opt"><input type="radio" name="l1q4" value="c"> C. That the minutes of last month's board meeting have been reviewed and signed off as accurate</label><label class="opt"><input type="radio" name="l1q4" value="d"> D. That the quorum requirement has been formally recorded in the meeting register</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What is the chairperson's stated intention regarding the meeting schedule?</div><div class="options"><label class="opt"><input type="radio" name="l1q5" value="a"> A. To allow the agenda to run over if important decisions require additional time</label><label class="opt"><input type="radio" name="l1q5" value="b"> B. To keep the meeting to schedule, as the purpose is to reach decisions, not just have conversations</label><label class="opt"><input type="radio" name="l1q5" value="c"> C. To cancel any item that cannot be resolved within its allocated time slot</label><label class="opt"><input type="radio" name="l1q5" value="d"> D. To hold a vote at the end of the meeting on whether to extend the running time</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l1',{l1q1:'b',l1q2:'c',l1q3:'b',l1q4:'c',l1q5:'b'})">✅ Submit</button><div id="l1-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>C</strong></li><li>3. <strong>B</strong></li><li>4. <strong>C</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+    </div>
+  </div>
+
+  <!-- L2 -->
+  <div class="listen-block" style="margin-top:32px">
+    <div class="listen-header">
+      <div class="listen-icon">🎙️</div>
+      <div class="listen-meta">
+        <h4>Activity 2: Managing a Difficult Meeting Discussion</h4>
+        <div class="track-sub">Chairperson & Two Participants — Heated meeting discussion</div>
+        <div class="listen-tags"><span class="ltag ltag-gold">LEVEL: B2</span><span class="ltag ltag-outline">MULTIPLE CHOICE</span><span class="ltag ltag-outline">FOCUS: MANAGING CONFLICT</span></div>
+      </div>
+    </div>
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp2" onclick="togglePlay('pp2','prog2','tm2','st2','','ls2')">▶</button>
+        <div class="player-track-info"><div class="track-title-sm">Managing a Difficult Meeting Discussion</div><div class="track-sub-sm">Chairperson & Participants</div></div>
+        <div class="time-display"><span id="tm2">0:00</span> / <span id="dur2">0:00</span></div>
+      </div>
+      <div class="progress-audio" onclick="seekTrack(event,'prog2','ls2')"><div class="progress-audio-fill" id="prog2"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpeed('ls2',0.7,this,'sg2')">0.7×</button>
+        <button class="speed-btn active" id="sg2" onclick="setSpeed('ls2',0.85,this,'sg2')">0.85×</button>
+        <button class="speed-btn" onclick="setSpeed('ls2',1.0,this,'sg2')">1.0×</button>
+        <button class="speed-btn" onclick="setSpeed('ls2',1.2,this,'sg2')">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls2','prog2','tm2','pp2','st2')">↺ Replay</button>
+        <span id="st2" style="font-size:11px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace">Ready</span>
+      </div>
+      <div class="player-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+    </div>
+    <button class="transcript-toggle-btn" onclick="togTranscript(this)"><span class="tt-arrow">▶</span> Show / Hide Transcript</button>
+    <div class="transcript-box">
+      <p id="ls2">Chairperson: I'd like to open the floor on Item Three — the proposal to restructure the customer service department. I think it would be helpful to hear from both sides before we move toward a decision. Ms Okafor, would you like to present the case for the restructuring? Ms Okafor: Thank you, Chair. The data is unambiguous. Response times have deteriorated by thirty-two percent over the last two quarters. The current structure is simply not fit for purpose. I am in full support of the proposed reorganisation. Mr Dawson: If I could come in here, Chair — I strongly disagree. The data Ms Okafor has presented is being taken completely out of context. The response time deterioration has nothing to do with structure. It is a resourcing issue. If we reorganise without addressing headcount, we will be making a very expensive mistake. Chairperson: Thank you, Mr Dawson. Let me ensure everyone has the opportunity to be heard before we proceed. Mr Dawson, could you hold further comment for a moment while we hear from others around the table? Mr Nakamura: Could I just add something at this point? I think there is merit in both arguments. It seems to me that the data supports the case for change, but the proposal as currently drafted does not adequately address resourcing. Perhaps we could defer a final decision until a revised proposal is submitted that addresses both elements? Chairperson: That is a constructive suggestion, Mr Nakamura. Could we agree that Ms Okafor will revise the proposal to incorporate resourcing considerations, and bring it back to next month's meeting?</p>
+    </div>
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the meeting discussion, then answer the questions below.</div>
+      <div id="l2" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. What is the subject of Item Three in this meeting?</div><div class="options"><label class="opt"><input type="radio" name="l2q1" value="a"> A. A proposal to reduce the customer service department's budget</label><label class="opt"><input type="radio" name="l2q1" value="b"> B. A proposal to restructure the customer service department</label><label class="opt"><input type="radio" name="l2q1" value="c"> C. A request to hire additional customer service staff immediately</label><label class="opt"><input type="radio" name="l2q1" value="d"> D. A review of customer service performance data from the past year</label></div></div>
+        <div class="q-item"><div class="q-stem">2. What statistic does Ms Okafor use to support the case for restructuring?</div><div class="options"><label class="opt"><input type="radio" name="l2q2" value="a"> A. Customer satisfaction has declined by 32% over the last year</label><label class="opt"><input type="radio" name="l2q2" value="b"> B. Response times have deteriorated by 32% over the last two quarters</label><label class="opt"><input type="radio" name="l2q2" value="c"> C. Staff turnover has increased by 32% since the last restructuring</label><label class="opt"><input type="radio" name="l2q2" value="d"> D. Departmental costs have risen by 32% above the approved budget</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What is Mr Dawson's main argument against the restructuring?</div><div class="options"><label class="opt"><input type="radio" name="l2q3" value="a"> A. The data presented does not show any meaningful performance decline</label><label class="opt"><input type="radio" name="l2q3" value="b"> B. The current department structure has only recently been put in place</label><label class="opt"><input type="radio" name="l2q3" value="c"> C. The performance issue is a resourcing problem, not a structural one</label><label class="opt"><input type="radio" name="l2q3" value="d"> D. The proposal has not been reviewed by the Finance Committee</label></div></div>
+        <div class="q-item"><div class="q-stem">4. How does the chairperson manage Mr Dawson after his intervention?</div><div class="options"><label class="opt"><input type="radio" name="l2q4" value="a"> A. The chairperson asks Mr Dawson to leave the meeting temporarily</label><label class="opt"><input type="radio" name="l2q4" value="b"> B. The chairperson overrules Mr Dawson's objection and proceeds to a vote</label><label class="opt"><input type="radio" name="l2q4" value="c"> C. The chairperson asks Mr Dawson to hold further comment while others are heard</label><label class="opt"><input type="radio" name="l2q4" value="d"> D. The chairperson ignores Mr Dawson and moves directly to the next agenda item</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What outcome is agreed at the end of the discussion?</div><div class="options"><label class="opt"><input type="radio" name="l2q5" value="a"> A. A formal vote is taken and the restructuring is approved by a majority</label><label class="opt"><input type="radio" name="l2q5" value="b"> B. The item is removed from the agenda entirely and abandoned</label><label class="opt"><input type="radio" name="l2q5" value="c"> C. Ms Okafor will revise the proposal to address resourcing and present it at next month's meeting</label><label class="opt"><input type="radio" name="l2q5" value="d"> D. Mr Dawson is asked to prepare an alternative proposal for the next meeting</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l2',{l2q1:'b',l2q2:'b',l2q3:'c',l2q4:'c',l2q5:'c'})">✅ Submit</button><div id="l2-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>C</strong></li><li>4. <strong>C</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+    </div>
+  </div>
+
+  <!-- L3 -->
+  <div class="listen-block" style="margin-top:32px">
+    <div class="listen-header">
+      <div class="listen-icon">📝</div>
+      <div class="listen-meta">
+        <h4>Activity 3: Closing a Meeting and Confirming Action Points</h4>
+        <div class="track-sub">Chairperson — Formal meeting close</div>
+        <div class="listen-tags"><span class="ltag ltag-gold">LEVEL: B1–B2</span><span class="ltag ltag-outline">MULTIPLE CHOICE</span><span class="ltag ltag-outline">FOCUS: ACTION POINTS & FOLLOW-UP</span></div>
+      </div>
+    </div>
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp3" onclick="togglePlay('pp3','prog3','tm3','st3','','ls3')">▶</button>
+        <div class="player-track-info"><div class="track-title-sm">Closing a Meeting & Confirming Action Points</div><div class="track-sub-sm">Chairperson — Meeting close</div></div>
+        <div class="time-display"><span id="tm3">0:00</span> / <span id="dur3">0:00</span></div>
+      </div>
+      <div class="progress-audio" onclick="seekTrack(event,'prog3','ls3')"><div class="progress-audio-fill" id="prog3"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpeed('ls3',0.7,this,'sg3')">0.7×</button>
+        <button class="speed-btn active" id="sg3" onclick="setSpeed('ls3',0.85,this,'sg3')">0.85×</button>
+        <button class="speed-btn" onclick="setSpeed('ls3',1.0,this,'sg3')">1.0×</button>
+        <button class="speed-btn" onclick="setSpeed('ls3',1.2,this,'sg3')">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls3','prog3','tm3','pp3','st3')">↺ Replay</button>
+        <span id="st3" style="font-size:11px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace">Ready</span>
+      </div>
+      <div class="player-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+    </div>
+    <button class="transcript-toggle-btn" onclick="togTranscript(this)"><span class="tt-arrow">▶</span> Show / Hide Transcript</button>
+    <div class="transcript-box">
+      <p id="ls3">To wrap up today's meeting, I'd like to take a few minutes to summarise the decisions we have reached and confirm the action points before we adjourn. First and foremost, the board has approved the expansion into the two new regional markets by Q2 of next year. This is a significant resolution and I want to ensure everyone is clear on the next steps. Action point one: the Commercial Director, Ms Ferreira, will prepare a detailed market entry plan and financial projection for board review no later than the thirtieth of next month. Action point two: the Legal Director, Mr Osei, will confirm the regulatory requirements in each target region and report back within three weeks. Turning to Item Four, on the pricing strategy review — as discussed, no final decision was reached today. The consensus was that we need more detailed market data before committing to a position. The item will be deferred to next month's meeting. Action point three: the Strategy team, led by Dr Liang, will commission and deliver a full competitor pricing analysis to the board by the twenty-second of next month. Are there any questions about any of the action points, or anything arising from today's discussions that has not been captured? If not, could I have a proposal to adjourn? Thank you. This meeting is formally adjourned. The minutes will be circulated within five working days. Our next scheduled board meeting is confirmed for the fifteenth of next month at nine o'clock.</p>
+    </div>
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the meeting close, then answer the questions below.</div>
+      <div id="l3" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. What key decision was formally approved by the board during this meeting?</div><div class="options"><label class="opt"><input type="radio" name="l3q1" value="a"> A. The approval of a new pricing strategy for existing products</label><label class="opt"><input type="radio" name="l3q1" value="b"> B. The appointment of a new Commercial Director</label><label class="opt"><input type="radio" name="l3q1" value="c"> C. The expansion into two new regional markets by Q2 of next year</label><label class="opt"><input type="radio" name="l3q1" value="d"> D. The commissioning of an external consultant to review the business strategy</label></div></div>
+        <div class="q-item"><div class="q-stem">2. What is Ms Ferreira's action point from this meeting?</div><div class="options"><label class="opt"><input type="radio" name="l3q2" value="a"> A. To contact the legal team about regulatory requirements in the new markets</label><label class="opt"><input type="radio" name="l3q2" value="b"> B. To prepare a market entry plan and financial projection by the thirtieth of next month</label><label class="opt"><input type="radio" name="l3q2" value="c"> C. To commission a full competitor pricing analysis for the board</label><label class="opt"><input type="radio" name="l3q2" value="d"> D. To circulate the minutes of the meeting within five working days</label></div></div>
+        <div class="q-item"><div class="q-stem">3. Why was no decision reached on the pricing strategy review?</div><div class="options"><label class="opt"><input type="radio" name="l3q3" value="a"> A. The item was not included on the original agenda and was raised under AOB</label><label class="opt"><input type="radio" name="l3q3" value="b"> B. The board could not agree on the correct approach and reached a deadlock</label><label class="opt"><input type="radio" name="l3q3" value="c"> C. More detailed market data was needed before a commitment could be made</label><label class="opt"><input type="radio" name="l3q3" value="d"> D. The Legal Director advised that a decision required additional regulatory clearance</label></div></div>
+        <div class="q-item"><div class="q-stem">4. Who is responsible for commissioning the competitor pricing analysis?</div><div class="options"><label class="opt"><input type="radio" name="l3q4" value="a"> A. Ms Ferreira, the Commercial Director</label><label class="opt"><input type="radio" name="l3q4" value="b"> B. Mr Osei, the Legal Director</label><label class="opt"><input type="radio" name="l3q4" value="c"> C. The chairperson of the meeting</label><label class="opt"><input type="radio" name="l3q4" value="d"> D. Dr Liang, leading the Strategy team</label></div></div>
+        <div class="q-item"><div class="q-stem">5. When will the minutes of this meeting be circulated?</div><div class="options"><label class="opt"><input type="radio" name="l3q5" value="a"> A. Immediately following the meeting, on the same day</label><label class="opt"><input type="radio" name="l3q5" value="b"> B. At the next scheduled board meeting on the fifteenth of next month</label><label class="opt"><input type="radio" name="l3q5" value="c"> C. Within five working days of the meeting</label><label class="opt"><input type="radio" name="l3q5" value="d"> D. Only after all action points have been confirmed as completed</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l3',{l3q1:'c',l3q2:'b',l3q3:'c',l3q4:'d',l3q5:'c'})">✅ Submit</button><div id="l3-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>C</strong></li><li>2. <strong>B</strong></li><li>3. <strong>C</strong></li><li>4. <strong>D</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+    </div>
+  </div>
+
+  <!-- L4 -->
+  <div class="listen-block" style="margin-top:32px">
+    <div class="listen-header">
+      <div class="listen-icon">🎓</div>
+      <div class="listen-meta">
+        <h4>Activity 4: Expert Talk — Running Better Meetings</h4>
+        <div class="track-sub">Business Communication Trainer — Conference keynote excerpt</div>
+        <div class="listen-tags"><span class="ltag ltag-gold">LEVEL: B2</span><span class="ltag ltag-outline">MULTIPLE CHOICE</span><span class="ltag ltag-outline">FOCUS: ADVICE & OPINION</span></div>
+      </div>
+    </div>
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp4" onclick="togglePlay('pp4','prog4','tm4','st4','','ls4')">▶</button>
+        <div class="player-track-info"><div class="track-title-sm">Expert Talk — Running Better Meetings</div><div class="track-sub-sm">Business Communication Trainer — Keynote</div></div>
+        <div class="time-display"><span id="tm4">0:00</span> / <span id="dur4">0:00</span></div>
+      </div>
+      <div class="progress-audio" onclick="seekTrack(event,'prog4','ls4')"><div class="progress-audio-fill" id="prog4"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpeed('ls4',0.7,this,'sg4')">0.7×</button>
+        <button class="speed-btn active" id="sg4" onclick="setSpeed('ls4',0.85,this,'sg4')">0.85×</button>
+        <button class="speed-btn" onclick="setSpeed('ls4',1.0,this,'sg4')">1.0×</button>
+        <button class="speed-btn" onclick="setSpeed('ls4',1.2,this,'sg4')">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls4','prog4','tm4','pp4','st4')">↺ Replay</button>
+        <span id="st4" style="font-size:11px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace">Ready</span>
+      </div>
+      <div class="player-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+    </div>
+    <button class="transcript-toggle-btn" onclick="togTranscript(this)"><span class="tt-arrow">▶</span> Show / Hide Transcript</button>
+    <div class="transcript-box">
+      <p id="ls4">Good afternoon. Thank you for that warm introduction. I want to start with a question: when did you last leave a meeting feeling that it was a genuinely good use of your time? I suspect most of you are pausing to think. We have created a meeting culture in many organisations that is self-defeating — we hold meetings to discuss the outcomes of other meetings, we invite people who don't need to be there, and we rarely ask the one question that could transform our meeting efficiency overnight: do we actually need to meet at all? My first principle for better meetings is this — every meeting must have a single, clearly stated decision that it is trying to reach. Not five decisions. Not a "discussion." One decision. If you cannot state the decision you need to make before the meeting begins, you are not ready to call the meeting. Second: the right people must be in the room — and only the right people. Meeting bloat — filling the room with people who are there to observe rather than contribute — destroys focus and adds enormous cost. Studies estimate that a poorly attended one-hour meeting with twelve unnecessary participants costs an organisation as much as a half-day's work in lost productivity. Third, and this is the one people resist most: start and end on time, every single time. Lateness is a form of disrespect, and a culture that tolerates it signals that the meeting, and by extension the people in it, are not worth prioritising. Set a norm. Hold it. You will be surprised how quickly the culture changes. The fourth principle is follow-up. A meeting without follow-up is a conversation that cost your organisation money.</p>
+    </div>
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the expert keynote, then answer the questions below.</div>
+      <div id="l4" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. What question does the speaker say could "transform meeting efficiency overnight"?</div><div class="options"><label class="opt"><input type="radio" name="l4q1" value="a"> A. Whether all participants have been adequately prepared and briefed</label><label class="opt"><input type="radio" name="l4q1" value="b"> B. Whether the meeting has a clearly structured agenda with time allocations</label><label class="opt"><input type="radio" name="l4q1" value="c"> C. Whether a meeting is actually necessary in the first place</label><label class="opt"><input type="radio" name="l4q1" value="d"> D. Whether the chairperson has sufficient experience to manage the discussion</label></div></div>
+        <div class="q-item"><div class="q-stem">2. According to the speaker's first principle, what must every meeting have?</div><div class="options"><label class="opt"><input type="radio" name="l4q2" value="a"> A. A detailed written agenda circulated at least 48 hours in advance</label><label class="opt"><input type="radio" name="l4q2" value="b"> B. A single, clearly stated decision that it is trying to reach</label><label class="opt"><input type="radio" name="l4q2" value="c"> C. A professional minute-taker to record all discussions accurately</label><label class="opt"><input type="radio" name="l4q2" value="d"> D. A quorum of at least half of the total number of eligible participants</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What does the speaker call "meeting bloat"?</div><div class="options"><label class="opt"><input type="radio" name="l4q3" value="a"> A. Meetings that run significantly longer than their scheduled time slot</label><label class="opt"><input type="radio" name="l4q3" value="b"> B. Having too many items on a single meeting agenda</label><label class="opt"><input type="radio" name="l4q3" value="c"> C. Inviting people to attend meetings who are there to observe rather than contribute</label><label class="opt"><input type="radio" name="l4q3" value="d"> D. Discussions that generate no actionable decisions or outcomes</label></div></div>
+        <div class="q-item"><div class="q-stem">4. How much does the speaker estimate a poorly attended one-hour meeting with twelve unnecessary participants can cost?</div><div class="options"><label class="opt"><input type="radio" name="l4q4" value="a"> A. An entire working day's worth of lost productivity</label><label class="opt"><input type="radio" name="l4q4" value="b"> B. As much as a half-day's work in lost productivity</label><label class="opt"><input type="radio" name="l4q4" value="c"> C. The equivalent of one week's worth of wasted team time</label><label class="opt"><input type="radio" name="l4q4" value="d"> D. A fixed financial penalty equal to the participants' combined hourly rate</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What does the speaker say about lateness in meetings?</div><div class="options"><label class="opt"><input type="radio" name="l4q5" value="a"> A. It is an understandable issue that should be managed with empathy</label><label class="opt"><input type="radio" name="l4q5" value="b"> B. It is most commonly caused by poor diary management and scheduling conflicts</label><label class="opt"><input type="radio" name="l4q5" value="c"> C. It is a form of disrespect and tolerating it signals that the meeting is not a priority</label><label class="opt"><input type="radio" name="l4q5" value="d"> D. It only becomes a serious problem when the chairperson or a senior participant arrives late</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l4',{l4q1:'c',l4q2:'b',l4q3:'c',l4q4:'b',l4q5:'c'})">✅ Submit</button><div id="l4-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 4</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>C</strong></li><li>2. <strong>B</strong></li><li>3. <strong>C</strong></li><li>4. <strong>B</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<section id="casestudy">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fce7f3">🏢</div>
+      <div><div class="sec-title">Case Studies</div><div class="sec-sub">2 Business Cases · Meeting Effectiveness · Auto-graded</div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:32px">
+    <div class="case-hd">
+      <div class="case-company">Case Study 1 · Professional Services · United Kingdom</div>
+      <h3>Meridian Consulting: When Too Many Meetings Kill Productivity</h3>
+    </div>
+    <div class="case-body">
+      <p>Meridian Consulting is a 280-person management consultancy based in London with offices in Manchester and Edinburgh. In 2023, the firm's managing partner, Caroline Ashworth, commissioned an internal productivity audit after a significant number of senior consultants flagged "excessive and unproductive meeting culture" as a primary contributor to both burnout and declining client output quality. The audit findings were striking: on average, senior consultants were spending 62% of their working week in internal meetings, leaving less than 40% of billable time for actual client work. Many of these meetings had no agenda, no named decision-maker, and no follow-up documentation. A recurring complaint was the presence of between twelve and twenty participants in meetings that involved decisions that could have been made by two or three people. The firm's billable hour rate had declined by 18% year-on-year, and three high-performing consultants had resigned in the previous six months, all citing meeting culture in their exit interviews.</p>
+      <p>Caroline Ashworth brought in an external facilitation specialist, Dr Priya Mehta, to design and implement a firm-wide meeting reform programme. The programme introduced four non-negotiable rules: every meeting required a written agenda stating its single decision objective, circulated at least 24 hours in advance; no meeting could have more than six participants without the managing partner's explicit approval; all meetings were to be time-boxed with a maximum default length of forty-five minutes; and all meetings required a follow-up action log distributed within 24 hours. Dr Mehta also trained fifteen internal "meeting champions" — senior staff who were empowered to challenge poorly structured meetings and model the new practices publicly. The firm adopted a "no agenda, no meeting" rule that became its most visible cultural marker.</p>
+      <p>Within nine months of the programme launch, the results were measurable and significant. The average number of weekly meetings per senior consultant had fallen from fourteen to six. Billable hours had increased by 22%, and client satisfaction scores — which had been declining — reversed their downward trend. Three of the five most recent new hires cited Meridian's reformed meeting culture as a specific reason they had chosen to join the firm. Caroline Ashworth noted in her quarterly report that the single highest-return intervention of the entire programme had been the introduction of the mandatory written agenda — a simple, zero-cost change that transformed the seriousness with which every meeting was approached from the moment it was scheduled.</p>
+    </div>
+  </div>
+  <div id="cs1" class="quiz-card">
+    <div class="quiz-title">Case Study 1 — 5 Questions</div>
+    <div class="q-item"><div class="q-stem">1. What was the primary finding of Meridian Consulting's internal productivity audit?</div><div class="options"><label class="opt"><input type="radio" name="cs1q1" value="a"> A. Senior consultants were spending insufficient time on business development activities</label><label class="opt"><input type="radio" name="cs1q1" value="b"> B. Senior consultants were spending 62% of their working week in largely unproductive internal meetings</label><label class="opt"><input type="radio" name="cs1q1" value="c"> C. The firm's meeting rooms were consistently overbooked and under-resourced</label><label class="opt"><input type="radio" name="cs1q1" value="d"> D. Client-facing meetings were not being followed up with adequate documentation</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What was a common complaint raised by senior consultants about the meetings they attended?</div><div class="options"><label class="opt"><input type="radio" name="cs1q2" value="a"> A. Meetings were too short and rarely allowed sufficient time for discussion</label><label class="opt"><input type="radio" name="cs1q2" value="b"> B. Meetings lacked senior leadership participation and decision-making authority</label><label class="opt"><input type="radio" name="cs1q2" value="c"> C. Twelve to twenty participants were present for decisions that required only two or three people</label><label class="opt"><input type="radio" name="cs1q2" value="d"> D. Meeting agendas were too detailed and left no room for spontaneous discussion</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What was the most visible cultural rule introduced by Dr Mehta's reform programme?</div><div class="options"><label class="opt"><input type="radio" name="cs1q3" value="a"> A. All meetings had to be approved by the managing partner in writing</label><label class="opt"><input type="radio" name="cs1q3" value="b"> B. All meetings had to take place in formal meeting rooms, not informally at desks</label><label class="opt"><input type="radio" name="cs1q3" value="c"> C. The "no agenda, no meeting" rule, which required every meeting to have a written agenda</label><label class="opt"><input type="radio" name="cs1q3" value="d"> D. All meetings were to be recorded and transcribed for future reference</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What quantitative improvement was recorded in billable hours after the programme launch?</div><div class="options"><label class="opt"><input type="radio" name="cs1q4" value="a"> A. Billable hours increased by 18%</label><label class="opt"><input type="radio" name="cs1q4" value="b"> B. Billable hours increased by 22%</label><label class="opt"><input type="radio" name="cs1q4" value="c"> C. Billable hours increased by 40%</label><label class="opt"><input type="radio" name="cs1q4" value="d"> D. Billable hours increased by 62%</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What does Caroline Ashworth identify as the single highest-return intervention of the programme?</div><div class="options"><label class="opt"><input type="radio" name="cs1q5" value="a"> A. The training of fifteen internal meeting champions across the organisation</label><label class="opt"><input type="radio" name="cs1q5" value="b"> B. The introduction of a 45-minute maximum default meeting length</label><label class="opt"><input type="radio" name="cs1q5" value="c"> C. The requirement for a follow-up action log within 24 hours of every meeting</label><label class="opt"><input type="radio" name="cs1q5" value="d"> D. The introduction of the mandatory written agenda stating a single decision objective</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('cs1',{cs1q1:'b',cs1q2:'c',cs1q3:'c',cs1q4:'b',cs1q5:'d'})">✅ Submit</button><div id="cs1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Case Study 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>C</strong></li><li>3. <strong>C</strong></li><li>4. <strong>B</strong></li><li>5. <strong>D</strong></li></ol></div></div>
+
+  <div style="margin-top:40px;margin-bottom:32px">
+    <div class="case-hd">
+      <div class="case-company">Case Study 2 · Financial Technology · Colombia & Spain</div>
+      <h3>Fintera: Bridging the Cross-Cultural Meeting Divide</h3>
+    </div>
+    <div class="case-body">
+      <p>Fintera is a financial technology company founded in Medellín, Colombia, which expanded into the European market by acquiring a Madrid-based payments startup in early 2022. The integration of the two teams — 85 staff from Medellín and 62 from Madrid — created significant operational challenges, but none more persistent and damaging than the cultural differences in how the two teams conducted and experienced business meetings. The Colombian team, led by Operations Director Santiago Reyes, had a highly relational meeting culture: meetings began with extended informal conversation, agendas were treated as flexible starting points rather than binding schedules, and decision-making was typically deferred to the most senior person in the room. The Madrid team, led by General Manager Isabel Fontaine, came from a professional culture where punctuality was non-negotiable, agendas were precise and adhered to rigorously, and it was expected that any participant — regardless of seniority — could raise objections and influence decisions.</p>
+      <p>The clashes were immediate and significant. Madrid team members found the Colombian meetings frustrating and inefficient, feeling that time was wasted before substantive discussion began and that decisions were never clearly made or recorded. Santiago's team, by contrast, experienced the Madrid-run meetings as cold, transactional, and dismissive of relationship-building — a value they considered essential to effective professional collaboration. Two significant project decisions were delayed by over six weeks as a result of meetings that concluded without any clear resolution, because neither team's expectations of how a decision should be reached or communicated had been made explicit. The situation was compounded by language dynamics: while both teams conducted meetings in English as a common language, differing competency levels created additional power imbalances in discussions.</p>
+      <p>The company engaged an intercultural communication consultant, who facilitated a joint workshop attended by both leadership teams. The workshop identified five agreed principles for all Fintera meetings going forward: a brief, structured "check-in" at the beginning of every meeting (meeting the Colombian team's relationship needs without consuming agenda time); a standardised agenda template including a decision field for every item; a clear meeting role allocation system identifying the chairperson, minute-taker, and timekeeper in advance; a multilingual glossary of key meeting phrases available to all participants; and a post-meeting action log reviewed at the next meeting's opening. Within four months, cross-team project completion rates had improved by 31%, and both Santiago and Isabel described the revised meeting structure as one of the most effective cross-cultural integration tools they had experienced in their careers.</p>
+    </div>
+  </div>
+  <div id="cs2" class="quiz-card">
+    <div class="quiz-title">Case Study 2 — 5 Questions</div>
+    <div class="q-item"><div class="q-stem">1. What was a defining feature of the Colombian team's meeting culture at Fintera?</div><div class="options"><label class="opt"><input type="radio" name="cs2q1" value="a"> A. Rigorous adherence to the agenda and strict time management</label><label class="opt"><input type="radio" name="cs2q1" value="b"> B. Expectation that any participant could raise objections regardless of seniority</label><label class="opt"><input type="radio" name="cs2q1" value="c"> C. Extended informal conversation at the start and flexible agenda management</label><label class="opt"><input type="radio" name="cs2q1" value="d"> D. A preference for written decision-making over verbal discussion in meetings</label></div></div>
+    <div class="q-item"><div class="q-stem">2. How did the Madrid team perceive the Colombian-run meetings?</div><div class="options"><label class="opt"><input type="radio" name="cs2q2" value="a"> A. As well-structured and inclusive but overly formal in tone</label><label class="opt"><input type="radio" name="cs2q2" value="b"> B. As frustrating and inefficient, with time wasted before substantive discussion</label><label class="opt"><input type="radio" name="cs2q2" value="c"> C. As overly hierarchical and dismissive of junior team members' contributions</label><label class="opt"><input type="radio" name="cs2q2" value="d"> D. As culturally interesting but ultimately compatible with their own approach</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What was a direct operational consequence of the meeting culture clash?</div><div class="options"><label class="opt"><input type="radio" name="cs2q3" value="a"> A. Three senior staff resigned citing communication breakdowns as their primary reason</label><label class="opt"><input type="radio" name="cs2q3" value="b"> B. Two significant project decisions were delayed by over six weeks</label><label class="opt"><input type="radio" name="cs2q3" value="c"> C. The Madrid office requested a formal separation from the Medellín leadership team</label><label class="opt"><input type="radio" name="cs2q3" value="d"> D. The company was required to bring in an external legal mediator to resolve disputes</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What was the purpose of the "structured check-in" introduced at the start of all Fintera meetings?</div><div class="options"><label class="opt"><input type="radio" name="cs2q4" value="a"> A. To allow the chairperson to assess the emotional state of participants before beginning</label><label class="opt"><input type="radio" name="cs2q4" value="b"> B. To review the action points from the previous meeting before moving to the agenda</label><label class="opt"><input type="radio" name="cs2q4" value="c"> C. To meet the Colombian team's relationship-building needs without consuming agenda time</label><label class="opt"><input type="radio" name="cs2q4" value="d"> D. To allow remote participants to confirm their connection and technical readiness</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What broader lesson does the Fintera case illustrate about international business meetings?</div><div class="options"><label class="opt"><input type="radio" name="cs2q5" value="a"> A. Cross-cultural business teams should always conduct meetings in their mother tongue to avoid misunderstandings</label><label class="opt"><input type="radio" name="cs2q5" value="b"> B. Cultural differences in meeting expectations must be made explicit and addressed through agreed shared structures</label><label class="opt"><input type="radio" name="cs2q5" value="c"> C. Formal meeting structures are incompatible with relationship-oriented business cultures</label><label class="opt"><input type="radio" name="cs2q5" value="d"> D. The most effective international meetings are always those led by the most experienced chairperson present</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('cs2',{cs2q1:'c',cs2q2:'b',cs2q3:'b',cs2q4:'c',cs2q5:'b'})">✅ Submit</button><div id="cs2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Case Study 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>C</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>C</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<section id="final">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fee2e2">🏆</div>
+      <div><div class="sec-title">Final Assessment</div><div class="sec-sub">20 Multiple-Choice Questions · Full Module 4 Coverage · Pass: 70%</div></div>
+    </div>
+  </div>
+  <div class="info-box" style="background:#fffbf0;border-color:rgba(201,168,76,.35)">⚠️ <strong>Assessment Rules:</strong> This assessment covers all sections of Module 4. A score of <strong>14/20 (70%)</strong> or above is required to pass. You may only submit once.</div>
+
+  <div class="final-wrap" id="fwrap">
+    <div class="quiz-title">Module 4 Final Assessment — 20 Questions</div>
+    <div class="q-item"><div class="q-stem">1. The minimum number of members required to be present for a formal meeting to be valid is called the ________.</div><div class="options"><label class="opt"><input type="radio" name="fq1" value="a"> A. casting vote</label><label class="opt"><input type="radio" name="fq1" value="b"> B. quorum</label><label class="opt"><input type="radio" name="fq1" value="c"> C. resolution</label><label class="opt"><input type="radio" name="fq1" value="d"> D. consensus</label></div></div>
+    <div class="q-item"><div class="q-stem">2. "It ________ that the revised budget would be distributed to all committee members by Friday." — Correct passive form:</div><div class="options"><label class="opt"><input type="radio" name="fq2" value="a"> A. agreed</label><label class="opt"><input type="radio" name="fq2" value="b"> B. was agreed</label><label class="opt"><input type="radio" name="fq2" value="c"> C. has agreed</label><label class="opt"><input type="radio" name="fq2" value="d"> D. agreeing</label></div></div>
+    <div class="q-item"><div class="q-stem">3. In British English, "to table an item" in a meeting means to ________.</div><div class="options"><label class="opt"><input type="radio" name="fq3" value="a"> A. remove it from the agenda permanently</label><label class="opt"><input type="radio" name="fq3" value="b"> B. postpone it to a future meeting</label><label class="opt"><input type="radio" name="fq3" value="c"> C. add it to the agenda for discussion</label><label class="opt"><input type="radio" name="fq3" value="d"> D. delegate it to a subcommittee for review</label></div></div>
+    <div class="q-item"><div class="q-stem">4. Which sentence is correctly formed as an indirect question?</div><div class="options"><label class="opt"><input type="radio" name="fq4" value="a"> A. "Could you tell us when will the results be published?"</label><label class="opt"><input type="radio" name="fq4" value="b"> B. "I'd like to know whether the motion has been seconded."</label><label class="opt"><input type="radio" name="fq4" value="c"> C. "I wonder does the team have the capacity to deliver by Q3."</label><label class="opt"><input type="radio" name="fq4" value="d"> D. "Could someone confirm did the minutes get circulated?"</label></div></div>
+    <div class="q-item"><div class="q-stem">5. In the Meridian Consulting case study, what was identified as the single highest-return meeting intervention?</div><div class="options"><label class="opt"><input type="radio" name="fq5" value="a"> A. Introducing a maximum 45-minute time limit for all meetings</label><label class="opt"><input type="radio" name="fq5" value="b"> B. Limiting meeting attendance to six participants without approval</label><label class="opt"><input type="radio" name="fq5" value="c"> C. Training fifteen internal meeting champions across the organisation</label><label class="opt"><input type="radio" name="fq5" value="d"> D. Introducing a mandatory written agenda with a single stated decision objective</label></div></div>
+    <div class="q-item"><div class="q-stem">6. "The proposal ________ be the right approach, but I'm not yet convinced it addresses the root cause." — Best hedging option:</div><div class="options"><label class="opt"><input type="radio" name="fq6" value="a"> A. definitely will</label><label class="opt"><input type="radio" name="fq6" value="b"> B. might</label><label class="opt"><input type="radio" name="fq6" value="c"> C. undoubtedly will</label><label class="opt"><input type="radio" name="fq6" value="d"> D. evidently</label></div></div>
+    <div class="q-item"><div class="q-stem">7. The official written record of a formal meeting's discussions, decisions, and action points is called the ________.</div><div class="options"><label class="opt"><input type="radio" name="fq7" value="a"> A. agenda</label><label class="opt"><input type="radio" name="fq7" value="b"> B. action log</label><label class="opt"><input type="radio" name="fq7" value="c"> C. minutes</label><label class="opt"><input type="radio" name="fq7" value="d"> D. terms of reference</label></div></div>
+    <div class="q-item"><div class="q-stem">8. "________, let me acknowledge the excellent progress the team has made before we turn to the challenges." — Best discourse marker:</div><div class="options"><label class="opt"><input type="radio" name="fq8" value="a"> A. That said</label><label class="opt"><input type="radio" name="fq8" value="b"> B. As a result</label><label class="opt"><input type="radio" name="fq8" value="c"> C. First and foremost</label><label class="opt"><input type="radio" name="fq8" value="d"> D. On the contrary</label></div></div>
+    <div class="q-item"><div class="q-stem">9. AOB in a meeting agenda stands for ________.</div><div class="options"><label class="opt"><input type="radio" name="fq9" value="a"> A. Any Outstanding Business</label><label class="opt"><input type="radio" name="fq9" value="b"> B. Any Other Business</label><label class="opt"><input type="radio" name="fq9" value="c"> C. Approval of Business</label><label class="opt"><input type="radio" name="fq9" value="d"> D. Agenda Overview Briefing</label></div></div>
+    <div class="q-item"><div class="q-stem">10. In the Fintera case study, what caused project decisions to be delayed by over six weeks?</div><div class="options"><label class="opt"><input type="radio" name="fq10" value="a"> A. A dispute over which language should be used to conduct meetings</label><label class="opt"><input type="radio" name="fq10" value="b"> B. Meetings that concluded without clear resolutions due to unaddressed cultural expectations</label><label class="opt"><input type="radio" name="fq10" value="c"> C. Senior managers refusing to attend meetings called by their counterparts in the other office</label><label class="opt"><input type="radio" name="fq10" value="d"> D. Technical failures in the video conferencing system used for cross-border meetings</label></div></div>
+    <div class="q-item"><div class="q-stem">11. "The expansion plan ________ by the full board at this morning's meeting." — Correct passive:</div><div class="options"><label class="opt"><input type="radio" name="fq11" value="a"> A. approved</label><label class="opt"><input type="radio" name="fq11" value="b"> B. was approved</label><label class="opt"><input type="radio" name="fq11" value="c"> C. has approving</label><label class="opt"><input type="radio" name="fq11" value="d"> D. approving</label></div></div>
+    <div class="q-item"><div class="q-stem">12. Which phrase is the most appropriate for diplomatically disagreeing with a colleague's point in a meeting?</div><div class="options"><label class="opt"><input type="radio" name="fq12" value="a"> A. "That analysis is completely wrong, I'm afraid."</label><label class="opt"><input type="radio" name="fq12" value="b"> B. "I take your point entirely, but I would argue that the data suggests otherwise."</label><label class="opt"><input type="radio" name="fq12" value="c"> C. "With all due respect, that view is not supported by any evidence."</label><label class="opt"><input type="radio" name="fq12" value="d"> D. "I'm surprised the board is even considering this proposal."</label></div></div>
+    <div class="q-item"><div class="q-stem">13. A recurring agenda item that appears at every meeting — such as a financial update — is known as a ________.</div><div class="options"><label class="opt"><input type="radio" name="fq13" value="a"> A. matters arising</label><label class="opt"><input type="radio" name="fq13" value="b"> B. standing item</label><label class="opt"><input type="radio" name="fq13" value="c"> C. point of order</label><label class="opt"><input type="radio" name="fq13" value="d"> D. deferred item</label></div></div>
+    <div class="q-item"><div class="q-stem">14. "Our revenue exceeded forecast this quarter. ________, we must address the rising cost base before it erodes the margin." — Best discourse marker:</div><div class="options"><label class="opt"><input type="radio" name="fq14" value="a"> A. Similarly</label><label class="opt"><input type="radio" name="fq14" value="b"> B. For instance</label><label class="opt"><input type="radio" name="fq14" value="c"> C. That said</label><label class="opt"><input type="radio" name="fq14" value="d"> D. In addition</label></div></div>
+    <div class="q-item"><div class="q-stem">15. According to Reading Text 2, what common principle do all key meeting language functions share?</div><div class="options"><label class="opt"><input type="radio" name="fq15" value="a"> A. They are appropriate only in senior management meetings, not team meetings</label><label class="opt"><input type="radio" name="fq15" value="b"> B. They must be precise enough to communicate clearly and courteous enough to maintain collaboration</label><label class="opt"><input type="radio" name="fq15" value="c"> C. They should be used sparingly to avoid appearing too formal or procedurally rigid</label><label class="opt"><input type="radio" name="fq15" value="d"> D. They are effective only when used by the chairperson rather than participants</label></div></div>
+    <div class="q-item"><div class="q-stem">16. "Could you clarify ________ this decision affects the current service level agreements?" — Correct indirect question form:</div><div class="options"><label class="opt"><input type="radio" name="fq16" value="a"> A. how does</label><label class="opt"><input type="radio" name="fq16" value="b"> B. how</label><label class="opt"><input type="radio" name="fq16" value="c"> C. does how</label><label class="opt"><input type="radio" name="fq16" value="d"> D. that how</label></div></div>
+    <div class="q-item"><div class="q-stem">17. A situation in which participants in a meeting or negotiation cannot reach agreement is called a ________.</div><div class="options"><label class="opt"><input type="radio" name="fq17" value="a"> A. deferral</label><label class="opt"><input type="radio" name="fq17" value="b"> B. standing item</label><label class="opt"><input type="radio" name="fq17" value="c"> C. deadlock</label><label class="opt"><input type="radio" name="fq17" value="d"> D. casting vote</label></div></div>
+    <div class="q-item"><div class="q-stem">18. "The data ________ that customer engagement has improved, though causation has not been fully established." — Best hedging expression:</div><div class="options"><label class="opt"><input type="radio" name="fq18" value="a"> A. proves conclusively</label><label class="opt"><input type="radio" name="fq18" value="b"> B. makes entirely clear</label><label class="opt"><input type="radio" name="fq18" value="c"> C. would tend to indicate</label><label class="opt"><input type="radio" name="fq18" value="d"> D. undeniably confirms</label></div></div>
+    <div class="q-item"><div class="q-stem">19. In Reading Text 1, why are hybrid meetings described as the most challenging format?</div><div class="options"><label class="opt"><input type="radio" name="fq19" value="a"> A. They require significantly more expensive technology than other meeting formats</label><label class="opt"><input type="radio" name="fq19" value="b"> B. The chairperson must manage participants in two different environments simultaneously</label><label class="opt"><input type="radio" name="fq19" value="c"> C. Remote participants are consistently less engaged than those present in person</label><label class="opt"><input type="radio" name="fq19" value="d"> D. Decisions made in hybrid meetings do not have the same legal status as in-person decisions</label></div></div>
+    <div class="q-item"><div class="q-stem">20. Which statement best summarises the central message of Module 4: Conducting and Participating in Meetings?</div><div class="options"><label class="opt"><input type="radio" name="fq20" value="a"> A. Formal meetings are increasingly being replaced by digital communication tools in modern organisations</label><label class="opt"><input type="radio" name="fq20" value="b"> B. The most effective meeting participants say as little as possible and avoid challenging ideas</label><label class="opt"><input type="radio" name="fq20" value="c"> C. Effective meetings require structured preparation, professional language, skilled facilitation, and disciplined follow-up</label><label class="opt"><input type="radio" name="fq20" value="d"> D. Cultural differences in meeting behaviour are too significant to be managed through shared frameworks</label></div></div>
+    <div class="btn-row" style="margin-top:28px">
+      <button class="btn btn-gold" style="font-size:15px;padding:12px 28px" onclick="gradeFinal()">🏆 Submit Final Assessment</button>
+    </div>
+    <div class="final-result" id="fresult">
+      <div id="femoji" style="font-size:50px;margin-bottom:10px"></div>
+      <h2 id="fscore"></h2>
+      <div class="final-prog-wrap"><div class="final-prog-fill" id="fprog" style="width:0%"></div></div>
+      <p id="fmsg" style="margin-top:12px"></p>
+      <p style="font-size:11px;color:rgba(255,255,255,.3);margin-top:8px">Review the answer key below for any questions you missed.</p>
+    </div>
+  </div>
+  <div class="ak-wrap" style="margin-top:14px">
+    <button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Final Assessment</span><span class="ak-icon">▶</span></button>
+    <div class="ak-content"><ol>
+      <li>1. <strong>B</strong> — quorum</li><li>2. <strong>B</strong> — was agreed (impersonal passive)</li><li>3. <strong>C</strong> — add it to the agenda (British English meaning)</li><li>4. <strong>B</strong> — "whether the motion has been seconded" (no inversion in indirect question)</li><li>5. <strong>D</strong> — mandatory written agenda with a single decision objective</li><li>6. <strong>B</strong> — might (modal hedge)</li><li>7. <strong>C</strong> — minutes</li><li>8. <strong>C</strong> — First and foremost (prioritising)</li><li>9. <strong>B</strong> — Any Other Business</li><li>10. <strong>B</strong> — unaddressed cultural expectations led to unresolved meetings</li><li>11. <strong>B</strong> — was approved (past passive)</li><li>12. <strong>B</strong> — hedged disagreement: "I take your point, but I would argue…"</li><li>13. <strong>B</strong> — standing item</li><li>14. <strong>C</strong> — That said (concessive contrast)</li><li>15. <strong>B</strong> — precise yet courteous</li><li>16. <strong>B</strong> — how (no inversion after embedded question word)</li><li>17. <strong>C</strong> — deadlock</li><li>18. <strong>C</strong> — would tend to indicate (hedged data interpretation)</li><li>19. <strong>B</strong> — managing two environments simultaneously</li><li>20. <strong>C</strong> — structured preparation, professional language, facilitation, and follow-up</li>
+    </ol></div>
+  </div>
+</section>
+
+</div><!-- /content -->
+
+<div style="background:var(--navy);color:rgba(255,255,255,.25);text-align:center;padding:20px;font-size:11px;font-family:'DM Mono',monospace;margin-top:44px">
+  Business Management English · Module 4: Conducting and Participating in Meetings · B1–B2 Level
+</div>
+</main>
+
+<script>
+function gradeQ(id,ans){
+  let sc=0,tot=Object.keys(ans).length;
+  Object.entries(ans).forEach(([nm,cr])=>{
+    const sel=document.querySelector(`input[name="${nm}"]:checked`);
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(o=>{const l=o.closest('.opt');if(l)l.classList.remove('correct','wrong');});
+    if(sel){const sl=sel.closest('.opt');if(sel.value===cr){sc++;if(sl)sl.classList.add('correct');}else{if(sl)sl.classList.add('wrong');}}
+    const ci=document.querySelector(`input[name="${nm}"][value="${cr}"]`);
+    if(ci){const cl=ci.closest('.opt');if(cl&&!cl.classList.contains('wrong'))cl.classList.add('correct');}
+  });
+  const pct=Math.round(sc/tot*100),el=document.getElementById(id+'-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/${tot} (${pct}%)</span>`;}
+  updateProgress();
+}
+const gAns2={g2i1:'standing item',g2i2:'circulate',g2i3:'matters arising',g2i4:'resolution',g2i5:'action point',g2i6:'adjourn',g2i7:'facilitation',g2i8:'open forum'};
+function gradeGap2(){
+  let sc=0;
+  Object.entries(gAns2).forEach(([id,ans])=>{
+    const inp=document.getElementById(id);if(!inp)return;
+    inp.classList.remove('correct','wrong');
+    if(inp.value.toLowerCase().trim()===ans.toLowerCase()){sc++;inp.classList.add('correct');}else inp.classList.add('wrong');
+  });
+  const pct=Math.round(sc/8*100),el=document.getElementById('v2-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+const tfSel={};
+const tfAns={'1':'F','2':'T','3':'F','4':'T','5':'F','6':'T','7':'T','8':'F'};
+function pickTF(btn,num,val){
+  const row=btn.closest('.tf-row');
+  row.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('sel-t','sel-f'));
+  btn.classList.add(val==='T'?'sel-t':'sel-f');tfSel[num]=val;
+}
+function gradeTF(){
+  let sc=0;
+  for(let i=1;i<=8;i++){
+    const s=tfSel[String(i)],c=tfAns[String(i)];
+    const row=document.querySelector(`#tfr${i} .tf-row`);if(!row)continue;
+    const btns=row.querySelectorAll('.tf-btn');
+    btns.forEach(b=>b.classList.remove('ok-tf','nok-tf','sel-t','sel-f'));
+    if(s){
+      if(s===c)sc++;
+      btns.forEach(b=>{const v=b.textContent.trim()==='True'?'T':'F';if(v===c)b.classList.add('ok-tf');else if(v===s&&s!==c)b.classList.add('nok-tf');});
+    } else {btns.forEach(b=>{if((b.textContent.trim()==='True'?'T':'F')===c)b.classList.add('ok-tf');});}
+  }
+  const pct=Math.round(sc/8*100),el=document.getElementById('v3-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+let curDrag=null;
+function pickDrag(el){
+  if(el.classList.contains('used'))return;
+  document.querySelectorAll('.drag-chip').forEach(d=>d.classList.remove('selected-chip'));
+  if(curDrag===el){curDrag=null;}else{curDrag=el;el.classList.add('selected-chip');}
+}
+function doDrop(zone){
+  if(!curDrag)return;
+  if(zone.dataset.cur){document.querySelectorAll('.drag-chip').forEach(d=>{if(d.dataset.w===zone.dataset.cur)d.classList.remove('used');});}
+  zone.textContent=curDrag.dataset.w;zone.classList.add('filled');zone.dataset.cur=curDrag.dataset.w;
+  curDrag.classList.add('used');curDrag.classList.remove('selected-chip');curDrag=null;
+}
+function gradeDrop(){
+  let sc=0;
+  document.querySelectorAll('.drop-zone').forEach(z=>{
+    z.classList.remove('filled','wrong-drop');
+    if(z.dataset.cur===z.dataset.ans){sc++;z.classList.add('filled');}
+    else if(z.dataset.cur)z.classList.add('wrong-drop');
+  });
+  const pct=Math.round(sc/8*100),el=document.getElementById('v4-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+function resetDrop(){
+  document.querySelectorAll('.drop-zone').forEach(z=>{z.textContent='Place here';z.classList.remove('filled','wrong-drop');delete z.dataset.cur;});
+  document.querySelectorAll('.drag-chip').forEach(d=>d.classList.remove('used','selected-chip'));
+  curDrag=null;const el=document.getElementById('v4-score');if(el)el.innerHTML='';
+}
+function togAK(btn){btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('visible');}
+function wc(tid,cid,max){
+  const t=document.getElementById(tid).value.trim();
+  const n=t===''?0:t.split(/\s+/).length;
+  const el=document.getElementById(cid);if(el)el.textContent=`Words: ${n} / ${max}`;
+}
+function togTranscript(btn){btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('visible');}
+const trackState={};
+function togglePlay(ppId,progId,tmId,stId,_,scriptId){
+  const s=trackState[scriptId];
+  if(s&&s.utt&&speechSynthesis.speaking){
+    if(s.paused){speechSynthesis.resume();s.paused=false;document.getElementById(ppId).textContent='⏸';}
+    else{speechSynthesis.pause();s.paused=true;document.getElementById(ppId).textContent='▶';}
+    return;
+  }
+  Object.keys(trackState).forEach(k=>{if(k!==scriptId&&trackState[k]&&trackState[k].utt)speechSynthesis.cancel();});
+  const text=document.getElementById(scriptId).textContent.trim();
+  const utt=new SpeechSynthesisUtterance(text);
+  utt.rate=trackState[scriptId]?.speed||0.85;utt.lang='en-GB';utt.pitch=1.02;
+  const numId=ppId.slice(2);
+  trackState[scriptId]={utt,paused:false,speed:utt.rate,start:Date.now(),dur:0};
+  const estSec=text.split(' ').length/(utt.rate*150)*60;
+  trackState[scriptId].dur=estSec;
+  const durEl=document.getElementById('dur'+numId);if(durEl)durEl.textContent=fmtTime(estSec);
+  const pp=document.getElementById(ppId),st=document.getElementById(stId),prog=document.getElementById(progId),tm=document.getElementById(tmId);
+  utt.onstart=()=>{
+    if(pp)pp.textContent='⏸';if(st)st.textContent='▶ Playing…';
+    trackState[scriptId].timer=setInterval(()=>{
+      if(trackState[scriptId].paused)return;
+      const elapsed=(Date.now()-trackState[scriptId].start)/1000;
+      const pct=Math.min(elapsed/estSec*100,99);
+      if(prog)prog.style.width=pct+'%';if(tm)tm.textContent=fmtTime(elapsed);
+    },300);
+  };
+  utt.onend=()=>{if(pp)pp.textContent='▶';if(st)st.textContent='✓ Finished';if(prog)prog.style.width='100%';clearInterval(trackState[scriptId].timer);};
+  utt.onerror=()=>{if(pp)pp.textContent='▶';if(st)st.textContent='Error';clearInterval(trackState[scriptId].timer);};
+  speechSynthesis.speak(utt);
+}
+function replayTrack(scriptId,progId,tmId,ppId,stId){
+  speechSynthesis.cancel();
+  const prog=document.getElementById(progId),tm=document.getElementById(tmId);
+  if(prog)prog.style.width='0%';if(tm)tm.textContent='0:00';
+  if(trackState[scriptId])delete trackState[scriptId];
+  setTimeout(()=>togglePlay(ppId,progId,tmId,stId,'',scriptId),200);
+}
+function setSpeed(scriptId,rate,btn,grpId){
+  btn.closest('.speed-row').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(!trackState[scriptId])trackState[scriptId]={};
+  trackState[scriptId].speed=rate;
+}
+function seekTrack(e,progId){
+  const bar=e.currentTarget,rect=bar.getBoundingClientRect();
+  const pct=(e.clientX-rect.left)/rect.width;
+  const prog=document.getElementById(progId);if(prog)prog.style.width=(pct*100)+'%';
+}
+function fmtTime(s){const m=Math.floor(s/60),sec=Math.floor(s%60);return `${m}:${sec<10?'0':''}${sec}`;}
+const fAns={fq1:'b',fq2:'b',fq3:'c',fq4:'b',fq5:'d',fq6:'b',fq7:'c',fq8:'c',fq9:'b',fq10:'b',fq11:'b',fq12:'b',fq13:'b',fq14:'c',fq15:'b',fq16:'b',fq17:'c',fq18:'c',fq19:'b',fq20:'c'};
+let fDone=false;
+function gradeFinal(){
+  if(fDone)return;fDone=true;
+  let sc=0;
+  Object.entries(fAns).forEach(([nm,cr])=>{
+    const sel=document.querySelector(`input[name="${nm}"]:checked`);
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(o=>{const l=o.closest('.opt');if(l)l.classList.remove('correct','wrong');});
+    if(sel){const sl=sel.closest('.opt');if(sel.value===cr){sc++;if(sl)sl.classList.add('correct');}else{if(sl)sl.classList.add('wrong');}}
+    const ci=document.querySelector(`input[name="${nm}"][value="${cr}"]`);
+    if(ci){const cl=ci.closest('.opt');if(cl)cl.classList.add('correct');}
+  });
+  const pct=Math.round(sc/20*100);
+  const r=document.getElementById('fresult');r.style.display='block';
+  document.getElementById('fscore').textContent=`${sc} / 20`;
+  document.getElementById('fprog').style.width=pct+'%';
+  const em=document.getElementById('femoji'),msg=document.getElementById('fmsg');
+  if(pct>=90){em.textContent='🏆';msg.textContent=`Outstanding — ${pct}%. Excellent mastery of Module 4: Conducting and Participating in Meetings.`;}
+  else if(pct>=70){em.textContent='✅';msg.textContent=`Well done — ${pct}%. You have passed Module 4. Review any missed questions using the answer key.`;}
+  else{em.textContent='📚';msg.textContent=`${pct}% — You did not reach the 70% pass mark. Review all sections before retrying.`;}
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+  document.querySelectorAll('#fwrap input[name^="fq"]').forEach(i=>i.disabled=true);
+}
+function setActive(el){document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.remove('active'));el.classList.add('active');}
+window.addEventListener('scroll',()=>{
+  const secs=document.querySelectorAll('section[id]');let cur='';
+  secs.forEach(s=>{if(s.getBoundingClientRect().top<200)cur=s.id;});
+  document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+function updateProgress(){
+  const scored=document.querySelectorAll('.score-badge').length;
+  const pct=Math.min(Math.round(scored/12*100),100);
+  const prog=document.getElementById('modprog'),pctEl=document.getElementById('modpct');
+  if(prog)prog.style.width=pct+'%';if(pctEl)pctEl.textContent=pct+'%';
+}
+setTimeout(()=>{const p=document.getElementById('modprog');if(p)p.style.width='0%';},200);
+</script>
+</body>
+</html>

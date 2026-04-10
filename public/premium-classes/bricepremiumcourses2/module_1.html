@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: Financial Statements & Key Vocabulary — Finance & Accounting English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d1e35;
+  --navy-mid: #152e4d;
+  --navy-light: #1e4068;
+  --gold: #b8860b;
+  --gold-light: #d4a820;
+  --cream: #f4f1eb;
+  --cream-dark: #e8e2d6;
+  --white: #ffffff;
+  --text-light: #a0b4cc;
+  --text-mid: #5e7a99;
+  --red-accent: #c0392b;
+  --green-accent: #1a8a4a;
+  --teal: #0e7490;
+  --teal-light: #22d3ee;
+  --sidebar-w: 265px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── SIDEBAR ─── */
+#sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--navy);
+  position: fixed;
+  top: 0; left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
+}
+.sidebar-brand { padding: 22px 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.sidebar-brand h1 { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: var(--gold-light); line-height: 1.35; margin-bottom: 4px; }
+.sidebar-brand .subtitle { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mid); font-weight: 500; }
+.level-badge { display: inline-block; margin-top: 10px; background: var(--gold); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 3px 10px; border-radius: 20px; }
+.sidebar-section-label { padding: 18px 20px 8px; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-mid); font-weight: 600; }
+.nav-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; cursor: pointer; transition: all 0.2s; border-left: 3px solid transparent; }
+.nav-item:hover { background: rgba(255,255,255,0.05); }
+.nav-item.active { background: rgba(212,168,32,0.13); border-left-color: var(--gold-light); }
+.nav-item .nav-left { display: flex; align-items: center; gap: 10px; }
+.nav-icon { font-size: 15px; }
+.nav-label { font-size: 13px; color: var(--text-light); font-weight: 400; }
+.nav-item.active .nav-label { color: var(--white); font-weight: 500; }
+.nav-badge { font-size: 10px; font-weight: 700; color: var(--navy); background: var(--gold-light); padding: 1px 7px; border-radius: 10px; }
+
+/* ─── MAIN ─── */
+#main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; }
+.section { display: none; }
+.section.active { display: block; }
+
+/* ─── HERO ─── */
+.hero {
+  background: linear-gradient(135deg, #0d1e35 0%, #152e4d 55%, #0e3055 100%);
+  padding: 60px 60px 52px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: 'M1';
+  position: absolute;
+  right: -10px; bottom: -50px;
+  font-family: 'Playfair Display', serif;
+  font-size: 320px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.025);
+  line-height: 1;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 340px; height: 100%;
+  background: linear-gradient(135deg, transparent 0%, rgba(14,116,144,0.08) 100%);
+  pointer-events: none;
+}
+.module-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.14); padding: 6px 16px; border-radius: 30px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-light); font-weight: 500; margin-bottom: 28px; }
+.hero h2 { font-family: 'Playfair Display', serif; font-size: clamp(34px, 4.8vw, 56px); font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 4px; }
+.hero h2 span { color: var(--gold-light); }
+.hero p { font-size: 15px; color: var(--text-light); max-width: 640px; line-height: 1.75; margin-top: 18px; font-weight: 300; }
+.hero-stats { display: flex; gap: 38px; margin-top: 42px; flex-wrap: wrap; }
+.stat { display: flex; flex-direction: column; gap: 4px; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; color: var(--gold-light); line-height: 1; }
+.stat-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mid); font-weight: 500; }
+
+/* ─── PROGRESS BAR ─── */
+.progress-bar-wrap { background: var(--navy-mid); padding: 15px 60px; display: flex; align-items: center; gap: 20px; }
+.progress-label { font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: var(--text-light); white-space: nowrap; }
+.progress-track { flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 10px; width: 0%; transition: width 0.9s ease; }
+.progress-pct { font-size: 13px; font-weight: 700; color: var(--gold-light); min-width: 34px; }
+
+/* ─── CONTENT ─── */
+.content-area { padding: 50px 60px; }
+.card { background: var(--white); border-radius: 14px; padding: 30px 34px; margin-bottom: 26px; border: 1px solid var(--cream-dark); box-shadow: 0 2px 16px rgba(13,30,53,0.06); }
+.card-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.card-title-bar { width: 42px; height: 3px; background: var(--gold); border-radius: 2px; margin-bottom: 22px; }
+
+/* ─── OUTCOMES ─── */
+.outcomes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+.outcome-item { display: flex; align-items: flex-start; gap: 12px; background: var(--cream); border-radius: 10px; padding: 14px 16px; border-left: 3px solid var(--gold); }
+.outcome-num { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--gold); line-height: 1; min-width: 24px; }
+.outcome-text { font-size: 13.5px; color: var(--navy); line-height: 1.5; font-weight: 400; }
+
+/* ─── SPEAKING ─── */
+.speaking-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.speaking-card { background: var(--cream); border-radius: 10px; padding: 18px 20px; border-top: 3px solid var(--gold); transition: transform 0.2s, box-shadow 0.2s; }
+.speaking-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(13,30,53,0.1); }
+.q-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); font-weight: 500; margin-bottom: 8px; letter-spacing: 1px; }
+.q-text { font-size: 13.5px; color: var(--navy); line-height: 1.55; }
+
+/* ─── WORD BANK ─── */
+.wordbank-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.word-card { background: var(--navy); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 8px; transition: transform 0.2s; }
+.word-card:hover { transform: translateY(-2px); }
+.word-emoji { font-size: 24px; }
+.word-term { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--gold-light); }
+.word-def { font-size: 12.5px; color: var(--text-light); line-height: 1.5; }
+
+/* ─── READING ─── */
+.reading-text-box { background: var(--cream); border-radius: 12px; padding: 28px 32px; margin-bottom: 28px; border-left: 4px solid var(--gold); }
+.reading-text-box h4 { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+.reading-text-box p { font-size: 14px; color: var(--navy); line-height: 1.82; margin-bottom: 14px; }
+.reading-text-box p:last-child { margin-bottom: 0; }
+
+/* ─── MCQ ─── */
+.mcq-block { margin-bottom: 22px; }
+.mcq-q { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 12px; line-height: 1.5; }
+.mcq-options { display: flex; flex-direction: column; gap: 8px; }
+.mcq-option { display: flex; align-items: center; gap: 10px; background: var(--cream); border: 2px solid var(--cream-dark); border-radius: 8px; padding: 10px 14px; cursor: pointer; transition: all 0.2s; font-size: 13.5px; color: var(--navy); user-select: none; }
+.mcq-option:hover { border-color: var(--gold); background: #fdf6e3; }
+.mcq-option.selected { border-color: var(--gold); background: #fdf0c8; }
+.mcq-option.correct { border-color: var(--green-accent); background: #e8f8ee; color: #145e32; }
+.mcq-option.incorrect { border-color: var(--red-accent); background: #fdecea; color: #7b1a14; }
+.option-letter { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--navy); }
+.mcq-option.correct .option-letter { background: var(--green-accent); color: white; }
+.mcq-option.incorrect .option-letter { background: var(--red-accent); color: white; }
+.check-btn { margin-top: 14px; background: var(--navy); color: var(--gold-light); border: none; padding: 10px 24px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; font-family: 'DM Sans', sans-serif; }
+.check-btn:hover { background: var(--navy-light); }
+.score-display { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: var(--gold-light); font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 20px; margin-top: 16px; }
+
+/* ─── TABS ─── */
+.ex-tabs { display: flex; gap: 4px; margin-bottom: 28px; background: var(--cream-dark); border-radius: 10px; padding: 4px; }
+.ex-tab { flex: 1; text-align: center; padding: 9px 12px; border-radius: 7px; font-size: 12.5px; font-weight: 500; cursor: pointer; color: var(--text-mid); transition: all 0.2s; }
+.ex-tab.active { background: var(--navy); color: var(--gold-light); }
+
+/* ─── GRAMMAR REF ─── */
+.grammar-ref-box { background: var(--navy); border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; color: var(--white); }
+.grammar-ref-box h4 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold-light); margin-bottom: 16px; }
+.grammar-rule { background: rgba(255,255,255,0.07); border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; border-left: 3px solid var(--gold); }
+.grammar-rule .rule-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold-light); margin-bottom: 8px; }
+.grammar-rule p, .grammar-rule li { font-size: 13px; color: var(--text-light); line-height: 1.65; }
+.grammar-rule code { font-family: 'DM Mono', monospace; background: rgba(212,168,32,0.18); color: var(--gold-light); padding: 1px 6px; border-radius: 4px; font-size: 12px; }
+.grammar-rule ul { padding-left: 18px; }
+
+/* ─── GAP FILL ─── */
+.gapfill-item { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-size: 14px; color: var(--navy); line-height: 2.1; margin-bottom: 12px; }
+.gap-input { border: none; border-bottom: 2px solid var(--gold); background: transparent; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--navy); padding: 2px 6px; width: 155px; outline: none; text-align: center; }
+.gap-input.correct { border-color: var(--green-accent); color: var(--green-accent); }
+.gap-input.incorrect { border-color: var(--red-accent); color: var(--red-accent); }
+
+/* ─── TRUE FALSE ─── */
+.tf-item { background: var(--cream); border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.tf-statement { font-size: 13.5px; color: var(--navy); flex: 1; line-height: 1.5; }
+.tf-buttons { display: flex; gap: 8px; flex-shrink: 0; }
+.tf-btn { padding: 6px 16px; border-radius: 6px; border: 2px solid var(--cream-dark); font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; background: white; font-family: 'DM Sans', sans-serif; }
+.tf-btn:hover { border-color: var(--gold); }
+.tf-btn.selected-true { background: var(--navy); color: white; border-color: var(--navy); }
+.tf-btn.selected-false { background: var(--navy); color: white; border-color: var(--navy); }
+.tf-btn.correct-answer { background: var(--green-accent); color: white; border-color: var(--green-accent); }
+.tf-btn.wrong-answer { background: var(--red-accent); color: white; border-color: var(--red-accent); }
+
+/* ─── WRITING ─── */
+.writing-prompt { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); border-radius: 14px; padding: 28px 32px; margin-bottom: 20px; color: var(--white); }
+.writing-prompt h4 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold-light); margin-bottom: 10px; }
+.writing-prompt p { font-size: 13.5px; color: var(--text-light); line-height: 1.75; }
+.writing-meta { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+.writing-tag { background: rgba(212,168,32,0.18); color: var(--gold-light); font-size: 11px; font-weight: 600; letter-spacing: 0.8px; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; border: 1px solid rgba(212,168,32,0.3); }
+.writing-textarea { width: 100%; min-height: 185px; border: 2px solid var(--cream-dark); border-radius: 10px; padding: 16px 18px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--navy); background: var(--cream); outline: none; resize: vertical; transition: border-color 0.2s; line-height: 1.75; margin-bottom: 12px; }
+.writing-textarea:focus { border-color: var(--gold); background: white; }
+.word-counter { font-size: 12px; color: var(--text-mid); text-align: right; margin-bottom: 12px; }
+.submit-btn { background: var(--gold); color: var(--navy); border: none; padding: 12px 28px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+.submit-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+.submit-success { display: none; align-items: center; gap: 10px; background: #e8f8ee; border: 1px solid var(--green-accent); border-radius: 8px; padding: 12px 18px; font-size: 13.5px; color: #145e32; font-weight: 500; margin-top: 12px; }
+
+/* ─── LISTENING ─── */
+.listening-activity { background: linear-gradient(135deg, #152e4d 0%, #0d1e35 100%); border-radius: 14px; margin-bottom: 28px; overflow: hidden; }
+.listening-header { padding: 22px 28px 18px; display: flex; align-items: flex-start; gap: 16px; }
+.listening-icon { font-size: 32px; margin-top: 2px; }
+.listening-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.listening-subtitle { font-size: 13px; color: var(--text-mid); }
+.listening-tags { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.l-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; }
+.l-tag-level { background: rgba(212,168,32,0.2); color: var(--gold-light); border: 1px solid rgba(212,168,32,0.3); }
+.l-tag-type { color: #e8a0a0; background: rgba(192,57,43,0.2); border: 1px solid rgba(192,57,43,0.3); }
+.l-tag-focus { color: var(--text-light); }
+.audio-player { background: rgba(0,0,0,0.35); margin: 0 20px 18px; border-radius: 12px; padding: 18px 20px; }
+.player-top { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.play-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--teal); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; color: white; flex-shrink: 0; transition: background 0.2s, transform 0.15s; }
+.play-btn:hover { background: #0e8aaa; transform: scale(1.07); }
+.player-info { flex: 1; }
+.player-title { font-size: 13px; font-weight: 600; color: var(--white); }
+.player-desc { font-size: 11.5px; color: var(--text-mid); }
+.player-time { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-mid); white-space: nowrap; }
+.progress-audio { width: 100%; height: 4px; background: rgba(255,255,255,0.15); border-radius: 4px; margin-bottom: 12px; }
+.progress-audio-fill { height: 100%; background: var(--teal); border-radius: 4px; width: 0%; transition: width 0.4s; }
+.speed-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.speed-label { font-size: 10px; font-weight: 700; color: var(--text-mid); letter-spacing: 0.5px; text-transform: uppercase; }
+.speed-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: var(--text-light); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+.speed-btn:hover { background: rgba(255,255,255,0.18); }
+.speed-btn.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+.replay-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: var(--text-light); font-size: 11px; font-weight: 600; padding: 3px 12px; border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.audio-note { font-size: 11px; color: var(--text-mid); font-style: italic; margin-top: 8px; }
+.transcript-toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-mid); cursor: pointer; padding: 10px 28px; border-top: 1px solid rgba(255,255,255,0.07); user-select: none; transition: color 0.2s; }
+.transcript-toggle:hover { color: var(--text-light); }
+.transcript-toggle .arrow { transition: transform 0.2s; font-size: 11px; }
+.transcript-toggle.open .arrow { transform: rotate(180deg); }
+.transcript-content { display: none; padding: 16px 28px 20px; background: rgba(255,255,255,0.03); }
+.transcript-content.open { display: block; }
+.transcript-content p { font-size: 13px; color: var(--text-light); line-height: 1.8; font-style: italic; }
+.listening-mcq { padding: 20px 28px 24px; }
+.instructions-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; display: flex; gap: 10px; align-items: flex-start; }
+.inst-icon { font-size: 14px; color: var(--gold-light); margin-top: 1px; }
+.inst-text { font-size: 12.5px; color: var(--text-mid); line-height: 1.5; }
+
+/* ─── LISTENING MCQ — WHITE ─── */
+.l-mcq-option { background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.1); color: var(--white); }
+.l-mcq-option:hover { border-color: var(--gold-light); background: rgba(212,168,32,0.1); color: var(--white); }
+.l-mcq-option.selected { border-color: var(--gold-light); background: rgba(212,168,32,0.15); color: var(--white); }
+.l-mcq-option.correct { border-color: var(--green-accent); background: rgba(26,138,74,0.15); color: #7dddaa; }
+.l-mcq-option.incorrect { border-color: var(--red-accent); background: rgba(192,57,43,0.15); color: #f1948a; }
+.listening-mcq .mcq-q { color: var(--white); }
+.listening-mcq .score-display { background: rgba(255,255,255,0.1); color: var(--gold-light); }
+.listening-mcq .option-letter { background: rgba(255,255,255,0.12); color: var(--white); }
+.l-check-btn { background: var(--teal); color: white; }
+.l-check-btn:hover { background: #0e8aaa; }
+
+/* ─── CASE STUDY ─── */
+.case-header { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius: 14px 14px 0 0; padding: 28px 32px; border-bottom: 3px solid var(--gold); }
+.case-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-light); font-weight: 600; margin-bottom: 8px; }
+.case-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 8px; line-height: 1.3; }
+.case-sub { font-size: 13.5px; color: var(--text-light); }
+.case-body { background: white; border-radius: 0 0 14px 14px; padding: 28px 32px; margin-bottom: 24px; border: 1px solid var(--cream-dark); border-top: none; }
+.case-body p { font-size: 14px; color: var(--navy); line-height: 1.82; margin-bottom: 14px; }
+.case-body h5 { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--navy); margin: 20px 0 10px; padding-bottom: 6px; border-bottom: 2px solid var(--cream-dark); }
+
+/* ─── ASSESSMENT ─── */
+.assessment-banner { background: linear-gradient(135deg, var(--navy), var(--navy-light)); border-radius: 14px; padding: 32px 36px; color: white; margin-bottom: 28px; text-align: center; }
+.assessment-banner h3 { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--gold-light); margin-bottom: 8px; }
+.assessment-banner p { font-size: 14px; color: var(--text-light); margin-bottom: 20px; line-height: 1.6; }
+.assessment-meta { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+.a-meta-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.a-meta-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--gold-light); }
+.a-meta-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mid); }
+.attempts-display { display: flex; align-items: center; gap: 8px; justify-content: flex-end; margin-bottom: 20px; font-size: 13px; color: var(--text-mid); }
+.attempt-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--cream-dark); }
+.attempt-dot.used { background: var(--gold); }
+.final-result { display: none; background: var(--navy); border-radius: 12px; padding: 28px 32px; text-align: center; color: white; margin-top: 20px; }
+.final-result.pass { border: 2px solid var(--green-accent); }
+.final-result.fail { border: 2px solid var(--red-accent); }
+.final-score { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; margin-bottom: 4px; }
+.final-result.pass .final-score { color: #7dddaa; }
+.final-result.fail .final-score { color: #f1948a; }
+.final-verdict { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+.final-msg { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+
+/* ─── MISC ─── */
+.ex-divider { height: 1px; background: var(--cream-dark); margin: 28px 0; }
+
+@media (max-width: 960px) {
+  :root { --sidebar-w: 220px; }
+  .content-area { padding: 32px 28px; }
+  .hero { padding: 40px 28px 36px; }
+  .progress-bar-wrap { padding: 14px 28px; }
+  .speaking-grid { grid-template-columns: 1fr 1fr; }
+  .wordbank-grid { grid-template-columns: 1fr 1fr; }
+  .outcomes-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  #sidebar { display: none; }
+  #main { margin-left: 0; }
+  .speaking-grid, .wordbank-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h1>Finance &amp; Accounting English</h1>
+    <div class="subtitle">Professional Development</div>
+    <span class="level-badge">B1–B2 LEVEL</span>
+  </div>
+  <div class="sidebar-section-label">Module 1</div>
+  <div class="nav-item active" onclick="showSection('overview')">
+    <div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  </div>
+  <div class="nav-item" onclick="showSection('speaking')">
+    <div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div>
+    <span class="nav-badge">21Q</span>
+  </div>
+  <div class="nav-item" onclick="showSection('wordbank')">
+    <div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div>
+    <span class="nav-badge">21</span>
+  </div>
+  <div class="nav-item" onclick="showSection('reading')">
+    <div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div>
+    <span class="nav-badge">2T</span>
+  </div>
+  <div class="nav-item" onclick="showSection('vocabulary')">
+    <div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span></div>
+    <span class="nav-badge">3Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('grammar')">
+    <div class="nav-left"><span class="nav-icon">📝</span><span class="nav-label">Grammar</span></div>
+    <span class="nav-badge">3Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('grammar-review')">
+    <div class="nav-left"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  </div>
+  <div class="nav-item" onclick="showSection('writing')">
+    <div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div>
+    <span class="nav-badge">2W</span>
+  </div>
+  <div class="nav-item" onclick="showSection('listening')">
+    <div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div>
+    <span class="nav-badge">4Ex</span>
+  </div>
+  <div class="nav-item" onclick="showSection('casestudies')">
+    <div class="nav-left"><span class="nav-icon">🏢</span><span class="nav-label">Case Studies</span></div>
+    <span class="nav-badge">2CS</span>
+  </div>
+  <div class="nav-item" onclick="showSection('assessment')">
+    <div class="nav-left"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span></div>
+    <span class="nav-badge">20Q</span>
+  </div>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main id="main">
+
+<!-- OVERVIEW -->
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="module-tag">💼 MODULE 1 · FINANCE &amp; ACCOUNTING ENGLISH</div>
+    <h2>Financial Statements<br><span>&amp; Key Vocabulary</span></h2>
+    <p>Build the essential English skills to read, interpret, and discuss core financial statements — the income statement, balance sheet, and cash flow statement — with accuracy and professional confidence.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <span class="progress-label">Module Progress</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:14px;line-height:1.85;color:#1a2e4a;margin-bottom:14px;">
+        <strong>Welcome to Module 1: Financial Statements and Key Vocabulary.</strong> This module introduces the three core financial statements used in businesses worldwide — the income statement, the balance sheet, and the cash flow statement — along with the essential English vocabulary you need to read and discuss them confidently. You will learn how each statement is structured, what key figures mean, and how to talk about financial performance, liquidity, and profitability in a professional context.
+      </p>
+      <p style="font-size:14px;line-height:1.85;color:#1a2e4a;">
+        This module is designed for finance professionals, accountants, analysts, managers, and anyone who works with financial information at B1–B2 English level. By completing all activities, you will be able to participate confidently in meetings, write reports, and discuss financial data with colleagues and stakeholders in English.
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">By the end of this module, you will be able to:</p>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-num">1</div><div class="outcome-text">Identify and explain the purpose and structure of the three core financial statements: income statement, balance sheet, and cash flow statement.</div></div>
+        <div class="outcome-item"><div class="outcome-num">2</div><div class="outcome-text">Use key financial vocabulary accurately to describe revenue, expenses, assets, liabilities, equity, and cash flows in spoken and written English.</div></div>
+        <div class="outcome-item"><div class="outcome-num">3</div><div class="outcome-text">Apply prepositions of financial change correctly to describe increases, decreases, and movements in financial data.</div></div>
+        <div class="outcome-item"><div class="outcome-num">4</div><div class="outcome-text">Use the present perfect and past simple tenses accurately to report financial results and describe historical performance.</div></div>
+        <div class="outcome-item"><div class="outcome-num">5</div><div class="outcome-text">Form and use financial collocations and noun phrases that are essential for professional finance communication in English.</div></div>
+        <div class="outcome-item"><div class="outcome-num">6</div><div class="outcome-text">Interpret financial data from income statements and balance sheets and comment on a company's financial health using appropriate language.</div></div>
+        <div class="outcome-item"><div class="outcome-num">7</div><div class="outcome-text">Write a short financial summary report and a professional email reporting key financial results to a non-specialist audience.</div></div>
+        <div class="outcome-item"><div class="outcome-num">8</div><div class="outcome-text">Listen to financial briefings, earnings calls, and analyst presentations and extract key figures, trends, and recommendations.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPEAKING -->
+<div id="speaking" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🎙️ SPEAKING ACTIVITIES</div>
+    <h2>Discussion <span>Questions</span></h2>
+    <p>21 questions to practise speaking about financial statements, accounting, and business finance at B1–B2 level.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Speaking Questions</div>
+      <div class="card-title-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">Discuss these questions with a partner or prepare a spoken response of 2–3 minutes each.</p>
+      <div class="speaking-grid" id="speakingGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- WORD BANK -->
+<div id="wordbank" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">📚 WORD BANK</div>
+    <h2>Key <span>Vocabulary</span></h2>
+    <p>21 essential terms for reading and discussing financial statements at B1–B2 level.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Vocabulary</div>
+      <div class="card-title-bar"></div>
+      <div class="wordbank-grid" id="wordbankGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- READING -->
+<div id="reading" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">📖 READING</div>
+    <h2>Reading <span>Texts</span></h2>
+    <p>Two professional texts followed by 10 multiple-choice comprehension questions each.</p>
+  </div>
+  <div class="content-area" id="readingContent"></div>
+</div>
+
+<!-- VOCABULARY -->
+<div id="vocabulary" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">✏️ VOCABULARY EXERCISES</div>
+    <h2>Vocabulary <span>Practice</span></h2>
+    <p>Three exercises to consolidate your understanding of key financial vocabulary.</p>
+  </div>
+  <div class="content-area">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocabEx(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocabEx(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocabEx(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vocab-ex-0" class="vocab-ex"></div>
+    <div id="vocab-ex-1" class="vocab-ex" style="display:none"></div>
+    <div id="vocab-ex-2" class="vocab-ex" style="display:none"></div>
+  </div>
+</div>
+
+<!-- GRAMMAR -->
+<div id="grammar" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">📝 GRAMMAR EXERCISES</div>
+    <h2>Grammar <span>Practice</span></h2>
+    <p>Three grammar exercises covering prepositions of change, present perfect vs past simple, and financial noun phrases.</p>
+  </div>
+  <div class="content-area">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGrammarEx(0,this)">Exercise 1 · Prepositions of Change</div>
+      <div class="ex-tab" onclick="showGrammarEx(1,this)">Exercise 2 · Present Perfect vs Past Simple</div>
+      <div class="ex-tab" onclick="showGrammarEx(2,this)">Exercise 3 · Financial Noun Phrases</div>
+    </div>
+    <div id="grammar-ex-0" class="grammar-ex"></div>
+    <div id="grammar-ex-1" class="grammar-ex" style="display:none"></div>
+    <div id="grammar-ex-2" class="grammar-ex" style="display:none"></div>
+  </div>
+</div>
+
+<!-- GRAMMAR REVIEW -->
+<div id="grammar-review" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🔍 GRAMMAR REVIEW</div>
+    <h2>Grammar <span>Reference</span></h2>
+    <p>Detailed reference boxes covering all three grammar points in this module.</p>
+  </div>
+  <div class="content-area" id="grammarReviewContent"></div>
+</div>
+
+<!-- WRITING -->
+<div id="writing" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">✍️ WRITING ACTIVITIES</div>
+    <h2>Writing <span>Tasks</span></h2>
+    <p>Two structured writing tasks to practise financial summary writing and professional reporting emails.</p>
+  </div>
+  <div class="content-area" id="writingContent"></div>
+</div>
+
+<!-- LISTENING -->
+<div id="listening" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🎧 LISTENING ACTIVITIES</div>
+    <h2>Listening <span>Activities</span></h2>
+    <p>4 audio activities with built-in speech players — press ▶ Play, listen, then answer the questions.</p>
+  </div>
+  <div class="content-area" id="listeningContent"></div>
+</div>
+
+<!-- CASE STUDIES -->
+<div id="casestudies" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🏢 CASE STUDIES</div>
+    <h2>Real-World <span>Cases</span></h2>
+    <p>Two in-depth case studies on financial reporting and analysis, with comprehension questions.</p>
+  </div>
+  <div class="content-area" id="caseStudiesContent"></div>
+</div>
+
+<!-- ASSESSMENT -->
+<div id="assessment" class="section">
+  <div class="hero" style="padding-bottom:42px">
+    <div class="module-tag">🎯 FINAL ASSESSMENT</div>
+    <h2>Module 1 <span>Assessment</span></h2>
+    <p>20 multiple-choice questions covering all areas of the module. Pass mark: 70%. Two attempts allowed.</p>
+  </div>
+  <div class="content-area" id="assessmentContent"></div>
+</div>
+
+</main>
+
+<script>
+/* ══════════════════════════════════════════
+   DATA
+══════════════════════════════════════════ */
+
+const speakingQs = [
+  "What do you understand by the term 'financial statement'? Why are financial statements important for a business?",
+  "Can you name the three main financial statements? What is the purpose of each one?",
+  "Have you ever read an annual report or a financial statement in your work? What information were you looking for?",
+  "What is the difference between revenue and profit? Why is this distinction important?",
+  "What does it mean when a company says it is 'profitable but cash-poor'? How is that possible?",
+  "What is the difference between an asset and a liability? Give two examples of each from a real business.",
+  "Why might a company have strong revenues but still struggle financially? What kinds of costs could cause this?",
+  "How do you think investors use financial statements when deciding whether to invest in a company?",
+  "What is gross profit and how does it differ from net profit? Which do you think is more meaningful?",
+  "What is working capital and why is it important for a company's day-to-day operations?",
+  "Why do you think cash flow is sometimes considered more important than profit for assessing a company's health?",
+  "What is depreciation and why is it recorded as an expense if no cash is being paid out?",
+  "How does equity differ from debt as a source of financing for a company? What are the advantages of each?",
+  "What does it mean when a balance sheet 'balances'? What is the fundamental accounting equation?",
+  "What is the difference between current assets and non-current assets? Give examples of each.",
+  "How do financial statements differ between a manufacturing company and a service company?",
+  "What role do auditors play in relation to financial statements? Why does their independence matter?",
+  "If a company's liabilities exceed its assets, what does that mean? What might happen next?",
+  "What is EBITDA and why do analysts and investors pay close attention to it?",
+  "How might a financial statement look different when presented under IFRS compared to local accounting standards?",
+  "In your opinion, what is the single most important figure in a company's financial statements? Why?"
+];
+
+const wordBank = [
+  { emoji:"📊", term:"Income statement", def:"A financial statement showing a company's revenues, expenses, and profit or loss over a specific period. Also called the profit and loss account (P&L)." },
+  { emoji:"⚖️", term:"Balance sheet", def:"A financial statement showing a company's assets, liabilities, and equity at a specific point in time." },
+  { emoji:"💧", term:"Cash flow statement", def:"A financial statement that shows how cash moves in and out of a business through operating, investing, and financing activities." },
+  { emoji:"💰", term:"Revenue", def:"The total income a company earns from its primary business activities, such as the sale of goods or services. Also called turnover or sales." },
+  { emoji:"📉", term:"Gross profit", def:"Revenue minus the cost of goods sold (COGS). It represents profit before operating expenses are deducted." },
+  { emoji:"🏦", term:"Net profit", def:"The final profit remaining after all expenses, taxes, and interest have been deducted from revenue. Also called the bottom line." },
+  { emoji:"🧾", term:"Operating expenses", def:"The costs incurred in running the business day-to-day, such as salaries, rent, and utilities — excluding the cost of goods sold." },
+  { emoji:"🏠", term:"Assets", def:"Resources owned or controlled by a company that are expected to provide future economic benefit. Divided into current and non-current assets." },
+  { emoji:"📋", term:"Liabilities", def:"Obligations that a company owes to external parties, such as loans, accounts payable, and accrued expenses." },
+  { emoji:"🤝", term:"Equity", def:"The residual interest in the assets of a company after deducting liabilities. Represents the owners' stake in the business." },
+  { emoji:"🔄", term:"Working capital", def:"Current assets minus current liabilities. A measure of a company's short-term liquidity and operational efficiency." },
+  { emoji:"📆", term:"Accounts receivable", def:"Money owed to a company by customers who have purchased goods or services on credit." },
+  { emoji:"🧮", term:"Accounts payable", def:"Money a company owes to its suppliers for goods or services received but not yet paid for." },
+  { emoji:"📦", term:"Inventory", def:"The raw materials, work-in-progress, and finished goods held by a company for sale." },
+  { emoji:"🏗️", term:"Depreciation", def:"The systematic allocation of the cost of a tangible fixed asset over its useful life, recorded as an expense." },
+  { emoji:"📈", term:"EBITDA", def:"Earnings Before Interest, Taxes, Depreciation, and Amortisation. A widely used measure of a company's core operating profitability." },
+  { emoji:"💳", term:"Retained earnings", def:"The portion of net profit that is kept within the business after dividends are paid out, used to fund future growth." },
+  { emoji:"🔍", term:"Liquidity", def:"A company's ability to meet its short-term financial obligations using available cash or assets quickly convertible to cash." },
+  { emoji:"💼", term:"Cost of goods sold (COGS)", def:"The direct costs attributable to the production of the goods sold by a company, including materials and direct labour." },
+  { emoji:"📐", term:"Financial ratio", def:"A numerical relationship between two financial figures used to assess a company's performance, efficiency, or financial health." },
+  { emoji:"🌐", term:"IFRS", def:"International Financial Reporting Standards — a globally recognised set of accounting standards for the preparation of financial statements." }
+];
+
+const readingTexts = [
+  {
+    title: "Text 1: Understanding the Income Statement",
+    subtitle: "Structure, key line items, and what the numbers tell us",
+    paragraphs: [
+      "The income statement — also known as the profit and loss account or P&L — is one of the most closely studied financial documents in business. It provides a summary of a company's financial performance over a defined period, typically a quarter or a full financial year. Starting with revenue at the top — often referred to as the 'top line' — and ending with net profit at the bottom — the 'bottom line' — the income statement tells the story of how efficiently a company converts its sales into profit. Every line between these two figures represents a cost or deduction that erodes the company's earnings.",
+      "The first major deduction from revenue is the cost of goods sold (COGS), which represents the direct costs of producing the goods or services a company sells. Subtracting COGS from revenue gives us gross profit, which is a measure of production efficiency. From gross profit, operating expenses are then deducted — these include salaries, rent, marketing, and general administrative costs. The result is operating profit, also known as EBIT (Earnings Before Interest and Tax). After interest expenses and tax charges are deducted, the remaining figure is net profit, the definitive measure of a company's profitability during the period.",
+      "Analysts and investors study the income statement not simply for the headline profit figure but for the margins it reveals. The gross profit margin — gross profit divided by revenue — shows how efficiently a company manages its production costs. The net profit margin — net profit divided by revenue — reflects overall management efficiency after all costs are accounted for. A consistent improvement in margins over time typically signals that a company is becoming more efficient and competitive. Conversely, declining margins may indicate rising costs, pricing pressure, or operational problems that require management attention."
+    ],
+    questions: [
+      { q: "What is another name for the income statement?", opts: ["Cash flow statement", "Balance sheet", "Profit and loss account", "Equity statement"], ans: 2 },
+      { q: "What does the term 'top line' refer to in an income statement?", opts: ["Net profit", "Operating expenses", "Revenue", "Gross profit"], ans: 2 },
+      { q: "What does 'bottom line' refer to?", opts: ["Total revenue", "Cost of goods sold", "Operating profit", "Net profit"], ans: 3 },
+      { q: "What does COGS stand for?", opts: ["Cost of Goods Sold", "Cash on General Sales", "Cost of Gross Spending", "Current Operating Gross Sales"], ans: 0 },
+      { q: "How is gross profit calculated?", opts: ["Revenue minus net profit", "Revenue minus COGS", "Revenue minus operating expenses", "Revenue minus tax"], ans: 1 },
+      { q: "What does EBIT stand for?", opts: ["Earnings Before Income Tax", "Equity Before Interest and Tax", "Earnings Before Interest and Tax", "Estimated Business Income Total"], ans: 2 },
+      { q: "What is deducted after gross profit to arrive at operating profit?", opts: ["Tax and interest", "COGS", "Operating expenses", "Depreciation only"], ans: 2 },
+      { q: "How is the gross profit margin calculated?", opts: ["Net profit divided by revenue", "Gross profit divided by COGS", "Gross profit divided by revenue", "Revenue divided by gross profit"], ans: 2 },
+      { q: "What does a consistent improvement in profit margins typically indicate?", opts: ["Rising costs and pricing pressure", "The company is becoming more efficient and competitive", "The company has fewer customers", "Revenue is declining"], ans: 1 },
+      { q: "According to the text, what might declining margins indicate?", opts: ["Strong financial performance", "Growing revenue", "Rising costs, pricing pressure, or operational problems", "Improved production efficiency"], ans: 2 }
+    ]
+  },
+  {
+    title: "Text 2: The Balance Sheet — A Snapshot of Financial Position",
+    subtitle: "Understanding assets, liabilities, equity, and the accounting equation",
+    paragraphs: [
+      "The balance sheet is a financial statement that provides a snapshot of what a company owns, what it owes, and what belongs to its shareholders at a specific point in time. Unlike the income statement, which covers a period, the balance sheet captures a single moment — typically the last day of a financial quarter or year. It is organised around the fundamental accounting equation: Assets = Liabilities + Equity. This equation must always hold true, which is why the statement is called a balance sheet — the two sides must balance. Assets represent everything the company controls that has economic value; liabilities represent all obligations owed to external parties; and equity represents the residual interest belonging to shareholders.",
+      "Assets are divided into two main categories: current assets and non-current assets. Current assets are those expected to be converted into cash within twelve months — they include cash and cash equivalents, accounts receivable, and inventory. Non-current assets, also called fixed or long-term assets, provide value over a longer period and include property, plant and equipment (PP&E), intangible assets such as patents and goodwill, and long-term investments. On the other side of the balance sheet, liabilities are similarly divided into current liabilities — those due within twelve months, such as accounts payable and short-term loans — and non-current liabilities, such as long-term debt and pension obligations.",
+      "Equity, also known as shareholders' equity or net assets, is the third section of the balance sheet. It includes share capital — money originally invested by shareholders — and retained earnings, which are the accumulated profits the company has kept rather than distributing as dividends. Equity is sometimes described as the 'book value' of the company, though this rarely equals the company's market value. Analysts use the balance sheet to assess a company's leverage — how much debt it uses relative to equity — as well as its liquidity, which reflects its ability to meet short-term obligations. A healthy balance sheet typically shows a reasonable proportion of equity to debt and sufficient current assets to cover current liabilities."
+    ],
+    questions: [
+      { q: "What does the balance sheet show?", opts: ["Revenue and expenses over a period", "What a company owns, owes, and what belongs to shareholders at a point in time", "Cash inflows and outflows", "A company's profit margins"], ans: 1 },
+      { q: "What is the fundamental accounting equation?", opts: ["Revenue = Expenses + Profit", "Assets = Revenue − Expenses", "Assets = Liabilities + Equity", "Equity = Assets + Liabilities"], ans: 2 },
+      { q: "Why is it called a 'balance sheet'?", opts: ["Because profits must equal expenses", "Because both sides of the equation must balance", "Because it covers a balanced period of time", "Because assets and revenue must be equal"], ans: 1 },
+      { q: "Which of the following is an example of a current asset?", opts: ["Property and equipment", "Long-term investments", "Accounts receivable", "Patents and goodwill"], ans: 2 },
+      { q: "What does PP&E stand for?", opts: ["Payments, Provisions and Equity", "Property, Plant and Equipment", "Profit, Performance and Equity", "Provisions, Payables and Expenses"], ans: 1 },
+      { q: "Which of the following would be classified as a non-current liability?", opts: ["Accounts payable", "Short-term bank loans", "Cash equivalents", "Long-term debt"], ans: 3 },
+      { q: "What are retained earnings?", opts: ["Cash held in the company's bank account", "Dividends paid to shareholders", "Accumulated profits kept in the business rather than distributed", "Revenue from product sales"], ans: 2 },
+      { q: "How is equity sometimes described in the text?", opts: ["The 'top line' of the balance sheet", "The 'book value' of the company", "The 'bottom line' of performance", "The 'net revenue' figure"], ans: 1 },
+      { q: "What does the term 'leverage' refer to in the context of the balance sheet?", opts: ["How quickly a company can sell its inventory", "How much debt a company uses relative to equity", "The total value of a company's assets", "The proportion of revenue converted to profit"], ans: 1 },
+      { q: "What does a healthy balance sheet typically show?", opts: ["High liabilities and low equity", "A reasonable proportion of equity to debt and sufficient current assets", "Equal revenue and expenses", "More non-current assets than current assets"], ans: 1 }
+    ]
+  }
+];
+
+const vocabExercises = [
+  {
+    type: "mcq",
+    title: "Exercise 1: Multiple Choice",
+    instructions: "Choose the best word or phrase to complete each sentence.",
+    questions: [
+      { q: "The company's total income from selling its products last year was €45 million. This figure is called _____.", opts: ["net profit", "revenue", "equity", "COGS"], ans: 1 },
+      { q: "After deducting the cost of goods sold from revenue, we arrive at the _____.", opts: ["net profit", "operating expenses", "gross profit", "EBITDA"], ans: 2 },
+      { q: "The money owed by customers who have purchased goods on credit is recorded as _____.", opts: ["accounts payable", "inventory", "accounts receivable", "retained earnings"], ans: 2 },
+      { q: "The company's _____ showed that it had more short-term obligations than cash available to meet them.", opts: ["income statement", "working capital", "equity position", "gross margin"], ans: 1 },
+      { q: "The factory equipment was purchased five years ago and its value has been reduced each year through _____.", opts: ["amortisation of goodwill", "depreciation", "revenue deduction", "cost of goods sold"], ans: 1 },
+      { q: "The board decided to keep the profits in the business rather than pay dividends, increasing the company's _____.", opts: ["accounts payable", "COGS", "retained earnings", "current liabilities"], ans: 2 },
+      { q: "A company's _____ is calculated by subtracting current liabilities from current assets.", opts: ["EBITDA", "net profit margin", "working capital", "leverage ratio"], ans: 2 },
+      { q: "The _____ measures a company's profitability before interest, tax, depreciation, and amortisation.", opts: ["gross profit", "EBITDA", "net revenue", "accounts receivable"], ans: 1 },
+      { q: "Under _____, companies follow a consistent global framework for preparing and presenting their financial statements.", opts: ["COGS", "EBITDA", "IFRS", "PP&E"], ans: 2 },
+      { q: "The ability of a company to pay its short-term debts as they fall due is known as its _____.", opts: ["leverage", "equity", "liquidity", "net margin"], ans: 2 }
+    ]
+  },
+  {
+    type: "gapfill",
+    title: "Exercise 2: Gap Fill",
+    instructions: "Complete each sentence using a word or phrase from the box.",
+    words: ["liabilities", "balance sheet", "equity", "cash flow", "net profit", "operating expenses", "inventory", "gross profit", "assets", "income statement"],
+    sentences: [
+      { before: "The ", blank: "income statement", after: " shows how much profit a company has made over a given period." },
+      { before: "Current ", blank: "assets", after: " include cash, receivables, and inventory that can be converted quickly." },
+      { before: "The company's ", blank: "gross profit", after: " was $8 million after deducting the cost of goods sold from revenue." },
+      { before: "Salaries, rent, and marketing costs are all examples of ", blank: "operating expenses", after: "." },
+      { before: "The ", blank: "balance sheet", after: " is prepared at the end of each financial year to show the company's financial position." },
+      { before: "After paying all costs, interest, and taxes, the company recorded a ", blank: "net profit", after: " of $2.3 million." },
+      { before: "The company held $4 million worth of unsold goods in ", blank: "inventory", after: " at the year end." },
+      { before: "Shareholders' ", blank: "equity", after: " represents the portion of the company that belongs to its owners." },
+      { before: "Accounts payable and long-term debt are both examples of company ", blank: "liabilities", after: "." },
+      { before: "A positive operating ", blank: "cash flow", after: " means the business is generating more cash than it spends running daily operations." }
+    ]
+  },
+  {
+    type: "truefalse",
+    title: "Exercise 3: True / False",
+    instructions: "Read the statements and decide if they are TRUE or FALSE.",
+    statements: [
+      { text: "The income statement shows a company's financial position at a specific point in time.", ans: false },
+      { text: "Revenue is sometimes called the 'top line' because it appears at the top of the income statement.", ans: true },
+      { text: "Gross profit is calculated by subtracting all operating expenses from revenue.", ans: false },
+      { text: "The fundamental accounting equation is: Assets = Liabilities + Equity.", ans: true },
+      { text: "Accounts payable represents money owed to a company by its customers.", ans: false },
+      { text: "Retained earnings are profits kept in the business rather than paid out as dividends.", ans: true },
+      { text: "A high EBITDA margin always means a company has strong cash flow.", ans: false },
+      { text: "Current assets are expected to be converted into cash within twelve months.", ans: true },
+      { text: "Depreciation is a cash expense that reduces the company's bank balance directly.", ans: false },
+      { text: "Liquidity refers to a company's ability to meet its short-term financial obligations.", ans: true }
+    ]
+  }
+];
+
+const grammarExercises = [
+  {
+    type: "mcq",
+    title: "Exercise 1: Prepositions of Financial Change",
+    instructions: "Choose the correct preposition to complete each financial sentence.",
+    questions: [
+      { q: "Revenue increased _____ 12% compared to the same period last year.", opts: ["of", "with", "by", "from"], ans: 2 },
+      { q: "Operating costs rose _____ $4.2 million _____ $5.1 million during the second quarter.", opts: ["from / to", "by / at", "of / into", "at / up"], ans: 0 },
+      { q: "The gross profit margin fell _____ 34% to 29% due to rising material costs.", opts: ["by", "from", "with", "at"], ans: 1 },
+      { q: "Net profit declined _____ approximately 8% year-on-year.", opts: ["to", "at", "by", "from"], ans: 2 },
+      { q: "The company's cash balance stood _____ $12.5 million at the end of the quarter.", opts: ["by", "to", "at", "from"], ans: 2 },
+      { q: "Accounts receivable grew _____ $3.8 million as a result of strong sales in December.", opts: ["at", "by", "from", "of"], ans: 1 },
+      { q: "Total liabilities decreased _____ $18 million following the early repayment of a bank loan.", opts: ["at", "to", "by", "with"], ans: 2 },
+      { q: "The share price dropped _____ $45 _____ $38 after the results announcement.", opts: ["from / to", "at / by", "by / from", "with / to"], ans: 0 },
+      { q: "Inventory levels were reduced _____ 15% to improve working capital efficiency.", opts: ["to", "at", "from", "by"], ans: 3 },
+      { q: "EBITDA improved _____ $9.2 million, driven mainly by cost reduction initiatives.", opts: ["at", "from", "to", "by"], ans: 3 }
+    ]
+  },
+  {
+    type: "mcq",
+    title: "Exercise 2: Present Perfect vs Past Simple",
+    instructions: "Choose the correct tense to complete each financial reporting sentence.",
+    questions: [
+      { q: "The company _____ its annual revenue by 15% last financial year.", opts: ["has increased", "increased", "is increasing", "had been increasing"], ans: 1 },
+      { q: "Since introducing the new pricing strategy, margins _____.", opts: ["improved", "improve", "have improved", "had improved"], ans: 2 },
+      { q: "In Q3 2022, the board _____ a dividend of $0.45 per share.", opts: ["has declared", "is declaring", "declared", "has been declaring"], ans: 2 },
+      { q: "Revenue _____ steadily over the past three years, reaching a record high this quarter.", opts: ["grew", "has grown", "had grown", "was growing"], ans: 1 },
+      { q: "The company _____ its debt significantly when it refinanced in 2021.", opts: ["has reduced", "reduces", "reduced", "is reducing"], ans: 2 },
+      { q: "Operating expenses _____ by 6% so far this year, well below the budgeted figure.", opts: ["fell", "has fallen", "have fallen", "had fallen"], ans: 2 },
+      { q: "The auditors _____ the 2023 financial statements and found no material errors.", opts: ["have reviewed", "reviewed", "are reviewing", "review"], ans: 1 },
+      { q: "The company _____ not yet published its full-year results for the current financial year.", opts: ["did", "has", "had", "was"], ans: 1 },
+      { q: "Cash flow from operations _____ negative in two consecutive quarters in 2020.", opts: ["has been", "is", "was", "has become"], ans: 2 },
+      { q: "Management _____ costs by 10% compared to last year, exceeding the target.", opts: ["cut", "has cut", "had cut", "is cutting"], ans: 1 }
+    ]
+  },
+  {
+    type: "mcq",
+    title: "Exercise 3: Financial Noun Phrases & Collocations",
+    instructions: "Choose the word that correctly completes the financial noun phrase or collocation.",
+    questions: [
+      { q: "The company reported a strong _____ profit margin of 42% for the year.", opts: ["rough", "gross", "wide", "base"], ans: 1 },
+      { q: "The board approved the _____ of a $0.30 dividend per share at the AGM.", opts: ["payment", "declaration", "recording", "management"], ans: 1 },
+      { q: "A sharp increase in raw material prices put pressure on the company's _____ margins.", opts: ["cash", "profit", "revenue", "equity"], ans: 1 },
+      { q: "The finance team prepared the _____ statements for the year ended 31 December.", opts: ["accounting", "financial", "economic", "budgetary"], ans: 1 },
+      { q: "The _____ ratio shows the relationship between a company's debt and its equity.", opts: ["liquidity", "leverage", "current", "profit"], ans: 1 },
+      { q: "The company improved its _____ capital position by collecting receivables more quickly.", opts: ["fixed", "working", "long-term", "retained"], ans: 1 },
+      { q: "Analysts focus on _____ earnings per share as a key indicator of profitability.", opts: ["basic", "diluted", "adjusted", "operating"], ans: 2 },
+      { q: "The finance director presented a detailed _____ analysis to the board.", opts: ["cash flow", "profit sharing", "equity swap", "tax bracket"], ans: 0 },
+      { q: "The company recorded a significant _____ in goodwill following the acquisition review.", opts: ["depreciation", "impairment", "margin", "declaration"], ans: 1 },
+      { q: "The external auditors issued an unqualified _____ opinion on the financial statements.", opts: ["review", "audit", "financial", "management"], ans: 1 }
+    ]
+  }
+];
+
+const grammarReview = [
+  {
+    title: "Grammar Reference 1: Prepositions of Financial Change",
+    points: [
+      { title: "Why prepositions matter in finance", body: "Prepositions are small words that carry important meaning when discussing financial figures. Using the wrong preposition changes the meaning significantly. In financial English, specific prepositions are paired with specific types of movement or position.", examples: [] },
+      { title: "BY — Expressing the amount of change", body: "Use 'by' to show how much something changed. This is the most commonly misused preposition in financial English.", examples: [
+        "Revenue increased by 12%. (= the amount it went up)",
+        "Costs fell by $2 million.",
+        "The margin improved by 3 percentage points."
+      ]},
+      { title: "FROM / TO — Expressing the range of change", body: "Use 'from... to...' to show the starting point and the ending point of a change.", examples: [
+        "The share price rose from $40 to $48.",
+        "Debt was reduced from $20 million to $15 million.",
+        "Gross margin improved from 28% to 33%."
+      ]},
+      { title: "AT — Expressing a fixed position or level", body: "Use 'at' when stating where a figure stands, not how it changed.", examples: [
+        "Cash stood at $5.2 million at year end.",
+        "The interest rate is currently at 4.5%.",
+        "The stock is trading at $62 per share."
+      ]}
+    ]
+  },
+  {
+    title: "Grammar Reference 2: Present Perfect vs Past Simple in Financial Reporting",
+    points: [
+      { title: "Why this distinction matters", body: "In financial English, choosing between the present perfect and past simple signals whether results are complete and historical, or whether they connect to the current situation. Mixing them up sounds unprofessional.", examples: [] },
+      { title: "Past Simple — completed, historical events", body: "Use the past simple for results, decisions, or events in a completed, specific time period in the past.", examples: [
+        "Revenue grew by 8% in fiscal year 2022.",
+        "The board declared a dividend of $0.50 last quarter.",
+        "The company reduced its debt when it sold the subsidiary in 2021."
+      ]},
+      { title: "Present Perfect — relevance to now", body: "Use the present perfect for results or changes with current relevance, or when no specific past time is given. Common with: since, over the past X years, so far, recently, yet, already.", examples: [
+        "Revenue has grown by 8% since the restructuring.",
+        "The company has not yet published its full-year results.",
+        "Margins have improved significantly over the past three quarters."
+      ]},
+      { title: "Key time expressions to watch", body: "These time expressions help you choose the right tense:", examples: [
+        "Past simple: last year, in Q3, in 2021, at that time, when…",
+        "Present perfect: since, over the past…, so far this year, recently, yet, already, this quarter (if still open)"
+      ]}
+    ]
+  },
+  {
+    title: "Grammar Reference 3: Financial Noun Phrases & Collocations",
+    points: [
+      { title: "What are collocations?", body: "Collocations are word combinations that native speakers use naturally together. In finance, specific adjectives, verbs, and nouns combine in fixed ways. Using the wrong combination sounds unnatural even if it is grammatically correct.", examples: [] },
+      { title: "Common Financial Collocations: Verbs + Nouns", body: "These verb-noun combinations are essential in financial reporting:", examples: [
+        "report / record / post → a profit, a loss, earnings",
+        "declare / pay / cut → a dividend",
+        "raise / secure / repay → debt / financing / a loan",
+        "improve / squeeze / protect → margins"
+      ]},
+      { title: "Common Financial Collocations: Adjective + Noun", body: "These adjective-noun pairings are fixed in professional financial language:", examples: [
+        "gross profit / net profit / operating profit",
+        "current assets / fixed assets / intangible assets",
+        "working capital / share capital / venture capital",
+        "adjusted earnings / diluted earnings / basic earnings"
+      ]},
+      { title: "Noun Phrases in Financial Statements", body: "Financial documents use complex noun phrases. Understanding these helps you read statements more fluently:", examples: [
+        "earnings per share (EPS)",
+        "cost of goods sold (COGS)",
+        "property, plant and equipment (PP&E)",
+        "earnings before interest and tax (EBIT)"
+      ]}
+    ]
+  }
+];
+
+const listeningActivities = [
+  {
+    title: "Activity 1: An Introduction to Financial Statements",
+    subtitle: "Finance lecturer and student — Educational podcast format",
+    level: "B1",
+    type: "Multiple Choice",
+    focus: "Listening for Main Ideas",
+    transcript: `Host: Welcome to Finance Foundations. Today we're covering the basics of financial statements with Professor Diana Reeves. Diana, can you give us a quick overview of the three main financial statements? Professor: Of course. Every business produces three core financial statements. The first is the income statement, which tells you whether the business made a profit or a loss during a specific period — usually a quarter or a full year. It starts with revenue at the top and works down through various costs and deductions to arrive at net profit at the bottom. Host: And the second one? Professor: The balance sheet. This is a snapshot — it shows what the company owns, what it owes, and what belongs to its shareholders at a single point in time, usually the last day of the financial year. It's built around the fundamental equation: assets equal liabilities plus equity. Host: So assets must always equal the other two sides? Professor: Exactly. That's why it's called a balance sheet — the two sides must always balance. If they don't, there's an error somewhere. Host: And the third statement? Professor: The cash flow statement. This one is often underestimated. A company can be profitable on paper but run out of cash. The cash flow statement shows exactly how cash moves in and out of the business through three activities: operating, investing, and financing. Host: Why do investors care so much about cash flow? Professor: Because cash is real. Profit can be affected by accounting choices — things like when you recognise revenue or how you depreciate assets. But cash in the bank is harder to manipulate. That's why many analysts say cash flow is the most honest measure of a business's health.`,
+    questions: [
+      { q: "How many core financial statements does Professor Reeves mention?", opts: ["Two", "Three", "Four", "Five"], ans: 1 },
+      { q: "What does the income statement show?", opts: ["A snapshot of assets and liabilities", "Whether the business made a profit or loss during a period", "How cash moves in and out of the business", "The equity value of the company"], ans: 1 },
+      { q: "What does 'top line' refer to in the income statement?", opts: ["Net profit", "Operating expenses", "Revenue", "Gross profit"], ans: 2 },
+      { q: "What does the balance sheet show?", opts: ["Revenue over a period", "Cash flow activities", "What a company owns, owes, and what belongs to shareholders at one point in time", "Quarterly profit margins"], ans: 2 },
+      { q: "What is the fundamental accounting equation mentioned by the professor?", opts: ["Revenue = Expenses + Profit", "Assets = Liabilities + Equity", "Cash = Assets − Liabilities", "Equity = Revenue − COGS"], ans: 1 },
+      { q: "Through how many types of activity does the cash flow statement track cash movements?", opts: ["Two", "Four", "Three", "Five"], ans: 2 },
+      { q: "Why does the professor say a company can be profitable but run out of cash?", opts: ["Because profit is always overstated", "Because cash flow is never positive", "Because profit can be affected by accounting choices", "Because taxes reduce all cash"], ans: 2 },
+      { q: "What does the professor say many analysts consider the most honest measure of business health?", opts: ["Gross profit margin", "Net profit", "Revenue growth", "Cash flow"], ans: 3 }
+    ]
+  },
+  {
+    title: "Activity 2: A Company Earnings Call",
+    subtitle: "CFO presenting quarterly results — Investor relations format",
+    level: "B2",
+    type: "Multiple Choice",
+    focus: "Listening for Specific Information",
+    transcript: `Good morning, everyone. Thank you for joining our third-quarter earnings call. I'm Rachel Torres, Chief Financial Officer at Meridian Consumer Goods. I'll walk you through our financial highlights for the quarter ended September 30th. Revenue for Q3 came in at $284 million, representing a year-on-year increase of 9.2%. This growth was driven primarily by strong performance in our North American division, which contributed 61% of total group revenue. Gross profit was $118 million, giving us a gross margin of 41.5% — up from 38.9% in the same quarter last year. The improvement reflects both our pricing adjustments and ongoing supply chain efficiencies. Operating expenses increased by 4.3% to $62 million, which is below our internal guidance of 6%, reflecting disciplined cost management across the business. Our operating profit for the quarter was $56 million, and EBITDA came in at $71 million — a margin of 25%. Net profit after tax was $38 million, compared with $31 million in Q3 last year, an increase of 22.6%. Turning to the balance sheet: we ended the quarter with a cash position of $94 million and net debt of $127 million — down from $145 million at the same time last year, reflecting strong cash generation. Working capital improved by $11 million compared to the prior quarter, driven by a reduction in inventory days. We are maintaining our full-year revenue guidance of $1.1 billion and raising our EBITDA margin guidance from 23% to 24%. We look forward to your questions.`,
+    questions: [
+      { q: "Who is presenting on the earnings call?", opts: ["The CEO of Meridian Consumer Goods", "The CFO, Rachel Torres", "An external financial analyst", "The Head of Investor Relations"], ans: 1 },
+      { q: "What was Q3 revenue?", opts: ["$248 million", "$284 million", "$310 million", "$1.1 billion"], ans: 1 },
+      { q: "By how much did revenue increase year-on-year?", opts: ["4.3%", "6%", "9.2%", "22.6%"], ans: 2 },
+      { q: "What was the gross profit margin in Q3?", opts: ["38.9%", "41.5%", "25%", "23%"], ans: 1 },
+      { q: "What was the EBITDA margin for the quarter?", opts: ["41.5%", "9.2%", "25%", "22.6%"], ans: 2 },
+      { q: "What was the net profit for Q3?", opts: ["$56 million", "$71 million", "$38 million", "$31 million"], ans: 2 },
+      { q: "What was the company's net debt at the end of Q3?", opts: ["$94 million", "$127 million", "$145 million", "$284 million"], ans: 1 },
+      { q: "What happened to the full-year EBITDA margin guidance?", opts: ["It was maintained at 23%", "It was reduced to 22%", "It was raised from 23% to 24%", "It was removed entirely"], ans: 2 }
+    ]
+  },
+  {
+    title: "Activity 3: A Finance Manager Explaining the Balance Sheet",
+    subtitle: "Finance manager training session — Internal briefing format",
+    level: "B2",
+    type: "Multiple Choice",
+    focus: "Understanding Explanation and Structure",
+    transcript: `Good afternoon, everyone. Today I want to walk through the balance sheet structure for those of you who are newer to the finance team. The balance sheet is divided into three sections: assets, liabilities, and equity. Let's start with assets. On our balance sheet, assets are listed from most liquid to least liquid — meaning we list cash first, then items that can be turned into cash relatively quickly, then long-term assets. Our current assets this year total $142 million. The largest component is accounts receivable at $68 million — this is money our customers owe us, mostly from invoices issued in Q3 and Q4. Inventory stands at $39 million, and cash and equivalents are $35 million. Our non-current assets are $287 million, dominated by our manufacturing facilities, which are valued at cost less accumulated depreciation. Now, liabilities. Our current liabilities are $88 million, which includes accounts payable of $41 million and the current portion of our long-term debt. Our total non-current liabilities are $134 million, made up almost entirely of our seven-year bank facility. That brings our total liabilities to $222 million. Now for equity. Our share capital is $75 million — that's the amount our founders and early investors put in. Retained earnings have grown to $132 million over the years, reflecting the profits we've chosen to reinvest rather than distribute. So total equity is $207 million. And if you add liabilities and equity — $222 million plus $207 million — you get $429 million, which matches our total assets exactly. The balance sheet balances.`,
+    questions: [
+      { q: "Into how many sections is the balance sheet divided?", opts: ["Two", "Three", "Four", "Five"], ans: 1 },
+      { q: "What are the company's total current assets?", opts: ["$35 million", "$88 million", "$142 million", "$287 million"], ans: 2 },
+      { q: "What is the largest component of current assets?", opts: ["Cash and equivalents", "Inventory", "Accounts receivable", "Short-term investments"], ans: 2 },
+      { q: "What does accounts receivable represent?", opts: ["Money the company owes to suppliers", "Money customers owe the company", "Cash held in the bank", "The value of unsold goods"], ans: 1 },
+      { q: "What are the company's total non-current assets?", opts: ["$142 million", "$222 million", "$287 million", "$429 million"], ans: 2 },
+      { q: "What makes up most of the non-current liabilities?", opts: ["Accounts payable", "Pension obligations", "A seven-year bank facility", "Short-term loans"], ans: 2 },
+      { q: "What is the value of retained earnings?", opts: ["$75 million", "$132 million", "$207 million", "$222 million"], ans: 1 },
+      { q: "What is the company's total assets figure?", opts: ["$207 million", "$222 million", "$287 million", "$429 million"], ans: 3 }
+    ]
+  },
+  {
+    title: "Activity 4: A Financial Analyst Discussing Ratios and Red Flags",
+    subtitle: "Senior equity analyst — Investment research podcast",
+    level: "B1–B2",
+    type: "Multiple Choice",
+    focus: "Listening for Opinion and Detail",
+    transcript: `Host: Welcome back. Today we're speaking with senior equity analyst Naomi Brennan. Naomi, when you look at a company's financial statements, where do you start? Naomi: I always start with the income statement — specifically the revenue trend. Is revenue growing, and at what rate? Then I look at the gross margin. A high gross margin tells me the core business is efficient. But I'm just as interested in whether the margin is stable, improving, or deteriorating. A consistently shrinking gross margin is one of the biggest red flags I see. Host: What other red flags do you look for? Naomi: Several. One is when revenue is growing strongly but cash flow from operations is not growing at the same rate. That can indicate that the company is recognising revenue aggressively, or that its customers are paying slowly — meaning receivables are building up. Another red flag is rising inventory. If inventory grows much faster than revenue, it can mean the company is struggling to sell its goods. Host: What about the balance sheet? Naomi: On the balance sheet, I pay close attention to the debt level. I look at the net debt to EBITDA ratio — most analysts want to see this below three times. Above four times starts to become a concern, especially if interest rates are rising. I also look at goodwill. A very large goodwill balance can be a risk if the company has overpaid for acquisitions and needs to take impairment charges later. Host: Any final tips? Naomi: Read the notes to the financial statements. Most investors skip them, but the notes contain critical information about accounting policies, contingent liabilities, and assumptions that can completely change your interpretation of the numbers.`,
+    questions: [
+      { q: "Where does Naomi always start when analysing financial statements?", opts: ["The balance sheet", "The cash flow statement", "The income statement", "The notes to the accounts"], ans: 2 },
+      { q: "What does a high gross margin tell Naomi about a business?", opts: ["It has high debt levels", "The core business is efficient", "Revenue is growing too fast", "The company overpaid for acquisitions"], ans: 1 },
+      { q: "What does Naomi consider one of the biggest red flags?", opts: ["High cash balances", "Rising revenues", "A consistently shrinking gross margin", "Low EBITDA"], ans: 2 },
+      { q: "What might it indicate if revenue grows strongly but operating cash flow does not?", opts: ["The company is very profitable", "The company may be recognising revenue aggressively or has slow-paying customers", "The company's margins are improving", "The balance sheet is healthy"], ans: 1 },
+      { q: "What can rapidly rising inventory suggest?", opts: ["Strong sales performance", "Efficient working capital management", "The company may be struggling to sell its goods", "Improving cash flow"], ans: 2 },
+      { q: "What net debt to EBITDA ratio does Naomi say most analysts want to see?", opts: ["Above 5 times", "Below 3 times", "Exactly 4 times", "Between 4 and 6 times"], ans: 1 },
+      { q: "Why does Naomi flag a very large goodwill balance as a potential risk?", opts: ["Goodwill is always fraudulent", "It reduces revenue", "The company may need to take impairment charges later if it overpaid for acquisitions", "Goodwill always exceeds retained earnings"], ans: 2 },
+      { q: "What does Naomi recommend reading that most investors skip?", opts: ["The CEO's letter to shareholders", "The notes to the financial statements", "The company's press releases", "The auditor's report only"], ans: 1 }
+    ]
+  }
+];
+
+const caseStudies = [
+  {
+    title: "Enron: When Financial Statements Deceive",
+    subtitle: "USA · Energy · 2001 Collapse · Accounting Fraud",
+    intro: "How creative accounting and off-balance-sheet debt destroyed one of America's largest companies",
+    sections: [
+      { heading: "Background", text: "Enron Corporation was an American energy company headquartered in Houston, Texas, that rose to become the seventh-largest company in the United States by revenue. Throughout the late 1990s, Enron reported spectacular growth, strong earnings, and was repeatedly named Fortune's 'Most Innovative Company' in America. Its financial statements appeared to show a thriving, profitable business with substantial assets and consistent revenue growth. However, these statements concealed a fundamentally different reality — one built on sophisticated accounting manipulations designed to inflate earnings, hide debt, and present an artificially healthy financial picture to investors and analysts." },
+      { heading: "The Accounting Fraud", text: "Enron's management, led by CEO Jeffrey Skilling and CFO Andrew Fastow, used a range of techniques to manipulate their financial statements. The most significant was the use of special purpose entities (SPEs) — off-balance-sheet vehicles that allowed Enron to transfer debt out of its balance sheet, making its leverage appear far lower than it actually was. This prevented investors from seeing the true level of risk. Additionally, Enron used mark-to-market accounting — originally intended for financial instruments — to immediately recognise the full estimated future value of long-term energy contracts as revenue, even when the cash had not been received and might never be. Costs, meanwhile, were deferred or hidden. The result was a reported income statement that bore little resemblance to the economic reality of the business." },
+      { heading: "Collapse and Consequences", text: "When investigative journalists and analysts began questioning the opacity of Enron's financial disclosures in 2001, confidence collapsed rapidly. As the true state of the balance sheet became clear — with debts far exceeding what had been reported — Enron's share price plummeted from over $90 to less than $1. The company filed for bankruptcy in December 2001, at the time the largest corporate bankruptcy in US history. The scandal led directly to the Sarbanes-Oxley Act of 2002, which introduced strict new requirements for financial reporting and internal controls. It also destroyed the reputation of Arthur Andersen, Enron's auditor, which had signed off on the misleading statements." }
+    ],
+    questions: [
+      { q: "What rank was Enron among US companies by revenue before its collapse?", opts: ["First", "Third", "Seventh", "Twentieth"], ans: 2 },
+      { q: "What was the key technique Enron used to hide debt?", opts: ["Inflating inventory values", "Off-balance-sheet special purpose entities (SPEs)", "Understating revenue", "Overstating accounts payable"], ans: 1 },
+      { q: "What is mark-to-market accounting as described in the text?", opts: ["Valuing assets at their original purchase price", "Recognising the future estimated value of contracts as revenue immediately", "Recording expenses when cash is paid", "Adjusting inventory to market prices quarterly"], ans: 1 },
+      { q: "What effect did hiding debt in SPEs have on investors?", opts: ["It made the company appear less profitable", "It prevented investors from seeing the true level of risk", "It reduced the company's reported revenue", "It improved the company's cash flow statement"], ans: 1 },
+      { q: "Who was Enron's Chief Financial Officer?", opts: ["Jeffrey Skilling", "Arthur Andersen", "Andrew Fastow", "Ken Lay"], ans: 2 },
+      { q: "What triggered the collapse of investor confidence in Enron?", opts: ["A product recall", "A government investigation", "Investigative journalists and analysts questioning the opacity of disclosures", "A large drop in energy prices"], ans: 2 },
+      { q: "What was notable about Enron's bankruptcy in December 2001?", opts: ["It was the first corporate bankruptcy in US history", "It was at the time the largest corporate bankruptcy in US history", "It was resolved within six months", "It did not affect employees or investors"], ans: 1 },
+      { q: "What legislation was passed directly as a result of the Enron scandal?", opts: ["The Dodd-Frank Act", "The IFRS Adoption Act", "The Companies Act 2002", "The Sarbanes-Oxley Act of 2002"], ans: 3 },
+      { q: "What happened to Arthur Andersen as a result of the scandal?", opts: ["It became the world's largest audit firm", "Its reputation was destroyed", "It was acquired by a competitor", "It was fined but continued operating"], ans: 1 },
+      { q: "What did the reported income statement fail to reflect?", opts: ["The company's revenue growth", "The economic reality of the business", "The level of cash in the bank", "The company's market capitalisation"], ans: 1 }
+    ]
+  },
+  {
+    title: "Apple Inc.: Analysing a World-Class Balance Sheet",
+    subtitle: "USA · Technology · Ongoing · Exemplary Financial Management",
+    intro: "What makes Apple's financial statements remarkable — and what every finance professional can learn from them",
+    sections: [
+      { heading: "Revenue and Profitability", text: "Apple Inc. is one of the most financially analysed companies in the world, and with good reason. Its income statement consistently demonstrates exceptional profitability at scale. In its fiscal year 2023, Apple reported total net revenue of approximately $383 billion — driven by iPhone sales, services, Mac, iPad, and wearables. What makes Apple's income statement particularly striking is not just the scale of revenue but the quality of its margins. The services segment, which includes the App Store, Apple Music, and iCloud, generates gross margins of over 70%, dramatically higher than the hardware segment's margin of approximately 36%. This shift towards services has been a deliberate strategy to improve overall profitability and reduce dependence on the more volatile hardware product cycle." },
+      { heading: "The Balance Sheet", text: "Apple's balance sheet has attracted significant commentary from analysts for one particular reason: the extraordinary size of its cash and marketable securities position. At various points in recent history, Apple has held over $160 billion in cash and short-term investments — more than the GDP of many countries. This cash pile reflects the company's exceptional ability to generate free cash flow from its operations. However, Apple has also carried a significant amount of long-term debt — not because it needs to borrow to fund operations, but because borrowing at low interest rates and using the cash for share buybacks is financially advantageous in a low-rate environment. This strategic use of the balance sheet — holding cash while also carrying debt — is a deliberate financial management choice rather than a sign of financial weakness." },
+      { heading: "Lessons for Financial Analysis", text: "Studying Apple's financial statements offers several important lessons. First, revenue size alone does not determine financial quality — margin structure and the mix between high-margin and low-margin business lines matter enormously. Second, a large debt balance does not automatically signal financial distress; context and cash generation capacity are essential to interpreting leverage correctly. Third, cash flow from operations — which Apple generates in excess of $110 billion annually — is the ultimate validation of a business model's strength. Finally, Apple's consistent return of capital to shareholders through dividends and buybacks demonstrates how a strong balance sheet can be actively used as a strategic tool rather than simply a record of past activity." }
+    ],
+    questions: [
+      { q: "What was Apple's approximate total revenue in fiscal year 2023?", opts: ["$183 billion", "$283 billion", "$383 billion", "$483 billion"], ans: 2 },
+      { q: "What gross margin does Apple's services segment generate?", opts: ["Over 36%", "Over 50%", "Over 70%", "Over 90%"], ans: 2 },
+      { q: "Why has Apple deliberately increased its services revenue?", opts: ["To reduce its tax obligations", "To improve margins and reduce dependence on the hardware cycle", "To compete directly with Google", "To increase its accounts receivable balance"], ans: 1 },
+      { q: "What has been notable about Apple's cash position historically?", opts: ["It has often been negative", "It has been over $160 billion at various points", "It has always been below $10 billion", "It has been kept entirely in physical assets"], ans: 1 },
+      { q: "Why has Apple borrowed money despite having large cash reserves?", opts: ["Because it could not generate enough free cash flow", "Because regulations required it to borrow", "Because borrowing at low rates and using cash for buybacks is financially advantageous", "Because its suppliers demanded payment in debt instruments"], ans: 2 },
+      { q: "What does Apple's carrying of both cash and debt demonstrate?", opts: ["Financial weakness", "A lack of financial planning", "A deliberate strategic financial management choice", "Poor communication with shareholders"], ans: 2 },
+      { q: "What lesson does the text draw from Apple's margin structure?", opts: ["Revenue size alone determines financial quality", "The mix between high-margin and low-margin businesses matters enormously", "Hardware is always more profitable than services", "Margins are less important than revenue growth"], ans: 1 },
+      { q: "How much cash flow from operations does Apple generate annually, according to the text?", opts: ["Over $10 billion", "Over $40 billion", "Over $110 billion", "Over $200 billion"], ans: 2 },
+      { q: "What does Apple's return of capital to shareholders through buybacks and dividends demonstrate?", opts: ["That the balance sheet is merely a historical record", "That Apple prefers debt over equity financing", "That a strong balance sheet can be used as a strategic tool", "That Apple has no profitable investment opportunities"], ans: 2 },
+      { q: "What important lesson does the text draw regarding leverage?", opts: ["High debt always signals financial distress", "Context and cash generation capacity are essential to interpreting leverage correctly", "Leverage should always be avoided by large companies", "Debt is always more expensive than equity"], ans: 1 }
+    ]
+  }
+];
+
+const assessmentQs = [
+  { q: "What is the alternative name for the income statement?", opts: ["Balance sheet", "Cash flow statement", "Profit and loss account", "Equity statement"], ans: 2 },
+  { q: "What does the balance sheet show?", opts: ["Revenue and expenses over a period", "Cash inflows and outflows", "Assets, liabilities, and equity at a point in time", "Gross and net profit margins"], ans: 2 },
+  { q: "What is the fundamental accounting equation?", opts: ["Revenue = Expenses + Profit", "Assets = Liabilities + Equity", "Cash = Assets − Liabilities", "Gross Profit = Revenue − Operating Expenses"], ans: 1 },
+  { q: "How is gross profit calculated?", opts: ["Revenue minus operating expenses", "Revenue minus net profit", "Revenue minus cost of goods sold", "Revenue minus tax and interest"], ans: 2 },
+  { q: "Which preposition correctly completes this sentence: 'Revenue increased _____ 15%.'?", opts: ["to", "at", "from", "by"], ans: 3 },
+  { q: "Which sentence uses the present perfect correctly?", opts: ["Revenue grew by 12% in Q3 2022.", "We declared a dividend last March.", "Margins have improved significantly since the restructuring.", "The auditors reviewed the accounts in January."], ans: 2 },
+  { q: "What does EBITDA stand for?", opts: ["Earnings Before Interest, Tax, Depreciation and Amortisation", "Equity Before Income, Tax, Debt and Assets", "Earnings Based on Income, Tax, Dividends and Adjustments", "Estimated Business Income Tax and Dividend Allocation"], ans: 0 },
+  { q: "What are accounts receivable?", opts: ["Money owed by the company to its suppliers", "Money owed to the company by its customers", "Cash held in the company's bank accounts", "The value of unsold inventory"], ans: 1 },
+  { q: "What does the cash flow statement track?", opts: ["Only operating expenses", "Revenue and net profit over time", "Cash movements through operating, investing, and financing activities", "The company's equity position over a period"], ans: 2 },
+  { q: "What is working capital?", opts: ["Total assets minus total liabilities", "Current assets minus current liabilities", "Revenue minus operating costs", "Equity minus long-term debt"], ans: 1 },
+  { q: "Which of the following is a current asset?", opts: ["Property and equipment", "Long-term investments", "Accounts receivable", "Goodwill"], ans: 2 },
+  { q: "What is the correct collocation? 'The board decided to _____ a dividend of $0.40 per share.'", opts: ["make", "do", "declare", "produce"], ans: 2 },
+  { q: "What did Enron use special purpose entities (SPEs) for?", opts: ["To increase reported revenue", "To move debt off the balance sheet and hide financial risk", "To improve cash flow from operations", "To reduce accounts payable"], ans: 1 },
+  { q: "What is retained earnings?", opts: ["The total revenue earned in a year", "Cash held in the company's bank account", "Profits accumulated and kept in the business rather than paid as dividends", "The original share capital invested by founders"], ans: 2 },
+  { q: "What does the gross profit margin measure?", opts: ["How efficiently the company manages all costs", "The proportion of revenue remaining after deducting cost of goods sold", "The company's ability to pay dividends", "Total profit compared to total assets"], ans: 1 },
+  { q: "Which of the following correctly uses 'from / to' to describe financial change?", opts: ["The margin improved by 28% to 33%.", "The margin improved from 28% to 33%.", "The margin improved at 28% from 33%.", "The margin improved to 28% from up 33%."], ans: 1 },
+  { q: "What does liquidity measure?", opts: ["The total value of a company's long-term assets", "A company's ability to meet its short-term financial obligations", "The ratio of revenue to net profit", "The market value of shareholders' equity"], ans: 1 },
+  { q: "In Apple's case study, why does Apple hold long-term debt despite large cash reserves?", opts: ["Because it cannot generate enough free cash flow", "Because regulations force it to borrow", "Because borrowing at low rates and buying back shares is financially advantageous", "Because it needs cash to pay dividends"], ans: 2 },
+  { q: "What does depreciation represent?", opts: ["A cash payment made to replace old equipment", "The systematic allocation of the cost of an asset over its useful life", "A reduction in the market value of liabilities", "The loss of revenue from declining sales"], ans: 1 },
+  { q: "What financial reporting standard is used by many companies internationally?", opts: ["COGS", "EBITDA", "IFRS", "PP&E"], ans: 2 }
+];
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(`'${id}'`)) n.classList.add('active');
+  });
+  window.scrollTo(0, 0);
+}
+
+/* ══════════════════════════════════════════
+   MCQ ENGINE
+══════════════════════════════════════════ */
+const userAnswers = {};
+function renderMCQ(questions, containerId, darkMode=false) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const letters = ['A','B','C','D'];
+  let html = questions.map((item, qi) => `
+    <div class="mcq-block" id="${containerId}-q${qi}">
+      <div class="mcq-q">${qi+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((opt, oi) => `
+          <div class="mcq-option ${darkMode?'l-mcq-option':''}" onclick="selectOption('${containerId}',${qi},${oi},${item.ans})" id="${containerId}-q${qi}-o${oi}">
+            <span class="option-letter">${letters[oi]}</span>${opt}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+  html += `<button class="check-btn ${darkMode?'l-check-btn':''}" onclick="checkAll('${containerId}',${questions.length})">Check Answers</button>
+  <div id="${containerId}-score" style="display:none" class="score-display"></div>`;
+  container.innerHTML = html;
+}
+function selectOption(cid, qi, oi, correct) {
+  const key = `${cid}-q${qi}`;
+  if (userAnswers[key]?.checked) return;
+  userAnswers[key] = { selected: oi, correct };
+  document.querySelectorAll(`#${cid}-q${qi} .mcq-option`).forEach((o, i) => {
+    o.classList.remove('selected');
+    if (i === oi) o.classList.add('selected');
+  });
+}
+function checkAll(cid, count) {
+  let score = 0;
+  for (let qi = 0; qi < count; qi++) {
+    const key = `${cid}-q${qi}`;
+    const data = userAnswers[key];
+    if (!data) continue;
+    data.checked = true;
+    document.querySelectorAll(`#${cid}-q${qi} .mcq-option`).forEach((o, i) => {
+      o.classList.remove('selected');
+      if (i === data.correct) o.classList.add('correct');
+      if (i === data.selected && data.selected !== data.correct) o.classList.add('incorrect');
+    });
+    if (data.selected === data.correct) score++;
+  }
+  const el = document.getElementById(`${cid}-score`);
+  if (el) { el.style.display = 'inline-flex'; el.textContent = `Score: ${score} / ${count}`; }
+}
+
+/* ══════════════════════════════════════════
+   RENDER SPEAKING
+══════════════════════════════════════════ */
+function renderSpeaking() {
+  document.getElementById('speakingGrid').innerHTML = speakingQs.map((q, i) => `
+    <div class="speaking-card">
+      <div class="q-num">Q${String(i+1).padStart(2,'0')}</div>
+      <div class="q-text">${q}</div>
+    </div>`).join('');
+}
+
+/* ══════════════════════════════════════════
+   RENDER WORD BANK
+══════════════════════════════════════════ */
+function renderWordBank() {
+  document.getElementById('wordbankGrid').innerHTML = wordBank.map(w => `
+    <div class="word-card">
+      <div class="word-emoji">${w.emoji}</div>
+      <div class="word-term">${w.term}</div>
+      <div class="word-def">${w.def}</div>
+    </div>`).join('');
+}
+
+/* ══════════════════════════════════════════
+   RENDER READING
+══════════════════════════════════════════ */
+function renderReading() {
+  const content = document.getElementById('readingContent');
+  content.innerHTML = readingTexts.map((text, ti) => {
+    const cid = `reading-mcq-${ti}`;
+    return `<div class="card">
+      <div class="card-title">${text.title}</div>
+      <div class="card-title-bar"></div>
+      <div class="reading-text-box">
+        <h4>${text.subtitle}</h4>
+        ${text.paragraphs.map(p => `<p>${p}</p>`).join('')}
+      </div>
+      <h4 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:18px;">Comprehension Questions</h4>
+      <div id="${cid}"></div>
+    </div>`;
+  }).join('');
+  readingTexts.forEach((t, ti) => renderMCQ(t.questions, `reading-mcq-${ti}`));
+}
+
+/* ══════════════════════════════════════════
+   RENDER VOCABULARY
+══════════════════════════════════════════ */
+function renderVocabulary() {
+  // Ex 1: MCQ
+  document.getElementById('vocab-ex-0').innerHTML = `<div class="card"><div class="card-title">${vocabExercises[0].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${vocabExercises[0].instructions}</p>
+  <div id="vocab-mcq-0"></div></div>`;
+  renderMCQ(vocabExercises[0].questions, 'vocab-mcq-0');
+
+  // Ex 2: Gap Fill
+  const wordsHtml = vocabExercises[1].words.map(w =>
+    `<span style="display:inline-block;background:var(--navy);color:var(--gold-light);font-size:12px;font-weight:600;padding:3px 12px;border-radius:20px;margin:3px;">${w}</span>`).join('');
+  const gapHtml = vocabExercises[1].sentences.map((s, i) => `
+    <div class="gapfill-item">
+      <span>${i+1}. ${s.before}</span>
+      <input class="gap-input" id="gf-${i}" type="text" placeholder="…" data-ans="${s.blank}">
+      <span>${s.after}</span>
+    </div>`).join('');
+  document.getElementById('vocab-ex-1').innerHTML = `<div class="card"><div class="card-title">${vocabExercises[1].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:14px;">${vocabExercises[1].instructions}</p>
+  <div style="margin-bottom:20px;padding:14px 16px;background:var(--cream);border-radius:8px;line-height:2;">${wordsHtml}</div>
+  ${gapHtml}
+  <button class="check-btn" onclick="checkGapFill()">Check Answers</button>
+  <div id="gf-score" style="display:none" class="score-display"></div></div>`;
+
+  // Ex 3: True/False
+  const tfHtml = vocabExercises[2].statements.map((s, i) => `
+    <div class="tf-item">
+      <div class="tf-statement">${i+1}. ${s.text}</div>
+      <div class="tf-buttons">
+        <button class="tf-btn" id="tf-${i}-T" onclick="selectTF(${i},'T',${s.ans})">True</button>
+        <button class="tf-btn" id="tf-${i}-F" onclick="selectTF(${i},'F',${s.ans})">False</button>
+      </div>
+    </div>`).join('');
+  document.getElementById('vocab-ex-2').innerHTML = `<div class="card"><div class="card-title">${vocabExercises[2].title}</div><div class="card-title-bar"></div>
+  <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${vocabExercises[2].instructions}</p>
+  ${tfHtml}
+  <button class="check-btn" onclick="checkTF()">Check Answers</button>
+  <div id="tf-score" style="display:none" class="score-display"></div></div>`;
+}
+
+const tfAnswers = {};
+function selectTF(i, val, correct) {
+  if (tfAnswers[i]?.checked) return;
+  tfAnswers[i] = { selected: val, correct };
+  ['T','F'].forEach(v => document.getElementById(`tf-${i}-${v}`).classList.remove('selected-true','selected-false'));
+  document.getElementById(`tf-${i}-${val}`).classList.add(val==='T'?'selected-true':'selected-false');
+}
+function checkTF() {
+  let score = 0;
+  vocabExercises[2].statements.forEach((s, i) => {
+    const data = tfAnswers[i];
+    if (!data) return;
+    data.checked = true;
+    const cv = s.ans ? 'T' : 'F';
+    ['T','F'].forEach(v => document.getElementById(`tf-${i}-${v}`).classList.remove('selected-true','selected-false'));
+    const selBtn = document.getElementById(`tf-${i}-${data.selected}`);
+    const corrBtn = document.getElementById(`tf-${i}-${cv}`);
+    if (data.selected === cv) { selBtn.classList.add('correct-answer'); score++; }
+    else { selBtn.classList.add('wrong-answer'); corrBtn.classList.add('correct-answer'); }
+  });
+  const sc = document.getElementById('tf-score');
+  sc.style.display = 'inline-flex';
+  sc.textContent = `Score: ${score} / ${vocabExercises[2].statements.length}`;
+}
+function checkGapFill() {
+  let score = 0;
+  vocabExercises[1].sentences.forEach((s, i) => {
+    const input = document.getElementById(`gf-${i}`);
+    const val = input.value.trim().toLowerCase();
+    input.classList.remove('correct','incorrect');
+    if (val === s.blank.toLowerCase()) { input.classList.add('correct'); score++; }
+    else { input.classList.add('incorrect'); input.value = s.blank; }
+  });
+  const sc = document.getElementById('gf-score');
+  sc.style.display = 'inline-flex';
+  sc.textContent = `Score: ${score} / ${vocabExercises[1].sentences.length}`;
+}
+function showVocabEx(idx, el) {
+  document.querySelectorAll('.vocab-ex').forEach((e,i) => e.style.display = i===idx?'block':'none');
+  el.parentElement.querySelectorAll('.ex-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ══════════════════════════════════════════
+   RENDER GRAMMAR
+══════════════════════════════════════════ */
+function renderGrammar() {
+  grammarExercises.forEach((ex, ei) => {
+    const cid = `grammar-mcq-${ei}`;
+    document.getElementById(`grammar-ex-${ei}`).innerHTML = `<div class="card"><div class="card-title">${ex.title}</div><div class="card-title-bar"></div>
+    <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:20px;">${ex.instructions}</p>
+    <div id="${cid}"></div></div>`;
+    renderMCQ(ex.questions, cid);
+  });
+}
+function showGrammarEx(idx, el) {
+  document.querySelectorAll('.grammar-ex').forEach((e,i) => e.style.display = i===idx?'block':'none');
+  el.parentElement.querySelectorAll('.ex-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ══════════════════════════════════════════
+   RENDER GRAMMAR REVIEW
+══════════════════════════════════════════ */
+function renderGrammarReview() {
+  document.getElementById('grammarReviewContent').innerHTML = grammarReview.map(ref => `
+    <div class="card">
+      <div class="card-title">${ref.title}</div>
+      <div class="card-title-bar"></div>
+      ${ref.points.map(pt => `
+        <div class="grammar-ref-box" style="margin-bottom:16px;">
+          <h4>${pt.title}</h4>
+          <div class="grammar-rule">
+            <p>${pt.body}</p>
+            ${pt.examples.length ? `<ul style="margin-top:10px">${pt.examples.map(e=>`<li style="margin-bottom:6px"><code>${e}</code></li>`).join('')}</ul>` : ''}
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+/* ══════════════════════════════════════════
+   RENDER WRITING
+══════════════════════════════════════════ */
+function renderWriting() {
+  const tasks = [
+    {
+      activity: "Writing Activity 1", type: "Financial Summary Report",
+      title: "Write a Short Financial Performance Summary",
+      prompt: "You have been given the following financial highlights for a fictional company, NovaTech Ltd, for the financial year just ended: Revenue: $52 million (up 11% year-on-year). Gross profit margin: 43% (up from 40% last year). Operating expenses: $14.2 million. Net profit: $8.1 million. Cash and equivalents at year end: $6.3 million. Write a short financial summary report suitable for presenting to a non-specialist audience. Describe the company's performance, compare it to the prior year, and comment on what the figures suggest about the company's financial health.",
+      tags: ["220–270 words", "Formal report register", "Include: Introduction, Key Highlights, Commentary, Conclusion"],
+      id: "writing-1"
+    },
+    {
+      activity: "Writing Activity 2", type: "Professional Email",
+      title: "Email to a Non-Finance Colleague Explaining Results",
+      prompt: "A colleague from the operations department has asked you to explain the company's latest quarterly results in simple terms. They have seen the headline numbers but do not understand some of the financial terminology. Write a professional email explaining: what the income statement shows, the difference between gross profit and net profit, what the company's strong cash flow means in practical terms, and whether the overall results should be considered positive or cause for concern.",
+      tags: ["200–240 words", "Semi-formal email register", "Include: Subject line, clear explanation, avoid jargon or define terms used"],
+      id: "writing-2"
+    }
+  ];
+  document.getElementById('writingContent').innerHTML = tasks.map(t => `
+    <div class="card">
+      <div class="card-title">${t.activity}: ${t.type}</div>
+      <div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>${t.title}</h4>
+        <p>${t.prompt}</p>
+        <div class="writing-meta">${t.tags.map(tag=>`<span class="writing-tag">${tag}</span>`).join('')}</div>
+      </div>
+      <textarea class="writing-textarea" id="${t.id}-textarea" placeholder="Write your response here…" oninput="updateWordCount('${t.id}')"></textarea>
+      <div class="word-counter" id="${t.id}-counter">0 words</div>
+      <button class="submit-btn" onclick="submitWriting('${t.id}')">Submit Writing ✓</button>
+      <div class="submit-success" id="${t.id}-success">✅ <span>Submitted successfully! Your response has been recorded.</span></div>
+    </div>`).join('');
+}
+function updateWordCount(id) {
+  const ta = document.getElementById(`${id}-textarea`);
+  const wc = ta.value.trim() === '' ? 0 : ta.value.trim().split(/\s+/).length;
+  document.getElementById(`${id}-counter`).textContent = `${wc} words`;
+}
+function submitWriting(id) {
+  const ta = document.getElementById(`${id}-textarea`);
+  const suc = document.getElementById(`${id}-success`);
+  if (ta.value.trim().length < 20) { alert('Please write at least a few sentences before submitting.'); return; }
+  suc.style.display = 'flex';
+  ta.style.borderColor = 'var(--green-accent)';
+}
+
+/* ══════════════════════════════════════════
+   RENDER LISTENING
+══════════════════════════════════════════ */
+function renderListening() {
+  document.getElementById('listeningContent').innerHTML = listeningActivities.map((act, ai) => {
+    const cid = `l-mcq-${ai}`;
+    return `
+    <div class="listening-activity">
+      <div class="listening-header">
+        <div class="listening-icon">📊</div>
+        <div>
+          <div class="listening-title">${act.title}</div>
+          <div class="listening-subtitle">${act.subtitle}</div>
+          <div class="listening-tags">
+            <span class="l-tag l-tag-level">LEVEL: ${act.level}</span>
+            <span class="l-tag l-tag-type">${act.type}</span>
+            <span class="l-tag l-tag-focus">FOCUS: ${act.focus}</span>
+          </div>
+        </div>
+      </div>
+      <div class="audio-player">
+        <div class="player-top">
+          <button class="play-btn" onclick="togglePlay(${ai})" id="play-${ai}">▶</button>
+          <div class="player-info">
+            <div class="player-title">🎧 ${act.title}</div>
+            <div class="player-desc">${act.subtitle}</div>
+          </div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="progress-audio"><div class="progress-audio-fill" id="prog-${ai}"></div></div>
+        <div class="speed-controls">
+          <span class="speed-label">SPEED:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7×</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2×</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">↩ Replay</button>
+        </div>
+        <div class="audio-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <div class="transcript-toggle" id="trans-toggle-${ai}" onclick="toggleTranscript(${ai})">
+        <span class="arrow">▼</span> Show / Hide Transcript
+      </div>
+      <div class="transcript-content" id="trans-${ai}">
+        <p>${act.transcript}</p>
+      </div>
+      <div class="listening-mcq">
+        <div class="instructions-box">
+          <span class="inst-icon">📋</span>
+          <span class="inst-text">Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</span>
+        </div>
+        <div id="${cid}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  listeningActivities.forEach((_, ai) => renderMCQ(listeningActivities[ai].questions, `l-mcq-${ai}`, true));
+}
+
+/* ══════════════════════════════════════════
+   AUDIO ENGINE — American Female Voice
+══════════════════════════════════════════ */
+const speechInstances = {};
+let cachedAmericanFemaleVoice = null;
+
+const US_FEMALE_VOICE_NAMES = [
+  'Samantha','Karen','Victoria','Allison','Susan',
+  'Zira','Microsoft Zira','Microsoft Zira Desktop',
+  'Google US English','en-US-Neural2-F','en-US-Wavenet-F',
+  'Ava','Nova','Jenny','Aria'
+];
+
+function pickAmericanFemaleVoice() {
+  if (cachedAmericanFemaleVoice) return cachedAmericanFemaleVoice;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  for (const name of US_FEMALE_VOICE_NAMES) {
+    const v = voices.find(v => v.name === name);
+    if (v) { cachedAmericanFemaleVoice = v; return v; }
+  }
+  for (const name of US_FEMALE_VOICE_NAMES) {
+    const v = voices.find(v => v.name.toLowerCase().includes(name.toLowerCase()));
+    if (v) { cachedAmericanFemaleVoice = v; return v; }
+  }
+  const enUS = voices.filter(v => v.lang === 'en-US');
+  const female = enUS.find(v => /female|woman|girl|zira|samantha|ava|nova|jenny|aria/i.test(v.name));
+  if (female) { cachedAmericanFemaleVoice = female; return female; }
+  if (enUS.length) { cachedAmericanFemaleVoice = enUS[0]; return enUS[0]; }
+  const enAny = voices.find(v => v.lang.startsWith('en'));
+  if (enAny) { cachedAmericanFemaleVoice = enAny; return enAny; }
+  return voices[0];
+}
+
+function getVoiceThenSpeak(ai, onVoiceReady) {
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length) { onVoiceReady(pickAmericanFemaleVoice()); return; }
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.onvoiceschanged = null;
+    cachedAmericanFemaleVoice = null;
+    onVoiceReady(pickAmericanFemaleVoice());
+  };
+  setTimeout(() => {
+    if (!cachedAmericanFemaleVoice) { cachedAmericanFemaleVoice = null; onVoiceReady(pickAmericanFemaleVoice()); }
+  }, 600);
+}
+
+const progressIntervals = {};
+function startProgressAnimation(ai) {
+  const progEl = document.getElementById(`prog-${ai}`);
+  const timeEl = document.getElementById(`time-${ai}`);
+  if (!progEl) return;
+  const wordCount = listeningActivities[ai].transcript.split(/\s+/).length;
+  const rate = speechInstances[`${ai}-rate`] || 0.85;
+  const estimatedSec = Math.round((wordCount / 130) * 60 / rate);
+  let elapsed = 0;
+  progEl.style.width = '0%';
+  const fmt = s => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  if (timeEl) timeEl.textContent = `0:00 / ${fmt(estimatedSec)}`;
+  clearInterval(progressIntervals[ai]);
+  progressIntervals[ai] = setInterval(() => {
+    elapsed++;
+    progEl.style.width = Math.min((elapsed/estimatedSec)*100, 99) + '%';
+    if (timeEl) timeEl.textContent = `${fmt(elapsed)} / ${fmt(estimatedSec)}`;
+  }, 1000);
+}
+function stopProgressAnimation(ai, complete=false) {
+  clearInterval(progressIntervals[ai]);
+  const progEl = document.getElementById(`prog-${ai}`);
+  if (progEl && complete) progEl.style.width = '100%';
+}
+
+function togglePlay(ai) {
+  const btn = document.getElementById(`play-${ai}`);
+  if (speechInstances[ai]) {
+    window.speechSynthesis.cancel();
+    stopProgressAnimation(ai);
+    btn.textContent = '▶';
+    delete speechInstances[ai];
+    return;
+  }
+  getVoiceThenSpeak(ai, (voice) => {
+    const utterance = new SpeechSynthesisUtterance(listeningActivities[ai].transcript);
+    utterance.voice = voice;
+    utterance.lang = 'en-US';
+    utterance.rate = speechInstances[`${ai}-rate`] || 0.85;
+    utterance.pitch = 1.08;
+    utterance.volume = 1.0;
+    utterance.onstart = () => { btn.textContent = '⏸'; startProgressAnimation(ai); };
+    utterance.onend = () => { btn.textContent = '▶'; stopProgressAnimation(ai, true); delete speechInstances[ai]; };
+    utterance.onerror = (e) => {
+      if (e.error !== 'interrupted') { btn.textContent = '▶'; stopProgressAnimation(ai); delete speechInstances[ai]; }
+    };
+    window.speechSynthesis.speak(utterance);
+    speechInstances[ai] = utterance;
+  });
+}
+function setSpeed(ai, rate, el) {
+  speechInstances[`${ai}-rate`] = rate;
+  el.closest('.speed-controls').querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  if (speechInstances[ai]) {
+    window.speechSynthesis.cancel();
+    stopProgressAnimation(ai);
+    delete speechInstances[ai];
+    document.getElementById(`play-${ai}`).textContent = '▶';
+    setTimeout(() => togglePlay(ai), 150);
+  }
+}
+function replayAudio(ai) {
+  if (speechInstances[ai]) { window.speechSynthesis.cancel(); stopProgressAnimation(ai); delete speechInstances[ai]; }
+  document.getElementById(`play-${ai}`).textContent = '▶';
+  setTimeout(() => togglePlay(ai), 200);
+}
+function toggleTranscript(ai) {
+  document.getElementById(`trans-toggle-${ai}`).classList.toggle('open');
+  document.getElementById(`trans-${ai}`).classList.toggle('open');
+}
+
+/* ══════════════════════════════════════════
+   RENDER CASE STUDIES
+══════════════════════════════════════════ */
+function renderCaseStudies() {
+  document.getElementById('caseStudiesContent').innerHTML = caseStudies.map((cs, ci) => {
+    const cid = `cs-mcq-${ci}`;
+    return `
+    <div style="margin-bottom:34px;">
+      <div class="case-header">
+        <div class="case-label">Case Study ${ci+1}</div>
+        <div class="case-title">${cs.title}</div>
+        <div class="case-sub">${cs.subtitle} &nbsp;·&nbsp; ${cs.intro}</div>
+      </div>
+      <div class="case-body">
+        ${cs.sections.map(s=>`<h5>${s.heading}</h5><p>${s.text}</p>`).join('')}
+        <div class="ex-divider"></div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:18px;">Comprehension Questions</h4>
+        <div id="${cid}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  caseStudies.forEach((_, ci) => renderMCQ(caseStudies[ci].questions, `cs-mcq-${ci}`));
+}
+
+/* ══════════════════════════════════════════
+   RENDER ASSESSMENT
+══════════════════════════════════════════ */
+let assessmentAttempts = 0;
+function renderAssessment() {
+  document.getElementById('assessmentContent').innerHTML = `
+    <div class="assessment-banner">
+      <h3>Module 1 Final Assessment</h3>
+      <p>This assessment covers all areas of Module 1: Financial Statements and Key Vocabulary.<br>Answer all 20 questions. You need 70% or above to pass. You have 2 attempts.</p>
+      <div class="assessment-meta">
+        <div class="a-meta-item"><div class="a-meta-num">20</div><div class="a-meta-label">Questions</div></div>
+        <div class="a-meta-item"><div class="a-meta-num">70%</div><div class="a-meta-label">Pass Mark</div></div>
+        <div class="a-meta-item"><div class="a-meta-num">2</div><div class="a-meta-label">Attempts</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="attempts-display">Attempts used: <span class="attempt-dot" id="att-0"></span><span class="attempt-dot" id="att-1"></span></div>
+      <div id="assessment-questions"></div>
+      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="submit-btn" id="submit-assessment-btn" onclick="submitAssessment()">Submit Assessment</button>
+        <button class="check-btn" id="retry-assessment-btn" onclick="resetAssessment()" style="display:none">Try Again</button>
+      </div>
+      <div class="final-result" id="final-result"></div>
+    </div>`;
+  renderAssessmentQuestions();
+}
+const finalAnswers = {};
+function renderAssessmentQuestions() {
+  const letters = ['A','B','C','D'];
+  document.getElementById('assessment-questions').innerHTML = assessmentQs.map((item, qi) => `
+    <div class="mcq-block" id="asmq-q${qi}">
+      <div class="mcq-q">${qi+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((opt, oi) => `
+          <div class="mcq-option" onclick="selectFinalOption(${qi},${oi},${item.ans})" id="asmq-q${qi}-o${oi}">
+            <span class="option-letter">${letters[oi]}</span>${opt}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function selectFinalOption(qi, oi, correct) {
+  if (finalAnswers[qi]?.checked) return;
+  finalAnswers[qi] = { selected: oi, correct };
+  document.querySelectorAll(`#asmq-q${qi} .mcq-option`).forEach((o,i) => { o.classList.remove('selected'); if (i===oi) o.classList.add('selected'); });
+}
+function submitAssessment() {
+  if (assessmentAttempts >= 2) return;
+  assessmentAttempts++;
+  document.getElementById(`att-${assessmentAttempts-1}`).classList.add('used');
+  let score = 0;
+  assessmentQs.forEach((item, qi) => {
+    const data = finalAnswers[qi];
+    const opts = document.querySelectorAll(`#asmq-q${qi} .mcq-option`);
+    opts.forEach(o => o.style.pointerEvents = 'none');
+    if (!data) return;
+    data.checked = true;
+    opts.forEach((o, i) => {
+      o.classList.remove('selected');
+      if (i === data.correct) o.classList.add('correct');
+      if (i === data.selected && data.selected !== data.correct) o.classList.add('incorrect');
+    });
+    if (data.selected === data.correct) score++;
+  });
+  const pct = Math.round((score/assessmentQs.length)*100);
+  const passed = pct >= 70;
+  const resultEl = document.getElementById('final-result');
+  resultEl.className = `final-result ${passed?'pass':'fail'}`;
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = `
+    <div class="final-score">${pct}%</div>
+    <div class="final-verdict">${passed ? '🎉 Congratulations! You passed!' : '❌ Not quite — keep studying!'}</div>
+    <div class="final-msg">${passed
+      ? `You scored ${score} out of ${assessmentQs.length}. Excellent work on Module 1: Financial Statements and Key Vocabulary. You have demonstrated strong command of financial language and concepts.`
+      : `You scored ${score} out of ${assessmentQs.length}. You need 70% to pass (14/20). ${assessmentAttempts < 2 ? 'You have 1 attempt remaining. Review the module and try again.' : 'You have used both attempts. Please review the module content and speak to your instructor.'}`
+    }</div>`;
+  document.getElementById('submit-assessment-btn').style.display = 'none';
+  if (assessmentAttempts < 2 && !passed) document.getElementById('retry-assessment-btn').style.display = 'inline-block';
+}
+function resetAssessment() {
+  Object.keys(finalAnswers).forEach(k => delete finalAnswers[k]);
+  renderAssessmentQuestions();
+  document.getElementById('final-result').style.display = 'none';
+  document.getElementById('submit-assessment-btn').style.display = 'inline-block';
+  document.getElementById('retry-assessment-btn').style.display = 'none';
+}
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  renderSpeaking();
+  renderWordBank();
+  renderReading();
+  renderVocabulary();
+  renderGrammar();
+  renderGrammarReview();
+  renderWriting();
+  renderListening();
+  renderCaseStudies();
+  renderAssessment();
+  setTimeout(() => {
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('progressPct').textContent = '0%';
+  }, 600);
+});
+</script>
+</body>
+</html>

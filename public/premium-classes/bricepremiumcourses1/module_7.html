@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7 · Risk Management and Planning</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d1b2a;--navy2:#162032;--navy3:#1e2d42;
+  --gold:#c9a84c;--gold2:#e8c86d;--gold-light:#fdf3da;
+  --cream:#f5f0e8;--cream2:#faf7f2;
+  --ink:#1a2332;--text:#2c3e50;--muted:#6b7a8d;
+  --border:#ddd8ce;--border2:#e8e4dc;
+  --mint:#1a8a6e;--rose:#c0392b;--sky:#2a6496;
+  --radius:10px;--shadow:0 2px 20px rgba(13,27,42,.10);
+  --sidebar:260px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream2);color:var(--text);min-height:100vh;display:flex}
+
+.sidebar{width:var(--sidebar);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:200;display:flex;flex-direction:column}
+.sb-brand{padding:28px 22px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand h2{font-family:'Fraunces',serif;color:var(--gold2);font-size:17px;line-height:1.3}
+.sb-brand p{color:rgba(255,255,255,.4);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-family:'DM Mono',monospace}
+.sb-badge{display:inline-block;margin-top:8px;background:var(--gold);color:var(--navy);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-family:'DM Mono',monospace}
+.sb-section{padding:16px 14px 4px;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.25);text-transform:uppercase;font-family:'DM Mono',monospace}
+.sb-nav{list-style:none;padding:0 10px 20px}
+.sb-nav li a{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,.6);font-size:13px;text-decoration:none;transition:.2s;gap:8px}
+.sb-nav li a:hover{background:rgba(255,255,255,.07);color:#fff}
+.sb-nav li a.active{background:rgba(201,168,76,.15);color:var(--gold2);font-weight:600}
+.sb-nav li a .nav-icon{font-size:15px;flex-shrink:0}
+.sb-nav li a .nav-label{flex:1}
+.sb-nav li a .nav-count{font-size:9px;background:rgba(255,255,255,.1);border-radius:20px;padding:2px 7px;font-family:'DM Mono',monospace;color:rgba(255,255,255,.45);flex-shrink:0}
+.sb-nav li a.active .nav-count{background:rgba(201,168,76,.25);color:var(--gold2)}
+
+.main{margin-left:var(--sidebar);flex:1;min-height:100vh}
+
+.hero{background:var(--navy);min-height:320px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--navy) 0%,#1a2f4a 60%,#0f2035 100%)}
+.hero-pattern{position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(201,168,76,1) 39px,rgba(201,168,76,1) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(201,168,76,1) 39px,rgba(201,168,76,1) 40px)}
+.hero-letter{position:absolute;right:-20px;bottom:-40px;font-family:'Fraunces',serif;font-size:300px;font-weight:900;color:rgba(255,255,255,.02);line-height:1;pointer-events:none;user-select:none}
+.hero-content{position:relative;z-index:1;padding:44px 52px 36px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold2);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:30px;font-family:'DM Mono',monospace;margin-bottom:18px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);line-height:1.08;color:#fff;font-weight:900;max-width:700px}
+.hero h1 em{color:var(--gold2);font-style:normal}
+.hero-desc{color:rgba(255,255,255,.55);font-size:15px;max-width:580px;line-height:1.75;margin-top:14px;font-weight:300}
+.hero-stats{display:flex;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.08);margin-top:32px}
+.stat-item{padding:22px 32px 22px 0;border-right:1px solid rgba(255,255,255,.07);margin-right:32px}
+.stat-item:last-child{border-right:none;margin-right:0}
+.stat-num{font-family:'Fraunces',serif;font-size:36px;color:var(--gold2);font-weight:700;line-height:1}
+.stat-label{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-family:'DM Mono',monospace}
+
+.progress-bar-wrap{background:var(--navy2);padding:14px 52px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:18px}
+.progress-label{color:rgba(255,255,255,.45);font-size:12px;font-family:'DM Mono',monospace;white-space:nowrap}
+.progress-track{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:10px;width:0%;transition:width 1.2s ease}
+.progress-pct{color:var(--gold2);font-size:12px;font-family:'DM Mono',monospace;font-weight:600;white-space:nowrap}
+
+.content{padding:44px 52px;max-width:1000px}
+
+.sec-header{margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.sec-header-inner{display:flex;align-items:flex-start;gap:16px}
+.sec-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;margin-top:2px}
+.sec-text .sec-title{font-family:'Fraunces',serif;font-size:30px;color:var(--navy);font-weight:700;line-height:1.1}
+.sec-text .sec-sub{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px}
+
+.divider{height:1px;background:var(--border);margin:52px 0}
+
+.overview-intro{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+.overview-intro p{font-size:14.5px;line-height:1.9;font-weight:300;color:var(--text)}
+.overview-intro p strong{font-weight:600;color:var(--navy)}
+.lo-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.lo-list li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text);line-height:1.6;font-weight:300}
+.lo-list li::before{content:'✓';color:var(--mint);font-weight:700;font-size:14px;flex-shrink:0;margin-top:1px}
+
+.info-box{background:linear-gradient(135deg,#fffbf0,#fdf5e0);border:1px solid rgba(201,168,76,.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;font-size:13px;color:#6b4e00;line-height:1.7}
+
+.speaking-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px}
+.sq{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:18px 20px;display:flex;gap:14px;box-shadow:var(--shadow);transition:.2s;align-items:flex-start}
+.sq:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(13,27,42,.12);border-color:var(--gold)}
+.sq-num{width:32px;height:32px;border-radius:8px;background:var(--navy);color:var(--gold2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;flex-shrink:0}
+.sq-text{font-size:13.5px;line-height:1.65;color:var(--text)}
+
+.wb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.wb-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:14px 16px;display:flex;gap:12px;box-shadow:var(--shadow);transition:.15s;align-items:flex-start}
+.wb-card:hover{border-color:var(--gold);transform:translateY(-1px)}
+.wb-icon{font-size:26px;flex-shrink:0;width:36px;text-align:center;line-height:1;padding-top:2px}
+.wb-info{flex:1;min-width:0}
+.wb-pos{font-size:9px;color:var(--sky);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.wb-word{font-weight:700;font-size:13.5px;color:var(--navy);font-family:'Fraunces',serif;line-height:1.2;margin-bottom:3px}
+.wb-def{font-size:12px;color:var(--muted);line-height:1.5}
+
+.reading-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:34px;margin-bottom:18px;box-shadow:var(--shadow)}
+.reading-card h3{font-family:'Fraunces',serif;font-size:21px;color:var(--navy);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border2)}
+.reading-card p{font-size:14.5px;line-height:1.95;color:var(--text);margin-bottom:14px;font-weight:300}
+.reading-card p:last-child{margin-bottom:0}
+
+.quiz-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:14px}
+.quiz-title{font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:var(--navy);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border2)}
+.q-item{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border2)}
+.q-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.q-stem{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px;line-height:1.55}
+.options{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 13px;border-radius:8px;border:1.5px solid var(--border2);cursor:pointer;font-size:13px;transition:.15s;background:#fff;font-family:'DM Sans',sans-serif;line-height:1.5}
+.opt:hover{border-color:var(--gold);background:var(--gold-light)}
+.opt input[type=radio]{accent-color:var(--navy);width:14px;height:14px;flex-shrink:0;margin-top:2px}
+.opt.correct{border-color:var(--mint)!important;background:#e8f8f3!important;color:#0d6b4f!important}
+.opt.wrong{border-color:var(--rose)!important;background:#fdf0ef!important;color:#8b1a12!important}
+
+.btn-row{display:flex;gap:10px;margin-top:16px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;border:none;transition:.18s;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--navy);color:#fff}.btn-primary:hover{background:var(--navy3)}
+.btn-gold{background:var(--gold);color:var(--navy)}.btn-gold:hover{background:var(--gold2)}
+.btn-outline{background:transparent;border:1.5px solid var(--navy);color:var(--navy)}.btn-outline:hover{background:var(--navy);color:#fff}
+.score-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-weight:700;font-size:13px;font-family:'DM Mono',monospace}
+.sb-good{background:#e8f8f3;color:#0d6b4f;border:1px solid #86c9b0}
+.sb-ok{background:#fffbeb;color:#7c5c00;border:1px solid #e8c86d}
+.sb-bad{background:#fdf0ef;color:#8b1a12;border:1px solid #e8a09a}
+
+.gap-input{border:none;border-bottom:2px solid var(--gold);outline:none;padding:2px 6px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--navy);background:transparent;min-width:160px;transition:.15s}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.gap-input.correct{border-bottom-color:var(--mint);color:var(--mint)}
+.gap-input.wrong{border-bottom-color:var(--rose);color:var(--rose)}
+
+.drag-bank{display:flex;flex-wrap:wrap;gap:7px;padding:12px;background:#f5f2ec;border-radius:8px;margin-bottom:12px;min-height:48px}
+.drag-chip{padding:5px 13px;border-radius:20px;background:var(--navy);color:#fff;font-size:12px;cursor:pointer;user-select:none;font-family:'DM Mono',monospace;transition:.15s;border:2px solid transparent}
+.drag-chip.selected-chip{border-color:var(--gold);background:var(--navy3)}
+.drag-chip.used{opacity:.25;pointer-events:none}
+.drop-zone{border:2px dashed var(--gold);border-radius:7px;padding:6px 12px;min-width:130px;min-height:34px;display:inline-flex;align-items:center;justify-content:center;background:#fffbf0;font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;vertical-align:middle;margin:0 3px;cursor:pointer;transition:.15s}
+.drop-zone.filled{border-style:solid;border-color:var(--mint);background:#e8f8f3;color:var(--navy);font-weight:600}
+.drop-zone.wrong-drop{border-color:var(--rose);background:#fdf0ef;color:var(--rose)}
+
+.tf-row{display:flex;gap:8px;margin-top:7px}
+.tf-btn{padding:5px 16px;border-radius:20px;border:1.5px solid var(--border2);cursor:pointer;font-size:12px;font-weight:600;background:#fff;transition:.15s;font-family:'DM Sans',sans-serif}
+.tf-btn:hover{border-color:var(--gold)}
+.tf-btn.sel-t{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tf-btn.sel-f{background:var(--navy3);color:#fff;border-color:var(--navy3)}
+.tf-btn.ok-tf{background:var(--mint);color:#fff;border-color:var(--mint)}
+.tf-btn.nok-tf{background:var(--rose);color:#fff;border-color:var(--rose)}
+
+.ak-wrap{margin-top:12px}
+.ak-toggle{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--navy);color:#fff;border-radius:8px;cursor:pointer;font-size:12px;font-family:'DM Mono',monospace;border:none;width:100%;text-align:left;transition:.18s}
+.ak-toggle:hover{background:var(--navy3)}
+.ak-icon{transition:.3s;font-size:13px}
+.ak-toggle.open .ak-icon{transform:rotate(90deg)}
+.ak-content{display:none;padding:16px;background:#f8f6f2;border:1px solid var(--border2);border-top:none;border-radius:0 0 8px 8px;font-size:12.5px;line-height:1.9}
+.ak-content.visible{display:block}
+.ak-content ol{padding-left:18px}
+.ak-content li{margin-bottom:4px}
+.ak-content strong{color:var(--navy)}
+
+.grammar-box{background:#fff;border-left:4px solid var(--gold);border-radius:0 10px 10px 0;padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow)}
+.grammar-box h4{font-family:'Fraunces',serif;font-weight:700;color:var(--navy);font-size:16px;margin-bottom:10px}
+.grammar-box p{font-size:13px;line-height:1.8;color:var(--text);font-weight:300;margin-bottom:8px}
+.grammar-box ul{padding-left:16px;margin-top:6px;margin-bottom:8px}
+.grammar-box li{font-size:13px;line-height:1.8;color:var(--text);font-weight:300;margin-bottom:3px}
+.grammar-box .ex{background:#f5f2ec;border-radius:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:11.5px;color:var(--sky);margin-top:8px;line-height:1.9}
+
+.writing-card{background:linear-gradient(135deg,#f5f3ee,#faf8f4);border:1px solid var(--border2);border-radius:var(--radius);padding:26px;margin-bottom:18px}
+.writing-card h4{font-family:'Fraunces',serif;font-size:17px;color:var(--navy);margin-bottom:8px}
+.writing-task{font-size:13px;color:var(--text);line-height:1.75;margin-bottom:12px;font-weight:300}
+.writing-area{width:100%;min-height:180px;border:1.5px solid var(--border2);border-radius:8px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);resize:vertical;outline:none;transition:.18s;background:#fff;line-height:1.7}
+.writing-area:focus{border-color:var(--gold)}
+.wc-display{font-size:11px;color:var(--muted);margin-top:4px;font-family:'DM Mono',monospace}
+.tag{display:inline-block;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.4px;margin-right:5px;margin-bottom:8px}
+.tag-navy{background:rgba(13,27,42,.1);color:var(--navy)}
+.tag-gold{background:rgba(201,168,76,.15);color:#7c5c00}
+
+/* ── LISTENING: airtight transcript dropdown ── */
+.listen-block{margin-bottom:32px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.listen-header{background:var(--navy);padding:20px 24px;display:flex;gap:16px;align-items:flex-start}
+.listen-icon{font-size:32px;flex-shrink:0}
+.listen-meta h4{font-family:'Fraunces',serif;font-size:17px;color:#fff;font-weight:700}
+.listen-meta .track-sub{font-size:12px;color:rgba(255,255,255,.45);margin-top:3px}
+.listen-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.ltag{font-size:9px;border:1px solid;padding:2px 8px;border-radius:20px;font-family:'DM Mono',monospace;letter-spacing:.5px;text-transform:uppercase}
+.ltag-gold{border-color:var(--gold);color:var(--gold)}
+.ltag-outline{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.5)}
+
+.player-wrap{background:#0a1520;padding:18px 22px}
+.player-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.play-pause-btn{width:44px;height:44px;border-radius:50%;background:var(--rose);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0;transition:.18s}
+.play-pause-btn:hover{background:#d44;transform:scale(1.05)}
+.player-track-info{flex:1;min-width:0}
+.track-title-sm{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track-sub-sm{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.time-display{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.5);white-space:nowrap}
+.progress-audio{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:4px;margin-bottom:10px;cursor:pointer;overflow:hidden}
+.progress-audio-fill{height:100%;background:linear-gradient(90deg,var(--rose),#ff6b6b);border-radius:4px;width:0%;transition:.1s linear;pointer-events:none}
+.speed-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace}
+.speed-btn{padding:3px 10px;border-radius:4px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.5);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:.15s}
+.speed-btn.active-spd{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700}
+.speed-btn:hover:not(.active-spd){background:rgba(255,255,255,.08);color:#fff}
+.replay-btn{padding:3px 10px;border-radius:4px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.4);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:.15s}
+.replay-btn:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.play-status{font-size:11px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace}
+.player-note{font-size:10.5px;color:rgba(255,255,255,.22);font-style:italic;margin-top:8px;font-family:'DM Sans',sans-serif}
+
+/* ── TRANSCRIPT DROPDOWN — the key part ── */
+.transcript-section{background:#0a1520;border-top:1px solid rgba(255,255,255,.07)}
+.transcript-btn{
+  width:100%;padding:12px 22px;
+  background:rgba(255,255,255,.05);
+  border:none;border-top:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.55);
+  font-size:12.5px;font-family:'DM Sans',sans-serif;font-weight:500;
+  cursor:pointer;display:flex;align-items:center;gap:9px;
+  transition:.18s;text-align:left;
+}
+.transcript-btn:hover{background:rgba(255,255,255,.09);color:#fff}
+.transcript-btn .t-arrow{
+  display:inline-block;font-size:10px;
+  transition:transform .25s ease;
+  color:var(--gold);
+}
+.transcript-btn.t-open .t-arrow{transform:rotate(90deg)}
+.transcript-btn .t-label{flex:1}
+.transcript-btn .t-hint{font-size:10px;color:rgba(255,255,255,.25);font-family:'DM Mono',monospace}
+.transcript-panel{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s ease, padding .3s ease;
+  background:#0d1e2e;
+}
+.transcript-panel.t-visible{max-height:600px}
+.transcript-panel-inner{padding:18px 22px 20px}
+.transcript-panel-inner p{font-size:13px;color:rgba(255,255,255,.58);line-height:1.9;font-weight:300}
+.t-speaker{color:var(--gold);font-weight:600;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-right:4px}
+
+.listen-body{background:#fff;border:1px solid var(--border2);border-top:none;padding:22px}
+.instructions-box{background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:10px 14px;font-size:13px;color:var(--text);margin-bottom:18px;line-height:1.6}
+.instructions-box strong{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:3px;color:var(--muted)}
+
+.case-hd{background:linear-gradient(135deg,var(--navy),#1e3054);color:#fff;border-radius:var(--radius) var(--radius) 0 0;padding:22px 26px}
+.case-hd .case-company{font-size:10px;color:var(--gold);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.case-hd h3{font-family:'Fraunces',serif;font-size:20px;font-weight:700}
+.case-body{background:#fff;border:1px solid var(--border2);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:26px;box-shadow:var(--shadow)}
+.case-body p{font-size:14px;line-height:1.9;margin-bottom:14px;font-weight:300;color:var(--text)}
+.case-body p:last-child{margin-bottom:0}
+
+.final-wrap{background:linear-gradient(160deg,var(--navy) 0%,#1a2f4a 100%);border-radius:14px;padding:36px;color:#fff}
+.final-wrap .quiz-title{color:#fff;border-bottom-color:rgba(255,255,255,.12);font-size:19px}
+.final-wrap .q-stem{color:rgba(255,255,255,.88)}
+.final-wrap .opt{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.75)}
+.final-wrap .opt:hover{background:rgba(201,168,76,.12);border-color:var(--gold)}
+.final-wrap .opt.correct{border-color:var(--mint)!important;background:rgba(26,138,110,.15)!important;color:#7ee8c8!important}
+.final-wrap .opt.wrong{border-color:var(--rose)!important;background:rgba(192,57,43,.15)!important;color:#f1a49d!important}
+.final-result{text-align:center;padding:28px;background:rgba(255,255,255,.05);border-radius:10px;margin-top:22px;display:none}
+.final-result h2{font-family:'Fraunces',serif;font-size:48px;color:var(--gold2)}
+.final-result p{color:rgba(255,255,255,.6);font-size:14px;margin-top:8px;line-height:1.6}
+.final-prog-wrap{background:rgba(255,255,255,.08);border-radius:20px;height:6px;margin:10px auto;max-width:280px;overflow:hidden}
+.final-prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:20px;transition:.8s}
+.attempts-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-family:'DM Mono',monospace;background:rgba(201,168,76,.15);color:var(--gold2);border:1px solid rgba(201,168,76,.3);margin-bottom:16px}
+
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sb-brand">
+    <h2>Business Management English</h2>
+    <p>Professional Development</p>
+    <span class="sb-badge">B1–B2 Level</span>
+  </div>
+  <div class="sb-section">Module 7</div>
+  <ul class="sb-nav">
+    <li><a href="#overview" class="active" onclick="setActive(this)"><span class="nav-icon">🏠</span><span class="nav-label">Overview</span></a></li>
+    <li><a href="#speaking" onclick="setActive(this)"><span class="nav-icon">💬</span><span class="nav-label">Speaking</span><span class="nav-count">20Q</span></a></li>
+    <li><a href="#wordbank" onclick="setActive(this)"><span class="nav-icon">📖</span><span class="nav-label">Word Bank</span><span class="nav-count">20</span></a></li>
+    <li><a href="#reading" onclick="setActive(this)"><span class="nav-icon">📄</span><span class="nav-label">Reading</span><span class="nav-count">2T</span></a></li>
+    <li><a href="#vocabulary" onclick="setActive(this)"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span><span class="nav-count">4Ex</span></a></li>
+    <li><a href="#grammar" onclick="setActive(this)"><span class="nav-icon">📐</span><span class="nav-label">Grammar</span><span class="nav-count">3Ex</span></a></li>
+    <li><a href="#grammarreview" onclick="setActive(this)"><span class="nav-icon">📘</span><span class="nav-label">Grammar Review</span></a></li>
+    <li><a href="#writing" onclick="setActive(this)"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span><span class="nav-count">2Ex</span></a></li>
+    <li><a href="#listening" onclick="setActive(this)"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span><span class="nav-count">3Ex</span></a></li>
+    <li><a href="#casestudy" onclick="setActive(this)"><span class="nav-icon">🏢</span><span class="nav-label">Case Studies</span><span class="nav-count">2Ex</span></a></li>
+    <li><a href="#final" onclick="setActive(this)"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></a></li>
+  </ul>
+</aside>
+
+<main class="main">
+<div class="hero">
+  <div class="hero-bg"></div><div class="hero-pattern"></div>
+  <div class="hero-letter">M7</div>
+  <div class="hero-content">
+    <div class="hero-badge">📋 Module 7 · Business Management English</div>
+    <h1>Risk Management <em>and Planning</em></h1>
+    <p class="hero-desc">Develop the professional English skills to identify, assess, and communicate business risks — and to design robust contingency plans that protect organisational objectives under conditions of uncertainty and change.</p>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Grammar Ex.</div></div>
+      <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Word Bank</div></div>
+    </div>
+  </div>
+</div>
+<div class="progress-bar-wrap">
+  <span class="progress-label">Module Progress</span>
+  <div class="progress-track"><div class="progress-fill" id="modprog"></div></div>
+  <span class="progress-pct" id="modpct">0%</span>
+</div>
+
+<div class="content">
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#e8f0fb">🏠</div>
+    <div class="sec-text"><div class="sec-title">Module Overview</div><div class="sec-sub">B1–B2 · Risk Management and Planning</div></div>
+  </div></div>
+  <div class="overview-intro">
+    <p><strong>Welcome to Module 7: Risk Management and Planning.</strong> This module builds the professional English vocabulary, reading comprehension, and communication skills required to identify, assess, and manage business risks — and to develop and present contingency plans with clarity and confidence. Risk management is a core competence at every level of business leadership, from operational project planning to board-level strategic governance. You will develop the language to discuss risk frameworks, probability and impact, mitigation strategies, and crisis response in professional English.</p>
+    <p style="margin-top:12px">By the end of this module, you will be able to:</p>
+    <ul class="lo-list">
+      <li>Use precise vocabulary to identify, classify, and describe business risks and their potential impact.</li>
+      <li>Discuss risk probability, likelihood, and severity using appropriate hedging and modal language.</li>
+      <li>Apply grammar structures — including future forms, passive constructions, and reported speech — in risk management contexts.</li>
+      <li>Write a professional risk register entry and a structured contingency plan.</li>
+      <li>Listen critically to professional conversations about risk assessment and crisis management.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SPEAKING -->
+<section id="speaking">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#dbeafe">💬</div>
+    <div class="sec-text"><div class="sec-title">Speaking Activities</div><div class="sec-sub">20 Discussion Questions · Risk Management and Planning</div></div>
+  </div></div>
+  <div class="info-box">Work in pairs or small groups. Discuss each question using your professional experience. Try to use vocabulary from the Word Bank in your responses.</div>
+  <div class="speaking-grid">
+    <div class="sq"><div class="sq-num">01</div><div class="sq-text">What is the difference between a risk and an issue in a project context? Can you give an example of each?</div></div>
+    <div class="sq"><div class="sq-num">02</div><div class="sq-text">Describe a significant business risk that your organisation faces. How is it currently being managed?</div></div>
+    <div class="sq"><div class="sq-num">03</div><div class="sq-text">What tools or frameworks does your organisation use to identify and assess risks? How effective are they?</div></div>
+    <div class="sq"><div class="sq-num">04</div><div class="sq-text">How do you decide which risks to prioritise? What criteria do you use to assess severity and likelihood?</div></div>
+    <div class="sq"><div class="sq-num">05</div><div class="sq-text">What is the difference between risk avoidance, risk mitigation, risk transfer, and risk acceptance? Give a business example of each.</div></div>
+    <div class="sq"><div class="sq-num">06</div><div class="sq-text">How does a contingency plan differ from a mitigation strategy? Can a plan include both? Give an example.</div></div>
+    <div class="sq"><div class="sq-num">07</div><div class="sq-text">What is a risk register, and who in an organisation is typically responsible for maintaining one?</div></div>
+    <div class="sq"><div class="sq-num">08</div><div class="sq-text">How do you communicate a serious risk to senior management or a board without causing unnecessary alarm?</div></div>
+    <div class="sq"><div class="sq-num">09</div><div class="sq-text">What reputational risks does your industry face? How can they be managed proactively?</div></div>
+    <div class="sq"><div class="sq-num">10</div><div class="sq-text">How has digital transformation introduced new categories of risk — such as cybersecurity, data privacy, and AI risk — that organisations must now plan for?</div></div>
+    <div class="sq"><div class="sq-num">11</div><div class="sq-text">Describe a situation where a business risk materialised. What happened, and what was done in response?</div></div>
+    <div class="sq"><div class="sq-num">12</div><div class="sq-text">What is the relationship between risk appetite and risk tolerance? How do these differ between organisations or industries?</div></div>
+    <div class="sq"><div class="sq-num">13</div><div class="sq-text">How should organisations respond when a crisis occurs that was not anticipated in their risk planning? What are the key principles of crisis management?</div></div>
+    <div class="sq"><div class="sq-num">14</div><div class="sq-text">What role does scenario planning play in risk management? How do you distinguish a credible scenario from an unlikely one?</div></div>
+    <div class="sq"><div class="sq-num">15</div><div class="sq-text">How do supply chain risks differ from operational risks? Give a real-world example of each from your industry.</div></div>
+    <div class="sq"><div class="sq-num">16</div><div class="sq-text">What is the role of insurance as a risk management tool? What risks can be transferred to an insurer, and what risks cannot?</div></div>
+    <div class="sq"><div class="sq-num">17</div><div class="sq-text">How does the frequency of risk reviews affect an organisation's ability to manage risk effectively? How often should a risk register be updated?</div></div>
+    <div class="sq"><div class="sq-num">18</div><div class="sq-text">What is systemic risk, and why is it more difficult to manage than organisation-specific risks? Can you give a recent example?</div></div>
+    <div class="sq"><div class="sq-num">19</div><div class="sq-text">How should a manager communicate a risk-related decision to a team when the chosen course of action involves accepting a significant risk?</div></div>
+    <div class="sq"><div class="sq-num">20</div><div class="sq-text">What advice would you give a newly appointed Risk Manager at a mid-sized company? What should they do in their first 90 days?</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WORD BANK -->
+<section id="wordbank">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#fef3c7">📖</div>
+    <div class="sec-text"><div class="sec-title">Word Bank</div><div class="sec-sub">20 Key Terms · Risk Management and Planning</div></div>
+  </div></div>
+  <div class="wb-grid">
+    <div class="wb-card"><div class="wb-icon">📋</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Risk Register</div><div class="wb-def">A formal document that records all identified risks, their likelihood, potential impact, assigned owner, and the agreed mitigation or response strategy.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">⚠️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Risk Appetite</div><div class="wb-def">The level of risk that an organisation or individual is willing to accept in pursuit of its strategic objectives before additional controls become necessary.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🎯</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Risk Mitigation</div><div class="wb-def">Actions taken to reduce the likelihood or impact of an identified risk before it materialises, without eliminating the risk entirely.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔄</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Contingency Plan</div><div class="wb-def">A pre-prepared response plan that specifies the actions to be taken if a defined risk event occurs, designed to minimise harm and enable a rapid return to normal operations.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📊</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Probability / Likelihood</div><div class="wb-def">The estimated chance that a specific risk event will occur, typically expressed on a scale (e.g. low / medium / high) or as a percentage probability.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">💥</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Impact / Severity</div><div class="wb-def">The magnitude of the negative consequences that would result if a risk event were to materialise, assessed across dimensions such as financial, operational, or reputational.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🚨</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Risk Trigger</div><div class="wb-def">A specific event, condition, or threshold that indicates a risk is beginning to materialise or is about to occur, prompting activation of the contingency plan.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🏗️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Risk Framework</div><div class="wb-def">A structured approach to identifying, evaluating, and managing risks consistently across an organisation, often based on international standards such as ISO 31000.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔁</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Business Continuity Plan</div><div class="wb-def">A plan that ensures an organisation can continue delivering its critical services or operations during and after a major disruptive event such as a system failure or natural disaster.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🧯</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Crisis Management</div><div class="wb-def">The process of responding to an unexpected, high-impact event in a way that limits damage, maintains stakeholder confidence, and facilitates a return to stability.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔀</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Risk Transfer</div><div class="wb-def">A risk response strategy in which the financial or operational consequences of a risk are shifted to a third party — typically through insurance, contracts, or outsourcing.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🛡️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Risk Tolerance</div><div class="wb-def">The maximum level of variation from objectives that an organisation is prepared to accept, often narrower than risk appetite and applied at the operational level.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🌐</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Systemic Risk</div><div class="wb-def">A risk that affects an entire industry, market, or economy rather than a single organisation — such as a financial crisis, pandemic, or geopolitical shock.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔎</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Due Diligence (Risk)</div><div class="wb-def">The thorough investigation of risks associated with a transaction, partnership, or investment — conducted to ensure informed decision-making and protect the organisation.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📉</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Residual Risk</div><div class="wb-def">The risk that remains after mitigation controls have been applied — the level of exposure the organisation must accept or manage further.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🗺️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Risk Heat Map</div><div class="wb-def">A visual matrix that plots risks according to their probability and impact, enabling prioritisation by showing which risks fall into high, medium, and low zones.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🧱</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Inherent Risk</div><div class="wb-def">The level of risk that exists before any mitigation controls are applied — the raw exposure to a risk in its unmanaged state.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">👤</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Risk Owner</div><div class="wb-def">The named individual who is accountable for monitoring a specific risk and ensuring that agreed mitigation actions are implemented and reviewed.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🌪️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Force Majeure</div><div class="wb-def">An unforeseeable external event — such as a natural disaster, war, or pandemic — that prevents contractual obligations from being fulfilled and typically releases parties from liability.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📡</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Early Warning Indicator</div><div class="wb-def">A measurable metric or signal that suggests a risk may be increasing in likelihood or severity, enabling proactive action before the risk fully materialises.</div></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<!-- READING -->
+<section id="reading">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#dcfce7">📄</div>
+    <div class="sec-text"><div class="sec-title">Reading Comprehension</div><div class="sec-sub">2 Texts · 3 Paragraphs Each · 10 MCQs Each · Auto-graded</div></div>
+  </div></div>
+
+  <div class="reading-card">
+    <h3>Text 1 — The Architecture of Enterprise Risk Management</h3>
+    <p>Risk is an unavoidable feature of all business activity. Every strategic decision, every operational process, and every external relationship carries some degree of uncertainty — the possibility that outcomes will deviate from what was planned. What distinguishes high-performing organisations from those that are repeatedly caught off guard by adverse events is not the absence of risk, but the quality of their approach to identifying, assessing, and managing it. Enterprise Risk Management, or ERM, is the discipline through which organisations take a structured, comprehensive view of all the risks they face — financial, operational, reputational, legal, and strategic — and develop the frameworks, processes, and cultures needed to manage those risks in alignment with their appetite for uncertainty. The foundational insight of ERM is that risks rarely operate in isolation: a supply chain disruption can trigger a financial impact, which triggers a reputational consequence, which affects customer retention. Managing risks as isolated events rather than as an interconnected system is one of the most common and costly failures of organisational risk governance.</p>
+    <p>The centrepiece of any risk management system is the risk register — a living document that records every identified risk, its probability of occurrence, its potential impact if it materialises, the name of the individual accountable for managing it, and the specific mitigation actions that have been agreed. Effective risk registers distinguish between inherent risk — the exposure that exists before any controls are applied — and residual risk, the level of exposure that remains after mitigation measures are in place. This distinction is important because it forces the organisation to be honest about how much of its risk has actually been reduced by its controls, rather than assuming that the existence of a policy or a process has removed the exposure entirely. Risk registers should also include early warning indicators: measurable signals that suggest a risk may be increasing in likelihood or severity before it fully materialises, giving the organisation time to activate its contingency plan proactively rather than reactively.</p>
+    <p>At the governance level, risk management is most effective when it is embedded in the organisation's culture, not treated as a compliance exercise confined to a specialist department. Research consistently shows that the organisations with the strongest risk outcomes are those in which risk awareness is a shared responsibility — where frontline employees feel empowered to escalate emerging risks, where middle managers integrate risk thinking into operational planning, and where the board has a clear, current, and honest view of the organisation's risk landscape. The risk heat map — a visual tool that plots risks by probability and impact across a matrix — is one of the most effective instruments for achieving board-level clarity: it enables non-specialist directors to see at a glance which risks require immediate attention, which can be monitored at regular intervals, and which are currently within the organisation's stated risk tolerance. Organisations that treat risk management as a strategic capability, rather than an administrative burden, consistently outperform their peers in periods of disruption.</p>
+  </div>
+
+  <div id="r1" class="quiz-card">
+    <div class="quiz-title">Reading 1 — 10 Multiple-Choice Questions</div>
+    <div class="q-item"><div class="q-stem">1. What does the text identify as the key difference between high-performing and poorly-performing organisations in relation to risk?</div><div class="options"><label class="opt"><input type="radio" name="r1q1" value="a"> A. High-performing organisations avoid more risks by operating in stable markets</label><label class="opt"><input type="radio" name="r1q2" value="b"> B. High-performing organisations have a structured approach to identifying, assessing, and managing risk</label><label class="opt"><input type="radio" name="r1q1" value="c"> C. High-performing organisations transfer more of their risk to insurance providers</label><label class="opt"><input type="radio" name="r1q1" value="d"> D. High-performing organisations employ more specialist risk management staff</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What is described as "one of the most common and costly failures of organisational risk governance"?</div><div class="options"><label class="opt"><input type="radio" name="r1q2" value="a"> A. Failing to purchase sufficient insurance coverage for major operational risks</label><label class="opt"><input type="radio" name="r1q2" value="b"> B. Delegating all risk decisions to a specialist risk department</label><label class="opt"><input type="radio" name="r1q2" value="c"> C. Managing risks as isolated events rather than as an interconnected system</label><label class="opt"><input type="radio" name="r1q2" value="d"> D. Updating the risk register too infrequently to reflect current exposures</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What is the difference between inherent risk and residual risk, as defined in the text?</div><div class="options"><label class="opt"><input type="radio" name="r1q3" value="a"> A. Inherent risk is financial; residual risk is reputational</label><label class="opt"><input type="radio" name="r1q3" value="b"> B. Inherent risk exists before controls are applied; residual risk remains after mitigation measures are in place</label><label class="opt"><input type="radio" name="r1q3" value="c"> C. Inherent risk applies to strategic decisions; residual risk applies to operational processes</label><label class="opt"><input type="radio" name="r1q3" value="d"> D. Inherent risk is assessed by the board; residual risk is assessed by the risk team</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What is the purpose of an early warning indicator, according to the text?</div><div class="options"><label class="opt"><input type="radio" name="r1q4" value="a"> A. It confirms that a risk has fully materialised and escalation is required</label><label class="opt"><input type="radio" name="r1q4" value="b"> B. It provides measurable signals that a risk may be increasing, enabling proactive action</label><label class="opt"><input type="radio" name="r1q4" value="c"> C. It measures the effectiveness of mitigation actions already in place</label><label class="opt"><input type="radio" name="r1q4" value="d"> D. It records the historical frequency of past risk events for benchmarking purposes</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What is described as the "centrepiece" of any risk management system?</div><div class="options"><label class="opt"><input type="radio" name="r1q5" value="a"> A. The risk heat map</label><label class="opt"><input type="radio" name="r1q5" value="b"> B. The enterprise risk management framework</label><label class="opt"><input type="radio" name="r1q5" value="c"> C. The risk register</label><label class="opt"><input type="radio" name="r1q5" value="d"> D. The business continuity plan</label></div></div>
+    <div class="q-item"><div class="q-stem">6. What does the text say distinguishes an effective risk register from an ineffective one?</div><div class="options"><label class="opt"><input type="radio" name="r1q6" value="a"> A. It is updated daily rather than quarterly</label><label class="opt"><input type="radio" name="r1q6" value="b"> B. It is reviewed exclusively by the board rather than by operational managers</label><label class="opt"><input type="radio" name="r1q6" value="c"> C. It distinguishes inherent from residual risk and includes early warning indicators</label><label class="opt"><input type="radio" name="r1q6" value="d"> D. It is produced by an external risk auditor rather than internal staff</label></div></div>
+    <div class="q-item"><div class="q-stem">7. What does the text say about organisations that treat risk management as a compliance exercise?</div><div class="options"><label class="opt"><input type="radio" name="r1q7" value="a"> A. They achieve better outcomes because their processes are more formally documented</label><label class="opt"><input type="radio" name="r1q7" value="b"> B. They underperform compared to organisations that embed risk management as a shared cultural responsibility</label><label class="opt"><input type="radio" name="r1q7" value="c"> C. They are less likely to face regulatory penalties because their documentation is more thorough</label><label class="opt"><input type="radio" name="r1q7" value="d"> D. They tend to be more resilient in periods of economic disruption</label></div></div>
+    <div class="q-item"><div class="q-stem">8. What is a risk heat map, and what is its primary value at board level?</div><div class="options"><label class="opt"><input type="radio" name="r1q8" value="a"> A. A financial model that calculates the cost of each risk event for budgeting purposes</label><label class="opt"><input type="radio" name="r1q8" value="b"> B. A legal document that assigns accountability for each risk to a named individual</label><label class="opt"><input type="radio" name="r1q8" value="c"> C. A visual matrix that plots risks by probability and impact to enable rapid, clear prioritisation</label><label class="opt"><input type="radio" name="r1q8" value="d"> D. A technical system that automatically alerts the board when a risk trigger is breached</label></div></div>
+    <div class="q-item"><div class="q-stem">9. According to the text, which three groups should share responsibility for risk awareness?</div><div class="options"><label class="opt"><input type="radio" name="r1q9" value="a"> A. The risk team, the legal department, and the board's audit committee</label><label class="opt"><input type="radio" name="r1q9" value="b"> B. Frontline employees, middle managers, and the board</label><label class="opt"><input type="radio" name="r1q9" value="c"> C. The CEO, the CFO, and the Chief Risk Officer</label><label class="opt"><input type="radio" name="r1q9" value="d"> D. External auditors, internal compliance officers, and departmental heads</label></div></div>
+    <div class="q-item"><div class="q-stem">10. What is the central argument of this text?</div><div class="options"><label class="opt"><input type="radio" name="r1q10" value="a"> A. Risk management is primarily a technical discipline requiring specialist expertise</label><label class="opt"><input type="radio" name="r1q10" value="b"> B. Enterprise risk management is most valuable when treated as a comprehensive, culturally embedded strategic capability</label><label class="opt"><input type="radio" name="r1q10" value="c"> C. The risk register is the only tool an organisation needs to manage its risk exposure effectively</label><label class="opt"><input type="radio" name="r1q10" value="d"> D. Organisations should eliminate as many risks as possible before entering new markets</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('r1',{r1q1:'b',r1q2:'c',r1q3:'b',r1q4:'b',r1q5:'c',r1q6:'c',r1q7:'b',r1q8:'c',r1q9:'b',r1q10:'b'})">✅ Submit Answers</button><div id="r1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Reading 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>C</strong></li><li>3. <strong>B</strong></li><li>4. <strong>B</strong></li><li>5. <strong>C</strong></li><li>6. <strong>C</strong></li><li>7. <strong>B</strong></li><li>8. <strong>C</strong></li><li>9. <strong>B</strong></li><li>10. <strong>B</strong></li></ol></div></div>
+
+  <div style="height:32px"></div>
+
+  <div class="reading-card">
+    <h3>Text 2 — Contingency Planning: From Risk Identification to Crisis Response</h3>
+    <p>A contingency plan is a pre-designed response to a risk event that has been identified in advance. Unlike reactive crisis management — which improvises a response after an unexpected event has occurred — contingency planning assumes that certain risk events are foreseeable and worth planning for before they happen. The quality of a contingency plan is determined by three factors: the accuracy of the underlying risk analysis (if the wrong risks have been identified, the plan will be misaligned with the actual threats the organisation faces); the specificity of the planned response (a plan that says "contact the relevant stakeholders" without naming them, specifying the communication channel, or setting a timeline is not a plan — it is an aspiration); and the organisation's readiness to execute the plan under pressure, which depends on whether the plan has been rehearsed, communicated, and assigned to named individuals with the authority to act.</p>
+    <p>Contingency plans are most effective when they are built around risk triggers — clearly defined thresholds or events that indicate a risk is beginning to materialise. A trigger-based plan avoids two common failure modes. The first is under-reaction: without a defined trigger, organisations tend to delay activating their response plan while debating whether the situation is "bad enough" to warrant it — a debate that wastes precisely the time that early intervention would have saved. The second is over-reaction: without a calibrated trigger, organisations sometimes activate their full crisis response to a minor disruption, expending resources and causing unnecessary alarm. A well-designed trigger system ensures that the right level of response is matched to the severity of the situation. For example, a retailer might define three escalation tiers: a yellow alert triggered when supplier delivery delays exceed 48 hours; an amber alert when a key supplier confirms they cannot fulfil an order; and a red alert when the delay is projected to affect the customer fulfilment rate below a defined threshold.</p>
+    <p>Business continuity planning extends the logic of contingency planning to the organisation's most critical functions — those whose disruption would threaten the survival of the organisation itself. Where a contingency plan addresses a specific risk, a business continuity plan asks: if our core systems, facilities, or capabilities were unavailable for an extended period, how would we continue to deliver our most essential services? Effective business continuity plans identify the minimum viable operations the organisation must maintain, specify the alternative resources or processes that would be activated, define the maximum tolerable downtime for each critical function, and assign clear ownership for each element of the response. The test of a business continuity plan is not its sophistication on paper, but whether the people who would need to execute it could do so accurately under the stress of a real crisis — which is why regular simulation exercises are a non-negotiable element of any serious continuity planning programme.</p>
+  </div>
+
+  <div id="r2" class="quiz-card">
+    <div class="quiz-title">Reading 2 — 10 Multiple-Choice Questions</div>
+    <div class="q-item"><div class="q-stem">1. How does the text distinguish a contingency plan from reactive crisis management?</div><div class="options"><label class="opt"><input type="radio" name="r2q1" value="a"> A. A contingency plan is prepared by external consultants; crisis management is handled internally</label><label class="opt"><input type="radio" name="r2q1" value="b"> B. A contingency plan is a pre-designed response to a foreseeable risk; crisis management improvises after an unexpected event</label><label class="opt"><input type="radio" name="r2q1" value="c"> C. A contingency plan addresses financial risks; crisis management addresses reputational ones</label><label class="opt"><input type="radio" name="r2q1" value="d"> D. A contingency plan is used only for operational risks; crisis management applies to strategic ones</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What are the three factors the text identifies as determining the quality of a contingency plan?</div><div class="options"><label class="opt"><input type="radio" name="r2q2" value="a"> A. Budget, timeline, and regulatory compliance</label><label class="opt"><input type="radio" name="r2q2" value="b"> B. The accuracy of the risk analysis, the specificity of the response, and the organisation's readiness to execute under pressure</label><label class="opt"><input type="radio" name="r2q2" value="c"> C. Senior management buy-in, legal review, and insurance coverage</label><label class="opt"><input type="radio" name="r2q2" value="d"> D. Technology infrastructure, staff training, and communication channels</label></div></div>
+    <div class="q-item"><div class="q-stem">3. Why does the text say "a plan that says 'contact the relevant stakeholders' without naming them is not a plan"?</div><div class="options"><label class="opt"><input type="radio" name="r2q3" value="a"> A. Because stakeholder lists change too frequently to be included in a written plan</label><label class="opt"><input type="radio" name="r2q3" value="b"> B. Because vague aspirational language cannot be executed under pressure — a real plan requires specificity</label><label class="opt"><input type="radio" name="r2q3" value="c"> C. Because only external consultants can determine which stakeholders are relevant to a crisis</label><label class="opt"><input type="radio" name="r2q3" value="d"> D. Because stakeholder communication should be handled informally during a crisis</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What is a risk trigger, and what two failure modes does a trigger-based plan avoid?</div><div class="options"><label class="opt"><input type="radio" name="r2q4" value="a"> A. A risk trigger is a budget threshold; it avoids overspending and under-resourcing</label><label class="opt"><input type="radio" name="r2q4" value="b"> B. A risk trigger is a defined threshold indicating materialisation; it avoids under-reaction and over-reaction</label><label class="opt"><input type="radio" name="r2q4" value="c"> C. A risk trigger is an audit finding; it avoids regulatory penalties and board escalations</label><label class="opt"><input type="radio" name="r2q4" value="d"> D. A risk trigger is a market signal; it avoids strategic errors and missed opportunities</label></div></div>
+    <div class="q-item"><div class="q-stem">5. In the retailer example, what triggers the "amber alert"?</div><div class="options"><label class="opt"><input type="radio" name="r2q5" value="a"> A. When supplier delivery delays exceed 48 hours</label><label class="opt"><input type="radio" name="r2q5" value="b"> B. When the customer fulfilment rate falls below a defined threshold</label><label class="opt"><input type="radio" name="r2q5" value="c"> C. When a key supplier confirms they cannot fulfil an order</label><label class="opt"><input type="radio" name="r2q5" value="d"> D. When the retailer's stock levels fall below a 10-day reserve</label></div></div>
+    <div class="q-item"><div class="q-stem">6. How does the text describe the relationship between a contingency plan and a business continuity plan?</div><div class="options"><label class="opt"><input type="radio" name="r2q6" value="a"> A. They are different names for the same document, applicable in different industries</label><label class="opt"><input type="radio" name="r2q6" value="b"> B. A contingency plan addresses a specific risk; a business continuity plan covers the survival of the organisation's most critical functions</label><label class="opt"><input type="radio" name="r2q6" value="c"> C. A contingency plan is used for small-scale disruptions; a business continuity plan is only for natural disasters</label><label class="opt"><input type="radio" name="r2q6" value="d"> D. A business continuity plan is mandatory by law; a contingency plan is optional</label></div></div>
+    <div class="q-item"><div class="q-stem">7. What four elements does an effective business continuity plan specify, according to Paragraph 3?</div><div class="options"><label class="opt"><input type="radio" name="r2q7" value="a"> A. Budget, insurance, legal liability, and communication strategy</label><label class="opt"><input type="radio" name="r2q7" value="b"> B. Minimum viable operations, alternative resources, maximum tolerable downtime, and clear ownership</label><label class="opt"><input type="radio" name="r2q7" value="c"> C. Risk probability, impact rating, trigger threshold, and residual risk level</label><label class="opt"><input type="radio" name="r2q7" value="d"> D. Staff training plan, technology backup, stakeholder list, and regulatory notification procedure</label></div></div>
+    <div class="q-item"><div class="q-stem">8. What does the text say is the true test of a business continuity plan?</div><div class="options"><label class="opt"><input type="radio" name="r2q8" value="a"> A. Whether it complies with the relevant industry regulation and audit requirements</label><label class="opt"><input type="radio" name="r2q8" value="b"> B. Whether it has been reviewed and approved by the board within the last twelve months</label><label class="opt"><input type="radio" name="r2q8" value="c"> C. Whether the people who would need to execute it could do so accurately under the stress of a real crisis</label><label class="opt"><input type="radio" name="r2q8" value="d"> D. Whether it covers all risks on the organisation's risk register</label></div></div>
+    <div class="q-item"><div class="q-stem">9. Why are simulation exercises described as "non-negotiable" in business continuity planning?</div><div class="options"><label class="opt"><input type="radio" name="r2q9" value="a"> A. They are required by insurance providers as a condition of coverage</label><label class="opt"><input type="radio" name="r2q9" value="b"> B. They are the only way to test whether the plan can actually be executed under real crisis conditions</label><label class="opt"><input type="radio" name="r2q9" value="c"> C. They reduce the likelihood of a risk materialising in the first place</label><label class="opt"><input type="radio" name="r2q9" value="d"> D. They satisfy regulatory requirements for business continuity certification</label></div></div>
+    <div class="q-item"><div class="q-stem">10. What is the central argument of this text?</div><div class="options"><label class="opt"><input type="radio" name="r2q10" value="a"> A. Most business disruptions are unforeseeable and organisations should focus on reactive crisis management</label><label class="opt"><input type="radio" name="r2q10" value="b"> B. Contingency and business continuity planning are effective only when they are precise, trigger-based, rehearsed, and owned</label><label class="opt"><input type="radio" name="r2q10" value="c"> C. The best contingency plans are short and simple, avoiding unnecessary detail that may confuse the response team</label><label class="opt"><input type="radio" name="r2q10" value="d"> D. Business continuity planning is the responsibility of the finance and legal departments</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('r2',{r2q1:'b',r2q2:'b',r2q3:'b',r2q4:'b',r2q5:'c',r2q6:'b',r2q7:'b',r2q8:'c',r2q9:'b',r2q10:'b'})">✅ Submit Answers</button><div id="r2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Reading 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>B</strong></li><li>5. <strong>C</strong></li><li>6. <strong>B</strong></li><li>7. <strong>B</strong></li><li>8. <strong>C</strong></li><li>9. <strong>B</strong></li><li>10. <strong>B</strong></li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<!-- VOCABULARY -->
+<section id="vocabulary">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#fef3c7">✏️</div>
+    <div class="sec-text"><div class="sec-title">Vocabulary Exercises</div><div class="sec-sub">4 Exercises · Multiple Choice · Gap-Fill · True/False · Drag-and-Drop</div></div>
+  </div></div>
+
+  <div id="v1" class="quiz-card">
+    <div class="quiz-title">Exercise 1 — Multiple Choice: Risk Management Vocabulary in Context</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the word or phrase that best completes each sentence.</p>
+    <div class="q-item"><div class="q-stem">1. The operations team set up a series of ________ — measurable signals such as supplier delivery delays and stock depletion rates — to give advance warning before a supply shortage became critical.</div><div class="options"><label class="opt"><input type="radio" name="v1q1" value="a"> A. risk registers</label><label class="opt"><input type="radio" name="v1q1" value="b"> B. early warning indicators</label><label class="opt"><input type="radio" name="v1q1" value="c"> C. contingency plans</label><label class="opt"><input type="radio" name="v1q1" value="d"> D. risk heat maps</label></div></div>
+    <div class="q-item"><div class="q-stem">2. The board reviewed the ________ to get a clear visual picture of which risks required immediate intervention and which were within acceptable tolerance levels.</div><div class="options"><label class="opt"><input type="radio" name="v1q2" value="a"> A. business continuity plan</label><label class="opt"><input type="radio" name="v1q2" value="b"> B. force majeure clause</label><label class="opt"><input type="radio" name="v1q2" value="c"> C. risk heat map</label><label class="opt"><input type="radio" name="v1q2" value="d"> D. residual risk assessment</label></div></div>
+    <div class="q-item"><div class="q-stem">3. Even after implementing three layers of mitigation controls, a degree of ________ remained — the organisation accepted this as the unavoidable cost of operating in a volatile market.</div><div class="options"><label class="opt"><input type="radio" name="v1q3" value="a"> A. inherent risk</label><label class="opt"><input type="radio" name="v1q3" value="b"> B. risk appetite</label><label class="opt"><input type="radio" name="v1q3" value="c"> C. residual risk</label><label class="opt"><input type="radio" name="v1q3" value="d"> D. systemic risk</label></div></div>
+    <div class="q-item"><div class="q-stem">4. The organisation had a high ________ — it was deliberately operating in emerging markets and accepting above-average volatility in pursuit of superior returns.</div><div class="options"><label class="opt"><input type="radio" name="v1q4" value="a"> A. risk tolerance</label><label class="opt"><input type="radio" name="v1q4" value="b"> B. risk appetite</label><label class="opt"><input type="radio" name="v1q4" value="c"> C. risk trigger</label><label class="opt"><input type="radio" name="v1q4" value="d"> D. inherent risk</label></div></div>
+    <div class="q-item"><div class="q-stem">5. The contract included a ________ clause, which released both parties from their obligations in the event of a natural disaster, pandemic, or act of war.</div><div class="options"><label class="opt"><input type="radio" name="v1q5" value="a"> A. risk mitigation</label><label class="opt"><input type="radio" name="v1q5" value="b"> B. business continuity</label><label class="opt"><input type="radio" name="v1q5" value="c"> C. residual risk</label><label class="opt"><input type="radio" name="v1q5" value="d"> D. force majeure</label></div></div>
+    <div class="q-item"><div class="q-stem">6. Each risk on the register was assigned to a named ________, who was accountable for monitoring the exposure and ensuring that the agreed mitigation actions were completed on schedule.</div><div class="options"><label class="opt"><input type="radio" name="v1q6" value="a"> A. risk owner</label><label class="opt"><input type="radio" name="v1q6" value="b"> B. risk trigger</label><label class="opt"><input type="radio" name="v1q6" value="c"> C. risk framework</label><label class="opt"><input type="radio" name="v1q6" value="d"> D. contingency plan</label></div></div>
+    <div class="q-item"><div class="q-stem">7. The 2008 financial crisis demonstrated the danger of ________ — when the collapse of mortgage-backed securities triggered failures across the entire global banking system simultaneously.</div><div class="options"><label class="opt"><input type="radio" name="v1q7" value="a"> A. residual risk</label><label class="opt"><input type="radio" name="v1q7" value="b"> B. risk transfer</label><label class="opt"><input type="radio" name="v1q7" value="c"> C. systemic risk</label><label class="opt"><input type="radio" name="v1q7" value="d"> D. force majeure</label></div></div>
+    <div class="q-item"><div class="q-stem">8. The company managed its foreign exchange exposure through ________ — by signing hedging contracts with its bank, the financial impact of currency fluctuations was borne by a third party rather than the company itself.</div><div class="options"><label class="opt"><input type="radio" name="v1q8" value="a"> A. risk appetite</label><label class="opt"><input type="radio" name="v1q8" value="b"> B. risk mitigation</label><label class="opt"><input type="radio" name="v1q8" value="c"> C. risk transfer</label><label class="opt"><input type="radio" name="v1q8" value="d"> D. risk tolerance</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('v1',{v1q1:'b',v1q2:'c',v1q3:'c',v1q4:'b',v1q5:'d',v1q6:'a',v1q7:'c',v1q8:'c'})">✅ Submit</button><div id="v1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — early warning indicators</li><li>2. <strong>C</strong> — risk heat map</li><li>3. <strong>C</strong> — residual risk</li><li>4. <strong>B</strong> — risk appetite</li><li>5. <strong>D</strong> — force majeure</li><li>6. <strong>A</strong> — risk owner</li><li>7. <strong>C</strong> — systemic risk</li><li>8. <strong>C</strong> — risk transfer</li></ol></div></div>
+
+  <div id="v2" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 2 — Gap-Fill: Complete the Risk Management Sentences</div>
+    <div style="background:#f5f2ec;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;font-family:'DM Mono',monospace;color:var(--sky);display:flex;flex-wrap:wrap;gap:8px">
+      <span>risk register</span> | <span>contingency plan</span> | <span>risk mitigation</span> | <span>business continuity plan</span> | <span>risk framework</span> | <span>inherent risk</span> | <span>risk trigger</span> | <span>crisis management</span>
+    </div>
+    <div class="q-item"><div class="q-stem">1. Before any mitigation controls were applied, the ________ for the new product launch was rated as high — the market was untested and competitive pressure was significant.</div><div style="margin-top:8px"><input class="gap-input" id="gi1" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">2. The organisation adopted ISO 31000 as its ________, providing a consistent methodology for identifying and evaluating risks across all its operating divisions.</div><div style="margin-top:8px"><input class="gap-input" id="gi2" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">3. The agreed ________ for the cyber attack risk was to invest in a multi-layer firewall system, conduct quarterly penetration testing, and provide all staff with mandatory security awareness training.</div><div style="margin-top:8px"><input class="gap-input" id="gi3" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">4. The team identified a ________ for the supplier insolvency risk: if the supplier's publicly reported current ratio fell below 1.0, the contingency plan would be automatically activated.</div><div style="margin-top:8px"><input class="gap-input" id="gi4" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">5. The risk committee reviewed the ________ quarterly, updating probability ratings and impact assessments as the business environment changed throughout the year.</div><div style="margin-top:8px"><input class="gap-input" id="gi5" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">6. When the primary data centre went offline, the IT Director activated the ________ which specified exactly how critical systems would be migrated to the backup facility within four hours.</div><div style="margin-top:8px"><input class="gap-input" id="gi6" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">7. The ________ team assembled within 30 minutes of the product recall announcement — they coordinated the media response, retailer communication, and regulatory notification simultaneously.</div><div style="margin-top:8px"><input class="gap-input" id="gi7" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">8. The ________ was stress-tested in a simulation exercise, during which the team discovered that three of the named response leads had changed roles since the plan was last updated.</div><div style="margin-top:8px"><input class="gap-input" id="gi8" placeholder="type answer…"></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeGap()">✅ Check Answers</button><div id="v2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>inherent risk</strong></li><li>2. <strong>risk framework</strong></li><li>3. <strong>risk mitigation</strong></li><li>4. <strong>risk trigger</strong></li><li>5. <strong>risk register</strong></li><li>6. <strong>business continuity plan</strong></li><li>7. <strong>crisis management</strong></li><li>8. <strong>contingency plan</strong></li></ol></div></div>
+
+  <div id="v3" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 3 — True or False: Risk Management Concepts</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Select <strong>True</strong> or <strong>False</strong> based on correct definitions and concepts from this module.</p>
+    <div class="q-item" id="tfr1"><div class="q-stem">1. Residual risk is the level of risk that exists before any mitigation controls have been applied.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'1','T')">True</button><button class="tf-btn" onclick="pickTF(this,'1','F')">False</button></div></div>
+    <div class="q-item" id="tfr2"><div class="q-stem">2. A risk trigger is a defined threshold or event that indicates a risk is beginning to materialise and prompts activation of the contingency plan.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'2','T')">True</button><button class="tf-btn" onclick="pickTF(this,'2','F')">False</button></div></div>
+    <div class="q-item" id="tfr3"><div class="q-stem">3. Risk appetite and risk tolerance are identical concepts and can be used interchangeably in all professional contexts.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'3','T')">True</button><button class="tf-btn" onclick="pickTF(this,'3','F')">False</button></div></div>
+    <div class="q-item" id="tfr4"><div class="q-stem">4. A business continuity plan focuses on ensuring the organisation can continue delivering its most critical services following a major disruptive event.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'4','T')">True</button><button class="tf-btn" onclick="pickTF(this,'4','F')">False</button></div></div>
+    <div class="q-item" id="tfr5"><div class="q-stem">5. Systemic risk affects only a single organisation and can be managed through a well-designed individual risk framework.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'5','T')">True</button><button class="tf-btn" onclick="pickTF(this,'5','F')">False</button></div></div>
+    <div class="q-item" id="tfr6"><div class="q-stem">6. Risk transfer involves shifting the financial or operational consequences of a risk to a third party, such as through insurance or a contractual arrangement.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'6','T')">True</button><button class="tf-btn" onclick="pickTF(this,'6','F')">False</button></div></div>
+    <div class="q-item" id="tfr7"><div class="q-stem">7. A risk heat map is a financial model that calculates the cost of each risk event in monetary terms for budget planning purposes.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'7','T')">True</button><button class="tf-btn" onclick="pickTF(this,'7','F')">False</button></div></div>
+    <div class="q-item" id="tfr8"><div class="q-stem">8. A risk register should record not only the risk itself but also its probability, potential impact, the name of the risk owner, and the agreed mitigation actions.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'8','T')">True</button><button class="tf-btn" onclick="pickTF(this,'8','F')">False</button></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeTF()">✅ Submit Answers</button><div id="v3-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>False</strong> — That is the definition of inherent risk. Residual risk is what remains after controls are applied.</li><li>2. <strong>True</strong></li><li>3. <strong>False</strong> — Risk appetite is the broader willingness to accept risk; tolerance is the maximum acceptable variance at operational level — they are related but distinct.</li><li>4. <strong>True</strong></li><li>5. <strong>False</strong> — Systemic risk affects an entire industry, market, or economy — it cannot be managed by a single organisation alone.</li><li>6. <strong>True</strong></li><li>7. <strong>False</strong> — A risk heat map is a visual matrix plotting risks by probability and impact — not a financial cost model.</li><li>8. <strong>True</strong></li></ol></div></div>
+
+  <div id="v4" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 4 — Match: Risk Term to Its Definition (Click to Select and Place)</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Click a term from the bank to select it, then click the matching definition box to place it.</p>
+    <div class="drag-bank" id="v4bank">
+      <div class="drag-chip" data-w="Risk Register" onclick="pickDrag(this)">Risk Register</div>
+      <div class="drag-chip" data-w="Contingency Plan" onclick="pickDrag(this)">Contingency Plan</div>
+      <div class="drag-chip" data-w="Risk Owner" onclick="pickDrag(this)">Risk Owner</div>
+      <div class="drag-chip" data-w="Residual Risk" onclick="pickDrag(this)">Residual Risk</div>
+      <div class="drag-chip" data-w="Risk Heat Map" onclick="pickDrag(this)">Risk Heat Map</div>
+      <div class="drag-chip" data-w="Force Majeure" onclick="pickDrag(this)">Force Majeure</div>
+      <div class="drag-chip" data-w="Risk Appetite" onclick="pickDrag(this)">Risk Appetite</div>
+      <div class="drag-chip" data-w="Business Continuity Plan" onclick="pickDrag(this)">Business Continuity Plan</div>
+    </div>
+    <div class="q-item"><div class="q-stem">1. "A living document listing all identified risks with probability, impact, owner, and mitigation actions." → <span class="drop-zone" data-ans="Risk Register" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">2. "The level of risk an organisation is prepared to accept in pursuit of its objectives." → <span class="drop-zone" data-ans="Risk Appetite" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">3. "A visual matrix plotting risks by probability and impact for rapid prioritisation." → <span class="drop-zone" data-ans="Risk Heat Map" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">4. "The named individual accountable for monitoring a specific risk and ensuring controls are in place." → <span class="drop-zone" data-ans="Risk Owner" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">5. "The risk exposure that remains after mitigation controls have been applied." → <span class="drop-zone" data-ans="Residual Risk" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">6. "A pre-designed response plan specifying actions to be taken if a specific risk event occurs." → <span class="drop-zone" data-ans="Contingency Plan" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">7. "A plan ensuring the organisation can continue critical operations after a major disruptive event." → <span class="drop-zone" data-ans="Business Continuity Plan" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">8. "An unforeseeable external event that releases contractual parties from their obligations." → <span class="drop-zone" data-ans="Force Majeure" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeDrop()">✅ Check Matches</button><button class="btn btn-outline" style="font-size:12px" onclick="resetDrop()">↺ Reset</button><div id="v4-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 4</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>Risk Register</strong></li><li>2. <strong>Risk Appetite</strong></li><li>3. <strong>Risk Heat Map</strong></li><li>4. <strong>Risk Owner</strong></li><li>5. <strong>Residual Risk</strong></li><li>6. <strong>Contingency Plan</strong></li><li>7. <strong>Business Continuity Plan</strong></li><li>8. <strong>Force Majeure</strong></li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<!-- GRAMMAR -->
+<section id="grammar">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#dcfce7">📐</div>
+    <div class="sec-text"><div class="sec-title">Grammar Exercises</div><div class="sec-sub">3 Exercises · Future Forms · Passive Voice · Reported Speech</div></div>
+  </div></div>
+
+  <div id="g1" class="quiz-card">
+    <div class="quiz-title">Grammar 1 — Future Forms in Risk Planning Contexts</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the correct future form for each risk management sentence.</p>
+    <div class="q-item"><div class="q-stem">1. Look at those supplier lead times — at this rate, we ________ a significant stock shortage before the end of the quarter. <em>(confident prediction from present evidence)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q1" value="a"> A. will have</label><label class="opt"><input type="radio" name="g1q1" value="b"> B. are going to have</label><label class="opt"><input type="radio" name="g1q1" value="c"> C. would have</label><label class="opt"><input type="radio" name="g1q1" value="d"> D. had</label></div></div>
+    <div class="q-item"><div class="q-stem">2. The board ________ the revised risk register at its next meeting on Thursday. <em>(planned future event)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q2" value="a"> A. reviews</label><label class="opt"><input type="radio" name="g1q2" value="b"> B. is going to review</label><label class="opt"><input type="radio" name="g1q2" value="c"> C. will be reviewing</label><label class="opt"><input type="radio" name="g1q2" value="d"> D. is reviewing</label></div></div>
+    <div class="q-item"><div class="q-stem">3. By the time the annual audit begins, the risk team ________ all mitigation actions for Q3 risks. <em>(future perfect — completed before a future point)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q3" value="a"> A. will complete</label><label class="opt"><input type="radio" name="g1q3" value="b"> B. is completing</label><label class="opt"><input type="radio" name="g1q3" value="c"> C. will have completed</label><label class="opt"><input type="radio" name="g1q3" value="d"> D. would have completed</label></div></div>
+    <div class="q-item"><div class="q-stem">4. If the risk trigger threshold is breached, the Operations Director ________ the contingency plan immediately. <em>(first conditional: real future result)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q4" value="a"> A. activates</label><label class="opt"><input type="radio" name="g1q4" value="b"> B. would activate</label><label class="opt"><input type="radio" name="g1q4" value="c"> C. will activate</label><label class="opt"><input type="radio" name="g1q4" value="d"> D. had activated</label></div></div>
+    <div class="q-item"><div class="q-stem">5. Don't worry — I ________ the risk owner now and ask for an update on the mitigation timeline. <em>(spontaneous decision at moment of speaking)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q5" value="a"> A. am going to contact</label><label class="opt"><input type="radio" name="g1q5" value="b"> B. contact</label><label class="opt"><input type="radio" name="g1q5" value="c"> C. will contact</label><label class="opt"><input type="radio" name="g1q5" value="d"> D. would contact</label></div></div>
+    <div class="q-item"><div class="q-stem">6. Between now and the product launch, the risk team ________ weekly progress meetings to monitor the project's risk exposure. <em>(ongoing future activity across a period)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q6" value="a"> A. will be holding</label><label class="opt"><input type="radio" name="g1q6" value="b"> B. holds</label><label class="opt"><input type="radio" name="g1q6" value="c"> C. had been holding</label><label class="opt"><input type="radio" name="g1q6" value="d"> D. is going to hold</label></div></div>
+    <div class="q-item"><div class="q-stem">7. We ________ the business continuity simulation next spring — it's already in the company calendar. <em>(fixed future arrangement)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q7" value="a"> A. will run</label><label class="opt"><input type="radio" name="g1q7" value="b"> B. run</label><label class="opt"><input type="radio" name="g1q7" value="c"> C. are running</label><label class="opt"><input type="radio" name="g1q7" value="d"> D. would run</label></div></div>
+    <div class="q-item"><div class="q-stem">8. By Q4, the organisation ________ its enterprise risk management framework for over two years, which should mean most staff are familiar with the process. <em>(future perfect continuous)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q8" value="a"> A. will run</label><label class="opt"><input type="radio" name="g1q8" value="b"> B. will have been running</label><label class="opt"><input type="radio" name="g1q8" value="c"> C. is running</label><label class="opt"><input type="radio" name="g1q8" value="d"> D. had run</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g1',{g1q1:'b',g1q2:'d',g1q3:'c',g1q4:'c',g1q5:'c',g1q6:'a',g1q7:'c',g1q8:'b'})">✅ Submit</button><div id="g1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — "are going to have" (prediction from visible present evidence)</li><li>2. <strong>D</strong> — "is reviewing" (fixed/scheduled future arrangement)</li><li>3. <strong>C</strong> — "will have completed" (future perfect: action complete before a future point)</li><li>4. <strong>C</strong> — "will activate" (1st conditional: real future result)</li><li>5. <strong>C</strong> — "will contact" (spontaneous decision at the moment of speaking)</li><li>6. <strong>A</strong> — "will be holding" (future continuous: ongoing activity across a future period)</li><li>7. <strong>C</strong> — "are running" (fixed future arrangement already in calendar)</li><li>8. <strong>B</strong> — "will have been running" (future perfect continuous: duration up to a future point)</li></ol></div></div>
+
+  <div id="g2" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Grammar 2 — Passive Voice in Risk Management Documents</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the correct passive construction for each sentence as it would appear in a risk report or register.</p>
+    <div class="q-item"><div class="q-stem">1. All risks on the register ________ on a quarterly basis by the Risk Committee to ensure ratings remain current.</div><div class="options"><label class="opt"><input type="radio" name="g2q1" value="a"> A. review</label><label class="opt"><input type="radio" name="g2q1" value="b"> B. are reviewed</label><label class="opt"><input type="radio" name="g2q1" value="c"> C. reviewing</label><label class="opt"><input type="radio" name="g2q1" value="d"> D. were reviewing</label></div></div>
+    <div class="q-item"><div class="q-stem">2. The cyber security risk ________ as high probability and critical impact following last month's industry-wide attack on a competitor.</div><div class="options"><label class="opt"><input type="radio" name="g2q2" value="a"> A. has been reclassified</label><label class="opt"><input type="radio" name="g2q2" value="b"> B. reclassified</label><label class="opt"><input type="radio" name="g2q2" value="c"> C. is reclassifying</label><label class="opt"><input type="radio" name="g2q2" value="d"> D. had reclassify</label></div></div>
+    <div class="q-item"><div class="q-stem">3. The contingency plan ________ by the Operations Director before the end of the financial year to incorporate updated supplier contacts.</div><div class="options"><label class="opt"><input type="radio" name="g2q3" value="a"> A. is updating</label><label class="opt"><input type="radio" name="g2q3" value="b"> B. updates</label><label class="opt"><input type="radio" name="g2q3" value="c"> C. will be updated</label><label class="opt"><input type="radio" name="g2q3" value="d"> D. updated</label></div></div>
+    <div class="q-item"><div class="q-stem">4. It ________ that the risk trigger for the foreign exchange exposure was breached on three occasions during the previous quarter without escalation.</div><div class="options"><label class="opt"><input type="radio" name="g2q4" value="a"> A. found</label><label class="opt"><input type="radio" name="g2q4" value="b"> B. has found</label><label class="opt"><input type="radio" name="g2q4" value="c"> C. was found</label><label class="opt"><input type="radio" name="g2q4" value="d"> D. finds</label></div></div>
+    <div class="q-item"><div class="q-stem">5. A comprehensive risk ________ carried out across all five business units prior to the merger announcement.</div><div class="options"><label class="opt"><input type="radio" name="g2q5" value="a"> A. was being assessed</label><label class="opt"><input type="radio" name="g2q5" value="b"> B. assessment was carried</label><label class="opt"><input type="radio" name="g2q5" value="c"> C. assessment was carried out</label><label class="opt"><input type="radio" name="g2q5" value="d"> D. was assessing</label></div></div>
+    <div class="q-item"><div class="q-stem">6. Each mitigation action ________ to a named risk owner, with a defined completion date and a clear escalation path.</div><div class="options"><label class="opt"><input type="radio" name="g2q6" value="a"> A. assigns</label><label class="opt"><input type="radio" name="g2q6" value="b"> B. has been assigned</label><label class="opt"><input type="radio" name="g2q6" value="c"> C. is assigning</label><label class="opt"><input type="radio" name="g2q6" value="d"> D. assigned</label></div></div>
+    <div class="q-item"><div class="q-stem">7. The business continuity simulation ________ twice in the past 18 months, and on both occasions significant gaps in the response plan were identified.</div><div class="options"><label class="opt"><input type="radio" name="g2q7" value="a"> A. conducted</label><label class="opt"><input type="radio" name="g2q7" value="b"> B. has been conducted</label><label class="opt"><input type="radio" name="g2q7" value="c"> C. is conducting</label><label class="opt"><input type="radio" name="g2q7" value="d"> D. was conducting</label></div></div>
+    <div class="q-item"><div class="q-stem">8. It ________ that the organisation's current risk appetite statement does not reflect the board's actual appetite for strategic risk, and an update is recommended.</div><div class="options"><label class="opt"><input type="radio" name="g2q8" value="a"> A. is recommended</label><label class="opt"><input type="radio" name="g2q8" value="b"> B. recommended</label><label class="opt"><input type="radio" name="g2q8" value="c"> C. is noted</label><label class="opt"><input type="radio" name="g2q8" value="d"> D. noting</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g2',{g2q1:'b',g2q2:'a',g2q3:'c',g2q4:'c',g2q5:'c',g2q6:'b',g2q7:'b',g2q8:'c'})">✅ Submit</button><div id="g2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — "are reviewed" (present passive: regular/standing action)</li><li>2. <strong>A</strong> — "has been reclassified" (present perfect passive: recent change with current relevance)</li><li>3. <strong>C</strong> — "will be updated" (future passive)</li><li>4. <strong>C</strong> — "was found" (past passive: impersonal discovery)</li><li>5. <strong>C</strong> — "assessment was carried out" (full past passive phrase)</li><li>6. <strong>B</strong> — "has been assigned" (present perfect passive: completed assignment still in force)</li><li>7. <strong>B</strong> — "has been conducted" (present perfect passive: twice in a period up to now)</li><li>8. <strong>C</strong> — "is noted" (present passive: impersonal observation in formal report language)</li></ol></div></div>
+
+  <div id="g3" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Grammar 3 — Reported Speech in Risk Management Briefings</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the correct reported speech form for each sentence from a risk committee meeting.</p>
+    <div class="q-item"><div class="q-stem">1. Direct speech: "The residual risk is still above our tolerance level." → The Risk Director told the board that the residual risk ________ above their tolerance level.</div><div class="options"><label class="opt"><input type="radio" name="g3q1" value="a"> A. is still</label><label class="opt"><input type="radio" name="g3q1" value="b"> B. was still</label><label class="opt"><input type="radio" name="g3q1" value="c"> C. has been still</label><label class="opt"><input type="radio" name="g3q1" value="d"> D. will still be</label></div></div>
+    <div class="q-item"><div class="q-stem">2. Direct speech: "We will activate the contingency plan if the trigger is breached." → The Operations Director confirmed that they ________ the contingency plan if the trigger ________ breached.</div><div class="options"><label class="opt"><input type="radio" name="g3q2" value="a"> A. will activate / is</label><label class="opt"><input type="radio" name="g3q2" value="b"> B. would activate / were</label><label class="opt"><input type="radio" name="g3q2" value="c"> C. activate / would be</label><label class="opt"><input type="radio" name="g3q2" value="d"> D. would have activated / was</label></div></div>
+    <div class="q-item"><div class="q-stem">3. Direct speech: "We have already updated the risk register." → The risk manager reported that they ________ the risk register.</div><div class="options"><label class="opt"><input type="radio" name="g3q3" value="a"> A. have already updated</label><label class="opt"><input type="radio" name="g3q3" value="b"> B. had already updated</label><label class="opt"><input type="radio" name="g3q3" value="c"> C. already updated</label><label class="opt"><input type="radio" name="g3q3" value="d"> D. were already updating</label></div></div>
+    <div class="q-item"><div class="q-stem">4. Direct speech: "You must review the business continuity plan before the audit." → The auditor told management that they ________ the business continuity plan before the audit.</div><div class="options"><label class="opt"><input type="radio" name="g3q4" value="a"> A. must review</label><label class="opt"><input type="radio" name="g3q4" value="b"> B. should review</label><label class="opt"><input type="radio" name="g3q4" value="c"> C. had to review</label><label class="opt"><input type="radio" name="g3q4" value="d"> D. could review</label></div></div>
+    <div class="q-item"><div class="q-stem">5. Direct speech: "Can you identify all the early warning indicators for this risk?" → The Chair asked the risk team whether they ________ all the early warning indicators for that risk.</div><div class="options"><label class="opt"><input type="radio" name="g3q5" value="a"> A. can identify</label><label class="opt"><input type="radio" name="g3q5" value="b"> B. could identify</label><label class="opt"><input type="radio" name="g3q5" value="c"> C. are able to identify</label><label class="opt"><input type="radio" name="g3q5" value="d"> D. would identify</label></div></div>
+    <div class="q-item"><div class="q-stem">6. Direct speech: "The simulation exercise took place last month." → The CEO told shareholders that the simulation exercise ________ the previous month.</div><div class="options"><label class="opt"><input type="radio" name="g3q6" value="a"> A. took place</label><label class="opt"><input type="radio" name="g3q6" value="b"> B. has taken place</label><label class="opt"><input type="radio" name="g3q6" value="c"> C. had taken place</label><label class="opt"><input type="radio" name="g3q6" value="d"> D. was taking place</label></div></div>
+    <div class="q-item"><div class="q-stem">7. Direct speech: "Don't approve the investment until the due diligence is complete." → The CFO warned the board not ________ the investment until the due diligence ________ complete.</div><div class="options"><label class="opt"><input type="radio" name="g3q7" value="a"> A. to approve / was</label><label class="opt"><input type="radio" name="g3q7" value="b"> B. approving / is</label><label class="opt"><input type="radio" name="g3q7" value="c"> C. approved / would be</label><label class="opt"><input type="radio" name="g3q7" value="d"> D. to have approved / had been</label></div></div>
+    <div class="q-item"><div class="q-stem">8. Direct speech: "We are monitoring three high-priority risks very closely." → The Risk Director explained that the team ________ three high-priority risks very closely.</div><div class="options"><label class="opt"><input type="radio" name="g3q8" value="a"> A. are monitoring</label><label class="opt"><input type="radio" name="g3q8" value="b"> B. monitored</label><label class="opt"><input type="radio" name="g3q8" value="c"> C. were monitoring</label><label class="opt"><input type="radio" name="g3q8" value="d"> D. have been monitoring</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g3',{g3q1:'b',g3q2:'b',g3q3:'b',g3q4:'c',g3q5:'b',g3q6:'c',g3q7:'a',g3q8:'c'})">✅ Submit</button><div id="g3-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — "was still" (present → past in reported speech)</li><li>2. <strong>B</strong> — "would activate / were" (will → would; is → were in reported speech)</li><li>3. <strong>B</strong> — "had already updated" (present perfect → past perfect in reported speech)</li><li>4. <strong>C</strong> — "had to review" (must → had to in reported speech)</li><li>5. <strong>B</strong> — "could identify" (can → could in reported speech)</li><li>6. <strong>C</strong> — "had taken place" (simple past → past perfect in reported speech)</li><li>7. <strong>A</strong> — "to approve / was" (imperative negative → not to + infinitive; is → was)</li><li>8. <strong>C</strong> — "were monitoring" (present continuous → past continuous in reported speech)</li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GRAMMAR REVIEW -->
+<section id="grammarreview">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#e0e7ff">📘</div>
+    <div class="sec-text"><div class="sec-title">Grammar Review</div><div class="sec-sub">3 Detailed Reference Boxes · All Grammar Points from Module 7</div></div>
+  </div></div>
+
+  <div class="grammar-box">
+    <h4>1. Future Forms in Risk Planning English</h4>
+    <p>Risk management language uses a range of future forms to describe predictions, plans, scheduled events, and ongoing future activities. Selecting the right form signals the degree of certainty and the nature of the future event.</p>
+    <ul>
+      <li><strong>will + base verb</strong> — Spontaneous decisions or neutral predictions: "I will contact the risk owner now." / "The situation will escalate if controls are not implemented."</li>
+      <li><strong>be going to + base verb</strong> — Predictions based on present evidence / pre-made plans: "Based on these trends, we are going to face a significant shortfall." / "We are going to review the register next week."</li>
+      <li><strong>Present continuous</strong> — Fixed future arrangements already scheduled: "We are running the simulation in March." / "The board is reviewing the heat map on Thursday."</li>
+      <li><strong>will be + -ing (future continuous)</strong> — Ongoing future activity across a period: "The team will be monitoring exposure levels throughout the quarter."</li>
+      <li><strong>will have + past participle (future perfect)</strong> — Action completed before a future point: "By the time the audit starts, we will have completed all mitigation actions."</li>
+      <li><strong>will have been + -ing (future perfect continuous)</strong> — Duration up to a future point: "By Q4, we will have been running the framework for two years."</li>
+    </ul>
+    <div class="ex">✔ "Based on current trends, we are going to face a funding gap." (evidence-based prediction)<br>✔ "I will contact the risk owner immediately." (spontaneous decision)<br>✔ "The team is presenting the risk heat map on Thursday." (fixed arrangement)<br>✔ "By year end, all risks will have been reassessed." (future perfect passive)<br>✔ "The team will be monitoring three triggers throughout the quarter." (future continuous)</div>
+  </div>
+
+  <div class="grammar-box">
+    <h4>2. Passive Voice in Risk Management Documents</h4>
+    <p>Passive constructions are the standard grammar of formal risk documents — registers, reports, and policies. They create an impersonal, authoritative tone and shift focus from who is acting to what is being done or what has been decided.</p>
+    <ul>
+      <li><strong>Present passive (are/is + pp)</strong> — Standing procedures: "All risks are reviewed quarterly." / "Each action is assigned to a named owner."</li>
+      <li><strong>Present perfect passive (has/have been + pp)</strong> — Recent changes still relevant now: "The risk has been reclassified as high." / "The framework has been updated."</li>
+      <li><strong>Past passive (was/were + pp)</strong> — Completed past actions: "The simulation was conducted last quarter." / "The trigger was breached twice."</li>
+      <li><strong>Future passive (will be + pp)</strong> — Planned future actions: "The plan will be updated before year end." / "All controls will be tested."</li>
+      <li><strong>Impersonal "It" passive</strong> — Formal observations and findings: "It was found that…" / "It is noted that…" / "It is recommended that…"</li>
+    </ul>
+    <div class="ex">✔ "All mitigation actions are assigned to a named risk owner with a defined deadline." (present passive)<br>✔ "It was found that the trigger had been breached without escalation." (past passive + impersonal)<br>✔ "The contingency plan will be tested in a simulation exercise next quarter." (future passive)<br>✔ "The risk has been reclassified following the competitor incident." (present perfect passive)<br>✔ "It is recommended that the risk appetite statement be reviewed by the board." (formal recommendation)</div>
+  </div>
+
+  <div class="grammar-box">
+    <h4>3. Reported Speech in Risk Briefings and Committee Minutes</h4>
+    <p>Reported speech (also called indirect speech) is essential for meeting minutes, risk briefings, and board papers — converting what was said directly into formal written summary. The main rule is backshift: tenses typically move one step back in time.</p>
+    <ul>
+      <li><strong>Present → Past:</strong> "The risk is high" → reported that the risk <em>was</em> high</li>
+      <li><strong>Present continuous → Past continuous:</strong> "We are monitoring it" → reported that they <em>were monitoring</em> it</li>
+      <li><strong>Present perfect → Past perfect:</strong> "We have updated the register" → reported that they <em>had updated</em> the register</li>
+      <li><strong>Simple past → Past perfect:</strong> "The simulation took place last month" → reported that it <em>had taken place</em> the previous month</li>
+      <li><strong>will → would:</strong> "We will activate the plan" → confirmed that they <em>would activate</em> the plan</li>
+      <li><strong>can → could:</strong> "Can you identify the triggers?" → asked whether they <em>could identify</em> the triggers</li>
+      <li><strong>must → had to:</strong> "You must review the BCP" → told them that they <em>had to review</em> the BCP</li>
+      <li><strong>Imperative negative → not + to infinitive:</strong> "Don't approve it yet" → warned them <em>not to approve</em> it</li>
+    </ul>
+    <div class="ex">✔ The Risk Director stated that the residual risk <em>was</em> still above tolerance. (present → past)<br>✔ She confirmed they <em>would activate</em> the plan if the trigger <em>were</em> breached. (will/is → would/were)<br>✔ He reported that the simulation <em>had been conducted</em> twice. (present perfect → past perfect)<br>✔ The CFO warned the board <em>not to approve</em> the investment until due diligence <em>was</em> complete.</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<!-- WRITING -->
+<section id="writing">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#fef3c7">✍️</div>
+    <div class="sec-text"><div class="sec-title">Writing Activities</div><div class="sec-sub">2 Professional Writing Tasks · Risk Register Entry & Contingency Plan</div></div>
+  </div></div>
+
+  <div class="writing-card">
+    <h4>✍️ Writing Task 1 — Risk Register Entry</h4>
+    <div><span class="tag tag-navy">Risk Register</span><span class="tag tag-gold">180–240 words</span></div>
+    <p class="writing-task"><strong>Context:</strong> You are the Risk Manager at a mid-sized pharmaceutical distribution company. During a quarterly risk review, your team has identified the following risk: a key third-party logistics partner — which currently handles 60% of your cold-chain distribution — has recently been acquired by a private equity firm. Financial analysts have noted a decline in its credit rating. There is a risk that the partner may face financial difficulties or be restructured in a way that disrupts your distribution capability.<br><br>Write a formal risk register entry for this risk. Your entry must include: <strong>(1)</strong> A clear and precise risk description. <strong>(2)</strong> An assessment of probability and impact (rate each as High / Medium / Low and briefly justify your rating). <strong>(3)</strong> The category of risk (e.g. operational, financial, reputational). <strong>(4)</strong> Three specific mitigation actions. <strong>(5)</strong> An early warning indicator. <strong>(6)</strong> The name of the risk owner (you may invent a name and role). Use formal register and passive constructions where appropriate.</p>
+    <textarea class="writing-area" id="w1ta" placeholder="Write your risk register entry here…" oninput="wcCalc('w1ta','w1wc',240)"></textarea>
+    <div class="wc-display" id="w1wc">Words: 0 / 240</div>
+    <div class="btn-row"><button class="btn btn-gold" onclick="alert('Risk register entry submitted for teacher review.')">📤 Submit</button></div>
+  </div>
+
+  <div class="writing-card">
+    <h4>✍️ Writing Task 2 — Contingency Plan</h4>
+    <div><span class="tag tag-navy">Contingency Plan</span><span class="tag tag-gold">260–320 words</span></div>
+    <p class="writing-task"><strong>Context:</strong> Following the risk identified in Task 1, your company has decided that a formal contingency plan is required for the scenario in which the logistics partner gives less than 30 days' notice of service suspension. You have three alternative distribution options available: <strong>Option A</strong> — activate an existing emergency contract with a secondary logistics provider (capacity: 35% of volume; mobilisation time: 5 days). <strong>Option B</strong> — temporarily use the company's own fleet of refrigerated vehicles (capacity: 20% of volume; higher cost; limited duration). <strong>Option C</strong> — negotiate temporary capacity with a competitor's distribution network (capacity: up to 50% of volume; 10-day mobilisation time; confidentiality risk).<br><br>Write a professional contingency plan for this risk. Your plan must include: <strong>(1)</strong> A clear statement of the risk event it addresses and the trigger that activates the plan. <strong>(2)</strong> An escalation structure — who must be notified and in what order. <strong>(3)</strong> A description of each response option with its key attributes and trade-offs. <strong>(4)</strong> A recommended primary response, with justification. <strong>(5)</strong> A brief note on plan review and testing. Use formal register, future passive constructions, and clear headings or numbered steps.</p>
+    <textarea class="writing-area" id="w2ta" placeholder="Write your contingency plan here…" oninput="wcCalc('w2ta','w2wc',320)"></textarea>
+    <div class="wc-display" id="w2wc">Words: 0 / 320</div>
+    <div class="btn-row"><button class="btn btn-gold" onclick="alert('Contingency plan submitted for teacher review.')">📤 Submit</button></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LISTENING — 3 activities with WORKING dropdown transcripts -->
+<section id="listening">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#e0e7ff">🎧</div>
+    <div class="sec-text"><div class="sec-title">Listening Activities</div><div class="sec-sub">3 Audio Activities · TTS Player · Dropdown Transcripts · 5 MCQs Each</div></div>
+  </div></div>
+  <div class="info-box" style="background:#fffbf0;border-color:rgba(201,168,76,.3)">🔊 Press ▶ to listen using your browser's built-in text-to-speech. Click <strong>▶ Show Transcript</strong> below each player to reveal the full script. Best in Chrome or Edge.</div>
+
+  <!-- ── LISTENING 1 ── -->
+  <div class="listen-block">
+    <div class="listen-header">
+      <div class="listen-icon">🎙️</div>
+      <div class="listen-meta">
+        <h4>Activity 1: Podcast — Introduction to Enterprise Risk Management</h4>
+        <div class="track-sub">Risk Management Consultant · Professional Development Series</div>
+        <div class="listen-tags">
+          <span class="ltag ltag-gold">LEVEL: B1–B2</span>
+          <span class="ltag ltag-outline">MULTIPLE CHOICE</span>
+          <span class="ltag ltag-outline">FOCUS: KEY CONCEPTS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp1" onclick="togglePlay('ls1','pp1','prog1','tm1','dur1','st1')">▶</button>
+        <div class="player-track-info">
+          <div class="track-title-sm">Introduction to Enterprise Risk Management</div>
+          <div class="track-sub-sm">Risk Management Consultant · Podcast</div>
+        </div>
+        <div class="time-display"><span id="tm1">0:00</span> / <span id="dur1">—</span></div>
+      </div>
+      <div class="progress-audio"><div class="progress-audio-fill" id="prog1"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpd('ls1',0.7,this)">0.7×</button>
+        <button class="speed-btn active-spd" onclick="setSpd('ls1',0.85,this)">0.85×</button>
+        <button class="speed-btn" onclick="setSpd('ls1',1.0,this)">1.0×</button>
+        <button class="speed-btn" onclick="setSpd('ls1',1.2,this)">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls1','pp1','prog1','tm1','st1')">↺ Replay</button>
+        <span id="st1" class="play-status">Ready</span>
+      </div>
+      <p class="player-note">Uses your browser's built-in speech engine · Best in Chrome or Edge</p>
+    </div>
+
+    <!-- TRANSCRIPT DROPDOWN 1 -->
+    <div class="transcript-section">
+      <button class="transcript-btn" id="tb1" onclick="toggleTranscript('tp1','tb1')">
+        <span class="t-arrow">▶</span>
+        <span class="t-label">Show / Hide Full Transcript</span>
+        <span class="t-hint">Click to expand</span>
+      </button>
+      <div class="transcript-panel" id="tp1">
+        <div class="transcript-panel-inner">
+          <p id="ls1">Welcome to this week's episode on enterprise risk management. My name is Dr Sarah Okafor and I have been working as a risk management consultant for over twenty years across financial services, manufacturing, and the public sector. Today I want to give you a clear and practical introduction to what enterprise risk management actually means and why it matters for every organisation, regardless of size or sector. Enterprise risk management, or ERM, is the process by which an organisation takes a comprehensive and structured view of all the risks it faces — financial risks, operational risks, strategic risks, reputational risks, and compliance risks — and develops a consistent approach to managing them. The key word here is comprehensive. The mistake that many organisations make is to manage risks in silos: the finance team manages financial risks, the IT team manages technology risks, and so on. But risks do not operate in silos. A technology failure can create an operational disruption, which creates a financial loss, which creates a reputational impact. Unless your risk management approach looks at the connections between risks, you will consistently underestimate your real exposure. The second key principle of ERM is that risk management is a strategic capability, not an administrative one. I often hear senior managers say that they cannot afford to invest in risk management. What they are actually saying is that they cannot afford to invest in understanding the threats to their business model. That strikes me as a very dangerous position. The organisations I have seen manage crises most effectively are always those that invested in risk management before the crisis occurred — not as a regulatory requirement, but because their leadership genuinely understood that managing uncertainty is the core work of management.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the podcast, then answer the 5 questions below.</div>
+      <div id="l1" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. What is the consultant's definition of Enterprise Risk Management?</div><div class="options"><label class="opt"><input type="radio" name="l1q1" value="a"> A. A compliance exercise required by regulators for large companies</label><label class="opt"><input type="radio" name="l1q1" value="b"> B. A process for taking a comprehensive, structured view of all risks and managing them consistently</label><label class="opt"><input type="radio" name="l1q1" value="c"> C. A financial modelling system for calculating the cost of potential risk events</label><label class="opt"><input type="radio" name="l1q1" value="d"> D. A department-level approach to managing specialist risks within each business unit</label></div></div>
+        <div class="q-item"><div class="q-stem">2. What mistake does the consultant say many organisations make?</div><div class="options"><label class="opt"><input type="radio" name="l1q2" value="a"> A. They invest too much in risk management before it is actually needed</label><label class="opt"><input type="radio" name="l1q2" value="b"> B. They focus only on financial and technology risks and ignore reputational ones</label><label class="opt"><input type="radio" name="l1q2" value="c"> C. They manage risks in silos rather than looking at how risks connect and interact</label><label class="opt"><input type="radio" name="l1q2" value="d"> D. They rely on external consultants rather than building internal capability</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What example does she give to illustrate the interconnected nature of risks?</div><div class="options"><label class="opt"><input type="radio" name="l1q3" value="a"> A. A financial loss that triggers a technology failure and then a staffing crisis</label><label class="opt"><input type="radio" name="l1q3" value="b"> B. A technology failure leading to operational disruption, then financial loss, then reputational impact</label><label class="opt"><input type="radio" name="l1q3" value="c"> C. A reputational risk that leads to a compliance failure and then a strategic realignment</label><label class="opt"><input type="radio" name="l1q3" value="d"> D. A strategic risk that causes a financial disruption and eventually a market exit</label></div></div>
+        <div class="q-item"><div class="q-stem">4. How does the consultant characterise senior managers who say they "cannot afford to invest in risk management"?</div><div class="options"><label class="opt"><input type="radio" name="l1q4" value="a"> A. As experienced leaders who are making a rational cost-saving decision</label><label class="opt"><input type="radio" name="l1q4" value="b"> B. As saying they cannot afford to understand the threats to their own business model — a dangerous position</label><label class="opt"><input type="radio" name="l1q4" value="c"> C. As correctly identifying that small organisations do not need formal risk management</label><label class="opt"><input type="radio" name="l1q4" value="d"> D. As prioritising operational efficiency over theoretical risk scenarios</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What does the consultant say distinguishes organisations that manage crises most effectively?</div><div class="options"><label class="opt"><input type="radio" name="l1q5" value="a"> A. They have the largest risk management departments in their industry</label><label class="opt"><input type="radio" name="l1q5" value="b"> B. They responded quickly and decisively once the crisis was already underway</label><label class="opt"><input type="radio" name="l1q5" value="c"> C. They invested in risk management before the crisis, understanding it as a core management responsibility</label><label class="opt"><input type="radio" name="l1q5" value="d"> D. They outsourced their risk management to specialist firms with crisis experience</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l1',{l1q1:'b',l1q2:'c',l1q3:'b',l1q4:'b',l1q5:'c'})">✅ Submit</button><div id="l1-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>C</strong></li><li>3. <strong>B</strong></li><li>4. <strong>B</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+    </div>
+  </div>
+
+  <!-- ── LISTENING 2 ── -->
+  <div class="listen-block" style="margin-top:32px">
+    <div class="listen-header">
+      <div class="listen-icon">🏢</div>
+      <div class="listen-meta">
+        <h4>Activity 2: Board Meeting Extract — Risk Committee Briefing</h4>
+        <div class="track-sub">Chief Risk Officer & Board Chair · Quarterly Risk Review</div>
+        <div class="listen-tags">
+          <span class="ltag ltag-gold">LEVEL: B2</span>
+          <span class="ltag ltag-outline">MULTIPLE CHOICE</span>
+          <span class="ltag ltag-outline">FOCUS: POSITIONS & DECISIONS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp2" onclick="togglePlay('ls2','pp2','prog2','tm2','dur2','st2')">▶</button>
+        <div class="player-track-info">
+          <div class="track-title-sm">Risk Committee Briefing — Q3 Review</div>
+          <div class="track-sub-sm">CRO & Board Chair · Quarterly Risk Review</div>
+        </div>
+        <div class="time-display"><span id="tm2">0:00</span> / <span id="dur2">—</span></div>
+      </div>
+      <div class="progress-audio"><div class="progress-audio-fill" id="prog2"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpd('ls2',0.7,this)">0.7×</button>
+        <button class="speed-btn active-spd" onclick="setSpd('ls2',0.85,this)">0.85×</button>
+        <button class="speed-btn" onclick="setSpd('ls2',1.0,this)">1.0×</button>
+        <button class="speed-btn" onclick="setSpd('ls2',1.2,this)">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls2','pp2','prog2','tm2','st2')">↺ Replay</button>
+        <span id="st2" class="play-status">Ready</span>
+      </div>
+      <p class="player-note">Uses your browser's built-in speech engine · Best in Chrome or Edge</p>
+    </div>
+
+    <!-- TRANSCRIPT DROPDOWN 2 -->
+    <div class="transcript-section">
+      <button class="transcript-btn" id="tb2" onclick="toggleTranscript('tp2','tb2')">
+        <span class="t-arrow">▶</span>
+        <span class="t-label">Show / Hide Full Transcript</span>
+        <span class="t-hint">Click to expand</span>
+      </button>
+      <div class="transcript-panel" id="tp2">
+        <div class="transcript-panel-inner">
+          <p id="ls2"><span class="t-speaker">Chair:</span> Thank you, Helena. Please go ahead with the Q3 risk review. <span class="t-speaker">CRO:</span> Thank you, Chair. I want to draw the board's attention to three developments since our last meeting. First, we have reclassified our cyber security risk from medium to high. Following the ransomware attack on a competitor last month, our own penetration testing revealed two vulnerabilities in our customer data infrastructure that we had not previously identified. The risk owner has been notified and a remediation plan has been agreed with the IT Director, with a target completion date of 30 November. Second, I want to flag our supply chain concentration risk. We currently source 70 percent of our raw materials from a single supplier in Southeast Asia. Our early warning indicators are showing some concern — specifically, a significant increase in lead times over the past six weeks and two unconfirmed reports of production capacity issues at the supplier's main facility. We have not yet reached the trigger threshold for activating our contingency plan, but we are monitoring this daily. <span class="t-speaker">Chair:</span> What is the contingency if the trigger is breached? <span class="t-speaker">CRO:</span> We have three alternative suppliers qualified and ready. Switching would take approximately two weeks and would increase our unit cost by around 12 percent. The board approved that trade-off in principle at our last meeting. The third item is positive news: our business continuity simulation, which was conducted last month, identified three gaps in our response plan — all of which have now been closed. The overall residual risk rating for business continuity has been reduced from high to medium. <span class="t-speaker">Chair:</span> Thank you, Helena. Does the board have any questions?</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the board meeting extract, then answer the 5 questions below.</div>
+      <div id="l2" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. Why has the cyber security risk been reclassified from medium to high?</div><div class="options"><label class="opt"><input type="radio" name="l2q1" value="a"> A. The company suffered a direct ransomware attack last month</label><label class="opt"><input type="radio" name="l2q1" value="b"> B. A competitor was attacked and penetration testing revealed two previously unknown vulnerabilities in the company's infrastructure</label><label class="opt"><input type="radio" name="l2q1" value="c"> C. The board's insurance provider increased the company's cybersecurity premium significantly</label><label class="opt"><input type="radio" name="l2q1" value="d"> D. The IT Director reported that the company's firewall system had not been updated in over a year</label></div></div>
+        <div class="q-item"><div class="q-stem">2. What are the early warning indicators for the supply chain concentration risk?</div><div class="options"><label class="opt"><input type="radio" name="l2q2" value="a"> A. A decline in supplier credit rating and two missed delivery deadlines</label><label class="opt"><input type="radio" name="l2q2" value="b"> B. A significant increase in lead times and unconfirmed reports of production capacity issues at the supplier</label><label class="opt"><input type="radio" name="l2q2" value="c"> C. A formal notice of force majeure from the supplier and a 20% price increase</label><label class="opt"><input type="radio" name="l2q2" value="d"> D. A drop in the supplier's stock price and a management restructuring announcement</label></div></div>
+        <div class="q-item"><div class="q-stem">3. Has the contingency plan for the supply chain risk been activated?</div><div class="options"><label class="opt"><input type="radio" name="l2q3" value="a"> A. Yes — it was activated two weeks ago when lead times began to increase</label><label class="opt"><input type="radio" name="l2q3" value="b"> B. No — the trigger threshold has not yet been reached, though the risk is being monitored daily</label><label class="opt"><input type="radio" name="l2q3" value="c"> C. Yes — the board approved switching to alternative suppliers at the last meeting</label><label class="opt"><input type="radio" name="l2q3" value="d"> D. No — the organisation does not yet have a contingency plan for this risk</label></div></div>
+        <div class="q-item"><div class="q-stem">4. What would be the main consequence of switching to alternative suppliers if the contingency plan were activated?</div><div class="options"><label class="opt"><input type="radio" name="l2q4" value="a"> A. It would take six months and require board approval before implementation</label><label class="opt"><input type="radio" name="l2q4" value="b"> B. It would take approximately two weeks and increase unit costs by around 12 percent</label><label class="opt"><input type="radio" name="l2q4" value="c"> C. It would permanently reduce the company's product quality below current standards</label><label class="opt"><input type="radio" name="l2q4" value="d"> D. It would require renegotiating all existing contracts with major customers</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What was the result of the business continuity simulation?</div><div class="options"><label class="opt"><input type="radio" name="l2q5" value="a"> A. It revealed that the plan was fully effective and no changes were needed</label><label class="opt"><input type="radio" name="l2q5" value="b"> B. It was cancelled due to time constraints and rescheduled for next quarter</label><label class="opt"><input type="radio" name="l2q5" value="c"> C. Three gaps were identified and have since been closed, reducing the residual risk from high to medium</label><label class="opt"><input type="radio" name="l2q5" value="d"> D. It identified gaps that remain unresolved, keeping the residual risk at high</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l2',{l2q1:'b',l2q2:'b',l2q3:'b',l2q4:'b',l2q5:'c'})">✅ Submit</button><div id="l2-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>B</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+    </div>
+  </div>
+
+  <!-- ── LISTENING 3 ── -->
+  <div class="listen-block" style="margin-top:32px">
+    <div class="listen-header">
+      <div class="listen-icon">🎓</div>
+      <div class="listen-meta">
+        <h4>Activity 3: Expert Interview — Building a Risk-Aware Culture</h4>
+        <div class="track-sub">Head of Risk Governance · Executive Education Interview</div>
+        <div class="listen-tags">
+          <span class="ltag ltag-gold">LEVEL: B2</span>
+          <span class="ltag ltag-outline">MULTIPLE CHOICE</span>
+          <span class="ltag ltag-outline">FOCUS: OPINION & ARGUMENT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp3" onclick="togglePlay('ls3','pp3','prog3','tm3','dur3','st3')">▶</button>
+        <div class="player-track-info">
+          <div class="track-title-sm">Building a Risk-Aware Culture</div>
+          <div class="track-sub-sm">Head of Risk Governance · Executive Education</div>
+        </div>
+        <div class="time-display"><span id="tm3">0:00</span> / <span id="dur3">—</span></div>
+      </div>
+      <div class="progress-audio"><div class="progress-audio-fill" id="prog3"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpd('ls3',0.7,this)">0.7×</button>
+        <button class="speed-btn active-spd" onclick="setSpd('ls3',0.85,this)">0.85×</button>
+        <button class="speed-btn" onclick="setSpd('ls3',1.0,this)">1.0×</button>
+        <button class="speed-btn" onclick="setSpd('ls3',1.2,this)">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls3','pp3','prog3','tm3','st3')">↺ Replay</button>
+        <span id="st3" class="play-status">Ready</span>
+      </div>
+      <p class="player-note">Uses your browser's built-in speech engine · Best in Chrome or Edge</p>
+    </div>
+
+    <!-- TRANSCRIPT DROPDOWN 3 -->
+    <div class="transcript-section">
+      <button class="transcript-btn" id="tb3" onclick="toggleTranscript('tp3','tb3')">
+        <span class="t-arrow">▶</span>
+        <span class="t-label">Show / Hide Full Transcript</span>
+        <span class="t-hint">Click to expand</span>
+      </button>
+      <div class="transcript-panel" id="tp3">
+        <div class="transcript-panel-inner">
+          <p id="ls3"><span class="t-speaker">Interviewer:</span> You argue that risk management culture is more important than any risk framework. Can you explain what you mean? <span class="t-speaker">Expert:</span> Absolutely. The best risk register in the world is worth nothing if the people who work in your organisation do not feel safe raising risks. And by safe, I mean psychologically safe — safe from the career consequences of being the person who flags a problem that turns out to be smaller than anticipated, or who slows down a project by identifying a risk that senior management would prefer not to hear about. The single greatest predictor of risk management failure that I have observed — across many organisations — is a culture in which bad news does not travel upward. When frontline employees, project managers, and middle managers routinely filter out uncomfortable information before it reaches the board, the board is effectively flying blind. They believe they have a clear picture of the organisation's risk landscape because the risk register looks manageable. But the register only reflects what people were willing to document. <span class="t-speaker">Interviewer:</span> So how do you build a risk-aware culture? <span class="t-speaker">Expert:</span> Three things, primarily. First, leadership modelling: leaders must visibly reward the escalation of risks, even — especially — when those risks turn out to be smaller than feared. If a manager raises a significant concern and the response is frustration rather than thanks, that sends a powerful message to everyone else. Second, simplicity: risk reporting systems must be simple enough that a busy line manager can actually use them without significant administrative burden. Complexity is the enemy of compliance. Third, accountability without blame: the post-incident review must be genuinely focused on learning rather than attribution. If people believe the purpose of a review is to find someone to blame, they will conceal information rather than share it.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the expert interview, then answer the 5 questions below.</div>
+      <div id="l3" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. What does the expert identify as the single greatest predictor of risk management failure?</div><div class="options"><label class="opt"><input type="radio" name="l3q1" value="a"> A. The absence of a formal risk register or enterprise risk management framework</label><label class="opt"><input type="radio" name="l3q1" value="b"> B. A culture in which bad news does not travel upward through the organisation</label><label class="opt"><input type="radio" name="l3q1" value="c"> C. Excessive reliance on external risk consultants rather than internal expertise</label><label class="opt"><input type="radio" name="l3q1" value="d"> D. Insufficient investment in technology systems for risk monitoring and escalation</label></div></div>
+        <div class="q-item"><div class="q-stem">2. Why does the expert say the board can be "flying blind" even when the risk register looks manageable?</div><div class="options"><label class="opt"><input type="radio" name="l3q2" value="a"> A. Because the risk register is only reviewed annually rather than quarterly</label><label class="opt"><input type="radio" name="l3q2" value="b"> B. Because the register only reflects what people were willing to document — uncomfortable information is filtered out before reaching the board</label><label class="opt"><input type="radio" name="l3q2" value="c"> C. Because external auditors do not have access to the full risk register data</label><label class="opt"><input type="radio" name="l3q2" value="d"> D. Because the board does not have the technical expertise to interpret the risk data accurately</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What does the expert say about leadership modelling in a risk-aware culture?</div><div class="options"><label class="opt"><input type="radio" name="l3q3" value="a"> A. Leaders should demonstrate their technical knowledge of the risk framework to inspire confidence</label><label class="opt"><input type="radio" name="l3q3" value="b"> B. Leaders should visibly reward the escalation of risks, especially when those risks turn out to be smaller than feared</label><label class="opt"><input type="radio" name="l3q3" value="c"> C. Leaders should personally review every risk on the register to demonstrate engagement</label><label class="opt"><input type="radio" name="l3q3" value="d"> D. Leaders should set an example by accepting greater personal risk in their strategic decisions</label></div></div>
+        <div class="q-item"><div class="q-stem">4. What does the expert mean when she says "complexity is the enemy of compliance"?</div><div class="options"><label class="opt"><input type="radio" name="l3q4" value="a"> A. Complex risks are more difficult to mitigate and tend to be excluded from risk registers</label><label class="opt"><input type="radio" name="l3q4" value="b"> B. If risk reporting systems are too complex, busy managers will not use them — simplicity is essential for genuine adoption</label><label class="opt"><input type="radio" name="l3q4" value="c"> C. Complex governance frameworks create confusion that leads to regulatory non-compliance</label><label class="opt"><input type="radio" name="l3q4" value="d"> D. Compliance teams make risk frameworks unnecessarily complex to justify their budgets</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What does the expert say happens when people believe that post-incident reviews are designed to find someone to blame?</div><div class="options"><label class="opt"><input type="radio" name="l3q5" value="a"> A. Employees become more diligent about documenting their actions in advance</label><label class="opt"><input type="radio" name="l3q5" value="b"> B. The quality of risk registers improves because people want to demonstrate due diligence</label><label class="opt"><input type="radio" name="l3q5" value="c"> C. People will conceal information rather than share it, undermining the review's learning value</label><label class="opt"><input type="radio" name="l3q5" value="d"> D. Senior management begins to conduct reviews without involving frontline staff</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l3',{l3q1:'b',l3q2:'b',l3q3:'b',l3q4:'b',l3q5:'c'})">✅ Submit</button><div id="l3-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>B</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<!-- CASE STUDIES -->
+<section id="casestudy">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#fce7f3">🏢</div>
+    <div class="sec-text"><div class="sec-title">Case Studies</div><div class="sec-sub">2 Business Cases · Risk Management in Practice · Auto-graded</div></div>
+  </div></div>
+
+  <div style="margin-bottom:32px">
+    <div class="case-hd">
+      <div class="case-company">Case Study 1 · Retail / Supply Chain · United Kingdom</div>
+      <h3>MeridianRetail: How a Missing Contingency Plan Cost £4.2 Million</h3>
+    </div>
+    <div class="case-body">
+      <p>MeridianRetail is a UK-based home furnishings retailer with 48 stores and a rapidly growing e-commerce operation. In 2021, the company was highly dependent on a single third-party logistics provider — FastTrack Distribution — which handled 78% of its last-mile delivery volume. The commercial relationship with FastTrack had developed organically over eight years and had never been subject to a formal risk assessment. FastTrack was listed in the company's risk register simply as "key supplier — to be monitored," without a probability rating, a defined impact assessment, a named risk owner, or any associated contingency plan. In June 2021, FastTrack informed MeridianRetail at six weeks' notice that it was entering administration following the collapse of its parent company. The logistics provider was unable to guarantee continuity of service beyond the notice period.</p>
+      <p>MeridianRetail's response was improvised entirely in real time. Over the following three weeks, the operations team contacted fourteen alternative logistics providers, of which only two had sufficient capacity for the volumes required — and neither had experience with the company's specific home furnishings delivery requirements, which included two-person room-of-choice delivery for large items. Customer-facing delivery times increased from 3–5 days to 14–21 days during the transition period. Approximately 18,000 orders were significantly delayed, generating over 6,000 customer complaints, 1,200 refund requests, and extensive negative coverage across social media and consumer review platforms. The company's Trustpilot rating fell from 4.2 to 2.8 over a six-week period. The total financial impact — including expedited logistics costs, refunds, customer retention programmes, and reputational management — was estimated at £4.2 million.</p>
+      <p>A post-incident review commissioned by the board identified four specific failures: the risk had been listed on the register without a meaningful risk assessment; no contingency plan had been developed; no early warning indicators had been set up to monitor FastTrack's financial health; and no alternative suppliers had been qualified in advance. Following the review, the board mandated a full risk assessment for all suppliers representing more than 15% of the company's operational capacity, with a requirement for a documented contingency plan, a named risk owner, and quarterly review for each. MeridianRetail also qualified three alternative logistics providers on a permanent preferred-supplier basis, with tested capacity plans and a service-level agreement that could be activated within 72 hours of a disruption trigger.</p>
+    </div>
+  </div>
+  <div id="cs1" class="quiz-card">
+    <div class="quiz-title">Case Study 1 — 5 Questions</div>
+    <div class="q-item"><div class="q-stem">1. What was the fundamental weakness in MeridianRetail's risk register entry for FastTrack Distribution?</div><div class="options"><label class="opt"><input type="radio" name="cs1q1" value="a"> A. The entry was too detailed and made it difficult to identify the key risk</label><label class="opt"><input type="radio" name="cs1q1" value="b"> B. It listed FastTrack as a key supplier without any probability rating, impact assessment, risk owner, or contingency plan</label><label class="opt"><input type="radio" name="cs1q1" value="c"> C. The entry was reviewed too frequently, creating unnecessary administrative burden</label><label class="opt"><input type="radio" name="cs1q1" value="d"> D. It rated the supplier as low risk based on their eight-year trading relationship</label></div></div>
+    <div class="q-item"><div class="q-stem">2. Why were the two available alternative logistics providers insufficient?</div><div class="options"><label class="opt"><input type="radio" name="cs1q2" value="a"> A. Their pricing was significantly higher than FastTrack's contracted rates</label><label class="opt"><input type="radio" name="cs1q2" value="b"> B. Neither had been pre-qualified or signed contracts with MeridianRetail</label><label class="opt"><input type="radio" name="cs1q2" value="c"> C. Neither had experience with the company's specific delivery requirements for large items</label><label class="opt"><input type="radio" name="cs1q2" value="d"> D. Both were located outside the company's primary operating region</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What was the impact on MeridianRetail's Trustpilot rating during the transition period?</div><div class="options"><label class="opt"><input type="radio" name="cs1q3" value="a"> A. It fell from 4.8 to 3.2</label><label class="opt"><input type="radio" name="cs1q3" value="b"> B. It remained stable as the company communicated proactively with customers</label><label class="opt"><input type="radio" name="cs1q3" value="c"> C. It fell from 4.2 to 2.8 over a six-week period</label><label class="opt"><input type="radio" name="cs1q3" value="d"> D. It recovered quickly following a customer compensation programme</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What four failures did the post-incident review identify?</div><div class="options"><label class="opt"><input type="radio" name="cs1q4" value="a"> A. No formal contract, no insurance, no board oversight, and no customer communication plan</label><label class="opt"><input type="radio" name="cs1q4" value="b"> B. No meaningful risk assessment, no contingency plan, no early warning indicators, and no pre-qualified alternative suppliers</label><label class="opt"><input type="radio" name="cs1q4" value="c"> C. No budget for crisis management, no staff training, no regulatory notification, and no IT system backup</label><label class="opt"><input type="radio" name="cs1q4" value="d"> D. No due diligence on FastTrack's parent company, no legal review of the contract, no SLA, and no financial guarantees</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What does the MeridianRetail case most powerfully illustrate about risk management?</div><div class="options"><label class="opt"><input type="radio" name="cs1q5" value="a"> A. That supplier relationships should always be managed by external procurement specialists</label><label class="opt"><input type="radio" name="cs1q5" value="b"> B. That simply listing a risk on a register without a complete assessment and plan is insufficient — and potentially very costly</label><label class="opt"><input type="radio" name="cs1q5" value="c"> C. That retail companies are inherently more vulnerable to supply chain risks than other industries</label><label class="opt"><input type="radio" name="cs1q5" value="d"> D. That third-party logistics providers should never represent more than 50% of operational volume</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('cs1',{cs1q1:'b',cs1q2:'c',cs1q3:'c',cs1q4:'b',cs1q5:'b'})">✅ Submit</button><div id="cs1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Case Study 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>C</strong></li><li>3. <strong>C</strong></li><li>4. <strong>B</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+
+  <div style="margin-top:40px;margin-bottom:32px">
+    <div class="case-hd">
+      <div class="case-company">Case Study 2 · Financial Services · Colombia</div>
+      <h3>Banco Cordillera: Embedding Risk Culture in a Growing Institution</h3>
+    </div>
+    <div class="case-body">
+      <p>Banco Cordillera is a Colombian regional bank headquartered in Medellín, with assets of approximately COP 8.4 trillion and a network of 62 branches serving SME and retail customers across the Andean region. In 2020, the bank's regulator — the Superintendencia Financiera de Colombia — conducted an inspection that identified significant weaknesses in the bank's risk management culture. Specifically, the inspection found that while the bank had a formally compliant risk framework, including a risk register, a risk appetite statement, and a documented methodology, frontline staff and middle managers were not engaging with the framework in practice. Branch managers reported feeling that risk escalation was discouraged by their regional directors, who were primarily incentivised on loan growth and customer acquisition rather than risk-adjusted performance. The regulator required the bank to submit a remediation plan within 90 days.</p>
+      <p>The bank's response was led by its newly appointed Chief Risk Officer, Dr María Fernanda Ríos, who had previously served as Head of Risk Supervision at the regulator itself. Her diagnosis was precise: the bank's risk management failure was not a process failure but a cultural one, driven by a misalignment between the incentive structure for commercial managers and the organisation's stated risk appetite. She proposed three structural changes. First, risk-adjusted performance metrics were introduced for all lending staff, so that their bonuses reflected not only the volume of loans originated but also the credit quality and risk profile of those loans over a 24-month period. Second, a simplified risk escalation tool was introduced — a single-page digital form accessible on all devices — replacing the previous system which required branch managers to complete a 14-page document. Third, quarterly "risk conversations" were mandated at every level of the organisation, from branch team to board risk committee, with a standard agenda that included explicit discussion of emerging risks from the previous quarter.</p>
+      <p>Within eighteen months of the remediation programme's implementation, measurable improvements were documented across all three dimensions. The number of risks formally escalated from branch level increased by 340%. The average time between a risk being identified at branch level and appearing on the regional risk register fell from 47 days to 6 days. Non-performing loan ratios stabilised and then declined, and the bank passed its subsequent regulatory inspection with no material findings. Dr Ríos attributed the results not to the technical changes she had made but to a single shift in the organisation's understanding: risk management was no longer something done to the frontline by the compliance department — it was something the frontline did themselves, for the benefit of the bank they worked for.</p>
+    </div>
+  </div>
+  <div id="cs2" class="quiz-card">
+    <div class="quiz-title">Case Study 2 — 5 Questions</div>
+    <div class="q-item"><div class="q-stem">1. What did the regulator's inspection find was the main problem with Banco Cordillera's risk management?</div><div class="options"><label class="opt"><input type="radio" name="cs2q1" value="a"> A. The bank had no formal risk framework, register, or documented methodology</label><label class="opt"><input type="radio" name="cs2q1" value="b"> B. The bank had a formally compliant framework but frontline and middle managers were not engaging with it in practice</label><label class="opt"><input type="radio" name="cs2q1" value="c"> C. The bank's risk appetite was set too conservatively, limiting its ability to grow</label><label class="opt"><input type="radio" name="cs2q1" value="d"> D. The bank's risk register had not been updated in over three years</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What was the root cause of the cultural failure, according to Dr Ríos?</div><div class="options"><label class="opt"><input type="radio" name="cs2q2" value="a"> A. A lack of qualified risk professionals at branch and regional level</label><label class="opt"><input type="radio" name="cs2q2" value="b"> B. An incentive structure that rewarded loan volume and acquisition without reflecting risk-adjusted performance</label><label class="opt"><input type="radio" name="cs2q2" value="c"> C. A regulator that had set overly complex and burdensome risk reporting requirements</label><label class="opt"><input type="radio" name="cs2q2" value="d"> D. An outdated technology system that prevented timely risk reporting from branches</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What replaced the previous 14-page risk escalation document?</div><div class="options"><label class="opt"><input type="radio" name="cs2q3" value="a"> A. A verbal escalation process at the weekly branch manager meeting</label><label class="opt"><input type="radio" name="cs2q3" value="b"> B. A simplified single-page digital form accessible on all devices</label><label class="opt"><input type="radio" name="cs2q3" value="c"> C. A mandatory call with the regional risk director every fortnight</label><label class="opt"><input type="radio" name="cs2q3" value="d"> D. An automated AI-driven risk monitoring tool embedded in the loan origination system</label></div></div>
+    <div class="q-item"><div class="q-stem">4. By how much did the average time between a branch-level risk identification and its appearance on the regional register improve?</div><div class="options"><label class="opt"><input type="radio" name="cs2q4" value="a"> A. From 90 days to 30 days</label><label class="opt"><input type="radio" name="cs2q4" value="b"> B. From 21 days to 5 days</label><label class="opt"><input type="radio" name="cs2q4" value="c"> C. From 47 days to 6 days</label><label class="opt"><input type="radio" name="cs2q4" value="d"> D. From 14 days to 2 days</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What broader lesson does the Banco Cordillera case illustrate about risk management culture?</div><div class="options"><label class="opt"><input type="radio" name="cs2q5" value="a"> A. Regulatory compliance is the primary driver of effective risk management in financial institutions</label><label class="opt"><input type="radio" name="cs2q5" value="b"> B. Risk management frameworks are most effective when developed by external specialists</label><label class="opt"><input type="radio" name="cs2q5" value="c"> C. A formally compliant framework is insufficient — culture, incentives, and genuine frontline ownership are what determine real-world effectiveness</label><label class="opt"><input type="radio" name="cs2q5" value="d"> D. Banks should reduce the number of metrics they track in order to focus attention on the most critical risks</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('cs2',{cs2q1:'b',cs2q2:'b',cs2q3:'b',cs2q4:'c',cs2q5:'c'})">✅ Submit</button><div id="cs2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Case Study 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>C</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<!-- FINAL ASSESSMENT -->
+<section id="final">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#fee2e2">🏆</div>
+    <div class="sec-text"><div class="sec-title">Final Assessment</div><div class="sec-sub">20 MCQs · Full Module 7 · 70% Pass Mark · 2 Attempts Allowed</div></div>
+  </div></div>
+  <div class="info-box" style="background:#fffbf0;border-color:rgba(201,168,76,.35)">⚠️ <strong>Assessment Rules:</strong> This assessment covers all sections of Module 7. A score of <strong>14/20 (70%)</strong> is required to pass. You have <strong>2 attempts</strong>. After your first attempt, review any missed questions before retrying.</div>
+
+  <div class="final-wrap" id="fwrap">
+    <div class="quiz-title">Module 7 Final Assessment — 20 Questions</div>
+    <div class="attempts-badge" id="att-badge">Attempt 1 of 2</div>
+
+    <div class="q-item"><div class="q-stem">1. The level of risk that remains after all mitigation controls have been applied is called ________.</div><div class="options"><label class="opt"><input type="radio" name="fq1" value="a"> A. inherent risk</label><label class="opt"><input type="radio" name="fq1" value="b"> B. risk appetite</label><label class="opt"><input type="radio" name="fq1" value="c"> C. residual risk</label><label class="opt"><input type="radio" name="fq1" value="d"> D. systemic risk</label></div></div>
+
+    <div class="q-item"><div class="q-stem">2. "Look at those supplier delays — at this rate, we ________ a serious shortfall by end of quarter." — Correct future form (prediction from evidence):</div><div class="options"><label class="opt"><input type="radio" name="fq2" value="a"> A. will have</label><label class="opt"><input type="radio" name="fq2" value="b"> B. are going to have</label><label class="opt"><input type="radio" name="fq2" value="c"> C. had</label><label class="opt"><input type="radio" name="fq2" value="d"> D. would have</label></div></div>
+
+    <div class="q-item"><div class="q-stem">3. In the MeridianRetail case study, what was the primary reason the company's response to the FastTrack administration was so disruptive?</div><div class="options"><label class="opt"><input type="radio" name="fq3" value="a"> A. FastTrack gave only six weeks' notice, which is too short for any contingency plan to be activated</label><label class="opt"><input type="radio" name="fq3" value="b"> B. No contingency plan existed, no alternative suppliers were pre-qualified, and no early warning indicators had been set up</label><label class="opt"><input type="radio" name="fq3" value="c"> C. The company's board had decided not to invest in logistics risk management as a cost-saving measure</label><label class="opt"><input type="radio" name="fq3" value="d"> D. MeridianRetail's insurance did not cover supplier insolvency events</label></div></div>
+
+    <div class="q-item"><div class="q-stem">4. "All risks on the register ________ quarterly by the Risk Committee." — Correct passive form:</div><div class="options"><label class="opt"><input type="radio" name="fq4" value="a"> A. review</label><label class="opt"><input type="radio" name="fq4" value="b"> B. are reviewed</label><label class="opt"><input type="radio" name="fq4" value="c"> C. reviewing</label><label class="opt"><input type="radio" name="fq4" value="d"> D. were reviewing</label></div></div>
+
+    <div class="q-item"><div class="q-stem">5. A defined threshold or event that signals a risk is materialising and prompts activation of a response plan is called a ________.</div><div class="options"><label class="opt"><input type="radio" name="fq5" value="a"> A. risk owner</label><label class="opt"><input type="radio" name="fq5" value="b"> B. risk trigger</label><label class="opt"><input type="radio" name="fq5" value="c"> C. early warning indicator</label><label class="opt"><input type="radio" name="fq5" value9="d"> D. inherent risk</label></div></div>
+
+    <div class="q-item"><div class="q-stem">6. Direct speech: "The simulation has already been conducted." → Reported: The CRO told the board that the simulation ________ already been conducted.</div><div class="options"><label class="opt"><input type="radio" name="fq6" value="a"> A. has</label><label class="opt"><input type="radio" name="fq6" value="b"> B. had</label><label class="opt"><input type="radio" name="fq6" value="c"> C. have</label><label class="opt"><input type="radio" name="fq6" value="d"> D. would have</label></div></div>
+
+    <div class="q-item"><div class="q-stem">7. According to Reading Text 1, what does a risk register entry need to include to be effective — beyond simply listing the risk?</div><div class="options"><label class="opt"><input type="radio" name="fq7" value="a"> A. The financial cost of the risk and a proposed insurance solution</label><label class="opt"><input type="radio" name="fq7" value="b"> B. Probability, impact, risk owner, mitigation actions, and early warning indicators</label><label class="opt"><input type="radio" name="fq7" value="c"> C. A legal risk opinion and the date of the last board review</label><label class="opt"><input type="radio" name="fq7" value="d"> D. Historical data on how often the risk has materialised in the past</label></div></div>
+
+    <div class="q-item"><div class="q-stem">8. A risk that affects an entire industry, market, or economy rather than a single organisation is called ________.</div><div class="options"><label class="opt"><input type="radio" name="fq8" value="a"> A. residual risk</label><label class="opt"><input type="radio" name="fq8" value="b"> B. force majeure</label><label class="opt"><input type="radio" name="fq8" value="c"> C. systemic risk</label><label class="opt"><input type="radio" name="fq8" value="d"> D. inherent risk</label></div></div>
+
+    <div class="q-item"><div class="q-stem">9. "By the time the audit begins, the risk team ________ all Q3 mitigation actions." — Correct future perfect form:</div><div class="options"><label class="opt"><input type="radio" name="fq9" value="a"> A. completes</label><label class="opt"><input type="radio" name="fq9" value="b"> B. will complete</label><label class="opt"><input type="radio" name="fq9" value="c"> C. will have completed</label><label class="opt"><input type="radio" name="fq9" value="d"> D. would complete</label></div></div>
+
+    <div class="q-item"><div class="q-stem">10. In the Banco Cordillera case study, what did Dr Ríos identify as the root cause of the bank's risk management failure?</div><div class="options"><label class="opt"><input type="radio" name="fq10" value="a"> A. An outdated risk framework that did not comply with the regulator's requirements</label><label class="opt"><input type="radio" name="fq10" value="b"> B. Misaligned incentives that rewarded loan volume without reflecting risk-adjusted performance</label><label class="opt"><input type="radio" name="fq10" value="c"> C. A shortage of qualified risk professionals at branch and regional level</label><label class="opt"><input type="radio" name="fq10" value="d"> D. Excessive bureaucracy in the risk escalation process imposed by the regulator</label></div></div>
+
+    <div class="q-item"><div class="q-stem">11. "It ________ that the risk trigger was breached on three occasions without escalation." — Correct impersonal passive:</div><div class="options"><label class="opt"><input type="radio" name="fq11" value="a"> A. finds</label><label class="opt"><input type="radio" name="fq11" value="b"> B. found</label><label class="opt"><input type="radio" name="fq11" value="c"> C. was found</label><label class="opt"><input type="radio" name="fq11" value="d"> D. is finding</label></div></div>
+
+    <div class="q-item"><div class="q-stem">12. A strategy in which the financial consequences of a risk are shifted to a third party — for example through insurance — is called ________.</div><div class="options"><label class="opt"><input type="radio" name="fq12" value="a"> A. risk mitigation</label><label class="opt"><input type="radio" name="fq12" value="b"> B. risk tolerance</label><label class="opt"><input type="radio" name="fq12" value="c"> C. risk transfer</label><label class="opt"><input type="radio" name="fq12" value="d"> D. risk appetite</label></div></div>
+
+    <div class="q-item"><div class="q-stem">13. According to the podcast (Listening 1), what does the consultant say about senior managers who claim they "cannot afford risk management"?</div><div class="options"><label class="opt"><input type="radio" name="fq13" value="a"> A. They are making a rational decision appropriate for smaller organisations</label><label class="opt"><input type="radio" name="fq13" value="b"> B. They are saying they cannot afford to understand the threats to their own business — a very dangerous position</label><label class="opt"><input type="radio" name="fq13" value="c"> C. They are correct that risk management is only essential for regulated industries</label><label class="opt"><input type="radio" name="fq13" value="d"> D. They should instead outsource risk management to reduce internal costs</label></div></div>
+
+    <div class="q-item"><div class="q-stem">14. Direct speech: "You must review the BCP before the audit." → Reported: The auditor told management that they ________ the BCP before the audit.</div><div class="options"><label class="opt"><input type="radio" name="fq14" value="a"> A. must review</label><label class="opt"><input type="radio" name="fq14" value="b"> B. should review</label><label class="opt"><input type="radio" name="fq14" value="c"> C. had to review</label><label class="opt"><input type="radio" name="fq14" value="d"> D. would review</label></div></div>
+
+    <div class="q-item"><div class="q-stem">15. According to Reading Text 2, what are the two failure modes that a trigger-based contingency plan avoids?</div><div class="options"><label class="opt"><input type="radio" name="fq15" value="a"> A. Overspending and under-resourcing the crisis response</label><label class="opt"><input type="radio" name="fq15" value="b"> B. Under-reaction (delaying activation) and over-reaction (activating a full response to a minor issue)</label><label class="opt"><input type="radio" name="fq15" value="c"> C. Regulatory non-compliance and reputational damage</label><label class="opt"><input type="radio" name="fq15" value="d"> D. Failing to notify stakeholders and failing to document the response</label></div></div>
+
+    <div class="q-item"><div class="q-stem">16. A visual matrix that plots risks by probability and impact to enable rapid prioritisation is called a ________.</div><div class="options"><label class="opt"><input type="radio" name="fq16" value="a"> A. risk register</label><label class="opt"><input type="radio" name="fq16" value="b"> B. business continuity plan</label><label class="opt"><input type="radio" name="fq16" value="c"> C. risk heat map</label><label class="opt"><input type="radio" name="fq16" value="d"> D. contingency plan</label></div></div>
+
+    <div class="q-item"><div class="q-stem">17. According to the expert interview (Listening 3), what happens when people believe post-incident reviews are designed to assign blame?</div><div class="options"><label class="opt"><input type="radio" name="fq17" value="a"> A. They document their actions more carefully in advance to protect themselves</label><label class="opt"><input type="radio" name="fq17" value="b"> B. They conceal information rather than share it, undermining the learning value of the review</label><label class="opt"><input type="radio" name="fq17" value="c"> C. They escalate more risks to avoid being criticised for inaction</label><label class="opt"><input type="radio" name="fq17" value="d"> D. They begin to involve external auditors in all escalation decisions</label></div></div>
+
+    <div class="q-item"><div class="q-stem">18. "The contingency plan ________ before the end of the financial year to incorporate updated contacts." — Correct future passive:</div><div class="options"><label class="opt"><input type="radio" name="fq18" value="a"> A. updates</label><label class="opt"><input type="radio" name="fq18" value="b"> B. is updating</label><label class="opt"><input type="radio" name="fq18" value="c"> C. will be updated</label><label class="opt"><input type="radio" name="fq18" value="d"> D. had updated</label></div></div>
+
+    <div class="q-item"><div class="q-stem">19. An unforeseeable external event — such as a pandemic or natural disaster — that releases contractual parties from their obligations is called ________.</div><div class="options"><label class="opt"><input type="radio" name="fq19" value="a"> A. systemic risk</label><label class="opt"><input type="radio" name="fq19" value="b"> B. residual risk</label><label class="opt"><input type="radio" name="fq19" value="c"> C. force majeure</label><label class="opt"><input type="radio" name="fq19" value="d"> D. risk transfer</label></div></div>
+
+    <div class="q-item"><div class="q-stem">20. Which statement best captures the central lesson of Module 7: Risk Management and Planning?</div><div class="options"><label class="opt"><input type="radio" name="fq20" value="a"> A. Risk management is a compliance exercise that should be delegated to specialist departments</label><label class="opt"><input type="radio" name="fq20" value="b"> B. The most important risk management tool is comprehensive insurance coverage</label><label class="opt"><input type="radio" name="fq20" value="c"> C. Effective risk management requires structured assessment, precise contingency planning, cultural ownership, and continuous review — not just documentation</label><label class="opt"><input type="radio" name="fq20" value="d"> D. Organisations can eliminate risk by adopting a sufficiently detailed enterprise risk management framework</label></div></div>
+
+    <div class="btn-row" style="margin-top:28px">
+      <button class="btn btn-gold" id="submit-btn" style="font-size:15px;padding:12px 28px" onclick="gradeFinal()">🏆 Submit Final Assessment</button>
+    </div>
+    <div class="final-result" id="fresult">
+      <div id="femoji" style="font-size:50px;margin-bottom:10px"></div>
+      <h2 id="fscore"></h2>
+      <div class="final-prog-wrap"><div class="final-prog-fill" id="fprog" style="width:0%"></div></div>
+      <p id="fmsg" style="margin-top:12px"></p>
+      <div id="retry-row" style="display:none;margin-top:16px"></div>
+    </div>
+  </div>
+  <div class="ak-wrap" style="margin-top:14px">
+    <button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Final Assessment</span><span class="ak-icon">▶</span></button>
+    <div class="ak-content"><ol>
+      <li>1. <strong>C</strong> — residual risk</li><li>2. <strong>B</strong> — are going to have (evidence-based future prediction)</li><li>3. <strong>B</strong> — no contingency plan, no pre-qualified suppliers, no early warning indicators</li><li>4. <strong>B</strong> — are reviewed (present passive)</li><li>5. <strong>B</strong> — risk trigger</li><li>6. <strong>B</strong> — had (present perfect → past perfect in reported speech)</li><li>7. <strong>B</strong> — probability, impact, owner, mitigation actions, early warning indicators</li><li>8. <strong>C</strong> — systemic risk</li><li>9. <strong>C</strong> — will have completed (future perfect)</li><li>10. <strong>B</strong> — misaligned incentives rewarding volume without risk adjustment</li><li>11. <strong>C</strong> — was found (past impersonal passive)</li><li>12. <strong>C</strong> — risk transfer</li><li>13. <strong>B</strong> — they cannot afford to understand threats to their business model — dangerous</li><li>14. <strong>C</strong> — had to review (must → had to in reported speech)</li><li>15. <strong>B</strong> — under-reaction and over-reaction</li><li>16. <strong>C</strong> — risk heat map</li><li>17. <strong>B</strong> — people conceal information rather than share it</li><li>18. <strong>C</strong> — will be updated (future passive)</li><li>19. <strong>C</strong> — force majeure</li><li>20. <strong>C</strong> — structured assessment, precise planning, cultural ownership, continuous review</li>
+    </ol></div>
+  </div>
+</section>
+
+</div><!-- /content -->
+
+<div style="background:var(--navy);color:rgba(255,255,255,.25);text-align:center;padding:20px;font-size:11px;font-family:'DM Mono',monospace;margin-top:44px">
+  Business Management English · Module 7: Risk Management and Planning · B1–B2 Level
+</div>
+</main>
+
+<script>
+/* ── GRADE MCQ ── */
+function gradeQ(id,ans){
+  let sc=0,tot=Object.keys(ans).length;
+  Object.entries(ans).forEach(([nm,cr])=>{
+    const sel=document.querySelector(`input[name="${nm}"]:checked`);
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(o=>{const l=o.closest('.opt');if(l)l.classList.remove('correct','wrong');});
+    if(sel){const sl=sel.closest('.opt');if(sel.value===cr){sc++;if(sl)sl.classList.add('correct');}else{if(sl)sl.classList.add('wrong');}}
+    const ci=document.querySelector(`input[name="${nm}"][value="${cr}"]`);
+    if(ci){const cl=ci.closest('.opt');if(cl&&!cl.classList.contains('wrong'))cl.classList.add('correct');}
+  });
+  const pct=Math.round(sc/tot*100),el=document.getElementById(id+'-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/${tot} (${pct}%)</span>`;}
+  updateProgress();
+}
+
+/* ── GAP FILL ── */
+const gapAns={gi1:'inherent risk',gi2:'risk framework',gi3:'risk mitigation',gi4:'risk trigger',gi5:'risk register',gi6:'business continuity plan',gi7:'crisis management',gi8:'contingency plan'};
+function gradeGap(){
+  let sc=0;
+  Object.entries(gapAns).forEach(([id,ans])=>{
+    const inp=document.getElementById(id);if(!inp)return;
+    inp.classList.remove('correct','wrong');
+    if(inp.value.toLowerCase().trim()===ans.toLowerCase()){sc++;inp.classList.add('correct');}else inp.classList.add('wrong');
+  });
+  const pct=Math.round(sc/8*100),el=document.getElementById('v2-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+
+/* ── TRUE / FALSE ── */
+const tfSel={};
+const tfAns={'1':'F','2':'T','3':'F','4':'T','5':'F','6':'T','7':'F','8':'T'};
+function pickTF(btn,num,val){
+  btn.closest('.tf-row').querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('sel-t','sel-f'));
+  btn.classList.add(val==='T'?'sel-t':'sel-f');
+  tfSel[num]=val;
+}
+function gradeTF(){
+  let sc=0;
+  for(let i=1;i<=8;i++){
+    const s=tfSel[String(i)],c=tfAns[String(i)];
+    const row=document.querySelector(`#tfr${i} .tf-row`);if(!row)continue;
+    const btns=row.querySelectorAll('.tf-btn');
+    btns.forEach(b=>b.classList.remove('ok-tf','nok-tf','sel-t','sel-f'));
+    if(s){
+      if(s===c)sc++;
+      btns.forEach(b=>{const v=b.textContent.trim()==='True'?'T':'F';if(v===c)b.classList.add('ok-tf');else if(v===s&&s!==c)b.classList.add('nok-tf');});
+    }else{btns.forEach(b=>{if((b.textContent.trim()==='True'?'T':'F')===c)b.classList.add('ok-tf');});}
+  }
+  const pct=Math.round(sc/8*100),el=document.getElementById('v3-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+
+/* ── DRAG & DROP ── */
+let curDrag=null;
+function pickDrag(el){
+  if(el.classList.contains('used'))return;
+  document.querySelectorAll('.drag-chip').forEach(d=>d.classList.remove('selected-chip'));
+  if(curDrag===el){curDrag=null;}else{curDrag=el;el.classList.add('selected-chip');}
+}
+function doDrop(zone){
+  if(!curDrag)return;
+  if(zone.dataset.cur)document.querySelectorAll('.drag-chip').forEach(d=>{if(d.dataset.w===zone.dataset.cur)d.classList.remove('used');});
+  zone.textContent=curDrag.dataset.w;zone.classList.add('filled');zone.dataset.cur=curDrag.dataset.w;
+  curDrag.classList.add('used');curDrag.classList.remove('selected-chip');curDrag=null;
+}
+function gradeDrop(){
+  let sc=0;
+  document.querySelectorAll('.drop-zone').forEach(z=>{
+    z.classList.remove('filled','wrong-drop');
+    if(z.dataset.cur===z.dataset.ans){sc++;z.classList.add('filled');}
+    else if(z.dataset.cur)z.classList.add('wrong-drop');
+  });
+  const pct=Math.round(sc/8*100),el=document.getElementById('v4-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+function resetDrop(){
+  document.querySelectorAll('.drop-zone').forEach(z=>{z.textContent='Place here';z.classList.remove('filled','wrong-drop');delete z.dataset.cur;});
+  document.querySelectorAll('.drag-chip').forEach(d=>d.classList.remove('used','selected-chip'));
+  curDrag=null;const el=document.getElementById('v4-score');if(el)el.innerHTML='';
+}
+
+/* ── ANSWER KEY ── */
+function togAK(btn){btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('visible');}
+
+/* ── WORD COUNT ── */
+function wcCalc(tid,cid,max){
+  const t=document.getElementById(tid).value.trim();
+  const n=t===''?0:t.split(/\s+/).length;
+  const el=document.getElementById(cid);if(el)el.textContent=`Words: ${n} / ${max}`;
+}
+
+/* ══════════════════════════════════════════════
+   TRANSCRIPT DROPDOWN — clean, reliable toggle
+   ══════════════════════════════════════════════ */
+function toggleTranscript(panelId, btnId){
+  const panel = document.getElementById(panelId);
+  const btn   = document.getElementById(btnId);
+  if(!panel || !btn) return;
+  const isOpen = panel.classList.contains('t-visible');
+  if(isOpen){
+    panel.classList.remove('t-visible');
+    btn.classList.remove('t-open');
+    btn.querySelector('.t-hint').textContent = 'Click to expand';
+  } else {
+    panel.classList.add('t-visible');
+    btn.classList.add('t-open');
+    btn.querySelector('.t-hint').textContent = 'Click to collapse';
+  }
+}
+
+/* ══════════════════════════════════════════════
+   TTS AUDIO PLAYER
+   ══════════════════════════════════════════════ */
+const tState = {};
+
+function togglePlay(scriptId, ppId, progId, tmId, durId, stId){
+  const s = tState[scriptId];
+  if(s && s.utt && speechSynthesis.speaking){
+    if(s.paused){ speechSynthesis.resume(); s.paused=false; document.getElementById(ppId).textContent='⏸'; }
+    else{ speechSynthesis.pause(); s.paused=true; document.getElementById(ppId).textContent='▶'; }
+    return;
+  }
+  // stop any other track
+  Object.keys(tState).forEach(k=>{
+    if(k!==scriptId && tState[k] && tState[k].utt) speechSynthesis.cancel();
+  });
+  const scriptEl = document.getElementById(scriptId);
+  if(!scriptEl){ alert('Transcript text not found.'); return; }
+  const text = scriptEl.textContent.trim();
+  if(!text){ alert('No transcript text available.'); return; }
+
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.rate  = tState[scriptId]?.speed || 0.85;
+  utt.lang  = 'en-GB';
+  utt.pitch = 1.02;
+
+  const wordCount = text.split(/\s+/).length;
+  const estSec = wordCount / (utt.rate * 150) * 60;
+  tState[scriptId] = { utt, paused:false, speed:utt.rate, start:Date.now(), dur:estSec };
+
+  const durEl=document.getElementById(durId);
+  if(durEl) durEl.textContent = fmtTime(estSec);
+
+  const pp=document.getElementById(ppId), st=document.getElementById(stId),
+        prog=document.getElementById(progId), tm=document.getElementById(tmId);
+
+  utt.onstart = ()=>{
+    if(pp) pp.textContent='⏸';
+    if(st) st.textContent='▶ Playing…';
+    tState[scriptId].timer = setInterval(()=>{
+      if(tState[scriptId].paused) return;
+      const elapsed=(Date.now()-tState[scriptId].start)/1000;
+      const pct=Math.min(elapsed/estSec*100,99);
+      if(prog) prog.style.width=pct+'%';
+      if(tm)   tm.textContent=fmtTime(elapsed);
+    },300);
+  };
+  utt.onend = ()=>{
+    if(pp) pp.textContent='▶';
+    if(st) st.textContent='✓ Done';
+    if(prog) prog.style.width='100%';
+    clearInterval(tState[scriptId].timer);
+  };
+  utt.onerror = ()=>{
+    if(pp) pp.textContent='▶';
+    if(st) st.textContent='⚠ Error';
+    clearInterval(tState[scriptId].timer);
+  };
+  speechSynthesis.speak(utt);
+}
+
+function replayTrack(scriptId, ppId, progId, tmId, stId){
+  speechSynthesis.cancel();
+  const prog=document.getElementById(progId), tm=document.getElementById(tmId);
+  if(prog) prog.style.width='0%';
+  if(tm)   tm.textContent='0:00';
+  if(tState[scriptId]) clearInterval(tState[scriptId].timer);
+  delete tState[scriptId];
+  setTimeout(()=>{
+    const s=tState[scriptId];
+    const durId='dur'+ppId.slice(2);
+    togglePlay(scriptId,ppId,progId,tmId,durId,stId);
+  },200);
+}
+
+function setSpd(scriptId, rate, btn){
+  btn.closest('.speed-row').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active-spd'));
+  btn.classList.add('active-spd');
+  if(!tState[scriptId]) tState[scriptId]={};
+  tState[scriptId].speed = rate;
+}
+
+function fmtTime(s){
+  const m=Math.floor(s/60), sec=Math.floor(s%60);
+  return `${m}:${sec<10?'0':''}${sec}`;
+}
+
+/* ── FINAL ASSESSMENT (2 attempts) ── */
+const fAns={fq1:'c',fq2:'b',fq3:'b',fq4:'b',fq5:'b',fq6:'b',fq7:'b',fq8:'c',fq9:'c',fq10:'b',fq11:'c',fq12:'c',fq13:'b',fq14:'c',fq15:'b',fq16:'c',fq17:'b',fq18:'c',fq19:'c',fq20:'c'};
+let attemptsUsed=0;
+const maxAttempts=2;
+
+function gradeFinal(){
+  if(attemptsUsed>=maxAttempts) return;
+  attemptsUsed++;
+  let sc=0;
+  Object.entries(fAns).forEach(([nm,cr])=>{
+    const sel=document.querySelector(`input[name="${nm}"]:checked`);
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(o=>{const l=o.closest('.opt');if(l)l.classList.remove('correct','wrong');});
+    if(sel){const sl=sel.closest('.opt');if(sel.value===cr){sc++;if(sl)sl.classList.add('correct');}else{if(sl)sl.classList.add('wrong');}}
+    const ci=document.querySelector(`input[name="${nm}"][value="${cr}"]`);
+    if(ci){const cl=ci.closest('.opt');if(cl)cl.classList.add('correct');}
+  });
+  const pct=Math.round(sc/20*100);
+  const r=document.getElementById('fresult'); r.style.display='block';
+  document.getElementById('fscore').textContent=`${sc} / 20`;
+  document.getElementById('fprog').style.width=pct+'%';
+  const em=document.getElementById('femoji'), msg=document.getElementById('fmsg'),
+        retryRow=document.getElementById('retry-row');
+  if(pct>=90){em.textContent='🏆';msg.textContent=`Outstanding — ${pct}%. Excellent mastery of Module 7: Risk Management and Planning.`;}
+  else if(pct>=70){em.textContent='✅';msg.textContent=`Well done — ${pct}%. You have passed Module 7. Review any missed questions above.`;}
+  else{em.textContent='📚';msg.textContent=`${pct}% — Below the 70% pass mark. Review the module content and try again.`;}
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+  if(attemptsUsed<maxAttempts && pct<70){
+    retryRow.style.display='block';
+    retryRow.innerHTML=`<p style="color:rgba(255,255,255,.5);font-size:13px;margin-bottom:10px">You have <strong style="color:var(--gold2)">${maxAttempts-attemptsUsed}</strong> attempt(s) remaining. Review the answer key, then try again.</p>
+    <button class="btn btn-gold" onclick="resetFinal()">🔄 Try Again — Attempt 2</button>`;
+    document.getElementById('att-badge').textContent=`Attempt ${attemptsUsed} of ${maxAttempts}`;
+  } else {
+    const sb=document.getElementById('submit-btn');
+    sb.disabled=true; sb.style.opacity='.5';
+    document.getElementById('att-badge').textContent=`All ${maxAttempts} attempts used`;
+    document.querySelectorAll('#fwrap input[name^="fq"]').forEach(i=>i.disabled=true);
+  }
+}
+
+function resetFinal(){
+  document.querySelectorAll('#fwrap input[name^="fq"]').forEach(i=>{i.disabled=false;i.checked=false;});
+  document.querySelectorAll('#fwrap .opt').forEach(o=>o.classList.remove('correct','wrong'));
+  document.getElementById('fresult').style.display='none';
+  document.getElementById('retry-row').style.display='none';
+  document.getElementById('att-badge').textContent='Attempt 2 of 2';
+  document.getElementById('fprog').style.width='0%';
+}
+
+/* ── SIDEBAR ACTIVE STATE ── */
+function setActive(el){
+  document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.remove('active'));
+  el.classList.add('active');
+}
+window.addEventListener('scroll',()=>{
+  const secs=document.querySelectorAll('section[id]'); let cur='';
+  secs.forEach(s=>{if(s.getBoundingClientRect().top<200) cur=s.id;});
+  document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+
+/* ── MODULE PROGRESS ── */
+function updateProgress(){
+  const scored=document.querySelectorAll('.score-badge').length;
+  const pct=Math.min(Math.round(scored/10*100),100);
+  const prog=document.getElementById('modprog'), pctEl=document.getElementById('modpct');
+  if(prog) prog.style.width=pct+'%';
+  if(pctEl) pctEl.textContent=pct+'%';
+}
+setTimeout(()=>{const p=document.getElementById('modprog');if(p)p.style.width='0%';},200);
+</script>
+</body>
+</html>

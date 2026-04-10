@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3 · Leading and Managing Teams</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d1b2a;--navy2:#162032;--navy3:#1e2d42;
+  --gold:#c9a84c;--gold2:#e8c86d;--gold-light:#fdf3da;
+  --cream:#f5f0e8;--cream2:#faf7f2;
+  --ink:#1a2332;--text:#2c3e50;--muted:#6b7a8d;
+  --border:#ddd8ce;--border2:#e8e4dc;
+  --mint:#1a8a6e;--rose:#c0392b;--sky:#2a6496;
+  --radius:10px;--shadow:0 2px 20px rgba(13,27,42,.10);
+  --sidebar:260px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream2);color:var(--text);min-height:100vh;display:flex}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:200;display:flex;flex-direction:column}
+.sb-brand{padding:28px 22px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand h2{font-family:'Fraunces',serif;color:var(--gold2);font-size:17px;line-height:1.3}
+.sb-brand p{color:rgba(255,255,255,.4);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-family:'DM Mono',monospace}
+.sb-badge{display:inline-block;margin-top:8px;background:var(--gold);color:var(--navy);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-family:'DM Mono',monospace}
+.sb-section{padding:16px 14px 4px;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.25);text-transform:uppercase;font-family:'DM Mono',monospace}
+.sb-nav{list-style:none;padding:0 10px 20px}
+.sb-nav li a{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,.6);font-size:13px;text-decoration:none;transition:.2s;gap:8px}
+.sb-nav li a:hover{background:rgba(255,255,255,.07);color:#fff}
+.sb-nav li a.active{background:rgba(201,168,76,.15);color:var(--gold2);font-weight:600}
+.sb-nav li a .nav-icon{font-size:15px;flex-shrink:0}
+.sb-nav li a .nav-count{font-size:9px;background:rgba(255,255,255,.1);border-radius:20px;padding:2px 7px;font-family:'DM Mono',monospace;color:rgba(255,255,255,.45);flex-shrink:0}
+.sb-nav li a.active .nav-count{background:rgba(201,168,76,.25);color:var(--gold2)}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar);flex:1;min-height:100vh}
+
+/* HERO */
+.hero{background:var(--navy);min-height:320px;padding:0;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--navy) 0%,#1a2f4a 60%,#0f2035 100%)}
+.hero-pattern{position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(201,168,76,1) 39px,rgba(201,168,76,1) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(201,168,76,1) 39px,rgba(201,168,76,1) 40px)}
+.hero-letter{position:absolute;right:-20px;bottom:-40px;font-family:'Fraunces',serif;font-size:300px;font-weight:900;color:rgba(255,255,255,.02);line-height:1;pointer-events:none;user-select:none}
+.hero-content{position:relative;z-index:1;padding:44px 52px 36px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold2);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:30px;font-family:'DM Mono',monospace;margin-bottom:18px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,56px);line-height:1.08;color:#fff;font-weight:900;max-width:700px}
+.hero h1 em{color:var(--gold2);font-style:normal}
+.hero-desc{color:rgba(255,255,255,.55);font-size:15px;max-width:580px;line-height:1.75;margin-top:14px;font-weight:300}
+.hero-stats{display:flex;gap:0;border-top:1px solid rgba(255,255,255,.08);margin-top:32px;padding-top:0}
+.stat-item{padding:22px 32px 22px 0;border-right:1px solid rgba(255,255,255,.07);margin-right:32px}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Fraunces',serif;font-size:36px;color:var(--gold2);font-weight:700;line-height:1}
+.stat-label{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-family:'DM Mono',monospace}
+
+/* PROGRESS BAR */
+.progress-bar-wrap{background:var(--navy2);padding:14px 52px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:18px}
+.progress-label{color:rgba(255,255,255,.45);font-size:12px;font-family:'DM Mono',monospace;white-space:nowrap}
+.progress-track{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:10px;width:0%;transition:width 1.2s ease}
+.progress-pct{color:var(--gold2);font-size:12px;font-family:'DM Mono',monospace;font-weight:600;white-space:nowrap}
+
+/* CONTENT AREA */
+.content{padding:44px 52px;max-width:1000px}
+
+/* SECTION HEADER */
+.sec-header{margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.sec-header-inner{display:flex;align-items:flex-start;gap:16px}
+.sec-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.sec-title{font-family:'Fraunces',serif;font-size:30px;color:var(--navy);font-weight:700}
+.sec-sub{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:3px}
+.divider{height:1px;background:var(--border);margin:52px 0}
+
+/* CARDS & COMPONENTS */
+.card{background:#fff;border-radius:var(--radius);border:1px solid var(--border2);padding:28px;margin-bottom:18px;box-shadow:var(--shadow)}
+.card-navy{background:var(--navy);color:#fff;border-color:var(--navy)}
+.info-box{background:linear-gradient(135deg,#fffbf0,#fdf5e0);border:1px solid rgba(201,168,76,.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;font-size:13px;color:#6b4e00;line-height:1.7}
+
+/* SPEAKING */
+.speaking-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px}
+.sq{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:18px 20px;display:flex;gap:14px;box-shadow:var(--shadow);transition:.2s}
+.sq:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(13,27,42,.12);border-color:var(--gold)}
+.sq-num{width:32px;height:32px;border-radius:8px;background:var(--navy);color:var(--gold2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;flex-shrink:0}
+.sq-text{font-size:13.5px;line-height:1.65;color:var(--text)}
+
+/* WORD BANK */
+.wb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:10px}
+.wb-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:14px 16px;display:flex;gap:12px;box-shadow:var(--shadow);transition:.15s}
+.wb-card:hover{border-color:var(--gold);transform:translateY(-1px)}
+.wb-icon{font-size:28px;flex-shrink:0;width:38px;text-align:center;line-height:1}
+.wb-info .wb-word{font-weight:700;font-size:14px;color:var(--navy);font-family:'Fraunces',serif}
+.wb-info .wb-pos{font-size:9px;color:var(--sky);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.wb-info .wb-def{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* READING */
+.reading-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:34px;margin-bottom:18px;box-shadow:var(--shadow)}
+.reading-card h3{font-family:'Fraunces',serif;font-size:22px;color:var(--navy);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border2)}
+.reading-card p{font-size:14.5px;line-height:1.95;color:var(--text);margin-bottom:14px;font-weight:300}
+.reading-card p:last-child{margin-bottom:0}
+
+/* QUIZ */
+.quiz-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:14px}
+.quiz-title{font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:var(--navy);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border2)}
+.q-item{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border2)}
+.q-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.q-stem{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px;line-height:1.55}
+.options{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:center;gap:10px;padding:9px 13px;border-radius:8px;border:1.5px solid var(--border2);cursor:pointer;font-size:13px;transition:.15s;background:#fff;font-family:'DM Sans',sans-serif}
+.opt:hover{border-color:var(--gold);background:var(--gold-light)}
+.opt input[type=radio]{accent-color:var(--navy);width:14px;height:14px;flex-shrink:0}
+.opt.correct{border-color:var(--mint)!important;background:#e8f8f3!important;color:#0d6b4f!important}
+.opt.wrong{border-color:var(--rose)!important;background:#fdf0ef!important;color:#8b1a12!important}
+.btn-row{display:flex;gap:10px;margin-top:16px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;border:none;transition:.18s;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--navy);color:#fff}.btn-primary:hover{background:var(--navy3)}
+.btn-gold{background:var(--gold);color:var(--navy)}.btn-gold:hover{background:var(--gold2)}
+.btn-outline{background:transparent;border:1.5px solid var(--navy);color:var(--navy)}.btn-outline:hover{background:var(--navy);color:#fff}
+.score-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-weight:700;font-size:13px;font-family:'DM Mono',monospace}
+.sb-good{background:#e8f8f3;color:#0d6b4f;border:1px solid #86c9b0}
+.sb-ok{background:#fffbeb;color:#7c5c00;border:1px solid #e8c86d}
+.sb-bad{background:#fdf0ef;color:#8b1a12;border:1px solid #e8a09a}
+
+/* GAP FILL */
+.gap-input{border:none;border-bottom:2px solid var(--gold);outline:none;padding:2px 6px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--navy);background:transparent;min-width:140px;transition:.15s}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.gap-input.correct{border-bottom-color:var(--mint);color:var(--mint)}
+.gap-input.wrong{border-bottom-color:var(--rose);color:var(--rose)}
+
+/* REORDER */
+.reorder-list{display:flex;flex-direction:column;gap:6px}
+.reorder-item{display:flex;align-items:center;gap:10px;padding:9px 13px;border:1.5px solid var(--border2);border-radius:8px;background:#fff;cursor:grab;font-size:13px;transition:.15s;user-select:none}
+.reorder-item:hover{border-color:var(--gold);background:var(--gold-light)}
+.reorder-item.dragging{opacity:.5;border-color:var(--gold);background:var(--gold-light)}
+.reorder-item.over{border-color:var(--navy);background:#f0f4f8}
+.reorder-handle{color:var(--muted);font-size:16px;flex-shrink:0;cursor:grab}
+.reorder-item.correct-order{border-color:var(--mint);background:#e8f8f3}
+.reorder-item.wrong-order{border-color:var(--rose);background:#fdf0ef}
+
+/* DRAG-DROP */
+.drag-bank{display:flex;flex-wrap:wrap;gap:7px;padding:12px;background:#f5f2ec;border-radius:8px;margin-bottom:12px;min-height:46px}
+.drag-chip{padding:5px 13px;border-radius:20px;background:var(--navy);color:#fff;font-size:12px;cursor:pointer;user-select:none;font-family:'DM Mono',monospace;transition:.15s;border:2px solid transparent}
+.drag-chip.selected-chip{border-color:var(--gold);background:var(--navy3)}
+.drag-chip.used{opacity:.25;pointer-events:none}
+.drop-zone{border:2px dashed var(--gold);border-radius:7px;padding:6px 12px;min-width:120px;min-height:34px;display:inline-flex;align-items:center;justify-content:center;background:#fffbf0;font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;vertical-align:middle;margin:0 3px;cursor:pointer;transition:.15s}
+.drop-zone.filled{border-style:solid;border-color:var(--mint);background:#e8f8f3;color:var(--navy);font-weight:600}
+.drop-zone.wrong-drop{border-color:var(--rose);background:#fdf0ef;color:var(--rose)}
+
+/* T/F */
+.tf-row{display:flex;gap:8px;margin-top:7px;flex-wrap:wrap}
+.tf-btn{padding:5px 16px;border-radius:20px;border:1.5px solid var(--border2);cursor:pointer;font-size:12px;font-weight:600;background:#fff;transition:.15s;font-family:'DM Sans',sans-serif}
+.tf-btn:hover{border-color:var(--gold);color:var(--navy)}
+.tf-btn.sel-t{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tf-btn.sel-f{background:var(--navy3);color:#fff;border-color:var(--navy3)}
+.tf-btn.ok-tf{background:var(--mint);color:#fff;border-color:var(--mint)}
+.tf-btn.nok-tf{background:var(--rose);color:#fff;border-color:var(--rose)}
+
+/* ANSWER KEY */
+.ak-wrap{margin-top:12px}
+.ak-toggle{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--navy);color:#fff;border-radius:8px;cursor:pointer;font-size:12px;font-family:'DM Mono',monospace;border:none;width:100%;text-align:left;transition:.18s}
+.ak-toggle:hover{background:var(--navy3)}
+.ak-icon{transition:.3s;font-size:13px}
+.ak-toggle.open .ak-icon{transform:rotate(90deg)}
+.ak-content{display:none;padding:16px;background:#f8f6f2;border:1px solid var(--border2);border-top:none;border-radius:0 0 8px 8px;font-size:12.5px;line-height:1.9}
+.ak-content.visible{display:block}
+.ak-content ol{padding-left:16px}
+.ak-content li{margin-bottom:4px}
+.ak-content strong{color:var(--navy)}
+
+/* GRAMMAR BOX */
+.grammar-box{background:#fff;border-left:4px solid var(--gold);border-radius:0 10px 10px 0;padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow)}
+.grammar-box h4{font-family:'Fraunces',serif;font-weight:700;color:var(--navy);font-size:15px;margin-bottom:8px}
+.grammar-box p,.grammar-box li{font-size:13px;line-height:1.8;color:var(--text);font-weight:300}
+.grammar-box ul{padding-left:14px;margin-top:5px}
+.grammar-box .ex{background:#f5f2ec;border-radius:6px;padding:8px 12px;font-family:'DM Mono',monospace;font-size:11.5px;color:var(--sky);margin-top:8px;line-height:1.8}
+
+/* WRITING */
+.writing-card{background:linear-gradient(135deg,#f5f3ee,#faf8f4);border:1px solid var(--border2);border-radius:var(--radius);padding:24px;margin-bottom:18px}
+.writing-card h4{font-family:'Fraunces',serif;font-size:17px;color:var(--navy);margin-bottom:8px}
+.writing-task{font-size:13px;color:var(--text);line-height:1.75;margin-bottom:12px;font-weight:300}
+.writing-area{width:100%;min-height:180px;border:1.5px solid var(--border2);border-radius:8px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);resize:vertical;outline:none;transition:.18s;background:#fff;line-height:1.7}
+.writing-area:focus{border-color:var(--gold)}
+.wc{font-size:11px;color:var(--muted);margin-top:4px;font-family:'DM Mono',monospace}
+.tag{display:inline-block;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.4px;margin-right:5px;margin-bottom:8px}
+.tag-navy{background:rgba(13,27,42,.1);color:var(--navy)}
+.tag-gold{background:rgba(201,168,76,.15);color:#7c5c00}
+
+/* ── LISTENING PLAYER ── */
+.listen-block{margin-bottom:28px}
+.listen-header{background:var(--navy);border-radius:var(--radius) var(--radius) 0 0;padding:20px 24px;display:flex;gap:16px;align-items:flex-start}
+.listen-icon{font-size:32px;flex-shrink:0}
+.listen-meta h4{font-family:'Fraunces',serif;font-size:17px;color:#fff;font-weight:700}
+.listen-meta .track-sub{font-size:12px;color:rgba(255,255,255,.45);margin-top:3px}
+.listen-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.ltag{font-size:9px;border:1px solid;padding:2px 8px;border-radius:20px;font-family:'DM Mono',monospace;letter-spacing:.5px;text-transform:uppercase}
+.ltag-gold{border-color:var(--gold);color:var(--gold)}
+.ltag-outline{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.5)}
+.player-wrap{background:#0a1520;border:1px solid rgba(255,255,255,.06);padding:18px 22px;border-radius:0}
+.player-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.play-pause-btn{width:44px;height:44px;border-radius:50%;background:var(--rose);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0;transition:.18s}
+.play-pause-btn:hover{background:#d44;transform:scale(1.05)}
+.play-pause-btn.playing{background:#e55}
+.player-track-info{flex:1;min-width:0}
+.track-title-sm{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track-sub-sm{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.time-display{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.5);white-space:nowrap}
+.progress-audio{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:4px;margin-bottom:10px;cursor:pointer;position:relative;overflow:hidden}
+.progress-audio-fill{height:100%;background:linear-gradient(90deg,var(--rose),#ff6b6b);border-radius:4px;width:0%;transition:.1s linear;pointer-events:none}
+.speed-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace}
+.speed-btn{padding:3px 10px;border-radius:4px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.5);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:.15s}
+.speed-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700}
+.speed-btn:hover:not(.active){background:rgba(255,255,255,.08);color:#fff}
+.replay-btn{padding:3px 10px;border-radius:4px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.4);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:.15s;display:flex;align-items:center;gap:5px}
+.replay-btn:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.player-note{font-size:10.5px;color:rgba(255,255,255,.25);font-style:italic;margin-top:8px;font-family:'DM Sans',sans-serif}
+.transcript-toggle-btn{width:100%;padding:11px 18px;background:rgba(255,255,255,.04);border:none;border-top:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.5);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:8px;text-align:left;transition:.15s;font-family:'DM Sans',sans-serif}
+.transcript-toggle-btn:hover{background:rgba(255,255,255,.07);color:#fff}
+.transcript-toggle-btn .tt-arrow{transition:.25s;display:inline-block;font-size:10px}
+.transcript-toggle-btn.open .tt-arrow{transform:rotate(90deg)}
+.transcript-box{display:none;padding:16px 22px;background:#0d1e2e;border-top:1px solid rgba(255,255,255,.05)}
+.transcript-box.visible{display:block}
+.transcript-box p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.85;font-weight:300}
+.listen-body{background:#fff;border:1px solid var(--border2);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:22px}
+.instructions-box{background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:10px 14px;font-size:13px;color:var(--text);margin-bottom:18px;line-height:1.6}
+.instructions-box strong{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:3px;color:var(--muted)}
+
+/* CASE STUDY */
+.case-hd{background:linear-gradient(135deg,var(--navy),#1e3054);color:#fff;border-radius:var(--radius) var(--radius) 0 0;padding:22px 26px}
+.case-hd .case-company{font-size:10px;color:var(--gold);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.case-hd h3{font-family:'Fraunces',serif;font-size:20px;font-weight:700}
+.case-body{background:#fff;border:1px solid var(--border2);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:26px;box-shadow:var(--shadow)}
+.case-body p{font-size:14px;line-height:1.9;margin-bottom:14px;font-weight:300}
+
+/* FINAL ASSESSMENT */
+.final-wrap{background:linear-gradient(160deg,var(--navy) 0%,#1a2f4a 100%);border-radius:14px;padding:36px;color:#fff}
+.final-wrap .quiz-title{color:#fff;border-bottom-color:rgba(255,255,255,.12);font-size:19px}
+.final-wrap .q-stem{color:rgba(255,255,255,.88)}
+.final-wrap .opt{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.75)}
+.final-wrap .opt:hover{background:rgba(201,168,76,.12);border-color:var(--gold)}
+.final-wrap .opt.correct{border-color:var(--mint)!important;background:rgba(26,138,110,.15)!important;color:#7ee8c8!important}
+.final-wrap .opt.wrong{border-color:var(--rose)!important;background:rgba(192,57,43,.15)!important;color:#f1a49d!important}
+.final-result{text-align:center;padding:28px;background:rgba(255,255,255,.05);border-radius:10px;margin-top:22px;display:none}
+.final-result h2{font-family:'Fraunces',serif;font-size:48px;color:var(--gold2)}
+.final-result p{color:rgba(255,255,255,.6);font-size:14px;margin-top:8px;line-height:1.6}
+.final-prog-wrap{background:rgba(255,255,255,.08);border-radius:20px;height:6px;margin:10px auto;max-width:280px;overflow:hidden}
+.final-prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:20px;transition:.8s}
+
+/* OVERVIEW SECTION */
+.overview-intro{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+.overview-intro p{font-size:14.5px;line-height:1.9;font-weight:300;color:var(--text)}
+.overview-intro p strong{font-weight:600;color:var(--navy)}
+.lo-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.lo-list li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text);line-height:1.6;font-weight:300}
+.lo-list li::before{content:'✓';color:var(--mint);font-weight:700;font-size:14px;flex-shrink:0;margin-top:1px}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
+
+@media(max-width:768px){
+  .sidebar{width:60px;overflow:hidden}.main{margin-left:60px}
+  .sb-brand,.sb-section,.sb-nav li a span:not(.nav-icon){display:none}
+  .content{padding:24px 16px}.hero-content{padding:28px 18px}
+  .hero-stats{flex-wrap:wrap}.stat-item{padding:14px 16px 14px 0}
+  .progress-bar-wrap{padding:12px 18px}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-brand">
+    <h2>Business Management English</h2>
+    <p>Professional Development</p>
+    <span class="sb-badge">B1–B2 Level</span>
+  </div>
+  <div class="sb-section">Module 3</div>
+  <ul class="sb-nav">
+    <li><a href="#overview" class="active" onclick="setActive(this)"><span class="nav-icon">🏠</span><span>Overview</span></a></li>
+    <li><a href="#speaking" onclick="setActive(this)"><span class="nav-icon">💬</span><span>Speaking</span><span class="nav-count">20Q</span></a></li>
+    <li><a href="#wordbank" onclick="setActive(this)"><span class="nav-icon">📖</span><span>Word Bank</span><span class="nav-count">30+</span></a></li>
+    <li><a href="#reading" onclick="setActive(this)"><span class="nav-icon">📄</span><span>Reading</span><span class="nav-count">2T</span></a></li>
+    <li><a href="#vocabulary" onclick="setActive(this)"><span class="nav-icon">✏️</span><span>Vocabulary</span><span class="nav-count">4Ex</span></a></li>
+    <li><a href="#grammar" onclick="setActive(this)"><span class="nav-icon">📐</span><span>Grammar</span><span class="nav-count">4Ex</span></a></li>
+    <li><a href="#grammarreview" onclick="setActive(this)"><span class="nav-icon">📘</span><span>Grammar Review</span></a></li>
+    <li><a href="#writing" onclick="setActive(this)"><span class="nav-icon">✍️</span><span>Writing</span><span class="nav-count">2Ex</span></a></li>
+    <li><a href="#listening" onclick="setActive(this)"><span class="nav-icon">🎧</span><span>Listening</span><span class="nav-count">4Ex</span></a></li>
+    <li><a href="#casestudy" onclick="setActive(this)"><span class="nav-icon">🏢</span><span>Case Studies</span><span class="nav-count">2Ex</span></a></li>
+    <li><a href="#final" onclick="setActive(this)"><span class="nav-icon">🏆</span><span>Final Assessment</span></a></li>
+  </ul>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-letter">M3</div>
+  <div class="hero-content">
+    <div class="hero-badge">📋 Module 3 · Business Management English</div>
+    <h1>Leading and <em>Managing Teams</em></h1>
+    <p class="hero-desc">Develop professional English skills to lead, motivate, and manage high-performing teams — from delegation and feedback to conflict resolution and performance management.</p>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Grammar Ex.</div></div>
+      <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat-item"><div class="stat-num">30+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+  </div>
+</div>
+<div class="progress-bar-wrap">
+  <span class="progress-label">Module Progress</span>
+  <div class="progress-track"><div class="progress-fill" id="modprog"></div></div>
+  <span class="progress-pct" id="modpct">0%</span>
+</div>
+
+<div class="content">
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#e8f0fb">🏠</div>
+      <div><div class="sec-title">Module Overview</div><div class="sec-sub">B1–B2 · Leading and Managing Teams</div></div>
+    </div>
+  </div>
+  <div class="overview-intro">
+    <p><strong>Welcome to Module 3: Leading and Managing Teams.</strong> In this module you will develop the professional English vocabulary and language structures needed to lead, motivate, and manage people effectively in a business environment. You will explore key themes including leadership styles, team dynamics, delegation, performance management, conflict resolution, and professional communication.</p>
+    <p style="margin-top:12px">By the end of this module, you will be able to:</p>
+    <ul class="lo-list">
+      <li>Use specialised vocabulary to describe leadership styles and team roles.</li>
+      <li>Discuss delegation, motivation, and performance management using accurate, professional language.</li>
+      <li>Write formal emails and reports related to team management contexts.</li>
+      <li>Understand spoken English in meetings, briefings, and managerial conversations.</li>
+      <li>Apply grammar structures — including conditionals, modals, and reported speech — in authentic business contexts.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+<!-- SPEAKING -->
+<section id="speaking">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#dbeafe">💬</div>
+      <div><div class="sec-title">Speaking Activities</div><div class="sec-sub">20 Discussion Questions · Team Leadership & Management</div></div>
+    </div>
+  </div>
+  <div class="info-box">Work in pairs or small groups. Discuss each question in detail, using specific examples from your professional experience or from companies you know. Aim to use vocabulary from the Word Bank in your responses.</div>
+  <div class="speaking-grid">
+    <div class="sq"><div class="sq-num">01</div><div class="sq-text">What qualities do you think distinguish an exceptional team leader from an average one? Give specific examples.</div></div>
+    <div class="sq"><div class="sq-num">02</div><div class="sq-text">How would you describe your preferred leadership style? Is it democratic, autocratic, or transformational — and why?</div></div>
+    <div class="sq"><div class="sq-num">03</div><div class="sq-text">What are the most important factors when building a high-performing team from scratch? What roles must be filled?</div></div>
+    <div class="sq"><div class="sq-num">04</div><div class="sq-text">How do you effectively delegate tasks to team members while ensuring quality and accountability?</div></div>
+    <div class="sq"><div class="sq-num">05</div><div class="sq-text">Describe a situation in which a team you worked in experienced conflict. How was it resolved, and what would you do differently?</div></div>
+    <div class="sq"><div class="sq-num">06</div><div class="sq-text">What strategies can managers use to keep remote or hybrid teams motivated and engaged?</div></div>
+    <div class="sq"><div class="sq-num">07</div><div class="sq-text">How important is psychological safety in a team environment? How can a leader foster it?</div></div>
+    <div class="sq"><div class="sq-num">08</div><div class="sq-text">When and how should a manager give constructive feedback to an underperforming team member?</div></div>
+    <div class="sq"><div class="sq-num">09</div><div class="sq-text">What is the difference between a manager and a leader? Can one person be both effectively?</div></div>
+    <div class="sq"><div class="sq-num">10</div><div class="sq-text">How should a leader handle a situation where a high-performing employee is repeatedly missing deadlines?</div></div>
+    <div class="sq"><div class="sq-num">11</div><div class="sq-text">What role does diversity and inclusion play in building stronger, more innovative teams?</div></div>
+    <div class="sq"><div class="sq-num">12</div><div class="sq-text">How can a manager build trust with a new team quickly, especially if they are replacing a popular predecessor?</div></div>
+    <div class="sq"><div class="sq-num">13</div><div class="sq-text">What are the risks of micromanaging a team, and how can a leader avoid this tendency?</div></div>
+    <div class="sq"><div class="sq-num">14</div><div class="sq-text">How would you communicate a significant and unpopular organisational change to your team?</div></div>
+    <div class="sq"><div class="sq-num">15</div><div class="sq-text">What performance management tools or frameworks do you find most effective? Why?</div></div>
+    <div class="sq"><div class="sq-num">16</div><div class="sq-text">How do you manage competing priorities and deadlines when your team's resources are stretched?</div></div>
+    <div class="sq"><div class="sq-num">17</div><div class="sq-text">What is the role of emotional intelligence in effective leadership? Can it be developed?</div></div>
+    <div class="sq"><div class="sq-num">18</div><div class="sq-text">How should leaders approach team meetings to make them productive rather than a waste of time?</div></div>
+    <div class="sq"><div class="sq-num">19</div><div class="sq-text">Describe the characteristics of a dysfunctional team. What steps would you take as a new leader to turn it around?</div></div>
+    <div class="sq"><div class="sq-num">20</div><div class="sq-text">How can organisations retain talented employees who have been passed over for promotion?</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WORD BANK -->
+<section id="wordbank">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fef3c7">📖</div>
+      <div><div class="sec-title">Word Bank</div><div class="sec-sub">32 Key Terms · Leading and Managing Teams</div></div>
+    </div>
+  </div>
+  <div class="wb-grid">
+    <div class="wb-card"><div class="wb-icon">👑</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Leadership Style</div><div class="wb-def">The characteristic approach a leader uses to guide, motivate, and manage a team — such as autocratic, democratic, or transformational.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🤝</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Delegation</div><div class="wb-def">The act of assigning specific tasks, responsibilities, or authority to team members while retaining overall accountability for outcomes.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔥</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Motivation</div><div class="wb-def">The internal or external drive that encourages individuals to perform at their best and pursue organisational goals with commitment.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📊</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Performance Management</div><div class="wb-def">A systematic process for setting expectations, monitoring progress, providing feedback, and developing employees to achieve organisational goals.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">⚡</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Team Dynamics</div><div class="wb-def">The behavioural relationships and interactions between team members that influence how effectively they collaborate and perform together.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🎯</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Accountability</div><div class="wb-def">The obligation of an individual or team to accept responsibility for their actions, decisions, and performance outcomes.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🗣️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Constructive Feedback</div><div class="wb-def">Specific, actionable, and respectful commentary on performance that helps individuals identify areas for improvement and growth.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🧠</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Emotional Intelligence</div><div class="wb-def">The capacity to recognise, understand, and manage one's own emotions and those of others — a critical skill for effective leadership.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🛡️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Psychological Safety</div><div class="wb-def">An environment in which team members feel safe to speak up, share ideas, admit mistakes, and take risks without fear of negative consequences.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">⚔️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Conflict Resolution</div><div class="wb-def">The process of identifying and addressing disagreements or disputes between individuals or groups in a constructive and productive manner.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔄</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Transformational Leadership</div><div class="wb-def">A leadership style that inspires and motivates team members through a compelling vision, encouraging innovation and personal development.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📋</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Team Charter</div><div class="wb-def">A formal document that defines a team's purpose, goals, ground rules, roles, and expectations for behaviour and collaboration.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔍</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Micromanagement</div><div class="wb-def">Excessive supervisory control over employees' work and decisions, which undermines autonomy, trust, and overall team morale.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🌱</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Employee Development</div><div class="wb-def">Planned initiatives and activities designed to improve an employee's skills, knowledge, and capabilities for current and future roles.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🎭</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Team Cohesion</div><div class="wb-def">The degree to which team members are united, committed to shared goals, and work effectively together as a collaborative unit.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📅</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">One-to-One Meeting</div><div class="wb-def">A private, structured meeting between a manager and an individual team member to discuss performance, well-being, and development goals.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🏅</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Recognition</div><div class="wb-def">The formal or informal acknowledgement of an employee's contributions, achievements, or positive behaviours to reinforce performance.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📈</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">KPI (Key Performance Indicator)</div><div class="wb-def">A measurable metric used to evaluate an individual's, team's, or organisation's progress towards defined objectives and targets.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔧</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Skill Gap</div><div class="wb-def">A discrepancy between the skills and competencies a team currently possesses and those required to meet business objectives effectively.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🌐</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Cross-functional Team</div><div class="wb-def">A group of professionals from different departments or areas of expertise who collaborate on a specific project or shared objective.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🤜</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Empowerment</div><div class="wb-def">The process of giving team members the authority, resources, and confidence to make decisions and take initiative within their roles.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📣</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Briefing</div><div class="wb-def">A short, structured meeting in which a leader communicates essential information, instructions, or objectives to the team.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔁</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">360-Degree Feedback</div><div class="wb-def">A performance review process where an employee receives feedback from multiple sources including peers, subordinates, and their own manager.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🧩</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Role Clarity</div><div class="wb-def">The degree to which team members clearly understand their individual responsibilities, expectations, and boundaries within the team.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">💼</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Succession Planning</div><div class="wb-def">A proactive strategy for identifying and preparing high-potential employees to fill key leadership roles when they become vacant.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🏗️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Team Building</div><div class="wb-def">Activities and strategies designed to improve relationships, trust, communication, and collaboration among team members.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">😤</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Burnout</div><div class="wb-def">A state of chronic physical and emotional exhaustion caused by prolonged workplace stress, often leading to disengagement and reduced productivity.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔀</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Agile Management</div><div class="wb-def">A flexible, iterative management approach that prioritises collaboration, adaptability, and rapid response to change over rigid planning.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📌</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Onboarding</div><div class="wb-def">The structured process of integrating a new employee into the team and organisation, helping them adapt to their role and workplace culture.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🪞</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Self-Assessment</div><div class="wb-def">A reflective process in which an employee evaluates their own performance, strengths, and areas for improvement against agreed standards.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📡</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Stakeholder Communication</div><div class="wb-def">The planned and purposeful sharing of relevant information with all parties who have an interest in a team's work and outcomes.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🎯</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Coaching</div><div class="wb-def">A developmental partnership in which a leader helps an employee improve performance, build skills, and achieve their full professional potential.</div></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<!-- READING -->
+<section id="reading">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#dcfce7">📄</div>
+      <div><div class="sec-title">Reading Comprehension</div><div class="sec-sub">2 Texts · 3 Paragraphs Each · 10 MCQs Each · Auto-graded</div></div>
+    </div>
+  </div>
+
+  <div class="reading-card">
+    <h3>Text 1 — The Art of Leadership: Styles, Trust, and Team Performance</h3>
+    <p>Leadership is far more than issuing instructions and monitoring results. At its core, effective leadership requires a deep understanding of human motivation, behaviour, and the complex dynamics that emerge whenever a group of people works toward a shared goal. Researchers have identified several distinct leadership styles, each with its own strengths and limitations depending on the organisational context. Autocratic leaders retain centralised decision-making authority and expect compliance from team members; this approach can be effective in high-pressure, time-critical situations where rapid, unambiguous direction is needed. Democratic leaders, by contrast, actively involve their teams in decision-making, which fosters a greater sense of ownership, improves morale, and often produces more creative and well-rounded solutions. Transformational leaders go further still — they inspire team members through a compelling shared vision, encouraging them to exceed their own expectations and grow both professionally and personally.</p>
+    <p>The foundation of every high-performing team is trust — specifically, what researchers call "psychological safety." A psychologically safe team environment is one in which all members feel genuinely comfortable speaking up, challenging existing ideas, admitting mistakes openly, and taking calculated risks without fear of embarrassment or professional punishment. Google's celebrated Project Aristotle, a landmark study of hundreds of internal teams, identified psychological safety as the single most important factor in determining team effectiveness — ranking above individual talent, technical skills, and even team composition. Leaders who actively cultivate this culture do so by modelling vulnerability themselves, explicitly inviting dissenting views, responding to mistakes with curiosity rather than blame, and consistently demonstrating that every team member's voice is not only heard but genuinely valued. When psychological safety is absent, team members default to self-protective silence, innovation stagnates, and critical information rarely reaches the people who need it most.</p>
+    <p>Effective leaders also recognise that motivation is not a static, one-size-fits-all resource. Different team members are driven by entirely different factors — some primarily by financial rewards and recognition, others by meaningful challenges, professional growth, a sense of belonging, or the autonomy to direct their own work. Psychologist Frederick Herzberg distinguished between "hygiene factors" — baseline conditions such as salary and job security whose absence causes dissatisfaction but whose presence alone does not produce engagement — and "motivators" such as achievement, recognition, and development, which genuinely inspire sustained high performance. A skilled manager, therefore, takes time to understand what truly drives each individual team member and tailors their management approach accordingly. They use structured one-to-one meetings, development planning conversations, and regular constructive feedback not as bureaucratic obligations, but as powerful opportunities to connect, inspire, and grow the unique human talent within their team.</p>
+  </div>
+
+  <div id="r1" class="quiz-card">
+    <div class="quiz-title">Reading 1 — 10 Multiple-Choice Questions</div>
+    <div class="q-item"><div class="q-stem">1. According to the text, in which situation is an autocratic leadership style most appropriate?</div><div class="options"><label class="opt"><input type="radio" name="r1q1" value="a"> A. When building long-term creative innovation within a team</label><label class="opt"><input type="radio" name="r1q1" value="b"> B. When a leader needs the team's full emotional engagement</label><label class="opt"><input type="radio" name="r1q1" value="c"> C. In high-pressure, time-critical situations requiring rapid direction</label><label class="opt"><input type="radio" name="r1q1" value="d"> D. When team morale is low and members need greater involvement</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What key advantage of the democratic leadership style does the text highlight?</div><div class="options"><label class="opt"><input type="radio" name="r1q2" value="a"> A. It speeds up decision-making significantly in all contexts</label><label class="opt"><input type="radio" name="r1q2" value="b"> B. It fosters ownership, improves morale, and generates more creative solutions</label><label class="opt"><input type="radio" name="r1q2" value="c"> C. It removes the need for performance management</label><label class="opt"><input type="radio" name="r1q2" value="d"> D. It works best in military or emergency response organisations</label></div></div>
+    <div class="q-item"><div class="q-stem">3. How does the text define "transformational leadership"?</div><div class="options"><label class="opt"><input type="radio" name="r1q3" value="a"> A. A style based on strict rules and structured compliance</label><label class="opt"><input type="radio" name="r1q3" value="b"> B. A transactional approach using rewards and penalties to manage performance</label><label class="opt"><input type="radio" name="r1q3" value="c"> C. A style where leaders inspire teams through a compelling vision and encourage personal growth</label><label class="opt"><input type="radio" name="r1q3" value="d"> D. A democratic style focused purely on consensus building</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What did Google's Project Aristotle identify as the single most important factor in team effectiveness?</div><div class="options"><label class="opt"><input type="radio" name="r1q4" value="a"> A. Individual talent and technical expertise</label><label class="opt"><input type="radio" name="r1q4" value="b"> B. Psychological safety within the team</label><label class="opt"><input type="radio" name="r1q4" value="c"> C. The diversity of the team's professional background</label><label class="opt"><input type="radio" name="r1q4" value="d"> D. The clarity of roles and responsibilities</label></div></div>
+    <div class="q-item"><div class="q-stem">5. According to Paragraph 2, how do leaders who lack psychological safety typically affect their teams?</div><div class="options"><label class="opt"><input type="radio" name="r1q5" value="a"> A. Team members become more competitive with each other</label><label class="opt"><input type="radio" name="r1q5" value="b"> B. Team members focus exclusively on financial targets</label><label class="opt"><input type="radio" name="r1q5" value="c"> C. Team members default to self-protective silence and innovation stagnates</label><label class="opt"><input type="radio" name="r1q5" value="d"> D. Team members escalate complaints directly to senior management</label></div></div>
+    <div class="q-item"><div class="q-stem">6. What does Herzberg's concept of "hygiene factors" refer to?</div><div class="options"><label class="opt"><input type="radio" name="r1q6" value="a"> A. Workplace cleanliness and health and safety standards</label><label class="opt"><input type="radio" name="r1q6" value="b"> B. Motivators such as achievement and recognition</label><label class="opt"><input type="radio" name="r1q6" value="c"> C. Baseline conditions like salary whose absence causes dissatisfaction but presence alone doesn't motivate</label><label class="opt"><input type="radio" name="r1q6" value="d"> D. The core values embedded in an organisation's culture</label></div></div>
+    <div class="q-item"><div class="q-stem">7. What does the text say about motivation being a "one-size-fits-all resource"?</div><div class="options"><label class="opt"><input type="radio" name="r1q7" value="a"> A. It agrees that all employees respond best to financial incentives</label><label class="opt"><input type="radio" name="r1q7" value="b"> B. It argues that motivation is not static and different people are driven by different factors</label><label class="opt"><input type="radio" name="r1q7" value="c"> C. It claims that once employees are motivated, they remain so permanently</label><label class="opt"><input type="radio" name="r1q7" value="d"> D. It states that only senior leaders need to be actively motivated</label></div></div>
+    <div class="q-item"><div class="q-stem">8. According to the text, how should leaders view one-to-one meetings?</div><div class="options"><label class="opt"><input type="radio" name="r1q8" value="a"> A. As a formal HR requirement with little practical value</label><label class="opt"><input type="radio" name="r1q8" value="b"> B. As opportunities to issue performance warnings</label><label class="opt"><input type="radio" name="r1q8" value="c"> C. As powerful opportunities to connect, inspire, and develop team members</label><label class="opt"><input type="radio" name="r1q8" value="d"> D. As time-consuming bureaucratic obligations to be minimised</label></div></div>
+    <div class="q-item"><div class="q-stem">9. Which behaviours does the text identify as ways leaders cultivate psychological safety?</div><div class="options"><label class="opt"><input type="radio" name="r1q9" value="a"> A. Delegating all decisions to avoid bias and conflict</label><label class="opt"><input type="radio" name="r1q9" value="b"> B. Modelling vulnerability, inviting dissent, and responding to mistakes with curiosity</label><label class="opt"><input type="radio" name="r1q9" value="c"> C. Setting strict performance targets and enforcing them consistently</label><label class="opt"><input type="radio" name="r1q9" value="d"> D. Organising monthly team-building retreats and social events</label></div></div>
+    <div class="q-item"><div class="q-stem">10. What is the overall message of this text?</div><div class="options"><label class="opt"><input type="radio" name="r1q10" value="a"> A. Autocratic leadership is the most practical approach in modern workplaces</label><label class="opt"><input type="radio" name="r1q10" value="b"> B. Team performance is primarily driven by individual talent and technical skills</label><label class="opt"><input type="radio" name="r1q10" value="c"> C. Effective leadership integrates knowledge of leadership styles, psychological safety, and individual motivation</label><label class="opt"><input type="radio" name="r1q10" value="d"> D. The main role of a leader is to evaluate and assess employee performance</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('r1',{r1q1:'c',r1q2:'b',r1q3:'c',r1q4:'b',r1q5:'c',r1q6:'c',r1q7:'b',r1q8:'c',r1q9:'b',r1q10:'c'})">✅ Submit Answers</button><div id="r1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Reading 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>C</strong> — In high-pressure, time-critical situations requiring rapid direction</li><li>2. <strong>B</strong> — Fosters ownership, improves morale, and generates more creative solutions</li><li>3. <strong>C</strong> — A style where leaders inspire through a compelling vision and encourage personal growth</li><li>4. <strong>B</strong> — Psychological safety within the team</li><li>5. <strong>C</strong> — Team members default to self-protective silence and innovation stagnates</li><li>6. <strong>C</strong> — Baseline conditions whose absence causes dissatisfaction</li><li>7. <strong>B</strong> — Motivation is not static and different people are driven by different factors</li><li>8. <strong>C</strong> — As powerful opportunities to connect, inspire, and develop</li><li>9. <strong>B</strong> — Modelling vulnerability, inviting dissent, and responding to mistakes with curiosity</li><li>10. <strong>C</strong> — Effective leadership integrates styles, psychological safety, and individual motivation</li></ol></div></div>
+
+  <div style="height:32px"></div>
+
+  <div class="reading-card">
+    <h3>Text 2 — Delegation, Conflict, and the Performance Management Cycle</h3>
+    <p>Delegation is one of the most essential — and most frequently misused — tools in any manager's repertoire. Effective delegation involves far more than simply handing off tasks to free up a manager's calendar. When done well, delegation is a powerful act of trust and professional development: it signals confidence in an employee's capabilities, stretches their skills into new territory, and cultivates the kind of ownership and engagement that no amount of direct supervision can manufacture. However, the delegation process can fail at several critical junctures. Over-delegation — assigning tasks without adequate context, resources, or support — leaves employees feeling overwhelmed and exposed to failure. Under-delegation, or micromanagement, conveys distrust, stifles initiative, and creates an unsustainable bottleneck at the managerial level. The most effective managers master the art of contextual delegation: matching the complexity of a task to the capability and confidence level of the individual, providing clear objectives and decision-making boundaries, and remaining available as a resource without becoming an obstacle.</p>
+    <p>Conflict within teams, when managed well, can be a powerful catalyst for innovation and better decision-making. Research consistently shows that teams that engage in healthy, respectful task-related conflict — disagreements about ideas, approaches, and solutions — produce significantly better outcomes than those that avoid all friction in the name of harmony. However, when conflict becomes personal, emotional, or entrenched, it rapidly becomes destructive. Effective managers intervene early, before positions harden and trust is irreparably damaged. Key conflict resolution techniques include active listening, perspective-taking, reframing the disagreement in terms of shared goals, and establishing clear behavioural expectations going forward. In some cases, structural solutions — such as clarifying role boundaries, redistributing responsibilities, or restructuring team dynamics — are required to prevent the same conflicts from recurring. A manager who is skilled at navigating conflict does not seek to eliminate all disagreement, but to channel it productively toward the team's collective objectives.</p>
+    <p>A robust performance management cycle is the operational backbone of team leadership. This cycle typically consists of four interconnected phases: goal-setting, ongoing monitoring and coaching, formal review and feedback, and development planning. The goal-setting phase is where clarity is established — objectives should align with organisational priorities and be specific, measurable, and time-bound. The monitoring phase is where many managers fail: effective monitoring requires regular, substantive check-ins rather than the passive assumption that no news is good news. When performance falls below expectations, the manager's response should be timely, honest, and constructive — focusing on specific behaviours and measurable outcomes rather than personal characteristics. The development planning phase closes the loop by identifying skill gaps, training needs, and growth opportunities that will equip each team member to perform more effectively in the future. When all four phases are executed consistently and with genuine care for each individual's development, performance management transforms from a compliance exercise into a genuine engine of team growth.</p>
+  </div>
+
+  <div id="r2" class="quiz-card">
+    <div class="quiz-title">Reading 2 — 10 Multiple-Choice Questions</div>
+    <div class="q-item"><div class="q-stem">1. According to the text, what does effective delegation signal to an employee?</div><div class="options"><label class="opt"><input type="radio" name="r2q1" value="a"> A. That the manager is too busy to do the work themselves</label><label class="opt"><input type="radio" name="r2q1" value="b"> B. Confidence in the employee's capabilities and a commitment to their development</label><label class="opt"><input type="radio" name="r2q1" value="c"> C. That the task is not important enough for senior attention</label><label class="opt"><input type="radio" name="r2q1" value="d"> D. That the employee needs to prove themselves before being trusted</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What is described as the consequence of "under-delegation" or micromanagement?</div><div class="options"><label class="opt"><input type="radio" name="r2q2" value="a"> A. Employees become more motivated when supervised closely</label><label class="opt"><input type="radio" name="r2q2" value="b"> B. Decision quality improves due to constant managerial oversight</label><label class="opt"><input type="radio" name="r2q2" value="c"> C. It conveys distrust, stifles initiative, and creates a bottleneck at managerial level</label><label class="opt"><input type="radio" name="r2q2" value="d"> D. Teams become more cohesive and collaborative as a result</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What does the text say about task-related conflict in teams?</div><div class="options"><label class="opt"><input type="radio" name="r2q3" value="a"> A. It should always be avoided to maintain positive team relationships</label><label class="opt"><input type="radio" name="r2q3" value="b"> B. It is always a sign of poor leadership and dysfunctional team dynamics</label><label class="opt"><input type="radio" name="r2q3" value="c"> C. Healthy task-related conflict can be a catalyst for innovation and better decisions</label><label class="opt"><input type="radio" name="r2q3" value="d"> D. Conflict is only productive when managed by external mediators</label></div></div>
+    <div class="q-item"><div class="q-stem">4. When should a manager intervene in a team conflict, according to the text?</div><div class="options"><label class="opt"><input type="radio" name="r2q4" value="a"> A. Only when the conflict has escalated to a formal HR complaint</label><label class="opt"><input type="radio" name="r2q4" value="b"> B. Early, before positions harden and trust is irreparably damaged</label><label class="opt"><input type="radio" name="r2q4" value="c"> C. After giving team members at least three months to resolve it independently</label><label class="opt"><input type="radio" name="r2q4" value="d"> D. Only during the formal annual performance review</label></div></div>
+    <div class="q-item"><div class="q-stem">5. Which of the following is listed as a conflict resolution technique in the text?</div><div class="options"><label class="opt"><input type="radio" name="r2q5" value="a"> A. Reassigning all conflicting team members to different departments</label><label class="opt"><input type="radio" name="r2q5" value="b"> B. Reframing the disagreement in terms of shared team goals</label><label class="opt"><input type="radio" name="r2q5" value="c"> C. Removing the lower-performing party from the team entirely</label><label class="opt"><input type="radio" name="r2q5" value="d"> D. Escalating all conflicts directly to senior management without intervention</label></div></div>
+    <div class="q-item"><div class="q-stem">6. What are the four phases of the performance management cycle as described in Paragraph 3?</div><div class="options"><label class="opt"><input type="radio" name="r2q6" value="a"> A. Hiring, onboarding, monitoring, and dismissal</label><label class="opt"><input type="radio" name="r2q6" value="b"> B. Goal-setting, monitoring and coaching, formal review, and development planning</label><label class="opt"><input type="radio" name="r2q6" value="c"> C. Appraisal, salary review, promotion decision, and exit interview</label><label class="opt"><input type="radio" name="r2q6" value="d"> D. Benchmarking, training, evaluation, and recognition</label></div></div>
+    <div class="q-item"><div class="q-stem">7. Where does the text say many managers fail in the performance management cycle?</div><div class="options"><label class="opt"><input type="radio" name="r2q7" value="a"> A. During the goal-setting phase, where objectives are too vague</label><label class="opt"><input type="radio" name="r2q7" value="b"> B. During the monitoring phase, by assuming no news is good news</label><label class="opt"><input type="radio" name="r2q7" value="c"> C. During the formal review, by avoiding difficult conversations</label><label class="opt"><input type="radio" name="r2q7" value="d"> D. During development planning, by overlooking training budgets</label></div></div>
+    <div class="q-item"><div class="q-stem">8. How should a manager respond when an employee's performance falls below expectations?</div><div class="options"><label class="opt"><input type="radio" name="r2q8" value="a"> A. Wait until the annual review to address the issue formally</label><label class="opt"><input type="radio" name="r2q8" value="b"> B. Focus feedback on the employee's personal attitude and character</label><label class="opt"><input type="radio" name="r2q8" value="c"> C. Respond in a timely, honest, and constructive manner, focusing on specific behaviours</label><label class="opt"><input type="radio" name="r2q8" value="d"> D. Immediately begin a formal disciplinary process</label></div></div>
+    <div class="q-item"><div class="q-stem">9. What is the purpose of the development planning phase in performance management?</div><div class="options"><label class="opt"><input type="radio" name="r2q9" value="a"> A. To document poor performance for future legal proceedings</label><label class="opt"><input type="radio" name="r2q9" value="b"> B. To set next year's salary increase and bonus targets</label><label class="opt"><input type="radio" name="r2q9" value="c"> C. To identify skill gaps and growth opportunities to help employees perform more effectively</label><label class="opt"><input type="radio" name="r2q9" value="d"> D. To decide which employees should be promoted to management roles</label></div></div>
+    <div class="q-item"><div class="q-stem">10. What is the overall argument of this text?</div><div class="options"><label class="opt"><input type="radio" name="r2q10" value="a"> A. Performance management is primarily a compliance and HR function</label><label class="opt"><input type="radio" name="r2q10" value="b"> B. Conflict should be avoided entirely to maintain team harmony</label><label class="opt"><input type="radio" name="r2q10" value="c"> C. Effective delegation, thoughtful conflict management, and a consistent performance cycle are essential for team success</label><label class="opt"><input type="radio" name="r2q10" value="d"> D. The best managers delegate everything and focus entirely on strategy</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('r2',{r2q1:'b',r2q2:'c',r2q3:'c',r2q4:'b',r2q5:'b',r2q6:'b',r2q7:'b',r2q8:'c',r2q9:'c',r2q10:'c'})">✅ Submit Answers</button><div id="r2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Reading 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>C</strong></li><li>3. <strong>C</strong></li><li>4. <strong>B</strong></li><li>5. <strong>B</strong></li><li>6. <strong>B</strong></li><li>7. <strong>B</strong></li><li>8. <strong>C</strong></li><li>9. <strong>C</strong></li><li>10. <strong>C</strong></li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<!-- VOCABULARY -->
+<section id="vocabulary">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fef3c7">✏️</div>
+      <div><div class="sec-title">Vocabulary Exercises</div><div class="sec-sub">4 Exercises · Multiple Choice · Gap-Fill · True/False · Sentence Reorder</div></div>
+    </div>
+  </div>
+
+  <!-- VOC 1: Multiple Choice -->
+  <div id="v1" class="quiz-card">
+    <div class="quiz-title">Exercise 1 — Multiple Choice: Choose the Best Word</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Choose the word or phrase that best completes each sentence.</p>
+    <div class="q-item"><div class="q-stem">1. The manager decided to ________ the project coordination to her most experienced team member, freeing herself to focus on the board presentation.</div><div class="options"><label class="opt"><input type="radio" name="v1q1" value="a"> A. micromanage</label><label class="opt"><input type="radio" name="v1q1" value="b"> B. delegate</label><label class="opt"><input type="radio" name="v1q1" value="c"> C. terminate</label><label class="opt"><input type="radio" name="v1q1" value="d"> D. penalise</label></div></div>
+    <div class="q-item"><div class="q-stem">2. After the merger, the HR director identified a significant ________ in data analytics skills, and recommended a targeted training programme.</div><div class="options"><label class="opt"><input type="radio" name="v1q2" value="a"> A. performance review</label><label class="opt"><input type="radio" name="v1q2" value="b"> B. team charter</label><label class="opt"><input type="radio" name="v1q2" value="c"> C. skill gap</label><label class="opt"><input type="radio" name="v1q2" value="d"> D. team cohesion</label></div></div>
+    <div class="q-item"><div class="q-stem">3. The new CEO is known for her highly ________ leadership approach — she regularly challenges the team to exceed what they thought was possible.</div><div class="options"><label class="opt"><input type="radio" name="v1q3" value="a"> A. autocratic</label><label class="opt"><input type="radio" name="v1q3" value="b"> B. transactional</label><label class="opt"><input type="radio" name="v1q3" value="c"> C. transformational</label><label class="opt"><input type="radio" name="v1q3" value="d"> D. passive</label></div></div>
+    <div class="q-item"><div class="q-stem">4. The team's strong sense of ________ — the fact that everyone genuinely wanted to support each other — made them far more resilient during the crisis.</div><div class="options"><label class="opt"><input type="radio" name="v1q4" value="a"> A. micromanagement</label><label class="opt"><input type="radio" name="v1q4" value="b"> B. team cohesion</label><label class="opt"><input type="radio" name="v1q4" value="c"> C. role clarity</label><label class="opt"><input type="radio" name="v1q4" value="d"> D. onboarding</label></div></div>
+    <div class="q-item"><div class="q-stem">5. Research consistently shows that ________ — the feeling that you can speak up without fear — is the single biggest predictor of team effectiveness.</div><div class="options"><label class="opt"><input type="radio" name="v1q5" value="a"> A. succession planning</label><label class="opt"><input type="radio" name="v1q5" value="b"> B. employee recognition</label><label class="opt"><input type="radio" name="v1q5" value="c"> C. psychological safety</label><label class="opt"><input type="radio" name="v1q5" value="d"> D. agile management</label></div></div>
+    <div class="q-item"><div class="q-stem">6. Rather than a formal annual appraisal alone, the company now uses ________ feedback, collecting input from peers, subordinates, and senior leaders.</div><div class="options"><label class="opt"><input type="radio" name="v1q6" value="a"> A. self-assessment</label><label class="opt"><input type="radio" name="v1q6" value="b"> B. 360-degree</label><label class="opt"><input type="radio" name="v1q6" value="c"> C. onboarding</label><label class="opt"><input type="radio" name="v1q6" value="d"> D. coaching</label></div></div>
+    <div class="q-item"><div class="q-stem">7. Long hours and an impossibly demanding workload had pushed several of the top performers to the edge of complete ________.</div><div class="options"><label class="opt"><input type="radio" name="v1q7" value="a"> A. empowerment</label><label class="opt"><input type="radio" name="v1q7" value="b"> B. accountability</label><label class="opt"><input type="radio" name="v1q7" value="c"> C. burnout</label><label class="opt"><input type="radio" name="v1q7" value="d"> D. briefing</label></div></div>
+    <div class="q-item"><div class="q-stem">8. As part of the company's ________ programme, three junior managers had been identified and were receiving intensive leadership development to prepare for the next level.</div><div class="options"><label class="opt"><input type="radio" name="v1q8" value="a"> A. team building</label><label class="opt"><input type="radio" name="v1q8" value="b"> B. succession planning</label><label class="opt"><input type="radio" name="v1q8" value="c"> C. conflict resolution</label><label class="opt"><input type="radio" name="v1q8" value="d"> D. performance management</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('v1',{v1q1:'b',v1q2:'c',v1q3:'c',v1q4:'b',v1q5:'c',v1q6:'b',v1q7:'c',v1q8:'b'})">✅ Submit</button><div id="v1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — delegate</li><li>2. <strong>C</strong> — skill gap</li><li>3. <strong>C</strong> — transformational</li><li>4. <strong>B</strong> — team cohesion</li><li>5. <strong>C</strong> — psychological safety</li><li>6. <strong>B</strong> — 360-degree</li><li>7. <strong>C</strong> — burnout</li><li>8. <strong>B</strong> — succession planning</li></ol></div></div>
+
+  <!-- VOC 2: GAP FILL -->
+  <div id="v2" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 2 — Gap-Fill: Complete the Sentences</div>
+    <div style="background:#f5f2ec;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;font-family:'DM Mono',monospace;color:var(--sky);display:flex;flex-wrap:wrap;gap:8px">
+      <span>empowerment</span>|<span>onboarding</span>|<span>accountability</span>|<span>coaching</span>|<span>team dynamics</span>|<span>role clarity</span>|<span>recognition</span>|<span>emotional intelligence</span>
+    </div>
+    <div class="q-item"><div class="q-stem">1. The new ________ programme ensured that all new hires understood the company culture, their key responsibilities, and their team's ways of working within their first two weeks.</div><div style="margin-top:8px"><input class="gap-input" id="g2i1" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">2. Strong ________ means that each team member knows exactly what is expected of them — avoiding the confusion and duplication of effort that plagues poorly structured teams.</div><div style="margin-top:8px"><input class="gap-input" id="g2i2" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">3. The manager dedicated time each week to individual ________ sessions, helping her team members work through challenges and develop their professional capabilities.</div><div style="margin-top:8px"><input class="gap-input" id="g2i3" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">4. A culture of genuine ________ — where people acknowledge when things go wrong and take ownership of fixing them — is a hallmark of high-performing teams.</div><div style="margin-top:8px"><input class="gap-input" id="g2i4" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">5. He was promoted not because of his technical skills, but because of his exceptional ________ — his ability to read people, manage conflict, and stay calm under pressure.</div><div style="margin-top:8px"><input class="gap-input" id="g2i5" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">6. The restructuring created a great deal of uncertainty, and the team's ________ changed significantly — former collaborators became rivals for the same new role.</div><div style="margin-top:8px"><input class="gap-input" id="g2i6" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">7. True ________ means more than just saying well done — it means understanding what each person values and acknowledging their contribution in a way that is meaningful to them.</div><div style="margin-top:8px"><input class="gap-input" id="g2i7" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">8. By giving team members real ________ over their own projects, the director significantly increased their engagement, initiative, and sense of personal investment in outcomes.</div><div style="margin-top:8px"><input class="gap-input" id="g2i8" placeholder="type answer…"></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeGap2()">✅ Check Answers</button><div id="v2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>onboarding</strong></li><li>2. <strong>role clarity</strong></li><li>3. <strong>coaching</strong></li><li>4. <strong>accountability</strong></li><li>5. <strong>emotional intelligence</strong></li><li>6. <strong>team dynamics</strong></li><li>7. <strong>recognition</strong></li><li>8. <strong>empowerment</strong></li></ol></div></div>
+
+  <!-- VOC 3: TRUE/FALSE -->
+  <div id="v3" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 3 — True or False: Team Leadership Statements</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Read each statement carefully. Select <strong>True</strong> or <strong>False</strong> based on the correct meaning of the vocabulary and concepts in this module.</p>
+    <div class="q-item" id="tfr1"><div class="q-stem">1. A 360-degree feedback process only collects input from the employee's direct line manager.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'1','T')">True</button><button class="tf-btn" onclick="pickTF(this,'1','F')">False</button></div></div>
+    <div class="q-item" id="tfr2"><div class="q-stem">2. Psychological safety refers to an environment where team members feel comfortable speaking up, taking risks, and admitting mistakes without fear.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'2','T')">True</button><button class="tf-btn" onclick="pickTF(this,'2','F')">False</button></div></div>
+    <div class="q-item" id="tfr3"><div class="q-stem">3. Micromanagement is considered an effective way to empower team members and develop their professional independence.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'3','T')">True</button><button class="tf-btn" onclick="pickTF(this,'3','F')">False</button></div></div>
+    <div class="q-item" id="tfr4"><div class="q-stem">4. Succession planning involves identifying and preparing high-potential employees to take on key leadership roles in the future.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'4','T')">True</button><button class="tf-btn" onclick="pickTF(this,'4','F')">False</button></div></div>
+    <div class="q-item" id="tfr5"><div class="q-stem">5. A team charter is an informal, unwritten set of team preferences with no binding expectations for behaviour or collaboration.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'5','T')">True</button><button class="tf-btn" onclick="pickTF(this,'5','F')">False</button></div></div>
+    <div class="q-item" id="tfr6"><div class="q-stem">6. Emotional intelligence includes the ability to recognise and manage both your own emotions and the emotions of those around you.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'6','T')">True</button><button class="tf-btn" onclick="pickTF(this,'6','F')">False</button></div></div>
+    <div class="q-item" id="tfr7"><div class="q-stem">7. Burnout is a positive state of energised engagement that results from high workload and productivity.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'7','T')">True</button><button class="tf-btn" onclick="pickTF(this,'7','F')">False</button></div></div>
+    <div class="q-item" id="tfr8"><div class="q-stem">8. A cross-functional team brings together professionals from different departments to collaborate on a shared project or objective.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'8','T')">True</button><button class="tf-btn" onclick="pickTF(this,'8','F')">False</button></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeTF()">✅ Submit Answers</button><div id="v3-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>False</strong> — 360-degree feedback collects input from multiple sources: peers, subordinates, and managers.</li><li>2. <strong>True</strong></li><li>3. <strong>False</strong> — Micromanagement undermines trust and stifles autonomy; it is not empowering.</li><li>4. <strong>True</strong></li><li>5. <strong>False</strong> — A team charter is a formal document with defined expectations and ground rules.</li><li>6. <strong>True</strong></li><li>7. <strong>False</strong> — Burnout is a state of chronic exhaustion and disengagement, not a positive one.</li><li>8. <strong>True</strong></li></ol></div></div>
+
+  <!-- VOC 4: DRAG & DROP -->
+  <div id="v4" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 4 — Match: Term to Definition (Click to Select & Place)</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Click a term to select it (highlighted in gold), then click the correct definition box to place it there.</p>
+    <div class="drag-bank" id="v4bank">
+      <div class="drag-chip" data-w="Delegation" onclick="pickDrag(this)">Delegation</div>
+      <div class="drag-chip" data-w="Agile Management" onclick="pickDrag(this)">Agile Management</div>
+      <div class="drag-chip" data-w="Briefing" onclick="pickDrag(this)">Briefing</div>
+      <div class="drag-chip" data-w="Coaching" onclick="pickDrag(this)">Coaching</div>
+      <div class="drag-chip" data-w="Team Cohesion" onclick="pickDrag(this)">Team Cohesion</div>
+      <div class="drag-chip" data-w="Constructive Feedback" onclick="pickDrag(this)">Constructive Feedback</div>
+      <div class="drag-chip" data-w="Onboarding" onclick="pickDrag(this)">Onboarding</div>
+      <div class="drag-chip" data-w="Empowerment" onclick="pickDrag(this)">Empowerment</div>
+    </div>
+    <div class="q-item"><div class="q-stem">1. "A developmental partnership where a leader helps an individual build skills and reach their professional potential." → <span class="drop-zone" data-ans="Coaching" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">2. "A short, structured meeting in which a manager communicates key information and objectives to the team." → <span class="drop-zone" data-ans="Briefing" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">3. "The process of integrating a new employee into the organisation, their role, and the team culture." → <span class="drop-zone" data-ans="Onboarding" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">4. "Assigning tasks and authority to team members while retaining overall accountability for outcomes." → <span class="drop-zone" data-ans="Delegation" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">5. "The degree to which team members are united, committed to shared goals, and work effectively together." → <span class="drop-zone" data-ans="Team Cohesion" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">6. "Giving team members the authority and confidence to make decisions and take initiative in their roles." → <span class="drop-zone" data-ans="Empowerment" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">7. "Specific, respectful, and actionable commentary on performance that helps employees improve." → <span class="drop-zone" data-ans="Constructive Feedback" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">8. "A flexible management approach that prioritises collaboration, adaptability, and rapid response to change." → <span class="drop-zone" data-ans="Agile Management" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeDrop()">✅ Check Matches</button><button class="btn btn-outline" style="font-size:12px" onclick="resetDrop()">↺ Reset</button><div id="v4-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 4</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>Coaching</strong></li><li>2. <strong>Briefing</strong></li><li>3. <strong>Onboarding</strong></li><li>4. <strong>Delegation</strong></li><li>5. <strong>Team Cohesion</strong></li><li>6. <strong>Empowerment</strong></li><li>7. <strong>Constructive Feedback</strong></li><li>8. <strong>Agile Management</strong></li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<!-- GRAMMAR -->
+<section id="grammar">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#dcfce7">📐</div>
+      <div><div class="sec-title">Grammar Exercises</div><div class="sec-sub">4 Exercises · Conditionals · Modals · Reported Speech · Gerunds & Infinitives</div></div>
+    </div>
+  </div>
+
+  <!-- GRAMMAR 1 -->
+  <div id="g1" class="quiz-card">
+    <div class="quiz-title">Grammar 1 — Conditional Sentences in Management Contexts</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the correct conditional form to complete each sentence.</p>
+    <div class="q-item"><div class="q-stem">1. If the manager ________ clearer role boundaries from the start, the team conflict would never have escalated this far.</div><div class="options"><label class="opt"><input type="radio" name="g1q1" value="a"> A. established</label><label class="opt"><input type="radio" name="g1q1" value="b"> B. had established</label><label class="opt"><input type="radio" name="g1q1" value="c"> C. establishes</label><label class="opt"><input type="radio" name="g1q1" value="d"> D. would establish</label></div></div>
+    <div class="q-item"><div class="q-stem">2. If you ________ regular one-to-one meetings with your team, you will identify performance issues much earlier.</div><div class="options"><label class="opt"><input type="radio" name="g1q2" value="a"> A. held</label><label class="opt"><input type="radio" name="g1q2" value="b"> B. had held</label><label class="opt"><input type="radio" name="g1q2" value="c"> C. hold</label><label class="opt"><input type="radio" name="g1q2" value="d"> D. would hold</label></div></div>
+    <div class="q-item"><div class="q-stem">3. Unless leaders ________ constructive feedback, employees cannot improve or grow in their roles. (general truth)</div><div class="options"><label class="opt"><input type="radio" name="g1q3" value="a"> A. would provide</label><label class="opt"><input type="radio" name="g1q3" value="b"> B. had provided</label><label class="opt"><input type="radio" name="g1q3" value="c"> C. provide</label><label class="opt"><input type="radio" name="g1q3" value="d"> D. will provide</label></div></div>
+    <div class="q-item"><div class="q-stem">4. If the leadership team ________ psychological safety more seriously, engagement scores would be significantly higher right now.</div><div class="options"><label class="opt"><input type="radio" name="g1q4" value="a"> A. takes</label><label class="opt"><input type="radio" name="g1q4" value="b"> B. had taken</label><label class="opt"><input type="radio" name="g1q4" value="c"> C. took</label><label class="opt"><input type="radio" name="g1q4" value="d"> D. will take</label></div></div>
+    <div class="q-item"><div class="q-stem">5. If the director ________ the team's workload earlier, several top performers ________ to the brink of burnout.</div><div class="options"><label class="opt"><input type="radio" name="g1q5" value="a"> A. had monitored / would not have been pushed</label><label class="opt"><input type="radio" name="g1q5" value="b"> B. monitored / would not push</label><label class="opt"><input type="radio" name="g1q5" value="c"> C. monitors / will not be pushed</label><label class="opt"><input type="radio" name="g1q5" value="d"> D. had monitored / would not push</label></div></div>
+    <div class="q-item"><div class="q-stem">6. If she ________ her team more autonomy today, she will see an immediate improvement in their initiative and motivation.</div><div class="options"><label class="opt"><input type="radio" name="g1q6" value="a"> A. gave</label><label class="opt"><input type="radio" name="g1q6" value="b"> B. gives</label><label class="opt"><input type="radio" name="g1q6" value="c"> C. had given</label><label class="opt"><input type="radio" name="g1q6" value="d"> D. would give</label></div></div>
+    <div class="q-item"><div class="q-stem">7. If the company ________ more investment in succession planning, it ________ a serious talent vacuum when the CEO retired.</div><div class="options"><label class="opt"><input type="radio" name="g1q7" value="a"> A. had made / would not have faced</label><label class="opt"><input type="radio" name="g1q7" value="b"> B. made / would not face</label><label class="opt"><input type="radio" name="g1q7" value="c"> C. makes / will not face</label><label class="opt"><input type="radio" name="g1q7" value="d"> D. would make / had not faced</label></div></div>
+    <div class="q-item"><div class="q-stem">8. If the team ________ a proper onboarding process, new recruits ________ faster and with much greater confidence.</div><div class="options"><label class="opt"><input type="radio" name="g1q8" value="a"> A. had / would settle in</label><label class="opt"><input type="radio" name="g1q8" value="b"> B. has / would settle in</label><label class="opt"><input type="radio" name="g1q8" value="c"> C. had had / would have settled in</label><label class="opt"><input type="radio" name="g1q8" value="d"> D. had had / settled in</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g1',{g1q1:'b',g1q2:'c',g1q3:'c',g1q4:'c',g1q5:'a',g1q6:'b',g1q7:'a',g1q8:'c'})">✅ Submit</button><div id="g1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — had established (3rd conditional: unreal past)</li><li>2. <strong>C</strong> — hold (1st conditional: real future)</li><li>3. <strong>C</strong> — provide (zero conditional: general truth)</li><li>4. <strong>C</strong> — took (2nd conditional: unreal present)</li><li>5. <strong>A</strong> — had monitored / would not have been pushed (3rd conditional)</li><li>6. <strong>B</strong> — gives (1st conditional)</li><li>7. <strong>A</strong> — had made / would not have faced (3rd conditional)</li><li>8. <strong>C</strong> — had had / would have settled in (3rd conditional)</li></ol></div></div>
+
+  <!-- GRAMMAR 2 -->
+  <div id="g2" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Grammar 2 — Modal Verbs: Obligation, Advice & Possibility</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Select the most appropriate modal verb for each management context.</p>
+    <div class="q-item"><div class="q-stem">1. All line managers ________ complete the mandatory performance management training before conducting annual appraisals. <em>(strict obligation)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q1" value="a"> A. might</label><label class="opt"><input type="radio" name="g2q1" value="b"> B. should</label><label class="opt"><input type="radio" name="g2q1" value="c"> C. must</label><label class="opt"><input type="radio" name="g2q1" value="d"> D. would</label></div></div>
+    <div class="q-item"><div class="q-stem">2. Team leaders ________ consider implementing weekly check-in meetings to monitor team morale more closely. <em>(strong recommendation)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q2" value="a"> A. must not</label><label class="opt"><input type="radio" name="g2q2" value="b"> B. could not</label><label class="opt"><input type="radio" name="g2q2" value="c"> C. should</label><label class="opt"><input type="radio" name="g2q2" value="d"> D. will</label></div></div>
+    <div class="q-item"><div class="q-stem">3. Given the symptoms described, the employee ________ be experiencing early signs of burnout — the workload issue needs urgent attention. <em>(logical deduction)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q3" value="a"> A. should</label><label class="opt"><input type="radio" name="g2q3" value="b"> B. could</label><label class="opt"><input type="radio" name="g2q3" value="c"> C. must</label><label class="opt"><input type="radio" name="g2q3" value="d"> D. might</label></div></div>
+    <div class="q-item"><div class="q-stem">4. Managers ________ share confidential employee performance data with colleagues who are not directly involved in the review process. <em>(prohibition)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q4" value="a"> A. should not</label><label class="opt"><input type="radio" name="g2q4" value="b"> B. must not</label><label class="opt"><input type="radio" name="g2q4" value="c"> C. might not</label><label class="opt"><input type="radio" name="g2q4" value="d"> D. would not</label></div></div>
+    <div class="q-item"><div class="q-stem">5. The team lead ________ addressed the conflict before it escalated — now it will take weeks to rebuild trust between those two colleagues. <em>(past criticism/regret)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q5" value="a"> A. must have</label><label class="opt"><input type="radio" name="g2q5" value="b"> B. might have</label><label class="opt"><input type="radio" name="g2q5" value="c"> C. should have</label><label class="opt"><input type="radio" name="g2q5" value="d"> D. could not have</label></div></div>
+    <div class="q-item"><div class="q-stem">6. The new team structure ________ improve productivity, but we won't know for certain until the first quarterly review. <em>(possibility)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q6" value="a"> A. must</label><label class="opt"><input type="radio" name="g2q6" value="b"> B. might</label><label class="opt"><input type="radio" name="g2q6" value="c"> C. should not</label><label class="opt"><input type="radio" name="g2q6" value="d"> D. will definitely</label></div></div>
+    <div class="q-item"><div class="q-stem">7. You ________ wait until the annual appraisal to address this — the performance issue needs to be discussed immediately and directly. <em>(strong advice against)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q7" value="a"> A. might not</label><label class="opt"><input type="radio" name="g2q7" value="b"> B. should not</label><label class="opt"><input type="radio" name="g2q7" value="c"> C. would not</label><label class="opt"><input type="radio" name="g2q7" value="d"> D. must have not</label></div></div>
+    <div class="q-item"><div class="q-stem">8. All employees ________ receive a formal written summary of their annual performance review within five working days of the meeting. <em>(obligation)</em></div><div class="options"><label class="opt"><input type="radio" name="g2q8" value="a"> A. might</label><label class="opt"><input type="radio" name="g2q8" value="b"> B. should</label><label class="opt"><input type="radio" name="g2q8" value="c"> C. must</label><label class="opt"><input type="radio" name="g2q8" value="d"> D. could</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g2',{g2q1:'c',g2q2:'c',g2q3:'c',g2q4:'b',g2q5:'c',g2q6:'b',g2q7:'b',g2q8:'c'})">✅ Submit</button><div id="g2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>C</strong> — must (strict obligation)</li><li>2. <strong>C</strong> — should (strong recommendation)</li><li>3. <strong>C</strong> — must (logical deduction)</li><li>4. <strong>B</strong> — must not (prohibition)</li><li>5. <strong>C</strong> — should have (past criticism/regret)</li><li>6. <strong>B</strong> — might (real possibility, not certain)</li><li>7. <strong>B</strong> — should not (strong advice against)</li><li>8. <strong>C</strong> — must (obligation)</li></ol></div></div>
+
+  <!-- GRAMMAR 3: REPORTED SPEECH -->
+  <div id="g3" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Grammar 3 — Reported Speech in Professional Contexts</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the correct reported speech form for each item.</p>
+    <div class="q-item"><div class="q-stem">1. Direct: "We will introduce a new 360-degree feedback system next quarter." — Reported speech:</div><div class="options"><label class="opt"><input type="radio" name="g3q1" value="a"> A. The director said they will introduce a new 360-degree feedback system next quarter.</label><label class="opt"><input type="radio" name="g3q1" value="b"> B. The director said they would introduce a new 360-degree feedback system the following quarter.</label><label class="opt"><input type="radio" name="g3q1" value="c"> C. The director told they would introduce a new system the following quarter.</label><label class="opt"><input type="radio" name="g3q1" value="d"> D. The director said that they introduce a new 360-degree feedback system next quarter.</label></div></div>
+    <div class="q-item"><div class="q-stem">2. Direct: "Give every team member direct access to the performance data." (COO to managers) — Reported:</div><div class="options"><label class="opt"><input type="radio" name="g3q2" value="a"> A. The COO said managers give every team member access to the performance data.</label><label class="opt"><input type="radio" name="g3q2" value="b"> B. The COO said to give every team member direct access to the performance data.</label><label class="opt"><input type="radio" name="g3q2" value="c"> C. The COO told managers to give every team member direct access to the performance data.</label><label class="opt"><input type="radio" name="g3q2" value="d"> D. The COO told to managers to give every team member access.</label></div></div>
+    <div class="q-item"><div class="q-stem">3. Direct: "I am currently reviewing all individual development plans." — Reported:</div><div class="options"><label class="opt"><input type="radio" name="g3q3" value="a"> A. She said she is currently reviewing all individual development plans.</label><label class="opt"><input type="radio" name="g3q3" value="b"> B. She said she was currently reviewing all individual development plans.</label><label class="opt"><input type="radio" name="g3q3" value="c"> C. She said she will be reviewing all development plans currently.</label><label class="opt"><input type="radio" name="g3q3" value="d"> D. She told she was reviewing development plans at that time.</label></div></div>
+    <div class="q-item"><div class="q-stem">4. Direct: "Have you conducted the team's skill gap analysis yet?" — Reported:</div><div class="options"><label class="opt"><input type="radio" name="g3q4" value="a"> A. The manager asked if they had conducted the team's skill gap analysis yet.</label><label class="opt"><input type="radio" name="g3q4" value="b"> B. The manager asked did they conduct the skill gap analysis yet.</label><label class="opt"><input type="radio" name="g3q4" value="c"> C. The manager asked whether they have conducted the analysis yet.</label><label class="opt"><input type="radio" name="g3q4" value="d"> D. The manager told them if they had conducted the analysis.</label></div></div>
+    <div class="q-item"><div class="q-stem">5. Direct: "Our team's KPIs have improved significantly this month." — Reported:</div><div class="options"><label class="opt"><input type="radio" name="g3q5" value="a"> A. The team leader reported that their KPIs have improved significantly this month.</label><label class="opt"><input type="radio" name="g3q5" value="b"> B. The team leader reported that their KPIs had improved significantly that month.</label><label class="opt"><input type="radio" name="g3q5" value="c"> C. The team leader said that KPIs improved significantly this month.</label><label class="opt"><input type="radio" name="g3q5" value="d"> D. The team leader told the KPIs had improved that month.</label></div></div>
+    <div class="q-item"><div class="q-stem">6. Direct: "We cannot resolve the conflict without external mediation." — Reported:</div><div class="options"><label class="opt"><input type="radio" name="g3q6" value="a"> A. They acknowledged that they could not resolve the conflict without external mediation.</label><label class="opt"><input type="radio" name="g3q6" value="b"> B. They acknowledged that they cannot resolve the conflict without external mediation.</label><label class="opt"><input type="radio" name="g3q6" value="c"> C. They said to them that they can't resolve the conflict.</label><label class="opt"><input type="radio" name="g3q6" value="d"> D. They told they cannot resolve the conflict without mediation.</label></div></div>
+    <div class="q-item"><div class="q-stem">7. Which sentence is the most formally phrased for inclusion in a written management report?</div><div class="options"><label class="opt"><input type="radio" name="g3q7" value="a"> A. "So basically the team is not really hitting its targets right now."</label><label class="opt"><input type="radio" name="g3q7" value="b"> B. "It is evident that the team has not achieved the targets set for this period."</label><label class="opt"><input type="radio" name="g3q7" value="c"> C. "The team probably hasn't done what they were supposed to do this period."</label><label class="opt"><input type="radio" name="g3q7" value="d"> D. "Looks like the team has missed its targets again for this period."</label></div></div>
+    <div class="q-item"><div class="q-stem">8. Direct: "Don't micromanage your team — it will destroy their motivation." — Reported:</div><div class="options"><label class="opt"><input type="radio" name="g3q8" value="a"> A. The mentor said the manager not to micromanage the team.</label><label class="opt"><input type="radio" name="g3q8" value="b"> B. The mentor told the manager not to micromanage the team, as it would destroy their motivation.</label><label class="opt"><input type="radio" name="g3q8" value="c"> C. The mentor said that the manager does not micromanage the team.</label><label class="opt"><input type="radio" name="g3q8" value="d"> D. The mentor told to not micromanage their team.</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g3',{g3q1:'b',g3q2:'c',g3q3:'b',g3q4:'a',g3q5:'b',g3q6:'a',g3q7:'b',g3q8:'b'})">✅ Submit</button><div id="g3-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — "would introduce" + "the following quarter" (tense backshift)</li><li>2. <strong>C</strong> — told + object + to + infinitive (reported imperative)</li><li>3. <strong>B</strong> — "was reviewing" (past continuous — backshift of present continuous)</li><li>4. <strong>A</strong> — indirect question: if + subject + had conducted (backshift)</li><li>5. <strong>B</strong> — "had improved" (backshift of present perfect) + "that month"</li><li>6. <strong>A</strong> — "could not" (backshift of "cannot")</li><li>7. <strong>B</strong> — Impersonal passive, objective and formal</li><li>8. <strong>B</strong> — told + object + not to + infinitive; "would" backshift</li></ol></div></div>
+
+  <!-- GRAMMAR 4: GERUNDS & INFINITIVES -->
+  <div id="g4" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Grammar 4 — Gerunds and Infinitives in Management Language</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the correct gerund (-ing form) or infinitive (to + verb) for each sentence.</p>
+    <div class="q-item"><div class="q-stem">1. She suggested ________ weekly team briefings to improve communication and reduce misunderstandings.</div><div class="options"><label class="opt"><input type="radio" name="g4q1" value="a"> A. to hold</label><label class="opt"><input type="radio" name="g4q1" value="b"> B. hold</label><label class="opt"><input type="radio" name="g4q1" value="c"> C. holding</label><label class="opt"><input type="radio" name="g4q1" value="d"> D. held</label></div></div>
+    <div class="q-item"><div class="q-stem">2. The board agreed ________ the performance management framework before the new financial year.</div><div class="options"><label class="opt"><input type="radio" name="g4q2" value="a"> A. reviewing</label><label class="opt"><input type="radio" name="g4q2" value="b"> B. to review</label><label class="opt"><input type="radio" name="g4q2" value="c"> C. reviewed</label><label class="opt"><input type="radio" name="g4q2" value="d"> D. review</label></div></div>
+    <div class="q-item"><div class="q-stem">3. The manager avoided ________ the conflict directly, which ultimately made the situation considerably worse.</div><div class="options"><label class="opt"><input type="radio" name="g4q3" value="a"> A. to address</label><label class="opt"><input type="radio" name="g4q3" value="b"> B. addressed</label><label class="opt"><input type="radio" name="g4q3" value="c"> C. address</label><label class="opt"><input type="radio" name="g4q3" value="d"> D. addressing</label></div></div>
+    <div class="q-item"><div class="q-stem">4. The director promised ________ all team members with a full explanation of the new delegation policy by Friday.</div><div class="options"><label class="opt"><input type="radio" name="g4q4" value="a"> A. providing</label><label class="opt"><input type="radio" name="g4q4" value="b"> B. to provide</label><label class="opt"><input type="radio" name="g4q4" value="c"> C. provide</label><label class="opt"><input type="radio" name="g4q4" value="d"> D. being provided</label></div></div>
+    <div class="q-item"><div class="q-stem">5. ________ effective feedback requires both skill and courage — it is one of the most demanding aspects of leadership.</div><div class="options"><label class="opt"><input type="radio" name="g4q5" value="a"> A. To delivering</label><label class="opt"><input type="radio" name="g4q5" value="b"> B. Delivers</label><label class="opt"><input type="radio" name="g4q5" value="c"> C. Deliver</label><label class="opt"><input type="radio" name="g4q5" value="d"> D. Delivering</label></div></div>
+    <div class="q-item"><div class="q-stem">6. Many leaders struggle ________ the transition from being an individual contributor to managing the performance of others.</div><div class="options"><label class="opt"><input type="radio" name="g4q6" value="a"> A. making</label><label class="opt"><input type="radio" name="g4q6" value="b"> B. to make</label><label class="opt"><input type="radio" name="g4q6" value="c"> C. to making</label><label class="opt"><input type="radio" name="g4q6" value="d"> D. made</label></div></div>
+    <div class="q-item"><div class="q-stem">7. The HR department recommended ________ a structured onboarding programme to reduce early-stage attrition significantly.</div><div class="options"><label class="opt"><input type="radio" name="g4q7" value="a"> A. to develop</label><label class="opt"><input type="radio" name="g4q7" value="b"> B. develop</label><label class="opt"><input type="radio" name="g4q7" value="c"> C. developing</label><label class="opt"><input type="radio" name="g4q7" value="d"> D. developed</label></div></div>
+    <div class="q-item"><div class="q-stem">8. The CEO refused ________ the succession planning discussion any longer, insisting it become a board agenda item this quarter.</div><div class="options"><label class="opt"><input type="radio" name="g4q8" value="a"> A. postponing</label><label class="opt"><input type="radio" name="g4q8" value="b"> B. postpone</label><label class="opt"><input type="radio" name="g4q8" value="c"> C. to postpone</label><label class="opt"><input type="radio" name="g4q8" value="d"> D. to postponing</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g4',{g4q1:'c',g4q2:'b',g4q3:'d',g4q4:'b',g4q5:'d',g4q6:'b',g4q7:'c',g4q8:'c'})">✅ Submit</button><div id="g4-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 4</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>C</strong> — "suggest + gerund" (suggest holding)</li><li>2. <strong>B</strong> — "agree + to-infinitive" (agreed to review)</li><li>3. <strong>D</strong> — "avoid + gerund" (avoided addressing)</li><li>4. <strong>B</strong> — "promise + to-infinitive" (promised to provide)</li><li>5. <strong>D</strong> — Gerund as subject of sentence (Delivering…)</li><li>6. <strong>B</strong> — "struggle + to-infinitive" (struggle to make)</li><li>7. <strong>C</strong> — "recommend + gerund" (recommended developing)</li><li>8. <strong>C</strong> — "refuse + to-infinitive" (refused to postpone)</li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<!-- GRAMMAR REVIEW -->
+<section id="grammarreview">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#e0e7ff">📘</div>
+      <div><div class="sec-title">Grammar Review</div><div class="sec-sub">Summary of all grammar points covered in Module 3 exercises</div></div>
+    </div>
+  </div>
+  <div class="grammar-box">
+    <h4>1. Conditional Sentences in Management English</h4>
+    <p>Conditionals are used constantly in management discussions to explore cause-and-effect relationships, scenarios, and consequences of decisions.</p>
+    <ul>
+      <li><strong>Zero conditional</strong> — General truths and facts: <em>If + present simple, present simple</em></li>
+      <li><strong>First conditional</strong> — Real, likely future scenarios: <em>If + present simple, will + base verb</em></li>
+      <li><strong>Second conditional</strong> — Hypothetical present/future: <em>If + past simple, would + base verb</em></li>
+      <li><strong>Third conditional</strong> — Unreal past situations and their consequences: <em>If + past perfect, would have + pp</em></li>
+      <li><strong>Mixed conditional</strong> — Past condition with present result: <em>If + past perfect, would + base verb</em></li>
+      <li><strong>Unless</strong> = "if not" — used with 1st and 2nd conditionals to express conditions</li>
+    </ul>
+    <div class="ex">✔ If leaders hold regular 1:1s, they catch performance issues early. (zero — fact)<br>✔ If you delegate this project, she will develop her skills significantly. (1st — real future)<br>✔ If the manager took emotional intelligence more seriously, morale would be much higher. (2nd — hypothetical)<br>✔ If they had addressed the conflict early, trust would not have broken down. (3rd — unreal past)</div>
+  </div>
+  <div class="grammar-box">
+    <h4>2. Modal Verbs for Professional Communication</h4>
+    <p>Modal verbs express key professional meanings such as obligation, advice, possibility, and criticism — essential for precise management communication.</p>
+    <ul>
+      <li><strong>must / have to</strong> — obligation, necessity, strict rules</li>
+      <li><strong>must not</strong> — prohibition (do not do this)</li>
+      <li><strong>should / ought to</strong> — recommendation, expectation, strong advice</li>
+      <li><strong>should not</strong> — strong advice against an action</li>
+      <li><strong>could / might / may</strong> — possibility, uncertainty, tentative suggestion</li>
+      <li><strong>should have + past participle</strong> — criticism or regret about a past action</li>
+      <li><strong>must have + past participle</strong> — logical deduction about a past situation</li>
+      <li><strong>could have + past participle</strong> — an unrealised past possibility</li>
+    </ul>
+    <div class="ex">✔ All managers must complete the training. (obligation)<br>✔ You should address the performance issue this week, not next month. (recommendation)<br>✔ She should have delegated that task earlier — now she's overloaded. (past regret)<br>✔ The team's low morale might improve with better recognition. (possibility)</div>
+  </div>
+  <div class="grammar-box">
+    <h4>3. Reported Speech in Business and Management Contexts</h4>
+    <p>Reported speech is used in meeting minutes, management reports, emails, and briefings when summarising what someone said or instructed.</p>
+    <ul>
+      <li><strong>Tense backshift</strong>: present simple → past simple | "will" → "would" | present perfect → past perfect | present continuous → past continuous</li>
+      <li><strong>Time/reference shifts</strong>: "now" → "at that time" | "today" → "that day" | "next week" → "the following week"</li>
+      <li><strong>Reported imperatives</strong>: Direct: "Delegate more." → Reported: She told him <em>to delegate more</em>. / She told him <em>not to micromanage</em>.</li>
+      <li><strong>Indirect questions</strong>: Yes/No: "Did you complete it?" → He asked <em>whether/if</em> I had completed it. (statement word order, no inversion)</li>
+      <li><strong>Formal written register</strong>: Use impersonal passives: "It was agreed that...", "It has been noted that...", "It is recommended that..."</li>
+    </ul>
+    <div class="ex">✔ Direct: "I will redesign the onboarding process." → Reported: She said she <em>would redesign</em> the onboarding process.<br>✔ Direct: "Don't skip the one-to-ones." → Reported: He told her <em>not to skip</em> the one-to-ones.<br>✔ Direct: "Are you using 360-degree feedback?" → Reported: She asked whether they <em>were using</em> 360-degree feedback.</div>
+  </div>
+  <div class="grammar-box">
+    <h4>4. Gerunds and Infinitives in Management Language</h4>
+    <p>Gerunds (verb + -ing) and infinitives (to + verb) follow specific verbs and patterns — mastering them is essential for fluent professional communication.</p>
+    <ul>
+      <li><strong>Verbs followed by gerund</strong>: suggest, recommend, avoid, consider, enjoy, practise, finish, keep, risk, mind, involve, admit, deny, postpone</li>
+      <li><strong>Verbs followed by infinitive</strong>: agree, decide, refuse, promise, plan, manage, fail, hope, want, need, choose, expect, afford, offer</li>
+      <li><strong>Verbs followed by either (different meaning)</strong>: remember, forget, stop, try, regret + gerund vs. infinitive can change the meaning significantly</li>
+      <li><strong>Gerunds as subjects</strong>: "Delivering effective feedback is one of the hardest managerial skills." — gerund as grammatical subject</li>
+      <li><strong>Struggle / tend / manage + to-infinitive</strong>: "Many leaders struggle <em>to delegate</em> effectively in their first management role."</li>
+    </ul>
+    <div class="ex">✔ She suggested holding a team retrospective at the end of each sprint. (suggest + gerund)<br>✔ The board agreed to review the succession plan before the next quarter. (agree + infinitive)<br>✔ Managing performance effectively requires both skill and emotional intelligence. (gerund as subject)<br>✔ He avoided addressing the underperformance, which made the situation worse. (avoid + gerund)</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WRITING -->
+<section id="writing">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fef3c7">✍️</div>
+      <div><div class="sec-title">Writing Activities</div><div class="sec-sub">2 Professional Writing Tasks · Email & Management Report</div></div>
+    </div>
+  </div>
+  <div class="writing-card">
+    <h4>✍️ Writing Task 1 — Professional Email: Addressing a Performance Issue</h4>
+    <div><span class="tag tag-navy">Professional Email</span><span class="tag tag-gold">200–260 words</span></div>
+    <p class="writing-task"><strong>Context:</strong> You are the Head of Operations. One of your team leaders, Jordan, has been repeatedly missing deadlines and their team's KPIs have declined for two consecutive quarters. You have had one informal conversation already, but the issues have continued.<br><br>Write a professional email to Jordan. Your email should: <strong>(1)</strong> Open with a formal acknowledgement of Jordan's overall contributions, before raising the concern. <strong>(2)</strong> Clearly and respectfully state the specific performance issues. <strong>(3)</strong> Reference at least one concrete example of a missed deadline or KPI shortfall. <strong>(4)</strong> Propose a structured one-to-one meeting to discuss a formal development plan. <strong>(5)</strong> Close professionally with a clear and respectful tone. Use formal business language throughout. Avoid contractions.</p>
+    <textarea class="writing-area" id="w1ta" placeholder="Write your professional email here…" oninput="wc('w1ta','w1wc',260)"></textarea>
+    <div class="wc" id="w1wc">Words: 0 / 260</div>
+    <div class="btn-row"><button class="btn btn-gold" onclick="alert('Email submitted for teacher review.')">📤 Submit Email</button></div>
+  </div>
+  <div class="writing-card">
+    <h4>✍️ Writing Task 2 — Management Report Extract: Team Performance Review</h4>
+    <div><span class="tag tag-navy">Formal Report</span><span class="tag tag-gold">220–280 words</span></div>
+    <p class="writing-task"><strong>Context:</strong> You are the Head of People & Performance. The senior leadership team has asked you to produce a brief written performance review report for the Customer Success team at the end of Q2.<br><br>Your report should include: <strong>(1)</strong> A brief introduction summarising the overall performance of the team this quarter. <strong>(2)</strong> Two or three specific KPIs with commentary on whether targets were met, exceeded, or missed. <strong>(3)</strong> An assessment of team dynamics and one notable team-building or conflict resolution challenge that arose. <strong>(4)</strong> Three clear, prioritised recommendations for Q3, including at least one focused on employee development or skill gap resolution. Use formal, impersonal, and objective language. Use passive voice and hedging language where appropriate (e.g., "It has been noted that…", "It is recommended that…").</p>
+    <textarea class="writing-area" id="w2ta" placeholder="Write your management report extract here…" oninput="wc('w2ta','w2wc',280)"></textarea>
+    <div class="wc" id="w2wc">Words: 0 / 280</div>
+    <div class="btn-row"><button class="btn btn-gold" onclick="alert('Report submitted for teacher review.')">📤 Submit Report</button></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<!-- LISTENING -->
+<section id="listening">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#e0e7ff">🎧</div>
+      <div><div class="sec-title">Listening Activities</div><div class="sec-sub">4 Activities with built-in audio players — press ▶ Play, listen, then answer the questions</div></div>
+    </div>
+  </div>
+  <div class="info-box" style="background:#fffbf0;border-color:rgba(201,168,76,.3)">🔊 <strong>Audio instructions:</strong> Click ▶ Play to listen using your browser's text-to-speech engine. Use the speed buttons to adjust playback. You may listen as many times as needed. Show / Hide the transcript to check key vocabulary after listening.</div>
+
+  <!-- L1 -->
+  <div class="listen-block">
+    <div class="listen-header">
+      <div class="listen-icon">📻</div>
+      <div class="listen-meta">
+        <h4>Activity 1: A Manager's Briefing on Team Restructuring</h4>
+        <div class="track-sub">Team Manager to Direct Reports — Corporate briefing format</div>
+        <div class="listen-tags">
+          <span class="ltag ltag-gold">LEVEL: B1–B2</span>
+          <span class="ltag ltag-outline">MULTIPLE CHOICE</span>
+          <span class="ltag ltag-outline">FOCUS: KEY INFORMATION</span>
+        </div>
+      </div>
+    </div>
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp1" onclick="togglePlay('pp1','prog1','tm1','st1','sp1','ls1')">▶</button>
+        <div class="player-track-info">
+          <div class="track-title-sm">A Manager's Briefing on Team Restructuring</div>
+          <div class="track-sub-sm">Team Manager — Corporate briefing</div>
+        </div>
+        <div class="time-display"><span id="tm1">0:00</span> / <span id="dur1">0:00</span></div>
+      </div>
+      <div class="progress-audio" onclick="seekTrack(event,'prog1','ls1')"><div class="progress-audio-fill" id="prog1"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpeed('ls1',0.7,this,'sg1')">0.7×</button>
+        <button class="speed-btn active" id="sg1" onclick="setSpeed('ls1',0.85,this,'sg1')">0.85×</button>
+        <button class="speed-btn" onclick="setSpeed('ls1',1.0,this,'sg1')">1.0×</button>
+        <button class="speed-btn" onclick="setSpeed('ls1',1.2,this,'sg1')">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls1','prog1','tm1','pp1','st1')">↺ Replay</button>
+        <span class="audio-status" id="st1">Ready</span>
+      </div>
+      <div class="player-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+    </div>
+    <button class="transcript-toggle-btn" onclick="togTranscript(this)"><span class="tt-arrow">▶</span> Show / Hide Transcript</button>
+    <div class="transcript-box">
+      <p id="ls1">Good morning, everyone. Thank you for making time for this briefing. I know it's short notice, and I appreciate your flexibility. I want to be direct with you today because you deserve clarity, and because I believe transparent communication is the foundation of any well-functioning team. As many of you may have anticipated, the company has decided to restructure our department. Effective from the first of next month, we will be moving from three separate sub-teams to two integrated cross-functional units. I want to reassure you that this restructuring does not involve any redundancies — every member of this team has a confirmed role in the new structure. What will change are your reporting lines, some of your day-to-day responsibilities, and the composition of your immediate working groups. Over the next two weeks, I will be holding individual one-to-one meetings with each of you to discuss your specific role in the new structure, your concerns, and how we can best support your transition. I want to acknowledge that change of this kind can feel unsettling, even when the rationale is sound. Your emotional response to this is completely valid. What I am asking of you is that you raise your concerns directly with me, not through speculation or corridor conversations, and that you approach this transition with the same professionalism and commitment you have consistently shown throughout your time in this team. I am fully available to answer questions now, and my door is open at all times throughout this process. Who would like to start?</p>
+    </div>
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the manager's briefing, then answer the questions below by selecting the best answer (A, B, C, or D).</div>
+      <div id="l1" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. What is the main purpose of the manager's briefing?</div><div class="options"><label class="opt"><input type="radio" name="l1q1" value="a"> A. To announce redundancies within the department</label><label class="opt"><input type="radio" name="l1q1" value="b"> B. To present the quarterly performance results</label><label class="opt"><input type="radio" name="l1q1" value="c"> C. To communicate a departmental restructuring and its impact on the team</label><label class="opt"><input type="radio" name="l1q1" value="d"> D. To introduce a new team member joining the department</label></div></div>
+        <div class="q-item"><div class="q-stem">2. What change will take effect from the first of next month?</div><div class="options"><label class="opt"><input type="radio" name="l1q2" value="a"> A. The team will expand from two to three sub-teams</label><label class="opt"><input type="radio" name="l1q2" value="b"> B. The department will merge with another division of the company</label><label class="opt"><input type="radio" name="l1q2" value="c"> C. The three sub-teams will be consolidated into two cross-functional units</label><label class="opt"><input type="radio" name="l1q2" value="d"> D. Half the team will be relocated to a new office building</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What does the manager explicitly reassure the team about?</div><div class="options"><label class="opt"><input type="radio" name="l1q3" value="a"> A. That salaries will increase as a result of the restructuring</label><label class="opt"><input type="radio" name="l1q3" value="b"> B. That no team members will lose their jobs in the restructuring</label><label class="opt"><input type="radio" name="l1q3" value="c"> C. That roles and responsibilities will remain entirely unchanged</label><label class="opt"><input type="radio" name="l1q3" value="d"> D. That the restructuring will be reversed within six months</label></div></div>
+        <div class="q-item"><div class="q-stem">4. What does the manager plan to do over the next two weeks?</div><div class="options"><label class="opt"><input type="radio" name="l1q4" value="a"> A. Host a series of team-wide workshops on change management</label><label class="opt"><input type="radio" name="l1q4" value="b"> B. Delay all individual meetings until the restructuring is complete</label><label class="opt"><input type="radio" name="l1q4" value="c"> C. Hold individual one-to-one meetings with each team member</label><label class="opt"><input type="radio" name="l1q4" value="d"> D. Publish a written Q&A document covering all transition details</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What does the manager ask team members to do regarding concerns?</div><div class="options"><label class="opt"><input type="radio" name="l1q5" value="a"> A. Raise concerns anonymously through the company intranet</label><label class="opt"><input type="radio" name="l1q5" value="b"> B. Address concerns directly with the manager, not through speculation</label><label class="opt"><input type="radio" name="l1q5" value="c"> C. Submit written concerns to the HR department within one week</label><label class="opt"><input type="radio" name="l1q5" value="d"> D. Wait until the end of the transition period before voicing any concerns</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l1',{l1q1:'c',l1q2:'c',l1q3:'b',l1q4:'c',l1q5:'b'})">✅ Submit</button><div id="l1-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>C</strong></li><li>2. <strong>C</strong></li><li>3. <strong>B</strong></li><li>4. <strong>C</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+    </div>
+  </div>
+
+  <!-- L2 -->
+  <div class="listen-block" style="margin-top:32px">
+    <div class="listen-header">
+      <div class="listen-icon">🎙️</div>
+      <div class="listen-meta">
+        <h4>Activity 2: Podcast — Giving Effective Feedback</h4>
+        <div class="track-sub">Leadership Coach & Host — Business podcast format</div>
+        <div class="listen-tags">
+          <span class="ltag ltag-gold">LEVEL: B2</span>
+          <span class="ltag ltag-outline">MULTIPLE CHOICE</span>
+          <span class="ltag ltag-outline">FOCUS: DETAIL & INFERENCE</span>
+        </div>
+      </div>
+    </div>
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp2" onclick="togglePlay('pp2','prog2','tm2','st2','sp2','ls2')">▶</button>
+        <div class="player-track-info">
+          <div class="track-title-sm">Podcast — Giving Effective Feedback</div>
+          <div class="track-sub-sm">Leadership Coach — Business podcast</div>
+        </div>
+        <div class="time-display"><span id="tm2">0:00</span> / <span id="dur2">0:00</span></div>
+      </div>
+      <div class="progress-audio" onclick="seekTrack(event,'prog2','ls2')"><div class="progress-audio-fill" id="prog2"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpeed('ls2',0.7,this,'sg2')">0.7×</button>
+        <button class="speed-btn active" id="sg2" onclick="setSpeed('ls2',0.85,this,'sg2')">0.85×</button>
+        <button class="speed-btn" onclick="setSpeed('ls2',1.0,this,'sg2')">1.0×</button>
+        <button class="speed-btn" onclick="setSpeed('ls2',1.2,this,'sg2')">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls2','prog2','tm2','pp2','st2')">↺ Replay</button>
+        <span class="audio-status" id="st2">Ready</span>
+      </div>
+      <div class="player-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+    </div>
+    <button class="transcript-toggle-btn" onclick="togTranscript(this)"><span class="tt-arrow">▶</span> Show / Hide Transcript</button>
+    <div class="transcript-box">
+      <p id="ls2">Welcome back to Lead With Purpose. I'm your host, and today we are diving deep into one of the most misunderstood skills in management: giving effective feedback. Now, I hear this constantly from the managers I coach — they tell me they find it really, genuinely difficult. And when I ask why, the answer is almost always the same: they are afraid. Afraid of the emotional response. Afraid of damaging the relationship. Afraid of getting it wrong. And this fear leads them to either avoid feedback altogether, or to water it down so much that the message is completely lost. So let's talk about what actually works. First, and this is non-negotiable: feedback must be specific. Not "your communication needs to improve." That tells someone nothing actionable. Instead: "In Tuesday's client meeting, when the client raised a concern about the timeline, you gave three different answers in five minutes, which created confusion and undermined confidence." That is specific. That is actionable. Second, effective feedback is always future-focused. It is not a verdict on someone's character or intelligence. It is a roadmap. You describe what happened, you explain the impact it had, and then you pivot immediately to what you would like to see differently in future. Third — and this one surprises a lot of people — timing matters enormously. Research tells us that feedback given within twenty-four hours of an event is two to three times more likely to change behaviour than feedback delivered weeks later. Finally, the most powerful feedback conversations are dialogues, not monologues. Ask the person what they think happened. Ask what they might do differently. You might learn something that completely changes your perspective.</p>
+    </div>
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the leadership podcast, then answer the questions below.</div>
+      <div id="l2" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. What does the host say is the most common reason managers avoid giving feedback?</div><div class="options"><label class="opt"><input type="radio" name="l2q1" value="a"> A. They lack the necessary training in performance management</label><label class="opt"><input type="radio" name="l2q1" value="b"> B. They fear damaging the relationship or getting the conversation wrong</label><label class="opt"><input type="radio" name="l2q1" value="c"> C. They believe feedback is the responsibility of the HR department</label><label class="opt"><input type="radio" name="l2q1" value="d"> D. They do not have sufficient time to conduct structured feedback sessions</label></div></div>
+        <div class="q-item"><div class="q-stem">2. According to the host, what is wrong with feedback like "your communication needs to improve"?</div><div class="options"><label class="opt"><input type="radio" name="l2q2" value="a"> A. It is too confrontational and likely to upset the recipient</label><label class="opt"><input type="radio" name="l2q2" value="b"> B. It is too vague and does not give the employee anything specific or actionable to act on</label><label class="opt"><input type="radio" name="l2q2" value="c"> C. It focuses too much on past behaviour rather than future expectations</label><label class="opt"><input type="radio" name="l2q2" value="d"> D. It is insufficiently positive and demotivating for the employee</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What example does the host give of specific, actionable feedback?</div><div class="options"><label class="opt"><input type="radio" name="l2q3" value="a"> A. Commenting on the employee's general attitude during team meetings</label><label class="opt"><input type="radio" name="l2q3" value="b"> B. Describing a concrete incident in a client meeting where inconsistent answers created confusion</label><label class="opt"><input type="radio" name="l2q3" value="c"> C. Praising the employee's strengths before raising any areas for development</label><label class="opt"><input type="radio" name="l2q3" value="d"> D. Comparing the employee's performance to the team's average KPI scores</label></div></div>
+        <div class="q-item"><div class="q-stem">4. What does the host say about the timing of feedback?</div><div class="options"><label class="opt"><input type="radio" name="l2q4" value="a"> A. Feedback given at the annual performance review is most effective</label><label class="opt"><input type="radio" name="l2q4" value="b"> B. The timing of feedback has no significant impact on the outcome</label><label class="opt"><input type="radio" name="l2q4" value="c"> C. Feedback within 24 hours is two to three times more likely to change behaviour than delayed feedback</label><label class="opt"><input type="radio" name="l2q4" value="d"> D. Feedback should always be given at the beginning of the working week</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What does the host say makes the most powerful feedback conversations?</div><div class="options"><label class="opt"><input type="radio" name="l2q5" value="a"> A. The manager should always speak first and listen last</label><label class="opt"><input type="radio" name="l2q5" value="b"> B. Feedback should be supported by written documentation and data</label><label class="opt"><input type="radio" name="l2q5" value="c"> C. They are dialogues, not monologues — the employee's perspective is actively invited</label><label class="opt"><input type="radio" name="l2q5" value="d"> D. The conversation should be formal and structured with no personal discussion</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l2',{l2q1:'b',l2q2:'b',l2q3:'b',l2q4:'c',l2q5:'c'})">✅ Submit</button><div id="l2-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>C</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+    </div>
+  </div>
+
+  <!-- L3 -->
+  <div class="listen-block" style="margin-top:32px">
+    <div class="listen-header">
+      <div class="listen-icon">🏢</div>
+      <div class="listen-meta">
+        <h4>Activity 3: Meeting Extract — Discussing a Team Performance Issue</h4>
+        <div class="track-sub">HR Manager & Department Head — Internal meeting</div>
+        <div class="listen-tags">
+          <span class="ltag ltag-gold">LEVEL: B2</span>
+          <span class="ltag ltag-outline">MULTIPLE CHOICE</span>
+          <span class="ltag ltag-outline">FOCUS: SPEAKER VIEWPOINT</span>
+        </div>
+      </div>
+    </div>
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp3" onclick="togglePlay('pp3','prog3','tm3','st3','sp3','ls3')">▶</button>
+        <div class="player-track-info">
+          <div class="track-title-sm">Meeting — Discussing a Team Performance Issue</div>
+          <div class="track-sub-sm">HR Manager & Department Head — Internal meeting</div>
+        </div>
+        <div class="time-display"><span id="tm3">0:00</span> / <span id="dur3">0:00</span></div>
+      </div>
+      <div class="progress-audio" onclick="seekTrack(event,'prog3','ls3')"><div class="progress-audio-fill" id="prog3"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpeed('ls3',0.7,this,'sg3')">0.7×</button>
+        <button class="speed-btn active" id="sg3" onclick="setSpeed('ls3',0.85,this,'sg3')">0.85×</button>
+        <button class="speed-btn" onclick="setSpeed('ls3',1.0,this,'sg3')">1.0×</button>
+        <button class="speed-btn" onclick="setSpeed('ls3',1.2,this,'sg3')">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls3','prog3','tm3','pp3','st3')">↺ Replay</button>
+        <span class="audio-status" id="st3">Ready</span>
+      </div>
+      <div class="player-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+    </div>
+    <button class="transcript-toggle-btn" onclick="togTranscript(this)"><span class="tt-arrow">▶</span> Show / Hide Transcript</button>
+    <div class="transcript-box">
+      <p id="ls3">HR Manager: Thanks for coming in. I wanted to catch up on the situation with the customer success team — you mentioned it in the leadership meeting last week, and I think we need to address it more systematically. Department Head: Yes, it's been on my mind. The team has missed its customer satisfaction target for two quarters in a row. The numbers are down twelve percent on last year. And I'm not entirely sure whether it's a capability issue, a motivation issue, or something about how the team is being led. HR Manager: That is an important distinction. Have you had a direct conversation with the team leader about this? Department Head: I have, once, informally. He acknowledged the numbers but felt the targets were unrealistic given the team's current headcount. HR Manager: That may be a valid point worth exploring. But I'd also gently suggest that the team leader might benefit from some structured coaching support to help him think through how he's managing his team's performance. Not as a punitive measure — as a genuine development investment. Department Head: I agree. I don't want to escalate this prematurely. What I'd like to avoid is going straight to a formal performance improvement plan without first understanding whether we have a systemic issue — such as unclear role expectations or a skill gap — or whether this is genuinely about individual performance. HR Manager: That makes sense. My recommendation would be to start with a team-level skill gap analysis, follow that with a confidential engagement survey, and then reconvene in four weeks with the data before making any decisions. Department Head: That is exactly the kind of structured approach I was hoping for. Let's do it.</p>
+    </div>
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the meeting between an HR Manager and a Department Head, then answer the questions below.</div>
+      <div id="l3" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. Why has the Department Head requested this meeting?</div><div class="options"><label class="opt"><input type="radio" name="l3q1" value="a"> A. To report a team member for a disciplinary matter</label><label class="opt"><input type="radio" name="l3q1" value="b"> B. To discuss declining performance in the customer success team over two consecutive quarters</label><label class="opt"><input type="radio" name="l3q1" value="c"> C. To announce the redundancy of the team leader</label><label class="opt"><input type="radio" name="l3q1" value="d"> D. To request a new performance management system</label></div></div>
+        <div class="q-item"><div class="q-stem">2. What did the team leader say when the Department Head raised the performance issue informally?</div><div class="options"><label class="opt"><input type="radio" name="l3q2" value="a"> A. He accepted full responsibility and committed to an immediate improvement plan</label><label class="opt"><input type="radio" name="l3q2" value="b"> B. He denied that there was any significant performance problem</label><label class="opt"><input type="radio" name="l3q2" value="c"> C. He acknowledged the numbers but argued the targets were unrealistic given headcount</label><label class="opt"><input type="radio" name="l3q2" value="d"> D. He requested an immediate transfer to a different department</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What does the HR Manager recommend for the team leader?</div><div class="options"><label class="opt"><input type="radio" name="l3q3" value="a"> A. Immediate formal disciplinary action</label><label class="opt"><input type="radio" name="l3q3" value="b"> B. Structured coaching support as a development investment, not a punitive measure</label><label class="opt"><input type="radio" name="l3q3" value="c"> C. Reassignment to a different role within the department</label><label class="opt"><input type="radio" name="l3q3" value="d"> D. A formal written performance improvement plan</label></div></div>
+        <div class="q-item"><div class="q-stem">4. What does the Department Head want to avoid?</div><div class="options"><label class="opt"><input type="radio" name="l3q4" value="a"> A. Discussing the matter with the HR department at all</label><label class="opt"><input type="radio" name="l3q4" value="b"> B. Conducting any formal analysis of the team's performance data</label><label class="opt"><input type="radio" name="l3q4" value="c"> C. Escalating to a formal performance improvement plan prematurely without understanding the root cause</label><label class="opt"><input type="radio" name="l3q4" value="d"> D. Informing the team leader of any concerns about performance</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What three-step approach does the HR Manager recommend?</div><div class="options"><label class="opt"><input type="radio" name="l3q5" value="a"> A. Issue a formal warning, then monitor for 90 days, then review</label><label class="opt"><input type="radio" name="l3q5" value="b"> B. Conduct a skill gap analysis, run an engagement survey, then reconvene in four weeks with the data</label><label class="opt"><input type="radio" name="l3q5" value="c"> C. Hold a team meeting, set new KPIs, and schedule a review in three months</label><label class="opt"><input type="radio" name="l3q5" value="d"> D. Replace the team leader, restructure the team, and re-set performance targets</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l3',{l3q1:'b',l3q2:'c',l3q3:'b',l3q4:'c',l3q5:'b'})">✅ Submit</button><div id="l3-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>C</strong></li><li>3. <strong>B</strong></li><li>4. <strong>C</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+    </div>
+  </div>
+
+  <!-- L4 -->
+  <div class="listen-block" style="margin-top:32px">
+    <div class="listen-header">
+      <div class="listen-icon">🎓</div>
+      <div class="listen-meta">
+        <h4>Activity 4: Executive Interview — Building a High-Performance Team Culture</h4>
+        <div class="track-sub">Business School Host & Senior Executive — Interview format</div>
+        <div class="listen-tags">
+          <span class="ltag ltag-gold">LEVEL: B2</span>
+          <span class="ltag ltag-outline">MULTIPLE CHOICE</span>
+          <span class="ltag ltag-outline">FOCUS: ATTITUDE & OPINION</span>
+        </div>
+      </div>
+    </div>
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp4" onclick="togglePlay('pp4','prog4','tm4','st4','sp4','ls4')">▶</button>
+        <div class="player-track-info">
+          <div class="track-title-sm">Executive Interview — High-Performance Team Culture</div>
+          <div class="track-sub-sm">Business School Interview</div>
+        </div>
+        <div class="time-display"><span id="tm4">0:00</span> / <span id="dur4">0:00</span></div>
+      </div>
+      <div class="progress-audio" onclick="seekTrack(event,'prog4','ls4')"><div class="progress-audio-fill" id="prog4"></div></div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpeed('ls4',0.7,this,'sg4')">0.7×</button>
+        <button class="speed-btn active" id="sg4" onclick="setSpeed('ls4',0.85,this,'sg4')">0.85×</button>
+        <button class="speed-btn" onclick="setSpeed('ls4',1.0,this,'sg4')">1.0×</button>
+        <button class="speed-btn" onclick="setSpeed('ls4',1.2,this,'sg4')">1.2×</button>
+        <button class="replay-btn" onclick="replayTrack('ls4','prog4','tm4','pp4','st4')">↺ Replay</button>
+        <span class="audio-status" id="st4">Ready</span>
+      </div>
+      <div class="player-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+    </div>
+    <button class="transcript-toggle-btn" onclick="togTranscript(this)"><span class="tt-arrow">▶</span> Show / Hide Transcript</button>
+    <div class="transcript-box">
+      <p id="ls4">Interviewer: Welcome. Thank you so much for joining us today. You have led very large, complex global teams across several industries. What, in your experience, is the single most important thing a leader must do to build a high-performance culture? Executive: Thank you for having me. That is a deceptively simple question. I thought about this for years before I arrived at what I now believe is the right answer. And it is this: hire for values and character first, and teach skills second. Technical competence is important — of course it is. But I have seen technically brilliant people destroy team cultures because they were unwilling to be accountable, unwilling to show vulnerability, or unwilling to support their colleagues. You can train skills. You cannot easily change character. Interviewer: Fascinating. And once you have the right people, how do you keep them performing at the highest level over time? Executive: The biggest mistake I see leaders make is confusing activity with performance. People are busy. Everyone is busy. Busyness is not performance. What you need are crystal clear expectations, KPIs that matter, and a feedback culture that is honest but not brutal. You also need to invest in people's growth — relentlessly. Because high performers leave when they stop learning. They do not leave for money, primarily. They leave because they are bored, or because they do not feel seen, or because they do not believe their manager is invested in their development. Interviewer: And what is your advice to a first-time manager who is struggling with delegation? Executive: Stop trying to be the best individual contributor in the room. That is the hardest psychological shift most first-time managers have to make. Your job now is to make your team perform at its best — not to perform brilliantly yourself at the expense of developing others. Delegate with clear outcomes, not with step-by-step instructions. Trust the process and the person. And when it goes wrong — and it will go wrong — treat it as a learning conversation, not a verdict.</p>
+    </div>
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the executive interview, then answer the questions below.</div>
+      <div id="l4" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. What does the executive say is the single most important thing a leader must do to build a high-performance culture?</div><div class="options"><label class="opt"><input type="radio" name="l4q1" value="a"> A. Hire people with the highest level of technical expertise available</label><label class="opt"><input type="radio" name="l4q1" value="b"> B. Focus relentlessly on setting and monitoring KPIs</label><label class="opt"><input type="radio" name="l4q1" value="c"> C. Hire for values and character first, and teach skills second</label><label class="opt"><input type="radio" name="l4q1" value="d"> D. Create a very competitive internal performance ranking system</label></div></div>
+        <div class="q-item"><div class="q-stem">2. According to the executive, why can technically brilliant people be damaging to team cultures?</div><div class="options"><label class="opt"><input type="radio" name="l4q2" value="a"> A. They often demand salaries that exceed the team's budget</label><label class="opt"><input type="radio" name="l4q2" value="b"> B. They are unwilling to be accountable, show vulnerability, or support colleagues</label><label class="opt"><input type="radio" name="l4q2" value="c"> C. They take too long to complete tasks and miss important deadlines</label><label class="opt"><input type="radio" name="l4q2" value="d"> D. They tend to undermine the authority of their line manager</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What does the executive say is the biggest mistake leaders make regarding performance?</div><div class="options"><label class="opt"><input type="radio" name="l4q3" value="a"> A. Not using performance management software and data dashboards</label><label class="opt"><input type="radio" name="l4q3" value="b"> B. Focusing too much on individual development and not enough on team targets</label><label class="opt"><input type="radio" name="l4q3" value="c"> C. Confusing activity and busyness with actual, meaningful performance</label><label class="opt"><input type="radio" name="l4q3" value="d"> D. Spending too much time on strategic planning and not enough on operations</label></div></div>
+        <div class="q-item"><div class="q-stem">4. According to the executive, why do high performers primarily leave organisations?</div><div class="options"><label class="opt"><input type="radio" name="l4q4" value="a"> A. They leave primarily because of insufficient financial compensation</label><label class="opt"><input type="radio" name="l4q4" value="b"> B. They leave because of conflict with their immediate colleagues</label><label class="opt"><input type="radio" name="l4q4" value="c"> C. They leave because they are bored, feel unseen, or lack a manager who invests in their development</label><label class="opt"><input type="radio" name="l4q4" value="d"> D. They leave because the organisation's strategic direction does not match their personal values</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What psychological shift does the executive say first-time managers must make regarding delegation?</div><div class="options"><label class="opt"><input type="radio" name="l4q5" value="a"> A. They must accept that some tasks simply cannot be delegated effectively</label><label class="opt"><input type="radio" name="l4q5" value="b"> B. They must stop trying to be the best individual contributor and focus on enabling their team</label><label class="opt"><input type="radio" name="l4q5" value="c"> C. They must delegate all decisions immediately and focus entirely on strategy</label><label class="opt"><input type="radio" name="l4q5" value="d"> D. They must accept that mistakes are not acceptable at the managerial level</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l4',{l4q1:'c',l4q2:'b',l4q3:'c',l4q4:'c',l4q5:'b'})">✅ Submit</button><div id="l4-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 4</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>C</strong></li><li>2. <strong>B</strong></li><li>3. <strong>C</strong></li><li>4. <strong>C</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<!-- CASE STUDIES -->
+<section id="casestudy">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fce7f3">🏢</div>
+      <div><div class="sec-title">Case Studies</div><div class="sec-sub">2 Business Cases · Multiple-Choice Questions · Auto-graded</div></div>
+    </div>
+  </div>
+
+  <!-- CASE 1 -->
+  <div style="margin-bottom:32px">
+    <div class="case-hd">
+      <div class="case-company">Case Study 1 · Technology Company · Latin America</div>
+      <h3>DigitalWave: From Brilliant Team to Dysfunctional One</h3>
+    </div>
+    <div class="case-body">
+      <p>DigitalWave is a fast-growing software company headquartered in Bogotá, Colombia, with 120 employees across three product teams. In early 2024, the company promoted its most technically capable engineer, Rafael Torres, to lead the newly formed Product Innovation team — a group of eight developers tasked with building the company's next-generation platform. The decision was widely celebrated: Rafael was universally respected for his technical brilliance, his dedication, and his extraordinary personal work output. However, within six months of his promotion, the team's performance had deteriorated significantly. Deadlines were being missed, two engineers had submitted formal complaints about communication, and one high performer had resigned. The team's quarterly performance review recorded the lowest team satisfaction score in the company's history.</p>
+      <p>An internal review conducted by the HR department uncovered a complex picture. Rafael had continued to operate primarily as an individual contributor — writing large portions of code himself, overriding team members' technical decisions, and checking and rechecking work that had already been reviewed and approved. Team members reported feeling micromanaged, undervalued, and unable to take any meaningful initiative. Several described a growing sense that their manager did not trust them. Rafael, when interviewed, acknowledged that he found delegation "genuinely terrifying" — he was deeply invested in the product's success and found it almost impossible to let go of the conviction that only he could ensure the standard was met. His emotional intelligence scores, assessed as part of the review process, were notably low in the self-awareness and empathy dimensions. He had never received any structured leadership development, and had been given no formal support when transitioning into the management role.</p>
+      <p>Following the review, the company developed a structured intervention plan. Rafael was enrolled in a six-month executive coaching programme focused specifically on delegation, empathy, and the management of high-performing individuals. A formal team charter was developed collaboratively with the full team, establishing clear role boundaries, decision-making authority, and behavioural expectations. Monthly 360-degree feedback sessions were introduced so that Rafael could receive regular, structured input on his impact. The team's KPIs were revised to measure collective outcomes rather than individual output, shifting the team's culture from individual competition toward genuine collaboration. Within nine months, team satisfaction scores had recovered to above the company average, and the product roadmap was back on track. Rafael, in a candid interview published in the company newsletter, described the experience as "the most difficult and most valuable thing I have ever done."</p>
+    </div>
+  </div>
+  <div id="cs1" class="quiz-card">
+    <div class="quiz-title">Case Study 1 — 5 Questions</div>
+    <div class="q-item"><div class="q-stem">1. Why was Rafael Torres originally promoted to team lead at DigitalWave?</div><div class="options"><label class="opt"><input type="radio" name="cs1q1" value="a"> A. He had completed a formal leadership development programme</label><label class="opt"><input type="radio" name="cs1q1" value="b"> B. He was the longest-serving member of the engineering department</label><label class="opt"><input type="radio" name="cs1q1" value="c"> C. He was widely respected for his exceptional technical ability and work output</label><label class="opt"><input type="radio" name="cs1q1" value="d"> D. He had previously managed a team at another technology company</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What specific behaviours by Rafael caused the team's performance to deteriorate?</div><div class="options"><label class="opt"><input type="radio" name="cs1q2" value="a"> A. Setting unrealistic deadlines and refusing to provide adequate technical support</label><label class="opt"><input type="radio" name="cs1q2" value="b"> B. Continuing to operate as an individual contributor, overriding decisions, and micromanaging</label><label class="opt"><input type="radio" name="cs1q2" value="c"> C. Consistently favouring certain team members over others in task allocation</label><label class="opt"><input type="radio" name="cs1q2" value="d"> D. Failing to communicate the team's technical objectives to senior management</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What did Rafael acknowledge in the internal HR review?</div><div class="options"><label class="opt"><input type="radio" name="cs1q3" value="a"> A. He was considering resigning from the management role to return to engineering</label><label class="opt"><input type="radio" name="cs1q3" value="b"> B. He had deliberately avoided delegating to protect his own position</label><label class="opt"><input type="radio" name="cs1q3" value="c"> C. He found delegation "genuinely terrifying" because he was invested in the product's success</label><label class="opt"><input type="radio" name="cs1q3" value="d"> D. He had requested support from the company but had been refused</label></div></div>
+    <div class="q-item"><div class="q-stem">4. Which element of emotional intelligence was identified as a specific weakness for Rafael?</div><div class="options"><label class="opt"><input type="radio" name="cs1q4" value="a"> A. Motivation and achievement drive</label><label class="opt"><input type="radio" name="cs1q4" value="b"> B. Technical communication and problem-solving</label><label class="opt"><input type="radio" name="cs1q4" value="c"> C. Self-awareness and empathy</label><label class="opt"><input type="radio" name="cs1q4" value="d"> D. Strategic thinking and planning capability</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What broader lesson does the DigitalWave case illustrate about leadership promotion decisions?</div><div class="options"><label class="opt"><input type="radio" name="cs1q5" value="a"> A. Technical experts should never be promoted into management roles under any circumstances</label><label class="opt"><input type="radio" name="cs1q5" value="b"> B. Technical excellence alone is insufficient for effective leadership — promotion must be accompanied by structured support and development</label><label class="opt"><input type="radio" name="cs1q5" value="c"> C. Leadership training programmes are too expensive to justify the investment for small companies</label><label class="opt"><input type="radio" name="cs1q5" value="d"> D. Team members should vote on who leads them rather than having leaders appointed from above</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('cs1',{cs1q1:'c',cs1q2:'b',cs1q3:'c',cs1q4:'c',cs1q5:'b'})">✅ Submit</button><div id="cs1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Case Study 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>C</strong></li><li>2. <strong>B</strong></li><li>3. <strong>C</strong></li><li>4. <strong>C</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+
+  <!-- CASE 2 -->
+  <div style="margin-top:40px;margin-bottom:32px">
+    <div class="case-hd">
+      <div class="case-company">Case Study 2 · Financial Services · Colombia</div>
+      <h3>BancoVerde: Transforming Team Culture Through Psychological Safety</h3>
+    </div>
+    <div class="case-body">
+      <p>BancoVerde is a regional bank operating in Colombia with over 2,400 employees. In 2022, the bank's Risk Management division — a team of 34 analysts, compliance specialists, and senior advisors — was identified as having a critically low employee engagement score of 38%, compared to a company-wide average of 64%. Exit interviews conducted over the previous two years had revealed a consistent and troubling pattern: multiple departing employees had cited an atmosphere of fear, blame, and hierarchical rigidity as their primary reasons for leaving. In a division whose core function required accurate and timely communication of potential risks to senior stakeholders, the absence of open communication was not merely a management problem — it was a direct operational and regulatory risk. The bank's Chief Operating Officer, Dr Valentina Moreno, was tasked with leading a comprehensive cultural transformation programme for the division.</p>
+      <p>Dr Moreno began with a diagnostic phase, conducting structured listening sessions with every member of the team, including junior analysts who had never before been formally consulted about their experience. The picture that emerged was unambiguous: a small number of senior managers had consistently responded to bad news, honest concerns, and differing professional opinions with dismissal, mockery, or overt anger. Over time, this had trained the entire team to withhold information, soften assessments, and self-censor rather than risk a negative reaction. The psychological contract between the team and its leadership had been severely damaged. Dr Moreno identified this as a textbook case of absent psychological safety — and made its restoration the central pillar of her intervention strategy.</p>
+      <p>The transformation programme she designed included: mandatory training in psychological safety and inclusive leadership behaviours for all managers in the division; the introduction of anonymised team feedback surveys conducted every six weeks; the explicit reframing of mistakes as learning opportunities in all team communications; and a formal revision of the performance management framework to reward collaborative behaviour and transparent communication alongside individual technical output. The two managers most responsible for the toxic dynamics were moved to non-managerial specialist roles as part of a broader restructuring. Within fourteen months, team engagement scores had risen to 71% — above the company average — attrition had fallen by 40%, and the team had successfully identified and flagged three regulatory compliance risks that had previously gone undetected. Dr Moreno attributed the risk improvements directly to the restored culture of open, honest communication.</p>
+    </div>
+  </div>
+  <div id="cs2" class="quiz-card">
+    <div class="quiz-title">Case Study 2 — 5 Questions</div>
+    <div class="q-item"><div class="q-stem">1. Why was the low engagement score in BancoVerde's Risk Management division considered especially serious?</div><div class="options"><label class="opt"><input type="radio" name="cs2q1" value="a"> A. Because it was causing significant disruption to the bank's customer service teams</label><label class="opt"><input type="radio" name="cs2q1" value="b"> B. Because the division required open, accurate communication — its absence was an operational and regulatory risk</label><label class="opt"><input type="radio" name="cs2q1" value="c"> C. Because the division was the most profitable part of the bank</label><label class="opt"><input type="radio" name="cs2q1" value="d"> D. Because the bank's competitors had significantly higher engagement scores</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What did the diagnostic phase reveal about the root cause of the team's poor culture?</div><div class="options"><label class="opt"><input type="radio" name="cs2q2" value="a"> A. The team lacked the technical skills needed to perform their risk management roles effectively</div><label class="opt"><input type="radio" name="cs2q2" value="b"> B. A small number of senior managers had consistently responded to honesty with dismissal, mockery, or anger</label><label class="opt"><input type="radio" name="cs2q2" value="c"> C. Junior analysts had been deliberately excluded from all decision-making processes</label><label class="opt"><input type="radio" name="cs2q2" value="d"> D. The team's KPIs had been consistently unrealistic and unachievable for several years</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What was Dr Moreno's central strategy for the cultural transformation?</div><div class="options"><label class="opt"><input type="radio" name="cs2q3" value="a"> A. Replacing the entire senior management team with external hires</label><label class="opt"><input type="radio" name="cs2q3" value="b"> B. Merging the Risk Management division with a more positive division of the bank</label><label class="opt"><input type="radio" name="cs2q3" value="c"> C. Restoring psychological safety as the central pillar of the intervention</label><label class="opt"><input type="radio" name="cs2q3" value="d"> D. Increasing salaries and bonuses across the division to improve morale</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What happened to the managers who were most responsible for the toxic team dynamics?</div><div class="options"><label class="opt"><input type="radio" name="cs2q4" value="a"> A. They were dismissed from the company immediately following the diagnostic review</label><label class="opt"><input type="radio" name="cs2q4" value="b"> B. They were enrolled in a mandatory coaching programme alongside the rest of the management team</label><label class="opt"><input type="radio" name="cs2q4" value="c"> C. They were moved to non-managerial specialist roles as part of a broader restructuring</label><label class="opt"><input type="radio" name="cs2q4" value="d"> D. They voluntarily resigned once the investigation was completed</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What direct link does Dr Moreno draw between the cultural transformation and the division's operational performance?</div><div class="options"><label class="opt"><input type="radio" name="cs2q5" value="a"> A. The improved culture led to reduced costs and a higher return on investment</label><label class="opt"><input type="radio" name="cs2q5" value="b"> B. The restored culture of open communication directly enabled the team to identify three previously undetected regulatory risks</label><label class="opt"><input type="radio" name="cs2q5" value="c"> C. The higher engagement scores attracted more qualified candidates to the division</label><label class="opt"><input type="radio" name="cs2q5" value="d"> D. The improved morale translated directly into higher individual output and fewer sick days</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('cs2',{cs2q1:'b',cs2q2:'b',cs2q3:'c',cs2q4:'c',cs2q5:'b'})">✅ Submit</button><div id="cs2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Case Study 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>C</strong></li><li>4. <strong>C</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+</section>
+
+<div class="divider"></div>
+<!-- FINAL ASSESSMENT -->
+<section id="final">
+  <div class="sec-header">
+    <div class="sec-header-inner">
+      <div class="sec-icon" style="background:#fee2e2">🏆</div>
+      <div><div class="sec-title">Final Assessment</div><div class="sec-sub">20 Multiple-Choice Questions · Full Module 3 Coverage · Auto-graded · Pass: 70%</div></div>
+    </div>
+  </div>
+  <div class="info-box" style="background:#fffbf0;border-color:rgba(201,168,76,.35)">⚠️ <strong>Assessment Rules:</strong> This final assessment covers all sections of Module 3. Read each question carefully before selecting your answer. A score of <strong>14/20 or above (70%)</strong> is required to pass. You may submit only once.</div>
+
+  <div class="final-wrap" id="fwrap">
+    <div class="quiz-title">Module 3 Final Assessment — 20 Questions</div>
+    <div class="q-item"><div class="q-stem">1. A leadership style that inspires team members through a compelling shared vision and encourages them to exceed their own expectations is known as ________ leadership.</div><div class="options"><label class="opt"><input type="radio" name="fq1" value="a"> A. autocratic</label><label class="opt"><input type="radio" name="fq1" value="b"> B. transactional</label><label class="opt"><input type="radio" name="fq1" value="c"> C. transformational</label><label class="opt"><input type="radio" name="fq1" value="d"> D. laissez-faire</label></div></div>
+    <div class="q-item"><div class="q-stem">2. Which sentence uses the correct conditional form? "If the manager ________ psychological safety, the team would have been more innovative."</div><div class="options"><label class="opt"><input type="radio" name="fq2" value="a"> A. fostered</label><label class="opt"><input type="radio" name="fq2" value="b"> B. had fostered</label><label class="opt"><input type="radio" name="fq2" value="c"> C. fosters</label><label class="opt"><input type="radio" name="fq2" value="d"> D. would foster</label></div></div>
+    <div class="q-item"><div class="q-stem">3. The process of assigning tasks and decision-making authority to team members while retaining overall accountability is called ________.</div><div class="options"><label class="opt"><input type="radio" name="fq3" value="a"> A. empowerment</label><label class="opt"><input type="radio" name="fq3" value="b"> B. succession planning</label><label class="opt"><input type="radio" name="fq3" value="c"> C. delegation</label><label class="opt"><input type="radio" name="fq3" value="d"> D. onboarding</label></div></div>
+    <div class="q-item"><div class="q-stem">4. "She suggested ________ a team retrospective at the end of each project sprint." — Choose the correct form.</div><div class="options"><label class="opt"><input type="radio" name="fq4" value="a"> A. to hold</label><label class="opt"><input type="radio" name="fq4" value="b"> B. hold</label><label class="opt"><input type="radio" name="fq4" value="c"> C. holding</label><label class="opt"><input type="radio" name="fq4" value="d"> D. held</label></div></div>
+    <div class="q-item"><div class="q-stem">5. In the BancoVerde case study, what was identified as the root cause of the Risk Management team's poor culture?</div><div class="options"><label class="opt"><input type="radio" name="fq5" value="a"> A. Insufficient salary and financial recognition</label><label class="opt"><input type="radio" name="fq5" value="b"> B. Senior managers consistently responding to honesty with dismissal or anger</label><label class="opt"><input type="radio" name="fq5" value="c"> C. A lack of technical expertise among junior analysts</label><label class="opt"><input type="radio" name="fq5" value="d"> D. Poor KPI-setting and unrealistic performance targets</label></div></div>
+    <div class="q-item"><div class="q-stem">6. "All managers ________ complete the leadership training before conducting performance reviews." — Which modal expresses strict obligation?</div><div class="options"><label class="opt"><input type="radio" name="fq6" value="a"> A. might</label><label class="opt"><input type="radio" name="fq6" value="b"> B. should</label><label class="opt"><input type="radio" name="fq6" value="c"> C. must</label><label class="opt"><input type="radio" name="fq6" value="d"> D. could</label></div></div>
+    <div class="q-item"><div class="q-stem">7. What does Google's Project Aristotle identify as the single most important factor in team effectiveness?</div><div class="options"><label class="opt"><input type="radio" name="fq7" value="a"> A. Individual talent and technical specialisation</label><label class="opt"><input type="radio" name="fq7" value="b"> B. Role clarity and well-defined KPIs</label><label class="opt"><input type="radio" name="fq7" value="c"> C. Psychological safety within the team</label><label class="opt"><input type="radio" name="fq7" value="d"> D. Team size and diversity of professional background</label></div></div>
+    <div class="q-item"><div class="q-stem">8. Direct: "We will implement a new 360-degree feedback process next month." — Correct reported speech:</div><div class="options"><label class="opt"><input type="radio" name="fq8" value="a"> A. The director said they will implement a new 360-degree feedback process next month.</label><label class="opt"><input type="radio" name="fq8" value="b"> B. The director said they would implement a new 360-degree feedback process the following month.</label><label class="opt"><input type="radio" name="fq8" value="c"> C. The director told they would implement a new process the following month.</label><label class="opt"><input type="radio" name="fq8" value="d"> D. The director said that they implemented a new process the following month.</label></div></div>
+    <div class="q-item"><div class="q-stem">9. A state of chronic physical and emotional exhaustion caused by prolonged workplace stress is called ________.</div><div class="options"><label class="opt"><input type="radio" name="fq9" value="a"> A. disengagement</label><label class="opt"><input type="radio" name="fq9" value="b"> B. burnout</label><label class="opt"><input type="radio" name="fq9" value="c"> C. role ambiguity</label><label class="opt"><input type="radio" name="fq9" value="d"> D. micromanagement</label></div></div>
+    <div class="q-item"><div class="q-stem">10. "The team leader ________ addressed the conflict before it escalated." — Which option expresses past regret or criticism?</div><div class="options"><label class="opt"><input type="radio" name="fq10" value="a"> A. must have</label><label class="opt"><input type="radio" name="fq10" value="b"> B. could not have</label><label class="opt"><input type="radio" name="fq10" value="c"> C. should have</label><label class="opt"><input type="radio" name="fq10" value="d"> D. might have</label></div></div>
+    <div class="q-item"><div class="q-stem">11. In the DigitalWave case study, what was identified as Rafael Torres' core weakness as a new team leader?</div><div class="options"><label class="opt"><input type="radio" name="fq11" value="a"> A. Poor technical knowledge of the product being developed</label><label class="opt"><input type="radio" name="fq11" value="b"> B. An inability to delegate effectively and low emotional intelligence scores</label><label class="opt"><input type="radio" name="fq11" value="c"> C. Failure to communicate the team's objectives to senior management</label><label class="opt"><input type="radio" name="fq11" value="d"> D. Excessive reliance on data and KPIs over team relationships</label></div></div>
+    <div class="q-item"><div class="q-stem">12. Which of the following is an example of a "hygiene factor" as defined by Herzberg?</div><div class="options"><label class="opt"><input type="radio" name="fq12" value="a"> A. Meaningful work and a sense of achievement</label><label class="opt"><input type="radio" name="fq12" value="b"> B. Regular recognition of outstanding contributions</label><label class="opt"><input type="radio" name="fq12" value="c"> C. Salary and job security</label><label class="opt"><input type="radio" name="fq12" value="d"> D. Opportunities for professional development and growth</label></div></div>
+    <div class="q-item"><div class="q-stem">13. "The board agreed ________ the performance framework before the new financial year." — Correct form:</div><div class="options"><label class="opt"><input type="radio" name="fq13" value="a"> A. reviewing</label><label class="opt"><input type="radio" name="fq13" value="b"> B. to review</label><label class="opt"><input type="radio" name="fq13" value="c"> C. review</label><label class="opt"><input type="radio" name="fq13" value="d"> D. reviewed</label></div></div>
+    <div class="q-item"><div class="q-stem">14. A formal document that defines a team's goals, ground rules, roles, and behavioural expectations is called a ________.</div><div class="options"><label class="opt"><input type="radio" name="fq14" value="a"> A. performance improvement plan</label><label class="opt"><input type="radio" name="fq14" value="b"> B. succession plan</label><label class="opt"><input type="radio" name="fq14" value="c"> C. team charter</label><label class="opt"><input type="radio" name="fq14" value="d"> D. briefing document</label></div></div>
+    <div class="q-item"><div class="q-stem">15. In the listening activity about feedback (Activity 2), what does the host say about the timing of constructive feedback?</div><div class="options"><label class="opt"><input type="radio" name="fq15" value="a"> A. Feedback is most effective when delivered in writing during the annual review</label><label class="opt"><input type="radio" name="fq15" value="b"> B. Feedback within 24 hours is two to three times more effective than delayed feedback</label><label class="opt"><input type="radio" name="fq15" value="c"> C. Feedback is most powerful when delivered to the entire team rather than individually</label><label class="opt"><input type="radio" name="fq15" value="d"> D. The timing of feedback has no significant impact on whether behaviour changes</label></div></div>
+    <div class="q-item"><div class="q-stem">16. "Unless managers ________ constructive feedback, employees cannot develop their skills." — Correct form:</div><div class="options"><label class="opt"><input type="radio" name="fq16" value="a"> A. provided</label><label class="opt"><input type="radio" name="fq16" value="b"> B. had provided</label><label class="opt"><input type="radio" name="fq16" value="c"> C. provide</label><label class="opt"><input type="radio" name="fq16" value="d"> D. would provide</label></div></div>
+    <div class="q-item"><div class="q-stem">17. A performance review process that collects input from peers, subordinates, and the employee's line manager is called ________.</div><div class="options"><label class="opt"><input type="radio" name="fq17" value="a"> A. a self-assessment cycle</label><label class="opt"><input type="radio" name="fq17" value="b"> B. a performance improvement plan</label><label class="opt"><input type="radio" name="fq17" value="c"> C. 360-degree feedback</label><label class="opt"><input type="radio" name="fq17" value="d"> D. an annual appraisal report</label></div></div>
+    <div class="q-item"><div class="q-stem">18. "The manager avoided ________ the conflict directly, which made the situation significantly worse."</div><div class="options"><label class="opt"><input type="radio" name="fq18" value="a"> A. to address</label><label class="opt"><input type="radio" name="fq18" value="b"> B. addressing</label><label class="opt"><input type="radio" name="fq18" value="c"> C. addressed</label><label class="opt"><input type="radio" name="fq18" value="d"> D. address</label></div></div>
+    <div class="q-item"><div class="q-stem">19. What is the difference between delegation and micromanagement?</div><div class="options"><label class="opt"><input type="radio" name="fq19" value="a"> A. There is no meaningful distinction — both involve assigning work to team members</label><label class="opt"><input type="radio" name="fq19" value="b"> B. Delegation empowers team members with authority and trust; micromanagement controls every detail and undermines autonomy</label><label class="opt"><input type="radio" name="fq19" value="c"> C. Delegation is informal while micromanagement is a formal management process</label><label class="opt"><input type="radio" name="fq19" value="d"> D. Delegation is used only for junior employees; micromanagement is for senior specialists</label></div></div>
+    <div class="q-item"><div class="q-stem">20. Which statement best summarises the central message of Module 3: Leading and Managing Teams?</div><div class="options"><label class="opt"><input type="radio" name="fq20" value="a"> A. The primary purpose of management is to monitor and control employee output and enforce compliance</label><label class="opt"><input type="radio" name="fq20" value="b"> B. Effective team leadership demands technical expertise above all other skills</label><label class="opt"><input type="radio" name="fq20" value="c"> C. Effective leadership integrates self-awareness, emotional intelligence, trust-building, and consistent people development</label><label class="opt"><input type="radio" name="fq20" value="d"> D. Once a team is performing well, a manager's role becomes primarily administrative</label></div></div>
+    <div class="btn-row" style="margin-top:28px">
+      <button class="btn btn-gold" style="font-size:15px;padding:12px 28px" onclick="gradeFinal()">🏆 Submit Final Assessment</button>
+    </div>
+    <div class="final-result" id="fresult">
+      <div id="femoji" style="font-size:50px;margin-bottom:10px"></div>
+      <h2 id="fscore"></h2>
+      <div class="final-prog-wrap"><div class="final-prog-fill" id="fprog" style="width:0%"></div></div>
+      <p id="fmsg" style="margin-top:12px"></p>
+      <p style="font-size:11px;color:rgba(255,255,255,.3);margin-top:8px">Review the answer key below to understand any questions you missed.</p>
+    </div>
+  </div>
+  <div class="ak-wrap" style="margin-top:14px">
+    <button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Final Assessment</span><span class="ak-icon">▶</span></button>
+    <div class="ak-content"><ol>
+      <li>1. <strong>C</strong> — transformational</li><li>2. <strong>B</strong> — had fostered (3rd conditional: unreal past)</li><li>3. <strong>C</strong> — delegation</li><li>4. <strong>C</strong> — holding (suggest + gerund)</li><li>5. <strong>B</strong> — Senior managers responding to honesty with dismissal or anger</li><li>6. <strong>C</strong> — must (strict obligation)</li><li>7. <strong>C</strong> — Psychological safety</li><li>8. <strong>B</strong> — would implement / the following month (reported speech backshift)</li><li>9. <strong>B</strong> — burnout</li><li>10. <strong>C</strong> — should have (past criticism/regret)</li><li>11. <strong>B</strong> — Inability to delegate + low emotional intelligence</li><li>12. <strong>C</strong> — Salary and job security (hygiene factors)</li><li>13. <strong>B</strong> — to review (agree + to-infinitive)</li><li>14. <strong>C</strong> — team charter</li><li>15. <strong>B</strong> — Feedback within 24 hours is 2–3× more effective</li><li>16. <strong>C</strong> — provide (zero/1st conditional with "unless")</li><li>17. <strong>C</strong> — 360-degree feedback</li><li>18. <strong>B</strong> — addressing (avoid + gerund)</li><li>19. <strong>B</strong> — Delegation empowers; micromanagement controls and undermines autonomy</li><li>20. <strong>C</strong> — Effective leadership integrates self-awareness, EI, trust-building, and development</li>
+    </ol></div>
+  </div>
+</section>
+
+</div><!-- /content -->
+
+<div style="background:var(--navy);color:rgba(255,255,255,.25);text-align:center;padding:20px;font-size:11px;font-family:'DM Mono',monospace;margin-top:44px;margin-left:0">
+  Business Management English · Module 3: Leading and Managing Teams · B1–B2 Level
+</div>
+
+</main>
+
+<!-- ── ALL JAVASCRIPT ── -->
+<script>
+// ── GRADER ──
+function gradeQ(id,ans){
+  let sc=0,tot=Object.keys(ans).length;
+  Object.entries(ans).forEach(([nm,cr])=>{
+    const sel=document.querySelector(`input[name="${nm}"]:checked`);
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(o=>{
+      const l=o.closest('.opt');if(l)l.classList.remove('correct','wrong');
+    });
+    if(sel){
+      const sl=sel.closest('.opt');
+      if(sel.value===cr){sc++;if(sl)sl.classList.add('correct');}
+      else{if(sl)sl.classList.add('wrong');}
+    }
+    const ci=document.querySelector(`input[name="${nm}"][value="${cr}"]`);
+    if(ci){const cl=ci.closest('.opt');if(cl&&!cl.classList.contains('wrong'))cl.classList.add('correct');}
+  });
+  const pct=Math.round(sc/tot*100);
+  const el=document.getElementById(id+'-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/${tot} (${pct}%)</span>`;}
+  updateProgress();
+}
+
+// ── GAP FILL ──
+const gAns2={g2i1:'onboarding',g2i2:'role clarity',g2i3:'coaching',g2i4:'accountability',g2i5:'emotional intelligence',g2i6:'team dynamics',g2i7:'recognition',g2i8:'empowerment'};
+function gradeGap2(){
+  let sc=0;
+  Object.entries(gAns2).forEach(([id,ans])=>{
+    const inp=document.getElementById(id);if(!inp)return;
+    inp.classList.remove('correct','wrong');
+    if(inp.value.toLowerCase().trim()===ans.toLowerCase()){sc++;inp.classList.add('correct');}
+    else inp.classList.add('wrong');
+  });
+  const pct=Math.round(sc/8*100),el=document.getElementById('v2-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+
+// ── TRUE/FALSE ──
+const tfSel={};
+const tfAns={'1':'F','2':'T','3':'F','4':'T','5':'F','6':'T','7':'F','8':'T'};
+function pickTF(btn,num,val){
+  const row=btn.closest('.tf-row');
+  row.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('sel-t','sel-f'));
+  btn.classList.add(val==='T'?'sel-t':'sel-f');tfSel[num]=val;
+}
+function gradeTF(){
+  let sc=0;
+  for(let i=1;i<=8;i++){
+    const s=tfSel[String(i)],c=tfAns[String(i)];
+    const row=document.querySelector(`#tfr${i} .tf-row`);if(!row)continue;
+    const btns=row.querySelectorAll('.tf-btn');
+    btns.forEach(b=>b.classList.remove('ok-tf','nok-tf','sel-t','sel-f'));
+    if(s){
+      if(s===c)sc++;
+      btns.forEach(b=>{
+        const v=b.textContent.trim()==='True'?'T':'F';
+        if(v===c)b.classList.add('ok-tf');
+        else if(v===s&&s!==c)b.classList.add('nok-tf');
+      });
+    } else {
+      btns.forEach(b=>{if((b.textContent.trim()==='True'?'T':'F')===c)b.classList.add('ok-tf');});
+    }
+  }
+  const pct=Math.round(sc/8*100),el=document.getElementById('v3-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+
+// ── DRAG DROP ──
+let curDrag=null;
+function pickDrag(el){
+  if(el.classList.contains('used'))return;
+  document.querySelectorAll('.drag-chip').forEach(d=>d.classList.remove('selected-chip'));
+  if(curDrag===el){curDrag=null;}else{curDrag=el;el.classList.add('selected-chip');}
+}
+function doDrop(zone){
+  if(!curDrag)return;
+  if(zone.dataset.cur){document.querySelectorAll('.drag-chip').forEach(d=>{if(d.dataset.w===zone.dataset.cur)d.classList.remove('used');});}
+  zone.textContent=curDrag.dataset.w;zone.classList.add('filled');zone.dataset.cur=curDrag.dataset.w;
+  curDrag.classList.add('used');curDrag.classList.remove('selected-chip');curDrag=null;
+}
+function gradeDrop(){
+  let sc=0;
+  document.querySelectorAll('.drop-zone').forEach(z=>{
+    z.classList.remove('filled','wrong-drop');
+    if(z.dataset.cur===z.dataset.ans){sc++;z.classList.add('filled');}
+    else if(z.dataset.cur)z.classList.add('wrong-drop');
+  });
+  const pct=Math.round(sc/8*100),el=document.getElementById('v4-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+function resetDrop(){
+  document.querySelectorAll('.drop-zone').forEach(z=>{z.textContent='Place here';z.classList.remove('filled','wrong-drop');delete z.dataset.cur;});
+  document.querySelectorAll('.drag-chip').forEach(d=>d.classList.remove('used','selected-chip'));
+  curDrag=null;const el=document.getElementById('v4-score');if(el)el.innerHTML='';
+}
+
+// ── ANSWER KEYS ──
+function togAK(btn){
+  btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('visible');
+}
+
+// ── WORD COUNT ──
+function wc(tid,cid,max){
+  const t=document.getElementById(tid).value.trim();
+  const n=t===''?0:t.split(/\s+/).length;
+  const el=document.getElementById(cid);if(el)el.textContent=`Words: ${n} / ${max}`;
+}
+
+// ── TRANSCRIPT TOGGLE ──
+function togTranscript(btn){
+  btn.classList.toggle('open');
+  const box=btn.nextElementSibling;box.classList.toggle('visible');
+}
+
+// ── AUDIO TTS SYSTEM ──
+const trackState={};
+function togglePlay(ppId,progId,tmId,stId,spId,scriptId){
+  const s=trackState[scriptId];
+  if(s && s.utt && speechSynthesis.speaking){
+    if(s.paused){speechSynthesis.resume();s.paused=false;document.getElementById(ppId).textContent='⏸';}
+    else{speechSynthesis.pause();s.paused=true;document.getElementById(ppId).textContent='▶';}
+    return;
+  }
+  // stop any other
+  Object.keys(trackState).forEach(k=>{
+    if(k!==scriptId&&trackState[k]&&trackState[k].utt){speechSynthesis.cancel();}
+  });
+  const text=document.getElementById(scriptId).textContent.trim();
+  const utt=new SpeechSynthesisUtterance(text);
+  utt.rate=trackState[scriptId]?.speed||0.85;utt.lang='en-GB';utt.pitch=1.02;
+  trackState[scriptId]={utt,paused:false,speed:utt.rate,start:Date.now(),dur:0};
+  const pp=document.getElementById(ppId),st=document.getElementById(stId),prog=document.getElementById(progId),tm=document.getElementById(tmId);
+  // estimate duration
+  const estSec=text.split(' ').length/(utt.rate*150)*60;
+  trackState[scriptId].dur=estSec;
+  if(document.getElementById('dur'+ppId.slice(2)))document.getElementById('dur'+ppId.slice(2)).textContent=fmtTime(estSec);
+  utt.onstart=()=>{
+    pp.textContent='⏸';if(st)st.textContent='▶ Playing…';
+    trackState[scriptId].timer=setInterval(()=>{
+      if(trackState[scriptId].paused)return;
+      const elapsed=(Date.now()-trackState[scriptId].start)/1000;
+      const pct=Math.min(elapsed/estSec*100,99);
+      if(prog)prog.style.width=pct+'%';
+      if(tm)tm.textContent=fmtTime(elapsed);
+    },300);
+  };
+  utt.onend=()=>{
+    pp.textContent='▶';if(st)st.textContent='✓ Finished';
+    if(prog)prog.style.width='100%';
+    clearInterval(trackState[scriptId].timer);
+  };
+  utt.onerror=()=>{pp.textContent='▶';if(st)st.textContent='Error — retry';clearInterval(trackState[scriptId].timer);};
+  speechSynthesis.speak(utt);
+}
+function replayTrack(scriptId,progId,tmId,ppId,stId){
+  speechSynthesis.cancel();
+  const prog=document.getElementById(progId),tm=document.getElementById(tmId);
+  if(prog)prog.style.width='0%';if(tm)tm.textContent='0:00';
+  if(trackState[scriptId])delete trackState[scriptId];
+  setTimeout(()=>togglePlay(ppId,progId,tmId,stId,'',scriptId),200);
+}
+function setSpeed(scriptId,rate,btn,grpId){
+  const container=btn.closest('.speed-row')||btn.closest('.player-wrap');
+  if(container)container.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(!trackState[scriptId])trackState[scriptId]={};
+  trackState[scriptId].speed=rate;
+  if(speechSynthesis.speaking&&trackState[scriptId].utt){
+    trackState[scriptId].utt.rate=rate;
+  }
+}
+function seekTrack(e,progId,scriptId){
+  const bar=e.currentTarget;
+  const rect=bar.getBoundingClientRect();
+  const pct=(e.clientX-rect.left)/rect.width;
+  const prog=document.getElementById(progId);
+  if(prog)prog.style.width=(pct*100)+'%';
+}
+function fmtTime(s){const m=Math.floor(s/60),sec=Math.floor(s%60);return `${m}:${sec<10?'0':''}${sec}`;}
+
+// ── FINAL ASSESSMENT ──
+const fAns={fq1:'c',fq2:'b',fq3:'c',fq4:'c',fq5:'b',fq6:'c',fq7:'c',fq8:'b',fq9:'b',fq10:'c',fq11:'b',fq12:'c',fq13:'b',fq14:'c',fq15:'b',fq16:'c',fq17:'c',fq18:'b',fq19:'b',fq20:'c'};
+let fDone=false;
+function gradeFinal(){
+  if(fDone)return;fDone=true;
+  let sc=0;
+  Object.entries(fAns).forEach(([nm,cr])=>{
+    const sel=document.querySelector(`input[name="${nm}"]:checked`);
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(o=>{const l=o.closest('.opt');if(l)l.classList.remove('correct','wrong');});
+    if(sel){const sl=sel.closest('.opt');if(sel.value===cr){sc++;if(sl)sl.classList.add('correct');}else{if(sl)sl.classList.add('wrong');}}
+    const ci=document.querySelector(`input[name="${nm}"][value="${cr}"]`);
+    if(ci){const cl=ci.closest('.opt');if(cl)cl.classList.add('correct');}
+  });
+  const pct=Math.round(sc/20*100);
+  const r=document.getElementById('fresult');r.style.display='block';
+  document.getElementById('fscore').textContent=`${sc} / 20`;
+  document.getElementById('fprog').style.width=pct+'%';
+  const em=document.getElementById('femoji'),msg=document.getElementById('fmsg');
+  if(pct>=90){em.textContent='🏆';msg.textContent=`Outstanding — ${pct}%. You have demonstrated excellent mastery of Module 3: Leading and Managing Teams.`;}
+  else if(pct>=70){em.textContent='✅';msg.textContent=`Well done — ${pct}%. You have passed Module 3. Review the questions you missed and use the answer key to consolidate your learning.`;}
+  else{em.textContent='📚';msg.textContent=`${pct}% — You did not reach the 70% pass mark this time. Review all module sections before attempting the assessment again.`;}
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+  document.querySelectorAll('#fwrap input[name^="fq"]').forEach(i=>i.disabled=true);
+}
+
+// ── SIDEBAR NAV ──
+function setActive(el){
+  document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.remove('active'));
+  el.classList.add('active');
+}
+window.addEventListener('scroll',()=>{
+  const secs=document.querySelectorAll('section[id]');
+  let cur='';
+  secs.forEach(s=>{if(s.getBoundingClientRect().top<200)cur=s.id;});
+  document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+
+// ── PROGRESS ──
+function updateProgress(){
+  const scored=document.querySelectorAll('.score-badge').length;
+  const total=12;
+  const pct=Math.min(Math.round(scored/total*100),100);
+  const prog=document.getElementById('modprog'),pctEl=document.getElementById('modpct');
+  if(prog)prog.style.width=pct+'%';
+  if(pctEl)pctEl.textContent=pct+'%';
+}
+// animate progress bar on load
+setTimeout(()=>{const p=document.getElementById('modprog');if(p)p.style.width='0%';},200);
+</script>
+</body>
+</html>

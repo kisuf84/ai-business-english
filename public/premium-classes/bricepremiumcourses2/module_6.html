@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance & Accounting English — Module 6: Investment Terminology</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d1b2e;
+  --navy-mid: #152337;
+  --navy-light: #1e3352;
+  --gold: #c9952a;
+  --gold-light: #e8b84b;
+  --cream: #f5f0e8;
+  --cream-dark: #ece5d8;
+  --white: #ffffff;
+  --text-muted: #8899aa;
+  --green: #2ecc8a;
+  --red: #e05c5c;
+  --sidebar-w: 260px;
+  --radius: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--navy); min-height: 100vh; display: flex; }
+
+/* ── SIDEBAR ── */
+#sidebar {
+  width: var(--sidebar-w); min-height: 100vh; background: var(--navy);
+  position: fixed; top: 0; left: 0; z-index: 100;
+  display: flex; flex-direction: column; overflow-y: auto; padding-bottom: 32px;
+}
+.sidebar-brand { padding: 24px 20px 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.sidebar-brand h2 { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1rem; line-height: 1.3; }
+.sidebar-brand .sub { color: var(--text-muted); font-size: .7rem; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; }
+.level-badge { display: inline-block; background: var(--gold); color: var(--navy); font-size: .65rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-top: 10px; letter-spacing: 1px; }
+.sidebar-section-label { color: var(--text-muted); font-size: .65rem; text-transform: uppercase; letter-spacing: 2px; padding: 20px 20px 6px; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 20px;
+  color: rgba(255,255,255,.65); font-size: .85rem; cursor: pointer;
+  border-left: 3px solid transparent; transition: all .2s; user-select: none;
+}
+.nav-item:hover { color: var(--white); background: rgba(255,255,255,.05); }
+.nav-item.active { color: var(--white); background: rgba(201,149,42,.12); border-left-color: var(--gold); }
+.nav-item .nav-icon { font-size: 1rem; width: 20px; text-align: center; }
+.nav-badge { margin-left: auto; background: rgba(201,149,42,.2); color: var(--gold-light); font-size: .65rem; font-weight: 600; padding: 2px 7px; border-radius: 10px; }
+
+/* ── MAIN ── */
+#main { margin-left: var(--sidebar-w); flex: 1; }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0d1b2e 0%, #152337 60%, #1a2d45 100%);
+  padding: 48px 56px 40px; position: relative; overflow: hidden;
+}
+.hero::after {
+  content: 'M6'; position: absolute; right: 40px; bottom: -20px;
+  font-family: 'Playfair Display', serif; font-size: 160px; font-weight: 800;
+  color: rgba(255,255,255,.03); line-height: 1; pointer-events: none;
+}
+.hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.1); color: rgba(255,255,255,.8); font-size: .72rem; text-transform: uppercase; letter-spacing: 2px; padding: 6px 14px; border-radius: 20px; margin-bottom: 20px; }
+.hero h1 { font-family: 'Playfair Display', serif; color: var(--white); font-size: 2.8rem; line-height: 1.15; }
+.hero h1 span { color: var(--gold); }
+.hero p { color: rgba(255,255,255,.65); margin-top: 14px; max-width: 680px; line-height: 1.7; font-size: .95rem; }
+.hero-stats { display: flex; gap: 36px; margin-top: 32px; flex-wrap: wrap; }
+.stat { text-align: center; }
+.stat .n { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2rem; font-weight: 700; }
+.stat .l { color: rgba(255,255,255,.5); font-size: .68rem; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px; }
+
+/* ── PROGRESS BAR ── */
+.progress-bar-wrap { background: var(--navy-mid); padding: 14px 56px; display: flex; align-items: center; gap: 16px; }
+.progress-label { color: rgba(255,255,255,.7); font-size: .8rem; white-space: nowrap; }
+.progress-track { flex: 1; height: 8px; background: rgba(255,255,255,.1); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 4px; width: 0%; transition: width 1s ease; }
+.progress-pct { color: var(--gold); font-size: .85rem; font-weight: 600; }
+
+/* ── SECTION WRAPPER ── */
+.section { display: none; padding: 48px 56px; }
+.section.active { display: block; }
+.section-title { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--navy); margin-bottom: 6px; }
+.section-title::after { content: ''; display: block; width: 48px; height: 3px; background: var(--gold); margin-top: 10px; border-radius: 2px; }
+.section-sub { color: #667; font-size: .9rem; margin-top: 12px; margin-bottom: 28px; }
+
+/* ── CARDS ── */
+.card { background: var(--white); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; border: 1px solid rgba(0,0,0,.07); }
+.card-dark { background: var(--navy); color: var(--white); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; }
+
+/* ── OVERVIEW ── */
+.outcome-list { list-style: none; display: grid; gap: 10px; margin-top: 16px; }
+.outcome-list li { display: flex; align-items: flex-start; gap: 10px; font-size: .9rem; line-height: 1.5; }
+.outcome-list li::before { content: '✦'; color: var(--gold); font-size: .7rem; margin-top: 3px; flex-shrink: 0; }
+
+/* ── SPEAKING ── */
+.q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.q-card { background: var(--white); border-radius: 8px; padding: 16px 18px; border-left: 3px solid var(--gold); font-size: .88rem; line-height: 1.5; display: flex; gap: 12px; align-items: flex-start; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.q-num { font-family: 'DM Mono', monospace; color: var(--gold); font-size: .75rem; font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+
+/* ── WORD BANK ── */
+.word-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.word-card { background: var(--white); border-radius: 10px; padding: 18px 16px; border: 1px solid rgba(0,0,0,.08); transition: transform .2s, box-shadow .2s; }
+.word-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+.word-emoji { font-size: 1.6rem; margin-bottom: 8px; }
+.word-term { font-weight: 700; font-size: .92rem; color: var(--navy); margin-bottom: 4px; }
+.word-def { font-size: .78rem; color: #556; line-height: 1.5; }
+
+/* ── READING ── */
+.reading-text { background: var(--white); border-radius: var(--radius); padding: 28px 32px; margin-bottom: 28px; border: 1px solid rgba(0,0,0,.07); }
+.reading-text h3 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 1.2rem; margin-bottom: 16px; }
+.reading-text p { font-size: .9rem; line-height: 1.8; color: #334; margin-bottom: 14px; }
+.reading-text p:last-child { margin-bottom: 0; }
+
+/* ── MCQ ── */
+.mcq-block { margin-bottom: 28px; }
+.mcq-question { font-weight: 600; font-size: .9rem; margin-bottom: 12px; color: var(--navy); line-height: 1.5; }
+.mcq-options { display: grid; gap: 8px; }
+.mcq-option {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  background: var(--cream); border-radius: 7px; cursor: pointer;
+  border: 2px solid transparent; transition: all .2s; font-size: .88rem;
+  user-select: none;
+}
+.mcq-option:hover { border-color: var(--gold); background: rgba(201,149,42,.08); }
+.mcq-option.correct { background: rgba(46,204,138,.12); border-color: var(--green); color: #1a6e4c; }
+.mcq-option.wrong { background: rgba(224,92,92,.1); border-color: var(--red); color: #8b1a1a; }
+.mcq-option.disabled { pointer-events: none; }
+.opt-letter { width: 24px; height: 24px; border-radius: 50%; background: rgba(201,149,42,.2); color: var(--gold); font-weight: 700; font-size: .72rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.feedback { margin-top: 8px; font-size: .82rem; padding: 8px 12px; border-radius: 6px; display: none; }
+.feedback.show { display: block; }
+.feedback.correct { background: rgba(46,204,138,.1); color: #1a6e4c; }
+.feedback.wrong { background: rgba(224,92,92,.1); color: #8b1a1a; }
+
+/* ── GAP FILL ── */
+.gap-sentence { font-size: .9rem; line-height: 2; margin-bottom: 12px; }
+.gap-input { border: none; border-bottom: 2px solid var(--gold); background: transparent; font-family: 'DM Sans', sans-serif; font-size: .88rem; padding: 2px 6px; color: var(--navy); min-width: 120px; outline: none; }
+.gap-input.correct { border-color: var(--green); color: #1a6e4c; }
+.gap-input.wrong { border-color: var(--red); color: var(--red); }
+
+/* ── DRAG DROP ── */
+.drag-pool { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: var(--cream-dark); border-radius: 8px; min-height: 48px; margin-bottom: 16px; }
+.drag-item { background: var(--navy); color: var(--white); padding: 6px 14px; border-radius: 20px; cursor: grab; font-size: .82rem; user-select: none; transition: opacity .2s; }
+.drag-item:active { cursor: grabbing; opacity: .7; }
+.drag-item.used { opacity: .3; pointer-events: none; }
+.drop-zone { border: 2px dashed var(--gold); border-radius: 6px; min-width: 130px; min-height: 34px; display: inline-flex; align-items: center; justify-content: center; padding: 4px 10px; font-size: .82rem; color: var(--text-muted); vertical-align: middle; margin: 0 4px; transition: background .2s; }
+.drop-zone.over { background: rgba(201,149,42,.15); }
+.drop-zone.filled { border-style: solid; color: var(--navy); font-weight: 600; }
+.drop-zone.correct { border-color: var(--green); background: rgba(46,204,138,.1); color: #1a6e4c; }
+.drop-zone.wrong { border-color: var(--red); background: rgba(224,92,92,.08); color: var(--red); }
+
+/* ── GRAMMAR ── */
+.grammar-rule { background: var(--navy); color: var(--white); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 20px; }
+.grammar-rule h4 { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 10px; }
+.grammar-rule p { font-size: .88rem; line-height: 1.7; color: rgba(255,255,255,.8); margin-bottom: 10px; }
+.grammar-rule .example { background: rgba(255,255,255,.08); border-left: 3px solid var(--gold); padding: 10px 14px; border-radius: 4px; font-size: .85rem; font-style: italic; margin-top: 8px; }
+.grammar-rule table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .82rem; }
+.grammar-rule th { background: rgba(201,149,42,.25); color: var(--gold-light); padding: 8px 12px; text-align: left; }
+.grammar-rule td { padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,.08); color: rgba(255,255,255,.8); }
+
+/* ── LISTENING ── */
+.listen-card { background: var(--navy); border-radius: var(--radius); padding: 24px; margin-bottom: 28px; }
+.listen-card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.listen-icon { width: 50px; height: 50px; background: rgba(201,149,42,.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+.listen-title { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+.listen-meta { color: rgba(255,255,255,.5); font-size: .78rem; margin-top: 3px; }
+.listen-badges { display: flex; gap: 8px; margin-top: 8px; }
+.badge { font-size: .65rem; text-transform: uppercase; letter-spacing: 1px; padding: 3px 9px; border-radius: 12px; font-weight: 600; }
+.badge-gold { border: 1px solid var(--gold); color: var(--gold); }
+.badge-outline { border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.7); }
+.audio-player { background: #0a1525; border-radius: 10px; padding: 16px 20px; }
+.audio-controls { display: flex; align-items: center; gap: 14px; }
+.play-btn { width: 46px; height: 46px; border-radius: 50%; background: var(--gold); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--navy); flex-shrink: 0; transition: background .2s; }
+.play-btn:hover { background: var(--gold-light); }
+.audio-info { flex: 1; }
+.audio-title-sm { color: var(--white); font-size: .85rem; font-weight: 600; }
+.audio-sub { color: rgba(255,255,255,.45); font-size: .75rem; margin-top: 2px; }
+.progress-audio { margin-top: 10px; height: 4px; background: rgba(255,255,255,.15); border-radius: 2px; position: relative; }
+.progress-audio-fill { height: 100%; background: var(--gold); border-radius: 2px; width: 0%; transition: width .3s; }
+.audio-time { color: rgba(255,255,255,.4); font-size: .72rem; font-family: 'DM Mono', monospace; display: flex; justify-content: flex-end; margin-top: 4px; }
+.speed-btns { display: flex; gap: 6px; margin-top: 10px; }
+.speed-btn { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.7); font-size: .75rem; padding: 3px 10px; border-radius: 12px; cursor: pointer; transition: all .2s; }
+.speed-btn.active { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 700; }
+.audio-note { color: rgba(255,255,255,.35); font-size: .72rem; margin-top: 8px; font-style: italic; }
+.transcript-toggle { margin-top: 12px; background: none; border: none; color: var(--gold); font-size: .82rem; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; }
+.transcript-box { background: rgba(255,255,255,.05); border-radius: 8px; padding: 14px 18px; margin-top: 10px; font-size: .84rem; color: rgba(255,255,255,.7); line-height: 1.75; display: none; }
+.transcript-box.open { display: block; }
+.listen-mcq-wrap { padding: 20px 0 0; }
+
+/* ── WRITING ── */
+.writing-prompt { background: var(--navy); color: var(--white); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; }
+.writing-prompt h3 { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 10px; }
+.writing-prompt p { font-size: .88rem; line-height: 1.7; color: rgba(255,255,255,.8); }
+.writing-prompt ul { margin: 10px 0 0 16px; font-size: .85rem; color: rgba(255,255,255,.7); line-height: 1.8; }
+.writing-area { width: 100%; min-height: 200px; border: 2px solid rgba(0,0,0,.12); border-radius: 8px; padding: 16px; font-family: 'DM Sans', sans-serif; font-size: .9rem; resize: vertical; outline: none; transition: border-color .2s; color: var(--navy); }
+.writing-area:focus { border-color: var(--gold); }
+.word-count { color: var(--text-muted); font-size: .78rem; margin-top: 6px; }
+.submit-btn { background: var(--gold); color: var(--navy); border: none; padding: 11px 28px; border-radius: 25px; font-family: 'DM Sans', sans-serif; font-size: .88rem; font-weight: 700; cursor: pointer; margin-top: 12px; transition: background .2s; }
+.submit-btn:hover { background: var(--gold-light); }
+.submit-feedback { display: none; background: rgba(46,204,138,.1); border: 1px solid var(--green); border-radius: 8px; padding: 12px 16px; margin-top: 12px; font-size: .88rem; color: #1a6e4c; }
+
+/* ── CASE STUDY ── */
+.case-header { background: linear-gradient(135deg, var(--navy), var(--navy-light)); color: var(--white); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 20px; }
+.case-header h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); margin-bottom: 8px; }
+.case-header .case-meta { font-size: .78rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+.case-header p { font-size: .88rem; line-height: 1.7; color: rgba(255,255,255,.8); }
+
+/* ── FINAL ASSESSMENT ── */
+.assessment-info { background: var(--navy); color: var(--white); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 28px; display: flex; gap: 32px; flex-wrap: wrap; }
+.assessment-info .info-item { text-align: center; }
+.assessment-info .info-n { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); }
+.assessment-info .info-l { font-size: .7rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,.5); margin-top: 2px; }
+.check-btn { background: var(--gold); color: var(--navy); border: none; padding: 13px 36px; border-radius: 25px; font-size: .95rem; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 24px; transition: all .2s; }
+.check-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+.result-box { display: none; border-radius: var(--radius); padding: 24px; margin-top: 20px; text-align: center; }
+.result-box.pass { background: rgba(46,204,138,.1); border: 2px solid var(--green); }
+.result-box.fail { background: rgba(224,92,92,.08); border: 2px solid var(--red); }
+.result-score { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; }
+.result-score.pass { color: var(--green); }
+.result-score.fail { color: var(--red); }
+.result-label { font-size: 1rem; font-weight: 600; margin-top: 4px; }
+.result-detail { font-size: .85rem; color: #667; margin-top: 8px; }
+
+/* ── BUTTONS ── */
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 22px; border: none; font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 600; cursor: pointer; transition: all .2s; }
+.btn-primary { background: var(--gold); color: var(--navy); }
+.btn-primary:hover { background: var(--gold-light); }
+.btn-outline { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+.btn-outline:hover { background: var(--navy); color: var(--white); }
+.check-mcq-btn { background: var(--navy); color: var(--white); border: none; padding: 9px 22px; border-radius: 20px; font-size: .82rem; font-weight: 600; cursor: pointer; margin-top: 16px; font-family: 'DM Sans', sans-serif; transition: background .2s; }
+.check-mcq-btn:hover { background: var(--navy-light); }
+
+/* ── EXERCISE HEADER ── */
+.ex-header { background: linear-gradient(90deg, var(--navy), var(--navy-light)); border-radius: var(--radius); padding: 18px 24px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; }
+.ex-num { width: 36px; height: 36px; background: var(--gold); color: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; flex-shrink: 0; }
+.ex-title { color: var(--white); font-size: .95rem; font-weight: 600; }
+.ex-desc { color: rgba(255,255,255,.6); font-size: .78rem; margin-top: 2px; }
+
+/* ── DIVIDER ── */
+.divider { border: none; border-top: 1px solid rgba(0,0,0,.08); margin: 32px 0; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  :root { --sidebar-w: 0px; }
+  #sidebar { transform: translateX(-260px); width: 260px; transition: transform .3s; }
+  #sidebar.open { transform: translateX(0); }
+  #main { margin-left: 0; }
+  .hero { padding: 28px 20px; }
+  .section { padding: 28px 20px; }
+  .q-grid { grid-template-columns: 1fr; }
+  .word-grid { grid-template-columns: 1fr 1fr; }
+  .hero-stats { gap: 18px; }
+  .progress-bar-wrap { padding: 12px 20px; }
+  .hero h1 { font-size: 1.8rem; }
+}
+@media (max-width: 560px) {
+  .word-grid { grid-template-columns: 1fr; }
+  .assessment-info { flex-direction: column; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h2>Finance &amp; Accounting English</h2>
+    <div class="sub">Professional Development</div>
+    <div class="level-badge">B1–B2 LEVEL</div>
+  </div>
+  <div class="sidebar-section-label">Module 6</div>
+  <div class="nav-item active" data-section="overview"><span class="nav-icon">🏠</span> Overview</div>
+  <div class="nav-item" data-section="speaking"><span class="nav-icon">💬</span> Speaking <span class="nav-badge">21Q</span></div>
+  <div class="nav-item" data-section="wordbank"><span class="nav-icon">📚</span> Word Bank <span class="nav-badge">21</span></div>
+  <div class="nav-item" data-section="reading"><span class="nav-icon">📖</span> Reading <span class="nav-badge">2T</span></div>
+  <div class="nav-item" data-section="vocabulary"><span class="nav-icon">✏️</span> Vocabulary <span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" data-section="grammar"><span class="nav-icon">📝</span> Grammar <span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" data-section="grammarreview"><span class="nav-icon">📋</span> Grammar Review</div>
+  <div class="nav-item" data-section="writing"><span class="nav-icon">✍️</span> Writing <span class="nav-badge">2</span></div>
+  <div class="nav-item" data-section="listening"><span class="nav-icon">🎧</span> Listening <span class="nav-badge">4</span></div>
+  <div class="nav-item" data-section="casestudies"><span class="nav-icon">🏢</span> Case Studies <span class="nav-badge">2</span></div>
+  <div class="nav-item" data-section="assessment"><span class="nav-icon">🏆</span> Final Assessment</div>
+</nav>
+
+<!-- ── MAIN ── -->
+<div id="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">💹 Module 6 · Finance &amp; Accounting English</div>
+    <h1>Investment<br><span>Terminology</span></h1>
+    <p>Master the precise language of financial markets, portfolios, and investment strategies used by professionals in the corporate world.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="n">21</div><div class="l">Speaking Q's</div></div>
+      <div class="stat"><div class="n">21</div><div class="l">Word Bank</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">Reading Texts</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">Listening Ex.</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">Exercises</div></div>
+      <div class="stat"><div class="n">20</div><div class="l">Final MCQs</div></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar-wrap">
+    <div class="progress-label">Module Progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-pct" id="progressPct">0%</div>
+  </div>
+
+  <!-- ══════════════════ OVERVIEW ══════════════════ -->
+  <section class="section active" id="sec-overview">
+    <div class="section-title">Module Overview</div>
+    <div style="display:inline-block;background:var(--navy);color:var(--white);font-size:.72rem;padding:3px 12px;border-radius:12px;margin:12px 0 20px;letter-spacing:1px;">B1–B2</div>
+
+    <div class="card">
+      <p style="font-size:.93rem;line-height:1.8;"><strong>Welcome to Module 6: Investment Terminology.</strong> In this module you will develop the professional English vocabulary and linguistic skills needed to discuss investments, financial markets, and portfolio management with confidence. Whether you are reading financial reports, participating in strategy meetings, or advising clients, the language covered here will help you communicate with precision and authority.</p>
+    </div>
+
+    <div class="card" style="background:var(--navy);color:var(--white);">
+      <h3 style="color:var(--gold);font-family:'Playfair Display',serif;margin-bottom:16px;">🎯 Learning Outcomes</h3>
+      <ul class="outcome-list">
+        <li>Identify and use key investment terminology in professional contexts</li>
+        <li>Read and interpret financial texts about markets, portfolios, and risk</li>
+        <li>Discuss investment strategies and market conditions using precise vocabulary</li>
+        <li>Understand and produce sentences using participle clauses in financial writing</li>
+        <li>Use cause/result linkers to explain financial relationships and outcomes</li>
+        <li>Apply phrasal verbs commonly used in business and investment discourse</li>
+        <li>Listen to and comprehend spoken English in investment-related scenarios</li>
+        <li>Write a professional investment memo and market analysis report</li>
+        <li>Analyse real-world investment case studies and evaluate decisions</li>
+      </ul>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:4px;">
+      <div class="card" style="text-align:center;padding:20px;">
+        <div style="font-size:2rem;margin-bottom:6px;">📈</div>
+        <div style="font-weight:700;font-size:.9rem;">Market Vocabulary</div>
+        <div style="color:#667;font-size:.8rem;margin-top:4px;">Equities, bonds, derivatives, indices</div>
+      </div>
+      <div class="card" style="text-align:center;padding:20px;">
+        <div style="font-size:2rem;margin-bottom:6px;">⚖️</div>
+        <div style="font-weight:700;font-size:.9rem;">Risk & Return</div>
+        <div style="color:#667;font-size:.8rem;margin-top:4px;">Diversification, liquidity, yield</div>
+      </div>
+      <div class="card" style="text-align:center;padding:20px;">
+        <div style="font-size:2rem;margin-bottom:6px;">🏦</div>
+        <div style="font-weight:700;font-size:.9rem;">Portfolio Strategy</div>
+        <div style="color:#667;font-size:.8rem;margin-top:4px;">Asset allocation, hedging, rebalancing</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ SPEAKING ══════════════════ -->
+  <section class="section" id="sec-speaking">
+    <div class="section-title">Speaking Activities</div>
+    <div class="section-sub">21 discussion questions to develop your fluency in investment topics. Discuss with a partner or record your answers.</div>
+    <div class="q-grid" id="speakingGrid"></div>
+  </section>
+
+  <!-- ══════════════════ WORD BANK ══════════════════ -->
+  <section class="section" id="sec-wordbank">
+    <div class="section-title">Word Bank</div>
+    <div class="section-sub">21 essential investment terms. Study each definition before completing the exercises.</div>
+    <div class="word-grid" id="wordGrid"></div>
+  </section>
+
+  <!-- ══════════════════ READING ══════════════════ -->
+  <section class="section" id="sec-reading">
+    <div class="section-title">Reading</div>
+    <div class="section-sub">Two professional texts followed by comprehension questions. Read carefully before answering.</div>
+    <div id="readingContent"></div>
+  </section>
+
+  <!-- ══════════════════ VOCABULARY ══════════════════ -->
+  <section class="section" id="sec-vocabulary">
+    <div class="section-title">Vocabulary Exercises</div>
+    <div class="section-sub">Three exercises to practise the investment vocabulary from this module.</div>
+    <div id="vocabContent"></div>
+  </section>
+
+  <!-- ══════════════════ GRAMMAR ══════════════════ -->
+  <section class="section" id="sec-grammar">
+    <div class="section-title">Grammar Exercises</div>
+    <div class="section-sub">Three grammar exercises focusing on participle clauses, cause/result linkers, and phrasal verbs.</div>
+    <div id="grammarContent"></div>
+  </section>
+
+  <!-- ══════════════════ GRAMMAR REVIEW ══════════════════ -->
+  <section class="section" id="sec-grammarreview">
+    <div class="section-title">Grammar Review</div>
+    <div class="section-sub">Detailed reference boxes covering all three grammar points from this module.</div>
+    <div id="grammarReviewContent"></div>
+  </section>
+
+  <!-- ══════════════════ WRITING ══════════════════ -->
+  <section class="section" id="sec-writing">
+    <div class="section-title">Writing Activities</div>
+    <div class="section-sub">Two professional writing tasks. Use the vocabulary and grammar from this module.</div>
+    <div id="writingContent"></div>
+  </section>
+
+  <!-- ══════════════════ LISTENING ══════════════════ -->
+  <section class="section" id="sec-listening">
+    <div class="section-title">Listening Activities</div>
+    <div class="section-sub">4 activities with built-in audio players — press ▶ Play, listen, then answer the questions</div>
+    <div id="listeningContent"></div>
+  </section>
+
+  <!-- ══════════════════ CASE STUDIES ══════════════════ -->
+  <section class="section" id="sec-casestudies">
+    <div class="section-title">Case Studies</div>
+    <div class="section-sub">Two real-world investment scenarios. Read, analyse, and answer the comprehension questions.</div>
+    <div id="caseContent"></div>
+  </section>
+
+  <!-- ══════════════════ FINAL ASSESSMENT ══════════════════ -->
+  <section class="section" id="sec-assessment">
+    <div class="section-title">Final Assessment</div>
+    <div class="section-sub">Module 6 — Investment Terminology</div>
+
+    <div class="assessment-info">
+      <div class="info-item"><div class="info-n">20</div><div class="info-l">Questions</div></div>
+      <div class="info-item"><div class="info-n">70%</div><div class="info-l">Pass Mark</div></div>
+      <div class="info-item"><div class="info-n">2</div><div class="info-l">Attempts</div></div>
+      <div class="info-item"><div class="info-n">B1–B2</div><div class="info-l">Level</div></div>
+    </div>
+
+    <div id="assessmentContent"></div>
+    <div id="assessmentResult" class="result-box"></div>
+  </section>
+
+</div><!-- /main -->
+
+<script>
+/* ═══════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════ */
+
+const speakingQs = [
+  "What do you understand by the term 'investment'? How is it different from saving?",
+  "Have you ever invested money in anything — stocks, property, or a business? What was your experience?",
+  "Why do you think diversification is considered a key principle in investment strategy?",
+  "What factors would you consider before making an investment decision?",
+  "In your opinion, is it better to invest in high-risk, high-return assets or low-risk, stable ones? Why?",
+  "How do you think interest rates affect investment decisions in a company?",
+  "What is the role of a financial analyst in an investment firm? Would you enjoy this job?",
+  "How do stock markets reflect the health of a country's economy?",
+  "What is the difference between a bull market and a bear market? Can you give an example of each?",
+  "How do bonds differ from equities as investment vehicles?",
+  "Why might a company choose to issue shares rather than take out a loan to raise capital?",
+  "What is portfolio rebalancing, and why is it important for long-term investors?",
+  "How does inflation affect the real return on an investment?",
+  "What is the significance of liquidity when choosing an investment?",
+  "How do you think technology has changed the way people invest their money?",
+  "What is your understanding of hedge funds? Are they accessible to ordinary investors?",
+  "How would you explain the concept of compound interest to someone with no financial background?",
+  "In what ways can geopolitical events impact financial markets and investment strategies?",
+  "What ethical considerations should investors take into account when building a portfolio?",
+  "How important is it for employees to understand investment terminology in today's business environment?",
+  "If you had $10,000 to invest today, where would you put it and why?",
+];
+
+const wordBank = [
+  {emoji:"📈",term:"Equity",def:"Shares representing ownership in a company and a claim on its assets and earnings."},
+  {emoji:"📉",term:"Bear Market",def:"A market condition where prices fall 20% or more from recent highs."},
+  {emoji:"🐂",term:"Bull Market",def:"A period of rising financial market prices driven by investor optimism."},
+  {emoji:"⚖️",term:"Diversification",def:"Spreading investments across assets to reduce exposure to any single risk."},
+  {emoji:"💧",term:"Liquidity",def:"The ease with which an asset can be converted into cash without affecting its price."},
+  {emoji:"📊",term:"Portfolio",def:"A collection of financial investments such as stocks, bonds, and cash equivalents."},
+  {emoji:"🏦",term:"Bond",def:"A fixed-income instrument representing a loan made by an investor to a borrower."},
+  {emoji:"📋",term:"Dividend",def:"A portion of a company's earnings distributed to shareholders."},
+  {emoji:"🔄",term:"Asset Allocation",def:"The process of distributing investments among different asset categories."},
+  {emoji:"📉",term:"Volatility",def:"The degree of variation of a trading price series over time."},
+  {emoji:"🎯",term:"Yield",def:"The earnings generated on an investment over a particular period, expressed as a percentage."},
+  {emoji:"🛡️",term:"Hedge",def:"An investment made to reduce the risk of adverse price movements in an asset."},
+  {emoji:"💹",term:"Index Fund",def:"A type of mutual fund designed to replicate the performance of a financial market index."},
+  {emoji:"🏗️",term:"Capital Gain",def:"The profit from selling an asset at a higher price than its purchase price."},
+  {emoji:"📌",term:"Benchmark",def:"A standard against which the performance of an investment portfolio is measured."},
+  {emoji:"🔃",term:"Rebalancing",def:"Adjusting portfolio weights to maintain an intended asset allocation strategy."},
+  {emoji:"🌍",term:"Emerging Market",def:"A developing economy with growing financial markets and increasing investor interest."},
+  {emoji:"💰",term:"ROI",def:"Return on Investment — a measure of the profitability of an investment."},
+  {emoji:"📝",term:"Derivative",def:"A financial contract whose value is based on an underlying asset such as a stock or commodity."},
+  {emoji:"🏛️",term:"IPO",def:"Initial Public Offering — the process by which a company first sells shares to the public."},
+  {emoji:"⚡",term:"Compound Interest",def:"Interest calculated on the initial principal and the accumulated interest of previous periods."},
+];
+
+/* ── READING DATA ── */
+const readings = [
+  {
+    title: "Text 1: Understanding Investment Portfolios",
+    paragraphs: [
+      "An investment portfolio is a carefully curated collection of financial assets held by an individual or institution. These assets typically include equities — representing ownership stakes in companies — as well as bonds, real estate, commodities, and cash equivalents. The fundamental principle behind portfolio construction is diversification: by spreading capital across a range of asset classes, investors reduce their exposure to the risk of any single investment performing poorly. A well-diversified portfolio seeks to balance the trade-off between risk and return, aligning with the investor's financial goals and time horizon.",
+      "Central to portfolio management is the concept of asset allocation — the strategic distribution of investments among different categories. Conservative investors, for example, may allocate a higher proportion of their portfolio to bonds and money-market instruments, which tend to offer lower but more predictable returns. Growth-oriented investors, on the other hand, may favour equities, accepting higher volatility in exchange for the potential of greater capital gains. Periodic rebalancing — the process of realigning portfolio weights to their original targets — ensures that the portfolio does not drift too far from its intended risk profile as market conditions change.",
+      "Another critical dimension of portfolio management is liquidity — the ease with which assets can be converted into cash without significantly affecting their market price. Highly liquid assets such as publicly traded equities or government bonds allow investors to respond swiftly to changing market conditions or unexpected financial needs. Illiquid assets such as real estate or private equity, while potentially offering superior long-term returns, can be difficult to sell quickly and may carry a liquidity premium. Sophisticated investors therefore carefully consider the liquidity profile of their holdings alongside expected returns and risk exposure.",
+    ],
+    questions: [
+      {q:"What does the word 'portfolio' refer to in the context of finance?",opts:["A document summarising a company's strategy","A collection of financial assets held by an investor","A report submitted to a regulatory authority","A contract between two financial institutions"],ans:1},
+      {q:"According to the text, what is the main purpose of diversification?",opts:["To maximise returns in every market condition","To ensure all assets are equally valued","To reduce exposure to risk from any single investment","To guarantee a fixed annual income"],ans:2},
+      {q:"What type of investor is more likely to hold a large proportion of bonds?",opts:["A growth-oriented investor","A speculative trader","A conservative investor","An institutional fund manager"],ans:2},
+      {q:"What does 'asset allocation' mean according to the text?",opts:["The sale of underperforming investments","The strategic distribution of investments among asset categories","The process of applying for an IPO","The measurement of portfolio performance"],ans:1},
+      {q:"What is portfolio rebalancing?",opts:["The act of liquidating all assets and reinvesting","Realigning portfolio weights to original targets","Moving all funds to a single high-yield asset","Paying dividends to shareholders"],ans:1},
+      {q:"Why might growth-oriented investors accept higher volatility?",opts:["Because volatility reduces transaction costs","Because it guarantees dividend payments","Because it offers the potential of greater capital gains","Because volatile assets are easier to trade"],ans:2},
+      {q:"What is meant by a 'liquidity premium'?",opts:["Additional return demanded for holding illiquid assets","A penalty for withdrawing funds early","A tax applied to liquid investments","An incentive offered by brokers to frequent traders"],ans:0},
+      {q:"Which of the following is described as a highly liquid asset?",opts:["Commercial real estate","Private equity","Infrastructure projects","Publicly traded equities"],ans:3},
+      {q:"What challenge is associated with illiquid assets such as real estate?",opts:["They offer no long-term returns","They cannot be included in a portfolio","They may be difficult to sell quickly","They are excluded from regulatory frameworks"],ans:2},
+      {q:"Which term describes the degree to which a portfolio may fluctuate in value?",opts:["Yield","Volatility","Liquidity","Benchmark"],ans:1},
+    ]
+  },
+  {
+    title: "Text 2: Bull and Bear Markets — Navigating Market Cycles",
+    paragraphs: [
+      "Financial markets are characterised by cyclical patterns of expansion and contraction, commonly referred to as bull and bear markets. A bull market describes a sustained period during which asset prices rise by 20% or more from recent lows, typically accompanied by strong economic growth, low unemployment, and high investor confidence. During these phases, equities tend to outperform other asset classes as companies report robust earnings and consumer spending remains buoyant. Investors who entered the market early in a bull run may accumulate significant capital gains as valuations climb steadily over months or even years.",
+      "Conversely, a bear market emerges when prices decline by 20% or more from recent peaks, frequently triggered by economic downturns, rising interest rates, or geopolitical instability. Fear and uncertainty dominate market sentiment during these periods, leading many investors to liquidate positions and move capital into perceived safe-haven assets such as gold, government bonds, or stable currencies. Portfolio managers facing bear market conditions often adopt defensive strategies, increasing allocations to less volatile, dividend-paying equities or fixed-income securities to preserve capital and maintain yield.",
+      "Seasoned investors understand that market cycles are inevitable and that attempting to time the market — predicting precisely when peaks and troughs will occur — is extremely difficult even for professionals. Instead, many adopt a strategy of dollar-cost averaging, investing a fixed amount at regular intervals regardless of market conditions. This approach reduces the impact of short-term volatility and removes the emotional decision-making that can lead to poor investment outcomes. Understanding both bull and bear market dynamics enables investors to make informed decisions, manage risk effectively, and position their portfolios for long-term growth.",
+    ],
+    questions: [
+      {q:"How is a bull market defined in the text?",opts:["A short-term market rally lasting less than a month","A period when asset prices rise by 20% or more from recent lows","A period of government intervention in financial markets","A decline in equity prices of more than 10%"],ans:1},
+      {q:"What economic conditions typically accompany a bull market?",opts:["High unemployment and weak consumer spending","Strong economic growth and high investor confidence","Rising interest rates and geopolitical instability","Declining corporate earnings and market fear"],ans:1},
+      {q:"What is a 'safe-haven asset' as implied by the text?",opts:["An asset that guarantees profit in any market","An investment considered stable during market downturns","A government-insured bank deposit","A short-term speculative instrument"],ans:1},
+      {q:"What typically triggers a bear market, according to the text?",opts:["Strong employment data and consumer confidence","Government stimulus and low interest rates","Economic downturns, rising interest rates, or geopolitical instability","High corporate dividends and robust earnings"],ans:2},
+      {q:"What defensive strategy might portfolio managers adopt in a bear market?",opts:["Concentrating all assets in a single high-growth sector","Increasing leverage to amplify potential gains","Increasing allocations to dividend-paying equities or fixed-income securities","Selling government bonds and buying commodities"],ans:2},
+      {q:"What does 'dollar-cost averaging' involve?",opts:["Investing a lump sum at the market peak","Buying assets only when prices are falling","Investing a fixed amount at regular intervals regardless of conditions","Converting all investments into US dollars"],ans:2},
+      {q:"Why is market timing considered difficult, according to the text?",opts:["Regulations prevent investors from trading at peaks","Predicting precise peaks and troughs is extremely difficult even for professionals","Markets no longer follow cyclical patterns","Technology has made all trades anonymous"],ans:1},
+      {q:"What sentiment dominates bear market conditions?",opts:["Optimism and growth expectations","Stability and long-term confidence","Fear and uncertainty","Enthusiasm and speculative buying"],ans:2},
+      {q:"Which of the following best describes 'capital gains'?",opts:["The regular income received from dividends","Profit earned by selling an asset at a higher price than its purchase price","The total value of assets held in a portfolio","Interest earned on a savings account"],ans:1},
+      {q:"What is the main advantage of dollar-cost averaging?",opts:["It guarantees maximum profit in all market conditions","It eliminates the need to pay taxes on investment returns","It reduces the impact of short-term volatility and removes emotional decision-making","It allows investors to concentrate on a single asset class"],ans:2},
+    ]
+  }
+];
+
+/* ── VOCABULARY DATA ── */
+const vocabEx1MCQ = {
+  title:"Exercise 1 — Multiple Choice: Choose the Best Definition",
+  type:"mcq",
+  questions:[
+    {q:"The company's shares offer an annual _____ of 4.5%, making them attractive to income-focused investors.",opts:["liquidity","volatility","yield","rebalancing"],ans:2},
+    {q:"After significant market gains, the fund manager decided to _____ the portfolio to restore the original 60/40 equity-bond split.",opts:["hedge","rebalance","diversify","liquidate"],ans:1},
+    {q:"Investors seeking to protect themselves against currency risk may use _____ instruments such as forward contracts.",opts:["derivative","benchmark","IPO","dividend"],ans:0},
+    {q:"The _____ of the FTSE 100 was used to evaluate the fund's performance over the three-year period.",opts:["yield","benchmark","rebalancing","liquidity"],ans:1},
+    {q:"Shares in the start-up were considered highly _____, as selling them quickly at a fair price proved extremely difficult.",opts:["volatile","liquid","illiquid","diversified"],ans:2},
+    {q:"The board voted to distribute a _____ of $1.20 per share to reward loyal shareholders.",opts:["derivative","dividend","portfolio","hedge"],ans:1},
+    {q:"The technology firm announced its _____, offering 10 million shares to the public for the first time.",opts:["asset allocation","IPO","rebalancing","compound interest"],ans:1},
+    {q:"Thanks to _____, a modest initial investment of $5,000 grew to over $12,000 in 15 years without any additional contributions.",opts:["compound interest","capital gain","diversification","liquidity"],ans:0},
+    {q:"The fund's _____ strategy allocated 50% to equities, 30% to bonds, and 20% to real estate.",opts:["hedging","yield","asset allocation","benchmark"],ans:2},
+    {q:"Investors in _____ economies often accept higher volatility in exchange for the potential of above-average long-term growth.",opts:["bear","emerging","liquid","fixed-income"],ans:1},
+  ]
+};
+const vocabEx2GapFill = {
+  title:"Exercise 2 — Gap Fill: Complete the Sentences",
+  type:"gap",
+  items:[
+    {sentence:"A _____ is a financial contract whose value is derived from an underlying asset such as a stock or commodity.", answer:"derivative"},
+    {sentence:"During a _____ market, asset prices fall significantly and investor confidence declines sharply.", answer:"bear"},
+    {sentence:"The concept of _____ involves spreading investments across different asset classes to reduce overall risk.", answer:"diversification"},
+    {sentence:"An _____ is a fund designed to mirror the performance of a specific financial market index.", answer:"index fund"},
+    {sentence:"The investor realised a substantial _____ after selling his shares at twice the original purchase price.", answer:"capital gain"},
+    {sentence:"High _____ means that an asset can be bought or sold quickly without significantly affecting its price.", answer:"liquidity"},
+    {sentence:"The fund measured its performance against a widely recognised _____ to assess relative returns.", answer:"benchmark"},
+    {sentence:"The company's decision to issue bonds rather than shares is a form of _____ financing through fixed-income instruments.", answer:"bond"},
+    {sentence:"_____ refers to the process of realigning portfolio weights after market movements alter the original allocation.", answer:"Rebalancing"},
+    {sentence:"A _____ market is characterised by rising prices, strong economic growth, and high investor optimism.", answer:"bull"},
+  ]
+};
+const vocabEx3TF = {
+  title:"Exercise 3 — True or False",
+  type:"tf",
+  items:[
+    {statement:"A bond represents an ownership stake in a company.",answer:false},
+    {statement:"Diversification is a strategy used to reduce investment risk.",answer:true},
+    {statement:"A bull market is characterised by falling prices and low investor confidence.",answer:false},
+    {statement:"Yield refers to the earnings generated on an investment, expressed as a percentage.",answer:true},
+    {statement:"An IPO is when a private company first sells its shares to the public.",answer:true},
+    {statement:"Liquidity measures how quickly an asset can be converted to cash without affecting its price.",answer:true},
+    {statement:"A derivative's value is independent of any underlying financial asset.",answer:false},
+    {statement:"Compound interest is calculated only on the initial principal amount.",answer:false},
+    {statement:"Portfolio rebalancing helps maintain an investor's intended risk profile over time.",answer:true},
+    {statement:"Emerging markets are fully developed economies with stable, low-volatility financial markets.",answer:false},
+  ]
+};
+
+/* ── GRAMMAR DATA ── */
+const grammarEx1 = {
+  title:"Exercise 1 — Participle Clauses",
+  instructions:"Rewrite or complete each sentence using a present or past participle clause as shown.",
+  type:"mcq",
+  questions:[
+    {q:"___ by the strong earnings report, investors pushed the share price to a new high. (encourage)",opts:["Encouraging","Encouraged","Having encouraged","To encourage"],ans:1},
+    {q:"The fund manager, ___ extensive research into emerging markets, decided to increase her allocation.",opts:["having conducted","having been conducted","to conduct","conducted"],ans:0},
+    {q:"___ in over 20 different sectors, the portfolio was well protected against market downturns.",opts:["Diversifying","Having diversified","Diversified","To diversify"],ans:2},
+    {q:"The analyst issued a report ___ the risks associated with the new derivative products.",opts:["highlighted","to highlight","highlighting","having highlighted"],ans:2},
+    {q:"___ a strong quarterly dividend, the company attracted numerous income-focused investors.",opts:["Declared","Declaring","Having declared","To declare"],ans:2},
+    {q:"The shares, ___ on the New York Stock Exchange in 1998, have consistently outperformed their benchmark.",opts:["listed","listing","having listing","to list"],ans:0},
+    {q:"___ a significant capital gain, the investor reinvested the proceeds into an index fund.",opts:["Realising","Having realised","Realised","To realise"],ans:1},
+    {q:"The bond market, ___ closely by analysts, showed signs of increased volatility in Q3.",opts:["monitored","monitoring","having monitored","to monitor"],ans:0},
+    {q:"___ by falling oil prices, energy stocks experienced their worst quarter in a decade.",opts:["Affecting","To affect","Affected","Having affected"],ans:2},
+    {q:"The portfolio manager, ___ the risks carefully, chose to hedge the currency exposure.",opts:["weighed","weighing","having weigh","to weigh"],ans:1},
+  ]
+};
+const grammarEx2 = {
+  title:"Exercise 2 — Cause/Result Linkers",
+  instructions:"Choose the most appropriate linker to complete each sentence.",
+  type:"mcq",
+  questions:[
+    {q:"Interest rates rose sharply; ___, bond prices fell across the market.",opts:["nevertheless","as a result","despite","although"],ans:1},
+    {q:"___ the high level of market volatility, many investors chose to move funds into safe-haven assets.",opts:["Due to","Therefore","As a result","Consequently"],ans:0},
+    {q:"The company reported record profits; ___, it announced an increase in its dividend payment.",opts:["however","in spite of","consequently","despite"],ans:2},
+    {q:"___ a surge in retail investor activity, trading volumes on the exchange reached an all-time high.",opts:["Because of","Therefore","As a result","Consequently"],ans:0},
+    {q:"The fund underperformed its benchmark; ___, the portfolio manager decided to adjust the asset allocation.",opts:["despite","as a result","however","in spite of"],ans:1},
+    {q:"___ geopolitical tensions, oil prices rose significantly, impacting transport and energy stocks.",opts:["Therefore","As a result","Owing to","Consequently"],ans:2},
+    {q:"The company's debt levels increased substantially; ___, its credit rating was downgraded.",opts:["nevertheless","therefore","despite","although"],ans:1},
+    {q:"___ the market correction, the long-term fundamentals of the investment remained strong.",opts:["Due to","As a result","Despite","Therefore"],ans:2},
+    {q:"Inflation remained persistently high; ___, the central bank was forced to raise interest rates further.",opts:["however","consequently","despite","in spite of"],ans:1},
+    {q:"The portfolio lost value in the short term; ___, the investor maintained his position, confident in the long-term strategy.",opts:["therefore","as a result","nevertheless","owing to"],ans:2},
+  ]
+};
+const grammarEx3 = {
+  title:"Exercise 3 — Phrasal Verbs in Investment English",
+  instructions:"Choose the correct phrasal verb to complete each sentence.",
+  type:"mcq",
+  questions:[
+    {q:"The investor decided to ___ her position in technology stocks after the sector's sharp decline.",opts:["pull out of","look into","take on","build up"],ans:0},
+    {q:"The portfolio manager plans to ___ the equity allocation over the next six months.",opts:["cash in","build up","pull out of","take on"],ans:1},
+    {q:"After years of steady investment, the entrepreneur decided to ___ his shares in the start-up for a substantial profit.",opts:["look into","cash in","take on","hold off"],ans:1},
+    {q:"The investment committee agreed to ___ new emerging market opportunities before making a decision.",opts:["pull out of","cash in","look into","build up"],ans:2},
+    {q:"The firm chose to ___ additional risk in exchange for the potential of higher returns.",opts:["look into","hold off","take on","cash in"],ans:2},
+    {q:"Analysts advised investors to ___ making any major decisions until the market stabilised.",opts:["pull out of","hold off","build up","take on"],ans:1},
+    {q:"The hedge fund manager decided to ___ the position gradually rather than selling all shares at once.",opts:["wind down","look into","take on","hold off"],ans:0},
+    {q:"The company plans to ___ its cash reserves before committing to any further acquisitions.",opts:["build up","pull out of","cash in","take on"],ans:0},
+    {q:"Several major investors threatened to ___ the deal if the terms were not renegotiated.",opts:["hold off","build up","back out of","look into"],ans:2},
+    {q:"The analyst recommended investors ___ the recent market decline as a buying opportunity.",opts:["look into","take on","pull out of","cash in on"],ans:3},
+  ]
+};
+
+/* ── LISTENING DATA ── */
+const listeningActivities = [
+  {
+    id:"l1",
+    title:"Activity 1: A Financial News Bulletin — Market Update",
+    meta:"News Presenter & Market Analyst — News broadcast format",
+    level:"B1",
+    type:"Multiple Choice",
+    focus:"Listening for Specific Information",
+    transcript:`Good morning and welcome to Market Watch. I'm Sarah Reynolds, and here is your morning briefing on global financial markets. \n\nEquity markets in Asia closed higher overnight, with the Nikkei 225 gaining 1.4% on positive sentiment following stronger-than-expected corporate earnings from major technology firms. In Europe, the FTSE 100 opened up 0.6%, supported by rising energy stocks after crude oil prices climbed to their highest level in three months.\n\nIn the United States, the Federal Reserve signalled that interest rates may remain elevated for longer than markets previously anticipated. This caused short-term volatility in bond markets, with yields on 10-year Treasury bonds rising to 4.8%. However, analysts noted that long-term investors should view this as an opportunity rather than a cause for alarm, as higher yields can improve the income profile of a fixed-income portfolio.\n\nMeanwhile, in currency markets, the US dollar strengthened against a basket of major currencies, putting pressure on emerging market assets. Portfolio managers with significant exposure to developing economies are advised to review their hedging strategies in light of this development.\n\nFinally, gold — widely regarded as a safe-haven asset — rose 0.9% as investors sought protection against ongoing geopolitical uncertainty. Analysts at Capital Bridge suggest that a modest allocation to gold may help cushion portfolios against further market turbulence.\n\nStay with us for more market analysis after the break. This has been Market Watch with Sarah Reynolds.`,
+    questions:[
+      {q:"What caused Asian equity markets to close higher?",opts:["Rising oil prices","Stronger-than-expected corporate earnings","A Federal Reserve announcement","A weaker US dollar"],ans:1},
+      {q:"What happened to the FTSE 100 at the European open?",opts:["It fell 0.6%","It remained unchanged","It rose 0.6%","It gained 1.4%"],ans:2},
+      {q:"What did the Federal Reserve signal according to the bulletin?",opts:["An immediate rate cut","That rates may stay elevated for longer","That markets should expect a recession","That bond yields would fall"],ans:1},
+      {q:"What was the yield on 10-year US Treasury bonds?",opts:["1.4%","0.9%","0.6%","4.8%"],ans:3},
+      {q:"Why did the US dollar strengthen?",opts:["Because of falling oil prices","Following strong Asian market performance","Due to Federal Reserve signals about interest rates","Because of increased gold demand"],ans:2},
+      {q:"What are portfolio managers with emerging market exposure advised to do?",opts:["Sell all emerging market assets immediately","Increase their equity allocations","Review their hedging strategies","Move funds into technology stocks"],ans:2},
+      {q:"Why did gold prices rise?",opts:["Because of rising corporate earnings","Due to investor demand for safe-haven assets amid geopolitical uncertainty","Because of a weaker US dollar","Following a Federal Reserve announcement"],ans:1},
+      {q:"What did analysts at Capital Bridge suggest?",opts:["Avoiding gold entirely","Selling all fixed-income instruments","That a modest gold allocation could cushion portfolios","That investors should withdraw from emerging markets"],ans:2},
+    ]
+  },
+  {
+    id:"l2",
+    title:"Activity 2: A Client Meeting — Reviewing Portfolio Performance",
+    meta:"Financial Adviser & Client — Professional consultation format",
+    level:"B2",
+    type:"Multiple Choice",
+    focus:"Understanding Detail and Inference",
+    transcript:`Financial Adviser: Good morning, Mr. Hartley. Thank you for coming in. I've prepared a full review of your portfolio's performance over the last twelve months.\n\nClient: Thank you, Jennifer. I must admit I was a little concerned when I saw how volatile markets have been recently.\n\nFinancial Adviser: That's completely understandable. But I'm pleased to tell you that your portfolio has actually performed rather well, delivering a total return of 9.2% for the year — comfortably ahead of our benchmark.\n\nClient: That's reassuring. Can you explain what drove that performance?\n\nFinancial Adviser: Certainly. The biggest contributor was your allocation to technology equities, which gained nearly 22% over the period. Your emerging market holdings were also positive, adding around 6%. The fixed-income component — your bonds — provided stability when equity markets dipped, which is exactly the role they're designed to play in a balanced portfolio.\n\nClient: What about the property fund? I recall it underperformed.\n\nFinancial Adviser: You're right. The property fund returned just 1.8% — below our target — primarily because rising interest rates increased borrowing costs for real estate companies. However, property remains an important diversifier in your portfolio, and we expect conditions to improve as rate pressures ease.\n\nClient: Should I increase my equity exposure to capture more of the upside?\n\nFinancial Adviser: I would advise caution. Given your investment horizon of five years and your moderate risk profile, I recommend maintaining your current allocation of 55% equities, 30% bonds, and 15% alternatives including property and gold. We will rebalance quarterly to ensure we stay aligned with these targets.\n\nClient: That sounds sensible. One final question — what's your outlook for the coming year?\n\nFinancial Adviser: We expect moderate growth, with some continued volatility driven by geopolitical factors and monetary policy uncertainty. We remain optimistic about technology and healthcare equities and continue to favour investment-grade bonds for the fixed-income portion of the portfolio.`,
+    questions:[
+      {q:"What was the total return of Mr. Hartley's portfolio over the past year?",opts:["6%","22%","9.2%","1.8%"],ans:2},
+      {q:"Which asset class was the biggest contributor to performance?",opts:["Property","Emerging market holdings","Fixed-income bonds","Technology equities"],ans:3},
+      {q:"What role did bonds play during the period of equity market volatility?",opts:["They amplified the portfolio's losses","They provided stability","They delivered the highest returns","They were converted to cash"],ans:1},
+      {q:"Why did the property fund underperform?",opts:["Because of falling oil prices","Due to rising interest rates increasing borrowing costs","Because of geopolitical instability","Due to weak consumer confidence"],ans:1},
+      {q:"What is Mr. Hartley's current asset allocation in equities?",opts:["30%","15%","55%","45%"],ans:2},
+      {q:"How often will the adviser rebalance the portfolio?",opts:["Annually","Monthly","Every six months","Quarterly"],ans:3},
+      {q:"What does the adviser recommend regarding increased equity exposure?",opts:["Strongly encourages it","Advises caution","Is completely indifferent","Recommends moving to all-equity"],ans:1},
+      {q:"What is the adviser's outlook for the coming year?",opts:["A significant market crash","Strong growth with no volatility","Moderate growth with some continued volatility","A deflationary recession"],ans:2},
+    ]
+  },
+  {
+    id:"l3",
+    title:"Activity 3: A Business Lecture — Understanding Risk and Return",
+    meta:"Finance Professor — Academic lecture format",
+    level:"B2",
+    type:"Multiple Choice",
+    focus:"Understanding Main Ideas and Supporting Details",
+    transcript:`Good afternoon, everyone. Welcome to today's session on one of the most foundational concepts in investment theory — the relationship between risk and return.\n\nIn finance, we often say that there is no such thing as a free lunch. What this means is that higher potential returns almost always come with higher risk. If you want to earn more than the risk-free rate — which is generally represented by the yield on government bonds — you must accept some degree of uncertainty about the outcome of your investment.\n\nNow, risk in an investment context can take many forms. Market risk, sometimes called systematic risk, refers to the risk that affects all investments simultaneously — for example, a global recession or a sharp rise in interest rates. This type of risk cannot be diversified away because it impacts the entire market. Unsystematic risk, by contrast, is specific to a particular company or sector. If a pharmaceutical company fails a drug trial, for instance, its share price may fall dramatically while the broader market is unaffected. This type of risk can be reduced through diversification — by holding a broad range of investments across different sectors and geographies.\n\nOne useful measure of an investment's risk relative to the market is beta. A beta greater than one indicates that the asset tends to move more than the market — it amplifies gains but also losses. A beta of less than one suggests that the asset is less sensitive to market movements — it offers more stability, but potentially lower returns.\n\nFinally, I want to emphasise that risk tolerance varies enormously between investors. A young professional with a 30-year investment horizon can typically afford to accept more risk than someone who is five years away from retirement. This is why investment advice must always be personalised, taking into account an individual's financial goals, time horizon, and psychological comfort with market fluctuations.\n\nWe will explore these concepts in greater depth next week when we look at modern portfolio theory. Thank you.`,
+    questions:[
+      {q:"What does the phrase 'no free lunch' mean in the context of investing?",opts:["All investments are guaranteed to generate returns","Higher potential returns almost always come with higher risk","Government bonds offer the best returns","Risk can always be eliminated through diversification"],ans:1},
+      {q:"What does the risk-free rate typically refer to?",opts:["The interest rate on corporate bonds","The expected return on equity markets","The yield on government bonds","The inflation rate"],ans:2},
+      {q:"What is systematic risk?",opts:["Risk specific to a particular company or sector","Risk that only affects bond markets","Risk that affects all investments simultaneously","Risk that can be eliminated through diversification"],ans:2},
+      {q:"How can unsystematic risk be reduced?",opts:["By investing only in government bonds","Through diversification across sectors and geographies","By avoiding equity markets entirely","Through dollar-cost averaging"],ans:1},
+      {q:"What does a beta greater than one indicate?",opts:["The asset is less sensitive to market movements","The asset tends to move less than the market","The asset amplifies market gains and losses","The asset is risk-free"],ans:2},
+      {q:"What does a beta of less than one suggest?",opts:["The asset is highly volatile","The asset moves in the opposite direction to the market","The asset offers more stability but potentially lower returns","The asset cannot be included in a diversified portfolio"],ans:2},
+      {q:"According to the lecturer, who can typically afford to accept more risk?",opts:["Someone five years from retirement","An investor with no fixed income","A young professional with a 30-year investment horizon","An investor with a conservative portfolio"],ans:2},
+      {q:"What does the lecturer say investment advice must take into account?",opts:["Only the current state of the market","An individual's goals, time horizon, and risk tolerance","The performance of government bonds exclusively","The overall level of market volatility"],ans:1},
+    ]
+  },
+  {
+    id:"l4",
+    title:"Activity 4: A Podcast Interview — The Rise of Index Investing",
+    meta:"Host & Guest Expert — Podcast interview format",
+    level:"B1–B2",
+    type:"Multiple Choice",
+    focus:"Understanding Speaker's Views and Arguments",
+    transcript:`Host: Welcome back to The Smart Money Podcast. I'm your host, Amanda Clarke, and today I'm delighted to be joined by Marcus Webb, a certified financial planner with over 20 years of experience. Marcus, thanks so much for being here.\n\nGuest: Thank you, Amanda. It's great to be on the show.\n\nHost: Today we're talking about index investing — something that has become enormously popular over the past decade. Can you start by explaining what an index fund actually is?\n\nGuest: Of course. An index fund is a type of investment fund designed to replicate the performance of a specific market index — such as the S&P 500 in the United States or the FTSE 100 in the UK. Rather than trying to beat the market by selecting individual stocks, the fund simply holds all — or a representative sample — of the stocks in that index. The goal is to match the market's performance, not exceed it.\n\nHost: And why has this approach become so popular?\n\nGuest: Several reasons. First, index funds are typically far cheaper than actively managed funds. Because there's no team of analysts trying to pick winning stocks, the management fees — known as the expense ratio — are much lower. Over time, lower fees can make a significant difference to your overall returns, especially when you factor in compound interest.\n\nHost: That's a really important point. What about performance — do index funds actually beat actively managed funds?\n\nGuest: This is where it gets interesting. Research consistently shows that the vast majority of actively managed funds underperform their benchmark index over a 10-year period, after fees are taken into account. So in many cases, the simple act of tracking the index actually delivers better results than trying to beat it.\n\nHost: Are there any drawbacks to index investing?\n\nGuest: Certainly. The main limitation is that index funds will never outperform the market — by definition, they can only match it. Also, during a bear market, an index fund will fall in line with the broader market. There's no active manager trying to reduce losses by moving into defensive assets. So investors in index funds need to have a long-term perspective and the emotional resilience to ride out market downturns without panic selling.\n\nHost: Excellent advice. Marcus, thank you so much for sharing your expertise today.\n\nGuest: My pleasure, Amanda. Happy investing, everyone.`,
+    questions:[
+      {q:"What is the goal of an index fund according to Marcus Webb?",opts:["To consistently beat the market","To select only the highest-performing stocks","To match the market's performance","To avoid all market downturns"],ans:2},
+      {q:"What does Marcus mean by 'expense ratio'?",opts:["The cost of borrowing to invest","The management fees charged by the fund","The tax applied to investment returns","The penalty for early withdrawal"],ans:1},
+      {q:"According to research mentioned in the podcast, what do most actively managed funds do over 10 years?",opts:["Significantly outperform their benchmark","Match their benchmark exactly","Underperform their benchmark index after fees","Avoid all market volatility"],ans:2},
+      {q:"What is a key limitation of index funds?",opts:["They are more expensive than actively managed funds","They can only invest in government bonds","They cannot outperform the market by definition","They are not available to retail investors"],ans:2},
+      {q:"What happens to index funds during a bear market?",opts:["They automatically move into defensive assets","They outperform actively managed funds","They fall in line with the broader market","They are protected by government guarantees"],ans:2},
+      {q:"What quality does Marcus say index fund investors need?",opts:["The ability to predict market peaks","Emotional resilience and a long-term perspective","Extensive knowledge of individual stocks","Access to professional financial analysts"],ans:1},
+      {q:"Why are index fund fees typically lower than actively managed funds?",opts:["Because they invest only in government bonds","Because they are backed by central banks","Because there is no team of analysts selecting stocks","Because they are exempt from financial regulation"],ans:2},
+      {q:"What is the S&P 500 an example of?",opts:["An actively managed investment fund","A government bond portfolio","A market index","A type of derivative instrument"],ans:2},
+    ]
+  }
+];
+
+/* ── WRITING DATA ── */
+const writingActivities = [
+  {
+    title:"Writing Activity 1: Investment Memo",
+    type:"Formal Business Memo",
+    prompt:"You are a junior investment analyst at a financial services firm. Your manager has asked you to write a brief investment memo recommending one asset class for the company's portfolio over the next 12 months.",
+    bullets:["State which asset class you recommend (equities, bonds, gold, real estate, etc.)","Explain the main reasons for your recommendation using cause/result language","Refer to current market conditions (bull/bear market, interest rates, volatility)","Use at least five terms from the Word Bank","Address one potential risk and how it could be mitigated"],
+    min:150, max:250
+  },
+  {
+    title:"Writing Activity 2: Market Analysis Report",
+    type:"Short Professional Report",
+    prompt:"Write a short market analysis report for a client who is considering investing in emerging market equities for the first time.",
+    bullets:["Introduce the concept of emerging markets and their investment potential","Describe the key risks associated with this asset class","Explain the importance of diversification and portfolio rebalancing","Use participle clauses and cause/result linkers where appropriate","Conclude with a balanced recommendation"],
+    min:200, max:300
+  }
+];
+
+/* ── CASE STUDY DATA ── */
+const caseStudies = [
+  {
+    title:"Case Study 1: The Diversification Dilemma — Apex Capital Partners",
+    meta:"Sector: Asset Management | Country: United Kingdom | Difficulty: B2",
+    text:`Apex Capital Partners, a mid-sized London-based investment firm, managed a portfolio of £450 million on behalf of institutional clients. In early 2022, the portfolio was heavily concentrated in technology equities, which had delivered exceptional returns during the post-pandemic bull market, with some positions gaining over 60% in value. The firm's portfolio managers were reluctant to reduce their technology exposure, arguing that the sector's long-term growth fundamentals remained intact.\n\nHowever, as interest rates began to rise sharply in response to surging inflation, technology valuations came under severe pressure. Growth stocks, whose value is heavily dependent on future cash flows discounted at current interest rates, fell dramatically. By the end of 2022, the technology-heavy portfolio had lost nearly 32% of its value — significantly underperforming the broader market benchmark. Several institutional clients demanded an explanation, and the firm faced significant reputational damage.\n\nIn response, Apex Capital implemented a comprehensive portfolio restructuring. They reduced technology exposure from 65% to 30%, increased allocations to value equities, investment-grade bonds, and commodities. They also introduced a systematic rebalancing policy to prevent future concentration risk. The following year, the diversified portfolio delivered a return of 14.2%, comfortably outperforming its benchmark. The experience served as a powerful reminder of the risks of over-concentration and the enduring value of diversification as a risk management tool.`,
+    questions:[
+      {q:"What was the main reason Apex Capital's portfolio performed poorly in 2022?",opts:["Excessive exposure to bonds","Over-concentration in technology equities","Poor performance of commodity markets","A decline in the property sector"],ans:1},
+      {q:"Why did technology valuations fall sharply?",opts:["Consumer demand for technology products collapsed","Government regulation reduced technology profits","Rising interest rates put pressure on growth stock valuations","Technology companies reported unexpected losses"],ans:2},
+      {q:"By how much did the technology-heavy portfolio lose value?",opts:["14.2%","65%","32%","60%"],ans:2},
+      {q:"What was one consequence of the portfolio's underperformance?",opts:["The firm gained new clients","The firm received a government bailout","The portfolio managers received bonuses","The firm faced reputational damage"],ans:3},
+      {q:"What percentage was technology reduced to after the restructuring?",opts:["65%","50%","30%","14%"],ans:2},
+      {q:"What was the return of the restructured portfolio the following year?",opts:["32%","9.2%","60%","14.2%"],ans:3},
+      {q:"What policy did Apex Capital introduce to prevent future concentration risk?",opts:["A ban on technology investments","A systematic rebalancing policy","A shift to index funds only","Mandatory client withdrawals"],ans:1},
+      {q:"What lesson does this case study illustrate?",opts:["Technology stocks always outperform in the long term","Concentration in one sector can be very risky","Active management always beats index investing","Rising interest rates benefit all asset classes"],ans:1},
+      {q:"What does 'growth stock' refer to in this context?",opts:["A stock paying high dividends","A stock whose value depends heavily on future cash flows","A government bond with a fixed yield","A commodity with rising prices"],ans:1},
+      {q:"What asset classes were added during the portfolio restructuring?",opts:["Cryptocurrency and derivatives","Value equities, investment-grade bonds, and commodities","Emerging market equities only","Short-term money market instruments"],ans:1},
+    ]
+  },
+  {
+    title:"Case Study 2: The First-Time Investor — Maria's Journey into the Market",
+    meta:"Sector: Personal Finance | Country: United States | Difficulty: B1–B2",
+    text:`Maria Santos, a 32-year-old marketing manager based in Chicago, decided to begin investing for the first time after receiving a significant year-end bonus. Having read extensively about personal finance and investment, she recognised that simply leaving the money in a savings account would result in a negative real return given the prevailing rate of inflation. After consulting with a certified financial planner, Maria decided to invest $15,000 across a diversified portfolio.\n\nFollowing her adviser's recommendation, Maria allocated 60% of her investment to a low-cost S&P 500 index fund, 25% to an international equity fund covering emerging and developed markets, and 15% to a short-duration bond fund to provide stability. She was advised to adopt a dollar-cost averaging approach, investing an additional $500 every month regardless of market conditions, and to review her portfolio allocation annually rather than reacting to short-term market movements.\n\nIn her first year, Maria experienced the psychological challenge of watching her portfolio fall 12% during a brief market correction before recovering to finish the year with a modest gain of 4.8%. Her financial adviser reminded her that market volatility is a normal feature of long-term investing and that her diversified, low-cost strategy was well suited to her 25-year investment horizon. By the end of her second year, her portfolio — buoyed by a strong recovery in equity markets — had grown to $21,400, representing a cumulative return of approximately 42% on her initial investment.`,
+    questions:[
+      {q:"Why did Maria decide to invest rather than keep the money in a savings account?",opts:["Savings accounts are illegal in the US","She wanted to speculate on high-risk assets","Inflation would erode the real value of savings","Her employer required it"],ans:2},
+      {q:"What percentage of Maria's portfolio was allocated to the S&P 500 index fund?",opts:["25%","15%","60%","40%"],ans:2},
+      {q:"What strategy was Maria advised to use for ongoing investment?",opts:["Lump-sum investing at market peaks","Dollar-cost averaging","Market timing","Concentrating on a single sector"],ans:1},
+      {q:"How often was Maria advised to review her portfolio allocation?",opts:["Daily","Monthly","Quarterly","Annually"],ans:3},
+      {q:"What psychological challenge did Maria face in her first year?",opts:["Difficulty choosing between index funds","Managing a 12% portfolio decline during a market correction","Understanding compound interest","Finding a financial adviser"],ans:1},
+      {q:"What was Maria's portfolio return at the end of year one?",opts:["12%","4.8%","42%","25%"],ans:1},
+      {q:"What is Maria's investment horizon?",opts:["5 years","10 years","25 years","2 years"],ans:2},
+      {q:"What was the value of Maria's portfolio at the end of year two?",opts:["$15,000","$500","$21,400","$18,500"],ans:2},
+      {q:"What does 'dollar-cost averaging' help Maria do?",opts:["Maximise returns in every market condition","Avoid paying any investment fees","Reduce the impact of short-term market volatility","Concentrate investments in top-performing assets"],ans:2},
+      {q:"What role did the bond fund play in Maria's portfolio?",opts:["It generated the highest returns","It provided stability during volatile periods","It replaced the need for a financial adviser","It captured all equity market gains"],ans:1},
+    ]
+  }
+];
+
+/* ── FINAL ASSESSMENT ── */
+const assessmentQs = [
+  {q:"Which term describes a collection of financial assets held by an investor?",opts:["Benchmark","Portfolio","Yield","Derivative"],ans:1},
+  {q:"A bull market is best characterised by:",opts:["Falling prices and low investor confidence","Rising prices and strong economic growth","Government intervention and rate cuts","Increased market volatility and fear"],ans:1},
+  {q:"Which of the following best defines 'diversification'?",opts:["Concentrating all capital in the highest-performing asset","Holding assets in a single currency to avoid exchange risk","Spreading investments across different assets to reduce risk","Reinvesting dividends automatically"],ans:2},
+  {q:"An investor who earned $2,000 on a $10,000 investment has achieved a _____ of 20%.",opts:["Yield","Capital gain","Benchmark","Dividend"],ans:0},
+  {q:"What is the primary purpose of portfolio rebalancing?",opts:["To maximise short-term gains","To maintain the intended asset allocation and risk profile","To eliminate all market risk","To increase exposure to emerging markets"],ans:1},
+  {q:"Which financial instrument has its value derived from an underlying asset?",opts:["Equity","Bond","Derivative","Index fund"],ans:2},
+  {q:"The S&P 500 is an example of:",opts:["A government bond","A hedge fund","A market index","A type of derivative"],ans:2},
+  {q:"Dollar-cost averaging involves:",opts:["Investing all capital at once when prices are low","Investing a fixed amount at regular intervals regardless of market conditions","Converting all investments to cash during bear markets","Timing the market to buy at the lowest point"],ans:1},
+  {q:"Which cause/result linker correctly completes this sentence? Interest rates rose sharply; _____, bond prices fell.",opts:["despite","nevertheless","as a result","although"],ans:2},
+  {q:"'Having analysed the market data, the fund manager adjusted the portfolio.' This sentence uses a:",opts:["Relative clause","Conditional clause","Participle clause","Noun clause"],ans:2},
+  {q:"Which phrasal verb means 'to withdraw from an investment position'?",opts:["Build up","Cash in on","Pull out of","Look into"],ans:2},
+  {q:"What does 'liquidity' measure in an investment context?",opts:["The profitability of an investment over time","The ease with which an asset can be converted to cash","The degree of price volatility in a market","The amount of income generated by dividends"],ans:1},
+  {q:"An investor with a high risk tolerance is most likely to have a portfolio with:",opts:["A high proportion of government bonds","Mostly cash and money-market instruments","A significant allocation to equities and growth assets","Equal parts gold and property"],ans:2},
+  {q:"A beta of less than one indicates that an asset:",opts:["Will always outperform the market","Moves more dramatically than the market","Is less sensitive to market movements","Has no relationship with broader market trends"],ans:2},
+  {q:"Which statement about index funds is correct?",opts:["They aim to outperform their benchmark index","They are always more expensive than actively managed funds","They replicate the performance of a specific market index","They invest only in government securities"],ans:2},
+  {q:"What does 'compound interest' mean?",opts:["Interest calculated only on the original principal","Interest earned on both the principal and accumulated previous interest","A fixed payment made by a company to shareholders","The difference between purchase and sale price of an asset"],ans:1},
+  {q:"An IPO occurs when:",opts:["A company buys back its own shares","A company issues bonds on international markets","A private company sells shares to the public for the first time","An investor withdraws from an emerging market fund"],ans:2},
+  {q:"Which of the following is considered a safe-haven asset during market downturns?",opts:["Technology growth stocks","High-yield corporate bonds","Emerging market equities","Gold"],ans:3},
+  {q:"'___ by rising inflation, the central bank raised interest rates.' Which word correctly completes this sentence?",opts:["Concerned","Having concerned","Concerning","Concern"],ans:0},
+  {q:"Asset allocation refers to:",opts:["The process of selecting individual stocks for a portfolio","The strategic distribution of investments among different asset categories","The measurement of portfolio performance against a benchmark","The reinvestment of dividends to buy additional shares"],ans:1},
+];
+
+/* ═══════════════════════════════════════════════
+   RENDER FUNCTIONS
+═══════════════════════════════════════════════ */
+
+function renderSpeaking() {
+  const g = document.getElementById('speakingGrid');
+  speakingQs.forEach((q,i) => {
+    g.innerHTML += `<div class="q-card"><span class="q-num">Q${String(i+1).padStart(2,'0')}</span><span>${q}</span></div>`;
+  });
+}
+
+function renderWordBank() {
+  const g = document.getElementById('wordGrid');
+  wordBank.forEach(w => {
+    g.innerHTML += `<div class="word-card"><div class="word-emoji">${w.emoji}</div><div class="word-term">${w.term}</div><div class="word-def">${w.def}</div></div>`;
+  });
+}
+
+function renderMCQBlock(questions, prefix, container) {
+  let html = '';
+  questions.forEach((item, i) => {
+    const id = `${prefix}_${i}`;
+    html += `<div class="mcq-block" id="${id}_block">
+      <div class="mcq-question">${i+1}. ${item.q}</div>
+      <div class="mcq-options">`;
+    ['A','B','C','D'].forEach((l,j) => {
+      html += `<div class="mcq-option" onclick="selectMCQ('${id}',${j},${item.ans})" id="${id}_opt${j}">
+        <span class="opt-letter">${l}</span>${item.opts[j]}</div>`;
+    });
+    html += `</div><div class="feedback" id="${id}_fb"></div></div>`;
+  });
+  container.innerHTML += html;
+}
+
+function selectMCQ(id, chosen, correct) {
+  const opts = document.querySelectorAll(`[id^="${id}_opt"]`);
+  if (opts[0].classList.contains('disabled')) return;
+  opts.forEach((o,i) => {
+    o.classList.add('disabled');
+    if (i === correct) o.classList.add('correct');
+    else if (i === chosen) o.classList.add('wrong');
+  });
+  const fb = document.getElementById(`${id}_fb`);
+  fb.classList.add('show');
+  if (chosen === correct) { fb.classList.add('correct'); fb.textContent = '✓ Correct! Well done.'; }
+  else { fb.classList.add('wrong'); fb.textContent = `✗ The correct answer is: ${['A','B','C','D'][correct]}. ${document.getElementById(`${id}_opt${correct}`).textContent.trim()}`; }
+  updateProgress();
+}
+
+function renderReading() {
+  const c = document.getElementById('readingContent');
+  let html = '';
+  readings.forEach((r, ri) => {
+    html += `<div class="reading-text"><h3>${r.title}</h3>`;
+    r.paragraphs.forEach(p => { html += `<p>${p}</p>`; });
+    html += `</div><div class="card"><h4 style="font-family:'Playfair Display',serif;margin-bottom:20px;color:var(--navy);">Comprehension Questions — ${r.title.split(':')[0]}</h4>`;
+    r.questions.forEach((q,qi) => {
+      const id = `read${ri}_${qi}`;
+      html += `<div class="mcq-block" id="${id}_block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j) => {
+        html += `<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;
+      });
+      html += `</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html += `</div>`;
+  });
+  c.innerHTML = html;
+}
+
+function renderVocab() {
+  const c = document.getElementById('vocabContent');
+  let html = '';
+
+  // EX 1 MCQ
+  html += `<div class="ex-header"><div class="ex-num">1</div><div><div class="ex-title">${vocabEx1MCQ.title}</div><div class="ex-desc">Choose the word that best completes each sentence.</div></div></div><div class="card">`;
+  vocabEx1MCQ.questions.forEach((q,i) => {
+    const id = `voc1_${i}`;
+    html += `<div class="mcq-block"><div class="mcq-question">${i+1}. ${q.q}</div><div class="mcq-options">`;
+    ['A','B','C','D'].forEach((l,j) => {
+      html += `<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;
+    });
+    html += `</div><div class="feedback" id="${id}_fb"></div></div>`;
+  });
+  html += `</div>`;
+
+  // EX 2 GAP FILL
+  html += `<div class="ex-header"><div class="ex-num">2</div><div><div class="ex-title">${vocabEx2GapFill.title}</div><div class="ex-desc">Type the missing word to complete each sentence.</div></div></div><div class="card">`;
+  vocabEx2GapFill.items.forEach((item, i) => {
+    const parts = item.sentence.split('_____');
+    html += `<div class="gap-sentence" style="margin-bottom:16px;">${i+1}. ${parts[0]}<input class="gap-input" id="gap2_${i}" placeholder="..." data-answer="${item.answer}">${parts[1] || ''}</div>`;
+  });
+  html += `<button class="check-mcq-btn" onclick="checkGapFill('gap2',${vocabEx2GapFill.items.length})">Check Answers</button></div>`;
+
+  // EX 3 TRUE/FALSE
+  html += `<div class="ex-header"><div class="ex-num">3</div><div><div class="ex-title">${vocabEx3TF.title}</div><div class="ex-desc">Decide whether each statement is True or False.</div></div></div><div class="card">`;
+  vocabEx3TF.items.forEach((item, i) => {
+    html += `<div class="mcq-block"><div class="mcq-question">${i+1}. ${item.statement}</div><div class="mcq-options">
+      <div class="mcq-option" onclick="selectTF('tf3_${i}',true,${item.answer})" id="tf3_${i}_optT"><span class="opt-letter">T</span>True</div>
+      <div class="mcq-option" onclick="selectTF('tf3_${i}',false,${item.answer})" id="tf3_${i}_optF"><span class="opt-letter">F</span>False</div>
+    </div><div class="feedback" id="tf3_${i}_fb"></div></div>`;
+  });
+  html += `</div>`;
+  c.innerHTML = html;
+}
+
+function checkGapFill(prefix, count) {
+  for (let i = 0; i < count; i++) {
+    const inp = document.getElementById(`${prefix}_${i}`);
+    if (!inp) continue;
+    const val = inp.value.trim().toLowerCase();
+    const ans = inp.dataset.answer.toLowerCase();
+    inp.classList.remove('correct','wrong');
+    inp.classList.add(val === ans ? 'correct' : 'wrong');
+    inp.disabled = true;
+  }
+  updateProgress();
+}
+
+function selectTF(id, chosen, correct) {
+  const optT = document.getElementById(`${id}_optT`);
+  const optF = document.getElementById(`${id}_optF`);
+  if (optT.classList.contains('disabled')) return;
+  [optT, optF].forEach(o => o.classList.add('disabled'));
+  const isCorrect = chosen === correct;
+  if (chosen === true) { optT.classList.add(isCorrect ? 'correct' : 'wrong'); if (!isCorrect) optF.classList.add('correct'); }
+  else { optF.classList.add(isCorrect ? 'correct' : 'wrong'); if (!isCorrect) optT.classList.add('correct'); }
+  const fb = document.getElementById(`${id}_fb`);
+  fb.classList.add('show', isCorrect ? 'correct' : 'wrong');
+  fb.textContent = isCorrect ? '✓ Correct!' : `✗ The correct answer is: ${correct ? 'True' : 'False'}.`;
+  updateProgress();
+}
+
+function renderGrammar() {
+  const c = document.getElementById('grammarContent');
+  let html = '';
+  [grammarEx1, grammarEx2, grammarEx3].forEach((ex, ei) => {
+    html += `<div class="ex-header"><div class="ex-num">${ei+1}</div><div><div class="ex-title">${ex.title}</div><div class="ex-desc">${ex.instructions}</div></div></div><div class="card">`;
+    ex.questions.forEach((q, qi) => {
+      const id = `gram${ei}_${qi}`;
+      html += `<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j) => {
+        html += `<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;
+      });
+      html += `</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html += `</div>`;
+  });
+  c.innerHTML = html;
+}
+
+function renderGrammarReview() {
+  document.getElementById('grammarReviewContent').innerHTML = `
+  <div class="grammar-rule">
+    <h4>📌 Grammar Point 1: Participle Clauses</h4>
+    <p>Participle clauses are non-finite clauses that begin with a present participle (-ing form) or past participle (-ed form). They are widely used in formal financial and business writing to condense information and avoid repetition.</p>
+    <p><strong>Present Participle Clauses</strong> express actions happening simultaneously or reasons:</p>
+    <div class="example">"The fund manager, <em>analysing market data carefully</em>, decided to increase the bond allocation." (simultaneous action)<br>"<em>Recognising the risks involved</em>, the board approved a more conservative strategy." (reason)</div>
+    <p><strong>Past Participle Clauses</strong> describe completed actions or passive situations:</p>
+    <div class="example">"<em>Listed on the New York Stock Exchange</em>, the company attracted significant institutional interest."<br>"<em>Diversified across multiple sectors</em>, the portfolio remained stable during the downturn."</div>
+    <p><strong>Perfect Participle Clauses</strong> (Having + past participle) show that one action happened before another:</p>
+    <div class="example">"<em>Having conducted extensive research</em>, the analyst issued her report with confidence."</div>
+    <table>
+      <tr><th>Type</th><th>Form</th><th>Function</th></tr>
+      <tr><td>Present</td><td>-ing</td><td>Simultaneous action / reason</td></tr>
+      <tr><td>Past</td><td>-ed / irregular</td><td>Passive situations / completed states</td></tr>
+      <tr><td>Perfect</td><td>Having + past participle</td><td>Earlier completed action</td></tr>
+    </table>
+  </div>
+
+  <div class="grammar-rule">
+    <h4>📌 Grammar Point 2: Cause / Result Linkers</h4>
+    <p>Cause and result linkers are essential in financial English for explaining relationships between market events and their consequences. They allow writers to construct logical, well-connected arguments in reports, memos, and analyses.</p>
+    <table>
+      <tr><th>Linker</th><th>Position</th><th>Example</th></tr>
+      <tr><td>as a result / consequently / therefore</td><td>Start of new clause</td><td>"Rates rose; <em>consequently</em>, bond yields increased."</td></tr>
+      <tr><td>due to / owing to / because of</td><td>Before noun/noun phrase</td><td>"<em>Due to</em> rising inflation, the Fed raised rates."</td></tr>
+      <tr><td>since / because / as</td><td>Start of subordinate clause</td><td>"<em>Since</em> markets were volatile, investors sought safe havens."</td></tr>
+      <tr><td>despite / in spite of / nevertheless</td><td>Contrast (not cause)</td><td>"<em>Despite</em> the correction, long-term fundamentals held."</td></tr>
+      <tr><td>so / so that</td><td>Between clauses (informal)</td><td>"Prices fell, <em>so</em> investors moved to bonds."</td></tr>
+    </table>
+    <div class="example"><strong>Tip:</strong> "Due to" and "owing to" are followed by a noun or noun phrase. "Because" and "since" are followed by a subject + verb clause. Do not confuse these structures in formal writing.</div>
+  </div>
+
+  <div class="grammar-rule">
+    <h4>📌 Grammar Point 3: Phrasal Verbs in Investment English</h4>
+    <p>Phrasal verbs are very common in spoken and semi-formal business English. In investment contexts, the following phrasal verbs appear frequently in meetings, podcasts, and client communications.</p>
+    <table>
+      <tr><th>Phrasal Verb</th><th>Meaning</th><th>Example</th></tr>
+      <tr><td>build up</td><td>Increase gradually</td><td>"We plan to <em>build up</em> our emerging market exposure."</td></tr>
+      <tr><td>pull out of</td><td>Withdraw from</td><td>"The fund decided to <em>pull out of</em> the losing position."</td></tr>
+      <tr><td>cash in (on)</td><td>Sell to make a profit / exploit</td><td>"She <em>cashed in</em> her shares after the IPO surge."</td></tr>
+      <tr><td>look into</td><td>Investigate / research</td><td>"We need to <em>look into</em> the bond market more carefully."</td></tr>
+      <tr><td>take on</td><td>Accept / assume</td><td>"The fund chose to <em>take on</em> more risk for higher returns."</td></tr>
+      <tr><td>hold off</td><td>Delay / wait</td><td>"Analysts advised investors to <em>hold off</em> until markets stabilised."</td></tr>
+      <tr><td>wind down</td><td>Reduce gradually / close</td><td>"The firm began to <em>wind down</em> its hedge fund operations."</td></tr>
+      <tr><td>back out of</td><td>Withdraw from an agreement</td><td>"Several investors threatened to <em>back out of</em> the deal."</td></tr>
+    </table>
+    <div class="example"><strong>Note:</strong> Many of these phrasal verbs are separable (e.g., "build the allocation up") or inseparable (e.g., "pull out of the deal"). Check whether the verb is transitive or intransitive to determine word order.</div>
+  </div>`;
+}
+
+function renderWriting() {
+  const c = document.getElementById('writingContent');
+  let html = '';
+  writingActivities.forEach((a, i) => {
+    html += `<div class="writing-prompt">
+      <h3>${a.title}</h3>
+      <p style="margin-bottom:10px;"><strong>Task type:</strong> ${a.type}</p>
+      <p>${a.prompt}</p>
+      <ul>${a.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+      <p style="margin-top:10px;color:rgba(255,255,255,.6);font-size:.8rem;">Word count: ${a.min}–${a.max} words</p>
+    </div>
+    <div class="card">
+      <textarea class="writing-area" id="write${i}" placeholder="Write your response here..." oninput="countWords('write${i}','wc${i}','${a.min}','${a.max}')"></textarea>
+      <div class="word-count" id="wc${i}">0 words (target: ${a.min}–${a.max})</div>
+      <button class="submit-btn" onclick="submitWriting(${i})">Submit Response ✓</button>
+      <div class="submit-feedback" id="wfb${i}">✓ Your response has been submitted. Well done on completing this writing task!</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function countWords(id, wcId, min, max) {
+  const txt = document.getElementById(id).value.trim();
+  const words = txt ? txt.split(/\s+/).length : 0;
+  const wc = document.getElementById(wcId);
+  wc.textContent = `${words} words (target: ${min}–${max})`;
+  wc.style.color = words >= min && words <= max ? 'var(--green)' : words > max ? 'var(--red)' : 'var(--text-muted)';
+}
+
+function submitWriting(i) {
+  const txt = document.getElementById(`write${i}`).value.trim();
+  if (txt.length < 20) { alert('Please write your response before submitting.'); return; }
+  const fb = document.getElementById(`wfb${i}`);
+  fb.style.display = 'block';
+  document.getElementById(`write${i}`).disabled = true;
+  updateProgress();
+}
+
+/* ── LISTENING ── */
+let ttsState = {};
+
+function renderListening() {
+  const c = document.getElementById('listeningContent');
+  let html = '';
+  listeningActivities.forEach((act, ai) => {
+    html += `<div class="listen-card">
+      <div class="listen-card-header">
+        <div class="listen-icon">🎙️</div>
+        <div>
+          <div class="listen-title">${act.title}</div>
+          <div class="listen-meta">${act.meta}</div>
+          <div class="listen-badges">
+            <span class="badge badge-gold">LEVEL: ${act.level}</span>
+            <span class="badge badge-outline">${act.type}</span>
+            <span class="badge badge-outline">FOCUS: ${act.focus}</span>
+          </div>
+        </div>
+      </div>
+      <div class="audio-player">
+        <div class="audio-controls">
+          <button class="play-btn" onclick="togglePlay(${ai})" id="playBtn${ai}">▶</button>
+          <div class="audio-info">
+            <div class="audio-title-sm">${act.title.split(':')[1].trim()}</div>
+            <div class="audio-sub">${act.meta}</div>
+          </div>
+        </div>
+        <div class="progress-audio"><div class="progress-audio-fill" id="prog${ai}"></div></div>
+        <div class="audio-time" id="time${ai}">0:00 / 0:00</div>
+        <div class="speed-btns">
+          <button class="speed-btn" onclick="setSpeed(${ai},0.75,this)">0.75×</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0×</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2×</button>
+        </div>
+        <div class="audio-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">▼ Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans${ai}">${act.transcript.replace(/\n/g,'<br>')}</div>
+    </div>
+    <div class="card listen-mcq-wrap">
+      <h4 style="font-family:'Playfair Display',serif;margin-bottom:20px;">Comprehension Questions — Activity ${ai+1}</h4>`;
+    act.questions.forEach((q, qi) => {
+      const id = `lis${ai}_${qi}`;
+      html += `<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j) => {
+        html += `<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;
+      });
+      html += `</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html += `</div>`;
+  });
+  c.innerHTML = html;
+}
+
+function toggleTranscript(ai) {
+  const t = document.getElementById(`trans${ai}`);
+  t.classList.toggle('open');
+}
+
+function togglePlay(ai) {
+  const act = listeningActivities[ai];
+  const btn = document.getElementById(`playBtn${ai}`);
+  if (ttsState[ai] && ttsState[ai].playing) {
+    speechSynthesis.cancel();
+    ttsState[ai].playing = false;
+    btn.textContent = '▶';
+    return;
+  }
+  speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(act.transcript);
+  utter.rate = ttsState[ai]?.rate || 0.85;
+  utter.pitch = 1.05;
+  // Select American female voice
+  const voices = speechSynthesis.getVoices();
+  const preferred = voices.find(v => v.lang === 'en-US' && v.name.toLowerCase().includes('female'))
+    || voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Zira') || v.name.includes('Google US English')))
+    || voices.find(v => v.lang === 'en-US')
+    || voices.find(v => v.lang.startsWith('en'));
+  if (preferred) utter.voice = preferred;
+  ttsState[ai] = { playing: true, rate: utter.rate, utterance: utter };
+  btn.textContent = '⏸';
+  // Animate progress
+  const words = act.transcript.split(' ').length;
+  const estDuration = (words / 130) / utter.rate * 60000;
+  const startTime = Date.now();
+  const prog = document.getElementById(`prog${ai}`);
+  const timeEl = document.getElementById(`time${ai}`);
+  const interval = setInterval(() => {
+    if (!ttsState[ai]?.playing) { clearInterval(interval); return; }
+    const elapsed = Date.now() - startTime;
+    const pct = Math.min((elapsed / estDuration) * 100, 100);
+    prog.style.width = pct + '%';
+    const elSec = Math.floor(elapsed/1000);
+    const totSec = Math.floor(estDuration/1000);
+    timeEl.textContent = `${Math.floor(elSec/60)}:${String(elSec%60).padStart(2,'0')} / ${Math.floor(totSec/60)}:${String(totSec%60).padStart(2,'0')}`;
+  }, 300);
+  utter.onend = () => {
+    ttsState[ai].playing = false;
+    btn.textContent = '▶';
+    prog.style.width = '100%';
+    clearInterval(interval);
+  };
+  speechSynthesis.speak(utter);
+}
+
+function setSpeed(ai, rate, btn) {
+  btn.closest('.speed-btns').querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (ttsState[ai]) { ttsState[ai].rate = rate; if (ttsState[ai].playing) { speechSynthesis.cancel(); ttsState[ai].playing = false; document.getElementById(`playBtn${ai}`).textContent = '▶'; } }
+  else { ttsState[ai] = { rate }; }
+}
+
+/* ── CASE STUDIES ── */
+function renderCaseStudies() {
+  const c = document.getElementById('caseContent');
+  let html = '';
+  caseStudies.forEach((cs, ci) => {
+    html += `<div class="case-header"><div class="case-meta">${cs.meta}</div><h3>${cs.title}</h3>
+      ${cs.text.split('\n\n').map(p=>`<p style="margin-bottom:12px;">${p}</p>`).join('')}
+    </div><div class="card"><h4 style="font-family:'Playfair Display',serif;margin-bottom:20px;">Comprehension Questions</h4>`;
+    cs.questions.forEach((q, qi) => {
+      const id = `cs${ci}_${qi}`;
+      html += `<div class="mcq-block"><div class="mcq-question">${qi+1}. ${q.q}</div><div class="mcq-options">`;
+      ['A','B','C','D'].forEach((l,j) => {
+        html += `<div class="mcq-option" onclick="selectMCQ('${id}',${j},${q.ans})" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;
+      });
+      html += `</div><div class="feedback" id="${id}_fb"></div></div>`;
+    });
+    html += `</div>`;
+  });
+  c.innerHTML = html;
+}
+
+/* ── ASSESSMENT ── */
+let assessmentAttempts = 0;
+function renderAssessment() {
+  const c = document.getElementById('assessmentContent');
+  let html = '';
+  assessmentQs.forEach((q, i) => {
+    const id = `ass_${i}`;
+    html += `<div class="mcq-block" id="${id}_block"><div class="mcq-question">${i+1}. ${q.q}</div><div class="mcq-options">`;
+    ['A','B','C','D'].forEach((l,j) => {
+      html += `<div class="mcq-option" id="${id}_opt${j}"><span class="opt-letter">${l}</span>${q.opts[j]}</div>`;
+    });
+    html += `</div></div>`;
+  });
+  html += `<button class="check-btn" onclick="submitAssessment()">Submit Assessment →</button>`;
+  c.innerHTML = html;
+  // Add click listeners
+  assessmentQs.forEach((q, i) => {
+    const id = `ass_${i}`;
+    ['A','B','C','D'].forEach((l,j) => {
+      document.getElementById(`${id}_opt${j}`).onclick = () => {
+        if (document.getElementById(`${id}_opt0`).classList.contains('disabled')) return;
+        document.querySelectorAll(`[id^="${id}_opt"]`).forEach(o => o.classList.remove('selected-opt'));
+        document.getElementById(`${id}_opt${j}`).classList.add('selected-opt');
+      };
+    });
+  });
+}
+
+function submitAssessment() {
+  if (assessmentAttempts >= 2) { alert('You have used both attempts.'); return; }
+  let score = 0;
+  assessmentQs.forEach((q, i) => {
+    const id = `ass_${i}`;
+    const opts = document.querySelectorAll(`[id^="${id}_opt"]`);
+    let chosen = -1;
+    opts.forEach((o, j) => { if (o.classList.contains('selected-opt')) chosen = j; });
+    opts.forEach((o, j) => {
+      o.classList.add('disabled');
+      o.classList.remove('selected-opt');
+      if (j === q.ans) o.classList.add('correct');
+      else if (j === chosen) o.classList.add('wrong');
+    });
+    if (chosen === q.ans) score++;
+  });
+  assessmentAttempts++;
+  const pct = Math.round((score / assessmentQs.length) * 100);
+  const pass = pct >= 70;
+  const rb = document.getElementById('assessmentResult');
+  rb.className = `result-box ${pass ? 'pass' : 'fail'}`;
+  rb.style.display = 'block';
+  rb.innerHTML = `<div class="result-score ${pass ? 'pass' : 'fail'}">${pct}%</div>
+    <div class="result-label">${pass ? '🏆 Congratulations — You Passed!' : '📚 Keep Studying — You Can Retake!'}</div>
+    <div class="result-detail">Score: ${score}/${assessmentQs.length} correct · ${pass ? 'Pass' : 'Fail'} · Attempts used: ${assessmentAttempts}/2</div>
+    ${assessmentAttempts < 2 && !pass ? `<button class="check-btn" style="margin-top:16px;" onclick="retakeAssessment()">Retake Assessment</button>` : ''}`;
+  rb.scrollIntoView({behavior:'smooth'});
+  updateProgress();
+}
+
+function retakeAssessment() {
+  assessmentQs.forEach((q, i) => {
+    const id = `ass_${i}`;
+    document.querySelectorAll(`[id^="${id}_opt"]`).forEach(o => {
+      o.classList.remove('disabled','correct','wrong','selected-opt');
+    });
+  });
+  document.getElementById('assessmentResult').style.display = 'none';
+}
+
+/* ── NAV & PROGRESS ── */
+const sections = ['overview','speaking','wordbank','reading','vocabulary','grammar','grammarreview','writing','listening','casestudies','assessment'];
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const sec = item.dataset.section;
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    item.classList.add('active');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(`sec-${sec}`).classList.add('active');
+    window.scrollTo(0,0);
+    speechSynthesis.cancel();
+    Object.keys(ttsState).forEach(k => { if (ttsState[k]) ttsState[k].playing = false; document.getElementById(`playBtn${k}`)?.textContent && (document.getElementById(`playBtn${k}`).textContent = '▶'); });
+  });
+});
+
+function updateProgress() {
+  const total = document.querySelectorAll('.mcq-option.correct, .mcq-option.wrong, .gap-input.correct, .gap-input.wrong').length;
+  const pct = Math.min(Math.round((total / 120) * 100), 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+/* ── INIT ── */
+window.addEventListener('load', () => {
+  renderSpeaking();
+  renderWordBank();
+  renderReading();
+  renderVocab();
+  renderGrammar();
+  renderGrammarReview();
+  renderWriting();
+  renderListening();
+  renderCaseStudies();
+  renderAssessment();
+  // Trigger progress bar animation
+  setTimeout(() => { document.getElementById('progressFill').style.width = '0%'; }, 100);
+  // Load TTS voices
+  speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+});
+
+// Add style for selected option
+const st = document.createElement('style');
+st.textContent = `.selected-opt { border-color: var(--gold) !important; background: rgba(201,149,42,.12) !important; }`;
+document.head.appendChild(st);
+</script>
+</body>
+</html>

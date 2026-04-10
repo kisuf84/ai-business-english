@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 10: Interpreting Marketing Metrics</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1c2d4a;--navy-dark:#0f1d35;--navy-mid:#243a5e;--navy-light:#2e4875;--navy-glow:#3a5a8a;
+  --gold:#f0a830;--gold-light:#f5c55a;--gold-pale:#fef3d0;--gold-dim:rgba(240,168,48,.18);
+  --cream:#faf8f4;--cream-dark:#efe9de;
+  --white:#fff;--text-dark:#0f1d35;--text-mid:#2c3e5a;--text-light:#5a7090;
+  --success:#1e7a4a;--error:#c0392b;
+  --sidebar-w:260px;--radius:12px;
+  --shadow-card:0 4px 20px rgba(15,29,53,.10);
+  --shadow-hover:0 8px 32px rgba(15,29,53,.16);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;
+  background:linear-gradient(175deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-mid) 100%);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto;
+  box-shadow:4px 0 24px rgba(15,29,53,.35);
+}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--navy-light);border-radius:2px}
+.sidebar-brand{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,.07)}
+.brand-title{font-family:'Fraunces',serif;font-size:13px;font-weight:600;color:var(--gold);line-height:1.3;letter-spacing:.01em}
+.brand-sub{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-top:4px}
+.level-badge{display:inline-block;background:var(--gold);color:var(--navy-dark);font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:20px;margin-top:11px}
+.sidebar-module-label{padding:20px 20px 8px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:600}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;
+  color:rgba(255,255,255,.6);font-size:13px;font-weight:400;transition:all .2s;
+  border-left:3px solid transparent;position:relative;
+}
+.nav-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.95)}
+.nav-item.active{
+  background:linear-gradient(90deg,rgba(240,168,48,.16),rgba(240,168,48,.04));
+  color:#fff;border-left-color:var(--gold);
+}
+.nav-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.nav-label{flex:1}
+.nav-badge{background:var(--gold);color:var(--navy-dark);font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;flex-shrink:0}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.section{display:none}.section.active{display:block}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 50%,var(--navy-mid) 100%);
+  padding:32px 52px 40px;position:relative;overflow:hidden;min-height:290px;
+}
+.hero::before{
+  content:'';position:absolute;right:-40px;top:-30px;width:460px;height:460px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='10' y='320' font-size='280' opacity='.035' fill='%23fff' font-family='serif'%3EM10%3C/text%3E%3C/svg%3E") center/contain no-repeat;
+}
+.hero::after{
+  content:'';position:absolute;left:-80px;bottom:-80px;
+  width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(240,168,48,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.section-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+  padding:6px 14px;border-radius:20px;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:22px;
+  font-family:'DM Mono',monospace;backdrop-filter:blur(4px);
+}
+.hero-title{font-family:'Fraunces',serif;font-size:54px;font-weight:700;line-height:1.05;color:#fff;margin-bottom:16px}
+.hero-title span{color:var(--gold)}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.62);max-width:620px;line-height:1.68;margin-bottom:28px}
+.stats-row{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:24px}
+.stat-num{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.stat-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38)}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.48);margin-bottom:7px}
+.progress-track{height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;transition:width .7s ease;width:0%}
+
+/* ── CONTENT ── */
+.content-area{background:var(--cream);padding:40px 52px}
+.card{
+  background:#fff;border-radius:var(--radius);padding:32px;margin-bottom:24px;
+  border:1px solid rgba(28,45,74,.07);box-shadow:var(--shadow-card);
+  transition:box-shadow .2s;
+}
+.card:hover{box-shadow:var(--shadow-hover)}
+.card-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--text-dark);margin-bottom:6px}
+.card-title-bar{width:40px;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;margin-bottom:18px}
+.prose{font-size:15px;line-height:1.75;color:var(--text-mid)}
+.prose strong{color:var(--text-dark);font-weight:600}
+.prose p+p{margin-top:12px}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.outcome-item{display:flex;align-items:flex-start;gap:10px;padding:13px 15px;background:var(--cream);border-radius:9px;border:1px solid var(--cream-dark)}
+.outcome-icon{color:var(--gold);flex-shrink:0;margin-top:1px}
+.outcome-text{font-size:13.5px;color:var(--text-mid);line-height:1.5}
+
+/* ── SPEAKING ── */
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.q-card{
+  background:#fff;border:1px solid rgba(28,45,74,.09);border-radius:9px;
+  padding:16px;display:flex;gap:12px;align-items:flex-start;transition:all .2s;
+}
+.q-card:hover{box-shadow:var(--shadow-hover);border-color:rgba(240,168,48,.3);transform:translateY(-1px)}
+.q-num{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--gold-light);flex-shrink:0;min-width:28px;line-height:1}
+.q-text{font-size:14px;color:var(--text-mid);line-height:1.55}
+
+/* ── WORD BANK ── */
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.wb-card{
+  background:#fff;border:1px solid rgba(28,45,74,.09);border-radius:11px;
+  padding:18px 16px;display:flex;flex-direction:column;gap:6px;transition:all .2s;
+}
+.wb-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:rgba(240,168,48,.25)}
+.wb-emoji{font-size:24px}
+.wb-term{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--text-dark)}
+.wb-pos{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.wb-def{font-size:13px;color:var(--text-mid);line-height:1.5}
+
+/* ── READING ── */
+.reading-text{
+  background:linear-gradient(135deg,var(--cream) 0%,rgba(239,233,222,.5) 100%);
+  border-left:4px solid var(--gold);padding:24px 28px;border-radius:0 10px 10px 0;margin-bottom:28px;
+}
+.reading-text h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--text-dark);margin-bottom:14px}
+.reading-text p{font-size:14.5px;line-height:1.78;color:var(--text-mid);margin-bottom:10px}
+.reading-text strong{color:var(--text-dark);font-weight:600}
+
+/* ── MCQ ── */
+.mcq-section{margin-top:24px}
+.mcq-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--text-dark);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--cream-dark)}
+.mcq-item{margin-bottom:20px}
+.mcq-q{font-size:14.5px;font-weight:600;color:var(--text-dark);margin-bottom:10px;line-height:1.5}
+.mcq-options{display:grid;gap:7px}
+.mcq-option{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:9px;
+  border:1.5px solid rgba(28,45,74,.13);cursor:pointer;transition:all .18s;
+  font-size:13.5px;color:var(--text-mid);background:#fff;
+}
+.mcq-option:hover{border-color:var(--gold);background:var(--gold-pale);color:var(--text-dark)}
+.mcq-option.selected{border-color:var(--navy);background:rgba(28,45,74,.06);color:var(--text-dark)}
+.mcq-option.correct{border-color:var(--success)!important;background:rgba(30,122,74,.08)!important;color:var(--success)!important}
+.mcq-option.wrong{border-color:var(--error)!important;background:rgba(192,57,43,.07)!important;color:var(--error)!important}
+.opt-letter{
+  width:22px;height:22px;border-radius:50%;background:rgba(28,45,74,.09);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+  flex-shrink:0;font-family:'DM Mono',monospace;
+}
+.check-btn{
+  display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 22px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  color:#fff;border:none;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;
+  font-family:'DM Sans',sans-serif;transition:all .2s;box-shadow:0 2px 8px rgba(28,45,74,.2);
+}
+.check-btn:hover{background:linear-gradient(135deg,var(--navy-mid) 0%,var(--navy-light) 100%);box-shadow:0 4px 14px rgba(28,45,74,.3);transform:translateY(-1px)}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:9px;font-size:13px;font-weight:500;display:none}
+.feedback.show{display:block}
+.feedback.good{background:rgba(30,122,74,.09);color:var(--success);border:1px solid rgba(30,122,74,.2)}
+.feedback.bad{background:rgba(192,57,43,.08);color:var(--error);border:1px solid rgba(192,57,43,.2)}
+.score-display{background:var(--cream);border-radius:9px;padding:14px 18px;margin-top:16px;display:none}
+.score-display.show{display:flex;align-items:center;justify-content:space-between}
+.score-val{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--text-dark)}
+.score-label{font-size:13px;color:var(--text-light)}
+
+/* ── VOCAB EXERCISES ── */
+.ex-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ex-badge{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  color:#fff;font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px;letter-spacing:.06em;
+}
+.ex-type{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.ex-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--text-dark);margin-bottom:4px}
+.ex-instruction{font-size:13.5px;color:var(--text-light);margin-bottom:20px;font-style:italic}
+.word-box{
+  background:linear-gradient(135deg,var(--cream) 0%,var(--cream-dark) 100%);
+  border-radius:9px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:20px;
+  border:1px solid var(--cream-dark);
+}
+.word-chip{background:#fff;border:1px solid rgba(28,45,74,.13);border-radius:6px;padding:3px 10px;font-size:13px;color:var(--text-mid)}
+.gap-sentence{font-size:14.5px;color:var(--text-dark);line-height:2.5;margin-bottom:6px}
+.gap-input{
+  border:none;border-bottom:2px solid var(--gold);background:transparent;
+  font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);
+  padding:2px 6px;width:170px;outline:none;text-align:center;transition:border-color .18s;
+}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.tf-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--cream-dark)}
+.tf-stmt{flex:1;font-size:14.5px;color:var(--text-mid);line-height:1.55}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+.tf-btn{
+  padding:5px 14px;border-radius:7px;border:1.5px solid rgba(28,45,74,.18);cursor:pointer;
+  font-size:12px;font-weight:600;background:#fff;color:var(--text-mid);transition:all .18s;
+  font-family:'DM Sans',sans-serif;
+}
+.tf-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-pale)}
+.tf-btn.sel-t{background:#dcfce7;border-color:var(--success);color:var(--success)}
+.tf-btn.sel-f{background:#fee2e2;border-color:var(--error);color:var(--error)}
+
+/* ── GRAMMAR REVIEW ── */
+.gr-box{
+  background:linear-gradient(150deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-mid) 100%);
+  color:#fff;border-radius:12px;padding:30px;margin-bottom:24px;
+  box-shadow:0 6px 28px rgba(15,29,53,.25);
+}
+.gr-box-title{font-family:'Fraunces',serif;font-size:21px;font-weight:600;color:var(--gold);margin-bottom:6px}
+.gr-box-sub{font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.12em;margin-bottom:20px}
+.gr-rule{background:rgba(255,255,255,.07);border-radius:9px;padding:16px;margin-bottom:12px;border:1px solid rgba(255,255,255,.05)}
+.gr-rule-title{font-size:13px;font-weight:600;color:var(--gold-light);margin-bottom:6px}
+.gr-rule-text{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.6}
+.gr-example{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--gold-pale);background:rgba(255,255,255,.05);padding:9px 13px;border-radius:7px;margin-top:8px;line-height:1.6;border-left:2px solid rgba(240,168,48,.3)}
+.gr-table{width:100%;border-collapse:collapse;margin-top:14px}
+.gr-table th{background:rgba(255,255,255,.09);padding:9px 13px;font-size:12px;text-align:left;color:var(--gold-light);letter-spacing:.06em;text-transform:uppercase}
+.gr-table td{padding:9px 13px;font-size:13px;color:rgba(255,255,255,.75);border-top:1px solid rgba(255,255,255,.07)}
+.gr-table tr:hover td{background:rgba(255,255,255,.04)}
+
+/* ── WRITING ── */
+.writing-prompt{background:rgba(240,168,48,.07);border:1px solid rgba(240,168,48,.28);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.writing-prompt h4{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--text-dark);margin-bottom:8px}
+.writing-prompt p{font-size:13.5px;color:var(--text-mid);line-height:1.6}
+.writing-focus{background:rgba(28,45,74,.04);border:1px solid rgba(28,45,74,.1);border-radius:9px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--text-light)}
+.writing-focus strong{color:var(--text-mid)}
+.writing-textarea{width:100%;min-height:180px;border:1.5px solid rgba(28,45,74,.18);border-radius:9px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);resize:vertical;outline:none;background:#fff;line-height:1.65;transition:border-color .2s}
+.writing-textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,168,48,.1)}
+.writing-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.word-count{font-size:12px;color:var(--text-light);font-family:'DM Mono',monospace}
+.submit-btn{padding:10px 24px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--navy-dark);border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;box-shadow:0 2px 8px rgba(240,168,48,.3)}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(240,168,48,.4)}
+.submit-success{display:none;padding:12px 16px;background:rgba(30,122,74,.09);border:1px solid rgba(30,122,74,.22);border-radius:9px;color:var(--success);font-size:13.5px;font-weight:500;margin-top:12px}
+
+/* ── AUDIO CARDS ── */
+.audio-card{
+  background:linear-gradient(150deg,var(--navy-dark) 0%,var(--navy) 70%,var(--navy-mid) 100%);
+  border-radius:14px;padding:26px;margin-bottom:28px;
+  box-shadow:0 6px 28px rgba(15,29,53,.28);
+}
+.audio-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
+.audio-emoji{font-size:30px;background:rgba(255,255,255,.09);border-radius:10px;padding:10px;flex-shrink:0;line-height:1;border:1px solid rgba(255,255,255,.07)}
+.audio-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#fff;margin-bottom:4px}
+.audio-sub{font-size:12px;color:rgba(255,255,255,.48)}
+.audio-tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.audio-tag{font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 9px;border-radius:10px;text-transform:uppercase}
+.tag-level{background:rgba(240,168,48,.28);color:var(--gold-light)}
+.tag-type{background:rgba(255,255,255,.1);color:rgba(255,255,255,.72)}
+.tag-focus{color:rgba(255,255,255,.42);font-size:10px}
+.player-box{background:rgba(15,29,53,.55);border-radius:11px;padding:16px 18px;margin-bottom:12px;border:1px solid rgba(255,255,255,.06)}
+.player-row{display:flex;align-items:center;gap:14px}
+.play-btn{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;transition:all .2s;color:var(--navy-dark);
+  box-shadow:0 2px 10px rgba(240,168,48,.3);
+}
+.play-btn:hover{transform:scale(1.08);box-shadow:0 4px 16px rgba(240,168,48,.45)}
+.player-info{flex:1}
+.player-title-sm{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px}
+.player-sub-sm{font-size:11px;color:rgba(255,255,255,.4)}
+.player-time{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.48);white-space:nowrap}
+.player-progress{width:100%;height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:11px;overflow:hidden}
+.player-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:2px;transition:width .5s linear}
+.speed-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.38);letter-spacing:.08em;text-transform:uppercase}
+.speed-btn{padding:3px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:transparent;color:rgba(255,255,255,.58);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:all .18s}
+.speed-btn.active,.speed-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-dark);font-weight:700}
+.replay-btn{padding:3px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:transparent;color:rgba(255,255,255,.58);font-size:11px;cursor:pointer;transition:all .18s}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light)}
+.tts-note{font-size:11px;color:rgba(255,255,255,.28);font-style:italic;margin-top:6px}
+.transcript-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;color:rgba(255,255,255,.55);font-size:12.5px;padding:8px 0;border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:color .18s}
+.transcript-toggle:hover{color:var(--gold-light)}
+.transcript-box{display:none;background:rgba(255,255,255,.05);border-radius:9px;padding:16px;margin-top:6px;margin-bottom:14px;border:1px solid rgba(255,255,255,.06)}
+.transcript-box.open{display:block}
+.transcript-box p{font-size:13px;color:rgba(255,255,255,.68);line-height:1.78;margin-bottom:8px}
+
+/* ── LISTENING MCQs — all WHITE ── */
+.listen-instruction{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.07);border-radius:9px;font-size:13px;color:#fff;margin-bottom:18px;font-weight:500;border:1px solid rgba(255,255,255,.06)}
+.listen-mcq-wrap .mcq-title{color:#fff;border-bottom-color:rgba(255,255,255,.18)}
+.listen-mcq-wrap .mcq-q{color:#fff}
+.listen-mcq-wrap .mcq-option{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18);color:#fff}
+.listen-mcq-wrap .mcq-option:hover{border-color:var(--gold);background:rgba(240,168,48,.14);color:#fff}
+.listen-mcq-wrap .mcq-option.selected{border-color:var(--gold);background:rgba(240,168,48,.2);color:#fff}
+.listen-mcq-wrap .mcq-option.correct{border-color:#4ade80!important;background:rgba(74,222,128,.14)!important;color:#4ade80!important}
+.listen-mcq-wrap .mcq-option.wrong{border-color:#f87171!important;background:rgba(248,113,113,.12)!important;color:#f87171!important}
+.listen-mcq-wrap .opt-letter{background:rgba(255,255,255,.13);color:#fff}
+.listen-mcq-wrap .check-btn{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--navy-dark);box-shadow:0 2px 8px rgba(240,168,48,.25)}
+.listen-mcq-wrap .check-btn:hover{background:var(--gold-light);transform:translateY(-1px)}
+.listen-mcq-wrap .feedback.good{background:rgba(74,222,128,.13);color:#4ade80;border-color:rgba(74,222,128,.28)}
+.listen-mcq-wrap .feedback.bad{background:rgba(248,113,113,.1);color:#f87171;border-color:rgba(248,113,113,.24)}
+.listen-mcq-wrap .score-display{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.06)}
+.listen-mcq-wrap .score-val{color:#fff}
+.listen-mcq-wrap .score-label{color:rgba(255,255,255,.58)}
+
+/* ── CASE STUDIES ── */
+.case-header{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy-mid) 100%);
+  border-radius:12px 12px 0 0;padding:22px 28px;
+}
+.case-header h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#fff;margin-bottom:4px}
+.case-header p{font-size:13px;color:rgba(255,255,255,.48)}
+.case-body{background:#fff;border:1px solid rgba(28,45,74,.09);border-top:none;border-radius:0 0 12px 12px;padding:24px 28px;margin-bottom:28px}
+.case-section-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.case-text{font-size:14.5px;color:var(--text-mid);line-height:1.78;margin-bottom:20px}
+.case-text strong{color:var(--text-dark)}
+
+/* ── ASSESSMENT ── */
+.assessment-header{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 50%,var(--navy-mid) 100%);
+  border-radius:14px;padding:30px 32px;margin-bottom:28px;text-align:center;
+  box-shadow:0 6px 28px rgba(15,29,53,.28);
+}
+.assessment-header h2{font-family:'Fraunces',serif;font-size:28px;color:#fff;margin-bottom:8px}
+.assessment-header p{color:rgba(255,255,255,.58);font-size:14px}
+.assessment-meta{display:flex;justify-content:center;gap:28px;margin-top:18px;flex-wrap:wrap}
+.assessment-meta-item{text-align:center}
+.assessment-meta-num{font-family:'Fraunces',serif;font-size:24px;color:var(--gold);font-weight:700}
+.assessment-meta-label{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em}
+.attempt-badge{display:inline-block;padding:4px 13px;border-radius:12px;font-size:11px;font-weight:600;background:rgba(240,168,48,.18);color:var(--gold-light);margin-top:10px;border:1px solid rgba(240,168,48,.2)}
+.assessment-result{display:none;text-align:center;padding:30px;background:#fff;border-radius:12px;border:2px solid var(--cream-dark);margin-bottom:24px;box-shadow:var(--shadow-card)}
+.result-score{font-family:'Fraunces',serif;font-size:56px;font-weight:700}
+.result-score.pass{color:var(--success)}.result-score.fail{color:var(--error)}
+.result-msg{font-size:16px;color:var(--text-mid);margin-top:8px}
+.retake-btn{padding:10px 24px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;margin-top:16px;font-family:'DM Sans',sans-serif;box-shadow:0 2px 8px rgba(28,45,74,.2)}
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:768px){
+  .sidebar{position:relative;width:100%;height:auto;flex-direction:column;overflow-y:visible;border-bottom:2px solid var(--gold);box-shadow:none}
+  .sidebar-brand{padding:16px 16px 12px}
+  .brand-title{font-size:12px}
+  .sidebar-module-label{padding:10px 16px 4px}
+  .nav-item{padding:8px 16px}
+  .main{margin-left:0}
+  .hero{padding:22px 20px 28px;min-height:auto}
+  .hero-title{font-size:34px}
+  .hero-desc{font-size:14px}
+  .stats-row{gap:20px}
+  .stat-num{font-size:22px}
+  .content-area{padding:20px 16px}
+  .card{padding:20px 16px}
+  .q-grid,.outcomes-grid,.wb-grid{grid-template-columns:1fr}
+  .gr-table{display:block;overflow-x:auto;white-space:nowrap}
+  .writing-textarea{min-height:160px;font-size:13px}
+  .mcq-option{font-size:13px;padding:9px 12px}
+  .audio-card{padding:18px}
+  .player-row{flex-wrap:wrap;gap:10px}
+  .speed-row{gap:6px}
+  .speed-btn{padding:3px 8px;font-size:10px}
+  .case-body{padding:16px}
+  .assessment-header{padding:22px 16px}
+  .assessment-meta{gap:18px}
+  .result-score{font-size:40px}
+  .tf-item{flex-direction:column;gap:8px}
+  .tf-btns{align-self:flex-start}
+  .word-box{padding:10px 12px;gap:6px}
+  .word-chip{font-size:12px;padding:2px 8px}
+  .gap-input{width:130px;font-size:13px}
+  .card-title{font-size:19px}
+  .ex-title{font-size:16px}
+  .section-tag{font-size:10px;padding:5px 10px}
+  .listen-instruction{font-size:12px;padding:8px 12px}
+  .check-btn{padding:9px 18px;font-size:12px}
+  .submit-btn{padding:9px 18px;font-size:12px}
+  .progress-label{font-size:11px}
+  .gr-box{padding:20px 16px}
+}
+@media(max-width:480px){
+  .hero-title{font-size:26px;line-height:1.1}
+  .stats-row{gap:14px}
+  .stat-num{font-size:20px}
+  .stat-label{font-size:9px}
+  .card{padding:16px 14px}
+  .mcq-q{font-size:13.5px}
+  .mcq-option{font-size:12.5px;gap:8px;padding:9px 10px}
+  .opt-letter{width:20px;height:20px;font-size:10px}
+  .audio-header{flex-direction:column;gap:10px}
+  .audio-emoji{font-size:24px;padding:8px}
+  .play-btn{width:40px;height:40px;font-size:16px}
+  .nav-badge{font-size:8px;padding:2px 5px}
+  .gr-rule{padding:12px}
+}
+
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-title">Marketing &amp; Advertising English</div>
+    <div class="brand-sub">Professional Development</div>
+    <div class="level-badge">B1&ndash;B2 LEVEL</div>
+  </div>
+  <div class="sidebar-module-label">Module 10</div>
+  <div class="nav-item active" onclick="showSection('overview')"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  <div class="nav-item" onclick="showSection('speaking')"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span><span class="nav-badge">21Q</span></div>
+  <div class="nav-item" onclick="showSection('wordbank')"><span class="nav-icon">🟩</span><span class="nav-label">Word Bank</span><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="showSection('reading')"><span class="nav-icon">📄</span><span class="nav-label">Reading</span><span class="nav-badge">2T</span></div>
+  <div class="nav-item" onclick="showSection('vocabulary')"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar')"><span class="nav-icon">📘</span><span class="nav-label">Grammar</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar-review')"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  <div class="nav-item" onclick="showSection('writing')"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span><span class="nav-badge">2W</span></div>
+  <div class="nav-item" onclick="showSection('listening')"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span><span class="nav-badge">4Ex</span></div>
+  <div class="nav-item" onclick="showSection('casestudies')"><span class="nav-icon">📊</span><span class="nav-label">Case Studies</span><span class="nav-badge">2CS</span></div>
+  <div class="nav-item" onclick="showSection('assessment')"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span><span class="nav-badge">20Q</span></div>
+</nav>
+<div class="main">
+
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="section-tag">🏛️ Module 10 &middot; Marketing &amp; Advertising English</div>
+    <div class="hero-title">Interpreting<br><span>Marketing Metrics</span></div>
+    <p class="hero-desc">Develop the professional English skills to read, interpret, present, and discuss marketing data with confidence &mdash; turning numbers into narratives that drive strategic decisions.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+    <div>
+      <div class="progress-label"><span>Module Progress</span><span id="progress-pct">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div><div class="card-title-bar"></div>
+      <div class="prose">
+        <p><strong>Welcome to Module 10: Interpreting Marketing Metrics.</strong> Data has transformed marketing from an intuition-driven discipline into a measurable, accountable profession. But data alone is not enough &mdash; the ability to interpret what the numbers mean, communicate those insights clearly in English, and use them to make better strategic decisions is what distinguishes effective marketing professionals from those who simply report figures.</p>
+        <p>This module focuses on the language and skills needed to work fluently with marketing data in a professional English environment. You will learn the vocabulary of performance measurement across all major marketing channels, the grammar structures used in data reporting and analysis, and the communication skills needed to present metrics to stakeholders who may have very different levels of data literacy.</p>
+        <p>By the end of this module, you will be able to interpret dashboards and performance reports, discuss metrics using precise professional English, identify correlations and causal relationships in marketing data, write a data-driven marketing analysis, and present findings and recommendations to senior stakeholders with clarity and confidence.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div><div class="card-title-bar"></div>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use 21+ marketing metrics terms accurately in professional data discussions</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Read and interpret dashboards, performance reports, and data visualisations</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Distinguish between vanity metrics and actionable performance indicators</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use language of correlation, causation, and data interpretation accurately</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Apply noun clauses and reporting structures to present data findings</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use hedging and qualifying language when discussing data conclusions</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Write a marketing performance analysis and a data-driven recommendations memo</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Analyse case studies showing how metric interpretation drives strategic change</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="speaking" class="section">
+  <div class="hero">
+    <div class="section-tag">🎙️ Speaking Activities</div>
+    <div class="hero-title">Speaking <span>Discussion</span></div>
+    <p class="hero-desc">21 discussion questions on marketing metrics, data interpretation, and performance communication &mdash; build fluency in the language of data-driven marketing.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Discussion Questions</div><div class="card-title-bar"></div>
+      <div class="q-grid"><div class="q-card"><div class="q-num">1</div><div class="q-text">What is the difference between a vanity metric and an actionable metric? Can you give examples of each from a marketing context?</div></div><div class="q-card"><div class="q-num">2</div><div class="q-text">Why do you think so many marketing teams focus on metrics that look impressive but do not actually drive business decisions?</div></div><div class="q-card"><div class="q-num">3</div><div class="q-text">What does ROI mean in marketing, and why is it sometimes difficult to calculate accurately across all channels?</div></div><div class="q-card"><div class="q-num">4</div><div class="q-text">What is the difference between reach and engagement in social media analytics? Which do you think is more valuable for most brands?</div></div><div class="q-card"><div class="q-num">5</div><div class="q-text">What is a conversion rate and why is it considered one of the most important metrics in digital marketing?</div></div><div class="q-card"><div class="q-num">6</div><div class="q-text">How do you explain a complex marketing metric to a senior stakeholder who is not from a marketing background?</div></div><div class="q-card"><div class="q-num">7</div><div class="q-text">What is customer lifetime value (CLV) and why is it more strategically useful than cost per acquisition alone?</div></div><div class="q-card"><div class="q-num">8</div><div class="q-text">What is the difference between a leading indicator and a lagging indicator in marketing performance? Give examples of each.</div></div><div class="q-card"><div class="q-num">9</div><div class="q-text">What does it mean when a metric shows a correlation? Why is correlation not the same as causation?</div></div><div class="q-card"><div class="q-num">10</div><div class="q-text">What is a dashboard in marketing analytics? What makes a good dashboard different from a poor one?</div></div><div class="q-card"><div class="q-num">11</div><div class="q-text">How do marketers use benchmarks when interpreting performance data? Where do these benchmarks come from?</div></div><div class="q-card"><div class="q-num">12</div><div class="q-text">What is the difference between organic traffic and paid traffic in web analytics? Why does the distinction matter?</div></div><div class="q-card"><div class="q-num">13</div><div class="q-text">What is share of search and why is it considered a leading indicator of market share?</div></div><div class="q-card"><div class="q-num">14</div><div class="q-text">What is the difference between absolute numbers and percentage changes when reporting marketing results? When should you use each?</div></div><div class="q-card"><div class="q-num">15</div><div class="q-text">What is a cohort analysis and how does it help marketers understand customer retention over time?</div></div><div class="q-card"><div class="q-num">16</div><div class="q-text">What is attribution in marketing analytics and why is it such a persistent challenge for multichannel campaigns?</div></div><div class="q-card"><div class="q-num">17</div><div class="q-text">How can two marketers look at the same data and reach completely different conclusions? What causes this?</div></div><div class="q-card"><div class="q-num">18</div><div class="q-text">What does it mean for a metric to be statistically significant? Why does this matter in campaign testing?</div></div><div class="q-card"><div class="q-num">19</div><div class="q-text">What is a north star metric and how does a team decide which single metric should guide their strategy?</div></div><div class="q-card"><div class="q-num">20</div><div class="q-text">How has the deprecation of third-party cookies affected the way marketers measure campaign performance?</div></div><div class="q-card"><div class="q-num">21</div><div class="q-text">If you were presenting poor campaign results to a senior leadership team, how would you structure your communication to be honest, clear, and constructive?</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="wordbank" class="section">
+  <div class="hero">
+    <div class="section-tag">🟩 Word Bank</div>
+    <div class="hero-title">Word <span>Bank</span></div>
+    <p class="hero-desc">21 essential marketing metrics terms &mdash; with professional definitions and strategic context for every key concept in performance measurement.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Key Vocabulary &mdash; 21 Terms</div><div class="card-title-bar"></div>
+      <div class="wb-grid"><div class="wb-card"><div class="wb-emoji">📊</div><div class="wb-term">Vanity metric</div><div class="wb-pos">noun phrase</div><div class="wb-def">A metric that appears impressive but does not meaningfully connect to business objectives or drive strategic decisions; examples include raw follower count and total page views without context.</div></div><div class="wb-card"><div class="wb-emoji">🎯</div><div class="wb-term">Actionable metric</div><div class="wb-pos">noun phrase</div><div class="wb-def">A metric that directly informs a decision or action, clearly linked to a business outcome such as revenue, customer acquisition, or retention.</div></div><div class="wb-card"><div class="wb-emoji">💰</div><div class="wb-term">Return on investment (ROI)</div><div class="wb-pos">noun phrase</div><div class="wb-def">A measure of the financial return generated by a marketing investment, calculated as (revenue minus cost) divided by cost, expressed as a percentage.</div></div><div class="wb-card"><div class="wb-emoji">📈</div><div class="wb-term">Conversion rate</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of users who complete a desired action out of the total number who had the opportunity to do so; one of the most fundamental performance metrics in digital marketing.</div></div><div class="wb-card"><div class="wb-emoji">👥</div><div class="wb-term">Customer lifetime value (CLV)</div><div class="wb-pos">noun phrase</div><div class="wb-def">The total net revenue a business can expect from a single customer over the entire duration of their relationship, used to assess the long-term value of marketing investments.</div></div><div class="wb-card"><div class="wb-emoji">🔄</div><div class="wb-term">Churn rate</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of customers who stop doing business with a brand within a given period, used as a key indicator of customer retention performance.</div></div><div class="wb-card"><div class="wb-emoji">⭐</div><div class="wb-term">Net Promoter Score (NPS)</div><div class="wb-pos">noun phrase</div><div class="wb-def">A customer loyalty metric measuring the likelihood of customers recommending a brand to others, calculated from responses to a single standardised question.</div></div><div class="wb-card"><div class="wb-emoji">🔍</div><div class="wb-term">Click-through rate (CTR)</div><div class="wb-pos">noun phrase</div><div class="wb-def">The ratio of users who click on a specific link, ad, or call to action to the total number who viewed it, used to measure the relevance and appeal of marketing content.</div></div><div class="wb-card"><div class="wb-emoji">🧮</div><div class="wb-term">Cost per acquisition (CPA)</div><div class="wb-pos">noun phrase</div><div class="wb-def">The average total marketing spend required to acquire one new customer, calculated by dividing total campaign cost by the number of new customers generated.</div></div><div class="wb-card"><div class="wb-emoji">📉</div><div class="wb-term">Bounce rate</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of website sessions in which the user left after viewing only one page, used as an indicator of content relevance and landing page quality.</div></div><div class="wb-card"><div class="wb-emoji">🌐</div><div class="wb-term">Share of search</div><div class="wb-pos">noun phrase</div><div class="wb-def">The proportion of total search volume in a category captured by a brand, used as a leading indicator of brand health and market share trends.</div></div><div class="wb-card"><div class="wb-emoji">🔗</div><div class="wb-term">Attribution</div><div class="wb-pos">noun phrase</div><div class="wb-def">The analytical process of assigning credit for a conversion or sale to the marketing touchpoints that contributed to it, used to evaluate channel effectiveness.</div></div><div class="wb-card"><div class="wb-emoji">📅</div><div class="wb-term">Cohort analysis</div><div class="wb-pos">noun phrase</div><div class="wb-def">An analytical technique that groups customers by a shared characteristic or time period and tracks their behaviour over time, used to measure retention and lifetime value.</div></div><div class="wb-card"><div class="wb-emoji">📡</div><div class="wb-term">North star metric</div><div class="wb-pos">noun phrase</div><div class="wb-def">The single most important metric that captures the core value a product or service delivers to customers, used to align a team's strategic priorities.</div></div><div class="wb-card"><div class="wb-emoji">📋</div><div class="wb-term">Marketing dashboard</div><div class="wb-pos">noun phrase</div><div class="wb-def">A visual display consolidating key performance indicators from multiple data sources into a single view, enabling rapid monitoring of campaign and business performance.</div></div><div class="wb-card"><div class="wb-emoji">⚖️</div><div class="wb-term">Benchmark</div><div class="wb-pos">noun phrase</div><div class="wb-def">A standard or reference point against which marketing performance is measured, derived from industry averages, historical data, or competitor performance.</div></div><div class="wb-card"><div class="wb-emoji">🔁</div><div class="wb-term">Retention rate</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of customers who continue to use a product or service over a given period, the inverse of churn rate and a key measure of long-term marketing effectiveness.</div></div><div class="wb-card"><div class="wb-emoji">💡</div><div class="wb-term">Leading indicator</div><div class="wb-pos">noun phrase</div><div class="wb-def">A metric that predicts future performance, enabling marketers to take proactive action; for example, search volume growth often precedes market share growth.</div></div><div class="wb-card"><div class="wb-emoji">📌</div><div class="wb-term">Lagging indicator</div><div class="wb-pos">noun phrase</div><div class="wb-def">A metric that reflects past performance and confirms trends that have already occurred; sales revenue is a classic lagging indicator in marketing.</div></div><div class="wb-card"><div class="wb-emoji">🧪</div><div class="wb-term">Statistical significance</div><div class="wb-pos">noun phrase</div><div class="wb-def">A measure of the likelihood that an observed difference in test results is genuine and not due to random chance, essential for validating A/B test conclusions.</div></div><div class="wb-card"><div class="wb-emoji">🎚️</div><div class="wb-term">Engagement rate</div><div class="wb-pos">noun phrase</div><div class="wb-def">The ratio of interactions (likes, comments, shares, saves) to reach or followers on social media, used to assess how actively an audience responds to content.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="reading" class="section">
+  <div class="hero">
+    <div class="section-tag">📄 Reading Activities</div>
+    <div class="hero-title">Reading <span>Texts</span></div>
+    <p class="hero-desc">Two professional texts on marketing metrics interpretation and data-driven decision-making. Read carefully, then answer the comprehension questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Text 1: From Data to Insight &mdash; Interpreting Marketing Performance</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; The Difference Between Data and Insight</h3>
+        <p>The marketing profession now has access to more data than at any point in its history. Web analytics platforms track every click and session; social media dashboards report reach, engagement, and sentiment in real time; CRM systems log every customer interaction; and programmatic advertising platforms generate auction-level data on millions of impressions per day. Yet despite this data abundance, many marketing teams remain unable to answer the most basic strategic question: is our marketing working?</p>
+        <p>The reason is that data and insight are not the same thing. Data is a recorded fact &mdash; "our website received 45,000 visits last month." Insight is the understanding of what that fact means in context &mdash; "our organic traffic grew 34% month-on-month because our new content programme is generating rankings for previously unaddressed search queries, and these visitors convert at 2.4x the rate of paid traffic." Insight connects data to cause, context, and consequence. Generating insight requires not just analytical tools but analytical thinking: the ability to ask the right questions, identify the relevant patterns, and communicate conclusions clearly to people who may not share your data literacy.</p>
+        <h3>Paragraph 2 &mdash; Vanity Metrics vs Actionable Metrics</h3>
+        <p>One of the most important distinctions in marketing measurement is between <strong>vanity metrics</strong> &mdash; numbers that look impressive but do not meaningfully inform decisions &mdash; and <strong>actionable metrics</strong> that directly connect to business outcomes. Total follower count is a classic vanity metric: a brand with 500,000 Instagram followers but a 0.3% engagement rate and no measurable sales attribution is not outperforming a brand with 50,000 highly engaged followers in its precise target segment. Page views, impressions, and raw reach all carry the same risk: they can grow substantially while the underlying commercial performance deteriorates.</p>
+        <p>Actionable metrics, by contrast, are those that tell a team something they can act on. Conversion rate tells you whether your landing page is persuading visitors to take the desired action. Cost per acquisition tells you how efficiently you are spending your budget. Customer lifetime value tells you whether the customers you are acquiring are worth what you are spending to acquire them. Retention rate tells you whether your product and service experience is strong enough to keep customers coming back. These metrics are connected directly to revenue and profitability, and movements in them require and enable a specific response from the marketing team.</p>
+        <h3>Paragraph 3 &mdash; Leading and Lagging Indicators</h3>
+        <p>A further critical distinction in marketing measurement is between <strong>leading indicators</strong> and <strong>lagging indicators</strong>. A lagging indicator measures something that has already happened: revenue, sales volume, and market share are all lagging indicators. They are valuable because they confirm whether the strategy has worked. But by the time a lagging indicator deteriorates, the opportunity to intervene proactively has often passed.</p>
+        <p>Leading indicators, by contrast, are metrics that predict future performance. <strong>Share of search</strong> &mdash; the proportion of total category search volume captured by a brand &mdash; has been shown to strongly predict future market share movements, often by six to twelve months. Brand awareness scores, NPS, and share of voice are all leading indicators that can alert a marketing team to emerging problems or opportunities before they appear in the revenue figures. Building a measurement framework that balances leading and lagging indicators is one of the hallmarks of a sophisticated marketing organisation.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 1 (10 Questions)</div>
+        <div id="r1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r1')">Check Answers</button>
+        <div id="r1-feedback" class="feedback"></div>
+        <div id="r1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Text 2: Presenting Data to Stakeholders &mdash; Language, Context, and Narrative</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; The Challenge of Communicating Data</h3>
+        <p>The ability to interpret marketing data is only half the skill; the other half is communicating what the data means to people who may not share your analytical background. In most organisations, marketing data must be presented to finance directors who think in terms of ROI and payback periods, to CEOs who want a three-sentence summary rather than a twelve-slide deck, and to creative teams who need to understand performance in a way that informs their next creative decision. Each of these audiences requires a different level of detail, a different vocabulary, and a different emphasis.</p>
+        <p>The most common failure in data presentations is the assumption that the audience will connect the dots themselves. A slide showing a chart of conversion rate movements over twelve months means nothing without the context of what changed during that period, a comparison to the benchmark or target, and a clear statement of what the team plans to do in response. Data without narrative is just noise. The marketer's job is to build the narrative: to explain not just what happened, but why it happened, what it means, and what should happen next.</p>
+        <h3>Paragraph 2 &mdash; Correlation, Causation, and Data Interpretation</h3>
+        <p>Two of the most commonly misused concepts in marketing data communication are correlation and causation. <strong>Correlation</strong> describes a statistical relationship between two variables that move together: when one increases, the other tends to increase or decrease. <strong>Causation</strong> means that one variable directly causes the change in another. The two are frequently confused, and this confusion can lead to significant strategic errors.</p>
+        <p>A brand's social media following and its revenue might grow simultaneously &mdash; but this correlation does not establish that the social following caused the revenue growth. Both may be driven by a third variable: a new product launch, a PR campaign, or broader market growth. When presenting data, it is essential to distinguish carefully between what the data shows and what it implies. Professional data communication uses hedging language precisely for this purpose: "the data suggests that," "this may indicate that," "one possible explanation is," rather than claiming certainty where none exists. Overstating causal relationships in presentations not only misleads stakeholders but can result in budget being misallocated to channels that are correlated with success but not genuinely causing it.</p>
+        <h3>Paragraph 3 &mdash; Building a Meaningful Measurement Framework</h3>
+        <p>A measurement framework is a structured approach to deciding which metrics will be tracked, at what frequency, by whom, and against which targets or benchmarks. Without a framework, marketing teams risk measuring everything and understanding nothing, or measuring the wrong things entirely. A well-designed framework is built around the organisation's strategic objectives and includes a balance of leading and lagging indicators, channel-specific and overall KPIs, and short-term campaign metrics alongside longer-term brand health measures.</p>
+        <p>The concept of the <strong>north star metric</strong> is useful here. A north star metric is the single most important indicator of whether a business is delivering value to its customers. For a streaming platform it might be total viewing hours. For an e-commerce brand it might be repeat purchase rate. For a SaaS business it might be weekly active users. Aligning the entire marketing team around a single north star metric does not mean ignoring all other metrics &mdash; it means ensuring that every campaign decision and every metric conversation ultimately connects back to the question of whether the north star is moving in the right direction.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 2 (10 Questions)</div>
+        <div id="r2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r2')">Check Answers</button>
+        <div id="r2-feedback" class="feedback"></div>
+        <div id="r2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="vocabulary" class="section">
+  <div class="hero">
+    <div class="section-tag">✏️ Vocabulary Exercises</div>
+    <div class="hero-title">Vocabulary <span>Practice</span></div>
+    <p class="hero-desc">Three vocabulary exercises to consolidate your command of marketing metrics and data interpretation English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Multiple Choice</div></div>
+      <div class="ex-title">Choosing the Right Term</div>
+      <p class="ex-instruction">Select the best word or phrase to complete each sentence in a professional marketing metrics context.</p>
+      <div id="v1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('v1')">Check Answers</button>
+      <div id="v1-feedback" class="feedback"></div>
+      <div id="v1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Gap-Fill</div></div>
+      <div class="ex-title">Complete the Sentences</div>
+      <p class="ex-instruction">Type the correct word from the box to complete each sentence. Check your spelling carefully.</p>
+      <div class="word-box">
+        <strong style="color:var(--text-dark);margin-right:6px">Word Box:</strong>
+        <span class="word-chip">benchmark</span><span class="word-chip">cohort</span><span class="word-chip">attribution</span>
+        <span class="word-chip">lagging</span><span class="word-chip">churn</span><span class="word-chip">north</span>
+        <span class="word-chip">retention</span><span class="word-chip">significance</span><span class="word-chip">dashboard</span>
+        <span class="word-chip">correlation</span>
+      </div>
+      <div id="v2-gaps"></div>
+      <button class="check-btn" onclick="checkGaps()">Check Answers</button>
+      <div id="v2-feedback" class="feedback"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">True / False</div></div>
+      <div class="ex-title">True or False?</div>
+      <p class="ex-instruction">Read each statement about marketing metrics. Decide whether it is TRUE or FALSE and click your answer.</p>
+      <div id="v3-tf"></div>
+      <button class="check-btn" onclick="checkTF()">Check Answers</button>
+      <div id="v3-feedback" class="feedback"></div>
+    </div>
+  </div>
+</div>
+
+<div id="grammar" class="section">
+  <div class="hero">
+    <div class="section-tag">📘 Grammar Exercises</div>
+    <div class="hero-title">Grammar <span>Practice</span></div>
+    <p class="hero-desc">Three grammar exercises covering noun clauses for reporting data, hedging and qualifying language, and language of correlation and causation in marketing analysis.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Noun Clauses</div></div>
+      <div class="ex-title">Noun Clauses for Reporting Data Findings</div>
+      <p class="ex-instruction">Choose the correct noun clause structure to report each marketing data finding professionally and accurately.</p>
+      <div id="g1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g1')">Check Answers</button>
+      <div id="g1-feedback" class="feedback"></div>
+      <div id="g1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Hedging Language</div></div>
+      <div class="ex-title">Hedging &amp; Qualifying Data Conclusions</div>
+      <p class="ex-instruction">Select the most appropriate hedging or qualifying expression for each data interpretation sentence.</p>
+      <div id="g2-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g2')">Check Answers</button>
+      <div id="g2-feedback" class="feedback"></div>
+      <div id="g2-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">Correlation &amp; Causation</div></div>
+      <div class="ex-title">Language of Correlation and Causation</div>
+      <p class="ex-instruction">Choose the correct expression of correlation or causation for each marketing analysis sentence. Be precise about the relationship being described.</p>
+      <div id="g3-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g3')">Check Answers</button>
+      <div id="g3-feedback" class="feedback"></div>
+      <div id="g3-score" class="score-display"></div>
+    </div>
+  </div>
+</div>
+
+<div id="grammar-review" class="section">
+  <div class="hero">
+    <div class="section-tag">🔍 Grammar Reference</div>
+    <div class="hero-title">Grammar <span>Review</span></div>
+    <p class="hero-desc">Three detailed reference boxes covering noun clauses for data reporting, hedging and qualifying language, and the language of correlation and causation in marketing analysis.</p>
+  </div>
+  <div class="content-area">
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 1</div>
+      <div class="gr-box-title">Noun Clauses for Reporting Data</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">What are noun clauses and why are they essential in data reporting?</div>
+        <div class="gr-rule-text">Noun clauses function as the subject or object of a sentence. In marketing data reports and presentations, they allow you to embed findings, conclusions, and recommendations into complex, professional sentences. They follow reporting verbs and expressions that are standard in data communication.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Structure</th><th>Use</th><th>Marketing Data Example</th></tr>
+        <tr><td>The data shows that + clause</td><td>Presenting a finding</td><td>The data shows that email has the highest conversion rate of all channels.</td></tr>
+        <tr><td>The analysis reveals that + clause</td><td>Introducing a key insight</td><td>The analysis reveals that mobile users convert at a lower rate than desktop users.</td></tr>
+        <tr><td>It is clear that + clause</td><td>Stating an obvious conclusion</td><td>It is clear that the campaign outperformed the Q2 benchmark on all key metrics.</td></tr>
+        <tr><td>What the data suggests is that + clause</td><td>Emphasising a finding</td><td>What the data suggests is that the awareness campaign is working as a top-of-funnel driver.</td></tr>
+        <tr><td>The fact that + clause + verb</td><td>Using a finding as evidence</td><td>The fact that retention fell in Q3 suggests a product experience issue.</td></tr>
+        <tr><td>Verb + wh- clause</td><td>Expressing what is unknown</td><td>We do not yet know why the bounce rate increased so significantly in week three.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Common reporting verbs used with noun clauses in data contexts</div>
+        <div class="gr-example">The data reveals / shows / indicates / demonstrates / confirms / suggests / implies that...</div>
+        <div class="gr-example">The analysis found / identified / highlighted / established / uncovered that...</div>
+        <div class="gr-example">It is worth noting / it should be highlighted / it is important to recognise that...</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 2</div>
+      <div class="gr-box-title">Hedging &amp; Qualifying Language in Data Communication</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why hedging is essential when interpreting marketing data</div>
+        <div class="gr-rule-text">Marketing data rarely provides absolute certainty. Sample sizes may be insufficient, external factors may have influenced results, and correlation does not equal causation. Professional marketers use hedging language to communicate findings honestly &mdash; accurately representing the confidence level of their conclusions and avoiding misleading stakeholders with overclaims.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Hedging Device</th><th>Strength</th><th>Marketing Data Example</th></tr>
+        <tr><td>The data suggests / indicates</td><td>Moderate</td><td>The data suggests that influencer content drives higher engagement than paid ads.</td></tr>
+        <tr><td>This may / might / could indicate</td><td>Weak/moderate</td><td>This might indicate that the audience is experiencing creative fatigue.</td></tr>
+        <tr><td>It appears / seems that</td><td>Moderate</td><td>It appears that the new landing page is underperforming relative to the previous version.</td></tr>
+        <tr><td>One possible explanation is</td><td>Speculative</td><td>One possible explanation is that the seasonal uplift inflated the conversion figures.</td></tr>
+        <tr><td>The evidence is consistent with</td><td>Moderate</td><td>The evidence is consistent with an improvement in brand awareness.</td></tr>
+        <tr><td>It is difficult to conclude definitively</td><td>Strong qualifier</td><td>It is difficult to conclude definitively without a longer test period.</td></tr>
+        <tr><td>Broadly / generally / largely</td><td>Approximate</td><td>The campaign broadly met its objectives across all measured channels.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Hedging vs overclaiming in data presentations</div>
+        <div class="gr-example">❌ Overclaiming: "The new campaign caused a 20% increase in sales."<br>✅ Hedged: "The data suggests a correlation between the campaign launch and a 20% uplift in sales, though other factors may also have contributed."</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 3</div>
+      <div class="gr-box-title">Language of Correlation &amp; Causation</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">The critical distinction</div>
+        <div class="gr-rule-text">Confusing correlation with causation is one of the most common and costly errors in marketing analysis. Using precise language to distinguish between the two protects the integrity of your analysis and prevents misallocation of budget based on false assumptions.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Relationship</th><th>Language to Use</th><th>Example</th></tr>
+        <tr><td>Correlation</td><td>is associated with, correlates with, tends to coincide with, moves in line with</td><td>Higher NPS scores are associated with higher retention rates.</td></tr>
+        <tr><td>Causation (certain)</td><td>causes, drives, leads to, results in, produces</td><td>A 10% price reduction led to a 22% increase in conversion rate in the A/B test.</td></tr>
+        <tr><td>Causation (probable)</td><td>appears to drive, is likely to cause, seems to contribute to</td><td>The new email sequence appears to drive higher repeat purchase rates.</td></tr>
+        <tr><td>Possible third variable</td><td>both may be driven by, may reflect, could be explained by</td><td>Both metrics improved, which may reflect the broader seasonal uplift rather than the campaign.</td></tr>
+        <tr><td>No causal claim</td><td>we cannot conclude, does not establish causation, does not prove</td><td>The correlation does not establish that social activity caused the sales increase.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Applying this in data presentations</div>
+        <div class="gr-example">We observed a strong positive correlation between email frequency and unsubscribe rate. This does not necessarily mean that sending fewer emails will reduce churn; other factors such as content relevance and audience fatigue may also be contributing. Further testing is required before we can make a causal claim.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="writing" class="section">
+  <div class="hero">
+    <div class="section-tag">✍️ Writing Activities</div>
+    <div class="hero-title">Writing <span>Tasks</span></div>
+    <p class="hero-desc">Two professional writing tasks &mdash; practise producing data-driven marketing analyses and recommendations memos in clear, accurate English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Writing Activity 1 &mdash; Marketing Performance Analysis</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a marketing performance analysis (180&ndash;220 words) for a fictional e-commerce homeware brand called <em>Nester</em>. Use the following Q3 data: Total sessions: 320,000 (target: 280,000). Conversion rate: 1.8% (target: 2.5%). Average order value: &pound;87 (target: &pound;75). Email CTR: 4.2% (target: 3.5%). Social engagement rate: 2.1% (target: 3.0%). Your analysis must: interpret each metric against its target using appropriate language, identify one key concern and one area of strength, use at least one noun clause reporting structure, and use hedging language when drawing conclusions.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Accurate metric interpretation &middot; Noun clause reporting &middot; Hedging language &middot; Balanced analysis (strength and concern) &middot; Professional register
+      </div>
+      <textarea class="writing-textarea" id="w1-text" placeholder="Q3 PERFORMANCE ANALYSIS&#10;Brand: Nester Homeware&#10;&#10;Overview:&#10;...&#10;&#10;Key Strength:&#10;...&#10;&#10;Key Concern:&#10;...&#10;&#10;Conclusions:&#10;..." oninput="updateWordCount('w1',220)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w1-wc">0 / 220 words</span>
+        <button class="submit-btn" onclick="submitWriting('w1')">Submit ✓</button>
+      </div>
+      <div id="w1-success" class="submit-success">✅ Analysis submitted! Excellent work applying metric interpretation and data communication skills in professional English.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Writing Activity 2 &mdash; Data-Driven Recommendations Memo</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a recommendations memo (190&ndash;230 words) to the Head of Marketing at a fictional SaaS brand called <em>Clarivo</em>. The north star metric is weekly active users (WAU), which has declined 12% over the past six weeks despite stable acquisition numbers. Churn rate has increased from 4.2% to 6.8%. NPS has fallen from +38 to +21. Propose three specific, data-driven recommendations. Use noun clause structures, hedging language, and language of correlation and causation where appropriate.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> North star metric framing &middot; Noun clauses &middot; Hedging and qualifying &middot; Correlation vs causation language &middot; Three clear actionable recommendations &middot; Professional memo register
+      </div>
+      <textarea class="writing-textarea" id="w2-text" placeholder="MEMO&#10;TO: Head of Marketing, Clarivo&#10;FROM: Marketing Analyst&#10;RE: WAU Decline &mdash; Data Analysis and Recommendations&#10;&#10;Summary:&#10;...&#10;&#10;Analysis:&#10;...&#10;&#10;Recommendations:&#10;1. ...&#10;2. ...&#10;3. ..." oninput="updateWordCount('w2',230)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w2-wc">0 / 230 words</span>
+        <button class="submit-btn" onclick="submitWriting('w2')">Submit ✓</button>
+      </div>
+      <div id="w2-success" class="submit-success">✅ Memo submitted! Great work applying data interpretation language and professional recommendations writing.</div>
+    </div>
+  </div>
+</div>
+
+<div id="listening" class="section">
+  <div class="hero">
+    <div class="section-tag">🎧 Listening Activities</div>
+    <div class="hero-title">Listening <span>Activities</span></div>
+    <p class="hero-desc">4 audio activities with built-in speech players &mdash; press &#9654; Play, listen, then answer the questions.</p>
+  </div>
+  <div class="content-area"><div id="listening-cards"></div></div>
+</div>
+
+<div id="casestudies" class="section">
+  <div class="hero">
+    <div class="section-tag">📊 Case Studies</div>
+    <div class="hero-title">Case <span>Studies</span></div>
+    <p class="hero-desc">Two real-world inspired case studies showing how metric interpretation drives strategic change. Read carefully and answer the analysis questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="case-header">
+      <h3>Case Study 1: Evergreen Nutrition &mdash; How Switching from Vanity to Actionable Metrics Saved a Campaign</h3>
+      <p>Metrics Strategy &middot; Conversion Optimisation &middot; Data-Driven Reallocation</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Evergreen Nutrition is a UK direct-to-consumer supplement brand founded in 2019. By 2022, the marketing team of six was running a substantial digital programme across paid search, paid social, influencer partnerships, and email. Monthly marketing spend was &pound;42,000. The team presented performance to the CEO every quarter using a dashboard that prominently featured total impressions (typically 8&ndash;12 million per month), total followers across all social platforms (340,000), and total email list size (94,000). These numbers looked impressive. They told almost nothing about whether the marketing investment was generating a commercial return.</p>
+        <p>The crisis point came when the CEO requested a simple calculation: total marketing spend divided by total new customers acquired in Q2. The answer was &pound;94 cost per acquisition against a customer average order value of &pound;48 and an estimated first-year customer lifetime value of &pound;112. The business was spending &pound;94 to acquire a customer worth &pound;112 over their first year, leaving a margin that was completely absorbed by fulfilment, returns, and customer service costs. The marketing programme was, in effect, generating activity but not profit.</p>
+      </div>
+      <div class="case-section-label">The Measurement Transformation</div>
+      <div class="case-text">
+        <p>The new marketing director replaced the dashboard entirely. The new framework tracked five metrics: cost per acquisition by channel, conversion rate by channel, average order value, 90-day repeat purchase rate (a leading indicator of CLV), and email revenue per subscriber. Follower counts and impressions disappeared from the board reporting entirely.</p>
+        <p>The new data immediately revealed a pattern that the old dashboard had hidden. Paid social was generating 67% of total impressions but only 12% of total purchases, with a CPA of &pound;138. Email, which the team had under-invested in because it generated fewer impressions, was responsible for 38% of total purchases with a CPA of &pound;18. The influencer programme showed the highest 90-day repeat purchase rate of any channel at 34%, suggesting that influencer-acquired customers had significantly higher lifetime value than the blended average.</p>
+        <p>Over the following two quarters, the team reallocated &pound;18,000 per month from paid social to email programme development and expanded the influencer programme. Blended CPA fell from &pound;94 to &pound;51. The 90-day repeat purchase rate across all channels improved from 18% to 27%. For the first time, the marketing programme was demonstrably generating profit rather than merely generating activity. The lesson the team drew: the metrics you measure determine the decisions you make. Measure the wrong things and you will optimise for the wrong outcomes.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 1 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs1')">Check Answers</button>
+        <div id="cs1-feedback" class="feedback"></div>
+        <div id="cs1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="case-header">
+      <h3>Case Study 2: Thornfield Bank &mdash; Using Leading Indicators to Prevent a Customer Retention Crisis</h3>
+      <p>Leading Indicators &middot; NPS &middot; Churn Prevention</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Thornfield Bank is a UK challenger bank that launched in 2017 and grew rapidly to 420,000 current account customers by 2022. The bank's marketing team focused primarily on acquisition metrics: cost per account opened, conversion rate from application to approval, and the volume of new accounts opened each month. These metrics were consistently strong. What the team was not measuring, however, was what was happening to customers after they opened their accounts.</p>
+        <p>In early 2023, the Head of Data commissioned a retrospective analysis of customer behaviour over the previous 24 months. The findings were alarming. The bank had a six-month account closure rate of 31% &mdash; meaning nearly one in three customers who opened an account closed it within six months. The data also revealed that customers who had been with the bank for more than twelve months had a dramatically higher NPS (+42) than those who were in their first six months (+8). This gap between new-customer and established-customer NPS had been invisible because the bank had been reporting a blended average NPS of +24 to the board &mdash; a figure that appeared healthy but concealed a serious early-life attrition problem.</p>
+      </div>
+      <div class="case-section-label">Intervention &amp; Results</div>
+      <div class="case-text">
+        <p>The analysis identified several leading indicators of early account closure: customers who did not set up a direct debit within 14 days of opening were five times more likely to close their account within six months; customers who had not logged into the app within seven days of account opening had a 40% closure rate, compared to 8% for those who logged in within 24 hours; and customers who received no personalised communication in the first month were significantly more likely to leave.</p>
+        <p>The marketing and product teams designed a <strong>first-60-days programme</strong>: a structured sequence of personalised in-app messages, email communications, and proactive support touchpoints triggered by specific behavioural signals. Customers showing early warning signs (no direct debit, no app login) were automatically enrolled in an intervention sequence. Within twelve months, the six-month closure rate fell from 31% to 14%. The blended NPS improved from +24 to +36. Importantly, the team began reporting segmented NPS (by customer tenure) rather than the blended average, giving the board a far more accurate picture of customer experience quality. The cost of the retention programme was &pound;380,000. The estimated revenue saved through reduced churn was &pound;4.2 million in the first year.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 2 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs2')">Check Answers</button>
+        <div id="cs2-feedback" class="feedback"></div>
+        <div id="cs2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="assessment" class="section">
+  <div class="hero">
+    <div class="section-tag">🎯 Final Assessment</div>
+    <div class="hero-title">Final <span>Assessment</span></div>
+    <p class="hero-desc">20 multiple choice questions covering all module sections. Score 70% or above to pass. You have two attempts.</p>
+  </div>
+  <div class="content-area">
+    <div class="assessment-header">
+      <h2>Module 10 &mdash; Final Assessment</h2>
+      <p>Interpreting Marketing Metrics</p>
+      <div class="assessment-meta">
+        <div class="assessment-meta-item"><div class="assessment-meta-num">20</div><div class="assessment-meta-label">Questions</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">70%</div><div class="assessment-meta-label">Pass Mark</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">2</div><div class="assessment-meta-label">Attempts</div></div>
+      </div>
+      <div class="attempt-badge" id="attempt-badge">Attempt 1 of 2</div>
+    </div>
+    <div id="assessment-result" class="assessment-result">
+      <div class="result-score" id="result-score-text"></div>
+      <div class="result-msg" id="result-msg"></div>
+      <div id="retake-wrap"></div>
+    </div>
+    <div class="card" id="assessment-form">
+      <div class="mcq-title">📝 Assessment Questions</div>
+      <div id="fa-mcqs"></div>
+      <button class="check-btn" onclick="submitAssessment()" style="margin-top:8px;padding:12px 32px;font-size:14px">Submit Assessment</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const DATA={
+r1:{questions:[
+  {q:"What distinction does Text 1 draw between data and insight?",opts:["Data is collected by machines; insight is collected by humans","Data is a recorded fact; insight connects that fact to cause, context, and consequence","Data is quantitative; insight is always qualitative","Data is historical; insight always refers to future predictions"],ans:1},
+  {q:"What does Text 1 say generating insight requires, beyond analytical tools?",opts:["A large team of data scientists and statisticians","Access to real-time data from all marketing channels simultaneously","Analytical thinking: asking the right questions, identifying patterns, and communicating conclusions clearly","A minimum of two years of historical data to identify statistically reliable trends"],ans:2},
+  {q:"Which metric does Text 1 use as an example of a classic vanity metric?",opts:["Conversion rate","Cost per acquisition","Total follower count","Customer lifetime value"],ans:2},
+  {q:"What does Text 1 say about a brand with 500,000 Instagram followers and a 0.3% engagement rate?",opts:["It is likely outperforming most competitors in the category","It is not necessarily outperforming a brand with 50,000 highly engaged targeted followers","It has the strongest social media presence of any brand in the example","It should immediately invest in growing its follower count further"],ans:1},
+  {q:"Which of the following is described as an actionable metric in Text 1?",opts:["Total page views","Raw reach across all social platforms","Total impressions from a display campaign","Customer lifetime value"],ans:3},
+  {q:"What does Text 1 say retention rate tells a marketing team?",opts:["How efficiently the team is spending its paid media budget","Whether the product and service experience is strong enough to keep customers coming back","How many new customers were acquired in a given period","The average revenue generated per marketing campaign"],ans:1},
+  {q:"What is the difference between a leading and a lagging indicator, according to Text 1?",opts:["Leading indicators are more expensive to measure; lagging indicators are free","Lagging indicators measure past performance; leading indicators predict future performance","Leading indicators are used only by large enterprises; lagging indicators suit smaller brands","Lagging indicators are always financial; leading indicators are always brand-related"],ans:1},
+  {q:"What does Text 1 say about share of search as a leading indicator?",opts:["It measures the percentage of paid search clicks captured by a brand","It has been shown to predict future market share movements, often by six to twelve months","It is a real-time measure of brand awareness among the target audience","It is only relevant for brands spending over GBP1 million on search advertising"],ans:1},
+  {q:"What does Text 1 describe as a hallmark of a sophisticated marketing organisation?",opts:["Measuring as many metrics as possible to ensure comprehensive coverage","Focusing exclusively on financial metrics that connect directly to revenue","Building a measurement framework that balances leading and lagging indicators","Replacing all lagging indicators with leading indicators for a more proactive approach"],ans:2},
+  {q:"What does Text 1 say about brand awareness scores and NPS in relation to revenue?",opts:["They are lagging indicators that confirm what the revenue figures already show","They are leading indicators that can alert teams to problems before they appear in revenue figures","They are vanity metrics that rarely predict future financial performance","They are the only reliable metrics for measuring long-term brand health"],ans:1}
+]},
+r2:{questions:[
+  {q:"What does Text 2 say is the most common failure in data presentations?",opts:["Using too many slides and overwhelming the audience with detail","Assuming the audience will connect the dots between the data and its implications themselves","Presenting only positive results and omitting underperforming metrics","Failing to include a comparison against competitors in the same category"],ans:1},
+  {q:"What does Text 2 say data without narrative is?",opts:["An opportunity for the audience to draw their own conclusions","Sufficient for a technically literate finance or CEO audience","Just noise","A more objective form of communication than data with interpretation"],ans:2},
+  {q:"What is correlation, according to Text 2?",opts:["A proven relationship where one variable directly causes the change in another","A statistical relationship between two variables that move together","A measurement of the statistical significance of a marketing test result","A framework for evaluating campaign performance against benchmarks"],ans:1},
+  {q:"What does Text 2 say about a brand's social following and revenue growing simultaneously?",opts:["This proves that social media investment causes revenue growth","This demonstrates a causal relationship that justifies further social media investment","This correlation does not establish that the social following caused the revenue growth","This is evidence that the brand's marketing strategy is fully integrated and working"],ans:2},
+  {q:"What kind of language does Text 2 say professional data communication uses when expressing uncertainty?",opts:["Direct, confident language that builds stakeholder confidence in the data","Technical statistical language that demonstrates analytical rigour","Hedging language such as 'the data suggests' or 'one possible explanation is'","Simplified language that removes all uncertainty to make conclusions actionable"],ans:2},
+  {q:"What does Text 2 say can happen when causal relationships are overstated in presentations?",opts:["Creative teams develop more innovative and effective campaign responses","Budget is misallocated to channels that are correlated with success but not genuinely causing it","Senior stakeholders are more likely to approve higher marketing budgets","The team builds a stronger reputation for data-driven decision-making"],ans:1},
+  {q:"What is a measurement framework, according to Text 2?",opts:["A visual dashboard displaying the top five KPIs for a marketing campaign","A structured approach to deciding which metrics will be tracked, how often, by whom, and against which targets","A list of all the analytics tools and platforms used by the marketing team","A financial model projecting the expected return on each marketing channel"],ans:1},
+  {q:"What is a north star metric, according to Text 2?",opts:["The single most important metric that captures the core value a product delivers to customers","The financial metric with the highest correlation to marketing investment","The metric with the highest weighting in the quarterly board performance review","The metric selected by the CEO as the primary measure of company health"],ans:0},
+  {q:"For a streaming platform, what does Text 2 say the north star metric might be?",opts:["Total subscribers","Monthly revenue per user","Total viewing hours","Brand awareness score"],ans:2},
+  {q:"What does Text 2 say aligning around a north star metric ensures?",opts:["Every campaign decision ultimately connects back to whether the north star is moving in the right direction","The team ignores all other metrics and focuses only on the north star","Senior stakeholders stop requesting data on other metrics","The team can justify any marketing investment by referencing the north star"],ans:0}
+]},
+v1:{questions:[
+  {q:"The team realised that total impressions and follower count were _______ metrics that told them nothing about whether the campaign was generating revenue.",opts:["actionable","leading","vanity","lagging"],ans:2},
+  {q:"The _______ rate climbed from 4.2% to 7.8% over the quarter, indicating that significantly more customers were leaving than in the same period last year.",opts:["conversion","click-through","churn","engagement"],ans:2},
+  {q:"The analyst presented a _______ showing five KPIs in real time, updated automatically from the analytics platforms and CRM.",opts:["benchmark","north star metric","cohort analysis","marketing dashboard"],ans:3},
+  {q:"The brand measured its _______ against the industry average and found it was below the benchmark for three of the five channels tracked.",opts:["conversion rate","vanity metric","north star","cohort"],ans:0},
+  {q:"The team decided that WAU (weekly active users) would serve as the _______ metric, aligning every campaign decision around whether this single indicator was growing.",opts:["lagging","vanity","north star","benchmark"],ans:2},
+  {q:"After six months, the team conducted a _______ analysis, tracking the behaviour of customers who had signed up in January separately from those who signed up in February.",opts:["attribution","vanity","cohort","benchmark"],ans:2},
+  {q:"The _______ model assigned 45% of conversion credit to email and 30% to paid search, giving the team a clearer view of which channels were actually driving sales.",opts:["attribution","cohort","benchmark","lagging"],ans:0},
+  {q:"The brand achieved an NPS of +42, significantly above the industry _______ of +28, indicating strong customer loyalty and a high likelihood of recommendation.",opts:["north star","correlation","benchmark","churn"],ans:2},
+  {q:"The _______ indicator to watch was share of search, which had been declining for six months before the drop in market share became visible in the sales data.",opts:["lagging","vanity","leading","cohort"],ans:2},
+  {q:"Revenue was a useful _______ indicator that confirmed the campaign had worked, but by the time it was visible, it was too late to make in-flight adjustments.",opts:["leading","north star","vanity","lagging"],ans:3}
+]},
+v2gaps:[
+  {sent:"The team compared their click-through rate to the industry _______ of 2.4% and found they were performing 0.8 percentage points below it.",ans:"benchmark"},
+  {sent:"A _______ analysis revealed that customers acquired through organic search had a 90-day retention rate twice as high as those acquired through paid social.",ans:"cohort"},
+  {sent:"The challenge of _______ became acute when the team realised that three different platforms were each claiming credit for the same conversion.",ans:"attribution"},
+  {sent:"Revenue is a _______ indicator because it only becomes visible weeks or months after the marketing activity that generated it.",ans:"lagging"},
+  {sent:"The _______ rate had risen from 3% to 8% over six months, meaning the business was losing nearly one in twelve customers per month.",ans:"churn"},
+  {sent:"The team agreed that weekly active users would be the _______ star metric, with every campaign decision evaluated against its impact on this single number.",ans:"north"},
+  {sent:"The email programme achieved the highest _______ rate of any channel at 68%, meaning more than two thirds of email subscribers were still purchasing twelve months after sign-up.",ans:"retention"},
+  {sent:"Before concluding that the new landing page had improved performance, the analyst checked whether the difference in conversion rate had reached statistical _______.",ans:"significance"},
+  {sent:"The marketing _______ was redesigned to show only five KPIs, eliminating the twenty-three metrics that had previously made it impossible to identify priorities quickly.",ans:"dashboard"},
+  {sent:"The analyst noted a strong positive _______ between email open rate and repeat purchase rate, though she cautioned that this did not establish a causal relationship.",ans:"correlation"}
+],
+v3tf:[
+  {stmt:"A vanity metric is a number that appears impressive but does not meaningfully connect to business objectives or drive strategic decisions.",ans:true},
+  {stmt:"A leading indicator measures something that has already happened, such as revenue or market share at the end of a campaign.",ans:false},
+  {stmt:"Customer lifetime value (CLV) measures the total net revenue a business can expect from a single customer over the entire duration of their relationship.",ans:true},
+  {stmt:"Correlation between two variables proves that one variable is directly causing changes in the other.",ans:false},
+  {stmt:"A north star metric is the single most important indicator of whether a business is delivering value to its customers.",ans:true},
+  {stmt:"A cohort analysis groups customers by a shared characteristic or time period and tracks their behaviour over time.",ans:true},
+  {stmt:"Statistical significance tells a marketer that an observed difference in test results is definitely caused by the change being tested.",ans:false},
+  {stmt:"Net Promoter Score (NPS) measures how likely customers are to recommend a brand to others.",ans:true},
+  {stmt:"A marketing dashboard is a visual display consolidating key performance indicators from multiple data sources into a single view.",ans:true},
+  {stmt:"Churn rate and retention rate measure the same thing expressed in the same way.",ans:false}
+],
+g1:{questions:[
+  {q:"The data _______ email has the highest return on investment of all channels tested this quarter.",opts:["say that","shows that","showing","shown"],ans:1},
+  {q:"The analysis _______ the bounce rate increase was concentrated on mobile devices rather than desktop sessions.",opts:["reveal","revealed that","revealing","to reveal"],ans:1},
+  {q:"_______ the conversion rate declined in Q3 suggests that the landing page may need to be redesigned.",opts:["It is the fact","The fact that","Factually that","That"],ans:1},
+  {q:"It is clear _______ the influencer channel generates a higher average order value than paid social.",opts:["which","what","that","how"],ans:2},
+  {q:"We do not yet know _______ the NPS decline occurred so significantly in the second half of the year.",opts:["that","what","which","why"],ans:3},
+  {q:"_______ the data suggests is that brand awareness is functioning as a top-of-funnel driver, not a direct conversion tool.",opts:["That","Which","What","How"],ans:2},
+  {q:"The report _______ the three channels with the lowest CPA all shared one characteristic: they targeted existing customers rather than new prospects.",opts:["finding that","found","founded that","is finding"],ans:1},
+  {q:"It is worth _______ the email list has grown by 40% while email revenue per subscriber has declined, suggesting a quality issue with new subscribers.",opts:["note that","noted","noting that","to note"],ans:2},
+  {q:"The dashboard _______ organic traffic has plateaued since March, while paid traffic continues to grow at 8% per month.",opts:["is showing that","shows","shown","showing"],ans:1},
+  {q:"The team was not sure _______ to prioritise: the decline in NPS or the increase in cost per acquisition.",opts:["that","what","which","whether"],ans:1}
+]},
+g2:{questions:[
+  {q:"The data _______ that influencer content generates higher long-term retention than paid social, though the sample size is limited.",opts:["definitely proves","is certain","suggests","guarantees"],ans:2},
+  {q:"This _______ indicate that the audience is experiencing creative fatigue, which would explain the declining click-through rate.",opts:["absolutely","certainly does","might","proves to"],ans:2},
+  {q:"It _______ that the new email sequence is contributing to higher repeat purchase rates, but further analysis is needed to confirm this.",opts:["is certain","appears","definitely shows","guarantees"],ans:1},
+  {q:"The increase in NPS _______ reflect an improvement in the onboarding experience, though other factors may also be involved.",opts:["definitely does","could","proves to","is certain to"],ans:1},
+  {q:"It is difficult to conclude _______ without a longer test period and a larger sample of converted users.",opts:["definitively","absolutely","certainly","with 100% confidence always"],ans:0},
+  {q:"The evidence is broadly _______ with an improvement in brand perception among the 25 to 35 age group.",opts:["proving","consistent","definitive","certain"],ans:1},
+  {q:"One _______ explanation is that the seasonal uplift in Q4 inflated the conversion figures beyond what the campaign alone achieved.",opts:["definite","certain","possible","guaranteed"],ans:2},
+  {q:"The campaign _______ met its primary objectives, though the secondary KPIs showed more mixed results.",opts:["completely","definitely","broadly","absolutely"],ans:2},
+  {q:"The correlation between email frequency and unsubscribe rate _______ that sending fewer emails will reduce churn; other factors must also be considered.",opts:["does not prove","definitely proves","guarantees","confirms"],ans:0},
+  {q:"The results _______ the hypothesis that premium content drives stronger brand recall than product-focused advertising.",opts:["are consistent with","definitely guarantee","certainly prove","absolutely confirm"],ans:0}
+]},
+g3:{questions:[
+  {q:"Higher NPS scores _______ higher retention rates in our data, though we cannot conclude that NPS directly causes retention.",opts:["cause","result in","are associated with","produce"],ans:2},
+  {q:"The A/B test showed that the new subject line _______ a 23% higher open rate. We are confident this was caused by the change.",opts:["is correlated with","tends to coincide with","led to","moves in line with"],ans:2},
+  {q:"Revenue and social follower count both grew this quarter. Both metrics _______ the broader market recovery rather than the campaign itself.",opts:["caused","resulted in","may reflect","led to"],ans:2},
+  {q:"The correlation between app login frequency and retention _______ a causal relationship between the two variables, but further testing is required.",opts:["proves","establishes","does not establish","demonstrates"],ans:2},
+  {q:"The new pricing structure _______ a 15% increase in average order value, based on the controlled A/B test we ran in Q3.",opts:["is associated with","tends to coincide with","resulted in","correlates with"],ans:2},
+  {q:"Email open rate and repeat purchase rate _______ in our data, but we cannot say with certainty that open rate drives repeat purchase behaviour.",opts:["cause each other","lead to each other","correlate strongly","directly produce"],ans:2},
+  {q:"The decline in brand awareness scores _______ the fall in market share that became visible six months later.",opts:["directly caused","resulted in","preceded and may have contributed to","is unrelated to"],ans:2},
+  {q:"The new onboarding sequence _______ a reduction in early-stage churn, based on the comparison between the control and test groups.",opts:["is correlated with","appears to have driven","tends to coincide with","moves in line with"],ans:1},
+  {q:"We observed that customer satisfaction scores and revenue both declined in Q3. We cannot conclude that one _______ the other without further analysis.",opts:["correlates with","is associated with","caused","tends to move with"],ans:2},
+  {q:"The analysis _______ a strong positive relationship between email engagement and long-term CLV, suggesting that email investment may have a compounding effect over time.",opts:["proved causation between","guaranteed","identified","directly caused"],ans:2}
+]},
+listening:[
+{
+  emoji:"📊",
+  title:"Activity 1: Vanity Metrics vs Actionable Metrics",
+  sub:"Priya Kapoor, Marketing Analytics Lead — Team workshop",
+  level:"B1",type:"Multiple Choice",focus:"Listening for main ideas",
+  transcript:`Good morning everyone. I want to start today by asking you a question. If I told you that our social media following grew by 40,000 people last month, how would you feel? Probably quite positive, right? Now let me ask a different question. What decision would you make differently because of that fact?
+
+That is the test of a good metric. If a number cannot change a decision, it is probably a vanity metric. And the problem with vanity metrics is not just that they are useless on their own. The problem is that they can actively mislead you, by making a team feel good about performance that is actually deteriorating.
+
+Let me give you a concrete example from my own experience. I joined a brand two years ago that was reporting monthly to the board using three headline metrics: total website sessions, total social followers, and total email subscribers. All three numbers were growing every month. The board was delighted. The marketing team was getting praised. And then, six months in, the finance director asked a simple question: where is the revenue? Because the revenue was not growing. In fact, it was declining slightly.
+
+When we dug into the data, we found that website sessions were growing because of a surge in referral traffic from a low-quality content partnership that was sending visitors with no purchase intent at all. Social followers were growing because the team had run a competition that attracted thousands of people who had no interest in the product. And the email list was growing because of a pop-up that offered a discount to anyone who subscribed, but most of those people used the discount once and never opened another email.
+
+Every vanity metric was growing. Every actionable metric, conversion rate, email revenue per subscriber, and repeat purchase rate, was declining. The lesson I took from that is this: always ask what decision this metric enables. If the answer is none, find a different metric.`,
+  questions:[
+    {q:"What does Priya say is the test of a good metric?",opts:["It should show growth every month to indicate campaign health","It should be easy to measure and report on a standard dashboard","If a number cannot change a decision, it is probably a vanity metric","It should be compared to a competitor benchmark to have meaning"],ans:2},
+    {q:"What does Priya say is the problem with vanity metrics beyond simply being useless?",opts:["They are expensive to collect and report on","They require specialist data skills to interpret correctly","They can actively mislead teams by creating a sense of positive performance while the business deteriorates","They are too simple to capture the complexity of marketing performance"],ans:2},
+    {q:"What three metrics was Priya's previous employer reporting to the board?",opts:["Conversion rate, CPA, and email CTR","Total website sessions, total social followers, and total email subscribers","NPS, churn rate, and customer lifetime value","ROAS, impressions, and brand awareness score"],ans:1},
+    {q:"Why were website sessions growing, according to Priya's investigation?",opts:["A strong SEO programme was driving high-quality organic traffic","A referral traffic surge from a low-quality partnership was sending visitors with no purchase intent","A viral social media post had attracted large numbers of new visitors","A paid search campaign had significantly increased branded keyword traffic"],ans:1},
+    {q:"Why was the social following growing?",opts:["Strong organic content was being shared widely by engaged followers","A PR campaign had attracted national media coverage","A competition had attracted thousands of people with no interest in the product","The brand had been featured in several high-profile publications"],ans:2},
+    {q:"What was happening to every actionable metric during the period when vanity metrics were growing?",opts:["They were also growing, confirming the overall health of the marketing programme","They were broadly stable, with no significant movement in either direction","They were declining, revealing that the apparent growth was entirely superficial","They were fluctuating unpredictably due to seasonal factors"],ans:2},
+    {q:"What specific actionable metrics does Priya mention as having declined?",opts:["ROAS, CPA, and share of voice","Brand awareness, NPS, and market share","Conversion rate, email revenue per subscriber, and repeat purchase rate","Sessions, followers, and email list size"],ans:2},
+    {q:"What lesson does Priya say she took from this experience?",opts:["Always invest in a minimum of ten KPIs to get a comprehensive view of performance","Always ask what decision a metric enables; if the answer is none, find a different metric","Always compare metrics against a competitor benchmark before drawing conclusions","Always involve the finance director in metric selection to ensure financial alignment"],ans:1}
+  ]
+},
+{
+  emoji:"🔍",
+  title:"Activity 2: How to Read a Marketing Dashboard",
+  sub:"Marcus Webb, Head of Insight — Agency onboarding session",
+  level:"B1",type:"Multiple Choice",focus:"Listening for specific information",
+  transcript:`Welcome to the team. Today I am going to walk you through how we read and interpret the client dashboards we work with, because I think this is a skill that looks simple but actually requires quite a lot of discipline and practice.
+
+First rule: always start with the objective before you look at the data. Every dashboard should exist in service of a specific business or campaign objective. Before you interpret a single number, remind yourself what the campaign was trying to achieve. If the objective was to drive new customer acquisition, the first metric you care about is cost per acquisition and conversion rate from new visitors. If the objective was to improve brand perception, you care about NPS movements and brand awareness shifts. Starting with the objective prevents you from getting distracted by numbers that look interesting but are not relevant to whether the campaign succeeded or failed.
+
+Second rule: always compare to a reference point. A conversion rate of 2.3% means nothing on its own. Is that good or bad? You need a benchmark to answer that question. The benchmark might be last month's performance, the same period last year, the industry average, or the target that was set in the campaign brief. Ideally, you compare against all of these. A number without context is just a number.
+
+Third rule: look for the story in the data, not just the snapshot. A single data point tells you where you are. A trend tells you where you are going. If conversion rate was 1.8% in January, 2.1% in February, and 2.4% in March, that upward trend is meaningful and worth highlighting. If it was 2.4%, 2.1%, 1.8%, that declining trend is an early warning signal. Always ask: what is the direction of travel, and what does that tell us?
+
+Fourth rule: be honest about what you do not know. Every dashboard has gaps. Data may be missing, tracked incorrectly, or simply not measured. A sophisticated analyst is as important for what they flag as uncertain as for what they report with confidence. Never present incomplete data as if it were complete, and never draw causal conclusions from correlational data. If you see two metrics moving together, note the relationship, but do not claim you know why without further investigation.`,
+  questions:[
+    {q:"What does Marcus say is the first rule when reading a marketing dashboard?",opts:["Always start by identifying which metrics are below target","Always start with the objective before looking at the data","Always compare every metric to the same period last year","Always prioritise financial metrics over brand health metrics"],ans:1},
+    {q:"If the campaign objective was to improve brand perception, which metrics does Marcus say you should focus on first?",opts:["Cost per acquisition and conversion rate from new visitors","Impressions and total reach across all channels","NPS movements and brand awareness shifts","Revenue growth and repeat purchase rate"],ans:2},
+    {q:"What does Marcus say about a conversion rate of 2.3% without a reference point?",opts:["It is a strong result that indicates the campaign is performing well","It means nothing on its own and requires a benchmark to be interpreted","It is below the industry average and should trigger immediate action","It is the correct level for an e-commerce brand at this stage of growth"],ans:1},
+    {q:"Which reference points does Marcus say can be used as benchmarks?",opts:["Only industry averages published by research organisations","Only the targets set in the original campaign brief","Last month, the same period last year, the industry average, and the campaign brief target","Only direct competitor performance data gathered through market research"],ans:2},
+    {q:"What does Marcus say the difference is between a data point and a trend?",opts:["A data point is more reliable; a trend can be affected by seasonal factors","A single data point tells you where you are; a trend tells you where you are going","Data points are used for short-term decisions; trends are used for long-term strategy","Trends require more sophisticated tools to measure than individual data points"],ans:1},
+    {q:"If conversion rate was 2.4%, 2.1%, then 1.8% over three months, how does Marcus describe this?",opts:["A broadly stable performance pattern that requires no immediate action","An upward trend that is worth highlighting to senior stakeholders","A declining trend that is an early warning signal","A seasonal variation that is expected for this time of year"],ans:2},
+    {q:"What does Marcus say about drawing causal conclusions from correlational data?",opts:["It is acceptable if the correlation is strong enough and covers a long enough period","It is encouraged when presenting to senior stakeholders to demonstrate analytical confidence","Never draw causal conclusions from correlational data without further investigation","Causal conclusions are only valid when the data comes from a controlled A/B test"],ans:2},
+    {q:"What does Marcus say a sophisticated analyst is important for?",opts:["Presenting all data with absolute confidence to maintain stakeholder trust","Both what they report with confidence and what they flag as uncertain","Selecting the most impressive metrics to present to senior stakeholders","Translating all metrics into financial terms that the finance team can understand"],ans:1}
+  ]
+},
+{
+  emoji:"📈",
+  title:"Activity 3: Customer Lifetime Value — Why It Changes Everything",
+  sub:"Dr Elena Vasquez, Customer Analytics Director — Industry webinar",
+  level:"B2",type:"Multiple Choice",focus:"Understanding professional explanations",
+  transcript:`Good afternoon. I want to talk today about customer lifetime value, or CLV, because I think it is the single metric that, when understood deeply, changes how a marketing team thinks about almost every decision it makes.
+
+Let me start with a basic definition. Customer lifetime value is the total net revenue that a business can expect to generate from a single customer over the entire duration of their relationship with the brand. It is not just the value of the first purchase. It is the sum of every purchase that customer makes, minus the cost of serving them, over what might be years of engagement.
+
+Why does this matter so much? Because when you understand CLV, cost per acquisition stops being an absolute number and becomes a ratio. A CPA of GBP80 looks expensive in isolation. But if the average customer acquired through that channel has a CLV of GBP600, that GBP80 CPA is actually an extraordinary investment. By contrast, a CPA of GBP20 looks efficient until you discover that those customers have a CLV of GBP40 and return the product 30% of the time.
+
+The most important implication of CLV thinking is that not all customers are equal, and therefore not all acquisition channels are equal. A brand that consistently acquires high-CLV customers from channel A and low-CLV customers from channel B should be allocating significantly more budget to channel A, even if channel A has a higher CPA. This is a counterintuitive insight that many marketing teams never reach because they are optimising for CPA rather than for the ratio of CPA to CLV.
+
+How do you improve CLV? Three main levers. First, increase average order value: design your product range and pricing in a way that encourages customers to spend more per transaction. Second, increase purchase frequency: keep customers engaged and give them reasons to return through loyalty programmes, personalised recommendations, and relevant communications. Third, extend customer tenure: reduce churn by delivering a consistently excellent product and service experience that gives customers no reason to leave.
+
+The marketing team that understands CLV and optimises for it will consistently outperform one that does not, because they are building a customer base rather than a transaction ledger.`,
+  questions:[
+    {q:"How does Dr Vasquez define customer lifetime value?",opts:["The average revenue generated from a customer in their first 90 days with the brand","The total net revenue a business can expect from a single customer over the entire duration of their relationship","The maximum potential revenue a customer could generate if they purchased every product in the range","The total marketing spend required to acquire and retain a single customer over their lifetime"],ans:1},
+    {q:"What does Dr Vasquez say CLV turns cost per acquisition into?",opts:["An absolute number that must be minimised regardless of channel","A ratio that can only be evaluated relative to the CLV of customers acquired","A lagging indicator that confirms past campaign performance","A benchmark that can be compared directly to competitor acquisition costs"],ans:1},
+    {q:"How does Dr Vasquez describe a CPA of GBP80 when the customer CLV is GBP600?",opts:["An expensive acquisition cost that requires immediate reduction","An average result that is typical for the industry","An extraordinary investment that represents strong return on marketing spend","A warning sign that the channel may not be sustainable long-term"],ans:2},
+    {q:"What is the counterintuitive insight that many teams miss, according to Dr Vasquez?",opts:["Channels with the lowest CPA always deliver the best business results","A higher CPA channel that delivers high-CLV customers may deserve more budget than a lower-CPA channel that delivers low-CLV customers","Organic channels always deliver higher CLV than paid channels","Email marketing always produces the highest CLV customers of any channel"],ans:1},
+    {q:"What does Dr Vasquez say teams that optimise for CPA rather than CLV ratio are doing wrong?",opts:["They are allocating too much budget to the most expensive channels","They are achieving lower CPAs than necessary by targeting too narrow an audience","They are treating all acquisition channels as equal when they produce very different customer quality","They are reporting the wrong metrics to senior stakeholders"],ans:2},
+    {q:"What is the first lever Dr Vasquez identifies for improving CLV?",opts:["Increase purchase frequency through loyalty programmes and personalised communication","Extend customer tenure by reducing churn","Increase average order value through product range and pricing design","Improve the onboarding experience to reduce early-stage churn"],ans:2},
+    {q:"What is the second lever for improving CLV?",opts:["Extend customer tenure by delivering an excellent product experience","Increase average order value through product bundling","Increase purchase frequency through loyalty programmes, personalised recommendations, and relevant communications","Reduce acquisition costs by improving the efficiency of paid channels"],ans:2},
+    {q:"What does Dr Vasquez say a marketing team that understands and optimises for CLV will consistently do?",opts:["Spend less on marketing than competitors while achieving the same revenue","Outperform teams that optimise for CPA, because they build a customer base rather than a transaction ledger","Achieve a lower cost per acquisition than teams optimising for CPA alone","Report more impressive metrics to senior stakeholders regardless of underlying performance"],ans:1}
+  ]
+},
+{
+  emoji:"🎚️",
+  title:"Activity 4: Presenting Data to the Board — Language and Structure",
+  sub:"James Okafor, CMO — Executive communication masterclass",
+  level:"B2",type:"Multiple Choice",focus:"Listening for detail and implication",
+  transcript:`Thank you. I have presented marketing data to boards and C-suite executives for twenty years, and I want to share what I have learnt about doing it well, because I see marketing teams get this wrong constantly, and it costs them credibility, budget, and influence.
+
+The first thing to understand is that the board is not your analytics team. They do not want to see twelve slides of data. They want to understand three things: are we on track, do we have any problems, and what do we plan to do? Everything else is detail that can sit in an appendix. Your job in a board presentation is not to demonstrate how much data you have analysed. It is to tell a clear story that enables a decision or builds confidence.
+
+Second: lead with the headline, not the methodology. I cannot count the number of data presentations I have sat through where the first ten minutes were spent explaining how the data was collected, what the sample size was, and which tool was used to analyse it. The board does not care about the methodology. Tell them the headline finding in the first thirty seconds, then provide the evidence.
+
+Third: be honest about underperformance, but frame it constructively. Nothing destroys your credibility faster than being caught presenting data selectively or downplaying problems that the board has independently heard about. If a campaign missed its targets, say so clearly. Then explain why, to the best of your understanding, and tell them what you are going to do about it. Acknowledging a problem and having a plan is a sign of competence. Being caught concealing a problem is a career-ending event.
+
+Fourth: use the right language for the audience. Finance directors think in terms of ROI, payback periods, and margin. CEOs think in terms of strategy, competitive position, and growth trajectory. Creative directors think in terms of brand and audience. When you present data, translate the metrics into the language your audience uses. A conversion rate is not meaningful to a finance director. But saying that our marketing generated GBP4.20 of revenue for every GBP1 invested, compared to a target of GBP3.50, is very meaningful.
+
+And finally: always end with a recommendation, not a summary. A summary leaves the audience passive. A recommendation invites engagement, builds dialogue, and demonstrates that you are not just reporting data but using it to drive strategy. Tell them what you think should happen next. That is why you are in the room.`,
+  questions:[
+    {q:"How long has James been presenting marketing data to boards?",opts:["Ten years","Fifteen years","Twenty years","Twenty-five years"],ans:2},
+    {q:"What does James say the board wants to understand from a data presentation?",opts:["A comprehensive overview of all marketing activities and their individual metrics","Whether they are on track, if there are any problems, and what the team plans to do","A detailed comparison of performance against every competitor in the category","The technical methodology behind the data collection and analysis process"],ans:1},
+    {q:"What does James say is the purpose of a board presentation?",opts:["To demonstrate how much data the team has analysed and how sophisticated the analytics are","To provide a complete and unfiltered view of all campaign data for board scrutiny","To tell a clear story that enables a decision or builds confidence","To justify the marketing budget by showing impressive headline metrics"],ans:2},
+    {q:"What mistake does James say many presenters make in the first ten minutes?",opts:["They present too much data about competitor performance","They skip directly to recommendations without providing sufficient evidence","They spend the opening time explaining methodology, sample sizes, and tools before reaching the headline finding","They use overly technical language that the board finds impossible to understand"],ans:2},
+    {q:"What does James say about presenting underperformance?",opts:["It should be downplayed to maintain board confidence in the marketing team","Only present underperformance if the board has already heard about it from another source","Acknowledge it clearly, explain why it occurred, and present what will be done about it","Present it after all positive results to reduce its perceived significance"],ans:2},
+    {q:"What does James describe as a career-ending event?",opts:["Presenting a campaign that significantly missed all its targets","Failing to hit the north star metric for three consecutive quarters","Being caught concealing a problem that the board later discovers independently","Recommending a strategy that the board ultimately rejects"],ans:2},
+    {q:"How does James say conversion rate should be communicated to a finance director?",opts:["It should be presented exactly as a percentage with no additional context","It should be translated into financial terms, such as GBP4.20 revenue for every GBP1 invested","It should be compared to the industry average conversion rate to show relative performance","It should be omitted from finance-facing presentations and replaced with pure revenue figures"],ans:1},
+    {q:"Why does James say presentations should end with a recommendation rather than a summary?",opts:["Recommendations are quicker to present and save time in long board meetings","Summaries confuse audiences who have already seen the data once","A recommendation invites engagement, builds dialogue, and demonstrates the team is using data to drive strategy","Recommendations are more memorable than summaries and make a stronger impression"],ans:2}
+  ]
+}
+],
+cs1:{questions:[
+  {q:"What was Evergreen Nutrition's monthly marketing spend before the transformation?",opts:["GBP18,000","GBP28,000","GBP42,000","GBP94,000"],ans:2},
+  {q:"What three metrics was the original dashboard reporting to the CEO?",opts:["Conversion rate, CPA, and email CTR","Total impressions, total followers, and total email list size","NPS, churn rate, and retention rate","ROAS, brand awareness, and market share"],ans:1},
+  {q:"What calculation did the CEO request that revealed the problem?",opts:["Total revenue divided by total marketing spend","Total marketing spend divided by total new customers acquired","Total impressions divided by total conversions","Total email sends divided by total purchases made"],ans:1},
+  {q:"What was the cost per acquisition, and how did it compare to average order value?",opts:["CPA of GBP48 against an AOV of GBP94","CPA of GBP94 against an AOV of GBP48","CPA of GBP112 against an AOV of GBP94","CPA of GBP42 against an AOV of GBP112"],ans:1},
+  {q:"What five metrics did the new measurement framework track?",opts:["Impressions, followers, sessions, email list size, and social shares","CPA by channel, conversion rate by channel, AOV, 90-day repeat purchase rate, and email revenue per subscriber","ROAS, CTR, NPS, churn rate, and brand awareness","Traffic by source, bounce rate, session duration, pages per session, and goal completions"],ans:1},
+  {q:"What percentage of total impressions was paid social generating?",opts:["12%","38%","55%","67%"],ans:3},
+  {q:"What percentage of total purchases did paid social generate?",opts:["12%","38%","55%","67%"],ans:0},
+  {q:"What was email CPA compared to paid social CPA?",opts:["Email CPA was GBP138; paid social CPA was GBP18","Email CPA was GBP18; paid social CPA was GBP138","Email CPA was GBP94; paid social CPA was GBP48","Email CPA was GBP48; paid social CPA was GBP94"],ans:1},
+  {q:"What happened to blended CPA after the budget reallocation?",opts:["It rose from GBP51 to GBP94","It fell from GBP94 to GBP51","It remained stable at GBP94","It fell from GBP138 to GBP42"],ans:1},
+  {q:"What central lesson does the Evergreen Nutrition case study illustrate?",opts:["Paid social advertising is always less effective than email marketing for e-commerce brands","Impression volume is the most reliable predictor of long-term commercial performance","The metrics you measure determine the decisions you make; measuring the wrong things leads to optimising for the wrong outcomes","Small brands should always prioritise follower growth before investing in conversion optimisation"],ans:2}
+]},
+cs2:{questions:[
+  {q:"How many current account customers did Thornfield Bank have by 2022?",opts:["120,000","280,000","420,000","600,000"],ans:2},
+  {q:"What metrics was the marketing team primarily focused on before the retrospective analysis?",opts:["NPS, churn rate, and customer retention","Cost per account opened, conversion rate from application to approval, and new accounts per month","Brand awareness, share of voice, and social engagement","Customer lifetime value, repeat usage rate, and product satisfaction scores"],ans:1},
+  {q:"What was the six-month account closure rate revealed by the analysis?",opts:["8%","14%","22%","31%"],ans:3},
+  {q:"What was the NPS gap between new customers (under six months) and established customers (over twelve months)?",opts:["New: +42, Established: +8","New: +8, Established: +42","New: +24, Established: +24","New: +36, Established: +21"],ans:1},
+  {q:"Why was the blended average NPS of +24 misleading?",opts:["It was calculated incorrectly due to a data error in the analytics platform","It concealed a serious early-life attrition problem by averaging very different new and established customer scores","It was below the industry benchmark and should have triggered intervention sooner","It was reported quarterly rather than monthly, making it too slow to detect emerging issues"],ans:1},
+  {q:"Which customer behaviour was most strongly predictive of early account closure?",opts:["Not making a purchase within the first 30 days","Not setting up a direct debit within 14 days, making them five times more likely to close their account","Not contacting customer support within the first week","Not logging into the app within 30 days"],ans:1},
+  {q:"What was the account closure rate for customers who did not log in within seven days?",opts:["8%","14%","40%","65%"],ans:2},
+  {q:"What was the first-60-days programme designed to do?",opts:["Acquire 60 new customers per day through accelerated marketing activity","Deliver structured personalised communications and support triggered by specific behavioural warning signals","Train customer service staff on the first 60 days of a customer relationship","Reduce the time from account application to account opening to 60 hours"],ans:1},
+  {q:"What happened to the six-month closure rate after the intervention programme?",opts:["It rose from 14% to 31%","It fell from 31% to 14%","It remained stable at 31% for the first six months","It fell from 40% to 31%"],ans:1},
+  {q:"What was the estimated revenue saved through reduced churn compared to the cost of the programme?",opts:["GBP380,000 saved versus GBP4.2 million programme cost","GBP4.2 million saved versus GBP380,000 programme cost","GBP1.2 million saved versus GBP380,000 programme cost","GBP2.8 million saved versus GBP1.4 million programme cost"],ans:1}
+]},
+fa:{questions:[
+  {q:"What is a vanity metric?",opts:["A metric that directly connects to business revenue and enables specific decisions","A number that appears impressive but does not meaningfully inform decisions or connect to business outcomes","A metric that measures brand perception rather than commercial performance","A leading indicator that predicts future market share movements"],ans:1},
+  {q:"What is the difference between a leading indicator and a lagging indicator?",opts:["Leading indicators are financial; lagging indicators are brand-related","Lagging indicators measure past performance; leading indicators predict future performance","Leading indicators require more sophisticated tools to measure","Lagging indicators are more accurate because they reflect what has actually happened"],ans:1},
+  {q:"What does correlation describe?",opts:["A relationship where one variable directly and certainly causes change in another","A statistical relationship between variables that move together, without implying causation","A method for calculating the significance of A/B test results","A comparison of two metrics against an industry benchmark"],ans:1},
+  {q:"Which noun clause structure is correct for reporting a data finding?",opts:["The data shows what email conversion is highest.","The data shows that email has the highest conversion rate of all channels.","The data shows how email is the most effective channel.","The data showing that email has the highest conversion rate."],ans:1},
+  {q:"Which sentence uses hedging language correctly when interpreting marketing data?",opts:["The new campaign definitely caused the 20% increase in sales.","The data proves that influencer marketing is more effective than paid social.","The data suggests a correlation between campaign launch and a 20% uplift in sales, though other factors may also have contributed.","The results confirm without doubt that email is the primary driver of revenue growth."],ans:2},
+  {q:"What is a north star metric?",opts:["The financial metric with the highest correlation to marketing investment","The single most important indicator of whether a business is delivering value to its customers","The metric selected by the board as the primary annual performance target","The metric that is easiest to improve through paid advertising investment"],ans:1},
+  {q:"What is a cohort analysis?",opts:["A technique that compares a brand's performance against a defined competitor set","An approach that groups customers by shared characteristics or time period and tracks their behaviour over time","A method for calculating the statistical significance of campaign results","A framework for evaluating the creative quality of marketing assets"],ans:1},
+  {q:"In the Evergreen Nutrition case study, what was the CPA from email compared to paid social?",opts:["Email: GBP138, paid social: GBP18","Email: GBP18, paid social: GBP138","Email: GBP94, paid social: GBP51","Email: GBP51, paid social: GBP94"],ans:1},
+  {q:"Which sentence correctly uses the language of correlation rather than causation?",opts:["Higher NPS scores cause higher retention rates in all cases.","Higher NPS scores result in higher retention rates, as proven by our data.","Higher NPS scores are associated with higher retention rates, though causation has not been established.","Higher NPS scores directly produce higher retention rates over time."],ans:2},
+  {q:"What is customer lifetime value (CLV)?",opts:["The average revenue generated by a customer in their first month with the brand","The total marketing spend required to acquire a customer","The total net revenue a business can expect from a single customer over the entire duration of their relationship","The maximum potential revenue from a customer who purchases the entire product range"],ans:2},
+  {q:"What is statistical significance?",opts:["A measure of how impressive a metric result is relative to the campaign objective","A calculation of the correlation between two marketing variables","A measure of the likelihood that an observed test result is genuine rather than due to random chance","A benchmark showing whether a metric is above or below the industry average"],ans:2},
+  {q:"In the Thornfield Bank case study, what made the blended average NPS of +24 misleading?",opts:["It was calculated using an outdated methodology that overstated the score","It was reported quarterly rather than monthly, concealing rapid deterioration","It averaged very different new-customer and established-customer scores, hiding a serious early-life attrition problem","It excluded data from the bank's highest-value customers, who had been surveyed separately"],ans:2},
+  {q:"Which expression correctly establishes causation rather than correlation?",opts:["Revenue and social followers are associated with each other in our data.","The increase in email frequency correlates with a decline in open rate.","The A/B test showed that the new subject line led to a 23% higher open rate.","NPS and retention tend to move together across our customer base."],ans:2},
+  {q:"What is attribution in marketing analytics?",opts:["The practice of attributing campaign success to the most senior person on the marketing team","The analytical process of assigning credit for a conversion to the touchpoints that contributed to it","A method for calculating the total impressions generated by a campaign","The process of comparing campaign results against the objectives set in the brief"],ans:1},
+  {q:"According to the listening activity with James Okafor, what should a data presentation to the board always end with?",opts:["A complete summary of all metrics presented to ensure nothing is forgotten","A list of the tools and platforms used to generate the data","A recommendation, not a summary, to invite engagement and demonstrate strategic thinking","An apology for any metrics that underperformed relative to their targets"],ans:2},
+  {q:"What is a marketing dashboard?",opts:["A tool used only by data scientists to conduct advanced statistical analysis","A visual display consolidating key performance indicators from multiple data sources into a single view","A financial model projecting future marketing investment requirements","A document used to brief creative agencies on campaign objectives and requirements"],ans:1},
+  {q:"What does Dr Vasquez say about a channel with a higher CPA but higher-CLV customers?",opts:["It should always be reduced in favour of the lower-CPA channel","It should be allocated more budget than a lower-CPA channel delivering lower-CLV customers","It should be maintained only if the CPA is no more than 20% above the lower-CPA channel","It should only be used for awareness objectives, not for acquisition campaigns"],ans:1},
+  {q:"Which sentence correctly uses the fact that clause as a noun clause?",opts:["The fact that retention fell in Q3, which suggests a product experience issue.","The fact retention fell in Q3 suggests a product experience issue.","The fact that retention fell in Q3 suggests a product experience issue.","The fact of that retention fell in Q3 suggests a product experience issue."],ans:2},
+  {q:"What does Priya Kapoor in the listening activities say is the test of a good metric?",opts:["It should show consistent growth every month to indicate positive campaign momentum","It should be comparable to an industry benchmark published by a recognised research body","If a number cannot change a decision, it is probably a vanity metric","It should be reported at board level to ensure senior stakeholder visibility"],ans:2},
+  {q:"What is a benchmark in marketing analytics?",opts:["The highest metric value ever achieved by a marketing campaign","A standard or reference point against which marketing performance is measured, derived from history, industry averages, or competitors","A target set by the finance director based on expected marketing return","A comparison metric calculated by averaging the performance of all channels in the mix"],ans:1}
+]}
+};
+
+function renderMCQ(containerId,questions,prefix,isListening){
+  const c=document.getElementById(containerId);if(!c)return;
+  const wrap=isListening?'<div class="listen-mcq-wrap">':'';
+  const wrapClose=isListening?'</div>':'';
+  c.innerHTML=wrap+questions.map((item,i)=>`
+    <div class="mcq-item" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((o,j)=>`<div class="mcq-option" onclick="selectOpt('${prefix}',${i},${j})" id="${prefix}-q${i}-o${j}"><span class="opt-letter">${['A','B','C','D'][j]}</span>${o}</div>`).join('')}
+      </div>
+    </div>`).join('')+wrapClose;
+}
+function selectOpt(prefix,qi,oi){
+  const item=DATA[prefix].questions[qi];
+  for(let j=0;j<item.opts.length;j++){const el=document.getElementById(`${prefix}-q${qi}-o${j}`);if(el)el.classList.remove('selected');}
+  const el=document.getElementById(`${prefix}-q${qi}-o${oi}`);if(el)el.classList.add('selected');
+}
+function checkMCQ(prefix){
+  const qs=DATA[prefix].questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#${prefix}-q${i} .mcq-option`);
+    let chosen=-1;opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+    if(chosen===item.ans)score++;
+  });
+  const fb=document.getElementById(`${prefix}-feedback`);
+  if(fb){fb.className='feedback show '+(score>=Math.ceil(total*0.7)?'good':'bad');fb.textContent=score>=Math.ceil(total*0.7)?`Well done! You scored ${score}/${total}.`:`You scored ${score}/${total}. Review the relevant sections and try again.`;}
+  const sc=document.getElementById(`${prefix}-score`);
+  if(sc){sc.className='score-display show';sc.innerHTML=`<div><div class="score-label">Your Score</div><div class="score-val">${score}/${total}</div></div><div style="font-size:13px;color:var(--text-light)">${Math.round(score/total*100)}%</div>`;}
+}
+function renderGaps(){
+  const c=document.getElementById('v2-gaps');if(!c)return;
+  c.innerHTML=DATA.v2gaps.map((g,i)=>`<div class="gap-sentence">${i+1}. ${g.sent.replace('_______',`<input class="gap-input" id="gap-${i}" placeholder="?" autocomplete="off">`)}</div>`).join('');
+}
+function checkGaps(){
+  let score=0;
+  DATA.v2gaps.forEach((g,i)=>{
+    const el=document.getElementById(`gap-${i}`);if(!el)return;
+    const val=el.value.trim().toLowerCase();
+    if(val===g.ans.toLowerCase()){score++;el.style.borderBottomColor='var(--success)';el.style.color='var(--success)';}
+    else{el.style.borderBottomColor='var(--error)';el.style.color='var(--error)';el.value=g.ans;}
+  });
+  const fb=document.getElementById('v2-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`Great work! ${score}/10 correct.`:`${score}/10 correct. Correct answers are shown in red.`;
+}
+const tfAnswers={};
+function renderTF(){
+  const c=document.getElementById('v3-tf');if(!c)return;
+  c.innerHTML=DATA.v3tf.map((item,i)=>`
+    <div class="tf-item" id="tf-${i}">
+      <div class="tf-stmt">${i+1}. ${item.stmt}</div>
+      <div class="tf-btns"><button class="tf-btn" onclick="selectTF(${i},true,this)">True</button><button class="tf-btn" onclick="selectTF(${i},false,this)">False</button></div>
+    </div>`).join('');
+}
+function selectTF(i,val,btn){
+  tfAnswers[i]=val;const row=document.getElementById(`tf-${i}`);
+  row.querySelectorAll('.tf-btn').forEach(b=>b.className='tf-btn');
+  btn.className='tf-btn '+(val?'sel-t':'sel-f');
+}
+function checkTF(){
+  let score=0;
+  DATA.v3tf.forEach((item,i)=>{
+    if(tfAnswers[i]===undefined)return;
+    const row=document.getElementById(`tf-${i}`);
+    row.querySelectorAll('.tf-btn').forEach(b=>{
+      const isTrue=b.textContent.trim()==='True';b.className='tf-btn';
+      if(isTrue===item.ans){b.style.background=item.ans?'#dcfce7':'#fee2e2';b.style.borderColor=item.ans?'var(--success)':'var(--error)';b.style.color=item.ans?'var(--success)':'var(--error)';b.textContent=(isTrue?'True':'False')+' ✓';}
+    });
+    if(tfAnswers[i]===item.ans)score++;
+  });
+  const fb=document.getElementById('v3-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`Excellent! ${score}/10 correct.`:`${score}/10 correct. Review the vocabulary definitions.`;
+}
+function renderListening(){
+  const c=document.getElementById('listening-cards');if(!c)return;
+  c.innerHTML=DATA.listening.map((act,ai)=>`
+    <div class="audio-card">
+      <div class="audio-header">
+        <div class="audio-emoji">${act.emoji}</div>
+        <div><div class="audio-title">${act.title}</div><div class="audio-sub">${act.sub}</div>
+          <div class="audio-tags"><span class="audio-tag tag-level">Level: ${act.level}</span><span class="audio-tag tag-type">${act.type}</span><span class="audio-tag tag-focus">Focus: ${act.focus}</span></div>
+        </div>
+      </div>
+      <div class="player-box">
+        <div class="player-row">
+          <button class="play-btn" id="play-${ai}" onclick="handlePlay(${ai})">&#9654;</button>
+          <div class="player-info"><div class="player-title-sm">${act.title}</div><div class="player-sub-sm">${act.sub}</div></div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="player-progress"><div class="player-progress-fill" id="pf-${ai}"></div></div>
+        <div class="speed-row">
+          <span class="speed-label">Speed:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7&times;</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2&times;</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">&#8617; Replay</button>
+        </div>
+        <div class="tts-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">&#9660; Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans-${ai}">${act.transcript.split('\n\n').map(p=>`<p>${p.trim()}</p>`).join('')}</div>
+      <div class="listen-instruction">&#128203; Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</div>
+      <div class="listen-mcq-wrap">
+        <div class="mcq-title">Questions &mdash; Activity ${ai+1}</div>
+        <div id="la${ai}-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('la${ai}')">Check Answers</button>
+        <div id="la${ai}-feedback" class="feedback"></div>
+        <div id="la${ai}-score" class="score-display"></div>
+      </div>
+    </div>`).join('');
+  DATA.listening.forEach((act,ai)=>{DATA[`la${ai}`]={questions:act.questions};renderMCQ(`la${ai}-mcqs`,act.questions,`la${ai}`,true);});
+}
+const audioState={};
+function handlePlay(ai){
+  const act=DATA.listening[ai];
+  if(!audioState[ai])audioState[ai]={playing:false,speed:0.85};
+  const st=audioState[ai];const btn=document.getElementById(`play-${ai}`);
+  if(st.playing){window.speechSynthesis.cancel();st.playing=false;btn.innerHTML='&#9654;';if(st.timer)clearInterval(st.timer);return;}
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.lang='en-GB';utt.rate=st.speed;utt.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const chosen=voices.find(v=>v.name==='Google UK English Female')||voices.find(v=>v.lang==='en-GB'&&v.name.toLowerCase().includes('female'))||voices.find(v=>v.lang==='en-GB');
+  if(chosen)utt.voice=chosen;
+  const words=act.transcript.split(/\s+/).length;const dur=Math.round(words/(st.speed*2.6));
+  const fmt=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  document.getElementById(`time-${ai}`).textContent=`0:00 / ${fmt(dur)}`;
+  let elapsed=0;
+  st.timer=setInterval(()=>{
+    if(!audioState[ai].playing){clearInterval(st.timer);return;}
+    elapsed++;
+    document.getElementById(`pf-${ai}`).style.width=Math.min(elapsed/dur*100,100)+'%';
+    document.getElementById(`time-${ai}`).textContent=`${fmt(elapsed)} / ${fmt(dur)}`;
+  },1000);
+  utt.onend=()=>{st.playing=false;btn.innerHTML='&#9654;';clearInterval(st.timer);document.getElementById(`pf-${ai}`).style.width='100%';};
+  window.speechSynthesis.speak(utt);st.playing=true;btn.innerHTML='&#9646;&#9646;';
+}
+function setSpeed(ai,spd,btn){
+  if(!audioState[ai])audioState[ai]={playing:false,speed:spd};audioState[ai].speed=spd;
+  btn.closest('.audio-card').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  if(audioState[ai].playing){window.speechSynthesis.cancel();audioState[ai].playing=false;document.getElementById(`play-${ai}`).innerHTML='&#9654;';if(audioState[ai].timer)clearInterval(audioState[ai].timer);setTimeout(()=>handlePlay(ai),80);}
+}
+function replayAudio(ai){
+  if(audioState[ai]){audioState[ai].playing=false;if(audioState[ai].timer)clearInterval(audioState[ai].timer);}
+  window.speechSynthesis.cancel();const pf=document.getElementById(`pf-${ai}`);if(pf)pf.style.width='0%';
+  document.getElementById(`play-${ai}`).innerHTML='&#9654;';setTimeout(()=>handlePlay(ai),80);
+}
+function toggleTranscript(ai){document.getElementById(`trans-${ai}`).classList.toggle('open');}
+function updateWordCount(id,max){
+  const ta=document.getElementById(`${id}-text`);const wc=document.getElementById(`${id}-wc`);if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  wc.textContent=`${words} / ${max} words`;wc.style.color=words>max?'var(--error)':'var(--text-light)';
+}
+function submitWriting(id){
+  const ta=document.getElementById(`${id}-text`);if(!ta||ta.value.trim().length<30){alert('Please write your response before submitting.');return;}
+  const s=document.getElementById(`${id}-success`);s.style.display='block';s.scrollIntoView({behavior:'smooth'});
+}
+let attemptCount=0;
+function renderAssessment(){renderMCQ('fa-mcqs',DATA.fa.questions,'fa',false);}
+function submitAssessment(){
+  attemptCount++;const qs=DATA.fa.questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#fa-q${i} .mcq-option`);let chosen=-1;
+    opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    if(chosen===item.ans)score++;
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+  });
+  const pct=Math.round(score/total*100);const pass=pct>=70;
+  const res=document.getElementById('assessment-result');res.style.display='block';res.scrollIntoView({behavior:'smooth'});
+  document.getElementById('result-score-text').className='result-score '+(pass?'pass':'fail');
+  document.getElementById('result-score-text').textContent=`${pct}% — ${score}/${total}`;
+  document.getElementById('result-msg').textContent=pass?'Congratulations! You have passed Module 10. Excellent work on Interpreting Marketing Metrics.':'You did not reach the 70% pass mark. Please review the module content and try again.';
+  const wrap=document.getElementById('retake-wrap');
+  if(!pass&&attemptCount<2)wrap.innerHTML=`<button class="retake-btn" onclick="retakeAssessment()">Retake Assessment (Attempt ${attemptCount+1} of 2)</button>`;
+  else if(attemptCount>=2&&!pass){wrap.innerHTML=`<p style="color:var(--error);font-size:14px;margin-top:12px">You have used both attempts. Please review the module content.</p>`;document.getElementById('assessment-form').style.display='none';}
+  document.getElementById('attempt-badge').textContent=`Attempt ${attemptCount} of 2`;
+}
+function retakeAssessment(){
+  document.getElementById('assessment-result').style.display='none';
+  document.querySelectorAll('#fa-mcqs .mcq-option').forEach(o=>o.classList.remove('selected','correct','wrong'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(id);if(sec)sec.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{if((n.getAttribute('onclick')||'').includes(`'${id}'`))n.classList.add('active');});
+  window.scrollTo({top:0,behavior:'smooth'});trackProgress(id);
+}
+function trackProgress(id){
+  let v=JSON.parse(sessionStorage.getItem('mkt10v')||'[]');
+  if(!v.includes(id)){v.push(id);sessionStorage.setItem('mkt10v',JSON.stringify(v));}
+  const pct=Math.round(v.length/11*100);
+  const pf=document.getElementById('progress-fill');const pp=document.getElementById('progress-pct');
+  if(pf)pf.style.width=pct+'%';if(pp)pp.textContent=pct+'%';
+}
+window.addEventListener('load',()=>{
+  if(window.speechSynthesis){window.speechSynthesis.getVoices();if(window.speechSynthesis.onvoiceschanged!==undefined)window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();}
+  renderMCQ('r1-mcqs',DATA.r1.questions,'r1',false);
+  renderMCQ('r2-mcqs',DATA.r2.questions,'r2',false);
+  renderMCQ('v1-mcqs',DATA.v1.questions,'v1',false);
+  renderGaps();renderTF();
+  renderMCQ('g1-mcqs',DATA.g1.questions,'g1',false);
+  renderMCQ('g2-mcqs',DATA.g2.questions,'g2',false);
+  renderMCQ('g3-mcqs',DATA.g3.questions,'g3',false);
+  renderListening();
+  renderMCQ('cs1-mcqs',DATA.cs1.questions,'cs1',false);
+  renderMCQ('cs2-mcqs',DATA.cs2.questions,'cs2',false);
+  renderAssessment();
+  trackProgress('overview');
+});
+</script>
+</body>
+</html>

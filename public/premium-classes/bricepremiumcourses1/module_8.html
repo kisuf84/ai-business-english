@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8 · Change Management Language</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d1b2a;--navy2:#162032;--navy3:#1e2d42;
+  --gold:#c9a84c;--gold2:#e8c86d;--gold-light:#fdf3da;
+  --cream:#f5f0e8;--cream2:#faf7f2;
+  --ink:#1a2332;--text:#2c3e50;--muted:#6b7a8d;
+  --border:#ddd8ce;--border2:#e8e4dc;
+  --mint:#1a8a6e;--rose:#c0392b;--sky:#2a6496;
+  --radius:10px;--shadow:0 2px 20px rgba(13,27,42,.10);
+  --sidebar:260px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream2);color:var(--text);min-height:100vh;display:flex}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:200;display:flex;flex-direction:column}
+.sb-brand{padding:28px 22px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand h2{font-family:'Fraunces',serif;color:var(--gold2);font-size:17px;line-height:1.3}
+.sb-brand p{color:rgba(255,255,255,.4);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-family:'DM Mono',monospace}
+.sb-badge{display:inline-block;margin-top:8px;background:var(--gold);color:var(--navy);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-family:'DM Mono',monospace}
+.sb-section{padding:16px 14px 4px;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.25);text-transform:uppercase;font-family:'DM Mono',monospace}
+.sb-nav{list-style:none;padding:0 10px 20px}
+.sb-nav li a{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,.6);font-size:13px;text-decoration:none;transition:.2s;gap:8px}
+.sb-nav li a:hover{background:rgba(255,255,255,.07);color:#fff}
+.sb-nav li a.active{background:rgba(201,168,76,.15);color:var(--gold2);font-weight:600}
+.sb-nav li a .nav-icon{font-size:15px;flex-shrink:0}
+.sb-nav li a .nav-label{flex:1}
+.sb-nav li a .nav-count{font-size:9px;background:rgba(255,255,255,.1);border-radius:20px;padding:2px 7px;font-family:'DM Mono',monospace;color:rgba(255,255,255,.45);flex-shrink:0}
+.sb-nav li a.active .nav-count{background:rgba(201,168,76,.25);color:var(--gold2)}
+
+/* MAIN */
+.main{margin-left:var(--sidebar);flex:1;min-height:100vh}
+
+/* HERO */
+.hero{background:var(--navy);min-height:320px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--navy) 0%,#1a2f4a 60%,#0f2035 100%)}
+.hero-pattern{position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(201,168,76,1) 39px,rgba(201,168,76,1) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(201,168,76,1) 39px,rgba(201,168,76,1) 40px)}
+.hero-letter{position:absolute;right:-20px;bottom:-40px;font-family:'Fraunces',serif;font-size:300px;font-weight:900;color:rgba(255,255,255,.02);line-height:1;pointer-events:none;user-select:none}
+.hero-content{position:relative;z-index:1;padding:44px 52px 36px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold2);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:30px;font-family:'DM Mono',monospace;margin-bottom:18px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);line-height:1.08;color:#fff;font-weight:900;max-width:700px}
+.hero h1 em{color:var(--gold2);font-style:normal}
+.hero-desc{color:rgba(255,255,255,.55);font-size:15px;max-width:580px;line-height:1.75;margin-top:14px;font-weight:300}
+.hero-stats{display:flex;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.08);margin-top:32px}
+.stat-item{padding:22px 32px 22px 0;border-right:1px solid rgba(255,255,255,.07);margin-right:32px}
+.stat-item:last-child{border-right:none;margin-right:0}
+.stat-num{font-family:'Fraunces',serif;font-size:36px;color:var(--gold2);font-weight:700;line-height:1}
+.stat-label{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-family:'DM Mono',monospace}
+
+/* PROGRESS */
+.progress-bar-wrap{background:var(--navy2);padding:14px 52px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:18px}
+.progress-label{color:rgba(255,255,255,.45);font-size:12px;font-family:'DM Mono',monospace;white-space:nowrap}
+.progress-track{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:10px;width:0%;transition:width 1.2s ease}
+.progress-pct{color:var(--gold2);font-size:12px;font-family:'DM Mono',monospace;font-weight:600;white-space:nowrap}
+
+/* CONTENT */
+.content{padding:44px 52px;max-width:1000px}
+.sec-header{margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.sec-header-inner{display:flex;align-items:flex-start;gap:16px}
+.sec-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;margin-top:2px}
+.sec-text .sec-title{font-family:'Fraunces',serif;font-size:30px;color:var(--navy);font-weight:700;line-height:1.1}
+.sec-text .sec-sub{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px}
+.divider{height:1px;background:var(--border);margin:52px 0}
+
+/* CARDS */
+.overview-intro{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+.overview-intro p{font-size:14.5px;line-height:1.9;font-weight:300;color:var(--text)}
+.overview-intro p strong{font-weight:600;color:var(--navy)}
+.lo-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.lo-list li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text);line-height:1.6;font-weight:300}
+.lo-list li::before{content:'✓';color:var(--mint);font-weight:700;font-size:14px;flex-shrink:0;margin-top:1px}
+.info-box{background:linear-gradient(135deg,#fffbf0,#fdf5e0);border:1px solid rgba(201,168,76,.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;font-size:13px;color:#6b4e00;line-height:1.7}
+
+/* SPEAKING */
+.speaking-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px}
+.sq{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:18px 20px;display:flex;gap:14px;box-shadow:var(--shadow);transition:.2s;align-items:flex-start}
+.sq:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(13,27,42,.12);border-color:var(--gold)}
+.sq-num{width:32px;height:32px;border-radius:8px;background:var(--navy);color:var(--gold2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;flex-shrink:0}
+.sq-text{font-size:13.5px;line-height:1.65;color:var(--text)}
+
+/* WORD BANK */
+.wb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.wb-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:14px 16px;display:flex;gap:12px;box-shadow:var(--shadow);transition:.15s;align-items:flex-start}
+.wb-card:hover{border-color:var(--gold);transform:translateY(-1px)}
+.wb-icon{font-size:26px;flex-shrink:0;width:36px;text-align:center;line-height:1;padding-top:2px}
+.wb-info{flex:1;min-width:0}
+.wb-pos{font-size:9px;color:var(--sky);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.wb-word{font-weight:700;font-size:13.5px;color:var(--navy);font-family:'Fraunces',serif;line-height:1.2;margin-bottom:3px}
+.wb-def{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* READING */
+.reading-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:34px;margin-bottom:18px;box-shadow:var(--shadow)}
+.reading-card h3{font-family:'Fraunces',serif;font-size:21px;color:var(--navy);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border2)}
+.reading-card p{font-size:14.5px;line-height:1.95;color:var(--text);margin-bottom:14px;font-weight:300}
+.reading-card p:last-child{margin-bottom:0}
+
+/* QUIZ */
+.quiz-card{background:#fff;border:1px solid var(--border2);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:14px}
+.quiz-title{font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:var(--navy);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border2)}
+.q-item{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border2)}
+.q-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.q-stem{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px;line-height:1.55}
+.options{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 13px;border-radius:8px;border:1.5px solid var(--border2);cursor:pointer;font-size:13px;transition:.15s;background:#fff;font-family:'DM Sans',sans-serif;line-height:1.5}
+.opt:hover{border-color:var(--gold);background:var(--gold-light)}
+.opt input[type=radio]{accent-color:var(--navy);width:14px;height:14px;flex-shrink:0;margin-top:2px}
+.opt.correct{border-color:var(--mint)!important;background:#e8f8f3!important;color:#0d6b4f!important}
+.opt.wrong{border-color:var(--rose)!important;background:#fdf0ef!important;color:#8b1a12!important}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:10px;margin-top:16px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;border:none;transition:.18s;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--navy);color:#fff}.btn-primary:hover{background:var(--navy3)}
+.btn-gold{background:var(--gold);color:var(--navy)}.btn-gold:hover{background:var(--gold2)}
+.btn-outline{background:transparent;border:1.5px solid var(--navy);color:var(--navy)}.btn-outline:hover{background:var(--navy);color:#fff}
+.score-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-weight:700;font-size:13px;font-family:'DM Mono',monospace}
+.sb-good{background:#e8f8f3;color:#0d6b4f;border:1px solid #86c9b0}
+.sb-ok{background:#fffbeb;color:#7c5c00;border:1px solid #e8c86d}
+.sb-bad{background:#fdf0ef;color:#8b1a12;border:1px solid #e8a09a}
+
+/* GAP FILL */
+.gap-input{border:none;border-bottom:2px solid var(--gold);outline:none;padding:2px 6px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--navy);background:transparent;min-width:160px;transition:.15s}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.gap-input.correct{border-bottom-color:var(--mint);color:var(--mint)}
+.gap-input.wrong{border-bottom-color:var(--rose);color:var(--rose)}
+
+/* DRAG DROP */
+.drag-bank{display:flex;flex-wrap:wrap;gap:7px;padding:12px;background:#f5f2ec;border-radius:8px;margin-bottom:12px;min-height:48px}
+.drag-chip{padding:5px 13px;border-radius:20px;background:var(--navy);color:#fff;font-size:12px;cursor:pointer;user-select:none;font-family:'DM Mono',monospace;transition:.15s;border:2px solid transparent}
+.drag-chip.selected-chip{border-color:var(--gold);background:var(--navy3)}
+.drag-chip.used{opacity:.25;pointer-events:none}
+.drop-zone{border:2px dashed var(--gold);border-radius:7px;padding:6px 12px;min-width:130px;min-height:34px;display:inline-flex;align-items:center;justify-content:center;background:#fffbf0;font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;vertical-align:middle;margin:0 3px;cursor:pointer;transition:.15s}
+.drop-zone.filled{border-style:solid;border-color:var(--mint);background:#e8f8f3;color:var(--navy);font-weight:600}
+.drop-zone.wrong-drop{border-color:var(--rose);background:#fdf0ef;color:var(--rose)}
+
+/* TRUE/FALSE */
+.tf-row{display:flex;gap:8px;margin-top:7px}
+.tf-btn{padding:5px 16px;border-radius:20px;border:1.5px solid var(--border2);cursor:pointer;font-size:12px;font-weight:600;background:#fff;transition:.15s;font-family:'DM Sans',sans-serif}
+.tf-btn:hover{border-color:var(--gold)}
+.tf-btn.sel-t{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tf-btn.sel-f{background:var(--navy3);color:#fff;border-color:var(--navy3)}
+.tf-btn.ok-tf{background:var(--mint);color:#fff;border-color:var(--mint)}
+.tf-btn.nok-tf{background:var(--rose);color:#fff;border-color:var(--rose)}
+
+/* ANSWER KEY */
+.ak-wrap{margin-top:12px}
+.ak-toggle{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--navy);color:#fff;border-radius:8px;cursor:pointer;font-size:12px;font-family:'DM Mono',monospace;border:none;width:100%;text-align:left;transition:.18s}
+.ak-toggle:hover{background:var(--navy3)}
+.ak-icon{transition:.3s;font-size:13px}
+.ak-toggle.open .ak-icon{transform:rotate(90deg)}
+.ak-content{display:none;padding:16px;background:#f8f6f2;border:1px solid var(--border2);border-top:none;border-radius:0 0 8px 8px;font-size:12.5px;line-height:1.9}
+.ak-content.visible{display:block}
+.ak-content ol{padding-left:18px}
+.ak-content li{margin-bottom:4px}
+.ak-content strong{color:var(--navy)}
+
+/* GRAMMAR BOXES */
+.grammar-box{background:#fff;border-left:4px solid var(--gold);border-radius:0 10px 10px 0;padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow)}
+.grammar-box h4{font-family:'Fraunces',serif;font-weight:700;color:var(--navy);font-size:16px;margin-bottom:10px}
+.grammar-box p{font-size:13px;line-height:1.8;color:var(--text);font-weight:300;margin-bottom:8px}
+.grammar-box ul{padding-left:16px;margin-top:6px;margin-bottom:8px}
+.grammar-box li{font-size:13px;line-height:1.8;color:var(--text);font-weight:300;margin-bottom:3px}
+.grammar-box .ex{background:#f5f2ec;border-radius:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:11.5px;color:var(--sky);margin-top:8px;line-height:1.9}
+
+/* WRITING */
+.writing-card{background:linear-gradient(135deg,#f5f3ee,#faf8f4);border:1px solid var(--border2);border-radius:var(--radius);padding:26px;margin-bottom:18px}
+.writing-card h4{font-family:'Fraunces',serif;font-size:17px;color:var(--navy);margin-bottom:8px}
+.writing-task{font-size:13px;color:var(--text);line-height:1.75;margin-bottom:12px;font-weight:300}
+.writing-area{width:100%;min-height:180px;border:1.5px solid var(--border2);border-radius:8px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);resize:vertical;outline:none;transition:.18s;background:#fff;line-height:1.7}
+.writing-area:focus{border-color:var(--gold)}
+.wc-display{font-size:11px;color:var(--muted);margin-top:4px;font-family:'DM Mono',monospace}
+.tag{display:inline-block;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.4px;margin-right:5px;margin-bottom:8px}
+.tag-navy{background:rgba(13,27,42,.1);color:var(--navy)}
+.tag-gold{background:rgba(201,168,76,.15);color:#7c5c00}
+
+/* ══ LISTENING — mobile-first audio player ══ */
+.listen-block{margin-bottom:32px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.listen-header{background:var(--navy);padding:20px 24px;display:flex;gap:16px;align-items:flex-start}
+.listen-icon{font-size:32px;flex-shrink:0}
+.listen-meta h4{font-family:'Fraunces',serif;font-size:17px;color:#fff;font-weight:700}
+.listen-meta .track-sub{font-size:12px;color:rgba(255,255,255,.45);margin-top:3px}
+.listen-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.ltag{font-size:9px;border:1px solid;padding:2px 8px;border-radius:20px;font-family:'DM Mono',monospace;letter-spacing:.5px;text-transform:uppercase}
+.ltag-gold{border-color:var(--gold);color:var(--gold)}
+.ltag-outline{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.5)}
+
+/* Player */
+.player-wrap{background:#0a1520;padding:18px 22px}
+.player-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.play-pause-btn{width:52px;height:52px;border-radius:50%;background:var(--rose);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;flex-shrink:0;transition:.18s;
+  /* Mobile tap improvements */
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  user-select:none;
+}
+.play-pause-btn:hover{background:#d44;transform:scale(1.05)}
+.play-pause-btn:active{transform:scale(.96)}
+.player-track-info{flex:1;min-width:0}
+.track-title-sm{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track-sub-sm{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.time-display{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.5);white-space:nowrap}
+.progress-audio{width:100%;height:6px;background:rgba(255,255,255,.1);border-radius:4px;margin-bottom:12px;cursor:pointer;overflow:hidden;
+  touch-action:manipulation;
+}
+.progress-audio-fill{height:100%;background:linear-gradient(90deg,var(--rose),#ff6b6b);border-radius:4px;width:0%;transition:.1s linear;pointer-events:none}
+
+/* Speed buttons — bigger on mobile */
+.speed-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.speed-label{font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace}
+.speed-btn{
+  padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.15);
+  background:transparent;color:rgba(255,255,255,.5);font-size:12px;cursor:pointer;
+  font-family:'DM Mono',monospace;transition:.15s;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  min-width:44px;min-height:36px;
+}
+.speed-btn.active-spd{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700}
+.speed-btn:hover:not(.active-spd){background:rgba(255,255,255,.08);color:#fff}
+.replay-btn{
+  padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.15);
+  background:transparent;color:rgba(255,255,255,.4);font-size:12px;cursor:pointer;
+  font-family:'DM Mono',monospace;transition:.15s;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  min-height:36px;
+}
+.replay-btn:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.play-status{font-size:11px;color:rgba(255,255,255,.35);font-family:'DM Mono',monospace;margin-left:4px}
+
+/* Mobile note with icon */
+.player-note{font-size:10.5px;color:rgba(255,255,255,.22);font-style:italic;margin-top:4px;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px}
+
+/* ══ TRANSCRIPT DROPDOWN ══ */
+.transcript-section{background:#0a1520;border-top:1px solid rgba(255,255,255,.07)}
+.transcript-btn{
+  width:100%;padding:14px 22px;
+  background:rgba(255,255,255,.05);border:none;
+  border-top:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.6);
+  font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;
+  cursor:pointer;display:flex;align-items:center;gap:10px;
+  transition:.18s;text-align:left;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  min-height:48px;
+}
+.transcript-btn:hover,.transcript-btn:focus{background:rgba(255,255,255,.09);color:#fff;outline:none}
+.t-arrow{display:inline-block;font-size:11px;transition:transform .25s ease;color:var(--gold);flex-shrink:0}
+.transcript-btn.t-open .t-arrow{transform:rotate(90deg)}
+.t-label{flex:1}
+.t-hint{font-size:10px;color:rgba(255,255,255,.25);font-family:'DM Mono',monospace;white-space:nowrap}
+.transcript-panel{
+  max-height:0;overflow:hidden;
+  transition:max-height .45s ease;
+  background:#0d1e2e;
+}
+.transcript-panel.t-visible{max-height:700px}
+.transcript-panel-inner{padding:20px 24px 22px}
+.transcript-panel-inner p{font-size:13.5px;color:rgba(255,255,255,.6);line-height:1.95;font-weight:300}
+.t-speaker{color:var(--gold2);font-weight:700;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-right:6px}
+
+/* Listening body */
+.listen-body{background:#fff;border:1px solid var(--border2);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:22px}
+.instructions-box{background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:10px 14px;font-size:13px;color:var(--text);margin-bottom:18px;line-height:1.6}
+.instructions-box strong{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:3px;color:var(--muted)}
+
+/* CASE STUDY */
+.case-hd{background:linear-gradient(135deg,var(--navy),#1e3054);color:#fff;border-radius:var(--radius) var(--radius) 0 0;padding:22px 26px}
+.case-hd .case-company{font-size:10px;color:var(--gold);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.case-hd h3{font-family:'Fraunces',serif;font-size:20px;font-weight:700}
+.case-body{background:#fff;border:1px solid var(--border2);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:26px;box-shadow:var(--shadow)}
+.case-body p{font-size:14px;line-height:1.9;margin-bottom:14px;font-weight:300;color:var(--text)}
+.case-body p:last-child{margin-bottom:0}
+
+/* FINAL ASSESSMENT */
+.final-wrap{background:linear-gradient(160deg,var(--navy) 0%,#1a2f4a 100%);border-radius:14px;padding:36px;color:#fff}
+.final-wrap .quiz-title{color:#fff;border-bottom-color:rgba(255,255,255,.12);font-size:19px}
+.final-wrap .q-stem{color:rgba(255,255,255,.88)}
+.final-wrap .opt{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.75)}
+.final-wrap .opt:hover{background:rgba(201,168,76,.12);border-color:var(--gold)}
+.final-wrap .opt.correct{border-color:var(--mint)!important;background:rgba(26,138,110,.15)!important;color:#7ee8c8!important}
+.final-wrap .opt.wrong{border-color:var(--rose)!important;background:rgba(192,57,43,.15)!important;color:#f1a49d!important}
+.final-result{text-align:center;padding:28px;background:rgba(255,255,255,.05);border-radius:10px;margin-top:22px;display:none}
+.final-result h2{font-family:'Fraunces',serif;font-size:48px;color:var(--gold2)}
+.final-prog-wrap{background:rgba(255,255,255,.08);border-radius:20px;height:6px;margin:10px auto;max-width:280px;overflow:hidden}
+.final-prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:20px;transition:.8s}
+.attempts-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-family:'DM Mono',monospace;background:rgba(201,168,76,.15);color:var(--gold2);border:1px solid rgba(201,168,76,.3);margin-bottom:16px}
+
+/* MOBILE RESPONSIVE */
+@media(max-width:768px){
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .hero-content{padding:28px 22px 24px}
+  .content{padding:28px 18px}
+  .progress-bar-wrap{padding:12px 18px}
+  .hero-stats{gap:0}
+  .stat-item{padding:16px 20px 16px 0;margin-right:20px}
+  .speaking-grid,.wb-grid{grid-template-columns:1fr}
+  .final-wrap{padding:22px 18px}
+  .listen-header{padding:16px 18px}
+  .player-wrap{padding:14px 16px}
+  .transcript-panel-inner{padding:14px 16px 18px}
+  .listen-body{padding:16px}
+  .reading-card{padding:22px 18px}
+  .quiz-card{padding:20px 16px}
+}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sb-brand">
+    <h2>Business Management English</h2>
+    <p>Professional Development</p>
+    <span class="sb-badge">B1–B2 Level</span>
+  </div>
+  <div class="sb-section">Module 8</div>
+  <ul class="sb-nav">
+    <li><a href="#overview" class="active" onclick="setActive(this)"><span class="nav-icon">🏠</span><span class="nav-label">Overview</span></a></li>
+    <li><a href="#speaking" onclick="setActive(this)"><span class="nav-icon">💬</span><span class="nav-label">Speaking</span><span class="nav-count">20Q</span></a></li>
+    <li><a href="#wordbank" onclick="setActive(this)"><span class="nav-icon">📖</span><span class="nav-label">Word Bank</span><span class="nav-count">20</span></a></li>
+    <li><a href="#reading" onclick="setActive(this)"><span class="nav-icon">📄</span><span class="nav-label">Reading</span><span class="nav-count">2T</span></a></li>
+    <li><a href="#vocabulary" onclick="setActive(this)"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span><span class="nav-count">4Ex</span></a></li>
+    <li><a href="#grammar" onclick="setActive(this)"><span class="nav-icon">📐</span><span class="nav-label">Grammar</span><span class="nav-count">3Ex</span></a></li>
+    <li><a href="#grammarreview" onclick="setActive(this)"><span class="nav-icon">📘</span><span class="nav-label">Grammar Review</span></a></li>
+    <li><a href="#writing" onclick="setActive(this)"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span><span class="nav-count">2Ex</span></a></li>
+    <li><a href="#listening" onclick="setActive(this)"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span><span class="nav-count">3Ex</span></a></li>
+    <li><a href="#casestudy" onclick="setActive(this)"><span class="nav-icon">🏢</span><span class="nav-label">Case Studies</span><span class="nav-count">2Ex</span></a></li>
+    <li><a href="#final" onclick="setActive(this)"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></a></li>
+  </ul>
+</aside>
+
+<main class="main">
+<div class="hero">
+  <div class="hero-bg"></div><div class="hero-pattern"></div>
+  <div class="hero-letter">M8</div>
+  <div class="hero-content">
+    <div class="hero-badge">📋 Module 8 · Business Management English</div>
+    <h1>Change Management <em>Language</em></h1>
+    <p class="hero-desc">Develop the professional English skills to lead, communicate, and write about organisational change — from announcing transformation programmes to managing resistance, building stakeholder buy-in, and measuring change outcomes.</p>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Grammar Ex.</div></div>
+      <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Word Bank</div></div>
+    </div>
+  </div>
+</div>
+<div class="progress-bar-wrap">
+  <span class="progress-label">Module Progress</span>
+  <div class="progress-track"><div class="progress-fill" id="modprog"></div></div>
+  <span class="progress-pct" id="modpct">0%</span>
+</div>
+
+<div class="content">
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#e8f0fb">🏠</div>
+    <div class="sec-text"><div class="sec-title">Module Overview</div><div class="sec-sub">B1–B2 · Change Management Language</div></div>
+  </div></div>
+  <div class="overview-intro">
+    <p><strong>Welcome to Module 8: Change Management Language.</strong> This module develops the professional English vocabulary, grammar, and communication skills required to plan, lead, and communicate organisational change effectively. Whether managing a digital transformation, a restructuring programme, a cultural shift, or a merger, the language of change is a critical leadership competency. You will study the frameworks, vocabulary, and communication strategies that enable managers at every level to build stakeholder support, address resistance constructively, and articulate a compelling vision for change in formal professional English.</p>
+    <p style="margin-top:12px">By the end of this module, you will be able to:</p>
+    <ul class="lo-list">
+      <li>Use precise vocabulary to describe change management frameworks, stakeholder dynamics, and transformation processes.</li>
+      <li>Discuss resistance to change, the change curve, and strategies for building organisational buy-in using professional English.</li>
+      <li>Apply grammar structures — including complex noun phrases, hedging language, and persuasive rhetorical devices — in change communication contexts.</li>
+      <li>Write a professional change communication announcement and a stakeholder engagement plan extract.</li>
+      <li>Listen critically to professional conversations about change leadership and identify key arguments, positions, and language strategies.</li>
+    </ul>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- SPEAKING -->
+<section id="speaking">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#dbeafe">💬</div>
+    <div class="sec-text"><div class="sec-title">Speaking Activities</div><div class="sec-sub">20 Discussion Questions · Change Management Language</div></div>
+  </div></div>
+  <div class="info-box">Work in pairs or small groups. Discuss each question in depth using professional examples. Try to incorporate vocabulary from the Word Bank in your answers.</div>
+  <div class="speaking-grid">
+    <div class="sq"><div class="sq-num">01</div><div class="sq-text">What is the difference between change management and project management? Can the two approaches coexist in the same initiative?</div></div>
+    <div class="sq"><div class="sq-num">02</div><div class="sq-text">Describe a significant organisational change you have experienced. Was it managed well? What would you have done differently?</div></div>
+    <div class="sq"><div class="sq-num">03</div><div class="sq-text">Why do some employees resist change even when they understand its rationale? What are the most common underlying reasons?</div></div>
+    <div class="sq"><div class="sq-num">04</div><div class="sq-text">What is the "burning platform" concept in change management? When is it appropriate, and when might it be counterproductive?</div></div>
+    <div class="sq"><div class="sq-num">05</div><div class="sq-text">How does the Kübler-Ross change curve help managers understand and respond to employee reactions to organisational change?</div></div>
+    <div class="sq"><div class="sq-num">06</div><div class="sq-text">What does "stakeholder buy-in" mean in practice? What steps can leaders take to build genuine commitment rather than surface compliance?</div></div>
+    <div class="sq"><div class="sq-num">07</div><div class="sq-text">What is the difference between managing change from the top down versus building it from the bottom up? What are the advantages and risks of each?</div></div>
+    <div class="sq"><div class="sq-num">08</div><div class="sq-text">How should a manager communicate an unpopular but necessary change — such as redundancies or a major restructuring — in a way that is honest, humane, and professional?</div></div>
+    <div class="sq"><div class="sq-num">09</div><div class="sq-text">What is the role of "quick wins" in a change management programme? Why do experienced change leaders often prioritise them early?</div></div>
+    <div class="sq"><div class="sq-num">10</div><div class="sq-text">How does organisational culture affect the success of a change initiative? Can culture itself be changed, and if so, how?</div></div>
+    <div class="sq"><div class="sq-num">11</div><div class="sq-text">What is the difference between a change champion and a sponsor? What qualities make each role effective?</div></div>
+    <div class="sq"><div class="sq-num">12</div><div class="sq-text">How can leaders distinguish between "healthy scepticism" — which can improve a change programme — and "destructive resistance" — which undermines it?</div></div>
+    <div class="sq"><div class="sq-num">13</div><div class="sq-text">What communication channels are most effective for different types of change messages? When should a leader communicate face-to-face rather than in writing?</div></div>
+    <div class="sq"><div class="sq-num">14</div><div class="sq-text">What is "change fatigue," and how can organisations that are implementing multiple simultaneous change programmes manage it effectively?</div></div>
+    <div class="sq"><div class="sq-num">15</div><div class="sq-text">How do you measure the success of a change management initiative? What indicators would tell you the change has been truly embedded?</div></div>
+    <div class="sq"><div class="sq-num">16</div><div class="sq-text">What is the role of storytelling and narrative in change leadership? How do effective change leaders use language to shape perception and build momentum?</div></div>
+    <div class="sq"><div class="sq-num">17</div><div class="sq-text">What ethical obligations do leaders have when communicating about change that will affect employees' jobs, working conditions, or career prospects?</div></div>
+    <div class="sq"><div class="sq-num">18</div><div class="sq-text">How should a change leader respond when a transformation programme is not progressing as planned — publicly, to the team, and internally?</div></div>
+    <div class="sq"><div class="sq-num">19</div><div class="sq-text">What have you learned from observing a poorly managed change initiative? What specific communication or leadership failures made the biggest difference?</div></div>
+    <div class="sq"><div class="sq-num">20</div><div class="sq-text">If you were appointed Change Director for a major organisational transformation tomorrow, what would be the first three things you would do and why?</div></div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- WORD BANK -->
+<section id="wordbank">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#fef3c7">📖</div>
+    <div class="sec-text"><div class="sec-title">Word Bank</div><div class="sec-sub">20 Key Terms · Change Management Language</div></div>
+  </div></div>
+  <div class="wb-grid">
+    <div class="wb-card"><div class="wb-icon">🔄</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Change Readiness</div><div class="wb-def">The degree to which an organisation, team, or individual is prepared — in terms of capability, capacity, and mindset — to implement and sustain a planned change.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🌊</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Change Curve</div><div class="wb-def">A model (derived from Kübler-Ross) that describes the emotional and psychological stages individuals typically pass through when experiencing significant organisational change: shock, denial, frustration, depression, experimentation, decision, and integration.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🤝</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Stakeholder Buy-in</div><div class="wb-def">The genuine commitment and active support of key individuals and groups whose engagement is essential for the success of a change initiative — distinct from passive compliance.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🚧</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Resistance to Change</div><div class="wb-def">The behaviours, attitudes, or actions through which individuals or groups oppose, delay, or undermine an organisational change — often arising from fear, uncertainty, or perceived loss.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🏆</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Quick Win</div><div class="wb-def">An early, visible success that demonstrates the value and momentum of a change programme, builds confidence among stakeholders, and counters scepticism during the transition period.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔥</div><div class="wb-info"><div class="wb-pos">noun phrase</div><div class="wb-word">Burning Platform</div><div class="wb-def">A compelling case for why the status quo is no longer viable — the articulation of an urgent threat or crisis that makes maintaining the current state more dangerous than changing.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📢</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Change Champion</div><div class="wb-def">An influential individual — often a respected peer rather than a formal leader — who actively advocates for a change initiative and models the new behaviours expected of others.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🗺️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Roadmap</div><div class="wb-def">A high-level visual or narrative plan that outlines the key milestones, phases, and activities of a change programme over time, enabling stakeholders to understand what is coming and when.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">💬</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Change Narrative</div><div class="wb-def">The overarching story that explains why a change is necessary, what success will look like, and how the organisation will get there — designed to create meaning, urgency, and emotional alignment.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">😴</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Change Fatigue</div><div class="wb-def">A state of exhaustion, disengagement, or cynicism that develops in employees who have experienced too many simultaneous or poorly managed changes without adequate recovery time or visible success.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📊</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Adoption Rate</div><div class="wb-def">The proportion of the target population who are actively using or following the new process, behaviour, or system introduced by a change initiative, measured at a defined point in time.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🏗️</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Anchor / Embedding</div><div class="wb-def">The process of making a change permanent and self-sustaining by integrating it into the organisation's systems, processes, culture, and incentive structures — Kotter's final step in his 8-step model.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">👥</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Coalition of Support</div><div class="wb-def">A cross-functional group of influential leaders and advocates who actively champion a change programme, lending credibility and driving adoption across different parts of the organisation.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔀</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Transition State</div><div class="wb-def">The period of uncertainty, adjustment, and learning that lies between the current state and the desired future state — often the most challenging phase of any change programme.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📋</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Impact Assessment</div><div class="wb-def">A structured analysis of how a proposed change will affect different groups of employees or stakeholders — examining changes to roles, processes, systems, and working practices.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🎯</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Change Sponsor</div><div class="wb-def">A senior leader with the authority, credibility, and organisational influence to champion a change programme at the executive level, remove obstacles, and hold the organisation accountable for delivery.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🧭</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Vision for Change</div><div class="wb-def">A clear, compelling, and emotionally resonant picture of what the organisation will look like after the change has been successfully implemented — essential for motivating sustained effort.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">📉</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Productivity Dip</div><div class="wb-def">The temporary decline in performance and output that typically occurs during the transition state of a change programme, as employees adapt to new processes, tools, or ways of working.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🔁</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Feedback Loop</div><div class="wb-def">A structured mechanism through which information about the progress and impact of a change is collected from stakeholders and used to adjust the change approach in real time.</div></div></div>
+    <div class="wb-card"><div class="wb-icon">🌱</div><div class="wb-info"><div class="wb-pos">noun</div><div class="wb-word">Organisational Resilience</div><div class="wb-def">The capacity of an organisation to anticipate, adapt to, and recover from disruptive change — and to use periods of disruption as opportunities for learning and improvement.</div></div></div>
+  </div>
+</section>
+<div class="divider"></div>
+<!-- READING -->
+<section id="reading">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#dcfce7">📄</div>
+    <div class="sec-text"><div class="sec-title">Reading Comprehension</div><div class="sec-sub">2 Texts · 3 Paragraphs Each · 10 MCQs Each · Auto-graded</div></div>
+  </div></div>
+
+  <div class="reading-card">
+    <h3>Text 1 — The Language of Leading Change: Why Communication Determines Outcomes</h3>
+    <p>Organisational change fails far more often than it succeeds. Research published by McKinsey and others consistently estimates that between 60 and 70 percent of major change initiatives do not achieve their stated objectives — and among the most frequently cited causes of failure, poor communication ranks at or near the top in virtually every study. This is not because leaders do not communicate during change; most do. It is because the language they use — and the underlying assumptions about communication that language reveals — is fundamentally unsuited to the complexity of the human experience of organisational disruption. Leaders who treat change communication as an information-delivery exercise — as a series of announcements about what is changing, when, and why — systematically underestimate the psychological and emotional labour that change demands of the people living through it. Effective change communication is not primarily about information; it is about meaning-making, identity, and the restoration of a sense of agency in people who feel that control has been taken from them.</p>
+    <p>The most powerful instrument available to change leaders is the change narrative — a coherent, emotionally resonant story that explains not just what is changing but why the current situation is no longer acceptable, what the future state will feel like for the people making the journey, and what role each person plays in getting there. The change narrative differs from a change announcement in critical ways. An announcement is directional and impersonal: it tells people what management has decided. A narrative is relational and participatory: it invites people into a shared understanding of a challenge and a shared commitment to a response. Research in cognitive science confirms what experienced change leaders already know intuitively: human beings make decisions and form commitments based on stories, not data. A compelling change narrative that connects the rationale for change to the audience's values, concerns, and aspirations will generate more genuine commitment than any number of slides featuring KPIs and project timelines.</p>
+    <p>Resistance to change, often treated as an obstacle to be overcome, is more accurately understood as a communication signal — evidence that the change narrative has not yet reached, resonated with, or addressed the concerns of a particular group. Rather than being suppressed or managed away, resistance should be treated as the most valuable source of feedback available to change leaders. When employees resist, they are almost always expressing one of four things: a lack of understanding of why the change is necessary; a lack of trust in the people leading it; a genuine and legitimate concern about its impact on their roles, relationships, or identities; or a memory of past changes that were poorly executed or whose promised benefits never materialised. Each of these requires a different communicative response — and none of them can be addressed by issuing more communications about the change. They require dialogue, listening, honesty, and the willingness to adapt the approach in response to what is heard.</p>
+  </div>
+
+  <div id="r1" class="quiz-card">
+    <div class="quiz-title">Reading 1 — 10 Multiple-Choice Questions</div>
+    <div class="q-item"><div class="q-stem">1. What percentage of major change initiatives are estimated to fail to achieve their stated objectives?</div><div class="options"><label class="opt"><input type="radio" name="r1q1" value="a"> A. 30–40%</label><label class="opt"><input type="radio" name="r1q1" value="b"> B. 50–55%</label><label class="opt"><input type="radio" name="r1q1" value="c"> C. 60–70%</label><label class="opt"><input type="radio" name="r1q1" value="d"> D. 80–90%</label></div></div>
+    <div class="q-item"><div class="q-stem">2. According to the text, what is the fundamental problem with treating change communication as an "information-delivery exercise"?</div><div class="options"><label class="opt"><input type="radio" name="r1q2" value="a"> A. It generates too much information for employees to process effectively</label><label class="opt"><input type="radio" name="r1q2" value="b"> B. It systematically underestimates the psychological and emotional labour change demands</label><label class="opt"><input type="radio" name="r1q2" value="c"> C. It relies too heavily on digital channels rather than face-to-face communication</label><label class="opt"><input type="radio" name="r1q2" value="d"> D. It places too much focus on data and not enough on the project timeline</label></div></div>
+    <div class="q-item"><div class="q-stem">3. What does the text say effective change communication is "primarily about"?</div><div class="options"><label class="opt"><input type="radio" name="r1q3" value="a"> A. Delivering accurate, timely information about decisions already made</label><label class="opt"><input type="radio" name="r1q3" value="b"> B. Managing the expectations of senior stakeholders and investors</label><label class="opt"><input type="radio" name="r1q3" value="c"> C. Meaning-making, identity, and restoring a sense of agency in people experiencing change</label><label class="opt"><input type="radio" name="r1q3" value="d"> D. Tracking adoption rates and measuring engagement with the new system</label></div></div>
+    <div class="q-item"><div class="q-stem">4. How does the text distinguish a "change narrative" from a "change announcement"?</div><div class="options"><label class="opt"><input type="radio" name="r1q4" value="a"> A. An announcement is verbal; a narrative is always written</label><label class="opt"><input type="radio" name="r1q4" value="b"> B. An announcement is directional and impersonal; a narrative is relational and invites shared participation</label><label class="opt"><input type="radio" name="r1q4" value="c"> C. An announcement comes from the CEO; a narrative is developed collaboratively by the whole team</label><label class="opt"><input type="radio" name="r1q4" value="d"> D. A narrative is shorter and more memorable; an announcement contains more detail</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What does cognitive science research confirm about how humans make commitments, according to the text?</div><div class="options"><label class="opt"><input type="radio" name="r1q5" value="a"> A. They make decisions primarily based on data and rational analysis</label><label class="opt"><input type="radio" name="r1q5" value="b"> B. They make decisions and form commitments based on stories rather than data</label><label class="opt"><input type="radio" name="r1q5" value="c"> C. They respond most strongly to clear timelines and KPI dashboards</label><label class="opt"><input type="radio" name="r1q5" value="d"> D. They are most motivated by financial incentives linked to change adoption</label></div></div>
+    <div class="q-item"><div class="q-stem">6. How does the text reframe "resistance to change"?</div><div class="options"><label class="opt"><input type="radio" name="r1q6" value="a"> A. As a sign of poor leadership that must be addressed through disciplinary action</label><label class="opt"><input type="radio" name="r1q6" value="b"> B. As an inevitable phase of change that will resolve itself over time</label><label class="opt"><input type="radio" name="r1q6" value="c"> C. As a communication signal that the change narrative has not reached or addressed particular concerns</label><label class="opt"><input type="radio" name="r1q6" value="d"> D. As a legitimate veto that employees should be empowered to exercise</label></div></div>
+    <div class="q-item"><div class="q-stem">7. What does the text identify as the most valuable source of feedback for change leaders?</div><div class="options"><label class="opt"><input type="radio" name="r1q7" value="a"> A. Engagement survey data collected at the end of the change programme</label><label class="opt"><input type="radio" name="r1q7" value="b"> B. Resistance from employees</label><label class="opt"><input type="radio" name="r1q7" value="c"> C. Adoption rate metrics from the change management team</label><label class="opt"><input type="radio" name="r1q7" value="d"> D. Feedback from external consultants conducting a mid-programme review</label></div></div>
+    <div class="q-item"><div class="q-stem">8. Which of the following is NOT listed in the text as a reason why employees resist change?</div><div class="options"><label class="opt"><input type="radio" name="r1q8" value="a"> A. A lack of understanding of why the change is necessary</label><label class="opt"><input type="radio" name="r1q8" value="b"> B. A lack of trust in the people leading the change</label><label class="opt"><input type="radio" name="r1q8" value="c"> C. A desire to maintain the current pay and benefits structure</label><label class="opt"><input type="radio" name="r1q8" value="d"> D. A memory of past changes that were poorly executed</label></div></div>
+    <div class="q-item"><div class="q-stem">9. What does the text say cannot address the four causes of resistance?</div><div class="options"><label class="opt"><input type="radio" name="r1q9" value="a"> A. Dialogue, listening, and honesty</label><label class="opt"><input type="radio" name="r1q9" value="b"> B. Issuing more communications about the change</label><label class="opt"><input type="radio" name="r1q9" value="c"> C. Engaging change champions to model the new behaviours</label><label class="opt"><input type="radio" name="r1q9" value="d"> D. Adapting the change approach in response to feedback</label></div></div>
+    <div class="q-item"><div class="q-stem">10. What is the central argument of this text?</div><div class="options"><label class="opt"><input type="radio" name="r1q10" value="a"> A. Change fails because leaders do not communicate enough</label><label class="opt"><input type="radio" name="r1q10" value="b"> B. The language and approach of change communication — particularly the use of narrative and genuine dialogue — is the primary determinant of change success</label><label class="opt"><input type="radio" name="r1q10" value="c"> C. Resistance should be suppressed quickly to maintain programme momentum</label><label class="opt"><input type="radio" name="r1q10" value="d"> D. Change succeeds when leaders share data transparently and regularly with all staff</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('r1',{r1q1:'c',r1q2:'b',r1q3:'c',r1q4:'b',r1q5:'b',r1q6:'c',r1q7:'b',r1q8:'c',r1q9:'b',r1q10:'b'})">✅ Submit Answers</button><div id="r1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Reading 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>C</strong></li><li>2. <strong>B</strong></li><li>3. <strong>C</strong></li><li>4. <strong>B</strong></li><li>5. <strong>B</strong></li><li>6. <strong>C</strong></li><li>7. <strong>B</strong></li><li>8. <strong>C</strong></li><li>9. <strong>B</strong></li><li>10. <strong>B</strong></li></ol></div></div>
+
+  <div style="height:32px"></div>
+
+  <div class="reading-card">
+    <h3>Text 2 — Kotter's 8-Step Model and the Reality of Change Leadership in Practice</h3>
+    <p>John Kotter's 8-Step Model of Change, introduced in his 1996 book Leading Change, remains the most widely cited framework in organisational change management. Its steps — creating urgency, forming a powerful coalition, developing a clear vision, communicating the vision, empowering action, generating short-term wins, consolidating gains and producing more change, and finally anchoring new approaches in the culture — represent an attempt to codify the conditions under which large-scale change succeeds. The model's enduring appeal lies in its sequential logic: it presents change as a manageable, step-by-step process that any sufficiently motivated and organised leadership team can execute. This is both its greatest strength and its most significant limitation. In practice, organisational change is rarely sequential, and the conditions Kotter describes as prerequisites — a genuine sense of urgency, a cohesive and credible coalition, a clear and shared vision — are often absent at the outset and must be built iteratively as the change progresses, frequently in the face of the very uncertainty the change is designed to address.</p>
+    <p>The most frequently misapplied step in Kotter's model is Step 1: creating urgency. Many organisations interpret this as the requirement to present a "burning platform" — to describe the current situation as a crisis demanding immediate action. Used authentically, this can be a powerful catalyst for change: when leaders honestly share evidence of competitive threat, financial deterioration, or market disruption, it creates the shared recognition that the status quo is no longer viable. But when urgency is manufactured or exaggerated — when leaders present a crisis that employees do not recognise from their own experience — the result is often the opposite of engagement: cynicism, distrust, and a return to precisely the change fatigue that makes subsequent steps even harder to execute. The challenge for change leaders is to communicate urgency that is both honest and compelling — to help stakeholders see what the data shows without catastrophising or manipulating, and to connect the evidence of external threat to the internal values and ambitions that motivate the specific audience being addressed.</div>
+    <p>The final step — anchoring change in the culture — is where the majority of change programmes ultimately fail to achieve permanence. In organisations that execute the first seven steps effectively but neglect the eighth, changes that appear to have been successfully implemented are gradually eroded: employees revert to familiar patterns when the pressure of the change programme lifts; new systems are used superficially while old processes are maintained in parallel; the language of the change persists in slide decks and board papers while the underlying behaviour has not changed at all. Anchoring requires, above all, that the organisation's measurement, reward, and recognition systems are aligned with the new behaviours — because what is measured and rewarded is, over time, what is done. Leaders who celebrate adoption milestones but continue to reward employees for behaviours that predate the change send a powerful and unintentional message: the change is optional. That message, once received, is very difficult to unsend.</p>
+  </div>
+
+  <div id="r2" class="quiz-card">
+    <div class="quiz-title">Reading 2 — 10 Multiple-Choice Questions</div>
+    <div class="q-item"><div class="q-stem">1. What is identified as both the greatest strength and the most significant limitation of Kotter's model?</div><div class="options"><label class="opt"><input type="radio" name="r2q1" value="a"> A. Its focus on the role of senior leadership as the sole driver of change</label><label class="opt"><input type="radio" name="r2q1" value="b"> B. Its sequential logic — presenting change as a manageable step-by-step process</label><label class="opt"><input type="radio" name="r2q1" value="c"> C. Its emphasis on short-term wins at the expense of long-term cultural embedding</label><label class="opt"><input type="radio" name="r2q1" value="d"> D. Its requirement for extensive data analysis before any change can begin</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What does the text say about the conditions Kotter describes as prerequisites for change?</div><div class="options"><label class="opt"><input type="radio" name="r2q2" value="a"> A. They are easily established by any competent leadership team before the change begins</label><label class="opt"><input type="radio" name="r2q2" value="b"> B. They are often absent at the outset and must be built iteratively as the change progresses</label><label class="opt"><input type="radio" name="r2q2" value="c"> C. They are the primary responsibility of the HR department and not of line managers</label><label class="opt"><input type="radio" name="r2q2" value="d"> D. They only apply to large organisations with more than 500 employees</label></div></div>
+    <div class="q-item"><div class="q-stem">3. Which step does the text describe as the most frequently misapplied in Kotter's model?</div><div class="options"><label class="opt"><input type="radio" name="r2q3" value="a"> A. Step 8 — Anchoring change in the culture</label><label class="opt"><input type="radio" name="r2q3" value="b"> B. Step 4 — Communicating the vision</label><label class="opt"><input type="radio" name="r2q3" value="c"> C. Step 1 — Creating urgency</label><label class="opt"><input type="radio" name="r2q3" value="d"> D. Step 6 — Generating short-term wins</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What happens when urgency is "manufactured or exaggerated" in a change communication, according to the text?</div><div class="options"><label class="opt"><input type="radio" name="r2q4" value="a"> A. Employees respond with increased engagement and willingness to change</label><label class="opt"><input type="radio" name="r2q4" value="b"> B. The result is often cynicism, distrust, and worsened change fatigue</label><label class="opt"><input type="radio" name="r2q4" value="c"> C. Leaders can then move quickly through the subsequent steps of the model</label><label class="opt"><input type="radio" name="r2q4" value="d"> D. The organisation's board of directors intervenes to validate the urgency case</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What does the text identify as the challenge for change leaders when communicating urgency?</div><div class="options"><label class="opt"><input type="radio" name="r2q5" value="a"> A. To present urgency using data that employees cannot dispute or question</label><label class="opt"><input type="radio" name="r2q5" value="b"> B. To be both honest and compelling — sharing evidence without catastrophising or manipulating</label><label class="opt"><input type="radio" name="r2q5" value="c"> C. To create urgency that motivates executives while not alarming frontline staff</label><label class="opt"><input type="radio" name="r2q5" value="d"> D. To frame urgency in ways that justify the cost of the change programme to shareholders</label></div></div>
+    <div class="q-item"><div class="q-stem">6. What typically happens in organisations that successfully execute the first seven steps but neglect Step 8?</div><div class="options"><label class="opt"><input type="radio" name="r2q6" value="a"> A. The change is permanently embedded because of the momentum built in the preceding steps</label><label class="opt"><input type="radio" name="r2q6" value="b"> B. Changes that appeared successful are gradually eroded as old behaviours return</label><label class="opt"><input type="radio" name="r2q6" value="c"> C. The organisation launches a second wave of change to reinforce the first</label><label class="opt"><input type="radio" name="r2q6" value="d"> D. Senior leadership is replaced to bring fresh energy to the embedding phase</label></div></div>
+    <div class="q-item"><div class="q-stem">7. What does the text say is the essential requirement for anchoring change?</div><div class="options"><label class="opt"><input type="radio" name="r2q7" value="a"> A. A comprehensive training programme that covers all aspects of the new way of working</label><label class="opt"><input type="radio" name="r2q7" value="b"> B. Alignment of measurement, reward, and recognition systems with the new behaviours</label><label class="opt"><input type="radio" name="r2q7" value="c"> C. A formal communication from the CEO confirming the change is now permanent</label><label class="opt"><input type="radio" name="r2q7" value="d"> D. An external audit confirming that the change has been successfully implemented</label></div></div>
+    <div class="q-item"><div class="q-stem">8. What message do leaders send when they celebrate adoption but continue to reward pre-change behaviours?</div><div class="options"><label class="opt"><input type="radio" name="r2q8" value="a"> A. That the change has been fully implemented and further effort is optional</label><label class="opt"><input type="radio" name="r2q8" value="b"> B. That senior management values both old and new ways of working equally</label><label class="opt"><input type="radio" name="r2q8" value="c"> C. That the change is optional — a message that is very difficult to reverse once received</label><label class="opt"><input type="radio" name="r2q8" value="d"> D. That the organisation will launch a performance review to identify non-adopters</label></div></div>
+    <div class="q-item"><div class="q-stem">9. What does the phrase "the language of the change persists in slide decks and board papers while the underlying behaviour has not changed at all" mean?</div><div class="options"><label class="opt"><input type="radio" name="r2q9" value="a"> A. Change communications are too long and should be simplified for different audiences</label><label class="opt"><input type="radio" name="r2q9" value="b"> B. The formal documentation of a change can mask the absence of real behavioural change</label><label class="opt"><input type="radio" name="r2q9" value="c"> C. Board-level communications about change are always more accurate than team-level reporting</label><label class="opt"><input type="radio" name="r2q9" value="d"> D. Slide decks are an ineffective medium for communicating complex organisational change</label></div></div>
+    <div class="q-item"><div class="q-stem">10. What is the central argument of this text?</div><div class="options"><label class="opt"><input type="radio" name="r2q10" value="a"> A. Kotter's model is outdated and should be replaced by more recent change management frameworks</label><label class="opt"><input type="radio" name="r2q10" value="b"> B. Kotter's model is valuable but must be applied with a realistic understanding of its limitations — particularly the non-sequential nature of real change and the critical importance of Step 8</label><label class="opt"><input type="radio" name="r2q10" value="c"> C. The urgency step is the only part of Kotter's model that is reliably applicable in practice</label><label class="opt"><input type="radio" name="r2q10" value="d"> D. Change programmes that reach Step 7 are almost always successful in the long term</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('r2',{r2q1:'b',r2q2:'b',r2q3:'c',r2q4:'b',r2q5:'b',r2q6:'b',r2q7:'b',r2q8:'c',r2q9:'b',r2q10:'b'})">✅ Submit Answers</button><div id="r2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Reading 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>C</strong></li><li>4. <strong>B</strong></li><li>5. <strong>B</strong></li><li>6. <strong>B</strong></li><li>7. <strong>B</strong></li><li>8. <strong>C</strong></li><li>9. <strong>B</strong></li><li>10. <strong>B</strong></li></ol></div></div>
+</section>
+<div class="divider"></div>
+<!-- VOCABULARY -->
+<section id="vocabulary">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#fef3c7">✏️</div>
+    <div class="sec-text"><div class="sec-title">Vocabulary Exercises</div><div class="sec-sub">4 Exercises · Multiple Choice · Gap-Fill · True/False · Drag-and-Drop</div></div>
+  </div></div>
+
+  <!-- V1 MCQ -->
+  <div id="v1" class="quiz-card">
+    <div class="quiz-title">Exercise 1 — Multiple Choice: Change Management Vocabulary in Context</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the word or phrase that best completes each sentence.</p>
+    <div class="q-item"><div class="q-stem">1. The CEO described the competitive situation in stark terms — they were, she said, on a ________: if the company did not transform its operating model within 18 months, it would be uncompetitive in every major market it served.</div><div class="options"><label class="opt"><input type="radio" name="v1q1" value="a"> A. change curve</label><label class="opt"><input type="radio" name="v1q1" value="b"> B. burning platform</label><label class="opt"><input type="radio" name="v1q1" value="c"> C. transition state</label><label class="opt"><input type="radio" name="v1q1" value="d"> D. roadmap</label></div></div>
+    <div class="q-item"><div class="q-stem">2. Despite three months of implementation, the ________ for the new CRM system remained below 40% — the majority of the sales team were still using spreadsheets in parallel.</div><div class="options"><label class="opt"><input type="radio" name="v1q2" value="a"> A. change narrative</label><label class="opt"><input type="radio" name="v1q2" value="b"> B. feedback loop</label><label class="opt"><input type="radio" name="v1q2" value="c"> C. adoption rate</label><label class="opt"><input type="radio" name="v1q2" value="d"> D. quick win</label></div></div>
+    <div class="q-item"><div class="q-stem">3. The HR Director identified six high-performing middle managers who commanded genuine respect from their peers — she recruited them as ________ to advocate informally for the restructuring before the formal announcement.</div><div class="options"><label class="opt"><input type="radio" name="v1q3" value="a"> A. change sponsors</label><label class="opt"><input type="radio" name="v1q3" value="b"> B. change champions</label><label class="opt"><input type="radio" name="v1q3" value="c"> C. coalitions of support</label><label class="opt"><input type="radio" name="v1q3" value="d"> D. change fatigue</label></div></div>
+    <div class="q-item"><div class="q-stem">4. The programme team deliberately launched the new employee self-service portal in the finance department first — a visible ________ that generated positive word-of-mouth before the wider rollout began.</div><div class="options"><label class="opt"><input type="radio" name="v1q4" value="a"> A. transition state</div><label class="opt"><input type="radio" name="v1q4" value="b"> B. quick win</label><label class="opt"><input type="radio" name="v1q4" value="c"> C. change readiness</label><label class="opt"><input type="radio" name="v1q4" value="d"> D. productivity dip</label></div></div>
+    <div class="q-item"><div class="q-stem">5. A survey of staff revealed severe ________ — employees reported feeling overwhelmed by the simultaneous demands of the digital transformation, the office relocation, and the merger integration, with no clear end in sight for any of them.</div><div class="options"><label class="opt"><input type="radio" name="v1q5" value="a"> A. organisational resilience</label><label class="opt"><input type="radio" name="v1q5" value="b"> B. change readiness</label><label class="opt"><input type="radio" name="v1q5" value="c"> C. change fatigue</label><label class="opt"><input type="radio" name="v1q5" value="d"> D. impact assessment</label></div></div>
+    <div class="q-item"><div class="q-stem">6. Before finalising the new operating model, the change team conducted a full ________ for each of the affected business units, documenting the specific changes to job roles, reporting lines, and daily processes for every team.</div><div class="options"><label class="opt"><input type="radio" name="v1q6" value="a"> A. roadmap</label><label class="opt"><input type="radio" name="v1q6" value="b"> B. change narrative</label><label class="opt"><input type="radio" name="v1q6" value="c"> C. adoption rate</label><label class="opt"><input type="radio" name="v1q6" value="d"> D. impact assessment</label></div></div>
+    <div class="q-item"><div class="q-stem">7. The ________ — the period between the announcement and the full implementation — proved to be the most difficult phase: uncertainty was high, productivity fell, and the most talented employees began exploring external opportunities.</div><div class="options"><label class="opt"><input type="radio" name="v1q7" value="a"> A. transition state</label><label class="opt"><input type="radio" name="v1q7" value="b"> B. change curve</label><label class="opt"><input type="radio" name="v1q7" value="c"> C. burning platform</label><label class="opt"><input type="radio" name="v1q7" value="d"> D. quick win</label></div></div>
+    <div class="q-item"><div class="q-stem">8. The new CFO was appointed as ________ for the finance transformation — she had the seniority, credibility, and board access required to remove the structural barriers that middle management could not overcome alone.</div><div class="options"><label class="opt"><input type="radio" name="v1q8" value="a"> A. change champion</label><label class="opt"><input type="radio" name="v1q8" value="b"> B. feedback loop</label><label class="opt"><input type="radio" name="v1q8" value="c"> C. change sponsor</label><label class="opt"><input type="radio" name="v1q8" value="d"> D. change readiness</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('v1',{v1q1:'b',v1q2:'c',v1q3:'b',v1q4:'b',v1q5:'c',v1q6:'d',v1q7:'a',v1q8:'c'})">✅ Submit</button><div id="v1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — burning platform</li><li>2. <strong>C</strong> — adoption rate</li><li>3. <strong>B</strong> — change champions</li><li>4. <strong>B</strong> — quick win</li><li>5. <strong>C</strong> — change fatigue</li><li>6. <strong>D</strong> — impact assessment</li><li>7. <strong>A</strong> — transition state</li><li>8. <strong>C</strong> — change sponsor</li></ol></div></div>
+
+  <!-- V2 Gap Fill -->
+  <div id="v2" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 2 — Gap-Fill: Complete the Change Management Sentences</div>
+    <div style="background:#f5f2ec;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;font-family:'DM Mono',monospace;color:var(--sky);display:flex;flex-wrap:wrap;gap:8px">
+      <span>change readiness</span> | <span>change narrative</span> | <span>stakeholder buy-in</span> | <span>feedback loop</span> | <span>vision for change</span> | <span>productivity dip</span> | <span>coalition of support</span> | <span>embedding</span>
+    </div>
+    <div class="q-item"><div class="q-stem">1. The programme director assembled a cross-functional ________ — including the heads of finance, operations, IT, and HR — who collectively held enough credibility and influence to drive adoption across every part of the organisation.</div><div style="margin-top:8px"><input class="gap-input" id="gi1" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">2. Before communicating the transformation to all staff, the leadership team spent six weeks crafting a compelling ________ — a story that connected the competitive data to the organisation's founding values and described what success would feel like for every employee.</div><div style="margin-top:8px"><input class="gap-input" id="gi2" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">3. The ________ assessment revealed that fewer than a third of teams felt they had sufficient training, capacity, or leadership clarity to implement the proposed changes within the proposed timeline.</div><div style="margin-top:8px"><input class="gap-input" id="gi3" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">4. The change leader acknowledged the ________ honestly at the all-hands meeting: output would fall by an estimated 15–20% during the three-month system transition, but the long-term productivity gains would significantly outweigh the short-term cost.</div><div style="margin-top:8px"><input class="gap-input" id="gi4" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">5. Without genuine ________ from the regional directors — not just their surface agreement — the new performance management system could not be implemented consistently across the national network.</div><div style="margin-top:8px"><input class="gap-input" id="gi5" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">6. The team established a structured ________ — a monthly pulse survey and a dedicated escalation channel — so that concerns from the frontline could reach the steering committee in time to be acted upon.</div><div style="margin-top:8px"><input class="gap-input" id="gi6" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">7. The ________ was clear and inspiring: by the end of the three-year transformation, the company would be the most digitally capable, customer-centric insurer in its regional market — and every employee would have the skills to thrive in that future.</div><div style="margin-top:8px"><input class="gap-input" id="gi7" placeholder="type answer…"></div></div>
+    <div class="q-item"><div class="q-stem">8. The final and most neglected phase of the programme was ________ — integrating the new behaviours into the performance review system, the onboarding process, and the organisational values — so the change would survive the departure of its original sponsors.</div><div style="margin-top:8px"><input class="gap-input" id="gi8" placeholder="type answer…"></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeGap()">✅ Check Answers</button><div id="v2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>coalition of support</strong></li><li>2. <strong>change narrative</strong></li><li>3. <strong>change readiness</strong></li><li>4. <strong>productivity dip</strong></li><li>5. <strong>stakeholder buy-in</strong></li><li>6. <strong>feedback loop</strong></li><li>7. <strong>vision for change</strong></li><li>8. <strong>embedding</strong></li></ol></div></div>
+
+  <!-- V3 True/False -->
+  <div id="v3" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 3 — True or False: Change Management Concepts</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Select <strong>True</strong> or <strong>False</strong> based on the correct definitions and concepts from this module.</p>
+    <div class="q-item" id="tfr1"><div class="q-stem">1. A change champion is typically a very senior executive whose primary function is to remove structural barriers to the change at board level.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'1','T')">True</button><button class="tf-btn" onclick="pickTF(this,'1','F')">False</button></div></div>
+    <div class="q-item" id="tfr2"><div class="q-stem">2. Resistance to change can be a valuable source of feedback, revealing where the change narrative has not resonated or where concerns have not been addressed.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'2','T')">True</button><button class="tf-btn" onclick="pickTF(this,'2','F')">False</button></div></div>
+    <div class="q-item" id="tfr3"><div class="q-stem">3. A "quick win" in change management is an action taken to bring the overall change programme to an early conclusion before all stakeholders have been consulted.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'3','T')">True</button><button class="tf-btn" onclick="pickTF(this,'3','F')">False</button></div></div>
+    <div class="q-item" id="tfr4"><div class="q-stem">4. Change fatigue typically develops when employees experience too many simultaneous or poorly managed changes without adequate recovery time or visible success.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'4','T')">True</button><button class="tf-btn" onclick="pickTF(this,'4','F')">False</button></div></div>
+    <div class="q-item" id="tfr5"><div class="q-stem">5. The transition state is the final phase of a change programme, during which new behaviours are fully embedded and performance returns to above its pre-change level.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'5','T')">True</button><button class="tf-btn" onclick="pickTF(this,'5','F')">False</button></div></div>
+    <div class="q-item" id="tfr6"><div class="q-stem">6. Anchoring or embedding a change requires aligning the organisation's measurement, reward, and recognition systems with the new behaviours expected of employees.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'6','T')">True</button><button class="tf-btn" onclick="pickTF(this,'6','F')">False</button></div></div>
+    <div class="q-item" id="tfr7"><div class="q-stem">7. A change narrative and a change announcement serve the same communicative purpose and can be used interchangeably in a change programme.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'7','T')">True</button><button class="tf-btn" onclick="pickTF(this,'7','F')">False</button></div></div>
+    <div class="q-item" id="tfr8"><div class="q-stem">8. The adoption rate measures the proportion of the target population who are actively using or following the new process or system introduced by a change initiative.</div><div class="tf-row"><button class="tf-btn" onclick="pickTF(this,'8','T')">True</button><button class="tf-btn" onclick="pickTF(this,'8','F')">False</button></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeTF()">✅ Submit Answers</button><div id="v3-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>False</strong> — That describes a change sponsor. A change champion is typically a respected peer who advocates informally for the change.</li><li>2. <strong>True</strong></li><li>3. <strong>False</strong> — A quick win is an early, visible success that builds momentum and confidence in the programme.</li><li>4. <strong>True</strong></li><li>5. <strong>False</strong> — The transition state is the uncertain middle phase between the current and future state — not the final embedded phase.</li><li>6. <strong>True</strong></li><li>7. <strong>False</strong> — A narrative is relational and participatory; an announcement is directional and impersonal — they serve different purposes.</li><li>8. <strong>True</strong></li></ol></div></div>
+
+  <!-- V4 Drag Drop -->
+  <div id="v4" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Exercise 4 — Match: Change Term to Its Definition (Click to Select and Place)</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Click a term to select it, then click the matching definition box to place it.</p>
+    <div class="drag-bank" id="v4bank">
+      <div class="drag-chip" data-w="Change Curve" onclick="pickDrag(this)">Change Curve</div>
+      <div class="drag-chip" data-w="Burning Platform" onclick="pickDrag(this)">Burning Platform</div>
+      <div class="drag-chip" data-w="Change Sponsor" onclick="pickDrag(this)">Change Sponsor</div>
+      <div class="drag-chip" data-w="Adoption Rate" onclick="pickDrag(this)">Adoption Rate</div>
+      <div class="drag-chip" data-w="Roadmap" onclick="pickDrag(this)">Roadmap</div>
+      <div class="drag-chip" data-w="Vision for Change" onclick="pickDrag(this)">Vision for Change</div>
+      <div class="drag-chip" data-w="Feedback Loop" onclick="pickDrag(this)">Feedback Loop</div>
+      <div class="drag-chip" data-w="Productivity Dip" onclick="pickDrag(this)">Productivity Dip</div>
+    </div>
+    <div class="q-item"><div class="q-stem">1. "A compelling picture of what the organisation will look like after successful change — essential for motivating sustained effort." → <span class="drop-zone" data-ans="Vision for Change" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">2. "The emotional stages individuals pass through when experiencing significant organisational change." → <span class="drop-zone" data-ans="Change Curve" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">3. "A case for why the status quo is no longer viable — making maintaining the current state more dangerous than changing." → <span class="drop-zone" data-ans="Burning Platform" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">4. "A high-level plan showing the key phases, milestones, and activities of a change programme over time." → <span class="drop-zone" data-ans="Roadmap" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">5. "The temporary decline in output that typically occurs as employees adapt to new processes or systems." → <span class="drop-zone" data-ans="Productivity Dip" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">6. "A senior leader with authority and credibility to champion change at executive level and remove obstacles." → <span class="drop-zone" data-ans="Change Sponsor" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">7. "A structured mechanism for collecting stakeholder information about a change and using it to adjust the approach." → <span class="drop-zone" data-ans="Feedback Loop" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="q-item"><div class="q-stem">8. "The proportion of the target population actively using the new system or process at a defined point in time." → <span class="drop-zone" data-ans="Adoption Rate" onclick="doDrop(this)">Place here</span></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeDrop()">✅ Check Matches</button><button class="btn btn-outline" style="font-size:12px" onclick="resetDrop()">↺ Reset</button><div id="v4-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Vocabulary 4</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>Vision for Change</strong></li><li>2. <strong>Change Curve</strong></li><li>3. <strong>Burning Platform</strong></li><li>4. <strong>Roadmap</strong></li><li>5. <strong>Productivity Dip</strong></li><li>6. <strong>Change Sponsor</strong></li><li>7. <strong>Feedback Loop</strong></li><li>8. <strong>Adoption Rate</strong></li></ol></div></div>
+</section>
+<div class="divider"></div>
+<!-- GRAMMAR -->
+<section id="grammar">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#dcfce7">📐</div>
+    <div class="sec-text"><div class="sec-title">Grammar Exercises</div><div class="sec-sub">3 Exercises · Hedging Language · Complex Noun Phrases · Persuasive Devices</div></div>
+  </div></div>
+
+  <!-- G1 Hedging -->
+  <div id="g1" class="quiz-card">
+    <div class="quiz-title">Grammar 1 — Hedging Language in Change Communication</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the hedging expression that best fits the degree of certainty or caution required in each professional change communication sentence.</p>
+    <div class="q-item"><div class="q-stem">1. "The transition to the new operating model ________ lead to some temporary disruption in customer response times." <em>(possibility, honest but not alarmist)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q1" value="a"> A. will definitely</label><label class="opt"><input type="radio" name="g1q1" value="b"> B. may</label><label class="opt"><input type="radio" name="g1q1" value="c"> C. cannot possibly</label><label class="opt"><input type="radio" name="g1q1" value="d"> D. should definitely</label></div></div>
+    <div class="q-item"><div class="q-stem">2. "It ________ that the full rollout will be completed ahead of the original timeline, though this remains subject to the outcomes of the regional pilot." <em>(cautious optimism, not a firm commitment)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q2" value="a"> A. is certain</label><label class="opt"><input type="radio" name="g1q2" value="b"> B. is confirmed</label><label class="opt"><input type="radio" name="g1q2" value="c"> C. appears likely</label><label class="opt"><input type="radio" name="g1q2" value="d"> D. has been guaranteed</label></div></div>
+    <div class="q-item"><div class="q-stem">3. "The proposed changes ________ affect a number of roles across the customer service division, and further details will be communicated as the design process concludes." <em>(diplomatic uncertainty)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q3" value="a"> A. will not</label><label class="opt"><input type="radio" name="g1q3" value="b"> B. are unlikely to</label><label class="opt"><input type="radio" name="g1q3" value="c"> C. are expected to</label><label class="opt"><input type="radio" name="g1q3" value="d"> D. must not</label></div></div>
+    <div class="q-item"><div class="q-stem">4. "________, some disruption during the transition period is to be anticipated — our focus will be on minimising its impact and supporting every affected team." <em>(framing acknowledgement professionally)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q4" value="a"> A. Unfortunately and inevitably</label><label class="opt"><input type="radio" name="g1q4" value="b"> B. Clearly and obviously</label><label class="opt"><input type="radio" name="g1q4" value="c"> C. It would seem that</label><label class="opt"><input type="radio" name="g1q4" value="d"> D. As would be expected</label></div></div>
+    <div class="q-item"><div class="q-stem">5. "There ________ some uncertainty at this stage about the precise timeline for the second phase — we will share a detailed plan as soon as it has been confirmed." <em>(transparent acknowledgement of uncertainty)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q5" value="a"> A. is no</label><label class="opt"><input type="radio" name="g1q5" value="b"> B. remains some</label><label class="opt"><input type="radio" name="g1q5" value="c"> C. is definitely</label><label class="opt"><input type="radio" name="g1q5" value="d"> D. must not be</label></div></div>
+    <div class="q-item"><div class="q-stem">6. "________ the evidence suggests that this approach has delivered strong results in comparable organisations, results will of course depend on how effectively we adapt it to our own context." <em>(referencing evidence with appropriate caveat)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q6" value="a"> A. Given that</label><label class="opt"><input type="radio" name="g1q6" value="b"> B. While</label><label class="opt"><input type="radio" name="g1q6" value="c"> C. Since definitively</label><label class="opt"><input type="radio" name="g1q6" value="d"> D. Provided only that</label></div></div>
+    <div class="q-item"><div class="q-stem">7. "The leadership team ________ confident that this is the right direction — but we also recognise that we will need your support, your patience, and your honest feedback to get there successfully." <em>(conviction with humility)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q7" value="a"> A. cannot be</label><label class="opt"><input type="radio" name="g1q7" value="b"> B. might not be</label><label class="opt"><input type="radio" name="g1q7" value="c"> C. remains</label><label class="opt"><input type="radio" name="g1q7" value="d"> D. was once</label></div></div>
+    <div class="q-item"><div class="q-stem">8. "The data ________ that our current cost base will become unsustainable within two years unless we implement the proposed efficiency measures." <em>(evidence-based assertion, professionally hedged)</em></div><div class="options"><label class="opt"><input type="radio" name="g1q8" value="a"> A. proves beyond doubt</label><label class="opt"><input type="radio" name="g1q8" value="b"> B. suggests strongly</label><label class="opt"><input type="radio" name="g1q8" value="c"> C. confirms absolutely</label><label class="opt"><input type="radio" name="g1q8" value="d"> D. cannot indicate</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g1',{g1q1:'b',g1q2:'c',g1q3:'c',g1q4:'d',g1q5:'b',g1q6:'b',g1q7:'c',g1q8:'b'})">✅ Submit</button><div id="g1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — "may" (appropriate possibility without overstating the risk)</li><li>2. <strong>C</strong> — "appears likely" (cautious optimism, not a firm commitment)</li><li>3. <strong>C</strong> — "are expected to" (diplomatic acknowledgement of anticipated impact)</li><li>4. <strong>D</strong> — "As would be expected" (professional framing that normalises disruption without alarm)</li><li>5. <strong>B</strong> — "remains some" (honest, transparent acknowledgement of uncertainty)</li><li>6. <strong>B</strong> — "While" (referencing evidence with a concessive caveat)</li><li>7. <strong>C</strong> — "remains" (conviction with ongoing humility — not absolute certainty)</li><li>8. <strong>B</strong> — "suggests strongly" (evidence-based assertion without overstatement)</li></ol></div></div>
+
+  <!-- G2 Complex Noun Phrases -->
+  <div id="g2" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Grammar 2 — Complex Noun Phrases in Change Management Writing</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Choose the most accurate and professionally appropriate noun phrase to complete each sentence from a change communication document.</p>
+    <div class="q-item"><div class="q-stem">1. The ________ revealed that fewer than 40% of employees felt adequately informed about the rationale for the restructuring.</div><div class="options"><label class="opt"><input type="radio" name="g2q1" value="a"> A. thing we found out about people's feelings</label><label class="opt"><input type="radio" name="g2q1" value="b"> B. employee engagement survey results</label><label class="opt"><input type="radio" name="g2q1" value="c"> C. findings about what staff thought</label><label class="opt"><input type="radio" name="g2q1" value="d"> D. information we collected from workers</label></div></div>
+    <div class="q-item"><div class="q-stem">2. The ________ identified a significant gap between the skills the organisation would require in 2026 and the capabilities currently available within the workforce.</div><div class="options"><label class="opt"><input type="radio" name="g2q2" value="a"> A. skill gap analysis exercise</label><label class="opt"><input type="radio" name="g2q2" value="b"> B. thing the HR team looked at</label><label class="opt"><input type="radio" name="g2q2" value="c"> C. workforce capability impact assessment</label><label class="opt"><input type="radio" name="g2q2" value="d"> D. study of what skills people have</label></div></div>
+    <div class="q-item"><div class="q-stem">3. The ________ will be reviewed by the steering committee at the end of each phase to ensure the programme remains on track.</div><div class="options"><label class="opt"><input type="radio" name="g2q3" value="a"> A. progress update about how things are going</label><label class="opt"><input type="radio" name="g2q3" value="b"> B. change programme performance dashboard</label><label class="opt"><input type="radio" name="g2q3" value="c"> C. report on the change and where it is</label><label class="opt"><input type="radio" name="g2q3" value="d"> D. monthly discussion about the programme</label></div></div>
+    <div class="q-item"><div class="q-stem">4. A ________ has been established to ensure that emerging risks and employee concerns are escalated to the Change Director within 48 hours of identification.</div><div class="options"><label class="opt"><input type="radio" name="g2q4" value="a"> A. system for telling people about problems</label><label class="opt"><input type="radio" name="g2q4" value="b"> B. real-time issue escalation protocol</label><label class="opt"><input type="radio" name="g2q4" value="c"> C. process that deals with things when they happen</label><label class="opt"><input type="radio" name="g2q4" value="d"> D. channel where managers can raise concerns</label></div></div>
+    <div class="q-item"><div class="q-stem">5. The ________ will include training sessions, coaching for line managers, and a dedicated helpline for employees with questions about the new ways of working.</div><div class="options"><label class="opt"><input type="radio" name="g2q5" value="a"> A. plan for helping employees get used to things</label><label class="opt"><input type="radio" name="g2q5" value="b"> B. staff transition support programme</label><label class="opt"><input type="radio" name="g2q5" value="c"> C. things we are doing to support staff</label><label class="opt"><input type="radio" name="g2q5" value="d"> D. employee assistance and training offer</label></div></div>
+    <div class="q-item"><div class="q-stem">6. The board approved a ________ that confirmed senior leadership's commitment to the new strategy and outlined the non-negotiables for the first twelve months.</div><div class="options"><label class="opt"><input type="radio" name="g2q6" value="a"> A. leadership letter about the strategic direction</label><label class="opt"><input type="radio" name="g2q6" value="b"> B. formal strategic direction and commitment statement</label><label class="opt"><input type="radio" name="g2q6" value="c"> C. official paper saying what the strategy is</label><label class="opt"><input type="radio" name="g2q6" value="d"> D. document from the board about next steps</label></div></div>
+    <div class="q-item"><div class="q-stem">7. The ________ showed a clear upward trend in active system users across all four divisions, confirming that adoption was accelerating ahead of projections.</div><div class="options"><label class="opt"><input type="radio" name="g2q7" value="a"> A. weekly adoption rate tracking data</label><label class="opt"><input type="radio" name="g2q7" value="b"> B. information about how many people are using the system</label><label class="opt"><input type="radio" name="g2q7" value="c"> C. report on the number of users</label><label class="opt"><input type="radio" name="g2q7" value="d"> D. update from the IT department</label></div></div>
+    <div class="q-item"><div class="q-stem">8. As part of the ________, each business unit was asked to nominate two employees who had demonstrated exceptional adoption of the new behaviours and to share their experiences at the quarterly all-hands event.</div><div class="options"><label class="opt"><input type="radio" name="g2q8" value="a"> A. change champion recognition and sharing initiative</label><label class="opt"><input type="radio" name="g2q8" value="b"> B. programme to celebrate the people doing well with the change</label><label class="opt"><input type="radio" name="g2q8" value="c"> C. staff appreciation and visibility activity</label><label class="opt"><input type="radio" name="g2q8" value="d"> D. event about recognising good examples</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g2',{g2q1:'b',g2q2:'c',g2q3:'b',g2q4:'b',g2q5:'b',g2q6:'b',g2q7:'a',g2q8:'a'})">✅ Submit</button><div id="g2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — "employee engagement survey results"</li><li>2. <strong>C</strong> — "workforce capability impact assessment"</li><li>3. <strong>B</strong> — "change programme performance dashboard"</li><li>4. <strong>B</strong> — "real-time issue escalation protocol"</li><li>5. <strong>B</strong> — "staff transition support programme"</li><li>6. <strong>B</strong> — "formal strategic direction and commitment statement"</li><li>7. <strong>A</strong> — "weekly adoption rate tracking data"</li><li>8. <strong>A</strong> — "change champion recognition and sharing initiative"</li></ol></div></div>
+
+  <!-- G3 Persuasive Devices -->
+  <div id="g3" class="quiz-card" style="margin-top:24px">
+    <div class="quiz-title">Grammar 3 — Persuasive Rhetorical Devices in Change Communication</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Identify the rhetorical device used in each extract from a change communication, or choose the most effective version of a sentence.</p>
+    <div class="q-item"><div class="q-stem">1. "We have a choice. We can act now, together, and shape the future of this organisation. Or we can wait — and let that future be shaped for us." — What rhetorical device is used?</div><div class="options"><label class="opt"><input type="radio" name="g3q1" value="a"> A. Hedging</label><label class="opt"><input type="radio" name="g3q1" value="b"> B. Antithesis (contrasting two opposite options for emphasis)</label><label class="opt"><input type="radio" name="g3q1" value="c"> C. Complex noun phrase</label><label class="opt"><input type="radio" name="g3q1" value="d"> D. Passive voice</label></div></div>
+    <div class="q-item"><div class="q-stem">2. "This is not just a technology upgrade. This is a fundamental reimagining of how we serve our customers, how we work with each other, and how we compete in our market." — What device reinforces the scale of the change?</div><div class="options"><label class="opt"><input type="radio" name="g3q2" value="a"> A. Understatement</label><label class="opt"><input type="radio" name="g3q2" value="b"> B. Rhetorical question</label><label class="opt"><input type="radio" name="g3q2" value="c"> C. Anaphora (repetition of "how" to build rhythm and emphasis)</label><label class="opt"><input type="radio" name="g3q2" value="d"> D. Hedging language</label></div></div>
+    <div class="q-item"><div class="q-stem">3. Which version of this change communication sentence is most likely to generate genuine commitment?</div><div class="options"><label class="opt"><input type="radio" name="g3q3" value="a"> A. "This change has been decided by the board and will be implemented from March."</label><label class="opt"><input type="radio" name="g3q3" value="b"> B. "We need you to adopt the new system because it is more cost-efficient for the company."</label><label class="opt"><input type="radio" name="g3q3" value="c"> C. "This change gives each of us the tools to do the work we're proud of — faster, with less friction, and for more customers."</label><label class="opt"><input type="radio" name="g3q3" value="d"> D. "Failure to adopt the new system by the deadline will be addressed through the performance management process."</label></div></div>
+    <div class="q-item"><div class="q-stem">4. "So let me ask you: when our customers look at us in five years' time, what do you want them to see?" — What is the purpose of this device in a change communication?</div><div class="options"><label class="opt"><input type="radio" name="g3q4" value="a"> A. To avoid answering a difficult question from the audience</label><label class="opt"><input type="radio" name="g3q4" value="b"> B. To invite the audience into the narrative and build personal commitment through a rhetorical question</label><label class="opt"><input type="radio" name="g3q4" value="c"> C. To signal that the speaker does not know the direction of the change programme</label><label class="opt"><input type="radio" name="g3q4" value="d"> D. To demonstrate transparency about the limitations of the change plan</label></div></div>
+    <div class="q-item"><div class="q-stem">5. "We have worked together through significant challenges before. We have navigated a global pandemic, a market downturn, and a complete leadership transition — and we have come through each one stronger than before." — What device is used, and why?</div><div class="options"><label class="opt"><input type="radio" name="g3q5" value="a"> A. Antithesis — to contrast past failure with future success</label><label class="opt"><input type="radio" name="g3q5" value="b"> B. Anaphora — "we have" is repeated to build collective identity and confidence</label><label class="opt"><input type="radio" name="g3q5" value="c"> C. Hedging — to acknowledge the difficulty of past change without overpromising</label><label class="opt"><input type="radio" name="g3q5" value="d"> D. Complex noun phrase — to describe past events with precision</label></div></div>
+    <div class="q-item"><div class="q-stem">6. Which sentence uses the most effective "inclusive we" language in a change communication?</div><div class="options"><label class="opt"><input type="radio" name="g3q6" value="a"> A. "Management has decided to implement the following changes, effective immediately."</label><label class="opt"><input type="radio" name="g3q6" value="b"> B. "You are required to comply with the new processes as outlined in the attached guidance."</label><label class="opt"><input type="radio" name="g3q6" value="c"> C. "Together, we will build an organisation that each of us is genuinely proud to be part of."</label><label class="opt"><input type="radio" name="g3q6" value="d"> D. "Staff should note that the transition will take effect from the first of next month."</label></div></div>
+    <div class="q-item"><div class="q-stem">7. "The scale of the challenge we face is significant. But so is the scale of the opportunity." — What rhetorical technique creates impact here?</div><div class="options"><label class="opt"><input type="radio" name="g3q7" value="a"> A. A complex noun phrase describing the opportunity</label><label class="opt"><input type="radio" name="g3q7" value="b"> B. A hedged statement acknowledging uncertainty about outcomes</label><label class="opt"><input type="radio" name="g3q7" value="c"> C. Antithesis — contrasting challenge with opportunity to reframe resistance</label><label class="opt"><input type="radio" name="g3q7" value="d"> D. Anaphora — repeating key words to create a rhythmic, memorable message</label></div></div>
+    <div class="q-item"><div class="q-stem">8. Which of the following openers most effectively builds urgency without manufacturing a crisis?</div><div class="options"><label class="opt"><input type="radio" name="g3q8" value="a"> A. "If we do not change immediately, we will fail. This is not negotiable."</label><label class="opt"><input type="radio" name="g3q8" value="b"> B. "The data shows that our three largest competitors have each invested significantly in this capability. We have not. That gap matters — and the time to close it is now."</label><label class="opt"><input type="radio" name="g3q8" value="c"> C. "Change is always difficult, and we understand if some of you have reservations about this programme."</label><label class="opt"><input type="radio" name="g3q8" value="d"> D. "This initiative has been approved by the board and will proceed on schedule regardless of feedback."</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('g3',{g3q1:'b',g3q2:'c',g3q3:'c',g3q4:'b',g3q5:'b',g3q6:'c',g3q7:'c',g3q8:'b'})">✅ Submit</button><div id="g3-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Grammar 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong> — Antithesis: contrasting "act now, together" with "wait and let it happen to us"</li><li>2. <strong>C</strong> — Anaphora: "how we serve…how we work…how we compete" — triple repetition builds rhythm and scale</li><li>3. <strong>C</strong> — Connects the change to the audience's professional values and personal experience (meaning-making)</li><li>4. <strong>B</strong> — Rhetorical question inviting personal reflection and building individual commitment</li><li>5. <strong>B</strong> — "We have" repeated to build collective identity and confidence through shared history</li><li>6. <strong>C</strong> — Inclusive "we" creates shared ownership; avoids "management" / "you" / "staff" which positions leader and audience as separate</li><li>7. <strong>C</strong> — Antithesis reframes the challenge as an opportunity, shifting emotional valence</li><li>8. <strong>B</strong> — Evidence-based urgency (competitor data + gap) without catastrophising or threats</li></ol></div></div>
+</section>
+<div class="divider"></div>
+
+<!-- GRAMMAR REVIEW -->
+<section id="grammarreview">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#e0e7ff">📘</div>
+    <div class="sec-text"><div class="sec-title">Grammar Review</div><div class="sec-sub">3 Detailed Reference Boxes · All Grammar Points from Module 8</div></div>
+  </div></div>
+
+  <div class="grammar-box">
+    <h4>1. Hedging Language in Professional Change Communication</h4>
+    <p>Hedging — the use of language that softens claims, qualifies assertions, and signals appropriate uncertainty — is a core competence in professional change communication. It conveys honesty, builds credibility, and avoids the credibility damage that results from over-promising.</p>
+    <ul>
+      <li><strong>Modal verbs for possibility/probability:</strong> "may / might / could affect…" / "this should lead to…" / "we would expect…"</li>
+      <li><strong>Adverbial hedges:</strong> "likely" / "probably" / "in most cases" / "to some extent" / "broadly speaking"</li>
+      <li><strong>Impersonal constructions:</strong> "It appears that…" / "It is anticipated that…" / "It would seem…" / "There appears to be…"</li>
+      <li><strong>Verb-based hedges:</strong> "The data suggests…" / "Evidence indicates…" / "This appears to reflect…" / "It remains unclear whether…"</li>
+      <li><strong>Concessive openers:</strong> "While it is too early to confirm…" / "Although progress has been positive…" / "Given the complexity involved…"</li>
+      <li><strong>Transparent uncertainty:</strong> "There remains some uncertainty at this stage…" / "We will share further details as they become available."</li>
+    </ul>
+    <div class="ex">✔ Overstatement (avoid): "This will definitely deliver cost savings of 20% within six months."<br>✔ Hedged (use): "The data suggests we may achieve cost savings in the range of 15–20%, though this will depend on the pace of adoption across divisions."<br>✔ "It appears likely that the rollout will be completed ahead of schedule, though this remains subject to pilot outcomes."<br>✔ "While some disruption is to be anticipated during the transition, we expect this to be manageable with appropriate support."</div>
+  </div>
+
+  <div class="grammar-box">
+    <h4>2. Complex Noun Phrases in Change Management Documents</h4>
+    <p>In professional change communications, reports, and plans, complex noun phrases pack detailed information into a compact, authoritative form. Mastering them is essential for writing at B2 level and above.</p>
+    <p>A complex noun phrase consists of: <strong>pre-modifier(s) + head noun + post-modifier(s)</strong></p>
+    <ul>
+      <li><strong>Pre-modifiers</strong> (adjectives, nouns, past/present participles before the head noun): "cross-functional change management team" / "evidence-based communication approach"</li>
+      <li><strong>Head noun</strong>: the main noun — "assessment," "programme," "initiative," "framework"</li>
+      <li><strong>Post-modifiers</strong> (prepositional phrases, relative clauses, infinitive phrases after the head noun): "an initiative designed to build change capability" / "a framework that aligns incentives with new behaviours"</li>
+    </ul>
+    <ul>
+      <li>Simple: "a plan" → Complex: "a phased stakeholder engagement and communication plan"</li>
+      <li>Simple: "a meeting" → Complex: "a cross-divisional change leadership forum"</li>
+      <li>Simple: "data" → Complex: "weekly adoption rate tracking data from all four divisions"</li>
+      <li>Simple: "a survey" → Complex: "a structured employee change readiness assessment survey"</li>
+    </ul>
+    <div class="ex">✔ Weak: "We have a system for raising issues."<br>✔ Strong: "A real-time issue escalation protocol has been established."<br>✔ Weak: "There will be a programme to help staff."<br>✔ Strong: "A comprehensive staff transition support programme will be launched in Q2."<br>✔ Weak: "We looked at the skills people have."<br>✔ Strong: "A workforce capability impact assessment was conducted across all business units."</div>
+  </div>
+
+  <div class="grammar-box">
+    <h4>3. Persuasive Rhetorical Devices in Change Leadership Communication</h4>
+    <p>Effective change leaders use rhetorical devices deliberately to create urgency, build connection, and inspire commitment. These are not manipulative tricks — they are the tools of honest and emotionally intelligent professional communication.</p>
+    <ul>
+      <li><strong>Antithesis</strong> — Contrasting two opposing ideas for emphasis and clarity: "We can shape our future, or we can let it be shaped for us." / "The scale of the challenge is significant. But so is the scale of the opportunity."</li>
+      <li><strong>Anaphora</strong> — Repeating a word or phrase at the start of successive clauses to build rhythm and emphasis: "We have overcome a pandemic. We have navigated a market downturn. We have rebuilt our leadership team." / "How we serve our customers. How we work together. How we compete."</li>
+      <li><strong>Rhetorical question</strong> — A question asked not to receive an answer but to invite reflection and build personal commitment: "When our customers look at us in five years, what do you want them to see?" / "Is this the organisation we set out to build?"</li>
+      <li><strong>Inclusive language</strong> — Using "we" and "our" to create shared ownership: "Together, we will build an organisation we are proud of." (vs. the distancing "management has decided…")</li>
+      <li><strong>Concrete specificity</strong> — Evidence-based urgency rather than manufactured crisis: "Our three largest competitors have invested in this capability. We have not. That gap matters." (honest, data-grounded, not catastrophising)</li>
+      <li><strong>Emotional anchoring</strong> — Connecting the change to the audience's values: "This is not just about efficiency. It is about giving each of you the tools to do work you're genuinely proud of."</li>
+    </ul>
+    <div class="ex">✔ Anaphora: "We have done it before. We have the people. We have the plan. We have the will."<br>✔ Antithesis: "We can wait for the market to change us. Or we can change the market."<br>✔ Rhetorical question: "What kind of organisation do we want to be known for?"<br>✔ Inclusive: "We are asking a lot. But we are also offering a lot — to each other and to the people we serve."</div>
+  </div>
+</section>
+<div class="divider"></div>
+<!-- WRITING -->
+<section id="writing">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#fef3c7">✍️</div>
+    <div class="sec-text"><div class="sec-title">Writing Activities</div><div class="sec-sub">2 Professional Writing Tasks · Change Communication & Stakeholder Engagement</div></div>
+  </div></div>
+
+  <div class="writing-card">
+    <h4>✍️ Writing Task 1 — Change Communication Announcement</h4>
+    <div><span class="tag tag-navy">All-Staff Message</span><span class="tag tag-gold">220–280 words</span></div>
+    <p class="writing-task"><strong>Context:</strong> You are the Chief Operating Officer of a mid-sized professional services firm. Following an extensive review, the leadership team has decided to move from a traditional office-based working model to a hybrid model, in which employees will work from home three days per week and from the office two days. The primary reasons are: (1) to reduce the cost of the company's central London office lease by 40%; (2) to improve employee wellbeing and work-life balance following post-pandemic feedback; and (3) to enable the firm to attract talent from outside London. The change will take effect in 90 days. Some employees — particularly those in client-facing roles — have informally expressed concerns about team cohesion and client relationships.<br><br>Write a professional all-staff communication announcing this change. Your message must: <strong>(1)</strong> Open with a compelling change narrative that explains the rationale clearly and honestly. <strong>(2)</strong> Acknowledge the concerns that some employees may have. <strong>(3)</strong> Describe what support will be provided during the transition. <strong>(4)</strong> Close with an inclusive, forward-looking statement. Use hedging language where appropriate and at least one persuasive device. Avoid management jargon and passive distancing language.</p>
+    <textarea class="writing-area" id="w1ta" placeholder="Write your change communication announcement here…" oninput="wcCalc('w1ta','w1wc',280)"></textarea>
+    <div class="wc-display" id="w1wc">Words: 0 / 280</div>
+    <div class="btn-row"><button class="btn btn-gold" onclick="alert('Communication submitted for teacher review.')">📤 Submit</button></div>
+  </div>
+
+  <div class="writing-card">
+    <h4>✍️ Writing Task 2 — Stakeholder Engagement Plan Extract</h4>
+    <div><span class="tag tag-navy">Internal Plan</span><span class="tag tag-gold">260–320 words</span></div>
+    <p class="writing-task"><strong>Context:</strong> As part of the hybrid working transition (Task 1), you have been asked to write an extract from the formal Stakeholder Engagement Plan for the programme. The plan must cover the following stakeholder groups: <strong>(1) Senior leadership team</strong> — high influence, generally supportive but have concerns about productivity measurement; <strong>(2) Client-facing teams</strong> (account managers, consultants) — high impact, some resistance, concerned about client relationships and team culture; <strong>(3) Support functions</strong> (HR, Finance, IT) — medium impact, broadly supportive but need clarity on logistics; <strong>(4) Clients</strong> — external stakeholders, low direct impact but must be communicated to professionally.<br><br>For each stakeholder group, your plan extract must specify: <strong>(a)</strong> Their primary concern or interest in the change. <strong>(b)</strong> The engagement approach (e.g. individual briefings, workshops, written communication). <strong>(c)</strong> The key message to communicate to them. <strong>(d)</strong> The timing of engagement. Write in formal professional English using complex noun phrases and structured formatting (e.g. numbered sections or a clear paragraph per group). Avoid bullet points.</p>
+    <textarea class="writing-area" id="w2ta" placeholder="Write your stakeholder engagement plan extract here…" oninput="wcCalc('w2ta','w2wc',320)"></textarea>
+    <div class="wc-display" id="w2wc">Words: 0 / 320</div>
+    <div class="btn-row"><button class="btn btn-gold" onclick="alert('Stakeholder engagement plan submitted for teacher review.')">📤 Submit</button></div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- LISTENING — all 3 with working dropdown transcripts + mobile-friendly TTS -->
+<section id="listening">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#e0e7ff">🎧</div>
+    <div class="sec-text"><div class="sec-title">Listening Activities</div><div class="sec-sub">3 Audio Activities · TTS Player · Dropdown Transcripts · Mobile-Compatible</div></div>
+  </div></div>
+  <div class="info-box" style="background:#fffbf0;border-color:rgba(201,168,76,.3)">🔊 Tap ▶ to listen. The audio uses your device's built-in text-to-speech — works on most browsers including mobile Safari and Chrome. Reveal the transcript any time using the dropdown below each player.</div>
+
+  <!-- ── LISTENING 1 ── -->
+  <div class="listen-block">
+    <div class="listen-header">
+      <div class="listen-icon">🎙️</div>
+      <div class="listen-meta">
+        <h4>Activity 1: Podcast — The Psychology of Resistance to Change</h4>
+        <div class="track-sub">Organisational Psychologist · Change Leadership Series</div>
+        <div class="listen-tags">
+          <span class="ltag ltag-gold">LEVEL: B1–B2</span>
+          <span class="ltag ltag-outline">MULTIPLE CHOICE</span>
+          <span class="ltag ltag-outline">FOCUS: KEY CONCEPTS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp1" onclick="handlePlay('ls1','pp1','prog1','tm1','dur1','st1')">▶</button>
+        <div class="player-track-info">
+          <div class="track-title-sm">The Psychology of Resistance to Change</div>
+          <div class="track-sub-sm">Organisational Psychologist · Podcast</div>
+        </div>
+        <div class="time-display"><span id="tm1">0:00</span> / <span id="dur1">—</span></div>
+      </div>
+      <div class="progress-audio" id="pa1" onclick="seekAudio(event,'pa1','ls1','prog1','tm1')">
+        <div class="progress-audio-fill" id="prog1"></div>
+      </div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpd('ls1',0.7,this)">0.7×</button>
+        <button class="speed-btn active-spd" onclick="setSpd('ls1',0.85,this)">0.85×</button>
+        <button class="speed-btn" onclick="setSpd('ls1',1.0,this)">1.0×</button>
+        <button class="speed-btn" onclick="setSpd('ls1',1.2,this)">1.2×</button>
+        <button class="replay-btn" onclick="replayAudio('ls1','pp1','prog1','tm1','dur1','st1')">↺ Replay</button>
+        <span id="st1" class="play-status">Ready</span>
+      </div>
+      <p class="player-note">🔊 Works on mobile (Safari, Chrome) · No internet audio required</p>
+    </div>
+
+    <div class="transcript-section">
+      <button class="transcript-btn" id="tb1" onclick="toggleTranscript('tp1','tb1')">
+        <span class="t-arrow">▶</span>
+        <span class="t-label">Show / Hide Full Transcript</span>
+        <span class="t-hint">Tap to expand</span>
+      </button>
+      <div class="transcript-panel" id="tp1">
+        <div class="transcript-panel-inner">
+          <p id="ls1">Welcome to the Change Leadership Series. I am Dr Priya Sharma, an organisational psychologist specialising in change behaviour, and today I want to explore something that every change leader encounters and very few handle well: resistance. The first thing I want to say about resistance is that it is entirely rational. When we describe an employee as resistant to change, we typically mean they are behaving in ways that slow down or oppose the change we have decided is necessary. But from their perspective, they are protecting something they value — their sense of competence, their professional identity, their established relationships, or simply their confidence that they know what good work looks like in their role. Change threatens all of these things. It is not irrational to protect them. The change curve model, which most change managers are familiar with, describes the emotional journey from initial shock and denial through frustration and low morale to a turning point — what we might call the moment of acceptance — and then gradually upward through experimentation and growing confidence to full integration of the new way of working. The critical insight for change leaders is that people move through this curve at different speeds. Some people are naturally more comfortable with ambiguity and will reach the acceptance point quickly. Others — particularly those whose professional identity is most deeply tied to the practices that are being changed — will take significantly longer, and no amount of communication about the benefits of the new approach will accelerate that journey if the underlying emotional processing has not yet occurred. What does help is being heard, having concerns acknowledged, and being given genuine agency over some aspect of how the change is implemented in their area. That is what changes behaviour — not more slide decks about the roadmap.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the podcast, then answer the 5 questions below.</div>
+      <div id="l1" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. How does Dr Sharma describe resistance to change?</div><div class="options"><label class="opt"><input type="radio" name="l1q1" value="a"> A. As irrational behaviour driven by fear of the unknown</label><label class="opt"><input type="radio" name="l1q1" value="b"> B. As entirely rational — people are protecting things they genuinely value</label><label class="opt"><input type="radio" name="l1q1" value="c"> C. As a sign of poor cultural fit that should lead to performance management</label><label class="opt"><input type="radio" name="l1q1" value="d"> D. As a temporary reaction that resolves itself without intervention within a few weeks</label></div></div>
+        <div class="q-item"><div class="q-stem">2. What four things does Dr Sharma say employees are typically trying to protect when they resist change?</div><div class="options"><label class="opt"><input type="radio" name="l1q2" value="a"> A. Salary, seniority, office location, and working hours</label><label class="opt"><input type="radio" name="l1q2" value="b"> B. Professional reputation, team size, budget control, and reporting lines</label><label class="opt"><input type="radio" name="l1q2" value="c"> C. Sense of competence, professional identity, established relationships, and confidence in their work</label><label class="opt"><input type="radio" name="l1q2" value="d"> D. Current performance ratings, access to training, pay progression, and job security</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What is described as "the critical insight" about the change curve model?</div><div class="options"><label class="opt"><input type="radio" name="l1q3" value="a"> A. Most people move through all stages of the curve within three months</label><label class="opt"><input type="radio" name="l1q3" value="b"> B. People move through the curve at different speeds, depending on how deeply their identity is tied to what is changing</label><label class="opt"><input type="radio" name="l1q3" value="c"> C. The curve only applies to senior employees who have a strong attachment to existing ways of working</label><label class="opt"><input type="radio" name="l1q3" value="d"> D. The acceptance point is reached more quickly when leaders share detailed implementation data</label></div></div>
+        <div class="q-item"><div class="q-stem">4. What does Dr Sharma say cannot accelerate the emotional journey through the curve?</div><div class="options"><label class="opt"><input type="radio" name="l1q4" value="a"> A. Coaching and mentoring support from line managers</label><label class="opt"><input type="radio" name="l1q4" value="b"> B. Regular team discussions about how the change is progressing</label><label class="opt"><input type="radio" name="l1q4" value="c"> C. Communication about the benefits of the new approach if the underlying emotional processing has not occurred</label><label class="opt"><input type="radio" name="l1q4" value="d"> D. Recognition and celebration of adoption milestones</label></div></div>
+        <div class="q-item"><div class="q-stem">5. According to Dr Sharma, what three things genuinely change behaviour during a change programme?</div><div class="options"><label class="opt"><input type="radio" name="l1q5" value="a"> A. Clear deadlines, financial incentives, and regular performance reviews</label><label class="opt"><input type="radio" name="l1q5" value="b"> B. Being heard, having concerns acknowledged, and being given genuine agency over some aspect of the change</label><label class="opt"><input type="radio" name="l1q5" value="c"> C. More communication, more training, and clearer expectations from senior management</label><label class="opt"><input type="radio" name="l1q5" value="d"> D. Physical proximity to the change leader, peer pressure, and visible role modelling</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l1',{l1q1:'b',l1q2:'c',l1q3:'b',l1q4:'c',l1q5:'b'})">✅ Submit</button><div id="l1-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>C</strong></li><li>3. <strong>B</strong></li><li>4. <strong>C</strong></li><li>5. <strong>B</strong></li></ol></div></div>
+    </div>
+  </div>
+
+  <!-- ── LISTENING 2 ── -->
+  <div class="listen-block" style="margin-top:32px">
+    <div class="listen-header">
+      <div class="listen-icon">🏢</div>
+      <div class="listen-meta">
+        <h4>Activity 2: Leadership Meeting — Communicating a Digital Transformation</h4>
+        <div class="track-sub">Change Director, HR Director & Regional Manager · Planning Meeting</div>
+        <div class="listen-tags">
+          <span class="ltag ltag-gold">LEVEL: B2</span>
+          <span class="ltag ltag-outline">MULTIPLE CHOICE</span>
+          <span class="ltag ltag-outline">FOCUS: POSITIONS & DECISIONS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp2" onclick="handlePlay('ls2','pp2','prog2','tm2','dur2','st2')">▶</button>
+        <div class="player-track-info">
+          <div class="track-title-sm">Communicating a Digital Transformation</div>
+          <div class="track-sub-sm">Change Director, HR Director & Regional Manager</div>
+        </div>
+        <div class="time-display"><span id="tm2">0:00</span> / <span id="dur2">—</span></div>
+      </div>
+      <div class="progress-audio" id="pa2" onclick="seekAudio(event,'pa2','ls2','prog2','tm2')">
+        <div class="progress-audio-fill" id="prog2"></div>
+      </div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpd('ls2',0.7,this)">0.7×</button>
+        <button class="speed-btn active-spd" onclick="setSpd('ls2',0.85,this)">0.85×</button>
+        <button class="speed-btn" onclick="setSpd('ls2',1.0,this)">1.0×</button>
+        <button class="speed-btn" onclick="setSpd('ls2',1.2,this)">1.2×</button>
+        <button class="replay-btn" onclick="replayAudio('ls2','pp2','prog2','tm2','dur2','st2')">↺ Replay</button>
+        <span id="st2" class="play-status">Ready</span>
+      </div>
+      <p class="player-note">🔊 Works on mobile (Safari, Chrome) · No internet audio required</p>
+    </div>
+
+    <div class="transcript-section">
+      <button class="transcript-btn" id="tb2" onclick="toggleTranscript('tp2','tb2')">
+        <span class="t-arrow">▶</span>
+        <span class="t-label">Show / Hide Full Transcript</span>
+        <span class="t-hint">Tap to expand</span>
+      </button>
+      <div class="transcript-panel" id="tp2">
+        <div class="transcript-panel-inner">
+          <p id="ls2"><span class="t-speaker">Change Director:</span> Thank you for joining me today. I want to spend this session working through how we communicate the CRM transformation to frontline staff. The all-hands announcement is scheduled for next Thursday, and I want to make sure we are all aligned on the narrative. <span class="t-speaker">HR Director:</span> I think the narrative piece is absolutely critical here. The last system rollout — which I was not part of, but I have heard a lot about — was communicated as a technology upgrade. It was not framed as anything to do with the customer or the employee experience. The result was that people felt it was being done to them, not for them. We cannot repeat that. <span class="t-speaker">Change Director:</span> Exactly. So our narrative has to be: this is about giving you the tools to serve customers more effectively and spend less time on administrative friction. The technology is the vehicle, not the destination. <span class="t-speaker">Regional Manager:</span> I want to flag something from my teams. There is already some anxiety, particularly among the more senior account managers who have been using the current system for eight or ten years. They are genuinely worried they will look incompetent during the transition. That is not resistance to the idea — they actually see the benefits. It is more about the transition period itself. <span class="t-speaker">HR Director:</span> That is a really important distinction. Can we build in a structured peer coaching programme — so the early adopters are paired with the more hesitant users? It takes the pressure off people to admit they are struggling. <span class="t-speaker">Change Director:</span> I love that. Let us add that to the support offer. And I think we need to be very explicit in the announcement that we are expecting a learning curve — that no one is expected to be expert users from day one. That honesty will build more trust than any amount of positive framing.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the meeting, then answer the 5 questions below.</div>
+      <div id="l2" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. Why does the HR Director say the previous system rollout failed to generate employee engagement?</div><div class="options"><label class="opt"><input type="radio" name="l2q1" value="a"> A. It was communicated too late, giving employees insufficient time to prepare</label><label class="opt"><input type="radio" name="l2q1" value="b"> B. It was framed as a technology upgrade rather than something related to customer or employee experience — people felt it was being done to them, not for them</label><label class="opt"><input type="radio" name="l2q1" value="c"> C. It was implemented without any staff training or support</label><label class="opt"><input type="radio" name="l2q1" value="d"> D. The technology itself was not fit for purpose and failed to deliver the promised benefits</label></div></div>
+        <div class="q-item"><div class="q-stem">2. What does the Change Director say should be the central message of the change narrative?</div><div class="options"><label class="opt"><input type="radio" name="l2q2" value="a"> A. The new system will reduce costs and improve company margins</label><label class="opt"><input type="radio" name="l2q2" value="b"> B. The technology is the vehicle, not the destination — the narrative is about giving employees tools to serve customers more effectively with less administrative friction</label><label class="opt"><input type="radio" name="l2q2" value="c"> C. This system has been used successfully by three competitor firms and represents an industry standard</label><label class="opt"><input type="radio" name="l2q2" value="d"> D. The current system is no longer fit for purpose and must be replaced immediately</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What specific concern does the Regional Manager raise about senior account managers?</div><div class="options"><label class="opt"><input type="radio" name="l2q3" value="a"> A. They do not see the benefits of the new system and are likely to actively oppose the change</label><label class="opt"><input type="radio" name="l2q3" value="b"> B. They are worried about the cost of the project and its impact on their team budgets</label><label class="opt"><input type="radio" name="l2q3" value="c"> C. They understand the benefits but are worried about looking incompetent during the transition period itself</label><label class="opt"><input type="radio" name="l2q3" value="d"> D. They have not been consulted about the design of the new system and feel excluded from the decision</label></div></div>
+        <div class="q-item"><div class="q-stem">4. What support solution does the HR Director propose in response to the Regional Manager's concern?</div><div class="options"><label class="opt"><input type="radio" name="l2q4" value="a"> A. Extended one-to-one coaching sessions with external consultants for senior account managers only</label><label class="opt"><input type="radio" name="l2q4" value="b"> B. A structured peer coaching programme pairing early adopters with more hesitant users</label><label class="opt"><input type="radio" name="l2q4" value="c"> C. A dedicated helpline staffed by the IT team for the first three months of implementation</label><label class="opt"><input type="radio" name="l2q4" value="d"> D. A formal competency assessment to identify which employees need additional support</label></div></div>
+        <div class="q-item"><div class="q-stem">5. What does the Change Director say should be explicitly acknowledged in the announcement, and why?</div><div class="options"><label class="opt"><input type="radio" name="l2q5" value="a"> A. That some roles will be made redundant as a result of the new system's efficiency gains</label><label class="opt"><input type="radio" name="l2q5" value="b"> B. That adoption of the new system will be tracked and linked to the annual performance review</label><label class="opt"><input type="radio" name="l2q5" value="c"> C. That there will be a learning curve and no one is expected to be an expert user from day one — because this honesty builds more trust than positive framing alone</label><label class="opt"><input type="radio" name="l2q5" value="d"> D. That the rollout timeline is subject to change depending on the outcomes of the pilot phase</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l2',{l2q1:'b',l2q2:'b',l2q3:'c',l2q4:'b',l2q5:'c'})">✅ Submit</button><div id="l2-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>C</strong></li><li>4. <strong>B</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+    </div>
+  </div>
+
+  <!-- ── LISTENING 3 ── -->
+  <div class="listen-block" style="margin-top:32px">
+    <div class="listen-header">
+      <div class="listen-icon">🎓</div>
+      <div class="listen-meta">
+        <h4>Activity 3: Expert Interview — Building Lasting Change in Organisations</h4>
+        <div class="track-sub">Professor of Organisational Behaviour · Executive Education Interview</div>
+        <div class="listen-tags">
+          <span class="ltag ltag-gold">LEVEL: B2</span>
+          <span class="ltag ltag-outline">MULTIPLE CHOICE</span>
+          <span class="ltag ltag-outline">FOCUS: OPINION & ARGUMENT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="player-wrap">
+      <div class="player-top">
+        <button class="play-pause-btn" id="pp3" onclick="handlePlay('ls3','pp3','prog3','tm3','dur3','st3')">▶</button>
+        <div class="player-track-info">
+          <div class="track-title-sm">Building Lasting Change in Organisations</div>
+          <div class="track-sub-sm">Professor of Organisational Behaviour</div>
+        </div>
+        <div class="time-display"><span id="tm3">0:00</span> / <span id="dur3">—</span></div>
+      </div>
+      <div class="progress-audio" id="pa3" onclick="seekAudio(event,'pa3','ls3','prog3','tm3')">
+        <div class="progress-audio-fill" id="prog3"></div>
+      </div>
+      <div class="speed-row">
+        <span class="speed-label">SPEED:</span>
+        <button class="speed-btn" onclick="setSpd('ls3',0.7,this)">0.7×</button>
+        <button class="speed-btn active-spd" onclick="setSpd('ls3',0.85,this)">0.85×</button>
+        <button class="speed-btn" onclick="setSpd('ls3',1.0,this)">1.0×</button>
+        <button class="speed-btn" onclick="setSpd('ls3',1.2,this)">1.2×</button>
+        <button class="replay-btn" onclick="replayAudio('ls3','pp3','prog3','tm3','dur3','st3')">↺ Replay</button>
+        <span id="st3" class="play-status">Ready</span>
+      </div>
+      <p class="player-note">🔊 Works on mobile (Safari, Chrome) · No internet audio required</p>
+    </div>
+
+    <div class="transcript-section">
+      <button class="transcript-btn" id="tb3" onclick="toggleTranscript('tp3','tb3')">
+        <span class="t-arrow">▶</span>
+        <span class="t-label">Show / Hide Full Transcript</span>
+        <span class="t-hint">Tap to expand</span>
+      </button>
+      <div class="transcript-panel" id="tp3">
+        <div class="transcript-panel-inner">
+          <p id="ls3"><span class="t-speaker">Interviewer:</span> Professor, your research focuses on why change fails to stick — why organisations implement a change successfully and then watch it erode over 18 months. What causes this? <span class="t-speaker">Professor:</span> The short answer is that the change was never actually embedded. It was adopted — which is different. Adoption means people started using the new system, following the new process, showing up to the new meeting. Embedding means the new way of working has become the default — the thing people do without thinking about it, the thing new joiners learn as the way things are done here. The gap between adoption and embedding is where the majority of change investment is lost. <span class="t-speaker">Interviewer:</span> And what closes that gap? <span class="t-speaker">Professor:</span> The most powerful mechanism is what I call structural alignment — making the new behaviours the path of least resistance. If your performance management system still rewards the old behaviours, people will revert to them. If your job descriptions do not reference the new ways of working, hiring managers will recruit people who do not have them. If your leaders say the change is important but spend their own time doing things the old way, everyone notices. The second mechanism is what I call narrative consolidation. Successful change leaders build the change into the organisation's story of itself — the way it talks about where it has come from, what it has achieved, and where it is going. When the change becomes part of the organisational identity — when it is in the induction programme, in the success stories shared at all-hands events, in the language that leaders use when they describe the company to external audiences — it becomes very difficult to erode because it is no longer just a project. It is who we are.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="listen-body">
+      <div class="instructions-box"><strong>📋 Instructions</strong>Listen to the expert interview, then answer the 5 questions below.</div>
+      <div id="l3" class="quiz-card" style="box-shadow:none;border:none;padding:0">
+        <div class="q-item"><div class="q-stem">1. What distinction does the Professor draw between "adoption" and "embedding"?</div><div class="options"><label class="opt"><input type="radio" name="l3q1" value="a"> A. Adoption is a leadership responsibility; embedding is managed by HR</label><label class="opt"><input type="radio" name="l3q1" value="b"> B. Adoption means people are using the new way; embedding means it has become the default — done without thinking, taught to new joiners as "the way things are done here"</label><label class="opt"><input type="radio" name="l3q1" value="c"> C. Adoption happens in the first three months; embedding takes five years or more</label><label class="opt"><input type="radio" name="l3q1" value="d"> D. Adoption is measured by survey data; embedding is confirmed by an external audit</label></div></div>
+        <div class="q-item"><div class="q-stem">2. What is the first mechanism the Professor identifies for closing the gap between adoption and embedding?</div><div class="options"><label class="opt"><input type="radio" name="l3q2" value="a"> A. Narrative consolidation — integrating the change into the organisation's story of itself</label><label class="opt"><input type="radio" name="l3q2" value="b"> B. Structural alignment — making the new behaviours the path of least resistance</label><label class="opt"><input type="radio" name="l3q2" value="c"> C. Change champion recognition — publicly celebrating the best adopters</label><label class="opt"><input type="radio" name="l3q2" value="d"> D. Performance management — linking adoption rates to individual pay reviews</label></div></div>
+        <div class="q-item"><div class="q-stem">3. What happens if the performance management system continues to reward old behaviours after a change has been implemented?</div><div class="options"><label class="opt"><input type="radio" name="l3q3" value="a"> A. Employees become confused and require additional training to clarify expectations</label><label class="opt"><input type="radio" name="l3q3" value="b"> B. People will revert to the old behaviours because those are what is rewarded</label><label class="opt"><input type="radio" name="l3q3" value="c"> C. The performance management system will gradually adapt to reflect the new norms</label><label class="opt"><input type="radio" name="l3q3" value="d"> D. Senior leadership will intervene to realign the incentive structure</label></div></div>
+        <div class="q-item"><div class="q-stem">4. What is the second mechanism the Professor describes, and how does it work?</div><div class="options"><label class="opt"><input type="radio" name="l3q4" value="a"> A. Structural alignment — making new processes mandatory through policy rather than choice</label><label class="opt"><input type="radio" name="l3q4" value="b"> B. Adoption tracking — using weekly metrics to hold teams accountable for usage rates</label><label class="opt"><input type="radio" name="l3q4" value="c"> C. Narrative consolidation — building the change into the organisation's story, language, and identity so it becomes "who we are" rather than a project</label><label class="opt"><input type="radio" name="l3q4" value="d"> D. External validation — having the change programme certified by an independent body</label></div></div>
+        <div class="q-item"><div class="q-stem">5. According to the Professor, when does a change become very difficult to erode?</div><div class="options"><label class="opt"><input type="radio" name="l3q5" value="a"> A. When it has been in place for more than three years and is no longer actively discussed</label><label class="opt"><input type="radio" name="l3q5" value="b"> B. When the change sponsor has publicly committed to it in writing to the board</label><label class="opt"><input type="radio" name="l3q5" value="c"> C. When it is part of the organisational identity — in the induction programme, the shared stories, and the language leaders use — so it is no longer just a project but "who we are"</label><label class="opt"><input type="radio" name="l3q5" value="d"> D. When all employees have completed the mandatory training and signed a compliance statement</label></div></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('l3',{l3q1:'b',l3q2:'b',l3q3:'b',l3q4:'c',l3q5:'c'})">✅ Submit</button><div id="l3-score"></div></div>
+      </div>
+      <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Listening 3</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>C</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+<!-- CASE STUDIES -->
+<section id="casestudy">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#fce7f3">🏢</div>
+    <div class="sec-text"><div class="sec-title">Case Studies</div><div class="sec-sub">2 Business Cases · Change Management in Practice · Auto-graded</div></div>
+  </div></div>
+
+  <div style="margin-bottom:32px">
+    <div class="case-hd">
+      <div class="case-company">Case Study 1 · Financial Services · United Kingdom</div>
+      <h3>NorthBridge Bank: When the Change Narrative Fails to Reach the Frontline</h3>
+    </div>
+    <div class="case-body">
+      <p>NorthBridge Bank is a UK-based retail and commercial bank with approximately 4,200 employees across 86 branches and a growing digital banking platform. In 2022, the bank's executive leadership launched a major branch transformation programme — "NorthBridge Next" — designed to shift 60% of routine customer transactions to self-service digital channels and redeploy branch staff from transactional roles into relationship management and financial advisory functions. The programme was described by the CEO in the launch communication as "the most exciting opportunity in the bank's history." Total investment was committed at £32 million over 18 months. A comprehensive project management structure was in place, and the change was underpinned by a genuinely strong business case: declining footfall data, customer satisfaction improvements at digitally-transformed peer institutions, and a genuine desire to offer branch staff more rewarding and better-compensated roles.</p>
+      <p>Despite the strength of the underlying rationale, the programme encountered significant difficulties at implementation. Twelve months in, adoption of the new advisory role model was below 30% across the branch network. Staff turnover in the branches undergoing transformation ran at 2.4 times the pre-programme average. A pulse survey conducted at month ten revealed that only 18% of frontline branch employees felt they understood why the change was happening, and fewer than 12% felt they had been given adequate support to develop the skills the new role required. The executive team's change narrative — which centred on the opportunity for staff to move into more rewarding advisory roles — had been delivered almost entirely through digital channels: video messages from the CEO, intranet articles, and slide decks in team briefings. Line managers, who had received two hours of training on the programme, reported feeling unable to answer staff questions about role changes, training timelines, and job security.</p>
+      <p>An independent change management review commissioned at month twelve identified three critical failures. First, the change narrative had not been translated into language that resonated with frontline branch staff — employees whose primary professional concerns were job security and the possibility that they lacked the skills for an advisory role. The opportunity framing used by executives was motivating for senior managers but felt tone-deaf to people facing role redesign. Second, line managers — the most trusted source of information for frontline staff — had been given insufficient preparation to act as effective change communicators. Third, no feedback mechanism had been established to identify these mismatches before they became entrenched. The review recommended a programme reset, including focus group-based narrative co-creation with branch staff, a structured line manager coaching programme, and a weekly pulse survey designed to surface adoption barriers in real time.</p>
+    </div>
+  </div>
+  <div id="cs1" class="quiz-card">
+    <div class="quiz-title">Case Study 1 — 5 Questions</div>
+    <div class="q-item"><div class="q-stem">1. What was the business rationale for the NorthBridge Next programme?</div><div class="options"><label class="opt"><input type="radio" name="cs1q1" value="a"> A. To reduce the total number of branch employees in order to cut costs</label><label class="opt"><input type="radio" name="cs1q1" value="b"> B. To shift routine transactions to digital and redeploy staff into advisory roles, supported by evidence of declining footfall and peer institution success</label><label class="opt"><input type="radio" name="cs1q1" value="c"> C. To respond to a regulatory requirement for banks to reduce their physical branch footprint</label><label class="opt"><input type="radio" name="cs1q1" value="d"> D. To restructure the senior management team and reduce the number of regional directors</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What did the pulse survey at month ten reveal about frontline branch staff?</div><div class="options"><label class="opt"><input type="radio" name="cs1q2" value="a"> A. Fewer than 12% supported the direction of the programme</label><label class="opt"><input type="radio" name="cs1q2" value="b"> B. 18% felt they understood why the change was happening, and fewer than 12% felt adequately supported to develop the required skills</label><label class="opt"><input type="radio" name="cs1q2" value="c"> C. 30% were actively looking for alternative employment outside the bank</label><label class="opt"><input type="radio" name="cs1q2" value="d"> D. The majority felt the timeline was unrealistic and were requesting a 12-month extension</label></div></div>
+    <div class="q-item"><div class="q-stem">3. Why did the executive change narrative fail to resonate with frontline employees?</div><div class="options"><label class="opt"><input type="radio" name="cs1q3" value="a"> A. It was communicated through the wrong digital channels — staff preferred face-to-face briefings</label><label class="opt"><input type="radio" name="cs1q3" value="b"> B. The "opportunity framing" used by executives was motivating for senior managers but did not address frontline concerns about job security and skill sufficiency</label><label class="opt"><input type="radio" name="cs1q3" value="c"> C. Frontline staff could not access the intranet or video content from branch locations</label><label class="opt"><input type="radio" name="cs1q3" value="d"> D. The narrative was communicated too late — after the new role designs had already been implemented</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What was identified as the second critical failure in the independent review?</div><div class="options"><label class="opt"><input type="radio" name="cs1q4" value="a"> A. The absence of a financial incentive for staff who adopted the new advisory model</label><label class="opt"><input type="radio" name="cs1q4" value="b"> B. The failure to pilot the new role model in a small number of branches before full rollout</label><label class="opt"><input type="radio" name="cs1q4" value="c"> C. Line managers had been given insufficient preparation to act as effective change communicators</label><label class="opt"><input type="radio" name="cs1q4" value="d"> D. The programme timeline was too short to allow effective training to be completed</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What broader lesson does the NorthBridge case illustrate about change communication?</div><div class="options"><label class="opt"><input type="radio" name="cs1q5" value="a"> A. Digital communication channels are never effective for communicating change to frontline staff</label><label class="opt"><input type="radio" name="cs1q5" value="b"> B. A strong business case and genuine investment are sufficient for change to succeed without extensive communication planning</label><label class="opt"><input type="radio" name="cs1q5" value="c"> C. A change narrative must be tailored to the specific concerns of each audience — what motivates executives may alienate frontline staff</label><label class="opt"><input type="radio" name="cs1q5" value="d"> D. The most important factor in any change programme is the size of the budget allocated to training</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('cs1',{cs1q1:'b',cs1q2:'b',cs1q3:'b',cs1q4:'c',cs1q5:'c'})">✅ Submit</button><div id="cs1-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Case Study 1</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>B</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>C</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+
+  <div style="margin-top:40px;margin-bottom:32px">
+    <div class="case-hd">
+      <div class="case-company">Case Study 2 · Manufacturing / Consumer Goods · Colombia</div>
+      <h3>Industrias Andina: Building Change Capability in a Traditional Manufacturing Culture</h3>
+    </div>
+    <div class="case-body">
+      <p>Industrias Andina is a Colombian consumer goods manufacturer headquartered in Cali, employing approximately 2,800 people across three production facilities and a national distribution network. The company had operated a largely unchanged production and management model for over 25 years, with deep cultural norms around hierarchy, stability, and deference to seniority. In 2021, the arrival of a new CEO — María José Restrepo, who had spent fifteen years in leadership roles at multinational consumer goods companies — triggered the beginning of a significant transformation. The programme aimed to introduce lean manufacturing principles, cross-functional team structures, and a performance culture based on continuous improvement and individual accountability — changes that were deeply at odds with the embedded organisational culture.</p>
+      <p>Rather than launching the transformation through a company-wide announcement and a centralised change programme — the approach her predecessor had tried and abandoned two years earlier — Restrepo began with a listening campaign. Over her first 90 days, she conducted 47 individual conversations with employees at every level, from production line supervisors to warehouse managers to members of the founding family who remained active in senior advisory roles. She made no promises and communicated no plans. She asked questions and, critically, she listened. What she heard was consistent: employees were not opposed to change; they were exhausted by changes that had been announced with great fanfare, generated significant disruption, and then quietly faded away when leadership priorities shifted. The credibility gap — the distance between what leaders said and what actually happened — was the primary barrier to engagement.</p>
+      <p>Restrepo's change strategy addressed this directly. Rather than a single large-scale transformation announcement, she launched three carefully chosen pilot programmes — each visible, achievable within six months, and genuinely valued by the employees in the affected teams. She communicated these not as the beginning of a company-wide transformation but as experiments: "We are trying something. We want your honest feedback on what works and what does not. The results of these pilots will shape what we do next." Within twelve months, all three pilots had achieved their objectives, were being cited by employees as evidence of genuine leadership commitment, and were being requested by other teams across the organisation. The company's annual engagement survey recorded its highest score in seven years — and the transformation programme had not yet been formally launched.</p>
+    </div>
+  </div>
+  <div id="cs2" class="quiz-card">
+    <div class="quiz-title">Case Study 2 — 5 Questions</div>
+    <div class="q-item"><div class="q-stem">1. What was the primary cultural barrier Industrias Andina faced at the start of the transformation?</div><div class="options"><label class="opt"><input type="radio" name="cs2q1" value="a"> A. Employees lacked the technical skills required to implement lean manufacturing practices</label><label class="opt"><input type="radio" name="cs2q1" value="b"> B. The founding family actively opposed any changes to the company's traditional operating model</label><label class="opt"><input type="radio" name="cs2q1" value="c"> C. Deep cultural norms of hierarchy, stability, and deference to seniority were incompatible with the proposed changes</label><label class="opt"><input type="radio" name="cs2q1" value="d"> D. The trade union representing production workers had formally rejected all proposals for operational change</label></div></div>
+    <div class="q-item"><div class="q-stem">2. What did Restrepo discover during her 90-day listening campaign?</div><div class="options"><label class="opt"><input type="radio" name="cs2q2" value="a"> A. Employees were fundamentally opposed to lean manufacturing as a concept</label><label class="opt"><input type="radio" name="cs2q2" value="b"> B. Employees were not opposed to change but were exhausted by previous changes that were announced with fanfare and then quietly abandoned — the credibility gap was the primary barrier</label><label class="opt"><input type="radio" name="cs2q2" value="c"> C. The majority of employees had never heard of the transformation programme and were unaware it was being planned</label><label class="opt"><input type="radio" name="cs2q2" value="d"> D. Senior managers were supportive of the change but frontline supervisors were actively undermining it</label></div></div>
+    <div class="q-item"><div class="q-stem">3. How did Restrepo frame the three pilot programmes to employees?</div><div class="options"><label class="opt"><input type="radio" name="cs2q3" value="a"> A. As the mandatory first phase of a company-wide transformation that would affect all employees</label><label class="opt"><input type="radio" name="cs2q3" value="b"> B. As experiments — "We are trying something; your honest feedback will shape what we do next"</label><label class="opt"><input type="radio" name="cs2q3" value="c"> C. As an external consultant-led review of current processes to identify inefficiencies</label><label class="opt"><input type="radio" name="cs2q3" value="d"> D. As pilot programmes whose success would determine whether any change would proceed at all</label></div></div>
+    <div class="q-item"><div class="q-stem">4. What were the three characteristics of the pilot programmes Restrepo selected?</div><div class="options"><label class="opt"><input type="radio" name="cs2q4" value="a"> A. They were large in scale, high in cost, and visible to external stakeholders</label><label class="opt"><input type="radio" name="cs2q4" value="b"> B. They were visible, achievable within six months, and genuinely valued by the employees in the affected teams</label><label class="opt"><input type="radio" name="cs2q4" value="c"> C. They were confidential, low-risk, and limited to the most senior operational teams</label><label class="opt"><input type="radio" name="cs2q4" value="d"> D. They were technically complex, long-term, and designed to test the full transformation model</label></div></div>
+    <div class="q-item"><div class="q-stem">5. What is the broader change management lesson from the Industrias Andina case?</div><div class="options"><label class="opt"><input type="radio" name="cs2q5" value="a"> A. Large-scale announcements are more effective than pilot programmes for building organisational momentum</label><label class="opt"><input type="radio" name="cs2q5" value="b"> B. Change in traditional cultures requires a fundamentally different approach — external experts are essential</label><label class="opt"><input type="radio" name="cs2q5" value="c"> C. Listening before acting, closing the credibility gap with visible wins, and framing change as experiments rather than mandates can rebuild trust and generate genuine engagement</label><label class="opt"><input type="radio" name="cs2q5" value="d"> D. The pace of change should always be determined by the most resistant group in the organisation</label></div></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gradeQ('cs2',{cs2q1:'c',cs2q2:'b',cs2q3:'b',cs2q4:'b',cs2q5:'c'})">✅ Submit</button><div id="cs2-score"></div></div>
+  </div>
+  <div class="ak-wrap"><button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Case Study 2</span><span class="ak-icon">▶</span></button><div class="ak-content"><ol><li>1. <strong>C</strong></li><li>2. <strong>B</strong></li><li>3. <strong>B</strong></li><li>4. <strong>B</strong></li><li>5. <strong>C</strong></li></ol></div></div>
+</section>
+<div class="divider"></div>
+<!-- FINAL ASSESSMENT -->
+<section id="final">
+  <div class="sec-header"><div class="sec-header-inner">
+    <div class="sec-icon" style="background:#fee2e2">🏆</div>
+    <div class="sec-text"><div class="sec-title">Final Assessment</div><div class="sec-sub">20 MCQs · Full Module 8 · 70% Pass Mark · 2 Attempts Allowed</div></div>
+  </div></div>
+  <div class="info-box" style="background:#fffbf0;border-color:rgba(201,168,76,.35)">⚠️ <strong>Assessment Rules:</strong> This assessment covers all sections of Module 8. A score of <strong>14/20 (70%)</strong> is required to pass. You have <strong>2 attempts</strong>. Review any missed questions before your second attempt.</div>
+
+  <div class="final-wrap" id="fwrap">
+    <div class="quiz-title">Module 8 Final Assessment — 20 Questions</div>
+    <div class="attempts-badge" id="att-badge">Attempt 1 of 2</div>
+
+    <div class="q-item"><div class="q-stem">1. The overarching story that explains why a change is necessary, what success looks like, and how the organisation will get there is called a ________.</div><div class="options"><label class="opt"><input type="radio" name="fq1" value="a"> A. change announcement</label><label class="opt"><input type="radio" name="fq1" value="b"> B. change narrative</label><label class="opt"><input type="radio" name="fq1" value="c"> C. impact assessment</label><label class="opt"><input type="radio" name="fq1" value="d"> D. transition roadmap</label></div></div>
+    <div class="q-item"><div class="q-stem">2. "The transition ________ lead to some temporary disruption in response times." — Correct hedging expression (possibility, not alarmist):</div><div class="options"><label class="opt"><input type="radio" name="fq2" value="a"> A. will definitely</label><label class="opt"><input type="radio" name="fq2" value="b"> B. cannot possibly</label><label class="opt"><input type="radio" name="fq2" value="c"> C. may</label><label class="opt"><input type="radio" name="fq2" value="d"> D. must inevitably</label></div></div>
+    <div class="q-item"><div class="q-stem">3. In the NorthBridge Bank case study, what did the independent review identify as the primary reason the change narrative failed?</div><div class="options"><label class="opt"><input type="radio" name="fq3" value="a"> A. The CEO did not communicate the change in person to branch staff</label><label class="opt"><input type="radio" name="fq3" value="b"> B. The opportunity framing used by executives did not address frontline concerns about job security and skills</label><label class="opt"><input type="radio" name="fq3" value="c"> C. The programme budget was insufficient to fund the required training</label><label class="opt"><input type="radio" name="fq3" value="d"> D. Branch staff had no access to the digital channels used to communicate the change</label></div></div>
+    <div class="q-item"><div class="q-stem">4. Which of the following is the most professional noun phrase for use in a change management plan?</div><div class="options"><label class="opt"><input type="radio" name="fq4" value="a"> A. "a system for telling people about problems"</label><label class="opt"><input type="radio" name="fq4" value="b"> B. "information about what staff think"</label><label class="opt"><input type="radio" name="fq4" value="c"> C. "a real-time issue escalation protocol"</label><label class="opt"><input type="radio" name="fq4" value="d"> D. "a way of dealing with concerns when they come up"</label></div></div>
+    <div class="q-item"><div class="q-stem">5. A respected peer who actively advocates for a change initiative and models the new behaviours expected of others is called a ________.</div><div class="options"><label class="opt"><input type="radio" name="fq5" value="a"> A. change sponsor</label><label class="opt"><input type="radio" name="fq5" value="b"> B. change director</label><label class="opt"><input type="radio" name="fq5" value="c"> C. change champion</label><label class="opt"><input type="radio" name="fq5" value="d"> D. change owner</label></div></div>
+    <div class="q-item"><div class="q-stem">6. "We have a choice. We can shape our future, or we can let it be shaped for us." — What rhetorical device is used here?</div><div class="options"><label class="opt"><input type="radio" name="fq6" value="a"> A. Anaphora</label><label class="opt"><input type="radio" name="fq6" value="b"> B. Hedging</label><label class="opt"><input type="radio" name="fq6" value="c"> C. Antithesis</label><label class="opt"><input type="radio" name="fq6" value="d"> D. Complex noun phrase</label></div></div>
+    <div class="q-item"><div class="q-stem">7. According to Reading Text 1, why does cognitive science support the use of narrative in change communication?</div><div class="options"><label class="opt"><input type="radio" name="fq7" value="a"> A. Narratives are shorter and more memorable than data-heavy presentations</label><label class="opt"><input type="radio" name="fq7" value="b"> B. Human beings make decisions and form commitments based on stories, not data</label><label class="opt"><input type="radio" name="fq7" value="c"> C. Narratives are easier to translate across different cultural contexts</label><label class="opt"><input type="radio" name="fq7" value="d"> D. Narratives can be produced more quickly than quantitative reports</label></div></div>
+    <div class="q-item"><div class="q-stem">8. A state of exhaustion and disengagement caused by too many simultaneous or poorly managed changes is called ________.</div><div class="options"><label class="opt"><input type="radio" name="fq8" value="a"> A. transition state</label><label class="opt"><input type="radio" name="fq8" value="b"> B. adoption rate</label><label class="opt"><input type="radio" name="fq8" value="c"> C. productivity dip</label><label class="opt"><input type="radio" name="fq8" value="d"> D. change fatigue</label></div></div>
+    <div class="q-item"><div class="q-stem">9. "It ________ that the full rollout will be completed ahead of schedule, though this remains subject to pilot outcomes." — Best hedged expression:</div><div class="options"><label class="opt"><input type="radio" name="fq9" value="a"> A. is confirmed</label><label class="opt"><input type="radio" name="fq9" value="b"> B. is guaranteed</label><label class="opt"><input type="radio" name="fq9" value="c"> C. appears likely</label><label class="opt"><input type="radio" name="fq9" value="d"> D. is absolutely certain</label></div></div>
+    <div class="q-item"><div class="q-stem">10. In the Industrias Andina case, what was the "credibility gap" that Restrepo identified?</div><div class="options"><label class="opt"><input type="radio" name="fq10" value="a"> A. A gap between the skills employees had and the skills the new roles required</label><label class="opt"><input type="radio" name="fq10" value="b"> B. A gap between what leaders said would happen and what actually happened — previous changes had been announced and then quietly abandoned</label><label class="opt"><input type="radio" name="fq10" value="c"> C. A gap between the salaries offered to new joiners and those of existing long-serving employees</label><label class="opt"><input type="radio" name="fq10" value="d"> D. A gap between the company's market position and the performance levels required to compete</label></div></div>
+    <div class="q-item"><div class="q-stem">11. "We have overcome a pandemic. We have navigated a downturn. We have rebuilt our leadership." — What device is used here?</div><div class="options"><label class="opt"><input type="radio" name="fq11" value="a"> A. Antithesis</label><label class="opt"><input type="radio" name="fq11" value="b"> B. Anaphora — "we have" is repeated to build collective identity</label><label class="opt"><input type="radio" name="fq11" value="c"> C. Hedging language</label><label class="opt"><input type="radio" name="fq11" value="d"> D. Complex noun phrase</label></div></div>
+    <div class="q-item"><div class="q-stem">12. According to Reading Text 2, what does Kotter's model identify as the most frequently neglected step in change programmes?</div><div class="options"><label class="opt"><input type="radio" name="fq12" value="a"> A. Step 1 — Creating urgency</label><label class="opt"><input type="radio" name="fq12" value="b"> B. Step 4 — Communicating the vision</label><label class="opt"><input type="radio" name="fq12" value="c"> C. Step 8 — Anchoring new approaches in the culture</label><label class="opt"><input type="radio" name="fq12" value="d"> D. Step 6 — Generating short-term wins</label></div></div>
+    <div class="q-item"><div class="q-stem">13. According to Listening Activity 3, what is "structural alignment" and why is it essential for embedding change?</div><div class="options"><label class="opt"><input type="radio" name="fq13" value="a"> A. Aligning the physical layout of offices with the new collaborative working model</label><label class="opt"><input type="radio" name="fq13" value="b"> B. Making the new behaviours the path of least resistance by aligning performance management, job descriptions, and leader behaviour with the change</label><label class="opt"><input type="radio" name="fq13" value="c"> C. Structuring the change programme into clear phases with defined milestones and budgets</label><label class="opt"><input type="radio" name="fq13" value="d"> D. Aligning the change programme with the organisation's regulatory and compliance framework</label></div></div>
+    <div class="q-item"><div class="q-stem">14. The temporary decline in output that typically occurs as employees adapt to new systems or processes is called a ________.</div><div class="options"><label class="opt"><input type="radio" name="fq14" value="a"> A. change curve</label><label class="opt"><input type="radio" name="fq14" value="b"> B. burning platform</label><label class="opt"><input type="radio" name="fq14" value="c"> C. productivity dip</label><label class="opt"><input type="radio" name="fq14" value="d"> D. adoption rate</label></div></div>
+    <div class="q-item"><div class="q-stem">15. Which sentence most effectively builds urgency without manufacturing a crisis in a change communication?</div><div class="options"><label class="opt"><input type="radio" name="fq15" value="a"> A. "If we do not act immediately, we will fail. This is not negotiable."</label><label class="opt"><input type="radio" name="fq15" value="b"> B. "Our three largest competitors have invested in this capability. We have not. That gap matters — and the time to close it is now."</label><label class="opt"><input type="radio" name="fq15" value="c"> C. "This initiative has been approved by the board and will proceed regardless of staff feedback."</label><label class="opt"><input type="radio" name="fq15" value="d"> D. "Change is always difficult, and we fully understand if you have reservations at this stage."</label></div></div>
+    <div class="q-item"><div class="q-stem">16. According to Listening Activity 1, what three things does Dr Sharma say genuinely change behaviour during a change programme?</div><div class="options"><label class="opt"><input type="radio" name="fq16" value="a"> A. Clear performance targets, financial incentives, and management oversight</label><label class="opt"><input type="radio" name="fq16" value="b"> B. Being heard, having concerns acknowledged, and being given genuine agency over some aspect of how the change is implemented</label><label class="opt"><input type="radio" name="fq16" value="c"> C. More training, more communication, and clearer expectations from senior leadership</label><label class="opt"><input type="radio" name="fq16" value="d"> D. Peer pressure, visible role modelling, and mandatory adoption tracking</label></div></div>
+    <div class="q-item"><div class="q-stem">17. "There ________ some uncertainty at this stage about the precise timeline — we will share further details as they become available." — Correct hedging:</div><div class="options"><label class="opt"><input type="radio" name="fq17" value="a"> A. is no</label><label class="opt"><input type="radio" name="fq17" value="b"> B. remains some</label><label class="opt"><input type="radio" name="fq17" value="c"> C. definitely is</label><label class="opt"><input type="radio" name="fq17" value="d"> D. cannot be any</label></div></div>
+    <div class="q-item"><div class="q-stem">18. The proportion of the target population actively using a new process or system at a defined point in time is called the ________.</div><div class="options"><label class="opt"><input type="radio" name="fq18" value="a"> A. change readiness score</label><label class="opt"><input type="radio" name="fq18" value="b"> B. adoption rate</label><label class="opt"><input type="radio" name="fq18" value="c"> C. embedding index</label><label class="opt"><input type="radio" name="fq18" value="d"> D. transition metric</label></div></div>
+    <div class="q-item"><div class="q-stem">19. According to Listening Activity 2, what did the Change Director say was the most important thing to acknowledge in the all-staff announcement?</div><div class="options"><label class="opt"><input type="radio" name="fq19" value="a"> A. That the adoption of the new system would be linked to the annual performance review</label><label class="opt"><input type="radio" name="fq19" value="b"> B. That there will be a learning curve and no one is expected to be an expert from day one — because honesty builds more trust than positive framing</label><label class="opt"><input type="radio" name="fq19" value="c"> C. That the timeline is fixed and there will be no extension to the implementation period</label><label class="opt"><input type="radio" name="fq19" value="d"> D. That line managers have been fully trained and are ready to support every member of their team</label></div></div>
+    <div class="q-item"><div class="q-stem">20. Which statement best captures the central lesson of Module 8: Change Management Language?</div><div class="options"><label class="opt"><input type="radio" name="fq20" value="a"> A. Change succeeds when leaders communicate frequently enough and with sufficient detail</label><label class="opt"><input type="radio" name="fq20" value="b"> B. Resistance should be suppressed quickly to prevent it from undermining programme momentum</label><label class="opt"><input type="radio" name="fq20" value="c"> C. Effective change communication uses narrative, honest hedging, audience-specific language, and genuine dialogue — building meaning rather than merely delivering information</label><label class="opt"><input type="radio" name="fq20" value="d"> D. The most important factor in change success is the seniority of the change sponsor</label></div></div>
+
+    <div class="btn-row" style="margin-top:28px">
+      <button class="btn btn-gold" id="submit-btn" style="font-size:15px;padding:12px 28px" onclick="gradeFinal()">🏆 Submit Final Assessment</button>
+    </div>
+    <div class="final-result" id="fresult">
+      <div id="femoji" style="font-size:50px;margin-bottom:10px"></div>
+      <h2 id="fscore"></h2>
+      <div class="final-prog-wrap"><div class="final-prog-fill" id="fprog" style="width:0%"></div></div>
+      <p id="fmsg" style="margin-top:12px"></p>
+      <div id="retry-row" style="display:none;margin-top:16px"></div>
+    </div>
+  </div>
+
+  <div class="ak-wrap" style="margin-top:14px">
+    <button class="ak-toggle" onclick="togAK(this)"><span>🔑 Answer Key — Final Assessment</span><span class="ak-icon">▶</span></button>
+    <div class="ak-content"><ol>
+      <li>1. <strong>B</strong> — change narrative</li><li>2. <strong>C</strong> — may</li><li>3. <strong>B</strong> — opportunity framing didn't address frontline concerns</li><li>4. <strong>C</strong> — "real-time issue escalation protocol"</li><li>5. <strong>C</strong> — change champion</li><li>6. <strong>C</strong> — antithesis</li><li>7. <strong>B</strong> — humans make commitments based on stories, not data</li><li>8. <strong>D</strong> — change fatigue</li><li>9. <strong>C</strong> — appears likely</li><li>10. <strong>B</strong> — gap between what leaders said and what actually happened</li><li>11. <strong>B</strong> — anaphora: "we have" repeated</li><li>12. <strong>C</strong> — Step 8: anchoring in culture</li><li>13. <strong>B</strong> — making new behaviours path of least resistance through aligned systems</li><li>14. <strong>C</strong> — productivity dip</li><li>15. <strong>B</strong> — evidence-based urgency without catastrophising</li><li>16. <strong>B</strong> — being heard, acknowledged, given agency</li><li>17. <strong>B</strong> — remains some</li><li>18. <strong>B</strong> — adoption rate</li><li>19. <strong>B</strong> — learning curve acknowledged honestly builds trust</li><li>20. <strong>C</strong> — narrative, honest hedging, audience-specific language, genuine dialogue</li>
+    </ol></div>
+  </div>
+</section>
+
+</div><!-- /content -->
+<div style="background:var(--navy);color:rgba(255,255,255,.25);text-align:center;padding:20px;font-size:11px;font-family:'DM Mono',monospace;margin-top:44px">
+  Business Management English · Module 8: Change Management Language · B1–B2 Level
+</div>
+</main>
+
+<script>
+/* ══════════════════════════════════════
+   QUIZ GRADER
+══════════════════════════════════════ */
+function gradeQ(id,ans){
+  let sc=0,tot=Object.keys(ans).length;
+  Object.entries(ans).forEach(([nm,cr])=>{
+    const sel=document.querySelector(`input[name="${nm}"]:checked`);
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(o=>{const l=o.closest('.opt');if(l)l.classList.remove('correct','wrong');});
+    if(sel){const sl=sel.closest('.opt');if(sel.value===cr){sc++;if(sl)sl.classList.add('correct');}else{if(sl)sl.classList.add('wrong');}}
+    const ci=document.querySelector(`input[name="${nm}"][value="${cr}"]`);
+    if(ci){const cl=ci.closest('.opt');if(cl&&!cl.classList.contains('wrong'))cl.classList.add('correct');}
+  });
+  const pct=Math.round(sc/tot*100),el=document.getElementById(id+'-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/${tot} (${pct}%)</span>`;}
+  updateProgress();
+}
+
+/* GAP FILL */
+const gapAns={gi1:'coalition of support',gi2:'change narrative',gi3:'change readiness',gi4:'productivity dip',gi5:'stakeholder buy-in',gi6:'feedback loop',gi7:'vision for change',gi8:'embedding'};
+function gradeGap(){
+  let sc=0;
+  Object.entries(gapAns).forEach(([id,ans])=>{
+    const inp=document.getElementById(id);if(!inp)return;
+    inp.classList.remove('correct','wrong');
+    if(inp.value.toLowerCase().trim()===ans.toLowerCase()){sc++;inp.classList.add('correct');}
+    else inp.classList.add('wrong');
+  });
+  const pct=Math.round(sc/8*100),el=document.getElementById('v2-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+
+/* TRUE / FALSE */
+const tfSel={};
+const tfAns={'1':'F','2':'T','3':'F','4':'T','5':'F','6':'T','7':'F','8':'T'};
+function pickTF(btn,num,val){
+  btn.closest('.tf-row').querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('sel-t','sel-f'));
+  btn.classList.add(val==='T'?'sel-t':'sel-f');
+  tfSel[num]=val;
+}
+function gradeTF(){
+  let sc=0;
+  for(let i=1;i<=8;i++){
+    const s=tfSel[String(i)],c=tfAns[String(i)];
+    const row=document.querySelector(`#tfr${i} .tf-row`);if(!row)continue;
+    const btns=row.querySelectorAll('.tf-btn');
+    btns.forEach(b=>b.classList.remove('ok-tf','nok-tf','sel-t','sel-f'));
+    if(s){
+      if(s===c)sc++;
+      btns.forEach(b=>{const v=b.textContent.trim()==='True'?'T':'F';if(v===c)b.classList.add('ok-tf');else if(v===s&&s!==c)b.classList.add('nok-tf');});
+    }else{btns.forEach(b=>{if((b.textContent.trim()==='True'?'T':'F')===c)b.classList.add('ok-tf');});}
+  }
+  const pct=Math.round(sc/8*100),el=document.getElementById('v3-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+
+/* DRAG & DROP */
+let curDrag=null;
+function pickDrag(el){
+  if(el.classList.contains('used'))return;
+  document.querySelectorAll('.drag-chip').forEach(d=>d.classList.remove('selected-chip'));
+  curDrag=(curDrag===el)?null:(el.classList.add('selected-chip'),el);
+}
+function doDrop(zone){
+  if(!curDrag)return;
+  if(zone.dataset.cur)document.querySelectorAll('.drag-chip').forEach(d=>{if(d.dataset.w===zone.dataset.cur)d.classList.remove('used');});
+  zone.textContent=curDrag.dataset.w;zone.classList.add('filled');zone.dataset.cur=curDrag.dataset.w;
+  curDrag.classList.add('used');curDrag.classList.remove('selected-chip');curDrag=null;
+}
+function gradeDrop(){
+  let sc=0;
+  document.querySelectorAll('.drop-zone').forEach(z=>{
+    z.classList.remove('filled','wrong-drop');
+    if(z.dataset.cur===z.dataset.ans){sc++;z.classList.add('filled');}
+    else if(z.dataset.cur)z.classList.add('wrong-drop');
+  });
+  const pct=Math.round(sc/8*100),el=document.getElementById('v4-score');
+  if(el){const c=pct>=70?'sb-good':pct>=50?'sb-ok':'sb-bad';el.innerHTML=`<span class="score-badge ${c}">Score: ${sc}/8 (${pct}%)</span>`;}
+  updateProgress();
+}
+function resetDrop(){
+  document.querySelectorAll('.drop-zone').forEach(z=>{z.textContent='Place here';z.classList.remove('filled','wrong-drop');delete z.dataset.cur;});
+  document.querySelectorAll('.drag-chip').forEach(d=>d.classList.remove('used','selected-chip'));
+  curDrag=null;const el=document.getElementById('v4-score');if(el)el.innerHTML='';
+}
+
+/* ANSWER KEY */
+function togAK(btn){btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('visible');}
+
+/* WORD COUNT */
+function wcCalc(tid,cid,max){
+  const t=document.getElementById(tid).value.trim();
+  const n=t===''?0:t.split(/\s+/).length;
+  const el=document.getElementById(cid);if(el)el.textContent=`Words: ${n} / ${max}`;
+}
+
+/* ══════════════════════════════════════
+   TRANSCRIPT DROPDOWN — reliable toggle
+══════════════════════════════════════ */
+function toggleTranscript(panelId, btnId){
+  const panel=document.getElementById(panelId);
+  const btn=document.getElementById(btnId);
+  if(!panel||!btn)return;
+  const open=panel.classList.contains('t-visible');
+  if(open){
+    panel.classList.remove('t-visible');
+    btn.classList.remove('t-open');
+    btn.querySelector('.t-hint').textContent='Tap to expand';
+  }else{
+    panel.classList.add('t-visible');
+    btn.classList.add('t-open');
+    btn.querySelector('.t-hint').textContent='Tap to collapse';
+  }
+}
+
+/* ══════════════════════════════════════
+   TTS AUDIO — Mobile-first implementation
+   Uses utterance + timer for progress
+══════════════════════════════════════ */
+const tts={};   // keyed by scriptId
+let activeSynthId=null;
+
+function handlePlay(scriptId,ppId,progId,tmId,durId,stId){
+  // iOS/Safari: speechSynthesis requires a user gesture — this handler IS a user gesture
+  const state=tts[scriptId];
+
+  // If this track is already speaking
+  if(state&&state.utt&&speechSynthesis.speaking&&!speechSynthesis.paused){
+    if(activeSynthId===scriptId){
+      // Pause it
+      speechSynthesis.pause();
+      state.paused=true;
+      document.getElementById(ppId).textContent='▶';
+      document.getElementById(stId).textContent='Paused';
+      if(state.timer)clearInterval(state.timer);
+      return;
+    }
+  }
+
+  // If this track is paused, resume
+  if(state&&state.paused&&speechSynthesis.paused&&activeSynthId===scriptId){
+    speechSynthesis.resume();
+    state.paused=false;
+    state.start=Date.now()-((state.elapsed||0)*1000);
+    document.getElementById(ppId).textContent='⏸';
+    document.getElementById(stId).textContent='▶ Playing…';
+    // Restart timer
+    const estSec=state.dur;
+    const prog=document.getElementById(progId),tm=document.getElementById(tmId);
+    state.timer=setInterval(()=>{
+      const el=(Date.now()-state.start)/1000;
+      state.elapsed=el;
+      if(prog)prog.style.width=Math.min(el/estSec*100,99)+'%';
+      if(tm)tm.textContent=fmtT(el);
+    },300);
+    return;
+  }
+
+  // Cancel any other active track
+  if(speechSynthesis.speaking)speechSynthesis.cancel();
+  Object.keys(tts).forEach(k=>{
+    if(k!==scriptId&&tts[k]&&tts[k].timer)clearInterval(tts[k].timer);
+  });
+
+  const scriptEl=document.getElementById(scriptId);
+  if(!scriptEl){return;}
+  const text=scriptEl.textContent.trim();
+  if(!text){return;}
+
+  const utt=new SpeechSynthesisUtterance(text);
+  const speed=tts[scriptId]?.speed||0.85;
+  utt.rate=speed;
+  utt.lang='en-GB';
+  utt.pitch=1.0;
+
+  const words=text.split(/\s+/).length;
+  const estSec=Math.max(words/(speed*140)*60,10);
+
+  tts[scriptId]={utt,paused:false,speed,start:Date.now(),dur:estSec,elapsed:0,timer:null};
+  activeSynthId=scriptId;
+
+  const durEl=document.getElementById(durId);
+  if(durEl)durEl.textContent=fmtT(estSec);
+
+  const pp=document.getElementById(ppId),st=document.getElementById(stId),
+        prog=document.getElementById(progId),tm=document.getElementById(tmId);
+
+  utt.onstart=()=>{
+    if(pp)pp.textContent='⏸';
+    if(st)st.textContent='▶ Playing…';
+    tts[scriptId].start=Date.now();
+    tts[scriptId].timer=setInterval(()=>{
+      if(tts[scriptId].paused)return;
+      const el=(Date.now()-tts[scriptId].start)/1000;
+      tts[scriptId].elapsed=el;
+      if(prog)prog.style.width=Math.min(el/estSec*100,99)+'%';
+      if(tm)tm.textContent=fmtT(el);
+    },300);
+  };
+
+  utt.onend=()=>{
+    if(pp)pp.textContent='▶';
+    if(st)st.textContent='✓ Done';
+    if(prog)prog.style.width='100%';
+    if(tts[scriptId]&&tts[scriptId].timer)clearInterval(tts[scriptId].timer);
+    activeSynthId=null;
+  };
+
+  utt.onerror=(e)=>{
+    if(pp)pp.textContent='▶';
+    if(st)st.textContent='⚠ Retry';
+    if(tts[scriptId]&&tts[scriptId].timer)clearInterval(tts[scriptId].timer);
+    activeSynthId=null;
+  };
+
+  // iOS Safari workaround: must call speak() synchronously in user-gesture handler
+  try{
+    speechSynthesis.speak(utt);
+    // iOS Safari sometimes needs a gentle kick
+    if(/iPad|iPhone|iPod/.test(navigator.userAgent)){
+      setTimeout(()=>{
+        if(!speechSynthesis.speaking&&speechSynthesis.pending){
+          speechSynthesis.cancel();
+          speechSynthesis.speak(utt);
+        }
+      },300);
+    }
+  }catch(err){
+    if(st)st.textContent='⚠ Error';
+  }
+}
+
+function replayAudio(scriptId,ppId,progId,tmId,durId,stId){
+  speechSynthesis.cancel();
+  if(tts[scriptId]&&tts[scriptId].timer)clearInterval(tts[scriptId].timer);
+  delete tts[scriptId];
+  activeSynthId=null;
+  const prog=document.getElementById(progId),tm=document.getElementById(tmId);
+  if(prog)prog.style.width='0%';
+  if(tm)tm.textContent='0:00';
+  const pp=document.getElementById(ppId);if(pp)pp.textContent='▶';
+  // Small delay so cancel() completes before re-speaking
+  setTimeout(()=>handlePlay(scriptId,ppId,progId,tmId,durId,stId),350);
+}
+
+function setSpd(scriptId,rate,btn){
+  btn.closest('.speed-row').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active-spd'));
+  btn.classList.add('active-spd');
+  if(!tts[scriptId])tts[scriptId]={};
+  tts[scriptId].speed=rate;
+  // If currently playing, we can't change rate mid-utterance — note will take effect on next play
+}
+
+function seekAudio(e,barId,scriptId,progId,tmId){
+  const bar=document.getElementById(barId);if(!bar)return;
+  const rect=bar.getBoundingClientRect();
+  const x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+  const pct=Math.max(0,Math.min(x/rect.width,1));
+  const prog=document.getElementById(progId);if(prog)prog.style.width=(pct*100)+'%';
+  // Note: Web Speech API does not support seeking — progress bar is visual only
+}
+
+function fmtT(s){
+  const m=Math.floor(s/60),sec=Math.floor(s%60);
+  return `${m}:${sec<10?'0':''}${sec}`;
+}
+
+/* ══════════════════════════════════════
+   FINAL ASSESSMENT
+══════════════════════════════════════ */
+const fAns={fq1:'b',fq2:'c',fq3:'b',fq4:'c',fq5:'c',fq6:'c',fq7:'b',fq8:'d',fq9:'c',fq10:'b',fq11:'b',fq12:'c',fq13:'b',fq14:'c',fq15:'b',fq16:'b',fq17:'b',fq18:'b',fq19:'b',fq20:'c'};
+let attemptsUsed=0;
+
+function gradeFinal(){
+  if(attemptsUsed>=2)return;
+  attemptsUsed++;
+  let sc=0;
+  Object.entries(fAns).forEach(([nm,cr])=>{
+    const sel=document.querySelector(`input[name="${nm}"]:checked`);
+    document.querySelectorAll(`input[name="${nm}"]`).forEach(o=>{const l=o.closest('.opt');if(l)l.classList.remove('correct','wrong');});
+    if(sel){const sl=sel.closest('.opt');if(sel.value===cr){sc++;if(sl)sl.classList.add('correct');}else{if(sl)sl.classList.add('wrong');}}
+    const ci=document.querySelector(`input[name="${nm}"][value="${cr}"]`);
+    if(ci){const cl=ci.closest('.opt');if(cl)cl.classList.add('correct');}
+  });
+  const pct=Math.round(sc/20*100);
+  const r=document.getElementById('fresult');r.style.display='block';
+  document.getElementById('fscore').textContent=`${sc} / 20`;
+  document.getElementById('fprog').style.width=pct+'%';
+  const em=document.getElementById('femoji'),msg=document.getElementById('fmsg'),retryRow=document.getElementById('retry-row');
+  if(pct>=90){em.textContent='🏆';msg.textContent=`Outstanding — ${pct}%. Excellent mastery of Module 8: Change Management Language.`;}
+  else if(pct>=70){em.textContent='✅';msg.textContent=`Well done — ${pct}%. You have passed Module 8. Review any missed questions above.`;}
+  else{em.textContent='📚';msg.textContent=`${pct}% — Below the 70% pass mark. Review the module and try again.`;}
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+  if(attemptsUsed<2&&pct<70){
+    retryRow.style.display='block';
+    retryRow.innerHTML=`<p style="color:rgba(255,255,255,.5);font-size:13px;margin-bottom:10px">You have <strong style="color:var(--gold2)">1</strong> attempt remaining. Review the answer key above, then try again.</p>
+    <button class="btn btn-gold" onclick="resetFinal()">🔄 Try Again — Attempt 2</button>`;
+    document.getElementById('att-badge').textContent='Attempt 1 of 2 — Used';
+  }else{
+    const sb=document.getElementById('submit-btn');sb.disabled=true;sb.style.opacity='.5';
+    document.getElementById('att-badge').textContent='All 2 attempts used';
+    document.querySelectorAll('#fwrap input[name^="fq"]').forEach(i=>i.disabled=true);
+  }
+}
+function resetFinal(){
+  document.querySelectorAll('#fwrap input[name^="fq"]').forEach(i=>{i.disabled=false;i.checked=false;});
+  document.querySelectorAll('#fwrap .opt').forEach(o=>o.classList.remove('correct','wrong'));
+  document.getElementById('fresult').style.display='none';
+  document.getElementById('retry-row').style.display='none';
+  document.getElementById('att-badge').textContent='Attempt 2 of 2';
+  document.getElementById('fprog').style.width='0%';
+}
+
+/* SIDEBAR */
+function setActive(el){document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.remove('active'));el.classList.add('active');}
+window.addEventListener('scroll',()=>{
+  const secs=document.querySelectorAll('section[id]');let cur='';
+  secs.forEach(s=>{if(s.getBoundingClientRect().top<200)cur=s.id;});
+  document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+
+/* PROGRESS */
+function updateProgress(){
+  const n=document.querySelectorAll('.score-badge').length;
+  const pct=Math.min(Math.round(n/10*100),100);
+  const p=document.getElementById('modprog'),pe=document.getElementById('modpct');
+  if(p)p.style.width=pct+'%';if(pe)pe.textContent=pct+'%';
+}
+setTimeout(()=>{const p=document.getElementById('modprog');if(p)p.style.width='0%';},200);
+
+/* iOS Safari: prevent speech synthesis from being killed on page visibility change */
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden&&speechSynthesis.speaking)speechSynthesis.pause();
+});
+</script>
+</body>
+</html>

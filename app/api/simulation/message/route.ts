@@ -70,6 +70,54 @@ function debugLog(stage: string, details: Record<string, unknown>) {
   console.log(`[simulation.message] ${stage}`, details);
 }
 
+function createEphemeralSimulationId() {
+  return `sim_${crypto.randomUUID()}`;
+}
+
+function mapProviderError(error: unknown): { userMessage: string; details: string } {
+  const err = error as {
+    message?: string;
+    status?: number;
+    code?: string;
+    type?: string;
+  };
+  const details = err?.message || "unknown_provider_error";
+  const lower = details.toLowerCase();
+
+  if (
+    err?.status === 429 ||
+    err?.code === "insufficient_quota" ||
+    lower.includes("insufficient_quota") ||
+    lower.includes("quota") ||
+    lower.includes("billing")
+  ) {
+    return {
+      userMessage:
+        "The AI service is temporarily unavailable because the current API quota has been exceeded.",
+      details,
+    };
+  }
+
+  if (lower.includes("rate limit")) {
+    return {
+      userMessage: "The AI service is temporarily rate-limited. Please try again shortly.",
+      details,
+    };
+  }
+
+  if (lower.includes("connection error") || lower.includes("fetch failed")) {
+    return {
+      userMessage: "The AI service is temporarily unavailable. Please try again shortly.",
+      details,
+    };
+  }
+
+  return {
+    userMessage: "The AI service is temporarily unavailable. Please try again.",
+    details,
+  };
+}
+
 function detectScenarioKey(input: SimulationMessageInput): ScenarioKey {
   const raw = `${normalizeText(input.user_input)} ${input.history
     .map((item) => item.content)
@@ -649,7 +697,10 @@ async function generateConversationResponse(
     return text;
   } catch (error) {
     console.error("[simulation/message] Full error:", error);
-    throw error;
+    const mapped = mapProviderError(error);
+    const wrapped = new Error(mapped.userMessage);
+    wrapped.cause = mapped.details;
+    throw wrapped;
   }
 }
 
@@ -741,12 +792,24 @@ export async function POST(request: Request) {
       }
 
       stage = "create_simulation";
-      const simulation = await createSimulation(payload);
-      simulationId = simulation.id;
-      debugLog("persistence.simulation_created", {
-        simulationId,
-        scenario_type: simulation.scenario_type,
-      });
+      try {
+        const simulation = await createSimulation(payload);
+        simulationId = simulation.id;
+        debugLog("persistence.simulation_created", {
+          simulationId,
+          scenario_type: simulation.scenario_type,
+        });
+      } catch (error) {
+        simulationId = createEphemeralSimulationId();
+        console.warn(
+          "Simulation creation failed; continuing with ephemeral simulation id:",
+          error
+        );
+        debugLog("persistence.simulation_skipped", {
+          simulationId,
+          reason: error instanceof Error ? error.message : String(error),
+        });
+      }
     }
 
     stage = "generate_response";
@@ -763,16 +826,27 @@ export async function POST(request: Request) {
     const output: SimulationMessageOutput = { response, feedback, suggestions };
 
     stage = "create_attempt";
-    await createSimulationAttempt({
-      simulation_id: simulationId,
-      user_input: payload.user_input,
-      ai_response: output.response,
-      feedback_json: { ...output.feedback, suggestions: output.suggestions },
-    });
-    debugLog("persistence.attempt_created", {
-      simulationId,
-      suggestionCount: output.suggestions.length,
-    });
+    try {
+      await createSimulationAttempt({
+        simulation_id: simulationId,
+        user_input: payload.user_input,
+        ai_response: output.response,
+        feedback_json: { ...output.feedback, suggestions: output.suggestions },
+      });
+      debugLog("persistence.attempt_created", {
+        simulationId,
+        suggestionCount: output.suggestions.length,
+      });
+    } catch (error) {
+      console.warn(
+        "Simulation attempt persistence failed; returning successful response anyway:",
+        error
+      );
+      debugLog("persistence.attempt_skipped", {
+        simulationId,
+        reason: error instanceof Error ? error.message : String(error),
+      });
+    }
 
     stage = "respond";
     debugLog("response.success", {
@@ -783,10 +857,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ simulation_id: simulationId, ...output });
   } catch (err) {
     console.error("[simulation/message] Full error:", err);
+    const errorMessage =
+      err instanceof Error ? err.message : "Simulation message failed";
+    const causeDetails =
+      err instanceof Error && typeof err.cause === "string" ? err.cause : null;
 
     const details =
       err instanceof Error
-        ? `${stage}: ${err.message}${err.stack ? `\n${err.stack}` : ""}`
+        ? `${stage}: ${causeDetails || err.message}${err.stack ? `\n${err.stack}` : ""}`
         : `unknown_simulation_error at ${stage}`;
 
     debugLog("response.failure", {
@@ -796,7 +874,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        error: "Simulation message failed",
+        error: errorMessage,
         ...(process.env.NODE_ENV !== "production" ? { details } : {}),
       },
       { status: 500 }

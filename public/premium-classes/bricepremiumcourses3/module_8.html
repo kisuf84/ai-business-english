@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8: Product Launch and Campaign Planning</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2744;--navy-dark:#111b33;--navy-mid:#243055;--navy-light:#2d3d6b;
+  --gold:#f0a830;--gold-light:#f5c55a;--gold-pale:#fef3d0;
+  --cream:#faf7f2;--cream-dark:#f0ebe0;
+  --white:#fff;--text-dark:#1a2744;--text-mid:#3d4f6e;--text-light:#6b7a99;
+  --success:#2d7a4f;--error:#b83232;
+  --sidebar-w:260px;--radius:10px;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh}
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--navy-dark);display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:4px}.sidebar::-webkit-scrollbar-thumb{background:var(--navy-light);border-radius:2px}
+.sidebar-brand{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand-title{font-family:'Fraunces',serif;font-size:13px;font-weight:600;color:var(--gold);line-height:1.3}
+.brand-sub{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:3px}
+.level-badge{display:inline-block;background:var(--gold);color:var(--navy-dark);font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 8px;border-radius:20px;margin-top:10px}
+.sidebar-module-label{padding:18px 20px 8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:600}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;color:rgba(255,255,255,.65);font-size:13px;font-weight:400;transition:all .18s;border-left:3px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:rgba(240,168,48,.12);color:#fff;border-left-color:var(--gold)}
+.nav-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.nav-label{flex:1}
+.nav-badge{background:var(--gold);color:var(--navy-dark);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.section{display:none}.section.active{display:block}
+.hero{background:var(--navy);padding:28px 52px 36px;position:relative;overflow:hidden;min-height:280px}
+.hero::before{content:'';position:absolute;right:-40px;top:-30px;width:460px;height:460px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='10' y='320' font-size='280' opacity='.04' fill='%23fff' font-family='serif'%3EM8%3C/text%3E%3C/svg%3E") center/contain no-repeat}
+.section-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:22px;font-family:'DM Mono',monospace}
+.hero-title{font-family:'Fraunces',serif;font-size:54px;font-weight:700;line-height:1.05;color:#fff;margin-bottom:16px}
+.hero-title span{color:var(--gold)}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.65);max-width:620px;line-height:1.65;margin-bottom:28px}
+.stats-row{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:24px}
+.stat-num{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.stat-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.progress-track{height:4px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .6s ease;width:0%}
+.content-area{background:var(--cream);padding:40px 52px}
+.card{background:#fff;border-radius:var(--radius);padding:32px;margin-bottom:24px;border:1px solid rgba(26,39,68,.08);box-shadow:0 2px 12px rgba(26,39,68,.06)}
+.card-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--text-dark);margin-bottom:6px}
+.card-title-bar{width:40px;height:3px;background:var(--gold);border-radius:2px;margin-bottom:18px}
+.prose{font-size:15px;line-height:1.75;color:var(--text-mid)}
+.prose strong{color:var(--text-dark);font-weight:600}
+.prose p+p{margin-top:12px}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.outcome-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--cream);border-radius:8px;border:1px solid var(--cream-dark)}
+.outcome-icon{color:var(--gold);flex-shrink:0;margin-top:1px}
+.outcome-text{font-size:13.5px;color:var(--text-mid);line-height:1.5}
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.q-card{background:#fff;border:1px solid rgba(26,39,68,.1);border-radius:8px;padding:16px;display:flex;gap:12px;align-items:flex-start;transition:box-shadow .2s}
+.q-card:hover{box-shadow:0 4px 16px rgba(26,39,68,.1)}
+.q-num{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--gold-light);flex-shrink:0;min-width:28px;line-height:1}
+.q-text{font-size:14px;color:var(--text-mid);line-height:1.55}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.wb-card{background:#fff;border:1px solid rgba(26,39,68,.1);border-radius:10px;padding:18px 16px;display:flex;flex-direction:column;gap:6px;transition:transform .2s,box-shadow .2s}
+.wb-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,39,68,.1)}
+.wb-emoji{font-size:24px}
+.wb-term{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--text-dark)}
+.wb-pos{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.wb-def{font-size:13px;color:var(--text-mid);line-height:1.5}
+.reading-text{background:var(--cream);border-left:4px solid var(--gold);padding:24px 28px;border-radius:0 8px 8px 0;margin-bottom:28px}
+.reading-text h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--text-dark);margin-bottom:14px}
+.reading-text p{font-size:14.5px;line-height:1.75;color:var(--text-mid);margin-bottom:10px}
+.reading-text strong{color:var(--text-dark);font-weight:600}
+.mcq-section{margin-top:24px}
+.mcq-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--text-dark);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--cream-dark)}
+.mcq-item{margin-bottom:20px}
+.mcq-q{font-size:14.5px;font-weight:600;color:var(--text-dark);margin-bottom:10px;line-height:1.5}
+.mcq-options{display:grid;gap:7px}
+.mcq-option{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1.5px solid rgba(26,39,68,.15);cursor:pointer;transition:all .18s;font-size:13.5px;color:var(--text-mid);background:#fff}
+.mcq-option:hover{border-color:var(--gold);background:var(--gold-pale)}
+.mcq-option.selected{border-color:var(--navy);background:rgba(26,39,68,.06);color:var(--text-dark)}
+.mcq-option.correct{border-color:var(--success)!important;background:rgba(45,122,79,.08)!important;color:var(--success)!important}
+.mcq-option.wrong{border-color:var(--error)!important;background:rgba(184,50,50,.07)!important;color:var(--error)!important}
+.opt-letter{width:22px;height:22px;border-radius:50%;background:rgba(26,39,68,.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'DM Mono',monospace}
+.check-btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 22px;background:var(--navy);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;transition:background .18s}
+.check-btn:hover{background:var(--navy-light)}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;display:none}
+.feedback.show{display:block}
+.feedback.good{background:rgba(45,122,79,.1);color:var(--success);border:1px solid rgba(45,122,79,.2)}
+.feedback.bad{background:rgba(184,50,50,.08);color:var(--error);border:1px solid rgba(184,50,50,.2)}
+.score-display{background:var(--cream);border-radius:8px;padding:14px 18px;margin-top:16px;display:none}
+.score-display.show{display:flex;align-items:center;justify-content:space-between}
+.score-val{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--text-dark)}
+.score-label{font-size:13px;color:var(--text-light)}
+.ex-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ex-badge{background:var(--navy);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.06em}
+.ex-type{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.ex-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--text-dark);margin-bottom:4px}
+.ex-instruction{font-size:13.5px;color:var(--text-light);margin-bottom:20px;font-style:italic}
+.word-box{background:var(--cream);border-radius:8px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:20px}
+.word-chip{background:#fff;border:1px solid rgba(26,39,68,.15);border-radius:5px;padding:3px 10px;font-size:13px;color:var(--text-mid)}
+.gap-sentence{font-size:14.5px;color:var(--text-dark);line-height:2.5;margin-bottom:6px}
+.gap-input{border:none;border-bottom:2px solid var(--gold);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);padding:2px 6px;width:170px;outline:none;text-align:center;transition:border-color .18s}
+.gap-input:focus{border-bottom-color:var(--navy)}
+.tf-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--cream-dark)}
+.tf-stmt{flex:1;font-size:14.5px;color:var(--text-mid);line-height:1.55}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+.tf-btn{padding:5px 14px;border-radius:6px;border:1.5px solid rgba(26,39,68,.2);cursor:pointer;font-size:12px;font-weight:600;background:#fff;color:var(--text-mid);transition:all .18s;font-family:'DM Sans',sans-serif}
+.tf-btn:hover{border-color:var(--gold);color:var(--gold)}
+.tf-btn.sel-t{background:#dcfce7;border-color:var(--success);color:var(--success)}
+.tf-btn.sel-f{background:#fee2e2;border-color:var(--error);color:var(--error)}
+.gr-box{background:var(--navy);color:#fff;border-radius:10px;padding:28px;margin-bottom:24px}
+.gr-box-title{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--gold);margin-bottom:6px}
+.gr-box-sub{font-size:12px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px}
+.gr-rule{background:rgba(255,255,255,.08);border-radius:8px;padding:16px;margin-bottom:12px}
+.gr-rule-title{font-size:13px;font-weight:600;color:var(--gold-light);margin-bottom:6px}
+.gr-rule-text{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.6}
+.gr-example{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--gold-pale);background:rgba(255,255,255,.05);padding:8px 12px;border-radius:6px;margin-top:8px;line-height:1.6}
+.gr-table{width:100%;border-collapse:collapse;margin-top:14px}
+.gr-table th{background:rgba(255,255,255,.1);padding:8px 12px;font-size:12px;text-align:left;color:var(--gold-light);letter-spacing:.06em;text-transform:uppercase}
+.gr-table td{padding:8px 12px;font-size:13px;color:rgba(255,255,255,.75);border-top:1px solid rgba(255,255,255,.08)}
+.gr-table tr:hover td{background:rgba(255,255,255,.04)}
+.writing-prompt{background:rgba(240,168,48,.08);border:1px solid rgba(240,168,48,.35);border-radius:8px;padding:18px 20px;margin-bottom:16px}
+.writing-prompt h4{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--text-dark);margin-bottom:8px}
+.writing-prompt p{font-size:13.5px;color:var(--text-mid);line-height:1.6}
+.writing-focus{background:rgba(26,39,68,.04);border:1px solid rgba(26,39,68,.12);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--text-light)}
+.writing-focus strong{color:var(--text-mid)}
+.writing-textarea{width:100%;min-height:180px;border:1.5px solid rgba(26,39,68,.2);border-radius:8px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dark);resize:vertical;outline:none;background:#fff;line-height:1.65;transition:border-color .18s}
+.writing-textarea:focus{border-color:var(--gold)}
+.writing-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.word-count{font-size:12px;color:var(--text-light);font-family:'DM Mono',monospace}
+.submit-btn{padding:10px 24px;background:var(--gold);color:var(--navy-dark);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .18s}
+.submit-btn:hover{background:var(--gold-light)}
+.submit-success{display:none;padding:12px 16px;background:rgba(45,122,79,.1);border:1px solid rgba(45,122,79,.25);border-radius:8px;color:var(--success);font-size:13.5px;font-weight:500;margin-top:12px}
+/* ── AUDIO CARDS ── */
+.audio-card{background:var(--navy-mid);border-radius:12px;padding:24px;margin-bottom:28px}
+.audio-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
+.audio-emoji{font-size:30px;background:rgba(255,255,255,.1);border-radius:8px;padding:9px;flex-shrink:0;line-height:1}
+.audio-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#fff;margin-bottom:4px}
+.audio-sub{font-size:12px;color:rgba(255,255,255,.5)}
+.audio-tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.audio-tag{font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 9px;border-radius:10px;text-transform:uppercase}
+.tag-level{background:rgba(240,168,48,.3);color:var(--gold-light)}
+.tag-type{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
+.tag-focus{color:rgba(255,255,255,.45);font-size:10px}
+.player-box{background:var(--navy-dark);border-radius:10px;padding:16px 18px;margin-bottom:12px}
+.player-row{display:flex;align-items:center;gap:14px}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:background .18s;color:var(--navy-dark)}
+.play-btn:hover{background:var(--gold-light)}
+.player-info{flex:1}
+.player-title-sm{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px}
+.player-sub-sm{font-size:11px;color:rgba(255,255,255,.4)}
+.player-time{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.5);white-space:nowrap}
+.player-progress{width:100%;height:3px;background:rgba(255,255,255,.12);border-radius:2px;margin-top:10px;overflow:hidden}
+.player-progress-fill{height:100%;width:0%;background:var(--gold);border-radius:2px;transition:width .5s linear}
+.speed-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.speed-label{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase}
+.speed-btn{padding:3px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;transition:all .18s}
+.speed-btn.active,.speed-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-dark);font-weight:700}
+.replay-btn{padding:3px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.6);font-size:11px;cursor:pointer;transition:all .18s}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light)}
+.tts-note{font-size:11px;color:rgba(255,255,255,.3);font-style:italic;margin-top:6px}
+.transcript-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;color:rgba(255,255,255,.6);font-size:12.5px;padding:8px 0;border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:color .18s}
+.transcript-toggle:hover{color:var(--gold-light)}
+.transcript-box{display:none;background:rgba(255,255,255,.06);border-radius:8px;padding:16px;margin-top:6px;margin-bottom:14px}
+.transcript-box.open{display:block}
+.transcript-box p{font-size:13px;color:rgba(255,255,255,.7);line-height:1.75;margin-bottom:8px}
+/* ── LISTENING MCQs — all text WHITE ── */
+.listen-instruction{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.08);border-radius:8px;font-size:13px;color:#fff;margin-bottom:18px;font-weight:500}
+.listen-mcq-wrap .mcq-title{color:#fff;border-bottom-color:rgba(255,255,255,.2)}
+.listen-mcq-wrap .mcq-q{color:#fff}
+.listen-mcq-wrap .mcq-option{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2);color:#fff}
+.listen-mcq-wrap .mcq-option:hover{border-color:var(--gold);background:rgba(240,168,48,.15);color:#fff}
+.listen-mcq-wrap .mcq-option.selected{border-color:var(--gold);background:rgba(240,168,48,.2);color:#fff}
+.listen-mcq-wrap .mcq-option.correct{border-color:#4ade80!important;background:rgba(74,222,128,.15)!important;color:#4ade80!important}
+.listen-mcq-wrap .mcq-option.wrong{border-color:#f87171!important;background:rgba(248,113,113,.12)!important;color:#f87171!important}
+.listen-mcq-wrap .opt-letter{background:rgba(255,255,255,.15);color:#fff}
+.listen-mcq-wrap .check-btn{background:var(--gold);color:var(--navy-dark)}
+.listen-mcq-wrap .check-btn:hover{background:var(--gold-light)}
+.listen-mcq-wrap .feedback.good{background:rgba(74,222,128,.15);color:#4ade80;border-color:rgba(74,222,128,.3)}
+.listen-mcq-wrap .feedback.bad{background:rgba(248,113,113,.12);color:#f87171;border-color:rgba(248,113,113,.25)}
+.listen-mcq-wrap .score-display{background:rgba(255,255,255,.08)}
+.listen-mcq-wrap .score-val{color:#fff}
+.listen-mcq-wrap .score-label{color:rgba(255,255,255,.6)}
+/* ── CASE STUDIES ── */
+.case-header{background:var(--navy);border-radius:10px 10px 0 0;padding:22px 28px}
+.case-header h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#fff;margin-bottom:4px}
+.case-header p{font-size:13px;color:rgba(255,255,255,.5)}
+.case-body{background:#fff;border:1px solid rgba(26,39,68,.1);border-top:none;border-radius:0 0 10px 10px;padding:24px 28px;margin-bottom:28px}
+.case-section-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.case-text{font-size:14.5px;color:var(--text-mid);line-height:1.75;margin-bottom:20px}
+.case-text strong{color:var(--text-dark)}
+/* ── ASSESSMENT ── */
+.assessment-header{background:linear-gradient(135deg,var(--navy-dark),var(--navy-mid));border-radius:12px;padding:28px 32px;margin-bottom:28px;text-align:center}
+.assessment-header h2{font-family:'Fraunces',serif;font-size:28px;color:#fff;margin-bottom:8px}
+.assessment-header p{color:rgba(255,255,255,.6);font-size:14px}
+.assessment-meta{display:flex;justify-content:center;gap:28px;margin-top:16px;flex-wrap:wrap}
+.assessment-meta-item{text-align:center}
+.assessment-meta-num{font-family:'Fraunces',serif;font-size:22px;color:var(--gold);font-weight:700}
+.assessment-meta-label{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em}
+.attempt-badge{display:inline-block;padding:4px 12px;border-radius:10px;font-size:11px;font-weight:600;background:rgba(240,168,48,.2);color:var(--gold-light);margin-top:8px}
+.assessment-result{display:none;text-align:center;padding:28px;background:#fff;border-radius:12px;border:2px solid var(--cream-dark);margin-bottom:24px}
+.result-score{font-family:'Fraunces',serif;font-size:56px;font-weight:700}
+.result-score.pass{color:var(--success)}.result-score.fail{color:var(--error)}
+.result-msg{font-size:16px;color:var(--text-mid);margin-top:8px}
+.retake-btn{padding:10px 24px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-top:16px;font-family:'DM Sans',sans-serif}
+
+
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:768px){
+  .sidebar{
+    position:relative;width:100%;height:auto;
+    flex-direction:column;overflow-y:visible;
+    border-bottom:2px solid var(--gold);
+  }
+  .sidebar-brand{padding:16px 16px 12px}
+  .brand-title{font-size:12px}
+  .sidebar-module-label{padding:10px 16px 4px}
+  .nav-item{padding:8px 16px}
+  .main{margin-left:0}
+  .hero{padding:20px 20px 26px;min-height:auto}
+  .hero-title{font-size:34px}
+  .hero-desc{font-size:14px}
+  .stats-row{gap:20px}
+  .stat-num{font-size:22px}
+  .content-area{padding:20px 16px}
+  .card{padding:20px 16px}
+  .q-grid,.outcomes-grid,.wb-grid{grid-template-columns:1fr}
+  .gr-table{display:block;overflow-x:auto;white-space:nowrap}
+  .writing-textarea{min-height:160px;font-size:13px}
+  .mcq-option{font-size:13px;padding:9px 12px}
+  .audio-card{padding:16px}
+  .player-row{flex-wrap:wrap;gap:10px}
+  .player-time{font-size:11px}
+  .speed-row{gap:6px}
+  .speed-btn{padding:3px 8px;font-size:10px}
+  .case-body{padding:16px}
+  .assessment-header{padding:20px 16px}
+  .assessment-meta{gap:16px}
+  .result-score{font-size:40px}
+  .tf-item{flex-direction:column;gap:8px}
+  .tf-btns{align-self:flex-start}
+  .word-box{padding:10px 12px;gap:6px}
+  .word-chip{font-size:12px;padding:2px 8px}
+  .gap-input{width:130px;font-size:13px}
+  .card-title{font-size:19px}
+  .ex-title{font-size:16px}
+  .section-tag{font-size:10px;padding:5px 10px}
+  .hero-title span{display:inline}
+  .listen-instruction{font-size:12px;padding:8px 12px}
+  .check-btn{padding:9px 18px;font-size:12px}
+  .submit-btn{padding:9px 18px;font-size:12px}
+  .progress-label{font-size:11px}
+}
+@media(max-width:480px){
+  .hero-title{font-size:26px;line-height:1.1}
+  .stats-row{gap:14px;flex-wrap:wrap}
+  .stat-num{font-size:20px}
+  .stat-label{font-size:9px}
+  .card{padding:16px 14px}
+  .mcq-q{font-size:13.5px}
+  .mcq-option{font-size:12.5px;gap:8px;padding:9px 10px}
+  .opt-letter{width:20px;height:20px;font-size:10px}
+  .audio-header{flex-direction:column;gap:10px}
+  .audio-emoji{font-size:24px;padding:7px}
+  .play-btn{width:40px;height:40px;font-size:16px}
+  .nav-badge{font-size:8px;padding:2px 5px}
+  .gr-box{padding:18px 14px}
+  .gr-rule{padding:12px}
+}
+
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-title">Marketing &amp; Advertising English</div>
+    <div class="brand-sub">Professional Development</div>
+    <div class="level-badge">B1&ndash;B2 LEVEL</div>
+  </div>
+  <div class="sidebar-module-label">Module 8</div>
+  <div class="nav-item active" onclick="showSection('overview')"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div>
+  <div class="nav-item" onclick="showSection('speaking')"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span><span class="nav-badge">21Q</span></div>
+  <div class="nav-item" onclick="showSection('wordbank')"><span class="nav-icon">🟩</span><span class="nav-label">Word Bank</span><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="showSection('reading')"><span class="nav-icon">📄</span><span class="nav-label">Reading</span><span class="nav-badge">2T</span></div>
+  <div class="nav-item" onclick="showSection('vocabulary')"><span class="nav-icon">✏️</span><span class="nav-label">Vocabulary</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar')"><span class="nav-icon">📘</span><span class="nav-label">Grammar</span><span class="nav-badge">3Ex</span></div>
+  <div class="nav-item" onclick="showSection('grammar-review')"><span class="nav-icon">🔍</span><span class="nav-label">Grammar Review</span></div>
+  <div class="nav-item" onclick="showSection('writing')"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span><span class="nav-badge">2W</span></div>
+  <div class="nav-item" onclick="showSection('listening')"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span><span class="nav-badge">4Ex</span></div>
+  <div class="nav-item" onclick="showSection('casestudies')"><span class="nav-icon">📊</span><span class="nav-label">Case Studies</span><span class="nav-badge">2CS</span></div>
+  <div class="nav-item" onclick="showSection('assessment')"><span class="nav-icon">🎯</span><span class="nav-label">Final Assessment</span><span class="nav-badge">20Q</span></div>
+</nav>
+<div class="main">
+
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="section-tag">🏛️ Module 8 &middot; Marketing &amp; Advertising English</div>
+    <div class="hero-title">Product Launch &amp;<br><span>Campaign Planning</span></div>
+    <p class="hero-desc">Master the professional English of go-to-market strategy, campaign briefs, launch timelines, and cross-functional coordination &mdash; the skills that turn great products into market-winning campaigns.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">21</div><div class="stat-label">Speaking Q's</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Reading Texts</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Grammar &amp; Vocab Ex.</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Listening Ex.</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Case Studies</div></div>
+      <div class="stat"><div class="stat-num">21+</div><div class="stat-label">Word Bank</div></div>
+    </div>
+    <div>
+      <div class="progress-label"><span>Module Progress</span><span id="progress-pct">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Module Overview</div><div class="card-title-bar"></div>
+      <div class="prose">
+        <p><strong>Welcome to Module 8: Product Launch and Campaign Planning.</strong> Launching a product is one of the most complex and high-stakes activities in marketing. It requires coordinating multiple teams &mdash; product, brand, digital, PR, sales, and operations &mdash; around a single, time-critical event, while maintaining a coherent strategy and a consistent message. The language used to plan, brief, and manage this process is highly specialised, and fluency in it is essential for any marketing professional working in an international or English-language environment.</p>
+        <p>This module focuses on the vocabulary and communication skills needed at every stage of the launch process: from the initial go-to-market strategy and campaign brief, through pre-launch activities and stakeholder alignment, to post-launch analysis and reporting. You will learn how to write and interpret campaign briefs, discuss launch timelines and critical paths, present strategy to senior stakeholders, and evaluate campaign performance against objectives.</p>
+        <p>By the end of this module, you will be able to lead or contribute to product launch discussions in English, write a structured campaign brief, present a go-to-market strategy clearly, and use the grammar structures most common in planning documents, presentations, and post-launch reviews.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Learning Outcomes</div><div class="card-title-bar"></div>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use 21+ product launch and campaign planning terms accurately in professional contexts</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Explain go-to-market strategy components and launch phases in English</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Write and interpret professional campaign briefs and creative briefs</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use future forms correctly to describe launch plans and timelines</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Use passives and impersonal structures common in formal planning documents</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Express purpose, objectives, and expected outcomes in professional English</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Write a campaign brief and a post-launch performance report in English</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✅</div><div class="outcome-text">Analyse product launch case studies and evaluate strategic decisions</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="speaking" class="section">
+  <div class="hero">
+    <div class="section-tag">🎙️ Speaking Activities</div>
+    <div class="hero-title">Speaking <span>Discussion</span></div>
+    <p class="hero-desc">21 discussion questions on product launch strategy, campaign planning, and go-to-market execution &mdash; build professional fluency in strategic marketing English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Discussion Questions</div><div class="card-title-bar"></div>
+      <div class="q-grid"><div class="q-card"><div class="q-num">1</div><div class="q-text">Think of a product launch you remember well — as a consumer or a professional. What made it effective or memorable?</div></div><div class="q-card"><div class="q-num">2</div><div class="q-text">What is a go-to-market strategy and what are the key decisions it needs to address before a product launches?</div></div><div class="q-card"><div class="q-num">3</div><div class="q-text">Why do you think so many product launches fail even when the product itself is good? What are the most common mistakes?</div></div><div class="q-card"><div class="q-num">4</div><div class="q-text">What is a campaign brief and who typically writes it? What information should it always contain?</div></div><div class="q-card"><div class="q-num">5</div><div class="q-text">How do marketing teams coordinate with product, sales, and operations teams during a product launch? What are the main challenges?</div></div><div class="q-card"><div class="q-num">6</div><div class="q-text">What is a critical path in project management, and why is it important to identify it early in launch planning?</div></div><div class="q-card"><div class="q-num">7</div><div class="q-text">What is a soft launch versus a hard launch? When would you choose each approach?</div></div><div class="q-card"><div class="q-num">8</div><div class="q-text">What is a pre-launch campaign and what is it designed to achieve? Can you give examples of effective pre-launch tactics?</div></div><div class="q-card"><div class="q-num">9</div><div class="q-text">What does it mean to define the target audience for a campaign, and how does this decision shape all the other planning decisions?</div></div><div class="q-card"><div class="q-num">10</div><div class="q-text">What is a key performance indicator (KPI) and how do you select the right KPIs for a product launch campaign?</div></div><div class="q-card"><div class="q-num">11</div><div class="q-text">What is the difference between a marketing objective and a business objective? How should they align?</div></div><div class="q-card"><div class="q-num">12</div><div class="q-text">How important is the timing of a product launch? What internal and external factors should influence the launch date?</div></div><div class="q-card"><div class="q-num">13</div><div class="q-text">What is stakeholder management and why is it a critical skill during a complex product launch?</div></div><div class="q-card"><div class="q-num">14</div><div class="q-text">What is a SWOT analysis and when is it useful in the launch planning process?</div></div><div class="q-card"><div class="q-num">15</div><div class="q-text">What is share of voice and why might a brand monitor it during and after a product launch?</div></div><div class="q-card"><div class="q-num">16</div><div class="q-text">What does it mean to have a clear brand message for a launch campaign, and how do you ensure consistency across all channels?</div></div><div class="q-card"><div class="q-num">17</div><div class="q-text">What is a press release and what role does it play in a product launch? How is it different from an advertisement?</div></div><div class="q-card"><div class="q-num">18</div><div class="q-text">How do you measure the success of a product launch campaign once it has ended? What metrics and time horizons matter?</div></div><div class="q-card"><div class="q-num">19</div><div class="q-text">What is a product launch timeline and who is responsible for maintaining it?</div></div><div class="q-card"><div class="q-num">20</div><div class="q-text">What role does consumer research play in the planning phase of a product launch? How do insights shape campaign decisions?</div></div><div class="q-card"><div class="q-num">21</div><div class="q-text">If you were the marketing lead for a new app launching in three months, what would be your first five priorities?</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="wordbank" class="section">
+  <div class="hero">
+    <div class="section-tag">🟩 Word Bank</div>
+    <div class="hero-title">Word <span>Bank</span></div>
+    <p class="hero-desc">21 essential terms for product launch and campaign planning &mdash; with professional definitions and strategic context for every key concept.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Key Vocabulary &mdash; 21 Terms</div><div class="card-title-bar"></div>
+      <div class="wb-grid"><div class="wb-card"><div class="wb-emoji">🚀</div><div class="wb-term">Go-to-market (GTM) strategy</div><div class="wb-pos">noun phrase</div><div class="wb-def">A comprehensive plan defining how a company will launch a product, reach its target customers, and achieve a competitive advantage in the market.</div></div><div class="wb-card"><div class="wb-emoji">📋</div><div class="wb-term">Campaign brief</div><div class="wb-pos">noun phrase</div><div class="wb-def">A structured document that defines the objectives, target audience, key messages, channels, timeline, and budget for a marketing campaign, used to align all stakeholders and brief agencies.</div></div><div class="wb-card"><div class="wb-emoji">🎯</div><div class="wb-term">Key performance indicator (KPI)</div><div class="wb-pos">noun phrase</div><div class="wb-def">A measurable value used to evaluate how effectively a campaign or business is achieving its key objectives; examples include conversion rate, reach, and cost per acquisition.</div></div><div class="wb-card"><div class="wb-emoji">📅</div><div class="wb-term">Launch timeline</div><div class="wb-pos">noun phrase</div><div class="wb-def">A detailed schedule mapping all tasks, milestones, and deadlines associated with a product launch, typically presented as a Gantt chart or project management document.</div></div><div class="wb-card"><div class="wb-emoji">🔑</div><div class="wb-term">Critical path</div><div class="wb-pos">noun phrase</div><div class="wb-def">The sequence of dependent tasks in a project that determines the minimum time required to complete the launch; any delay in a critical path task delays the entire launch.</div></div><div class="wb-card"><div class="wb-emoji">🌱</div><div class="wb-term">Soft launch</div><div class="wb-pos">noun phrase</div><div class="wb-def">A low-profile initial release of a product to a limited audience or market, used to test and refine before a wider public launch.</div></div><div class="wb-card"><div class="wb-emoji">🔊</div><div class="wb-term">Hard launch</div><div class="wb-pos">noun phrase</div><div class="wb-def">A full, public release of a product with maximum promotional activity across all relevant channels, typically accompanied by a coordinated PR and marketing campaign.</div></div><div class="wb-card"><div class="wb-emoji">📢</div><div class="wb-term">Pre-launch campaign</div><div class="wb-pos">noun phrase</div><div class="wb-def">Marketing activity designed to build awareness, anticipation, and a potential customer base before the product is officially available.</div></div><div class="wb-card"><div class="wb-emoji">🏹</div><div class="wb-term">Target audience</div><div class="wb-pos">noun phrase</div><div class="wb-def">The specific group of consumers a campaign is designed to reach and influence, defined by demographic, psychographic, geographic, and behavioural characteristics.</div></div><div class="wb-card"><div class="wb-emoji">📣</div><div class="wb-term">Key message</div><div class="wb-pos">noun phrase</div><div class="wb-def">The central idea or claim that a campaign wants to communicate to its audience; the single most important thing the target audience should take away from all campaign touchpoints.</div></div><div class="wb-card"><div class="wb-emoji">📊</div><div class="wb-term">Share of voice (SOV)</div><div class="wb-pos">noun phrase</div><div class="wb-def">The percentage of total advertising or media presence in a category that a brand occupies, used to measure relative brand visibility compared to competitors.</div></div><div class="wb-card"><div class="wb-emoji">🤝</div><div class="wb-term">Stakeholder alignment</div><div class="wb-pos">noun phrase</div><div class="wb-def">The process of ensuring that all key internal and external parties involved in a launch share a common understanding of the objectives, strategy, and their respective responsibilities.</div></div><div class="wb-card"><div class="wb-emoji">📰</div><div class="wb-term">Press release</div><div class="wb-pos">noun phrase</div><div class="wb-def">A written communication sent to journalists and media outlets to announce a newsworthy development, such as a product launch, and generate earned media coverage.</div></div><div class="wb-card"><div class="wb-emoji">🧭</div><div class="wb-term">Creative brief</div><div class="wb-pos">noun phrase</div><div class="wb-def">A document that guides creative teams and agencies in developing campaign assets, specifying the audience, objectives, tone of voice, key messages, and any mandatory brand requirements.</div></div><div class="wb-card"><div class="wb-emoji">💰</div><div class="wb-term">Campaign budget</div><div class="wb-pos">noun phrase</div><div class="wb-def">The total financial resources allocated to a marketing campaign, broken down by channel, activity, and time period to ensure efficient resource allocation.</div></div><div class="wb-card"><div class="wb-emoji">📈</div><div class="wb-term">Market penetration</div><div class="wb-pos">noun phrase</div><div class="wb-def">The extent to which a product or brand has been adopted by customers in a target market, or a strategy focused on increasing sales of existing products in existing markets.</div></div><div class="wb-card"><div class="wb-emoji">🔍</div><div class="wb-term">Competitive analysis</div><div class="wb-pos">noun phrase</div><div class="wb-def">A systematic examination of competitors' products, pricing, positioning, marketing strategies, and market share, used to identify opportunities and threats before a product launch.</div></div><div class="wb-card"><div class="wb-emoji">🗓️</div><div class="wb-term">Milestone</div><div class="wb-pos">noun phrase</div><div class="wb-def">A significant event or achievement in a project timeline that marks the completion of a key phase and is used to track progress against the overall launch plan.</div></div><div class="wb-card"><div class="wb-emoji">📡</div><div class="wb-term">Omnichannel</div><div class="wb-pos">adjective/noun</div><div class="wb-def">A marketing approach that provides customers with a fully integrated, consistent experience across all channels and touchpoints, both online and offline.</div></div><div class="wb-card"><div class="wb-emoji">🧪</div><div class="wb-term">Beta testing</div><div class="wb-pos">noun phrase</div><div class="wb-def">A phase of product testing in which a selected group of real users try the product before the official launch, providing feedback that informs final improvements.</div></div><div class="wb-card"><div class="wb-emoji">📉</div><div class="wb-term">Post-launch review</div><div class="wb-pos">noun phrase</div><div class="wb-def">A structured evaluation of campaign and product performance conducted after the launch, comparing actual results against objectives and identifying lessons for future campaigns.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="reading" class="section">
+  <div class="hero">
+    <div class="section-tag">📄 Reading Activities</div>
+    <div class="hero-title">Reading <span>Texts</span></div>
+    <p class="hero-desc">Two professional texts on go-to-market strategy and campaign brief writing. Read carefully, then answer the comprehension questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Text 1: Go-To-Market Strategy &mdash; Planning a Successful Product Launch</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; Why Most Product Launches Fail</h3>
+        <p>Research consistently suggests that between 80 and 95% of new product launches fail to meet their commercial objectives within the first year. The reasons are varied &mdash; poor product-market fit, inadequate distribution, pricing errors, insufficient marketing investment &mdash; but a significant proportion of failures can be attributed to poor launch planning rather than poor products. A product that is genuinely valuable to customers can still fail if it reaches the wrong people, in the wrong channels, with the wrong message, at the wrong time. The go-to-market strategy exists precisely to prevent this kind of avoidable failure.</p>
+        <p>A <strong>go-to-market (GTM) strategy</strong> is a comprehensive plan that defines how a company will bring a product to market, reach its target customers, generate initial sales, and establish a sustainable competitive position. It is not a marketing plan in the narrow sense; it encompasses decisions about product positioning, pricing, distribution, sales enablement, and marketing communications, all coordinated around a unified launch timeline. The GTM strategy is typically developed during the final phase of product development and must be finalised before any campaign activity can begin.</p>
+        <h3>Paragraph 2 &mdash; The Components of a GTM Strategy</h3>
+        <p>A well-constructed GTM strategy addresses five fundamental questions. First, <strong>who is the target customer?</strong> This means defining the primary target segment with precision: their demographics, psychographics, purchase behaviours, and the specific problem the product solves for them. Second, <strong>what is the value proposition?</strong> This is the clear, compelling statement of the benefit the customer receives from the product and why it is superior to existing alternatives. Third, <strong>how will the product be priced and distributed?</strong> Pricing strategy must reflect both the value delivered to the customer and the competitive landscape. Distribution determines where and how the customer can access the product. Fourth, <strong>how will the product be communicated?</strong> This covers the campaign channels, key messages, creative approach, and media investment. Fifth, <strong>how will success be measured?</strong> Defining KPIs before the launch ensures that the team has clear, shared criteria for evaluating performance.</p>
+        <p>The GTM strategy also establishes the launch phasing: most successful launches follow a sequence of pre-launch, launch, and post-launch phases. The <strong>pre-launch phase</strong> builds awareness and anticipation, typically through teaser content, early access programmes, waitlists, press previews, and influencer seeding. The <strong>launch phase</strong> deploys the full campaign across all selected channels simultaneously, driving awareness, consideration, and conversion. The <strong>post-launch phase</strong> sustains momentum through retargeting, customer reviews, case studies, and ongoing content, while also gathering data for the performance review.</p>
+        <h3>Paragraph 3 &mdash; Stakeholder Alignment and the Critical Path</h3>
+        <p>Even the best GTM strategy will fail in execution if the teams responsible for delivering it are not aligned. In most organisations, a product launch involves contributions from product, marketing, sales, legal, operations, customer service, and often external agencies or partners. Each team has its own priorities, timelines, and language. The marketing lead's responsibility is to create a shared understanding of the launch objectives and a clear picture of how each team's contributions fit into the overall plan.</p>
+        <p>Central to this coordination effort is the <strong>launch timeline</strong>, which maps every task, dependency, and milestone from the start of campaign development to the post-launch review. The concept of the <strong>critical path</strong> &mdash; the sequence of tasks that determine the minimum launch date &mdash; is essential here. If the packaging design is on the critical path and it is delayed by two weeks, the entire launch moves by two weeks. Identifying critical path items early and monitoring them closely is one of the most important skills in launch project management. It is also where most launches encounter their first serious problems: a task that seemed straightforward turns out to be dependent on another team's approval, a supplier's delivery, or a regulatory review that takes longer than anticipated.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 1 (10 Questions)</div>
+        <div id="r1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r1')">Check Answers</button>
+        <div id="r1-feedback" class="feedback"></div>
+        <div id="r1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Text 2: The Campaign Brief &mdash; The Foundation of Effective Marketing Execution</div><div class="card-title-bar"></div>
+      <div class="reading-text">
+        <h3>Paragraph 1 &mdash; What a Campaign Brief Is and Why It Matters</h3>
+        <p>The campaign brief is arguably the single most important document in marketing communications. It is the document that translates a business objective into a marketing task, and a marketing strategy into actionable creative and media direction. A poorly written brief produces unfocused work, wasted budget, and painful revision cycles. A well-written brief gives creative teams and media agencies a clear, shared understanding of what success looks like &mdash; and empowers them to do their best work within a defined strategic framework.</p>
+        <p>The brief is written by the marketing team (usually the brand or campaign manager) and is used to brief both internal teams and external agencies. It is a living document in the sense that it may be refined through conversations with the creative team, the media agency, and senior stakeholders before the campaign begins. However, once it is signed off, it becomes the reference point against which all campaign work is evaluated. If the work does not answer the brief, it is sent back for revision regardless of how creatively impressive it may be.</p>
+        <h3>Paragraph 2 &mdash; The Key Elements of a Campaign Brief</h3>
+        <p>While brief formats vary by organisation, the most effective briefs consistently address a common set of elements. The <strong>background</strong> section provides context: what is happening in the market, why is this campaign being run now, and what has been learnt from previous activity? The <strong>objective</strong> section states what the campaign must achieve in measurable terms. A good objective is specific, time-bound, and connected to a defined KPI: not "increase brand awareness" but "achieve a 15% increase in spontaneous brand awareness among our target segment within three months."</p>
+        <p>The <strong>target audience</strong> section describes the customer in detail: not just their demographics but their attitudes, motivations, barriers, and the specific insight that makes the campaign relevant to them. This is often the most important section of the brief, because if the creative team does not understand the audience deeply, the work will not resonate. The <strong>key message</strong> section distils everything the campaign needs to communicate into a single, prioritised sentence. There is usually space for supporting messages, but the single most important message should be unmistakable. The <strong>mandatories</strong> section lists non-negotiable requirements: the brand's visual identity guidelines, legal disclaimers, regulatory restrictions, and any mandatory product information that must be included.</p>
+        <h3>Paragraph 3 &mdash; Budget, Timeline, and Evaluation</h3>
+        <p>The brief must also specify the <strong>budget</strong> available for the campaign. Providing a budget figure is not optional: without it, creative teams and agencies cannot make informed decisions about scope, production values, or media scale. A campaign brief without a budget is like asking an architect to design a building without telling them how much the client can spend. The result is almost always wasted time and a mismatch between ambitions and reality.</p>
+        <p>The <strong>timeline</strong> section sets out the key milestones: the briefing date, the deadline for initial concepts, the date for client review and feedback, the production timeline, and the campaign go-live date. Finally, the <strong>success criteria</strong> or evaluation framework defines how the campaign will be measured after it launches. This section should specify both the primary KPI and any secondary metrics that will be tracked, as well as the tools and methodologies that will be used to measure them. A campaign that is well-planned but poorly evaluated generates no learning for future campaigns &mdash; and in a data-rich environment, that is an inexcusable waste.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Comprehension Questions &mdash; Text 2 (10 Questions)</div>
+        <div id="r2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('r2')">Check Answers</button>
+        <div id="r2-feedback" class="feedback"></div>
+        <div id="r2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="vocabulary" class="section">
+  <div class="hero">
+    <div class="section-tag">✏️ Vocabulary Exercises</div>
+    <div class="hero-title">Vocabulary <span>Practice</span></div>
+    <p class="hero-desc">Three vocabulary exercises to consolidate your command of product launch and campaign planning English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Multiple Choice</div></div>
+      <div class="ex-title">Choosing the Right Term</div>
+      <p class="ex-instruction">Select the best word or phrase to complete each sentence in a professional product launch or campaign planning context.</p>
+      <div id="v1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('v1')">Check Answers</button>
+      <div id="v1-feedback" class="feedback"></div>
+      <div id="v1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Gap-Fill</div></div>
+      <div class="ex-title">Complete the Sentences</div>
+      <p class="ex-instruction">Type the correct word from the box to complete each sentence. Check your spelling carefully.</p>
+      <div class="word-box">
+        <strong style="color:var(--text-dark);margin-right:6px">Word Box:</strong>
+        <span class="word-chip">milestone</span><span class="word-chip">omnichannel</span><span class="word-chip">stakeholder</span>
+        <span class="word-chip">penetration</span><span class="word-chip">beta</span><span class="word-chip">critical</span>
+        <span class="word-chip">pre-launch</span><span class="word-chip">brief</span><span class="word-chip">KPI</span>
+        <span class="word-chip">mandate</span>
+      </div>
+      <div id="v2-gaps"></div>
+      <button class="check-btn" onclick="checkGaps()">Check Answers</button>
+      <div id="v2-feedback" class="feedback"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">True / False</div></div>
+      <div class="ex-title">True or False?</div>
+      <p class="ex-instruction">Read each statement about product launch and campaign planning vocabulary. Decide whether it is TRUE or FALSE.</p>
+      <div id="v3-tf"></div>
+      <button class="check-btn" onclick="checkTF()">Check Answers</button>
+      <div id="v3-feedback" class="feedback"></div>
+    </div>
+  </div>
+</div>
+
+<div id="grammar" class="section">
+  <div class="hero">
+    <div class="section-tag">📘 Grammar Exercises</div>
+    <div class="hero-title">Grammar <span>Practice</span></div>
+    <p class="hero-desc">Three grammar exercises covering future forms in launch planning, passive and impersonal structures in documents, and expressing purpose and objectives professionally.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 1</div><div class="ex-type">Future Forms</div></div>
+      <div class="ex-title">Future Forms in Launch Planning</div>
+      <p class="ex-instruction">Choose the correct future form to complete each sentence from a product launch plan or campaign timeline.</p>
+      <div id="g1-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g1')">Check Answers</button>
+      <div id="g1-feedback" class="feedback"></div>
+      <div id="g1-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 2</div><div class="ex-type">Passive &amp; Impersonal Structures</div></div>
+      <div class="ex-title">Passive &amp; Impersonal Structures in Planning Documents</div>
+      <p class="ex-instruction">Select the correct passive or impersonal structure for each sentence from a formal campaign brief or launch document.</p>
+      <div id="g2-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g2')">Check Answers</button>
+      <div id="g2-feedback" class="feedback"></div>
+      <div id="g2-score" class="score-display"></div>
+    </div>
+    <div class="card">
+      <div class="ex-header"><div class="ex-badge">Exercise 3</div><div class="ex-type">Purpose &amp; Objectives</div></div>
+      <div class="ex-title">Expressing Purpose and Objectives</div>
+      <p class="ex-instruction">Choose the most accurate and professional expression of purpose or objective for each campaign planning sentence.</p>
+      <div id="g3-mcqs"></div>
+      <button class="check-btn" onclick="checkMCQ('g3')">Check Answers</button>
+      <div id="g3-feedback" class="feedback"></div>
+      <div id="g3-score" class="score-display"></div>
+    </div>
+  </div>
+</div>
+
+<div id="grammar-review" class="section">
+  <div class="hero">
+    <div class="section-tag">🔍 Grammar Reference</div>
+    <div class="hero-title">Grammar <span>Review</span></div>
+    <p class="hero-desc">Three reference boxes covering future forms, passive and impersonal structures, and expressing purpose and objectives in professional planning English.</p>
+  </div>
+  <div class="content-area">
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 1</div>
+      <div class="gr-box-title">Future Forms in Launch Planning</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why future forms matter in launch documents</div>
+        <div class="gr-rule-text">Launch plans and campaign timelines are written almost entirely in future forms. Choosing the right future form signals whether an action is planned and certain, scheduled, or a prediction. Using the wrong form can make professional documents sound uncertain or informal.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Form</th><th>Use</th><th>Launch Planning Example</th></tr>
+        <tr><td>will + infinitive</td><td>Decisions, predictions, promises</td><td>The campaign will launch on 14 March across all channels.</td></tr>
+        <tr><td>be going to + infinitive</td><td>Intentions already decided, predictions based on evidence</td><td>We are going to soft launch in the UK first.</td></tr>
+        <tr><td>Present continuous</td><td>Fixed future arrangements</td><td>The agency is presenting the creative concepts on Friday.</td></tr>
+        <tr><td>Present simple</td><td>Scheduled/timetabled events</td><td>The product goes live on the website on 1 April.</td></tr>
+        <tr><td>will + be + -ing</td><td>Actions in progress at a future time</td><td>By next month, the team will be briefing all regional managers.</td></tr>
+        <tr><td>will + have + past participle</td><td>Actions completed before a future point</td><td>By the launch date, all assets will have been approved.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Common errors in launch planning language</div>
+        <div class="gr-example">❌ "The campaign is going to will launch next month." (double future form)<br>✅ "The campaign will launch next month." or "The campaign is going to launch next month."<br><br>❌ "By the end of Q2, we launch the product." (missing future marker for future completion)<br>✅ "By the end of Q2, the product will have launched."</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 2</div>
+      <div class="gr-box-title">Passive &amp; Impersonal Structures in Planning Documents</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why planning documents use the passive</div>
+        <div class="gr-rule-text">Formal planning documents &mdash; campaign briefs, launch plans, strategy presentations &mdash; use the passive voice extensively to achieve an objective, authoritative tone, focus on outcomes rather than actors, and distribute responsibility across teams rather than attributing it to individuals. The passive is also used in impersonal constructions that are standard in professional English.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Structure</th><th>Use</th><th>Planning Document Example</th></tr>
+        <tr><td>Passive (past)</td><td>Completed actions</td><td>The market research was conducted in Q4 2024.</td></tr>
+        <tr><td>Passive (future)</td><td>Planned actions</td><td>All creative assets will be reviewed by the legal team.</td></tr>
+        <tr><td>It is expected that...</td><td>Formal predictions</td><td>It is expected that the launch will generate 50,000 first-week sales.</td></tr>
+        <tr><td>It has been agreed that...</td><td>Formal decisions</td><td>It has been agreed that the launch date will move to Q2.</td></tr>
+        <tr><td>It is recommended that...</td><td>Formal recommendations</td><td>It is recommended that a soft launch precede the full campaign.</td></tr>
+        <tr><td>It should be noted that...</td><td>Drawing attention to something</td><td>It should be noted that the budget excludes production costs.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Examples in campaign briefs and launch plans</div>
+        <div class="gr-example">All campaign materials must be submitted for brand approval no later than 10 working days before the go-live date.</div>
+        <div class="gr-example">It is anticipated that the pre-launch campaign will generate a waitlist of over 5,000 potential customers.</div>
+        <div class="gr-example">The budget has been allocated as follows: 40% to paid media, 30% to content production, and 30% to influencer partnerships.</div>
+      </div>
+    </div>
+
+    <div class="gr-box">
+      <div class="gr-box-sub">Reference Box 3</div>
+      <div class="gr-box-title">Expressing Purpose &amp; Objectives Professionally</div>
+      <div class="gr-rule">
+        <div class="gr-rule-title">Why precise objective language matters</div>
+        <div class="gr-rule-text">In campaign briefs and launch documents, stating objectives vaguely is one of the most common and costly mistakes. The right objective language is specific, measurable, and actionable. Using the correct grammatical structures also signals professional competence to senior stakeholders and agency partners.</div>
+      </div>
+      <table class="gr-table">
+        <tr><th>Structure</th><th>Use</th><th>Campaign Planning Example</th></tr>
+        <tr><td>The objective is to + infinitive</td><td>Formal objective statement</td><td>The objective is to achieve 20% brand awareness among 18&ndash;30-year-olds.</td></tr>
+        <tr><td>In order to + infinitive</td><td>Formal purpose (written)</td><td>In order to maximise launch impact, we will activate all channels simultaneously.</td></tr>
+        <tr><td>So as to + infinitive</td><td>Very formal purpose</td><td>So as to ensure consistency, all teams will use the approved messaging document.</td></tr>
+        <tr><td>The aim of this campaign is to...</td><td>Introductory purpose statement</td><td>The aim of this campaign is to generate 10,000 pre-launch sign-ups.</td></tr>
+        <tr><td>This campaign is designed to...</td><td>Passive purpose</td><td>This campaign is designed to shift brand perception among young urban consumers.</td></tr>
+        <tr><td>With a view to + gerund</td><td>Formal strategic intention</td><td>With a view to expanding into the German market, we are running a pilot in Berlin.</td></tr>
+      </table>
+      <div class="gr-rule" style="margin-top:14px">
+        <div class="gr-rule-title">Writing SMART objectives in briefs</div>
+        <div class="gr-rule-text">The best campaign objectives are SMART: Specific, Measurable, Achievable, Relevant, and Time-bound. Compare the examples below.</div>
+        <div class="gr-example">❌ Vague: "Increase brand awareness."<br>✅ SMART: "Achieve a 15-point increase in spontaneous brand awareness among UK women aged 25&ndash;40 within 12 weeks of launch, as measured by our monthly brand tracker."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="writing" class="section">
+  <div class="hero">
+    <div class="section-tag">✍️ Writing Activities</div>
+    <div class="hero-title">Writing <span>Tasks</span></div>
+    <p class="hero-desc">Two professional writing tasks &mdash; practise producing a campaign brief and a post-launch report in structured, accurate English.</p>
+  </div>
+  <div class="content-area">
+    <div class="card">
+      <div class="card-title">Writing Activity 1 &mdash; Campaign Brief</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a campaign brief (180&ndash;220 words) for the launch of a fictional UK plant-based meal-kit service called <em>Verdant</em>. The launch targets urban professionals aged 28&ndash;45 who are interested in sustainability and cooking. Budget: &pound;120,000. Campaign duration: 8 weeks. Your brief must include: background, objective (SMART), target audience, key message, channels (at least two), and success criteria. Use at least one passive structure and one purpose expression from the Grammar Review.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> SMART objective &middot; Target audience precision &middot; Key message clarity &middot; Passive structure &middot; Purpose expression &middot; Professional planning register
+      </div>
+      <textarea class="writing-textarea" id="w1-text" placeholder="CAMPAIGN BRIEF&#10;Product: Verdant Plant-Based Meal Kits&#10;&#10;Background:&#10;...&#10;&#10;Objective:&#10;...&#10;&#10;Target Audience:&#10;...&#10;&#10;Key Message:&#10;...&#10;&#10;Channels:&#10;...&#10;&#10;Success Criteria:&#10;..." oninput="updateWordCount('w1',220)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w1-wc">0 / 220 words</span>
+        <button class="submit-btn" onclick="submitWriting('w1')">Submit ✓</button>
+      </div>
+      <div id="w1-success" class="submit-success">✅ Brief submitted! Excellent work applying campaign planning vocabulary and structure in professional English.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Writing Activity 2 &mdash; Post-Launch Performance Report</div><div class="card-title-bar"></div>
+      <div class="writing-prompt">
+        <h4>📋 Task</h4>
+        <p>Write a post-launch performance report (190&ndash;230 words) for the fictional sportswear brand <em>Apex Run</em>, which launched a new trail running shoe eight weeks ago. Use the following data: Target: 8,000 unit sales in 8 weeks. Actual: 11,200 units. Paid search: ROAS 4.1x (target: 3.5x). Social media: 2.3M impressions, CTR 2.1% (target: 1.8%). Email: 38% open rate, 5.2% CTR. One setback: influencer campaign underdelivered on reach by 30%. Use future perfect and passive structures where appropriate. End with two recommendations for the next campaign phase.</p>
+      </div>
+      <div class="writing-focus">
+        <strong>Assessment Focus:</strong> Data presentation with trend language &middot; Future perfect &middot; Passive structures &middot; Balanced analysis (strengths and setbacks) &middot; Clear recommendations &middot; Professional report register
+      </div>
+      <textarea class="writing-textarea" id="w2-text" placeholder="POST-LAUNCH PERFORMANCE REPORT&#10;Brand: Apex Run | Product: Trail Runner Pro&#10;Campaign Duration: 8 weeks&#10;&#10;Executive Summary:&#10;...&#10;&#10;Channel Performance:&#10;...&#10;&#10;Challenges:&#10;...&#10;&#10;Recommendations:&#10;..." oninput="updateWordCount('w2',230)"></textarea>
+      <div class="writing-meta">
+        <span class="word-count" id="w2-wc">0 / 230 words</span>
+        <button class="submit-btn" onclick="submitWriting('w2')">Submit ✓</button>
+      </div>
+      <div id="w2-success" class="submit-success">✅ Report submitted! Great work applying performance language, passives, and future forms in a professional post-launch context.</div>
+    </div>
+  </div>
+</div>
+
+<div id="listening" class="section">
+  <div class="hero">
+    <div class="section-tag">🎧 Listening Activities</div>
+    <div class="hero-title">Listening <span>Activities</span></div>
+    <p class="hero-desc">4 audio activities with built-in speech players &mdash; press &#9654; Play, listen, then answer the questions.</p>
+  </div>
+  <div class="content-area"><div id="listening-cards"></div></div>
+</div>
+
+<div id="casestudies" class="section">
+  <div class="hero">
+    <div class="section-tag">📊 Case Studies</div>
+    <div class="hero-title">Case <span>Studies</span></div>
+    <p class="hero-desc">Two real-world inspired product launch case studies. Read carefully and answer the analysis questions.</p>
+  </div>
+  <div class="content-area">
+    <div class="case-header">
+      <h3>Case Study 1: Lyra Audio &mdash; A Phased Product Launch That Created a Waitlist of 40,000</h3>
+      <p>Go-To-Market Strategy &middot; Pre-Launch Campaign &middot; Soft Launch Execution</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Lyra Audio is a UK startup that spent three years developing a premium wireless headphone with an active noise-cancellation system that the founders believed outperformed everything available at a similar price point. By early 2023, the product was ready for market. However, rather than launching immediately with a traditional product release, the founding team made a deliberate decision to invest six months in a structured pre-launch strategy. Their reasoning was both strategic and financial: they had a limited marketing budget of &pound;95,000, and they needed that budget to work as hard as possible. A noisy, immediate launch with insufficient marketing support, they argued, would be worse than a delayed, well-prepared one.</p>
+        <p>The <strong>pre-launch phase</strong> began twelve weeks before the product went on sale. The team started by building an email waitlist, driving sign-ups through paid social advertising, tech review partnerships, and a referral programme where existing waitlist members received early-access privileges for each friend they referred. The product was seeded to thirty-five audio-focused YouTube reviewers and podcasters &mdash; not for paid promotions, but with the expectation that genuine reviews would follow. A teaser website was launched showing only the product's name, a countdown timer, and three headline specifications.</p>
+      </div>
+      <div class="case-section-label">Launch &amp; Results</div>
+      <div class="case-text">
+        <p>By launch day, the waitlist had grown to 42,000 people. Thirty-one of the thirty-five seeded reviewers had published content &mdash; generating over 8 million organic views and an estimated earned media value of &pound;340,000 against a seeding cost of approximately &pound;12,000 in product and logistics. The press coverage from the reviewer community had attracted the attention of three national technology publications, which ran features in the week before launch.</p>
+        <p>On launch day, the team activated the email list with a personalised launch announcement and an early-access window of 48 hours. Within 24 hours, 6,200 units had been sold. Within the first week, the entire initial production run of 9,000 units had been purchased. The paid media budget was not deployed until week two, when a new production batch was available. The campaign achieved a total <strong>ROAS of 6.2x</strong> across all paid activity &mdash; significantly above the 3.5x target set in the GTM strategy. The Lyra Audio launch was widely studied as an example of how a well-executed pre-launch strategy could dramatically reduce the cost of customer acquisition at launch by creating genuine pre-existing demand.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 1 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs1-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs1')">Check Answers</button>
+        <div id="cs1-feedback" class="feedback"></div>
+        <div id="cs1-score" class="score-display"></div>
+      </div>
+    </div>
+
+    <div class="case-header">
+      <h3>Case Study 2: Solaris Energy &mdash; A B2B Product Launch That Required Full Stakeholder Alignment</h3>
+      <p>B2B Launch Planning &middot; Stakeholder Management &middot; Campaign Brief Execution</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section-label">Background</div>
+      <div class="case-text">
+        <p>Solaris Energy Solutions is a UK provider of commercial solar installation services for mid-sized businesses. In 2023, the company developed a new product: a smart energy management dashboard that allowed commercial clients to monitor and optimise their energy usage in real time, reducing bills and supporting ESG reporting. The product had been eighteen months in development and represented the company's most significant investment in technology to date. The marketing director was brought in six months before the planned launch to lead the go-to-market strategy.</p>
+        <p>The first challenge she faced was not strategic but organisational: the product, sales, legal, and customer success teams each had different assumptions about what the product was, who it was for, and when it would be ready. The product team believed the launch date was fixed; the legal team had not yet approved the data privacy documentation required for the dashboard to comply with UK regulations; the sales team had not received any training on the product and did not feel confident selling it; and the customer success team had no onboarding materials prepared for clients who purchased. In short, despite the product being technically ready, the organisation was not ready to launch.</p>
+      </div>
+      <div class="case-section-label">Strategy &amp; Execution</div>
+      <div class="case-text">
+        <p>The marketing director immediately commissioned a full <strong>launch readiness audit</strong> covering all teams. The audit revealed that the legal approval process would take a minimum of eight weeks, making the original launch date impossible to meet. She presented the findings to the CEO with a revised timeline: the launch would be pushed back by ten weeks, and the additional time would be used to complete the sales training programme, produce the onboarding materials, and run a <strong>beta test</strong> with five existing clients who had agreed to trial the dashboard before the public launch.</p>
+        <p>The campaign brief was written to reflect a B2B launch: the target audience was defined as Operations Directors and Finance Managers at UK companies with 50&ndash;500 employees and existing solar installations. The key message was framed around measurable financial and ESG benefit: "See exactly how much your solar investment is saving you &mdash; in real time." The launch channels were LinkedIn (sponsored content and direct mail to a targeted list), a dedicated landing page, a PR campaign targeting the business energy and sustainability press, and a webinar series featuring existing client case studies. Within three months of launch, Solaris had acquired 47 new dashboard clients, exceeding the 30-client target set in the GTM strategy by 57%.</p>
+      </div>
+      <div class="mcq-section">
+        <div class="mcq-title">📝 Case Study 2 &mdash; Analysis Questions (10 Questions)</div>
+        <div id="cs2-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('cs2')">Check Answers</button>
+        <div id="cs2-feedback" class="feedback"></div>
+        <div id="cs2-score" class="score-display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="assessment" class="section">
+  <div class="hero">
+    <div class="section-tag">🎯 Final Assessment</div>
+    <div class="hero-title">Final <span>Assessment</span></div>
+    <p class="hero-desc">20 multiple choice questions covering all module sections. Score 70% or above to pass. You have two attempts.</p>
+  </div>
+  <div class="content-area">
+    <div class="assessment-header">
+      <h2>Module 8 &mdash; Final Assessment</h2>
+      <p>Product Launch &amp; Campaign Planning</p>
+      <div class="assessment-meta">
+        <div class="assessment-meta-item"><div class="assessment-meta-num">20</div><div class="assessment-meta-label">Questions</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">70%</div><div class="assessment-meta-label">Pass Mark</div></div>
+        <div class="assessment-meta-item"><div class="assessment-meta-num">2</div><div class="assessment-meta-label">Attempts</div></div>
+      </div>
+      <div class="attempt-badge" id="attempt-badge">Attempt 1 of 2</div>
+    </div>
+    <div id="assessment-result" class="assessment-result">
+      <div class="result-score" id="result-score-text"></div>
+      <div class="result-msg" id="result-msg"></div>
+      <div id="retake-wrap"></div>
+    </div>
+    <div class="card" id="assessment-form">
+      <div class="mcq-title">📝 Assessment Questions</div>
+      <div id="fa-mcqs"></div>
+      <button class="check-btn" onclick="submitAssessment()" style="margin-top:8px;padding:12px 32px;font-size:14px">Submit Assessment</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const DATA={
+r1:{questions:[
+  {q:"What percentage of new product launches does the text say fail to meet commercial objectives within the first year?",opts:["Between 30 and 50%","Between 50 and 70%","Between 80 and 95%","Over 95%"],ans:2},
+  {q:"What is a go-to-market (GTM) strategy, according to Text 1?",opts:["A narrow marketing plan focused only on advertising channels and creative execution","A comprehensive plan defining how a company will bring a product to market, reach customers, and establish a competitive position","A legal document required before any product can be sold in a regulated market","A financial projection showing expected revenue from a new product in its first year"],ans:1},
+  {q:"Which of the following is NOT listed as one of the five questions a GTM strategy addresses?",opts:["Who is the target customer?","What is the value proposition?","Who is the CEO of the company?","How will success be measured?"],ans:2},
+  {q:"What activity does the text describe as typical for the pre-launch phase?",opts:["Running the full paid media campaign at full budget","Publishing the post-launch performance review","Building awareness through teaser content, early access programmes, and influencer seeding","Conducting the competitive analysis and pricing research"],ans:2},
+  {q:"What happens during the post-launch phase, according to Text 1?",opts:["All marketing activity ceases and the results are evaluated","Momentum is sustained through retargeting, reviews, and content while data is gathered for the performance review","The product is re-priced based on initial sales performance","The team prepares the next product for launch"],ans:1},
+  {q:"What does the text say about the role of the marketing lead in a complex product launch?",opts:["The marketing lead is solely responsible for all launch activities across every team","The marketing lead creates a shared understanding of objectives and shows how each team fits into the overall plan","The marketing lead reports to the product team and has no authority over other departments","The marketing lead is responsible only for the creative and media elements of the campaign"],ans:1},
+  {q:"What is the critical path in launch planning, according to the text?",opts:["The most expensive sequence of tasks in the project budget","The sequence of tasks that determines the minimum launch date, where any delay delays the whole launch","The approved creative direction for the campaign across all channels","The list of milestones that must be completed before the agency can begin work"],ans:1},
+  {q:"What example does the text give of a critical path item that could delay a launch?",opts:["A change in the marketing team's creative preferences","Packaging design delayed by two weeks, which moves the entire launch by two weeks","A competitor launching a similar product in the same week","A budget reduction that limits the number of channels available"],ans:1},
+  {q:"What does the text say the GTM strategy is NOT?",opts:["A plan that addresses pricing and distribution","A comprehensive document developed before campaign activity begins","A marketing plan in the narrow sense","A tool for coordinating multiple teams around a unified timeline"],ans:2},
+  {q:"According to Text 1, where do most launches encounter their first serious problems?",opts:["At the point of setting the marketing budget","In the creative production phase when assets are being developed","On the launch day itself when all channels go live simultaneously","In critical path management, where tasks prove dependent on other teams' approvals or external factors"],ans:3}
+]},
+r2:{questions:[
+  {q:"What does Text 2 describe as the single most important document in marketing communications?",opts:["The go-to-market strategy","The campaign brief","The creative mood board","The media plan"],ans:1},
+  {q:"What does the text say a poorly written brief produces?",opts:["Strong creative work that exceeds the original objectives","Unfocused work, wasted budget, and painful revision cycles","A clear shared understanding that empowers creative teams","Higher than expected costs for the media agency"],ans:1},
+  {q:"Who writes the campaign brief, according to Text 2?",opts:["The creative agency, based on the client's business objectives","The media agency, based on the available budget and target audience","The marketing team, usually the brand or campaign manager","The CEO or managing director, who signs it off before any work begins"],ans:2},
+  {q:"What does the text say happens when campaign work does not answer the brief?",opts:["It is accepted with minor modifications as long as it meets the budget","It is sent back for revision regardless of how creative it may be","It is presented to the client alongside the original brief for comparison","It is approved provisionally while a new brief is written in parallel"],ans:1},
+  {q:"What does Text 2 say is wrong with the objective 'increase brand awareness'?",opts:["It is too ambitious for a campaign brief","It is not specific, time-bound, or connected to a measurable KPI","It focuses on the wrong stage of the customer journey","It cannot be approved by the legal team without further specification"],ans:1},
+  {q:"What does the text describe as often the most important section of the brief?",opts:["The budget section","The mandatories section","The target audience section","The timeline section"],ans:2},
+  {q:"What should the key message section contain, according to Text 2?",opts:["Every product benefit and feature that needs to be communicated","A list of all mandatory brand and legal requirements","A single, prioritised sentence distilling the most important message","A detailed breakdown of the media channels and posting schedule"],ans:2},
+  {q:"What does the text compare providing a budget figure to?",opts:["Giving a creative team too many constraints to produce excellent work","Asking an architect to design a building without telling them the budget","Sharing a business objective with a team before the strategy has been confirmed","Releasing a product without completing the post-launch review"],ans:1},
+  {q:"What does the text say a campaign that is well-planned but poorly evaluated generates?",opts:["Higher ROAS than campaigns with strong evaluation frameworks","No learning for future campaigns, which it describes as an inexcusable waste","Stronger brand loyalty among the customers it reached","More accurate attribution data for future budget allocation decisions"],ans:1},
+  {q:"What does the text say the mandatories section of a brief contains?",opts:["The creative team's preferred design aesthetic and colour palette","The budget breakdown by channel and production activity","Non-negotiable requirements including brand guidelines, legal disclaimers, and regulatory restrictions","The secondary KPIs that will be tracked alongside the primary campaign objective"],ans:2}
+]},
+v1:{questions:[
+  {q:"Before any campaign work began, the team finalised a detailed _______ that defined the target customer, value proposition, pricing, distribution, and communication approach.",opts:["campaign brief","go-to-market strategy","post-launch review","creative brief"],ans:1},
+  {q:"The packaging design was on the _______ and a two-week delay in sign-off meant the entire launch had to be pushed back.",opts:["launch timeline","campaign brief","stakeholder alignment","critical path"],ans:3},
+  {q:"The brand ran a _______ campaign six weeks before launch, using teaser content and a waitlist to build anticipation among its target audience.",opts:["post-launch","beta testing","pre-launch","hard launch"],ans:2},
+  {q:"Rather than launching publicly straight away, the team opted for a _______ to a limited group of existing customers to test the product and gather feedback.",opts:["hard launch","share of voice","soft launch","press release"],ans:2},
+  {q:"The marketing director defined three _______ for the campaign: brand awareness, website traffic, and cost per acquisition.",opts:["milestones","KPIs","mandatories","stakeholders"],ans:1},
+  {q:"The team wrote a detailed _______ to guide the agency, specifying the campaign objective, target audience, key message, and all non-negotiable brand requirements.",opts:["press release","campaign brief","launch timeline","competitive analysis"],ans:1},
+  {q:"The company monitored its _______ throughout the campaign period, tracking the percentage of total advertising presence it held relative to competitors in the category.",opts:["market penetration","share of voice","critical path","campaign budget"],ans:1},
+  {q:"Before the public launch, fifty users were invited to participate in a _______ programme to test the product and identify any remaining usability issues.",opts:["soft launch","beta testing","pre-launch campaign","competitive analysis"],ans:1},
+  {q:"The launch plan specified twelve _______ between the start of campaign development and the post-launch review, each marking the completion of a key project phase.",opts:["KPIs","milestones","key messages","target audiences"],ans:1},
+  {q:"The brand adopted an _______ approach, ensuring customers received a consistent experience whether they encountered the product in-store, on the website, or via the mobile app.",opts:["earned media","omnichannel","competitive analysis","share of voice"],ans:1}
+]},
+v2gaps:[
+  {sent:"The completion of the agency briefing was a key _______ in the launch timeline, marking the official start of the creative development phase.",ans:"milestone"},
+  {sent:"The brand adopted an _______ approach, delivering a consistent customer experience across its website, app, physical stores, and email communications.",ans:"omnichannel"},
+  {sent:"The marketing director ran a _______ alignment session with product, sales, legal, and customer success to ensure every team understood the launch objectives and their role.",ans:"stakeholder"},
+  {sent:"The go-to-market strategy aimed for rapid market _______, targeting 10% market share within the first twelve months of the product launch.",ans:"penetration"},
+  {sent:"Fifty existing customers were invited to participate in a _______ programme, testing the software in real conditions and providing structured feedback before the public launch.",ans:"beta"},
+  {sent:"The packaging supplier was on the _______ path and any delay to their delivery would push back the entire launch date.",ans:"critical"},
+  {sent:"The _______ campaign began eight weeks before launch day, using teaser videos and a waitlist to build excitement and generate leads before the product was available.",ans:"pre-launch"},
+  {sent:"The campaign _______ clearly defined the target audience, key message, campaign channels, budget, timeline, and success criteria, giving the agency everything needed to start work.",ans:"brief"},
+  {sent:"The primary _______ for the launch was cost per acquisition, with a target of no more than GBP25 per new customer acquired through paid channels.",ans:"KPI"},
+  {sent:"The legal team provided a list of _______ requirements that had to appear in all campaign materials, including regulatory disclaimers and product safety information.",ans:"mandate"}
+],
+v3tf:[
+  {stmt:"A go-to-market strategy is a narrow document focused only on the advertising and media elements of a product launch.",ans:false},
+  {stmt:"The critical path in launch planning is the sequence of tasks that determines the minimum time required to complete the launch.",ans:true},
+  {stmt:"A soft launch involves a full public release of a product with maximum promotional activity across all channels simultaneously.",ans:false},
+  {stmt:"A campaign brief must always include a budget figure; without it, agencies cannot make informed decisions about scope or production values.",ans:true},
+  {stmt:"A key performance indicator (KPI) is a measurable value used to evaluate how effectively a campaign is achieving its objectives.",ans:true},
+  {stmt:"Share of voice measures the total revenue generated by a brand in a given market, expressed as a percentage of total category sales.",ans:false},
+  {stmt:"A pre-launch campaign is designed to build awareness and anticipation before a product is officially available for purchase.",ans:true},
+  {stmt:"Beta testing involves releasing a product to all customers simultaneously and measuring their response to identify any remaining issues.",ans:false},
+  {stmt:"A post-launch review is a structured evaluation of campaign and product performance conducted after the launch, comparing results against objectives.",ans:true},
+  {stmt:"An omnichannel approach aims to provide customers with a consistent and integrated experience across all physical and digital touchpoints.",ans:true}
+],
+g1:{questions:[
+  {q:"The product _______ on sale on 15 September across all retail channels. (scheduled event)",opts:["is going to go","will going to go","goes","will have gone"],ans:2},
+  {q:"By the end of Q2, all campaign assets _______ and approved by the legal team. (completion before a future point)",opts:["will produce","will be produced","will have been produced","are going to produce"],ans:2},
+  {q:"We _______ a soft launch in two selected cities before rolling out nationally. (already decided intention)",opts:["will","are going to run","are running to","will have run"],ans:1},
+  {q:"This time next month, the creative team _______ the final campaign assets. (action in progress at a future time)",opts:["will produce","will have produced","will be producing","is going to produce"],ans:2},
+  {q:"The agency _______ the initial campaign concepts to the client team next Thursday. (fixed future arrangement)",opts:["will present","presents","is going to present","is presenting"],ans:3},
+  {q:"If sales targets are met in the first month, the board _______ the budget for Q3. (conditional future decision)",opts:["are going to increase","increases","will increase","will be increasing"],ans:2},
+  {q:"By launch day, the team _______ the creative assets reviewed, approved, and delivered to all media partners.",opts:["will have","is going to have had","will have had","has had"],ans:2},
+  {q:"We _______ a phased launch, beginning with the UK market and expanding to Europe in Q2. (plan already decided)",opts:["will","are going to run","will have run","runs"],ans:1},
+  {q:"The launch event _______ at 6pm on 3 October at the Southbank Centre. (scheduled event with fixed time)",opts:["is going to start","will be starting","starts","will have started"],ans:2},
+  {q:"_______ the brief to the agency this afternoon as soon as it is signed off. (offer / decision just made)",opts:["I send","I am going to send","I will send","I am sending"],ans:2}
+]},
+g2:{questions:[
+  {q:"The campaign brief _______ by the marketing director and signed off by the CMO before being shared with the agency.",opts:["writes","wrote","was written","has writing"],ans:2},
+  {q:"All campaign assets _______ for brand compliance before the go-live date. It is mandatory.",opts:["will check","will be checked","are checking","checks"],ans:1},
+  {q:"_______ that the pre-launch waitlist campaign will generate over 10,000 sign-ups within six weeks.",opts:["We expect","It is expected","Expecting","Expected"],ans:1},
+  {q:"_______ that the launch date will be moved to Q3 following the delay to the packaging supplier.",opts:["It has been agreed","It agrees","They agreed that","Agreed"],ans:0},
+  {q:"_______ that the influencer seeding budget be allocated before the main campaign begins, in order to allow sufficient review time.",opts:["We recommend","It is recommended","Recommending","Recommended"],ans:1},
+  {q:"A budget of GBP150,000 _______ for the campaign, allocated across paid media, content production, and PR.",opts:["allocated","has been allocated","allocates","is allocating"],ans:1},
+  {q:"_______ that the original target audience definition was too broad. A more defined segment will be used for the relaunch.",opts:["It was found","Found it","We are finding","It finds"],ans:0},
+  {q:"All photography and video assets _______ in accordance with the approved brand guidelines before production begins.",opts:["must produce","must be produced","producing","is produced"],ans:1},
+  {q:"_______ that the cost per acquisition exceeded the target by 18% during the first two weeks of the campaign.",opts:["It should be noted","It should note","We should noting","Should be noted"],ans:0},
+  {q:"The campaign timeline _______ to reflect the two-week delay caused by the regulatory approval process.",opts:["updates","updated","has been updated","is updating"],ans:2}
+]},
+g3:{questions:[
+  {q:"The objective _______ achieve a 20% increase in brand awareness among the target segment within twelve weeks of launch.",opts:["is","is to","it is to","is that"],ans:1},
+  {q:"The pre-launch campaign was designed _______ a waitlist of potential customers before the product became available.",opts:["for building","to build","with building","building"],ans:1},
+  {q:"_______ maximise the impact of the launch, all channels will be activated simultaneously on day one.",opts:["So as","In order to","To order to","For"],ans:1},
+  {q:"_______ ensuring consistency across all markets, a single messaging document has been created and shared with all regional teams.",opts:["With a view to","In a view to","Viewing to","With a view of"],ans:0},
+  {q:"The aim of this campaign _______ generate 5,000 new customer acquisitions within the first eight weeks.",opts:["is","is to","to","it is"],ans:1},
+  {q:"The product _______ address a gap in the market for affordable, professional-grade audio equipment for remote workers.",opts:["is designed for","is designed to","designs to","was designing to"],ans:1},
+  {q:"_______ the campaign will achieve a ROAS of at least 3.5x based on the performance of the previous quarter's activity.",opts:["The objective is","It is anticipated that","In order to","So as to"],ans:1},
+  {q:"The team conducted a competitive analysis _______ a better understanding of the pricing landscape before setting the product's retail price.",opts:["for gaining","in order to gain","so as gaining","so that gain"],ans:1},
+  {q:"The campaign brief was shared with all agency partners _______ everyone was working towards the same strategic objectives.",opts:["in order that","so that","so as to ensure","for to ensure"],ans:1},
+  {q:"The creative brief includes a mood board and tone of voice guidance _______ the agency can develop assets that feel consistent with the brand's identity.",opts:["in order to","so that","so as to","with a view to"],ans:1}
+]},
+listening:[
+{
+  emoji:"🚀",
+  title:"Activity 1: How to Write a Go-To-Market Strategy",
+  sub:"Elena Vasquez, VP of Marketing — Startup accelerator workshop",
+  level:"B1",type:"Multiple Choice",focus:"Listening for main ideas",
+  transcript:`Good morning everyone. I am Elena Vasquez, and I have spent the last fifteen years helping startups and growth-stage companies take products to market. Today I want to walk you through what a go-to-market strategy actually is, because I find that a lot of people confuse it with a marketing plan, and the two things are quite different.
+
+A go-to-market strategy is a plan for how you are going to bring a product to market, reach your customers, and generate your first sales. It is bigger than a marketing plan because it encompasses not just advertising and communications but also distribution, pricing, sales strategy, and the sequencing of everything. Think of it as the master plan that all the other plans sit underneath.
+
+Every GTM strategy needs to answer five core questions. Who is the customer? Not just a broad demographic description, but a specific, vivid picture of the person you are trying to reach, the problem they have, and why they would choose your product over an alternative. What is the value proposition? This is your promise: what the customer gets and why it is better. How will the product be priced and distributed? Where will customers find it and how much will they pay? How will you communicate? Which channels, which messages, which creative approach? And finally, how will you know if it has worked? Define your KPIs before you launch, not after.
+
+One thing I always emphasise is the importance of the launch phasing. Very few successful launches simply appear one day and immediately succeed. The most effective launches build in a pre-launch phase that creates demand before the product is available. This might be a waitlist, early access programme, teaser content, or media seeding. The goal is to arrive at your launch date with a pool of ready customers rather than having to build demand from zero on day one.
+
+Finally, make sure your GTM strategy is a shared document. One of the most common launch failures I see is when the marketing team has the strategy in their heads but the product team, the sales team, and the operations team are all working from different assumptions. Get everyone in a room, share the strategy document, and get explicit agreement from each function on their responsibilities and deadlines before anyone starts building anything.`,
+  questions:[
+    {q:"How does Elena say a GTM strategy differs from a marketing plan?",opts:["They are identical documents with different names used by different industries","A GTM strategy is bigger, encompassing distribution, pricing, sales strategy, and communications, not just advertising","A marketing plan is more strategic; a GTM strategy focuses only on tactical execution","A GTM strategy is written by the product team; a marketing plan is written by the marketing team"],ans:1},
+    {q:"How many core questions does Elena say every GTM strategy must answer?",opts:["Three","Four","Five","Seven"],ans:2},
+    {q:"What does Elena say the value proposition is?",opts:["A description of the product's technical specifications and features","A financial projection of expected revenue in the first year","The promise of what the customer gets and why it is better than an alternative","The agreed commission structure for the sales team"],ans:2},
+    {q:"When does Elena say KPIs should be defined?",opts:["After the campaign has launched and initial data has been collected","During the post-launch review, once results are available","Before the launch, not after","At the midpoint of the campaign when enough data exists to set realistic targets"],ans:2},
+    {q:"What does Elena say the goal of a pre-launch phase is?",opts:["To reduce the total campaign budget by generating earned media instead of paid media","To arrive at launch day with a pool of ready customers rather than building demand from zero","To allow the product team more time to complete development without delaying the campaign","To test the creative assets and gather feedback before committing the full media budget"],ans:1},
+    {q:"What does Elena describe as one of the most common launch failures she sees?",opts:["Spending too much of the budget on above-the-line advertising in the pre-launch phase","Launching in too many markets simultaneously without sufficient localisation","The marketing team has the strategy but other teams are working from different assumptions","Setting KPIs that are too ambitious and cannot be achieved within the campaign period"],ans:2},
+    {q:"What does Elena recommend doing before anyone starts building anything?",opts:["Conducting a competitive analysis to check no competitor is planning a simultaneous launch","Signing off the final campaign creative and submitting all assets to the media partners","Getting everyone in a room, sharing the strategy, and getting explicit agreement from each team","Appointing an external agency to manage the go-to-market process end to end"],ans:2},
+    {q:"According to Elena, what does a successful pre-launch phase look like?",opts:["A full media campaign running at reduced budget across all selected channels","A waitlist, early access programme, teaser content, or media seeding that creates demand before launch","A soft launch in a single test market with a limited product range","A detailed post-launch analysis of the previous product launch to identify lessons learned"],ans:1}
+  ]
+},
+{
+  emoji:"📋",
+  title:"Activity 2: Writing a Campaign Brief That Actually Gets Great Work",
+  sub:"Marcus Webb, Creative Director — Client and agency briefing session",
+  level:"B1",type:"Multiple Choice",focus:"Listening for specific information",
+  transcript:`Good afternoon. I am Marcus Webb, and I have been on both sides of the briefing process: I have written briefs as a client and received them as a creative director. And I can tell you from experience that the quality of the brief is the single biggest determinant of the quality of the work that comes out of it. A great brief will get you great work almost every time. A weak brief will get you mediocre work even from the best agency in the world.
+
+So what makes a brief great? Let me tell you what I look for when I receive a brief as a creative director.
+
+First, a clear and specific objective. Not "we want to be famous" or "we want to drive sales." Something like: "We want to increase trial among new customers aged 22 to 35 by 25% within twelve weeks of launch." That tells me exactly what I am trying to achieve. I can make creative decisions that serve that objective.
+
+Second, a deep understanding of the audience. The best briefs I have ever received have included a description of the target customer that felt so real and specific that I felt like I had just had a coffee with them. Not demographics alone, but what they believe, what they want, what holds them back, and what would make them genuinely excited about this product. That level of audience insight is what unlocks genuinely compelling creative.
+
+Third, a single-minded key message. Not a list of five things the product can do. One thing. The single most important truth about this product that we want the audience to take away. Because in thirty seconds of video or a single outdoor poster, you cannot communicate five things. You can communicate one thing well.
+
+Fourth, the mandatory elements. What absolutely must appear in the work. Legal disclaimers, brand elements, pricing information. Be specific here. Do not tell me these things exist and then show me a list of eight items at the approval stage.
+
+And finally, the one thing I wish more clients included but few do: the tone of voice direction. Not just "friendly" or "professional." Tell me: what should this feel like? Give me reference points. Other campaigns you admire. Adjectives that capture the emotional register. This is the creative brief that empowers rather than constrains.`,
+  questions:[
+    {q:"What does Marcus say is the single biggest determinant of the quality of creative work?",opts:["The size of the campaign budget available to the creative team","The reputation and experience of the creative agency briefed","The quality of the brief provided to the creative team","The amount of time given for the creative development process"],ans:2},
+    {q:"Which objective does Marcus say is specific enough to be useful in a brief?",opts:["We want to be famous and drive significant sales growth.","Increase brand awareness among young consumers in our target market.","Increase trial among new customers aged 22 to 35 by 25% within twelve weeks.","Improve brand perception and increase consideration among the target audience."],ans:2},
+    {q:"What does Marcus say the best target audience descriptions make him feel?",opts:["Informed about the demographics of the intended audience segment","Confident that he understands the budget constraints of the campaign","As though he had just had a coffee with the target customer","Aware of the competitive landscape and key brand differentiators"],ans:2},
+    {q:"How many key messages does Marcus say a brief should contain?",opts:["As many as needed to communicate all the product benefits","At least three, prioritised in order of importance","Two: one primary and one supporting","One: the single most important truth about the product"],ans:3},
+    {q:"What does Marcus say about mandatory elements in the brief?",opts:["They should be kept vague to give the creative team maximum flexibility","They should be listed in advance rather than revealed at the approval stage","They are optional if the brand has well-established guidelines already","They should be negotiated with the agency after the initial concepts are presented"],ans:1},
+    {q:"What element does Marcus say he wishes more clients included but few do?",opts:["A detailed breakdown of the campaign budget by channel","A list of the competitor campaigns that should be beaten on KPIs","A clear tone of voice direction with reference points and adjectives","A timeline specifying exactly when each creative asset must be delivered"],ans:2},
+    {q:"When Marcus says a brief should include a deep understanding of the audience, what does he mean by this?",opts:["A statistical summary of the target audience's demographics and household income","What the audience believes, wants, what holds them back, and what would excite them about the product","A comparison of the brand's target audience against the competitor's audience profile","A media consumption report showing which channels the target audience uses most"],ans:1},
+    {q:"What does Marcus say about communicating five things in thirty seconds of video?",opts:["It is possible if the creative concept is strong enough","It requires a very experienced director and a high production budget","You cannot communicate five things; you can communicate one thing well","It is acceptable for product demonstration formats but not for brand advertising"],ans:2}
+  ]
+},
+{
+  emoji:"🗓️",
+  title:"Activity 3: Managing a Launch Timeline — Avoiding the Most Common Mistakes",
+  sub:"Sophie Harrington, Head of Project Management — Marketing ops training",
+  level:"B2",type:"Multiple Choice",focus:"Understanding professional explanations",
+  transcript:`Good morning. I head up the project management function for a large integrated marketing agency, and today I want to talk about launch timelines: specifically, the most common mistakes I see teams make when planning and managing them, and how to avoid those mistakes.
+
+Mistake number one: not identifying the critical path early enough. I see this constantly. A team builds a launch timeline with fifty tasks on it, colour-codes it very beautifully, and then does not identify which of those tasks are on the critical path. The critical path is the sequence of tasks that determines when the launch can actually happen. It is not the longest list of things to do; it is the chain of tasks where each one is dependent on the completion of the previous one, and where any delay in any single task delays the entire launch. If you do not know your critical path, you do not know what to protect.
+
+Mistake number two: not building buffer time into the critical path. Even when teams identify the critical path correctly, they often plan it with no contingency. Every task is given exactly the time it theoretically needs, with no allowance for the fact that things rarely go according to plan. I recommend building at least a ten percent time buffer into any critical path item. If you think something will take two weeks, plan for just over two weeks.
+
+Mistake number three: not tracking dependencies between teams. In a complex launch, there are dozens of dependencies across multiple teams. The creative team cannot start production until the brief is signed off. The media agency cannot book placements until the assets are ready. The PR team cannot send the press release until legal has approved it. Map these dependencies explicitly and include them in the timeline. If you do not make them visible, someone will miss a handoff and you will only discover it when it is too late to recover.
+
+Mistake number four: treating the timeline as a static document. A launch timeline is not something you write once and then file. It is a living document that should be reviewed in a weekly status meeting with all relevant stakeholders. Update it every week. Make it visible. Make it the one shared source of truth that every team is working from. The timeline that sits in someone's inbox from six weeks ago, updated to version 4.3 on a Tuesday afternoon and never shared, is worse than no timeline at all.
+
+And finally, mistake number five: not defining who owns each task. Every item on the timeline should have a single named owner. Not a team. Not a department. A person. Because when ownership is shared, accountability disappears. One person on the critical path who does not know they are responsible for something is all it takes to miss a launch date.`,
+  questions:[
+    {q:"What does Sophie say the critical path is?",opts:["The longest list of tasks in the entire project timeline","The sequence of tasks where each depends on the previous one, and where any delay delays the entire launch","The most expensive items in the campaign budget that must be approved by the senior leadership team","The tasks that can be completed in parallel to accelerate the overall launch schedule"],ans:1},
+    {q:"What does Sophie say teams often do even when they correctly identify the critical path?",opts:["They share it only with senior stakeholders and not with the full project team","They plan it with no contingency time, allowing for no delays","They assign too many owners to each task, creating confusion about accountability","They update it too frequently, causing confusion about which version is current"],ans:1},
+    {q:"How much buffer time does Sophie recommend building into critical path items?",opts:["At least 5%","At least 10%","At least 25%","At least 50%"],ans:1},
+    {q:"What is the consequence of not mapping dependencies explicitly in a launch timeline?",opts:["The creative team gains too much autonomy and produces off-brief work","Handoffs are missed and problems are only discovered when it is too late to recover","The budget is allocated incorrectly across the different workstreams","External agencies take longer to complete their work than internally managed teams"],ans:1},
+    {q:"What dependency does Sophie give as an example involving the PR team?",opts:["PR cannot brief journalists until the CEO has personally reviewed the campaign strategy","PR cannot send the press release until legal has approved it","PR cannot begin work until the creative agency has delivered the campaign assets","PR cannot start until the paid media campaign has been running for two weeks"],ans:1},
+    {q:"How does Sophie describe a launch timeline?",opts:["A fixed document that should be finalised and distributed at the start of the project","A legal document that defines the responsibilities of each agency and team","A living document that should be reviewed weekly and updated as the single shared source of truth","A creative tool used primarily by the project management team for internal scheduling"],ans:2},
+    {q:"What does Sophie say about ownership of tasks on the timeline?",opts:["Every task should be owned by the team leader of the relevant department","Ownership should be shared equally between the client team and the agency","Every item should have a single named person responsible, not a team or department","Tasks on the critical path should be owned by the CEO to ensure sufficient priority"],ans:2},
+    {q:"According to Sophie, what is worse than no timeline at all?",opts:["A timeline that is too detailed and contains more than fifty tasks","A timeline shared with too many stakeholders, creating conflicting feedback","A timeline that has been updated multiple times but the latest version was never shared with the team","A timeline that does not include budget information alongside the task deadlines"],ans:2}
+  ]
+},
+{
+  emoji:"📈",
+  title:"Activity 4: Post-Launch Review — How to Evaluate a Campaign and Drive Improvement",
+  sub:"Dr James Nakamura, Marketing Performance Director — Conference presentation",
+  level:"B2",type:"Multiple Choice",focus:"Listening for detail and implication",
+  transcript:`Thank you. I want to talk about something that most marketing teams do not do well enough: the post-launch review. And I want to be direct about why this matters, because I think it is one of the most undervalued activities in marketing.
+
+Here is the problem. Marketing teams spend enormous amounts of time and money planning and executing product launches. And then, once the campaign is over, they move on to the next thing. Maybe there is a brief conversation about whether it went well. Maybe a few slides are put together showing the headline metrics. And then it is done. Nobody systematically captures what was learned, what would be done differently, or what should be replicated next time. The institutional memory of every campaign is essentially lost. And the next campaign starts from somewhere close to zero again.
+
+The post-launch review should not be a forty-five-minute debrief with a few slides. It should be a structured, rigorous evaluation of what happened, measured against what was planned. It should happen at a defined point after the launch, typically six to eight weeks in, once enough data has been collected to draw meaningful conclusions. And it should be attended not just by the marketing team but by all the teams that contributed to the launch.
+
+What should a post-launch review cover? First, a performance summary: how did the campaign perform against each KPI? Not just a traffic light status of red, amber, or green, but the actual numbers, the variance from the target, and a hypothesis about why the variance occurred. Second, channel-level analysis: which channels overperformed, which underperformed, and what does that tell us about where to focus next time? Third, an honest assessment of the execution: what went well in terms of process, team collaboration, and delivery, and what caused problems? Fourth, and most importantly, clear recommendations: what specific changes will be made to the next campaign as a direct result of this review?
+
+The final point I want to make is about the language of post-launch reviews. One of the biggest barriers to genuine learning is defensive language: when teams spend the review explaining why a result was someone else's fault, or why the external environment was responsible for underperformance, rather than engaging honestly with what could have been done better. Good review culture requires psychological safety: a shared understanding that honest analysis of what went wrong is valued and rewarded, not punished. Without that, you do not get a post-launch review. You get a performance presentation.`,
+  questions:[
+    {q:"What does James say most marketing teams do not do well enough?",opts:["Writing clear and specific campaign briefs for external agencies","Managing the launch timeline and critical path during campaign execution","Conducting a thorough post-launch review to evaluate performance and capture learning","Allocating the campaign budget efficiently across different digital channels"],ans:2},
+    {q:"What does James say happens to the institutional memory of campaigns when teams skip the review process?",opts:["It is captured automatically by analytics platforms and referenced in future campaigns","It is stored in the campaign brief and retrieved when planning the next project","It is essentially lost, and the next campaign starts from somewhere close to zero","It is maintained by the agency who can reference it in future briefing sessions"],ans:2},
+    {q:"When does James say the post-launch review should typically happen?",opts:["On the final day of the campaign when all activity has stopped","Within one week of the campaign going live, while the team's memory is fresh","Six to eight weeks after launch, once enough data has been collected","Three months after launch, once the full financial impact has been calculated"],ans:2},
+    {q:"Who does James say should attend the post-launch review?",opts:["Only the marketing team, to maintain confidentiality around performance data","The CEO and the CMO, who are the only people with authority to assess campaign outcomes","All the teams that contributed to the launch, not just the marketing team","The external agency partners, who can provide an objective independent assessment"],ans:2},
+    {q:"What does James say about the performance summary in a review?",opts:["It should use a simple traffic light system to make it accessible to all stakeholders","It should include actual numbers, variance from target, and a hypothesis about why the variance occurred","It should focus only on channels that exceeded their targets, to maintain team morale","It should be presented without context so that each stakeholder can draw their own conclusions"],ans:1},
+    {q:"What does James describe as the fourth and most important element of the post-launch review?",opts:["A financial reconciliation of the actual campaign spend against the approved budget","A comprehensive channel-level breakdown of impressions, clicks, and conversion rates","An honest assessment of what went well and what caused problems during execution","Clear recommendations: specific changes that will be made to the next campaign as a direct result"],ans:3},
+    {q:"What does James say is one of the biggest barriers to genuine learning in post-launch reviews?",opts:["The time pressure teams face to begin planning the next campaign immediately","The reluctance of senior leaders to attend reviews and engage with the data","Defensive language, where teams explain why results were someone else's fault rather than engaging honestly","The lack of a standard format or template for conducting post-launch reviews"],ans:2},
+    {q:"What does James say is required for honest post-launch reviews?",opts:["A mandatory requirement from senior leadership that all reviews include recommendations","External facilitation by a consultant who is independent of the campaign team","Psychological safety: a shared understanding that honest analysis of what went wrong is valued","Access to real-time campaign data from all channels in a single unified dashboard"],ans:2}
+  ]
+}
+],
+cs1:{questions:[
+  {q:"What was Lyra Audio's total marketing budget for the launch?",opts:["GBP45,000","GBP95,000","GBP150,000","GBP340,000"],ans:1},
+  {q:"How far in advance of the launch did the pre-launch phase begin?",opts:["Four weeks","Eight weeks","Twelve weeks","Six months"],ans:2},
+  {q:"How did the referral programme work?",opts:["Affiliates earned 10% commission on every sale they generated","Influencers earned a fee for each follower they directed to the waitlist","Existing waitlist members received early-access privileges for each friend they referred","Review publications earned a licensing fee for each article published about the product"],ans:2},
+  {q:"How many content creators were seeded with the product before the launch?",opts:["Fifteen","Twenty-five","Thirty-five","Fifty"],ans:2},
+  {q:"How many of the seeded reviewers published content?",opts:["All thirty-five","Thirty-one out of thirty-five","Twenty out of thirty-five","Fifteen out of thirty-five"],ans:1},
+  {q:"What was the estimated earned media value of the reviewer content?",opts:["GBP95,000","GBP120,000","GBP340,000","GBP500,000"],ans:2},
+  {q:"How large was the waitlist by launch day?",opts:["12,000","27,000","42,000","60,000"],ans:2},
+  {q:"How many units were sold within the first 24 hours of launch?",opts:["2,100","4,500","6,200","9,000"],ans:2},
+  {q:"What ROAS did the campaign achieve across all paid activity?",opts:["2.8x","3.5x","4.7x","6.2x"],ans:3},
+  {q:"What does the Lyra Audio case study demonstrate about pre-launch strategy?",opts:["Paid media should always be deployed from day one of a product launch","A large celebrity influencer partnership is essential for a successful product launch","A well-executed pre-launch strategy can dramatically reduce the cost of customer acquisition by creating pre-existing demand","A premium pricing strategy always generates a waitlist without the need for pre-launch marketing"],ans:2}
+]},
+cs2:{questions:[
+  {q:"What new product did Solaris Energy Solutions develop?",opts:["A new range of solar panels with improved energy efficiency","A smart energy management dashboard allowing commercial clients to monitor energy usage in real time","An AI-powered pricing tool for commercial energy contracts","A mobile app for tracking personal carbon footprint and ESG commitments"],ans:1},
+  {q:"How long had the product been in development before the marketing director was brought in?",opts:["Six months","Twelve months","Eighteen months","Three years"],ans:2},
+  {q:"What was the first major challenge the marketing director faced?",opts:["A competitor launching an identical product in the same market at the same time","An organisational challenge: each team had different assumptions about the product, audience, and timeline","A budget that was insufficient to support a full integrated launch campaign","A regulatory barrier that prevented the product from being sold in the UK market"],ans:1},
+  {q:"What problem did the launch readiness audit reveal?",opts:["The product had significant technical defects that required six months of further development","The target market was smaller than initially projected in the business case","The legal approval process for data privacy documentation would take at least eight weeks, making the original launch date impossible","The sales team had already promised the product to clients before marketing was involved"],ans:2},
+  {q:"By how many weeks was the launch pushed back?",opts:["Four weeks","Eight weeks","Ten weeks","Sixteen weeks"],ans:2},
+  {q:"How many existing clients participated in the beta test?",opts:["Two","Five","Ten","Twenty"],ans:1},
+  {q:"How was the target audience defined in the campaign brief?",opts:["All UK businesses interested in renewable energy, regardless of size","UK companies with over 500 employees seeking to reduce their operational carbon footprint","Operations Directors and Finance Managers at UK companies with 50 to 500 employees and existing solar installations","Sustainability managers at FTSE 250 companies planning new solar installations"],ans:2},
+  {q:"Which of the following was NOT listed as one of the launch channels?",opts:["LinkedIn sponsored content and direct mail","A dedicated landing page","Television and outdoor advertising","A webinar series featuring client case studies"],ans:2},
+  {q:"How many new dashboard clients did Solaris acquire within three months of launch?",opts:["23","30","47","75"],ans:2},
+  {q:"By what percentage did the Solaris launch exceed its three-month client acquisition target?",opts:["23%","37%","57%","72%"],ans:2}
+]},
+fa:{questions:[
+  {q:"What is a go-to-market strategy?",opts:["A narrow plan focused only on advertising channels and campaign creative execution","A comprehensive plan defining how a company will bring a product to market, reach customers, and establish a competitive position","A legal document required before any product can be sold to consumers","A financial model projecting first-year revenue from a new product launch"],ans:1},
+  {q:"What is the critical path in launch planning?",opts:["The most expensive sequence of tasks in the campaign budget","The sequence of dependent tasks that determines the minimum time required to complete the launch","The approved creative direction for the campaign across all selected channels","The list of senior stakeholders who must approve each phase of the launch"],ans:1},
+  {q:"What is the difference between a soft launch and a hard launch?",opts:["A soft launch uses only digital channels; a hard launch uses all channels simultaneously","A soft launch is a limited release used to test the product; a hard launch is a full public release with maximum promotional activity","A soft launch is lower in cost; a hard launch always requires a larger budget","A soft launch is used for B2B products; a hard launch is used for B2C products"],ans:1},
+  {q:"Which future form is used for a scheduled or timetabled event?",opts:["will + infinitive","be going to + infinitive","Present simple","Future perfect"],ans:2},
+  {q:"Which passive structure is correct for a formal planning document?",opts:["The campaign brief writes by the marketing director.","It is expected that the launch will generate 50,000 first-week sales.","It expects that the launch will generate 50,000 first-week sales.","The marketing director is expected write the campaign brief."],ans:1},
+  {q:"Which objective is written as a SMART objective?",opts:["Increase brand awareness.","Drive sales growth in the target market this year.","Achieve a 15-point increase in spontaneous brand awareness among UK women aged 25 to 40 within 12 weeks, as measured by the monthly brand tracker.","Become the most-recognised brand in the category."],ans:2},
+  {q:"What is share of voice?",opts:["The number of customer reviews a brand receives per month","The percentage of total advertising or media presence in a category that a brand occupies","The total revenue a brand generates through word-of-mouth recommendations","The number of social media mentions a brand receives compared to competitors"],ans:1},
+  {q:"What is a campaign brief?",opts:["A short email from the client to the agency confirming the meeting time","A financial document showing the campaign budget broken down by month","A structured document defining objectives, target audience, key messages, channels, timeline, and budget for a campaign","A legal contract between the brand and the creative agency specifying deliverables and payment terms"],ans:2},
+  {q:"Which sentence correctly expresses a formal purpose in a planning document?",opts:["For maximising launch impact, all channels will be activated simultaneously.","In order to maximise launch impact, all channels will be activated simultaneously.","So to maximise launch impact, all channels will be activated simultaneously.","For to maximise launch impact, all channels will be activated simultaneously."],ans:1},
+  {q:"In the Lyra Audio case study, what was the key reason the pre-launch strategy was so effective?",opts:["The brand spent the majority of its budget on national television advertising in the pre-launch period","A well-executed review seeding programme and waitlist created a pool of ready customers before launch day","The brand partnered with a celebrity ambassador who generated immediate mass awareness","The product was significantly cheaper than any competitor product in the market"],ans:1},
+  {q:"What is beta testing?",opts:["A phase in which a product is released to all customers simultaneously to measure initial demand","A form of A/B testing used to optimise digital advertising creative","A phase in which selected real users test the product before the official launch and provide structured feedback","A method of comparing the brand's performance against a competitor benchmark"],ans:2},
+  {q:"Which of the following correctly uses the future perfect tense?",opts:["By the launch date, all assets will produce and approve.","By launch day, all creative assets will have been produced and approved.","By launch day, all creative assets will be produced and approve.","By the launch, all assets will have producing and approving."],ans:1},
+  {q:"What is an omnichannel marketing approach?",opts:["A strategy that focuses exclusively on digital channels for all customer communication","A method of advertising across a very large number of unrelated channels simultaneously","An approach providing customers with a fully integrated, consistent experience across all channels and touchpoints","A system for managing all marketing communications from a single centralised platform"],ans:2},
+  {q:"In the Solaris Energy case study, what was the core lesson about stakeholder alignment?",opts:["Marketing should always lead the launch without consulting other departments","A technically ready product can still fail at launch if the wider organisation is not aligned and prepared","Legal approval processes can always be accelerated if the business case is strong enough","B2B product launches always require a longer timeline than B2C launches"],ans:1},
+  {q:"What is a post-launch review and why does it matter?",opts:["A presentation for investors showing the financial results of the product launch","A structured evaluation of campaign performance against objectives that generates learning for future campaigns","A meeting where the team celebrates the successful completion of the launch","A report submitted to the legal team confirming that all regulatory requirements were met"],ans:1},
+  {q:"What does it mean for a launch timeline to be a living document?",opts:["It should be redesigned from scratch for every new campaign","It should be reviewed and updated regularly, serving as the single shared source of truth for all teams","It should be distributed only to senior stakeholders who have authority over the launch","It should be written in plain language rather than project management terminology"],ans:1},
+  {q:"Which of the following is a correctly formed impersonal structure for a planning document?",opts:["It has been agreed that the launch date will move to Q2.","It has agreed that the launch date will move to Q2.","The launch date it has been agreed will move to Q2.","Has been agreed that the launch date will move to Q2."],ans:0},
+  {q:"According to Elena Vasquez in the listening activities, what is one of the most common launch failures she sees?",opts:["Spending too much budget on below-the-line activity during the pre-launch phase","Launching without completing a post-launch review of the previous product","The marketing team has the strategy in their heads but other teams are working from different assumptions","Setting KPIs that are too easy to achieve, resulting in insufficient ambition"],ans:2},
+  {q:"What is market penetration as a launch objective?",opts:["The practice of setting a very low introductory price to attract the maximum number of early adopters","The extent to which a product or brand has been adopted in a target market, or a strategy focused on increasing sales in existing markets","The level of brand awareness a product achieves in its first month of availability","The percentage of total category advertising spend allocated to a new product launch"],ans:1},
+  {q:"What does Sophie Harrington say about ownership of tasks in a launch timeline?",opts:["Tasks should be owned by the team with the largest budget allocation for that workstream","Every task should have a single named person responsible, not a team or department, because shared ownership means accountability disappears","Senior leadership should own all critical path items to ensure sufficient organisational priority","Ownership should alternate between the client and agency teams to ensure equal accountability"],ans:1}
+]}
+};
+
+function renderMCQ(containerId,questions,prefix,isListening){
+  const c=document.getElementById(containerId);if(!c)return;
+  const wrap=isListening?'<div class="listen-mcq-wrap">':'';
+  const wrapClose=isListening?'</div>':'';
+  c.innerHTML=wrap+questions.map((item,i)=>`
+    <div class="mcq-item" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map((o,j)=>`<div class="mcq-option" onclick="selectOpt('${prefix}',${i},${j})" id="${prefix}-q${i}-o${j}"><span class="opt-letter">${['A','B','C','D'][j]}</span>${o}</div>`).join('')}
+      </div>
+    </div>`).join('')+wrapClose;
+}
+function selectOpt(prefix,qi,oi){
+  const item=DATA[prefix].questions[qi];
+  for(let j=0;j<item.opts.length;j++){const el=document.getElementById(`${prefix}-q${qi}-o${j}`);if(el)el.classList.remove('selected');}
+  const el=document.getElementById(`${prefix}-q${qi}-o${oi}`);if(el)el.classList.add('selected');
+}
+function checkMCQ(prefix){
+  const qs=DATA[prefix].questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#${prefix}-q${i} .mcq-option`);
+    let chosen=-1;opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+    if(chosen===item.ans)score++;
+  });
+  const fb=document.getElementById(`${prefix}-feedback`);
+  if(fb){fb.className='feedback show '+(score>=Math.ceil(total*0.7)?'good':'bad');fb.textContent=score>=Math.ceil(total*0.7)?`Well done! You scored ${score}/${total}.`:`You scored ${score}/${total}. Review the relevant sections and try again.`;}
+  const sc=document.getElementById(`${prefix}-score`);
+  if(sc){sc.className='score-display show';sc.innerHTML=`<div><div class="score-label">Your Score</div><div class="score-val">${score}/${total}</div></div><div style="font-size:13px;color:var(--text-light)">${Math.round(score/total*100)}%</div>`;}
+}
+function renderGaps(){
+  const c=document.getElementById('v2-gaps');if(!c)return;
+  c.innerHTML=DATA.v2gaps.map((g,i)=>`<div class="gap-sentence">${i+1}. ${g.sent.replace('_______',`<input class="gap-input" id="gap-${i}" placeholder="?" autocomplete="off">`)}</div>`).join('');
+}
+function checkGaps(){
+  let score=0;
+  DATA.v2gaps.forEach((g,i)=>{
+    const el=document.getElementById(`gap-${i}`);if(!el)return;
+    const val=el.value.trim().toLowerCase();
+    if(val===g.ans.toLowerCase()){score++;el.style.borderBottomColor='var(--success)';el.style.color='var(--success)';}
+    else{el.style.borderBottomColor='var(--error)';el.style.color='var(--error)';el.value=g.ans;}
+  });
+  const fb=document.getElementById('v2-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`Great work! ${score}/10 correct.`:`${score}/10 correct. Correct answers are shown in red.`;
+}
+const tfAnswers={};
+function renderTF(){
+  const c=document.getElementById('v3-tf');if(!c)return;
+  c.innerHTML=DATA.v3tf.map((item,i)=>`
+    <div class="tf-item" id="tf-${i}">
+      <div class="tf-stmt">${i+1}. ${item.stmt}</div>
+      <div class="tf-btns"><button class="tf-btn" onclick="selectTF(${i},true,this)">True</button><button class="tf-btn" onclick="selectTF(${i},false,this)">False</button></div>
+    </div>`).join('');
+}
+function selectTF(i,val,btn){
+  tfAnswers[i]=val;const row=document.getElementById(`tf-${i}`);
+  row.querySelectorAll('.tf-btn').forEach(b=>b.className='tf-btn');
+  btn.className='tf-btn '+(val?'sel-t':'sel-f');
+}
+function checkTF(){
+  let score=0;
+  DATA.v3tf.forEach((item,i)=>{
+    if(tfAnswers[i]===undefined)return;
+    const row=document.getElementById(`tf-${i}`);
+    row.querySelectorAll('.tf-btn').forEach(b=>{
+      const isTrue=b.textContent.trim()==='True';b.className='tf-btn';
+      if(isTrue===item.ans){b.style.background=item.ans?'#dcfce7':'#fee2e2';b.style.borderColor=item.ans?'var(--success)':'var(--error)';b.style.color=item.ans?'var(--success)':'var(--error)';b.textContent=(isTrue?'True':'False')+' ✓';}
+    });
+    if(tfAnswers[i]===item.ans)score++;
+  });
+  const fb=document.getElementById('v3-feedback');
+  fb.className='feedback show '+(score>=7?'good':'bad');
+  fb.textContent=score>=7?`Excellent! ${score}/10 correct.`:`${score}/10 correct. Review the vocabulary definitions.`;
+}
+function renderListening(){
+  const c=document.getElementById('listening-cards');if(!c)return;
+  c.innerHTML=DATA.listening.map((act,ai)=>`
+    <div class="audio-card">
+      <div class="audio-header">
+        <div class="audio-emoji">${act.emoji}</div>
+        <div><div class="audio-title">${act.title}</div><div class="audio-sub">${act.sub}</div>
+          <div class="audio-tags"><span class="audio-tag tag-level">Level: ${act.level}</span><span class="audio-tag tag-type">${act.type}</span><span class="audio-tag tag-focus">Focus: ${act.focus}</span></div>
+        </div>
+      </div>
+      <div class="player-box">
+        <div class="player-row">
+          <button class="play-btn" id="play-${ai}" onclick="handlePlay(${ai})">&#9654;</button>
+          <div class="player-info"><div class="player-title-sm">${act.title}</div><div class="player-sub-sm">${act.sub}</div></div>
+          <div class="player-time" id="time-${ai}">0:00 / 0:00</div>
+        </div>
+        <div class="player-progress"><div class="player-progress-fill" id="pf-${ai}"></div></div>
+        <div class="speed-row">
+          <span class="speed-label">Speed:</span>
+          <button class="speed-btn" onclick="setSpeed(${ai},0.7,this)">0.7&times;</button>
+          <button class="speed-btn active" onclick="setSpeed(${ai},0.85,this)">0.85&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.0,this)">1.0&times;</button>
+          <button class="speed-btn" onclick="setSpeed(${ai},1.2,this)">1.2&times;</button>
+          <button class="replay-btn" onclick="replayAudio(${ai})">&#8617; Replay</button>
+        </div>
+        <div class="tts-note">Uses your browser's built-in speech engine. For best results use Chrome or Edge.</div>
+      </div>
+      <button class="transcript-toggle" onclick="toggleTranscript(${ai})">&#9660; Show / Hide Transcript</button>
+      <div class="transcript-box" id="trans-${ai}">${act.transcript.split('\n\n').map(p=>`<p>${p.trim()}</p>`).join('')}</div>
+      <div class="listen-instruction">&#128203; Listen to the audio, then answer the questions below by selecting the best answer (A, B, C, or D).</div>
+      <div class="listen-mcq-wrap">
+        <div class="mcq-title">Questions &mdash; Activity ${ai+1}</div>
+        <div id="la${ai}-mcqs"></div>
+        <button class="check-btn" onclick="checkMCQ('la${ai}')">Check Answers</button>
+        <div id="la${ai}-feedback" class="feedback"></div>
+        <div id="la${ai}-score" class="score-display"></div>
+      </div>
+    </div>`).join('');
+  DATA.listening.forEach((act,ai)=>{DATA[`la${ai}`]={questions:act.questions};renderMCQ(`la${ai}-mcqs`,act.questions,`la${ai}`,true);});
+}
+const audioState={};
+function handlePlay(ai){
+  const act=DATA.listening[ai];
+  if(!audioState[ai])audioState[ai]={playing:false,speed:0.85};
+  const st=audioState[ai];const btn=document.getElementById(`play-${ai}`);
+  if(st.playing){window.speechSynthesis.cancel();st.playing=false;btn.innerHTML='&#9654;';if(st.timer)clearInterval(st.timer);return;}
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.lang='en-GB';utt.rate=st.speed;utt.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const chosen=voices.find(v=>v.name==='Google UK English Female')||voices.find(v=>v.lang==='en-GB'&&v.name.toLowerCase().includes('female'))||voices.find(v=>v.lang==='en-GB');
+  if(chosen)utt.voice=chosen;
+  const words=act.transcript.split(/\s+/).length;const dur=Math.round(words/(st.speed*2.6));
+  const fmt=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  document.getElementById(`time-${ai}`).textContent=`0:00 / ${fmt(dur)}`;
+  let elapsed=0;
+  st.timer=setInterval(()=>{
+    if(!audioState[ai].playing){clearInterval(st.timer);return;}
+    elapsed++;
+    document.getElementById(`pf-${ai}`).style.width=Math.min(elapsed/dur*100,100)+'%';
+    document.getElementById(`time-${ai}`).textContent=`${fmt(elapsed)} / ${fmt(dur)}`;
+  },1000);
+  utt.onend=()=>{st.playing=false;btn.innerHTML='&#9654;';clearInterval(st.timer);document.getElementById(`pf-${ai}`).style.width='100%';};
+  window.speechSynthesis.speak(utt);st.playing=true;btn.innerHTML='&#9646;&#9646;';
+}
+function setSpeed(ai,spd,btn){
+  if(!audioState[ai])audioState[ai]={playing:false,speed:spd};audioState[ai].speed=spd;
+  btn.closest('.audio-card').querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  if(audioState[ai].playing){window.speechSynthesis.cancel();audioState[ai].playing=false;document.getElementById(`play-${ai}`).innerHTML='&#9654;';if(audioState[ai].timer)clearInterval(audioState[ai].timer);setTimeout(()=>handlePlay(ai),80);}
+}
+function replayAudio(ai){
+  if(audioState[ai]){audioState[ai].playing=false;if(audioState[ai].timer)clearInterval(audioState[ai].timer);}
+  window.speechSynthesis.cancel();const pf=document.getElementById(`pf-${ai}`);if(pf)pf.style.width='0%';
+  document.getElementById(`play-${ai}`).innerHTML='&#9654;';setTimeout(()=>handlePlay(ai),80);
+}
+function toggleTranscript(ai){document.getElementById(`trans-${ai}`).classList.toggle('open');}
+function updateWordCount(id,max){
+  const ta=document.getElementById(`${id}-text`);const wc=document.getElementById(`${id}-wc`);if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  wc.textContent=`${words} / ${max} words`;wc.style.color=words>max?'var(--error)':'var(--text-light)';
+}
+function submitWriting(id){
+  const ta=document.getElementById(`${id}-text`);if(!ta||ta.value.trim().length<30){alert('Please write your response before submitting.');return;}
+  const s=document.getElementById(`${id}-success`);s.style.display='block';s.scrollIntoView({behavior:'smooth'});
+}
+let attemptCount=0;
+function renderAssessment(){renderMCQ('fa-mcqs',DATA.fa.questions,'fa',false);}
+function submitAssessment(){
+  attemptCount++;const qs=DATA.fa.questions;let score=0,total=qs.length;
+  qs.forEach((item,i)=>{
+    const opts=document.querySelectorAll(`#fa-q${i} .mcq-option`);let chosen=-1;
+    opts.forEach((o,j)=>{if(o.classList.contains('selected'))chosen=j;});
+    if(chosen===item.ans)score++;
+    opts.forEach((o,j)=>{o.classList.remove('selected','correct','wrong');if(j===item.ans)o.classList.add('correct');else if(j===chosen&&chosen!==item.ans)o.classList.add('wrong');});
+  });
+  const pct=Math.round(score/total*100);const pass=pct>=70;
+  const res=document.getElementById('assessment-result');res.style.display='block';res.scrollIntoView({behavior:'smooth'});
+  document.getElementById('result-score-text').className='result-score '+(pass?'pass':'fail');
+  document.getElementById('result-score-text').textContent=`${pct}% — ${score}/${total}`;
+  document.getElementById('result-msg').textContent=pass?'Congratulations! You have passed Module 8. Excellent work on Product Launch and Campaign Planning.':'You did not reach the 70% pass mark. Please review the module content and try again.';
+  const wrap=document.getElementById('retake-wrap');
+  if(!pass&&attemptCount<2)wrap.innerHTML=`<button class="retake-btn" onclick="retakeAssessment()">Retake Assessment (Attempt ${attemptCount+1} of 2)</button>`;
+  else if(attemptCount>=2&&!pass){wrap.innerHTML=`<p style="color:var(--error);font-size:14px;margin-top:12px">You have used both attempts. Please review the module content.</p>`;document.getElementById('assessment-form').style.display='none';}
+  document.getElementById('attempt-badge').textContent=`Attempt ${attemptCount} of 2`;
+}
+function retakeAssessment(){
+  document.getElementById('assessment-result').style.display='none';
+  document.querySelectorAll('#fa-mcqs .mcq-option').forEach(o=>o.classList.remove('selected','correct','wrong'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(id);if(sec)sec.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{if((n.getAttribute('onclick')||'').includes(`'${id}'`))n.classList.add('active');});
+  window.scrollTo({top:0,behavior:'smooth'});trackProgress(id);
+}
+function trackProgress(id){
+  let v=JSON.parse(sessionStorage.getItem('mkt8v')||'[]');
+  if(!v.includes(id)){v.push(id);sessionStorage.setItem('mkt8v',JSON.stringify(v));}
+  const pct=Math.round(v.length/11*100);
+  const pf=document.getElementById('progress-fill');const pp=document.getElementById('progress-pct');
+  if(pf)pf.style.width=pct+'%';if(pp)pp.textContent=pct+'%';
+}
+window.addEventListener('load',()=>{
+  if(window.speechSynthesis){window.speechSynthesis.getVoices();if(window.speechSynthesis.onvoiceschanged!==undefined)window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();}
+  renderMCQ('r1-mcqs',DATA.r1.questions,'r1',false);
+  renderMCQ('r2-mcqs',DATA.r2.questions,'r2',false);
+  renderMCQ('v1-mcqs',DATA.v1.questions,'v1',false);
+  renderGaps();renderTF();
+  renderMCQ('g1-mcqs',DATA.g1.questions,'g1',false);
+  renderMCQ('g2-mcqs',DATA.g2.questions,'g2',false);
+  renderMCQ('g3-mcqs',DATA.g3.questions,'g3',false);
+  renderListening();
+  renderMCQ('cs1-mcqs',DATA.cs1.questions,'cs1',false);
+  renderMCQ('cs2-mcqs',DATA.cs2.questions,'cs2',false);
+  renderAssessment();
+  trackProgress('overview');
+});
+</script>
+</body>
+</html>

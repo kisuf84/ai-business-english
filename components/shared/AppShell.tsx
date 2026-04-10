@@ -43,6 +43,7 @@ export default function AppShell({ children }: AppShellProps) {
       items: [
         { href: "/my-courses", label: "My courses" },
         { href: "/library", label: "Lesson library" },
+        { href: "/premium-classes", label: "Premium Classes" },
         { href: "/for-teachers", label: "For Teachers" },
       ],
     },
@@ -58,9 +59,13 @@ export default function AppShell({ children }: AppShellProps) {
     "/lesson/new": "Generator",
     "/courses": "Generator",
   };
+  const derivedPageTitle = pathname?.startsWith("/premium-classes")
+    ? "Premium Classes"
+    : undefined;
   const pageTitle =
     navGroups.flatMap((group) => group.items).find((item) => item.href === pathname)
       ?.label ??
+    derivedPageTitle ??
     (pathname ? legacyPageTitles[pathname] : undefined) ??
     "Dashboard";
 
