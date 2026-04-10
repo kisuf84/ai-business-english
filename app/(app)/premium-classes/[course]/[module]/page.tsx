@@ -33,9 +33,9 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
     currentIndex < course.modules.length - 1 ? course.modules[currentIndex + 1] : null;
 
   return (
-    <section className="py-10">
+    <section className="mobile-page-shell py-6 sm:py-8 lg:py-10">
       <div className="mx-auto max-w-[1200px]">
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Premium Classes
           </p>
@@ -47,7 +47,7 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
           </p>
         </div>
 
-        <Card className="p-6">
+        <Card className="p-4 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap gap-2">
               <span className="rounded-full border border-[var(--border)] bg-[var(--surface-raised)] px-2.5 py-1 text-[11px] font-medium text-[var(--ink-muted)]">
@@ -66,12 +66,12 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
           </div>
         </Card>
 
-        <Card className="mt-6 overflow-hidden rounded-3xl p-3 sm:p-4">
+        <Card className="mt-6 overflow-hidden rounded-[20px] p-2 sm:rounded-3xl sm:p-4">
           <div className="overflow-hidden rounded-[20px] border border-[var(--border)] bg-white">
             <iframe
               title={module.title}
               src={module.iframeSrc}
-              className="h-[80vh] min-h-[720px] w-full border-0"
+              className="h-[72vh] min-h-[420px] w-full border-0 sm:h-[80vh] sm:min-h-[720px]"
             />
           </div>
         </Card>

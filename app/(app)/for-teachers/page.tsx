@@ -66,9 +66,9 @@ export default async function ForTeachersPage() {
   }
 
   return (
-    <section className="py-10">
+    <section className="mobile-page-shell py-6 sm:py-8 lg:py-10">
       <div className="mx-auto max-w-[1200px]">
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Teacher Resources
           </p>
@@ -83,9 +83,9 @@ export default async function ForTeachersPage() {
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {resourcesWithPreview.map((resource) => {
             return (
-              <Card key={resource.docsUrl} className="rounded-3xl p-5">
+              <Card key={resource.docsUrl} className="rounded-[20px] p-4 sm:rounded-3xl sm:p-5">
                 <div className="flex h-full flex-col">
-                  <h2 className="text-base font-semibold leading-snug text-[var(--ink)]">
+                  <h2 className="mobile-safe-wrap text-base font-semibold leading-snug text-[var(--ink)]">
                     {resource.title}
                   </h2>
                   <p className="mt-1 text-xs text-[var(--ink-faint)]">
@@ -152,10 +152,10 @@ export default async function ForTeachersPage() {
                     )}
                   </div>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
+                  <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                     <Link
                       href={`/for-teachers/${resource.id}`}
-                      className="inline-flex rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-4 py-2 text-xs font-semibold text-[#0c0b0a] transition hover:bg-[#d4ad55]"
+                      className="inline-flex w-full justify-center rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-4 py-2 text-xs font-semibold text-[#0c0b0a] transition hover:bg-[#d4ad55] sm:w-auto"
                     >
                       Open Lesson
                     </Link>
@@ -163,7 +163,7 @@ export default async function ForTeachersPage() {
                       href={resource.docsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-2 text-xs font-semibold text-[var(--ink)] transition hover:border-[var(--accent-gold)]"
+                      className="inline-flex w-full justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-2 text-xs font-semibold text-[var(--ink)] transition hover:border-[var(--accent-gold)] sm:w-auto"
                     >
                       Open in Gamma
                     </Link>

@@ -46,9 +46,9 @@ export default async function LibraryPage() {
   }
 
   return (
-    <section className="py-10">
+    <section className="mobile-page-shell py-6 sm:py-8 lg:py-10">
       <div className="mx-auto max-w-[960px]">
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Lesson Library
           </p>
@@ -60,7 +60,7 @@ export default async function LibraryPage() {
           </p>
         </div>
 
-        <Card className="p-7">
+        <Card className="p-5 sm:p-7">
           <div className="grid gap-2">
             <label htmlFor="lesson_search" className="text-sm font-medium">
               Search lessons
@@ -108,13 +108,13 @@ export default async function LibraryPage() {
                     href={`/lessons/${lesson.id}`}
                     className="group block"
                   >
-                    <Card className="h-full rounded-3xl p-6">
+                    <Card className="h-full rounded-[20px] p-4 sm:rounded-3xl sm:p-6">
                     <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h2 className="text-lg font-semibold leading-snug text-[var(--ink)]">
+                      <div className="min-w-0">
+                        <h2 className="mobile-safe-wrap text-lg font-semibold leading-snug text-[var(--ink)]">
                           {lesson.title}
                         </h2>
-                        <p className="mt-1 text-sm text-[var(--ink-muted)]">
+                        <p className="mobile-safe-wrap mt-1 text-sm text-[var(--ink-muted)]">
                           {lesson.topic}
                         </p>
                       </div>

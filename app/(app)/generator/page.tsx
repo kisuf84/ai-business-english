@@ -416,9 +416,9 @@ export default function GeneratorPage() {
   };
 
   return (
-    <section className="py-10">
+    <section className="mobile-page-shell py-6 sm:py-8 lg:py-10">
       <div className="mx-auto max-w-[960px]">
-        <div className="mb-10">
+        <div className="mb-8 sm:mb-10">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Generator
           </p>
@@ -431,11 +431,11 @@ export default function GeneratorPage() {
           </p>
         </div>
 
-        <div className="mb-8 inline-flex rounded-2xl border border-[var(--border)] bg-[var(--surface-card)] p-1">
+        <div className="mb-6 flex w-full flex-wrap gap-2 rounded-2xl border border-[var(--border)] bg-[var(--surface-card)] p-1 sm:mb-8 sm:inline-flex sm:w-auto sm:gap-0">
           <button
             type="button"
             onClick={() => setMode("lesson")}
-            className={`min-w-[110px] rounded-xl px-4 py-2 text-sm font-semibold transition ${
+            className={`flex-1 rounded-xl px-4 py-2 text-sm font-semibold transition sm:min-w-[110px] sm:flex-none ${
               mode === "lesson"
                 ? "bg-[var(--accent)] text-white"
                 : "text-[var(--ink-muted)] hover:bg-[var(--surface-raised)]"
@@ -446,7 +446,7 @@ export default function GeneratorPage() {
           <button
             type="button"
             onClick={() => setMode("course")}
-            className={`min-w-[110px] rounded-xl px-4 py-2 text-sm font-semibold transition ${
+            className={`flex-1 rounded-xl px-4 py-2 text-sm font-semibold transition sm:min-w-[110px] sm:flex-none ${
               mode === "course"
                 ? "bg-[var(--accent)] text-white"
                 : "text-[var(--ink-muted)] hover:bg-[var(--surface-raised)]"
@@ -456,7 +456,7 @@ export default function GeneratorPage() {
           </button>
         </div>
 
-        <div className="min-h-[760px]">
+        <div className="min-h-[560px] sm:min-h-[760px]">
           {mode === "lesson" ? (
             <>
             <Card>
@@ -598,7 +598,7 @@ export default function GeneratorPage() {
                         void runLessonGeneration();
                       }}
                       disabled={isLessonGenerating}
-                      className="rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-5 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55]"
+                      className="w-full rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-5 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55] sm:w-auto"
                     >
                       {isLessonGenerating ? "Generating..." : "Generate Lesson"}
                     </Button>
@@ -628,7 +628,7 @@ export default function GeneratorPage() {
 
             {lessonResult ? (
               <div className="mt-8">
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                   <h2 className="font-serif text-2xl text-[var(--ink)]">
                     Lesson Preview
                   </h2>
@@ -751,11 +751,11 @@ export default function GeneratorPage() {
 	                    />
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                     <Button
                       type="submit"
                       disabled={isCourseLoading}
-                      className="rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-5 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55]"
+                      className="w-full rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-5 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55] sm:w-auto"
                     >
                       {isCourseLoading ? "Generating..." : "Generate Course"}
                     </Button>
@@ -794,7 +794,7 @@ export default function GeneratorPage() {
               {!isCourseLoading && courses.length > 0 ? (
                 <div className="mt-4 grid gap-4">
                   {courses.map((course) => (
-                    <Card key={course.id} className="rounded-3xl p-6">
+                    <Card key={course.id} className="rounded-3xl p-5 sm:p-6">
                       <Link href={`/courses/${course.id}`}>
                         <div>
                           <strong className="text-lg text-[var(--ink)]">

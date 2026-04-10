@@ -22,9 +22,9 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
   }
 
   return (
-    <section className="py-10">
+    <section className="mobile-page-shell py-6 sm:py-8 lg:py-10">
       <div className="mx-auto max-w-[960px]">
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Premium Classes
           </p>
@@ -36,7 +36,7 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
           </p>
         </div>
 
-        <Card className="p-6">
+        <Card className="p-4 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="text-sm font-semibold text-[var(--ink)]">{course.subtitle}</p>
@@ -60,13 +60,13 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
               href={`/premium-classes/${course.slug}/${module.slug}`}
               className="group block"
             >
-              <Card className="rounded-3xl p-6">
+              <Card className="rounded-[20px] p-4 sm:rounded-3xl sm:p-6">
                 <div className="flex items-start justify-between gap-3">
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
                       Module {module.number}
                     </p>
-                    <h2 className="mt-2 text-lg font-semibold leading-snug text-[var(--ink)]">
+                    <h2 className="mobile-safe-wrap mt-2 text-lg font-semibold leading-snug text-[var(--ink)]">
                       {module.title}
                     </h2>
                   </div>

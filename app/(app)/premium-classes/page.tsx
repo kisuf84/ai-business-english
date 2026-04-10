@@ -8,9 +8,9 @@ export default async function PremiumClassesPage() {
   const courses = await listPremiumCourses();
 
   return (
-    <section className="py-10">
+    <section className="mobile-page-shell py-6 sm:py-8 lg:py-10">
       <div className="mx-auto max-w-[960px]">
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Premium Classes
           </p>
@@ -29,13 +29,13 @@ export default async function PremiumClassesPage() {
               href={`/premium-classes/${course.slug}`}
               className="group block"
             >
-              <Card className="h-full rounded-3xl p-6">
+              <Card className="h-full rounded-[20px] p-4 sm:rounded-3xl sm:p-6">
                 <div className="flex items-start justify-between gap-3">
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
                       {course.subtitle}
                     </p>
-                    <h2 className="mt-2 text-lg font-semibold leading-snug text-[var(--ink)]">
+                    <h2 className="mobile-safe-wrap mt-2 text-lg font-semibold leading-snug text-[var(--ink)]">
                       {course.title}
                     </h2>
                   </div>
@@ -44,7 +44,7 @@ export default async function PremiumClassesPage() {
                   </span>
                 </div>
 
-                <p className="mt-4 text-sm leading-6 text-[var(--ink-muted)]">
+                <p className="mobile-safe-wrap mt-4 text-sm leading-6 text-[var(--ink-muted)]">
                   {course.description}
                 </p>
 

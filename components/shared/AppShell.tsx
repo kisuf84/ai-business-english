@@ -15,6 +15,7 @@ type AppShellProps = {
 
 export default function AppShell({ children }: AppShellProps) {
   const { mode, toggleTheme } = useTheme();
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [user, setUser] = useState<{
     name: string;
     role: string;
@@ -138,6 +139,28 @@ export default function AppShell({ children }: AppShellProps) {
       if (unsubscribe) unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    setIsMobileNavOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isMobileNavOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMobileNavOpen(false);
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isMobileNavOpen]);
 
   const handleSignOut = async () => {
     const supabase = getSupabaseBrowserClient();
@@ -285,13 +308,30 @@ export default function AppShell({ children }: AppShellProps) {
 
         <main className="min-w-0 flex-1">
           <header
-            className={`flex min-h-[72px] flex-wrap items-center justify-between gap-3 px-4 py-3 backdrop-blur-[10px] sm:px-5 lg:flex-nowrap lg:px-7 ${
+            className={`sticky top-0 z-30 flex min-h-[72px] flex-wrap items-center justify-between gap-3 px-3 py-3 backdrop-blur-[10px] sm:px-5 lg:flex-nowrap lg:px-7 ${
               isLight
                 ? "border-b border-[var(--sidebar-border)] bg-[rgba(255,250,242,0.92)]"
                 : "border-b border-white/[0.04] bg-[rgba(7,11,22,0.92)]"
             }`}
           >
-            <div className="flex min-w-0 items-center gap-3">
+            <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+              <button
+                type="button"
+                onClick={() => setIsMobileNavOpen(true)}
+                aria-label="Open navigation menu"
+                aria-expanded={isMobileNavOpen}
+                aria-controls="mobile-navigation-drawer"
+                className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition lg:hidden ${
+                  isLight
+                    ? "border border-[var(--border)] bg-transparent text-[var(--ink)] hover:bg-[var(--surface-hover)]"
+                    : "border border-white/10 bg-transparent text-white hover:bg-white/[0.05]"
+                }`}
+              >
+                <span className="sr-only">Open navigation menu</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+              </button>
               <div className="grid h-[34px] w-[34px] place-items-center rounded-[10px] bg-[linear-gradient(135deg,#2e55ff_0%,#5f7cff_100%)] text-base font-extrabold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]">
                 A
               </div>
@@ -299,9 +339,9 @@ export default function AppShell({ children }: AppShellProps) {
                 <span className={`font-extrabold tracking-[-0.02em] ${isLight ? "text-[var(--ink)]" : "text-white"}`}>
                   LangslateAI
                 </span>
-                <span className="ml-1.5 break-words text-[13px] text-[var(--ink-muted)] sm:text-[15px]">
-                  | {pageTitle}
-                </span>
+                <div className="mt-0.5 text-[12px] text-[var(--ink-muted)] sm:text-[14px]">
+                  {pageTitle}
+                </div>
               </div>
             </div>
 
@@ -330,7 +370,7 @@ export default function AppShell({ children }: AppShellProps) {
               </button>
               <Link
                 href="/simulation"
-                className={`flex-1 rounded-xl px-4 py-3 text-center text-sm font-bold transition sm:flex-none sm:px-[18px] sm:text-[15px] ${
+                className={`min-w-0 flex-1 rounded-xl px-3 py-3 text-center text-sm font-bold transition sm:flex-none sm:px-[18px] sm:text-[15px] ${
                   isLight
                     ? "border border-[var(--border)] text-[var(--ink)] hover:bg-[var(--surface-hover)]"
                     : "border border-white/10 text-white hover:bg-white/[0.05]"
@@ -340,15 +380,143 @@ export default function AppShell({ children }: AppShellProps) {
               </Link>
               <Link
                 href="/generator"
-                className="flex-1 rounded-xl bg-[var(--accent)] px-4 py-3 text-center text-sm font-bold text-white transition hover:opacity-90 sm:flex-none sm:px-[18px] sm:text-[15px]"
+                className="min-w-0 flex-1 rounded-xl bg-[var(--accent)] px-3 py-3 text-center text-sm font-bold text-white transition hover:opacity-90 sm:flex-none sm:px-[18px] sm:text-[15px]"
               >
                 Open generator
               </Link>
             </div>
           </header>
 
-          <div className="px-4 py-5 sm:px-5 sm:py-6 lg:px-7 lg:py-7">{children}</div>
+          <div className="px-3 py-4 sm:px-5 sm:py-6 lg:px-7 lg:py-7">{children}</div>
         </main>
+      </div>
+
+      <div
+        className={`fixed inset-0 z-40 lg:hidden ${isMobileNavOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+        aria-hidden={!isMobileNavOpen}
+      >
+        <button
+          type="button"
+          aria-label="Close navigation menu"
+          className={`absolute inset-0 transition ${isMobileNavOpen ? "bg-black/45 opacity-100" : "opacity-0"}`}
+          onClick={() => setIsMobileNavOpen(false)}
+        />
+        <aside
+          id="mobile-navigation-drawer"
+          className={`absolute inset-y-0 left-0 flex w-[min(88vw,340px)] max-w-full flex-col border-r px-4 py-4 shadow-2xl transition-transform duration-200 ${
+            isLight
+              ? "border-[var(--sidebar-border)] bg-[var(--surface)]"
+              : "border-white/10 bg-[#08111f]"
+          } ${isMobileNavOpen ? "translate-x-0" : "-translate-x-full"}`}
+        >
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-sm font-extrabold text-[var(--ink)]">LangslateAI</p>
+              <p className="mt-1 text-xs text-[var(--ink-muted)]">Main navigation</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsMobileNavOpen(false)}
+              aria-label="Close navigation menu"
+              className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition ${
+                isLight
+                  ? "border border-[var(--border)] bg-transparent text-[var(--ink)] hover:bg-[var(--surface-hover)]"
+                  : "border border-white/10 bg-transparent text-white hover:bg-white/[0.05]"
+              }`}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
+            </button>
+          </div>
+
+          <div className="mt-4 rounded-[18px] border border-white/5 bg-white/[0.05] p-4">
+            <div className="flex items-center gap-3">
+              {user.avatarUrl ? (
+                <img
+                  src={user.avatarUrl}
+                  alt={user.name}
+                  className="h-11 w-11 rounded-full border-2 border-white/10 object-cover"
+                />
+              ) : (
+                <div className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white/10 bg-[radial-gradient(circle_at_30%_30%,#f0a46b,#7d3f2a_70%)] text-sm font-bold text-white">
+                  {initials || "U"}
+                </div>
+              )}
+              <div className="min-w-0">
+                <p className="truncate text-sm font-bold text-[var(--ink)]">{user.name}</p>
+                <p className="truncate text-xs text-[var(--ink-muted)]">{user.email || user.role}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-5 flex-1 overflow-y-auto pb-4">
+            {navGroups.map((group) => (
+              <div key={group.label} className="mt-5 first:mt-0">
+                <p className="px-2 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--ink-faint)]">
+                  {group.label}
+                </p>
+                <nav className="mt-2 space-y-1.5">
+                  {group.items.map((item) => {
+                    const isActive = pathname === item.href;
+
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`flex items-center rounded-[14px] px-4 py-3 text-[15px] transition ${
+                          isActive
+                            ? isLight
+                              ? "bg-[rgba(11,31,59,0.08)] font-semibold text-[var(--ink)]"
+                              : "bg-white/[0.06] font-semibold text-white"
+                            : isLight
+                              ? "text-[var(--ink-muted)] hover:bg-[rgba(11,31,59,0.05)] hover:text-[var(--ink)]"
+                              : "text-[var(--ink-muted)] hover:bg-white/[0.05] hover:text-white"
+                        }`}
+                      >
+                        <span className="min-w-0 break-words">{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+            ))}
+          </div>
+
+          <div className="space-y-2 border-t border-[var(--border)] pt-4">
+            <div className="flex gap-2">
+              <Link
+                href="/simulation"
+                className={`min-w-0 flex-1 rounded-xl px-4 py-3 text-center text-sm font-bold transition ${
+                  isLight
+                    ? "border border-[var(--border)] text-[var(--ink)] hover:bg-[var(--surface-hover)]"
+                    : "border border-white/10 text-white hover:bg-white/[0.05]"
+                }`}
+              >
+                Simulation
+              </Link>
+              <Link
+                href="/generator"
+                className="min-w-0 flex-1 rounded-xl bg-[var(--accent)] px-4 py-3 text-center text-sm font-bold text-white transition hover:opacity-90"
+              >
+                Generator
+              </Link>
+            </div>
+            {isAuthReady ? (
+              <button
+                type="button"
+                onClick={() => void handleSignOut()}
+                className={`w-full rounded-xl border px-4 py-3 text-sm font-semibold transition ${
+                  isLight
+                    ? "border-[var(--border)] bg-white/40 text-[var(--ink)] hover:bg-white/70"
+                    : "border-white/10 bg-transparent text-white hover:bg-white/[0.05]"
+                }`}
+              >
+                Sign out
+              </button>
+            ) : null}
+          </div>
+        </aside>
       </div>
     </div>
   );

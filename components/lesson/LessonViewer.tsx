@@ -32,7 +32,7 @@ type LessonViewerProps = {
 export default function LessonViewer({ lesson }: LessonViewerProps) {
   const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState("vocabulary");
-  const sectionPaddingX = "28px";
+  const sectionPaddingX = "clamp(16px, 4vw, 28px)";
 
   const [compAnswers, setCompAnswers] = useState<AnswerMap>({});
   const [compSubmitted, setCompSubmitted] = useState(false);
@@ -173,7 +173,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
     background: allAnswered ? theme.colors.accent : theme.colors.surface,
     border: `1px solid ${allAnswered ? theme.colors.accent : theme.colors.border}`,
     borderRadius: theme.radius.pill,
-    padding: "12px 32px",
+    padding: "12px 20px",
     cursor: "pointer",
     transition: "all 0.15s ease",
     boxShadow: allAnswered ? theme.shadow.sm : "none",
@@ -221,7 +221,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
         style={{
           background: "transparent",
           borderBottom: `1px solid ${theme.colors.border}`,
-          padding: "24px 0 22px",
+          padding: "20px 0 18px",
         }}
       >
         <div style={{ padding: `0 ${sectionPaddingX}` }}>
@@ -241,7 +241,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
             <h2
               style={{
                 fontFamily: theme.fonts.display,
-                fontSize: "28px",
+                fontSize: "clamp(24px, 5vw, 28px)",
                 fontWeight: 400,
                 color: theme.colors.ink,
                 lineHeight: 1.2,
@@ -273,12 +273,12 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
                 <span
                   key={i}
                   style={{
-                    fontFamily: theme.fonts.body,
-                    fontSize: "12px",
-                    fontWeight: 500,
-                    color: theme.colors.accent,
-                    background: theme.colors.accentSoft,
-                    padding: "6px 14px",
+                  fontFamily: theme.fonts.body,
+                  fontSize: "12px",
+                  fontWeight: 500,
+                  color: theme.colors.accent,
+                  background: theme.colors.accentSoft,
+                    padding: "6px 12px",
                     borderRadius: theme.radius.pill,
                   }}
                 >
@@ -335,7 +335,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
                   background: "transparent",
                   border: "none",
                   borderBottom: `2px solid ${isActive ? theme.colors.accent : "transparent"}`,
-                  padding: "14px 16px",
+                  padding: "12px 14px",
                   cursor: "pointer",
                   whiteSpace: "nowrap",
                   transition: "all 0.15s ease",
@@ -363,7 +363,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
       </nav>
 
       {/* Content */}
-      <div style={{ padding: `28px ${sectionPaddingX} 40px` }}>
+      <div style={{ padding: `24px ${sectionPaddingX} 32px` }}>
         {/* Vocabulary */}
         {activeTab === "vocabulary" && (
           <div>

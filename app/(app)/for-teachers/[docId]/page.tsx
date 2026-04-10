@@ -31,12 +31,12 @@ export default function TeacherLessonViewerPage({
           </h1>
         </div>
 
-        <Card className="overflow-hidden rounded-3xl p-5">
+        <Card className="overflow-hidden rounded-3xl p-3 sm:p-5">
           <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)]">
             <iframe
               src={resource.embedUrl}
               title={`${resource.title} lesson`}
-              style={{ width: "100%", height: "86vh", border: "none" }}
+              style={{ width: "100%", height: "min(86vh, 980px)", minHeight: "60vh", border: "none" }}
               allow="fullscreen"
               allowFullScreen
               loading="lazy"
@@ -49,7 +49,7 @@ export default function TeacherLessonViewerPage({
               href={resource.docsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-2 text-xs font-semibold text-[var(--ink)] transition hover:border-[var(--accent-gold)]"
+              className="inline-flex w-full justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-2 text-xs font-semibold text-[var(--ink)] transition hover:border-[var(--accent-gold)] sm:w-auto"
             >
               Open in Gamma
             </Link>

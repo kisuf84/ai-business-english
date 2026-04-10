@@ -4,19 +4,19 @@ import Card from "../../components/shared/Card";
 
 export default function LandingPage() {
   return (
-    <main className="relative overflow-hidden">
+    <main className="mobile-page-shell relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-[var(--accent-gold-soft)] blur-3xl" />
         <div className="absolute right-0 top-24 h-80 w-80 rounded-full bg-[rgba(42,92,63,0.12)] blur-3xl" />
       </div>
 
-      <section className="mx-auto max-w-6xl px-6 pb-16 pt-14">
+      <section className="mx-auto max-w-6xl px-1 pb-12 pt-10 sm:px-2 sm:pb-16 sm:pt-14 lg:px-6">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--ink-faint)]">
               The fastest way to learn English for work
             </p>
-            <h1 className="mt-3 font-serif text-4xl font-normal text-[var(--ink)] sm:text-5xl">
+            <h1 className="mt-3 font-serif text-[2.35rem] font-normal leading-tight text-[var(--ink)] sm:text-5xl">
               Business English training, instantly generated.
             </h1>
             <p className="mt-5 text-base text-[var(--ink-muted)]">
@@ -25,17 +25,17 @@ export default function LandingPage() {
               practical English for real work.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/dashboard">
+              <Link href="/dashboard" className="w-full sm:w-auto">
                 <Button className="rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-6 py-3 text-xs font-semibold text-[#0c0b0a] shadow-[0_4px_12px_rgba(201,162,74,0.3)] hover:bg-[#d4ad55]">
                   Enter Workspace
                 </Button>
               </Link>
-              <Link href="/auth">
+              <Link href="/auth" className="w-full sm:w-auto">
                 <Button className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface-card)] px-6 py-3 text-xs font-semibold text-[var(--ink)] hover:bg-[var(--surface-raised)]">
                   Sign In
                 </Button>
               </Link>
-              <Link href="/lesson/new">
+              <Link href="/lesson/new" className="w-full sm:w-auto">
                 <Button className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface-card)] px-6 py-3 text-xs font-semibold text-[var(--ink)] hover:bg-[var(--surface-raised)]">
                   Create Lesson
                 </Button>
@@ -70,8 +70,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-14">
-        <div className="flex items-end justify-between gap-4">
+      <section className="mx-auto max-w-6xl px-1 pb-12 sm:px-2 sm:pb-14 lg:px-6">
+        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--ink-faint)]">
               Workspace Shortcuts
@@ -115,7 +115,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-14">
+      <section className="mx-auto max-w-6xl px-1 pb-12 sm:px-2 sm:pb-14 lg:px-6">
         <div className="grid gap-6 lg:grid-cols-3">
           <Card>
             <div className="flex items-center gap-2">
@@ -155,7 +155,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-20">
+      <section className="mx-auto max-w-6xl px-1 pb-16 sm:px-2 sm:pb-20 lg:px-6">
         <Card className="grid gap-6 lg:grid-cols-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">

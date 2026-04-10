@@ -168,7 +168,7 @@ export default async function LessonDetailPage({
 
         {lessonRecord ? (
           <>
-            <Card className="mt-6">
+            <Card className="mt-6 p-5 sm:p-6 lg:p-8">
               <div className="flex flex-wrap items-center justify-between gap-6">
                 <div>
                   <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
@@ -211,7 +211,7 @@ export default async function LessonDetailPage({
             </Card>
 
             {safeLesson ? (
-              <Card className="mt-6">
+              <Card className="mt-6 p-5 sm:p-6 lg:p-8">
                 <LessonToolbar
                   lessonId={lessonRecord.id}
                   status={lessonRecord.status}
