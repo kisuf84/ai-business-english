@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "../../../../components/shared/Button";
 import Input from "../../../../components/shared/Input";
@@ -33,6 +33,16 @@ type GenerationStage =
   | "transcript_unavailable"
   | "generating_lesson"
   | "generation_failed";
+type YouTubeGenerationState =
+  | "idle"
+  | "processing_initial"
+  | "processing_extended"
+  | "needs_transcript"
+  | "ready"
+  | "failed";
+
+const YOUTUBE_EXTENDED_DELAY_MS = 7000;
+const YOUTUBE_NEEDS_TRANSCRIPT_MIN_DELAY_MS = 7000;
 
 import type { VocabularyItem, LessonQuestion } from "../../../../types/lesson";
 
@@ -133,6 +143,12 @@ function isTranscriptFailureCode(value: string | undefined): boolean {
   );
 }
 
+function wait(ms: number) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
+}
+
 export default function LessonNewPage() {
   const router = useRouter();
   const [form, setForm] = useState<LessonGenerationInput>(initialForm);
@@ -141,6 +157,25 @@ export default function LessonNewPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [generationStage, setGenerationStage] = useState<GenerationStage>("idle");
+  const [youtubeGenerationState, setYoutubeGenerationState] =
+    useState<YouTubeGenerationState>("idle");
+  const [notificationEmail, setNotificationEmail] = useState("");
+  const [isNotificationSaving, setIsNotificationSaving] = useState(false);
+  const [notificationStatus, setNotificationStatus] = useState<
+    "idle" | "saved" | "error"
+  >("idle");
+
+  useEffect(() => {
+    if (youtubeGenerationState !== "processing_initial") return;
+
+    const timeout = window.setTimeout(() => {
+      setYoutubeGenerationState((current) =>
+        current === "processing_initial" ? "processing_extended" : current
+      );
+    }, YOUTUBE_EXTENDED_DELAY_MS);
+
+    return () => window.clearTimeout(timeout);
+  }, [youtubeGenerationState]);
 
   const handleChange = (
     field: keyof LessonGenerationInput,
@@ -155,18 +190,24 @@ export default function LessonNewPage() {
     setError(null);
     setResult(null);
     setGenerationStage("generating_lesson");
+    setNotificationStatus("idle");
 
     try {
       const trimmedSourceUrl = form.source_url?.trim() || "";
+      const isYouTubeGeneration = Boolean(trimmedSourceUrl);
+      const generationStartedAt = Date.now();
       if (trimmedSourceUrl) {
+        setYoutubeGenerationState("processing_initial");
         setGenerationStage("validating_url");
         if (!parseYouTubeVideoId(trimmedSourceUrl)) {
           setGenerationStage("generation_failed");
-          setError("Please provide a valid YouTube URL.");
+          setYoutubeGenerationState("failed");
+          setError("Please enter a valid YouTube URL.");
           return;
         }
         setGenerationStage("extracting_transcript");
       } else {
+        setYoutubeGenerationState("idle");
         setGenerationStage("generating_lesson");
       }
 
@@ -186,14 +227,19 @@ export default function LessonNewPage() {
           | LessonGenerationApiError
           | null;
         if (isTranscriptFailureCode(apiError?.error_code)) {
+          if (isYouTubeGeneration) {
+            const elapsed = Date.now() - generationStartedAt;
+            if (elapsed < YOUTUBE_NEEDS_TRANSCRIPT_MIN_DELAY_MS) {
+              await wait(YOUTUBE_NEEDS_TRANSCRIPT_MIN_DELAY_MS - elapsed);
+            }
+          }
           setGenerationStage("transcript_unavailable");
-          setError(
-            apiError?.error ||
-              "This video does not expose captions that we can read. Paste a transcript to continue."
-          );
+          setYoutubeGenerationState("needs_transcript");
+          setError("Have a transcript? Paste it to speed things up.");
           return;
         }
         setGenerationStage("generation_failed");
+        setYoutubeGenerationState("failed");
         setError(apiError?.error || "We could not generate the lesson.");
         return;
       }
@@ -204,12 +250,42 @@ export default function LessonNewPage() {
         throw new Error("invalid_response");
       }
       setResult(data);
+      setYoutubeGenerationState(isYouTubeGeneration ? "ready" : "idle");
       setGenerationStage("idle");
     } catch {
       setGenerationStage("generation_failed");
+      setYoutubeGenerationState("failed");
       setError("We could not generate the lesson.");
     } finally {
       setIsGenerating(false);
+    }
+  };
+
+  const handleNotificationCapture = async () => {
+    const email = notificationEmail.trim();
+    if (!email) {
+      setNotificationStatus("error");
+      return;
+    }
+
+    setIsNotificationSaving(true);
+    setNotificationStatus("idle");
+    try {
+      const response = await fetch("/api/lesson/notify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          source_url: form.source_url?.trim() || undefined,
+          topic: form.topic?.trim() || undefined,
+        }),
+      });
+      if (!response.ok) throw new Error("notify_failed");
+      setNotificationStatus("saved");
+    } catch {
+      setNotificationStatus("error");
+    } finally {
+      setIsNotificationSaving(false);
     }
   };
 
@@ -391,20 +467,55 @@ export default function LessonNewPage() {
                   {isGenerating ? "Generating..." : "Generate Lesson"}
                 </Button>
                 {isGenerating ? (
-                  <p className="text-xs text-[var(--ink-faint)]">
-                    {generationStage === "validating_url"
-                      ? "Validating URL..."
-                      : generationStage === "extracting_transcript"
-                        ? "Extracting transcript..."
-                        : "Generating lesson..."}
-                  </p>
+                  <div className="grid gap-2 text-xs text-[var(--ink-faint)]">
+                    <p>
+                      {youtubeGenerationState === "processing_extended"
+                        ? "✨ Still working on your lesson..."
+                        : youtubeGenerationState === "processing_initial"
+                          ? "✨ Creating your lesson..."
+                          : "Generating lesson..."}
+                    </p>
+                    {youtubeGenerationState === "processing_extended" ? (
+                      <div className="grid max-w-sm gap-2">
+                        <p>We’ll notify you when it’s ready.</p>
+                        <div className="flex flex-col gap-2 sm:flex-row">
+                          <Input
+                            type="email"
+                            placeholder="Email address"
+                            value={notificationEmail}
+                            onChange={(event) => {
+                              setNotificationEmail(event.target.value);
+                              setNotificationStatus("idle");
+                            }}
+                            disabled={isNotificationSaving}
+                          />
+                          <Button
+                            type="button"
+                            onClick={handleNotificationCapture}
+                            disabled={isNotificationSaving}
+                            className="rounded-lg px-3 py-2 text-xs"
+                          >
+                            {isNotificationSaving ? "Saving..." : "Notify me"}
+                          </Button>
+                        </div>
+                        {notificationStatus === "saved" ? (
+                          <p>Got it. We’ll use this email for the lesson notification.</p>
+                        ) : null}
+                        {notificationStatus === "error" ? (
+                          <p className="text-[var(--accent-warm)]">
+                            Please enter a valid email address.
+                          </p>
+                        ) : null}
+                      </div>
+                    ) : null}
+                  </div>
                 ) : null}
-                {!isGenerating && generationStage === "transcript_unavailable" ? (
+                {!isGenerating && youtubeGenerationState === "needs_transcript" ? (
                   <p className="text-xs text-[var(--accent-warm)]">
-                    Transcript unavailable
+                    Have a transcript? Paste it to speed things up.
                   </p>
                 ) : null}
-                {error ? (
+                {error && youtubeGenerationState !== "needs_transcript" ? (
                   <p className="text-xs text-[var(--accent-warm)]">{error}</p>
                 ) : null}
               </div>

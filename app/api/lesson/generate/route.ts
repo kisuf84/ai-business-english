@@ -36,6 +36,7 @@ export async function POST(request: Request) {
     if (!validation.ok) {
       return NextResponse.json(
         {
+          status: "failed",
           error: REQUIRED_FIELDS_ERROR,
           error_code: "invalid_payload",
           details: validation.errors,
@@ -59,6 +60,7 @@ export async function POST(request: Request) {
         console.warn("YouTube URL parse failed", { sourceUrl: trimmedSourceUrl, details });
         return NextResponse.json(
           {
+            status: "failed",
             error: "Please enter a valid YouTube URL.",
             message: "Please enter a valid YouTube URL.",
             error_code: "invalid_source_url",
@@ -91,6 +93,7 @@ export async function POST(request: Request) {
 
         return NextResponse.json(
           {
+            status: "needs_transcript",
             error: transcript.message,
             message: transcript.message,
             error_code: transcript.reason,
@@ -132,6 +135,7 @@ export async function POST(request: Request) {
       });
       return NextResponse.json(
         {
+          status: "failed",
           error: parsed.error,
           error_code: "generation_failed",
           ...(process.env.NODE_ENV !== "production"
@@ -143,6 +147,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({
+      status: "ready",
       ...parsed.data,
       source_meta: sourceMeta,
     } satisfies LessonGenerationApiResponse);
@@ -152,6 +157,7 @@ export async function POST(request: Request) {
     if (error instanceof Error && error.message === "OPENAI_API_KEY_MISSING") {
       return NextResponse.json(
         {
+          status: "failed",
           error: "Lesson generation is unavailable: OPENAI_API_KEY is not configured.",
           error_code: "generation_failed",
           ...(process.env.NODE_ENV !== "production"
@@ -165,6 +171,7 @@ export async function POST(request: Request) {
     const errorMessage = error instanceof Error ? error.message : "unknown_error";
     return NextResponse.json(
       {
+        status: "failed",
         error: PROCESSING_ERROR,
         error_code: "generation_failed",
         ...(process.env.NODE_ENV !== "production"

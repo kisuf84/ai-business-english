@@ -43,6 +43,7 @@ export type LessonSourceMeta = {
 };
 
 export type LessonGenerationApiResponse = LessonGenerationOutput & {
+  status?: "ready" | "still_processing";
   source_meta?: LessonSourceMeta;
 };
 
@@ -62,6 +63,7 @@ export type LessonGenerationApiErrorCode =
   | "generation_failed";
 
 export type LessonGenerationApiError = {
+  status?: "still_processing" | "needs_transcript" | "failed";
   error: string;
   message?: string;
   error_code: LessonGenerationApiErrorCode;
