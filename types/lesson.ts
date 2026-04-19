@@ -94,3 +94,31 @@ export type Lesson = {
   input: LessonGenerationInput;
   output: LessonGenerationOutput;
 };
+
+export type YouTubeLessonJobStatus =
+  | "queued"
+  | "processing"
+  | "ready"
+  | "needs_transcript"
+  | "failed";
+
+export type YouTubeLessonJob = {
+  id: string;
+  source_url: string;
+  video_id: string;
+  email: string;
+  status: YouTubeLessonJobStatus;
+  transcript_text: string | null;
+  lesson_id: string | null;
+  topic: string | null;
+  level: string | null;
+  industry: string | null;
+  profession: string | null;
+  lesson_type: string | null;
+  title: string | null;
+  attempts: number;
+  last_error_code: string | null;
+  last_error_message: string | null;
+  created_at: string;
+  updated_at: string;
+};

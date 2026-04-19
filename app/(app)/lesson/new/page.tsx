@@ -161,10 +161,10 @@ export default function LessonNewPage() {
   const [youtubeGenerationState, setYoutubeGenerationState] =
     useState<YouTubeGenerationState>("idle");
   const [notificationEmail, setNotificationEmail] = useState("");
-  const [isNotificationSaving, setIsNotificationSaving] = useState(false);
   const [notificationStatus, setNotificationStatus] = useState<
-    "idle" | "saved" | "error"
+    "idle" | "error"
   >("idle");
+  const [jobStatusUrl, setJobStatusUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (youtubeGenerationState !== "processing_initial") return;
@@ -206,7 +206,39 @@ export default function LessonNewPage() {
           setError("Please enter a valid YouTube URL.");
           return;
         }
+        if (!notificationEmail.trim()) {
+          setGenerationStage("generation_failed");
+          setYoutubeGenerationState("failed");
+          setNotificationStatus("error");
+          setError("Please enter your email address.");
+          return;
+        }
         setGenerationStage("extracting_transcript");
+
+        const jobResponse = await fetch("/api/youtube-jobs", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...form,
+            source_url: trimmedSourceUrl,
+            industry: form.industry?.trim() || undefined,
+            profession: form.profession?.trim() || undefined,
+            email: notificationEmail.trim(),
+          }),
+        });
+        const jobPayload = (await jobResponse.json().catch(() => null)) as
+          | { error?: string; status_url?: string }
+          | null;
+        if (!jobResponse.ok) {
+          setGenerationStage("generation_failed");
+          setYoutubeGenerationState("failed");
+          setError(jobPayload?.error || "We couldn’t start your lesson. Try again.");
+          return;
+        }
+        setJobStatusUrl(jobPayload?.status_url || null);
+        setYoutubeGenerationState("email_submitted");
+        setGenerationStage("idle");
+        return;
       } else {
         setYoutubeGenerationState("idle");
         setGenerationStage("generating_lesson");
@@ -279,35 +311,6 @@ export default function LessonNewPage() {
       setError("We could not generate the lesson.");
     } finally {
       setIsGenerating(false);
-    }
-  };
-
-  const handleNotificationCapture = async () => {
-    const email = notificationEmail.trim();
-    if (!email) {
-      setNotificationStatus("error");
-      return;
-    }
-
-    setIsNotificationSaving(true);
-    setNotificationStatus("idle");
-    try {
-      const response = await fetch("/api/lesson/notify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          source_url: form.source_url?.trim() || undefined,
-          topic: form.topic?.trim() || undefined,
-        }),
-      });
-      if (!response.ok) throw new Error("notify_failed");
-      setYoutubeGenerationState("email_submitted");
-      setNotificationStatus("saved");
-    } catch {
-      setNotificationStatus("error");
-    } finally {
-      setIsNotificationSaving(false);
     }
   };
 
@@ -415,6 +418,24 @@ export default function LessonNewPage() {
                 />
               </div>
 
+              {form.source_url?.trim() ? (
+                <div className="grid gap-2">
+                  <label htmlFor="youtube_email" className="text-sm font-medium">
+                    Email
+                  </label>
+                  <Input
+                    id="youtube_email"
+                    type="email"
+                    placeholder="you@example.com"
+                    value={notificationEmail}
+                    onChange={(event) => {
+                      setNotificationEmail(event.target.value);
+                      setNotificationStatus("idle");
+                    }}
+                  />
+                </div>
+              ) : null}
+
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="grid gap-2">
                   <label htmlFor="level" className="text-sm font-medium">
@@ -488,7 +509,7 @@ export default function LessonNewPage() {
                 >
                   {isGenerating ? "Generating..." : "Generate Lesson"}
                 </Button>
-                {isGenerating ? (
+                {isGenerating || youtubeGenerationState === "email_submitted" ? (
                   <div className="grid gap-2 text-xs text-[var(--ink-faint)]">
                     <p>
                       {youtubeGenerationState === "processing_extended"
@@ -506,31 +527,19 @@ export default function LessonNewPage() {
                         </p>
                         <p>We’ll send your lesson as soon as it’s ready.</p>
                         <p>You can leave this page — we’ve got it from here.</p>
+                        {jobStatusUrl ? (
+                          <a
+                            href={jobStatusUrl}
+                            className="text-[var(--accent)] underline"
+                          >
+                            View lesson status
+                          </a>
+                        ) : null}
                       </div>
                     ) : null}
                     {youtubeGenerationState === "processing_extended" ? (
                       <div className="grid max-w-sm gap-2">
-                        <p>We’ll notify you when it’s ready.</p>
-                        <div className="flex flex-col gap-2 sm:flex-row">
-                          <Input
-                            type="email"
-                            placeholder="Email address"
-                            value={notificationEmail}
-                            onChange={(event) => {
-                              setNotificationEmail(event.target.value);
-                              setNotificationStatus("idle");
-                            }}
-                            disabled={isNotificationSaving}
-                          />
-                          <Button
-                            type="button"
-                            onClick={handleNotificationCapture}
-                            disabled={isNotificationSaving}
-                            className="rounded-lg px-3 py-2 text-xs"
-                          >
-                            {isNotificationSaving ? "Saving..." : "Notify me"}
-                          </Button>
-                        </div>
+                        <p>We’ll send you a link as soon as it’s ready.</p>
                         {notificationStatus === "error" ? (
                           <p className="text-[var(--accent-warm)]">
                             Please enter a valid email address.
