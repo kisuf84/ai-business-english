@@ -61,6 +61,16 @@ type TranscriptFetchResult =
 
 const USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+const YOUTUBE_ORIGIN = "https://www.youtube.com";
+const YOUTUBE_REFERER = "https://www.youtube.com/";
+const BROWSER_HEADERS = {
+  "User-Agent": USER_AGENT,
+  "Accept-Language": "en-US,en;q=0.9",
+  Referer: YOUTUBE_REFERER,
+  Origin: YOUTUBE_ORIGIN,
+  Accept:
+    "text/html,application/xhtml+xml,application/xml;q=0.9,application/json;q=0.8,*/*;q=0.7",
+} satisfies Record<string, string>;
 
 const INNERTUBE_CLIENTS = [
   {
@@ -74,6 +84,9 @@ const INNERTUBE_CLIENTS = [
     },
     headers: {
       "User-Agent": "com.google.android.youtube/20.10.38 (Linux; U; Android 14)",
+      "Accept-Language": "en-US,en;q=0.9",
+      Referer: YOUTUBE_REFERER,
+      Origin: YOUTUBE_ORIGIN,
     },
   },
   {
@@ -87,11 +100,43 @@ const INNERTUBE_CLIENTS = [
       },
     },
     headers: {
-      "User-Agent": USER_AGENT,
-      "Accept-Language": "en-US,en;q=0.9",
+      ...BROWSER_HEADERS,
     },
   },
 ] as const;
+
+function logTranscriptDebug(stage: string, details: Record<string, unknown>) {
+  console.info(`[youtube-transcript] ${stage}`, details);
+}
+
+function normalizeHeaders(headers: HeadersInit | undefined): Record<string, string> {
+  if (!headers) return {};
+  if (headers instanceof Headers) {
+    return Object.fromEntries(headers.entries());
+  }
+  if (Array.isArray(headers)) {
+    return Object.fromEntries(headers);
+  }
+  return headers;
+}
+
+function withYouTubeHeaders(
+  headers?: HeadersInit,
+  overrides: Record<string, string> = {}
+): Record<string, string> {
+  return {
+    ...BROWSER_HEADERS,
+    ...normalizeHeaders(headers),
+    ...overrides,
+  };
+}
+
+const browserFetch: typeof fetch = (input, init = {}) => {
+  return fetch(input, {
+    ...init,
+    headers: withYouTubeHeaders(init.headers),
+  });
+};
 
 function mapUrlParseError(code: YouTubeUrlParseErrorCode): TranscriptDiagnosticCode {
   if (code === "invalid_url" || code === "unsupported_host") {
@@ -198,15 +243,19 @@ async function fetchTranscriptViaLibrary(
   videoId: string,
   diagnostics: TranscriptDiagnostic[]
 ): Promise<TranscriptFetchResult> {
-  let fetchTranscriptFn: ((videoId: string, config?: { lang?: string }) => Promise<unknown>) | null =
-    null;
+  let fetchTranscriptFn:
+    | ((
+        videoId: string,
+        config?: { lang?: string; fetch?: typeof fetch }
+      ) => Promise<unknown>)
+    | null = null;
 
   try {
     const lib = await import("youtube-transcript");
     if (typeof lib.fetchTranscript === "function") {
       fetchTranscriptFn = lib.fetchTranscript as (
         videoId: string,
-        config?: { lang?: string }
+        config?: { lang?: string; fetch?: typeof fetch }
       ) => Promise<unknown>;
     } else if (
       lib.YoutubeTranscript &&
@@ -214,9 +263,13 @@ async function fetchTranscriptViaLibrary(
     ) {
       fetchTranscriptFn = lib.YoutubeTranscript.fetchTranscript.bind(
         lib.YoutubeTranscript
-      ) as (videoId: string, config?: { lang?: string }) => Promise<unknown>;
+      ) as (
+        videoId: string,
+        config?: { lang?: string; fetch?: typeof fetch }
+      ) => Promise<unknown>;
     }
   } catch {
+    logTranscriptDebug("library.load_failed", { videoId });
     diagnostics.push({
       code: "library_transcript_fetch_failed",
       message: "Transcript library could not be loaded.",
@@ -225,6 +278,7 @@ async function fetchTranscriptViaLibrary(
   }
 
   if (!fetchTranscriptFn) {
+    logTranscriptDebug("library.missing_export", { videoId });
     diagnostics.push({
       code: "library_transcript_fetch_failed",
       message: "Transcript library does not expose fetchTranscript.",
@@ -241,9 +295,14 @@ async function fetchTranscriptViaLibrary(
     try {
       const response = (await fetchTranscriptFn(videoId, {
         ...(attempt.lang ? { lang: attempt.lang } : {}),
+        fetch: browserFetch,
       })) as unknown;
 
       if (!Array.isArray(response)) {
+        logTranscriptDebug("library.non_array_response", {
+          videoId,
+          attempt: attempt.label,
+        });
         diagnostics.push({
           code: "library_transcript_parse_failed",
           message: `${attempt.label} returned a non-array transcript payload.`,
@@ -258,6 +317,12 @@ async function fetchTranscriptViaLibrary(
       );
 
       if (parsed) {
+        logTranscriptDebug("library.success", {
+          videoId,
+          attempt: attempt.label,
+          languageCode: parsed.languageCode,
+          textLength: parsed.text.length,
+        });
         return {
           ok: true,
           text: parsed.text,
@@ -269,8 +334,17 @@ async function fetchTranscriptViaLibrary(
         code: "library_transcript_parse_failed",
         message: `${attempt.label} returned empty transcript text.`,
       });
+      logTranscriptDebug("library.empty_transcript", {
+        videoId,
+        attempt: attempt.label,
+      });
     } catch (error) {
       const message = error instanceof Error ? error.message : "unknown error";
+      logTranscriptDebug("library.failed", {
+        videoId,
+        attempt: attempt.label,
+        message,
+      });
       diagnostics.push({
         code: "library_transcript_fetch_failed",
         message: `${attempt.label} failed: ${message}`,
@@ -283,7 +357,9 @@ async function fetchTranscriptViaLibrary(
     .map((item) => classifyErrorMessage(item.message))
     .find((reason) => reason !== "unknown_error");
 
-  return { ok: false, reason: classified ?? "unknown_error" };
+  const reason = classified ?? "unknown_error";
+  logTranscriptDebug("library.exhausted", { videoId, reason });
+  return { ok: false, reason };
 }
 
 function extractBalancedSegment(
@@ -553,19 +629,31 @@ async function fetchWatchPage(videoId: string): Promise<string | null> {
     try {
       const response = await fetch(url, {
         cache: "no-store",
-        headers: {
-          "User-Agent": USER_AGENT,
-          "Accept-Language": "en-US,en;q=0.9",
-        },
+        headers: withYouTubeHeaders(undefined, {
+          Accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        }),
       });
       if (!response.ok) {
+        logTranscriptDebug("watch_page.http_failed", {
+          videoId,
+          url,
+          status: response.status,
+        });
         continue;
       }
       const html = await response.text();
       if (html && html.length > 0) {
+        logTranscriptDebug("watch_page.success", {
+          videoId,
+          url,
+          htmlLength: html.length,
+        });
         return html;
       }
+      logTranscriptDebug("watch_page.empty", { videoId, url });
     } catch {
+      logTranscriptDebug("watch_page.fetch_failed", { videoId, url });
       // try next
     }
   }
@@ -577,17 +665,24 @@ async function fetchJson(url: string): Promise<{ ok: true; data: unknown } | { o
   try {
     const response = await fetch(url, {
       cache: "no-store",
-      headers: {
-        "User-Agent": USER_AGENT,
-        "Accept-Language": "en-US,en;q=0.9",
-      },
+      headers: withYouTubeHeaders(undefined, {
+        Accept: "application/json,text/plain,*/*",
+      }),
     });
     if (!response.ok) {
+      logTranscriptDebug("caption_json.http_failed", {
+        url,
+        status: response.status,
+      });
       return { ok: false };
     }
     const data = (await response.json()) as unknown;
     return { ok: true, data };
-  } catch {
+  } catch (error) {
+    logTranscriptDebug("caption_json.fetch_failed", {
+      url,
+      message: error instanceof Error ? error.message : "unknown error",
+    });
     return { ok: false };
   }
 }
@@ -596,14 +691,24 @@ async function fetchText(url: string): Promise<{ ok: true; text: string } | { ok
   try {
     const response = await fetch(url, {
       cache: "no-store",
-      headers: {
-        "User-Agent": USER_AGENT,
-        "Accept-Language": "en-US,en;q=0.9",
-      },
+      headers: withYouTubeHeaders(undefined, {
+        Accept: "text/xml,application/xml,text/plain,*/*",
+      }),
     });
-    if (!response.ok) return { ok: false };
-    return { ok: true, text: await response.text() };
-  } catch {
+    if (!response.ok) {
+      logTranscriptDebug("caption_text.http_failed", {
+        url,
+        status: response.status,
+      });
+      return { ok: false };
+    }
+    const text = await response.text();
+    return { ok: true, text };
+  } catch (error) {
+    logTranscriptDebug("caption_text.fetch_failed", {
+      url,
+      message: error instanceof Error ? error.message : "unknown error",
+    });
     return { ok: false };
   }
 }
@@ -688,8 +793,17 @@ async function fetchTranscriptFromTrack(
   if (jsonResponse.ok) {
     const parsed = parseTranscriptFromJson3(jsonResponse.data);
     if (parsed) {
+      logTranscriptDebug("caption_track.json_success", {
+        languageCode: track.languageCode,
+        isAutoGenerated: track.isAutoGenerated,
+        textLength: parsed.length,
+      });
       return { ok: true, text: parsed, languageCode: track.languageCode };
     }
+    logTranscriptDebug("caption_track.json_parse_failed", {
+      languageCode: track.languageCode,
+      isAutoGenerated: track.isAutoGenerated,
+    });
   }
 
   const xmlResponse = await fetchText(stripFmtJson3(track.baseUrl));
@@ -699,9 +813,19 @@ async function fetchTranscriptFromTrack(
 
   const parsedXml = parseTranscriptFromXml(xmlResponse.text);
   if (!parsedXml) {
+    logTranscriptDebug("caption_track.xml_parse_failed", {
+      languageCode: track.languageCode,
+      isAutoGenerated: track.isAutoGenerated,
+      textLength: xmlResponse.text.length,
+    });
     return { ok: false, code: "transcript_parse_failed" };
   }
 
+  logTranscriptDebug("caption_track.xml_success", {
+    languageCode: track.languageCode,
+    isAutoGenerated: track.isAutoGenerated,
+    textLength: parsedXml.length,
+  });
   return { ok: true, text: parsedXml, languageCode: track.languageCode };
 }
 
@@ -734,10 +858,10 @@ async function fetchTranscriptViaInnertube(
         {
           method: "POST",
           cache: "no-store",
-          headers: {
+          headers: withYouTubeHeaders(client.headers, {
             "Content-Type": "application/json",
-            ...client.headers,
-          },
+            Accept: "application/json,text/plain,*/*",
+          }),
           body: JSON.stringify({
             context: client.context,
             videoId,
@@ -746,6 +870,11 @@ async function fetchTranscriptViaInnertube(
       );
 
       if (!response.ok) {
+        logTranscriptDebug("innertube.http_failed", {
+          videoId,
+          client: client.label,
+          status: response.status,
+        });
         diagnostics.push({
           code: "transcript_fetch_failed",
           message: `${client.label} returned HTTP ${response.status}.`,
@@ -760,6 +889,12 @@ async function fetchTranscriptViaInnertube(
           typeof status.status === "string" ? status.status.toLowerCase() : "";
         const reason = typeof status.reason === "string" ? status.reason : "";
         if (rawStatus && rawStatus !== "ok") {
+          logTranscriptDebug("innertube.unsupported_video", {
+            videoId,
+            client: client.label,
+            status: rawStatus,
+            reason,
+          });
           diagnostics.push({
             code: "unsupported_video",
             message: `${client.label} playability status: ${rawStatus} ${reason}`.trim(),
@@ -770,6 +905,10 @@ async function fetchTranscriptViaInnertube(
 
       const tracks = normalizeCaptionTracks(findCaptionTracksInObject(data));
       if (tracks.length === 0) {
+        logTranscriptDebug("innertube.no_tracks", {
+          videoId,
+          client: client.label,
+        });
         diagnostics.push({
           code: "no_captions",
           message: `${client.label} did not expose caption tracks.`,
@@ -780,6 +919,12 @@ async function fetchTranscriptViaInnertube(
       for (const track of prioritizeTracks(tracks)) {
         const transcript = await fetchTranscriptFromTrack(track);
         if (transcript.ok) {
+          logTranscriptDebug("innertube.success", {
+            videoId,
+            client: client.label,
+            languageCode: transcript.languageCode,
+            textLength: transcript.text.length,
+          });
           return {
             ok: true,
             text: transcript.text,
@@ -787,16 +932,26 @@ async function fetchTranscriptViaInnertube(
           };
         }
       }
+      logTranscriptDebug("innertube.tracks_exhausted", {
+        videoId,
+        client: client.label,
+        trackCount: tracks.length,
+      });
     } catch (error) {
+      const message = error instanceof Error ? error.message : "unknown error";
+      logTranscriptDebug("innertube.failed", {
+        videoId,
+        client: client.label,
+        message,
+      });
       diagnostics.push({
         code: "transcript_fetch_failed",
-        message: `${client.label} failed: ${
-          error instanceof Error ? error.message : "unknown error"
-        }`,
+        message: `${client.label} failed: ${message}`,
       });
     }
   }
 
+  logTranscriptDebug("innertube.exhausted", { videoId });
   return { ok: false, reason: "no_captions" };
 }
 
@@ -813,6 +968,10 @@ async function fetchTranscriptViaCustomExtractor(
   } else {
     const watchFailure = classifyWatchHtmlFailure(watchHtml);
     if (watchFailure) {
+      logTranscriptDebug("custom.watch_failure", {
+        videoId,
+        reason: watchFailure,
+      });
       diagnostics.push({
         code:
           watchFailure === "unsupported_video"
@@ -826,9 +985,15 @@ async function fetchTranscriptViaCustomExtractor(
 
   const parsedTracks = watchHtml ? parseCaptionTracksFromWatchHtml(watchHtml) : [];
   if (parsedTracks.length === 0) {
+    logTranscriptDebug("custom.no_watch_tracks", { videoId });
     diagnostics.push({
       code: "no_captions",
       message: "No caption tracks were discovered in watch page payloads.",
+    });
+  } else {
+    logTranscriptDebug("custom.watch_tracks_found", {
+      videoId,
+      trackCount: parsedTracks.length,
     });
   }
 
@@ -846,6 +1011,7 @@ async function fetchTranscriptViaCustomExtractor(
   });
 
   if (uniqueTracks.length === 0) {
+    logTranscriptDebug("custom.no_candidate_tracks", { videoId });
     diagnostics.push({
       code: "transcript_url_missing",
       message: "No transcript URL candidates were available.",
@@ -863,6 +1029,11 @@ async function fetchTranscriptViaCustomExtractor(
   for (const track of uniqueTracks) {
     const transcript = await fetchTranscriptFromTrack(track);
     if (transcript.ok) {
+      logTranscriptDebug("custom.success", {
+        videoId,
+        languageCode: transcript.languageCode,
+        textLength: transcript.text.length,
+      });
       return {
         ok: true,
         text: transcript.text,
@@ -895,6 +1066,12 @@ async function fetchTranscriptViaCustomExtractor(
   diagnostics.push({
     code: "custom_extractor_failed",
     message: "Custom extractor did not resolve a usable transcript.",
+  });
+  logTranscriptDebug("custom.exhausted", {
+    videoId,
+    trackCount: uniqueTracks.length,
+    sawFetchFailure,
+    sawParseFailure,
   });
 
   if (sawFetchFailure && !sawParseFailure) {
@@ -977,6 +1154,9 @@ export async function fetchYouTubeTranscriptSource(
 
   const parsed = parseYouTubeVideoIdDetailed(sourceUrl);
   if (!parsed.ok) {
+    logTranscriptDebug("url.invalid", {
+      reason: parsed.code,
+    });
     diagnostics.push({
       code: mapUrlParseError(parsed.code),
       message: `URL parse failure: ${parsed.code}`,
@@ -991,9 +1171,16 @@ export async function fetchYouTubeTranscriptSource(
   }
 
   const { videoId } = parsed;
+  logTranscriptDebug("pipeline.start", { videoId });
 
   const libraryResult = await fetchTranscriptViaLibrary(videoId, diagnostics);
   if (libraryResult.ok) {
+    logTranscriptDebug("pipeline.success", {
+      videoId,
+      strategy: "library",
+      languageCode: libraryResult.languageCode,
+      textLength: libraryResult.text.length,
+    });
     return {
       ok: true,
       videoId,
@@ -1005,6 +1192,12 @@ export async function fetchYouTubeTranscriptSource(
 
   const innertubeResult = await fetchTranscriptViaInnertube(videoId, diagnostics);
   if (innertubeResult.ok) {
+    logTranscriptDebug("pipeline.success", {
+      videoId,
+      strategy: "innertube",
+      languageCode: innertubeResult.languageCode,
+      textLength: innertubeResult.text.length,
+    });
     return {
       ok: true,
       videoId,
@@ -1016,6 +1209,12 @@ export async function fetchYouTubeTranscriptSource(
 
   const customResult = await fetchTranscriptViaCustomExtractor(videoId, diagnostics);
   if (customResult.ok) {
+    logTranscriptDebug("pipeline.success", {
+      videoId,
+      strategy: "custom",
+      languageCode: customResult.languageCode,
+      textLength: customResult.text.length,
+    });
     return {
       ok: true,
       videoId,
@@ -1030,6 +1229,11 @@ export async function fetchYouTubeTranscriptSource(
     innertubeResult,
     customResult,
   ]);
+  logTranscriptDebug("pipeline.failed", {
+    videoId,
+    reason,
+    diagnostics: diagnostics.map((item) => `${item.code}: ${item.message}`),
+  });
 
   return {
     ok: false,
