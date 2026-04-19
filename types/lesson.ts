@@ -49,6 +49,7 @@ export type LessonGenerationApiResponse = LessonGenerationOutput & {
 
 export type LessonGenerationRequestInput = LessonGenerationInput & {
   manual_source_text?: string;
+  transcript_attempt?: number;
 };
 
 export type LessonGenerationApiErrorCode =
@@ -64,6 +65,7 @@ export type LessonGenerationApiErrorCode =
 
 export type LessonGenerationApiError = {
   status?: "still_processing" | "needs_transcript" | "failed";
+  reason?: "retrying";
   error: string;
   message?: string;
   error_code: LessonGenerationApiErrorCode;

@@ -37,6 +37,7 @@ type YouTubeGenerationState =
   | "idle"
   | "processing_initial"
   | "processing_extended"
+  | "email_submitted"
   | "needs_transcript"
   | "ready"
   | "failed";
@@ -211,41 +212,61 @@ export default function LessonNewPage() {
         setGenerationStage("generating_lesson");
       }
 
-      const response = await fetch("/api/lesson/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          source_url: form.source_url?.trim() || undefined,
-          industry: form.industry?.trim() || undefined,
-          profession: form.profession?.trim() || undefined,
-        }),
-      });
+      const maxAttempts = isYouTubeGeneration ? 2 : 1;
+      let rawResult: unknown = null;
 
-      if (!response.ok) {
-        const apiError = (await response.json().catch(() => null)) as
-          | LessonGenerationApiError
-          | null;
-        if (isTranscriptFailureCode(apiError?.error_code)) {
-          if (isYouTubeGeneration) {
-            const elapsed = Date.now() - generationStartedAt;
-            if (elapsed < YOUTUBE_NEEDS_TRANSCRIPT_MIN_DELAY_MS) {
-              await wait(YOUTUBE_NEEDS_TRANSCRIPT_MIN_DELAY_MS - elapsed);
-            }
+      for (let transcriptAttempt = 1; transcriptAttempt <= maxAttempts; transcriptAttempt += 1) {
+        const response = await fetch("/api/lesson/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...form,
+            source_url: form.source_url?.trim() || undefined,
+            industry: form.industry?.trim() || undefined,
+            profession: form.profession?.trim() || undefined,
+            transcript_attempt: transcriptAttempt,
+          }),
+        });
+
+        const rawPayload = (await response.json().catch(() => null)) as unknown;
+        const apiPayload =
+          rawPayload && typeof rawPayload === "object"
+            ? (rawPayload as LessonGenerationApiError)
+            : null;
+
+        if (response.ok && apiPayload?.status === "still_processing") {
+          setYoutubeGenerationState("processing_extended");
+          if (transcriptAttempt < maxAttempts) {
+            await wait(2500);
+            continue;
           }
-          setGenerationStage("transcript_unavailable");
-          setYoutubeGenerationState("needs_transcript");
-          setError("Have a transcript? Paste it to speed things up.");
+        }
+
+        if (!response.ok || apiPayload?.status === "needs_transcript") {
+          if (isTranscriptFailureCode(apiPayload?.error_code)) {
+            if (isYouTubeGeneration) {
+              const elapsed = Date.now() - generationStartedAt;
+              if (elapsed < YOUTUBE_NEEDS_TRANSCRIPT_MIN_DELAY_MS) {
+                await wait(YOUTUBE_NEEDS_TRANSCRIPT_MIN_DELAY_MS - elapsed);
+              }
+            }
+            setGenerationStage("transcript_unavailable");
+            setYoutubeGenerationState("needs_transcript");
+            setError("Have a transcript? Paste it to speed things up.");
+            return;
+          }
+          setGenerationStage("generation_failed");
+          setYoutubeGenerationState("failed");
+          setError(apiPayload?.error || "We could not generate the lesson.");
           return;
         }
-        setGenerationStage("generation_failed");
-        setYoutubeGenerationState("failed");
-        setError(apiError?.error || "We could not generate the lesson.");
-        return;
+
+        rawResult = rawPayload;
+        break;
       }
 
       setGenerationStage("generating_lesson");
-      const data = normalizeLessonResponse(await response.json());
+      const data = normalizeLessonResponse(rawResult);
       if (!data) {
         throw new Error("invalid_response");
       }
@@ -281,6 +302,7 @@ export default function LessonNewPage() {
         }),
       });
       if (!response.ok) throw new Error("notify_failed");
+      setYoutubeGenerationState("email_submitted");
       setNotificationStatus("saved");
     } catch {
       setNotificationStatus("error");
@@ -471,10 +493,21 @@ export default function LessonNewPage() {
                     <p>
                       {youtubeGenerationState === "processing_extended"
                         ? "✨ Still working on your lesson..."
+                        : youtubeGenerationState === "email_submitted"
+                          ? "✨ Still working on your lesson..."
                         : youtubeGenerationState === "processing_initial"
                           ? "✨ Creating your lesson..."
                           : "Generating lesson..."}
                     </p>
+                    {youtubeGenerationState === "email_submitted" ? (
+                      <div className="grid max-w-sm gap-1">
+                        <p className="font-medium text-[var(--ink)]">
+                          ✅ You’re all set.
+                        </p>
+                        <p>We’ll send your lesson as soon as it’s ready.</p>
+                        <p>You can leave this page — we’ve got it from here.</p>
+                      </div>
+                    ) : null}
                     {youtubeGenerationState === "processing_extended" ? (
                       <div className="grid max-w-sm gap-2">
                         <p>We’ll notify you when it’s ready.</p>
@@ -498,9 +531,6 @@ export default function LessonNewPage() {
                             {isNotificationSaving ? "Saving..." : "Notify me"}
                           </Button>
                         </div>
-                        {notificationStatus === "saved" ? (
-                          <p>Got it. We’ll use this email for the lesson notification.</p>
-                        ) : null}
                         {notificationStatus === "error" ? (
                           <p className="text-[var(--accent-warm)]">
                             Please enter a valid email address.

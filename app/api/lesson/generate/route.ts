@@ -19,6 +19,7 @@ export async function POST(request: Request) {
 
     const trimmedSourceUrl = payload.source_url?.trim() || "";
     const manualSourceText = payload.manual_source_text?.trim() || "";
+    const transcriptAttempt = Math.max(1, Number(payload.transcript_attempt) || 1);
     const normalizedTopic =
       payload.topic?.trim() ||
       (manualSourceText ? "Manual transcript lesson" : trimmedSourceUrl ? "YouTube lesson" : "");
@@ -80,8 +81,30 @@ export async function POST(request: Request) {
         console.warn("YouTube transcript ingestion failed", {
           videoId: transcript.videoId ?? videoId,
           reason: transcript.reason,
+          transcriptAttempt,
           diagnostics: debugDetails,
         });
+
+        if (transcript.reason !== "invalid_url" && transcriptAttempt < 2) {
+          return NextResponse.json(
+            {
+              status: "still_processing",
+              reason: "retrying",
+              error: "Still processing.",
+              message: "Still processing.",
+              error_code: transcript.reason,
+              ...(process.env.NODE_ENV !== "production"
+                ? {
+                    details:
+                      debugDetails.length > 0
+                        ? debugDetails
+                        : [`reason: ${transcript.reason}`],
+                  }
+                : {}),
+            } satisfies LessonGenerationApiError,
+            { status: 202 }
+          );
+        }
 
         const status =
           transcript.reason === "invalid_url"
