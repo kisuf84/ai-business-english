@@ -16,6 +16,33 @@ create table if not exists public.lessons (
   updated_at timestamp with time zone default now()
 );
 
+create table if not exists public.youtube_lesson_jobs (
+  id uuid primary key default gen_random_uuid(),
+  source_url text not null,
+  video_id text not null,
+  email text not null,
+  status text not null default 'queued',
+  transcript_text text null,
+  lesson_id uuid null references public.lessons(id) on delete set null,
+  topic text null,
+  level text null,
+  industry text null,
+  profession text null,
+  lesson_type text null,
+  title text null,
+  attempts integer not null default 0,
+  last_error_code text null,
+  last_error_message text null,
+  created_at timestamp with time zone default now(),
+  updated_at timestamp with time zone default now()
+);
+
+create index if not exists youtube_lesson_jobs_status_created_at_idx
+  on public.youtube_lesson_jobs(status, created_at);
+
+create index if not exists youtube_lesson_jobs_email_idx
+  on public.youtube_lesson_jobs(email);
+
 create table if not exists public.courses (
   id uuid primary key default gen_random_uuid(),
   user_id uuid null,
