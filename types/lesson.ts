@@ -53,8 +53,12 @@ export type LessonGenerationRequestInput = LessonGenerationInput & {
 export type LessonGenerationApiErrorCode =
   | "invalid_payload"
   | "invalid_source_url"
-  | "transcript_unavailable"
+  | "invalid_url"
+  | "no_captions"
+  | "captions_disabled"
   | "transcript_fetch_failed"
+  | "unsupported_video"
+  | "unknown_error"
   | "generation_failed";
 
 export type LessonGenerationApiError = {

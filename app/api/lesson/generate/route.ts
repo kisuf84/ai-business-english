@@ -10,6 +10,9 @@ import { fetchYouTubeTranscriptSource } from "../../../../lib/youtube/transcript
 import { buildLessonPrompt, generateLesson, parseAndValidateLessonOutput } from "../../../../lib/ai/lesson";
 import { parseYouTubeVideoIdDetailed } from "../../../../lib/youtube/url";
 
+const REQUIRED_FIELDS_ERROR = "Please complete all required fields";
+const PROCESSING_ERROR = "We couldn’t process your request. Try again.";
+
 export async function POST(request: Request) {
   try {
     const payload = (await request.json()) as LessonGenerationRequestInput;
@@ -33,7 +36,7 @@ export async function POST(request: Request) {
     if (!validation.ok) {
       return NextResponse.json(
         {
-          error: "Invalid payload",
+          error: REQUIRED_FIELDS_ERROR,
           error_code: "invalid_payload",
           details: validation.errors,
         } satisfies LessonGenerationApiError,
@@ -56,8 +59,8 @@ export async function POST(request: Request) {
         console.warn("YouTube URL parse failed", { sourceUrl: trimmedSourceUrl, details });
         return NextResponse.json(
           {
-            error: "Only valid YouTube URLs are supported for transcript ingestion.",
-            message: "Only valid YouTube URLs are supported for transcript ingestion.",
+            error: "Please enter a valid YouTube URL.",
+            message: "Please enter a valid YouTube URL.",
             error_code: "invalid_source_url",
             details,
           } satisfies LessonGenerationApiError,
@@ -81,28 +84,24 @@ export async function POST(request: Request) {
         const status =
           transcript.reason === "invalid_url"
             ? 400
-            : transcript.reason === "transcript_unavailable"
-              ? 422
-              : 502;
+            : transcript.reason === "transcript_fetch_failed" ||
+                transcript.reason === "unknown_error"
+              ? 502
+              : 422;
 
         return NextResponse.json(
           {
             error: transcript.message,
             message: transcript.message,
-            error_code:
-              transcript.reason === "invalid_url"
-                ? "invalid_source_url"
-                : transcript.reason,
-            details:
-              debugDetails.length > 0
-                ? debugDetails
-                : [
-                    `reason: ${
-                      transcript.reason === "invalid_url"
-                        ? "invalid_source_url"
-                        : transcript.reason
-                    }`,
-                  ],
+            error_code: transcript.reason,
+            ...(process.env.NODE_ENV !== "production"
+              ? {
+                  details:
+                    debugDetails.length > 0
+                      ? debugDetails
+                      : [`reason: ${transcript.reason}`],
+                }
+              : {}),
           } satisfies LessonGenerationApiError,
           { status }
         );
@@ -166,7 +165,7 @@ export async function POST(request: Request) {
     const errorMessage = error instanceof Error ? error.message : "unknown_error";
     return NextResponse.json(
       {
-        error: "Failed to generate lesson.",
+        error: PROCESSING_ERROR,
         error_code: "generation_failed",
         ...(process.env.NODE_ENV !== "production"
           ? { details: [`route_error: ${errorMessage}`] }

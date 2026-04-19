@@ -127,15 +127,13 @@ export function validateLessonOutputPayload(
 
   if (!isNonEmptyQuestionArray(payload.comprehension_questions)) {
     errors.push("Comprehension questions are required.");
-  }
-  if (payload.comprehension_questions.length !== 8) {
+  } else if (payload.comprehension_questions.length !== 8) {
     errors.push("Comprehension questions must contain exactly 8 MCQs.");
   }
 
   if (!isNonEmptyQuestionArray(payload.grammar_exercises)) {
     errors.push("Grammar exercises are required.");
-  }
-  if (payload.grammar_exercises.length !== 8) {
+  } else if (payload.grammar_exercises.length !== 8) {
     errors.push("Grammar exercises must contain exactly 8 MCQs.");
   }
 

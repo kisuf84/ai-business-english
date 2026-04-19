@@ -143,6 +143,38 @@ function normalizeLessonOutput(raw: unknown): LessonGenerationApiResponse | null
   };
 }
 
+function isTranscriptFailureCode(value: string | null): boolean {
+  return (
+    value === "no_captions" ||
+    value === "captions_disabled" ||
+    value === "unsupported_video" ||
+    value === "transcript_fetch_failed" ||
+    value === "unknown_error"
+  );
+}
+
+function getTranscriptFallbackMessage(code: string | null, apiMessage: string | null) {
+  if (apiMessage) return apiMessage;
+
+  if (code === "no_captions") {
+    return "This video does not expose captions that we can read. Paste the transcript below to continue.";
+  }
+
+  if (code === "captions_disabled") {
+    return "Captions are disabled for this video. Paste the transcript below to continue.";
+  }
+
+  if (code === "unsupported_video") {
+    return "We can’t read captions from this video. It may be private, age-restricted, or unavailable. Paste the transcript below to continue.";
+  }
+
+  if (code === "transcript_fetch_failed") {
+    return "We couldn’t retrieve the captions from YouTube right now. Try again, or paste the transcript below to continue.";
+  }
+
+  return "We couldn’t extract the transcript for this video. Paste the transcript below to continue.";
+}
+
 export default function GeneratorPage() {
   const router = useRouter();
   const [mode, setMode] = useState<GeneratorMode>("lesson");
@@ -271,11 +303,9 @@ export default function GeneratorPage() {
                 "details: none provided by API",
               ];
         setLessonDiagnostics(diagnostics);
-        if (errorCode === "transcript_unavailable") {
+        if (isTranscriptFailureCode(errorCode)) {
           setLessonStage("transcript_unavailable");
-          setLessonError(
-            "Transcript unavailable for this video. Paste a transcript below to continue."
-          );
+          setLessonError(getTranscriptFallbackMessage(errorCode, errorMessage));
           return;
         }
         setLessonStage("generation_failed");
@@ -344,7 +374,10 @@ export default function GeneratorPage() {
       });
 
       if (!response.ok) {
-        throw new Error("save_failed");
+        const payload = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        throw new Error(payload?.error || "save_failed");
       }
 
       const data = (await response.json()) as unknown;
@@ -357,8 +390,13 @@ export default function GeneratorPage() {
       }
       const lessonId = (data as { id: string }).id;
       router.push(`/lessons/${lessonId}?saved=1`);
-    } catch {
-      setLessonError("We could not save the lesson.");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "save_failed";
+      setLessonError(
+        message !== "save_failed" && message !== "invalid_response"
+          ? message
+          : "We couldn’t process your request. Try again."
+      );
     } finally {
       setIsLessonSaving(false);
     }
@@ -508,7 +546,7 @@ export default function GeneratorPage() {
                         rows={8}
                       />
                       <p className="text-xs text-[var(--ink-faint)]">
-                        Automatic extraction failed. Paste transcript text to keep going.
+                        Some YouTube videos do not expose captions. Paste the transcript text here and generate again.
                       </p>
                       {process.env.NODE_ENV !== "production" &&
                       lessonDiagnostics.length > 0 ? (
@@ -613,7 +651,7 @@ export default function GeneratorPage() {
                     ) : null}
                     {!isLessonGenerating && lessonStage === "transcript_unavailable" ? (
                       <p className="text-xs text-[var(--accent-warm)]">
-                        Transcript unavailable. Paste transcript to continue.
+                        Paste a transcript below to continue with this video.
                       </p>
                     ) : null}
                     {lessonError ? (

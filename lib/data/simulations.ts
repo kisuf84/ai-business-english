@@ -68,7 +68,10 @@ export async function createSimulation(
           profession: payload.profession,
         }),
       });
-      return created;
+      if (created?.id) {
+        return created;
+      }
+      throw new Error("Supabase insert did not return a simulation record.");
     } catch (error) {
       console.warn(
         "Falling back to local simulation storage because Supabase write failed:",
@@ -115,7 +118,10 @@ export async function createSimulationAttempt(params: {
           }),
         }
       );
-      return created;
+      if (created?.id) {
+        return created;
+      }
+      throw new Error("Supabase insert did not return a simulation attempt record.");
     } catch (error) {
       console.warn(
         "Falling back to local simulation attempt storage because Supabase write failed:",

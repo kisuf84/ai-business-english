@@ -74,6 +74,9 @@ function createEphemeralSimulationId() {
   return `sim_${crypto.randomUUID()}`;
 }
 
+const REQUIRED_FIELDS_ERROR = "Please complete all required fields";
+const PROCESSING_ERROR = "We couldn’t process your request. Try again.";
+
 function mapProviderError(error: unknown): { userMessage: string; details: string } {
   const err = error as {
     message?: string;
@@ -747,7 +750,7 @@ export async function POST(request: Request) {
   try {
     payload = (await request.json()) as SimulationMessageInput;
   } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    return NextResponse.json({ error: PROCESSING_ERROR }, { status: 400 });
   }
 
   try {
@@ -770,7 +773,7 @@ export async function POST(request: Request) {
         errors: validation.errors,
       });
       return NextResponse.json(
-        { error: "Invalid payload", details: validation.errors },
+        { error: REQUIRED_FIELDS_ERROR, details: validation.errors },
         { status: 400 }
       );
     }
@@ -786,7 +789,7 @@ export async function POST(request: Request) {
           errors: startValidation.errors,
         });
         return NextResponse.json(
-          { error: "Invalid payload", details: startValidation.errors },
+          { error: REQUIRED_FIELDS_ERROR, details: startValidation.errors },
           { status: 400 }
         );
       }
@@ -874,7 +877,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        error: errorMessage,
+        error: errorMessage === "Simulation message failed" ? PROCESSING_ERROR : errorMessage,
         ...(process.env.NODE_ENV !== "production" ? { details } : {}),
       },
       { status: 500 }

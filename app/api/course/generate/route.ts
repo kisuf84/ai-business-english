@@ -6,6 +6,9 @@ import type {
 import { validateCoursePayload } from "../../../../lib/validators/course";
 import { createCourse } from "../../../../lib/data/courses";
 
+const REQUIRED_FIELDS_ERROR = "Please complete all required fields";
+const PROCESSING_ERROR = "We couldn’t process your request. Try again.";
+
 function mockCourseResponse(
   input: CourseGenerationInput
 ): CourseGenerationOutput {
@@ -45,7 +48,7 @@ export async function POST(request: Request) {
 
     if (!validation.ok) {
       return NextResponse.json(
-        { error: "Invalid payload", details: validation.errors },
+        { error: REQUIRED_FIELDS_ERROR, details: validation.errors },
         { status: 400 }
       );
     }
@@ -60,7 +63,7 @@ export async function POST(request: Request) {
     return NextResponse.json(output);
   } catch {
     return NextResponse.json(
-      { error: "Could not generate course." },
+      { error: PROCESSING_ERROR },
       { status: 500 }
     );
   }

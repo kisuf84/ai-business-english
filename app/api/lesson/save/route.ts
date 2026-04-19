@@ -9,6 +9,9 @@ import {
   validateLessonPayload,
 } from "../../../../lib/validators/lesson";
 
+const REQUIRED_FIELDS_ERROR = "Please complete all required fields";
+const PROCESSING_ERROR = "We couldn’t process your request. Try again.";
+
 export async function POST(request: Request) {
   let payload: {
     input: LessonGenerationInput;
@@ -21,16 +24,17 @@ export async function POST(request: Request) {
       output: LessonGenerationOutput;
     };
   } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    return NextResponse.json({ error: PROCESSING_ERROR }, { status: 400 });
   }
 
   if (
     !payload?.input ||
     !payload?.output ||
-    typeof payload.input !== "object"
+    typeof payload.input !== "object" ||
+    typeof payload.output !== "object"
   ) {
     return NextResponse.json(
-      { error: "Invalid payload" },
+      { error: REQUIRED_FIELDS_ERROR },
       { status: 400 }
     );
   }
@@ -38,7 +42,7 @@ export async function POST(request: Request) {
   const inputValidation = validateLessonPayload(payload.input);
   if (!inputValidation.ok) {
     return NextResponse.json(
-      { error: "Invalid lesson input payload", details: inputValidation.errors },
+      { error: REQUIRED_FIELDS_ERROR, details: inputValidation.errors },
       { status: 400 }
     );
   }
@@ -46,7 +50,7 @@ export async function POST(request: Request) {
   const outputValidation = validateLessonOutputPayload(payload.output);
   if (!outputValidation.ok) {
     return NextResponse.json(
-      { error: "Invalid lesson output payload", details: outputValidation.errors },
+      { error: PROCESSING_ERROR, details: outputValidation.errors },
       { status: 400 }
     );
   }
@@ -58,10 +62,11 @@ export async function POST(request: Request) {
       user_id: null,
     });
 
-    return NextResponse.json({ id: lesson.id });
-  } catch {
+    return NextResponse.json({ lesson, id: lesson.id });
+  } catch (error) {
+    console.error("[lesson/save] Failed to save lesson:", error);
     return NextResponse.json(
-      { error: "Failed to save lesson." },
+      { error: PROCESSING_ERROR },
       { status: 500 }
     );
   }

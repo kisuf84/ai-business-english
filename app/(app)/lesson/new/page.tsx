@@ -123,6 +123,16 @@ function normalizeLessonResponse(raw: unknown): LessonGenerationApiResponse | nu
   };
 }
 
+function isTranscriptFailureCode(value: string | undefined): boolean {
+  return (
+    value === "no_captions" ||
+    value === "captions_disabled" ||
+    value === "unsupported_video" ||
+    value === "transcript_fetch_failed" ||
+    value === "unknown_error"
+  );
+}
+
 export default function LessonNewPage() {
   const router = useRouter();
   const [form, setForm] = useState<LessonGenerationInput>(initialForm);
@@ -175,9 +185,12 @@ export default function LessonNewPage() {
         const apiError = (await response.json().catch(() => null)) as
           | LessonGenerationApiError
           | null;
-        if (apiError?.error_code === "transcript_unavailable") {
+        if (isTranscriptFailureCode(apiError?.error_code)) {
           setGenerationStage("transcript_unavailable");
-          setError("Transcript unavailable for this video.");
+          setError(
+            apiError?.error ||
+              "This video does not expose captions that we can read. Paste a transcript to continue."
+          );
           return;
         }
         setGenerationStage("generation_failed");
@@ -230,13 +243,29 @@ export default function LessonNewPage() {
       });
 
       if (!response.ok) {
-        throw new Error("save_failed");
+        const payload = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        throw new Error(payload?.error || "save_failed");
       }
 
-      const data = (await response.json()) as { id: string };
-      router.push(`/lessons/${data.id}?saved=1`);
-    } catch {
-      setError("We could not save the lesson.");
+      const data = (await response.json()) as unknown;
+      if (
+        !data ||
+        typeof data !== "object" ||
+        typeof (data as { id?: unknown }).id !== "string"
+      ) {
+        throw new Error("invalid_response");
+      }
+      const lessonId = (data as { id: string }).id;
+      router.push(`/lessons/${lessonId}?saved=1`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "save_failed";
+      setError(
+        message !== "save_failed" && message !== "invalid_response"
+          ? message
+          : "We couldn’t process your request. Try again."
+      );
     } finally {
       setIsSaving(false);
     }

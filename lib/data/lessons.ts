@@ -41,6 +41,13 @@ function isSupabaseEnabled() {
   return Boolean(getSupabaseAdminConfig());
 }
 
+function saveLocalLesson(lesson: LessonRecord): LessonRecord {
+  const lessons = readAll();
+  lessons.unshift(lesson);
+  writeAll(lessons);
+  return lesson;
+}
+
 export async function createLesson(params: {
   input: LessonGenerationInput;
   output: LessonGenerationOutput;
@@ -75,33 +82,41 @@ export async function createLesson(params: {
   };
 
   if (isSupabaseEnabled()) {
-    const [created] = await supabaseRest<LessonRecord[]>("lessons", {
-      method: "POST",
-      headers: {
-        Prefer: "return=representation",
-      },
-      body: JSON.stringify({
-        user_id: lessonPayload.user_id,
-        title: lessonPayload.title,
-        topic: lessonPayload.topic,
-        level: lessonPayload.level,
-        industry: lessonPayload.industry,
-        profession: lessonPayload.profession,
-        lesson_type: lessonPayload.lesson_type,
-        source_url: lessonPayload.source_url,
-        content_json: lessonPayload.content_json,
-        status: lessonPayload.status,
-        visibility: lessonPayload.visibility,
-      }),
-    });
+    try {
+      const [created] = await supabaseRest<LessonRecord[]>("lessons", {
+        method: "POST",
+        headers: {
+          Prefer: "return=representation",
+        },
+        body: JSON.stringify({
+          user_id: lessonPayload.user_id,
+          title: lessonPayload.title,
+          topic: lessonPayload.topic,
+          level: lessonPayload.level,
+          industry: lessonPayload.industry,
+          profession: lessonPayload.profession,
+          lesson_type: lessonPayload.lesson_type,
+          source_url: lessonPayload.source_url,
+          content_json: lessonPayload.content_json,
+          status: lessonPayload.status,
+          visibility: lessonPayload.visibility,
+        }),
+      });
 
-    return created;
+      if (created?.id) {
+        return created;
+      }
+
+      throw new Error("Supabase insert did not return a lesson record.");
+    } catch (error) {
+      console.warn(
+        "Falling back to local lesson storage because Supabase write failed:",
+        error
+      );
+    }
   }
 
-  const lessons = readAll();
-  lessons.unshift(lessonPayload);
-  writeAll(lessons);
-  return lessonPayload;
+  return saveLocalLesson(lessonPayload);
 }
 
 export async function listLessons(): Promise<LessonRecord[]> {

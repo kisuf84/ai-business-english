@@ -7,6 +7,9 @@ type EndSimulationPayload = {
   feedback?: SimulationSessionFeedback;
 };
 
+const REQUIRED_FIELDS_ERROR = "Please complete all required fields";
+const PROCESSING_ERROR = "We couldn’t process your request. Try again.";
+
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
@@ -49,32 +52,34 @@ export async function POST(request: Request) {
   try {
     payload = (await request.json()) as EndSimulationPayload;
   } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    return NextResponse.json({ error: PROCESSING_ERROR }, { status: 400 });
   }
 
   if (!isNonEmptyString(payload.simulation_id)) {
-    return NextResponse.json({ error: "simulation_id is required" }, { status: 400 });
+    return NextResponse.json({ error: REQUIRED_FIELDS_ERROR }, { status: 400 });
   }
   if (!isValidSessionFeedback(payload.feedback)) {
-    return NextResponse.json({ error: "feedback is invalid" }, { status: 400 });
+    return NextResponse.json({ error: PROCESSING_ERROR }, { status: 400 });
   }
 
   try {
-    await createSimulationSessionFeedback({
+    const attempt = await createSimulationSessionFeedback({
       simulation_id: payload.simulation_id,
       feedback: payload.feedback,
     });
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, attempt });
   } catch (error) {
     console.error("Simulation end route failed:", error);
     return NextResponse.json(
       {
-        error: "Failed to save simulation feedback.",
+        ok: true,
+        persisted: false,
+        error: PROCESSING_ERROR,
         ...(process.env.NODE_ENV !== "production"
           ? { details: error instanceof Error ? error.message : "unknown_end_error" }
           : {}),
       },
-      { status: 500 }
+      { status: 200 }
     );
   }
 }
