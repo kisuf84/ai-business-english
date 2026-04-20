@@ -79,6 +79,7 @@ http://localhost:3000/dashboard
 ## Notes
 
 - Supabase schema scaffold: `lib/supabase/schema.sql`.
+- Vercel Hobby supports cron schedules at most once per day. The YouTube job processor is scheduled for `0 6 * * *` in `vercel.json`; use Vercel Pro, Supabase Cron, or an external scheduler for higher-frequency processing.
 - Local fallback files for development:
   - `.data/lessons.json`
   - `.data/courses.json`
