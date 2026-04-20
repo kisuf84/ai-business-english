@@ -3,7 +3,10 @@ import type {
   YouTubeLessonJob,
   YouTubeLessonJobStatus,
 } from "../../types/lesson";
-import { supabaseRest } from "../supabase/server";
+import {
+  getSupabaseServerDiagnostics,
+  supabaseServiceRoleRest,
+} from "../supabase/server";
 
 export type CreateYouTubeLessonJobInput = LessonGenerationInput & {
   source_url: string;
@@ -15,23 +18,26 @@ export async function createYouTubeLessonJob(
   input: CreateYouTubeLessonJobInput
 ): Promise<YouTubeLessonJob> {
   const now = new Date().toISOString();
-  const [created] = await supabaseRest<YouTubeLessonJob[]>("youtube_lesson_jobs", {
-    method: "POST",
-    headers: { Prefer: "return=representation" },
-    body: JSON.stringify({
-      source_url: input.source_url,
-      video_id: input.video_id,
-      email: input.email,
-      status: "queued",
-      topic: input.topic || null,
-      level: input.level || null,
-      industry: input.industry || null,
-      profession: input.profession || null,
-      lesson_type: input.lesson_type || null,
-      attempts: 0,
-      updated_at: now,
-    }),
-  });
+  const [created] = await supabaseServiceRoleRest<YouTubeLessonJob[]>(
+    "youtube_lesson_jobs",
+    {
+      method: "POST",
+      headers: { Prefer: "return=representation" },
+      body: JSON.stringify({
+        source_url: input.source_url,
+        video_id: input.video_id,
+        email: input.email,
+        status: "queued",
+        topic: input.topic || null,
+        level: input.level || null,
+        industry: input.industry || null,
+        profession: input.profession || null,
+        lesson_type: input.lesson_type || null,
+        attempts: 0,
+        updated_at: now,
+      }),
+    }
+  );
 
   if (!created?.id) {
     throw new Error("youtube_job_create_failed");
@@ -43,22 +49,85 @@ export async function createYouTubeLessonJob(
 export async function getYouTubeLessonJob(
   id: string
 ): Promise<YouTubeLessonJob | null> {
-  const results = await supabaseRest<YouTubeLessonJob[]>(
-    `youtube_lesson_jobs?select=*&id=eq.${id}`
-  );
-  return results[0] ?? null;
+  const path = `youtube_lesson_jobs?select=*&id=eq.${encodeURIComponent(
+    id
+  )}&limit=1`;
+  logJobDebug("get.query", {
+    id,
+    path,
+    helper: "supabaseServiceRoleRest",
+    supabase: getSupabaseServerDiagnostics(),
+  });
+  const results = await supabaseServiceRoleRest<YouTubeLessonJob[]>(path);
+  const row = results[0] ?? null;
+
+  logJobDebug("get.result", {
+    id,
+    path,
+    rowCount: results.length,
+    row: sanitizeJobForLog(row),
+    fallbackTriggered: !row,
+  });
+
+  return row;
 }
 
-function logJobUpdate(stage: string, details: Record<string, unknown>) {
-  if (process.env.NODE_ENV === "production") return;
+function logJobDebug(stage: string, details: Record<string, unknown>) {
   console.info(`[youtube-job:data] ${stage}`, details);
+}
+
+function sanitizeJobForLog(job: YouTubeLessonJob | null) {
+  if (!job) return null;
+  return {
+    id: job.id,
+    video_id: job.video_id,
+    status: job.status,
+    lesson_id: job.lesson_id,
+    title: job.title,
+    attempts: job.attempts,
+    last_error_code: job.last_error_code,
+    last_error_message: job.last_error_message,
+    created_at: job.created_at,
+    updated_at: job.updated_at,
+    hasEmail: Boolean(job.email),
+    transcriptLength: job.transcript_text?.length ?? 0,
+  };
+}
+
+function sanitizePatchForLog(
+  patch: Partial<
+    Pick<
+      YouTubeLessonJob,
+      | "status"
+      | "transcript_text"
+      | "lesson_id"
+      | "title"
+      | "attempts"
+      | "last_error_code"
+      | "last_error_message"
+    >
+  >
+) {
+  return {
+    ...patch,
+    transcript_text:
+      patch.transcript_text === undefined
+        ? undefined
+        : patch.transcript_text === null
+        ? null
+        : `[${patch.transcript_text.length} chars]`,
+  };
+}
+
+export function getYouTubeLessonJobLogSnapshot(job: YouTubeLessonJob | null) {
+  return sanitizeJobForLog(job);
 }
 
 export async function listProcessableYouTubeLessonJobs(
   limit = 3
 ): Promise<YouTubeLessonJob[]> {
   const safeLimit = Math.max(1, Math.min(10, limit));
-  return supabaseRest<YouTubeLessonJob[]>(
+  return supabaseServiceRoleRest<YouTubeLessonJob[]>(
     `youtube_lesson_jobs?select=*&status=in.(queued,failed)&attempts=lt.3&order=created_at.asc&limit=${safeLimit}`
   );
 }
@@ -78,9 +147,16 @@ export async function updateYouTubeLessonJob(
     >
   >
 ): Promise<YouTubeLessonJob> {
-  logJobUpdate("update.attempt", { id, patch });
-  const updatedRows = await supabaseRest<YouTubeLessonJob[]>(
-    `youtube_lesson_jobs?id=eq.${id}&select=*`,
+  const path = `youtube_lesson_jobs?id=eq.${encodeURIComponent(id)}&select=*`;
+  logJobDebug("update.attempt", {
+    id,
+    path,
+    patch: sanitizePatchForLog(patch),
+    helper: "supabaseServiceRoleRest",
+    supabase: getSupabaseServerDiagnostics(),
+  });
+  const updatedRows = await supabaseServiceRoleRest<YouTubeLessonJob[]>(
+    path,
     {
       method: "PATCH",
       headers: { Prefer: "return=representation" },
@@ -92,11 +168,12 @@ export async function updateYouTubeLessonJob(
   );
   const updated = updatedRows[0] ?? null;
 
-  logJobUpdate("update.returned", {
+  logJobDebug("update.returned", {
     id,
+    path,
     rows: updatedRows.length,
     status: updated?.status ?? null,
-    updated,
+    updated: sanitizeJobForLog(updated),
   });
 
   if (!updated?.id) {
@@ -104,10 +181,10 @@ export async function updateYouTubeLessonJob(
   }
 
   const persisted = await getYouTubeLessonJob(id);
-  logJobUpdate("update.persisted", {
+  logJobDebug("update.persisted", {
     id,
     status: persisted?.status ?? null,
-    persisted,
+    persisted: sanitizeJobForLog(persisted),
   });
 
   if (!persisted?.id) {
@@ -120,13 +197,16 @@ export async function updateYouTubeLessonJob(
 export async function claimYouTubeLessonJob(
   job: YouTubeLessonJob
 ): Promise<YouTubeLessonJob | null> {
-  logJobUpdate("claim.attempt", {
+  logJobDebug("claim.attempt", {
     id: job.id,
     expectedStatus: job.status,
     nextStatus: "processing",
   });
-  const claimedRows = await supabaseRest<YouTubeLessonJob[]>(
-    `youtube_lesson_jobs?id=eq.${job.id}&status=eq.${job.status}&select=*`,
+  const path = `youtube_lesson_jobs?id=eq.${encodeURIComponent(
+    job.id
+  )}&status=eq.${encodeURIComponent(job.status)}&select=*`;
+  const claimedRows = await supabaseServiceRoleRest<YouTubeLessonJob[]>(
+    path,
     {
       method: "PATCH",
       headers: { Prefer: "return=representation" },
@@ -139,11 +219,12 @@ export async function claimYouTubeLessonJob(
   );
   const claimed = claimedRows[0] ?? null;
 
-  logJobUpdate("claim.returned", {
+  logJobDebug("claim.returned", {
     id: job.id,
+    path,
     rows: claimedRows.length,
     status: claimed?.status ?? null,
-    claimed,
+    claimed: sanitizeJobForLog(claimed),
   });
 
   if (!claimed) {
@@ -151,10 +232,10 @@ export async function claimYouTubeLessonJob(
   }
 
   const persisted = await getYouTubeLessonJob(job.id);
-  logJobUpdate("claim.persisted", {
+  logJobDebug("claim.persisted", {
     id: job.id,
     status: persisted?.status ?? null,
-    persisted,
+    persisted: sanitizeJobForLog(persisted),
   });
 
   return persisted;
