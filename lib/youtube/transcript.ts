@@ -194,6 +194,116 @@ function transcriptFromSegments(segments: Array<{ text?: string; lang?: string }
   return { text: normalized, languageCode };
 }
 
+async function fetchTranscriptViaSupadata(
+  videoId: string,
+  diagnostics: TranscriptDiagnostic[]
+): Promise<TranscriptFetchResult> {
+  const apiKey = process.env.SUPADATA_API_KEY || "";
+  if (!apiKey) {
+    logTranscriptDebug("supadata.no_api_key", { videoId });
+    return { ok: false };
+  }
+
+  const requestUrl = `https://api.supadata.ai/v1/transcript?url=https://www.youtube.com/watch?v=${videoId}&text=true`;
+  logTranscriptDebug("supadata.request", { videoId });
+
+  try {
+    const response = await fetch(requestUrl, {
+      cache: "no-store",
+      next: { revalidate: 0 },
+      headers: {
+        "x-api-key": apiKey,
+        Accept: "application/json",
+      },
+    } as RequestInit & { next: { revalidate: number } });
+
+    if (!response.ok) {
+      const body = await response.text().catch(() => "");
+      logTranscriptDebug("supadata.http_failed", {
+        videoId,
+        status: response.status,
+        body: body.slice(0, 500),
+      });
+      diagnostics.push({
+        code: "transcript_fetch_failed",
+        message: `Supadata transcript request failed with HTTP ${response.status}.`,
+      });
+      return { ok: false, reason: "transcript_fetch_failed" };
+    }
+
+    const data = (await response.json().catch(() => null)) as
+      | {
+          content?: unknown;
+          language?: unknown;
+          lang?: unknown;
+          languageCode?: unknown;
+        }
+      | null;
+    const content = Array.isArray(data?.content) ? data.content : [];
+    const chunks = content
+      .map((item) => {
+        if (!item || typeof item !== "object") return "";
+        const text = (item as { text?: unknown }).text;
+        return typeof text === "string" ? text : "";
+      })
+      .filter((text) => Boolean(text.trim()));
+    const text = normalizeTranscriptText(chunks.join(" "));
+
+    if (!text) {
+      logTranscriptDebug("supadata.empty_response", {
+        videoId,
+        contentItems: content.length,
+      });
+      diagnostics.push({
+        code: "no_captions",
+        message: "Supadata returned no transcript text.",
+      });
+      return { ok: false, reason: "no_captions" };
+    }
+
+    const chunkLanguage = content.find((item) => {
+      if (!item || typeof item !== "object") return false;
+      const lang = (item as { lang?: unknown; language?: unknown }).lang;
+      const language = (item as { lang?: unknown; language?: unknown }).language;
+      return (
+        (typeof lang === "string" && Boolean(lang.trim())) ||
+        (typeof language === "string" && Boolean(language.trim()))
+      );
+    }) as { lang?: unknown; language?: unknown } | undefined;
+    const languageCode =
+      typeof data?.languageCode === "string" && data.languageCode.trim()
+        ? data.languageCode
+        : typeof data?.language === "string" && data.language.trim()
+          ? data.language
+          : typeof data?.lang === "string" && data.lang.trim()
+            ? data.lang
+            : typeof chunkLanguage?.lang === "string" && chunkLanguage.lang.trim()
+              ? chunkLanguage.lang
+              : typeof chunkLanguage?.language === "string" &&
+                  chunkLanguage.language.trim()
+                ? chunkLanguage.language
+                : null;
+
+    logTranscriptDebug("supadata.success", {
+      videoId,
+      languageCode,
+      textLength: text.length,
+      contentItems: content.length,
+    });
+
+    return { ok: true, text, languageCode };
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unknown Supadata transcript error.";
+    logTranscriptDebug("supadata.failed", { videoId, error: message });
+    diagnostics.push({
+      code: "transcript_fetch_failed",
+      message: `Supadata transcript request failed: ${message}`,
+    });
+    return { ok: false, reason: "transcript_fetch_failed" };
+  }
+}
+
 function classifyErrorMessage(message: string): Exclude<TranscriptFailureReason, "invalid_url"> {
   const lower = message.toLowerCase();
 
@@ -1173,6 +1283,24 @@ export async function fetchYouTubeTranscriptSource(
   const { videoId } = parsed;
   logTranscriptDebug("pipeline.start", { videoId });
 
+  // --- Strategy 1: Supadata ---
+  const supadataResult = await fetchTranscriptViaSupadata(videoId, diagnostics);
+  if (supadataResult.ok) {
+    logTranscriptDebug("pipeline.success", {
+      videoId,
+      strategy: "supadata",
+      languageCode: supadataResult.languageCode,
+      textLength: supadataResult.text.length,
+    });
+    return {
+      ok: true,
+      videoId,
+      sourceText: supadataResult.text,
+      languageCode: supadataResult.languageCode,
+      diagnostics,
+    };
+  }
+
   const libraryResult = await fetchTranscriptViaLibrary(videoId, diagnostics);
   if (libraryResult.ok) {
     logTranscriptDebug("pipeline.success", {
@@ -1225,6 +1353,7 @@ export async function fetchYouTubeTranscriptSource(
   }
 
   const reason = chooseFailureReason(diagnostics, [
+    supadataResult,
     libraryResult,
     innertubeResult,
     customResult,
