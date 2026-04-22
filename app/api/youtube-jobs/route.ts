@@ -7,11 +7,26 @@ function isValidEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+type YouTubeJobCreatePayload = LessonGenerationInput & {
+  email?: string;
+  sourceUrl?: string;
+  url?: string;
+};
+
+function normalizeSourceUrl(payload: YouTubeJobCreatePayload): string {
+  return (
+    payload.source_url?.trim() ||
+    payload.sourceUrl?.trim() ||
+    payload.url?.trim() ||
+    ""
+  );
+}
+
 export async function POST(request: Request) {
-  let payload: LessonGenerationInput & { email?: string };
+  let payload: YouTubeJobCreatePayload;
 
   try {
-    payload = (await request.json()) as LessonGenerationInput & { email?: string };
+    payload = (await request.json()) as YouTubeJobCreatePayload;
   } catch {
     return NextResponse.json(
       { error: "We couldn’t process your request. Try again." },
@@ -19,7 +34,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const sourceUrl = payload.source_url?.trim() || "";
+  const sourceUrl = normalizeSourceUrl(payload);
   const email = payload.email?.trim().toLowerCase() || "";
   const parsed = parseYouTubeVideoIdDetailed(sourceUrl);
 
@@ -52,7 +67,7 @@ export async function POST(request: Request) {
     console.info("[youtube-job] created", {
       id: job.id,
       videoId: job.video_id,
-      email: job.email,
+      hasEmail: Boolean(job.email),
     });
 
     return NextResponse.json(

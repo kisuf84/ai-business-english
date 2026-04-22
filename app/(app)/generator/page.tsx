@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Button from "../../../components/shared/Button";
@@ -18,6 +18,7 @@ import type {
 import type { CourseGenerationInput, CourseRecord } from "../../../types/course";
 import { parseYouTubeVideoId } from "../../../lib/youtube/url";
 import { validateLessonOutputPayload } from "../../../lib/validators/lesson";
+import { getSupabaseBrowserClient } from "../../../lib/supabase/client";
 
 type GeneratorMode = "lesson" | "course";
 type LessonGenerationStage =
@@ -37,7 +38,8 @@ type YouTubeGenerationState =
   | "failed";
 
 const YOUTUBE_EXTENDED_DELAY_MS = 7000;
-const YOUTUBE_NEEDS_TRANSCRIPT_MIN_DELAY_MS = 7000;
+const YOUTUBE_POLL_INTERVAL_MS = 2000;
+const YOUTUBE_FALLBACK_DELAY_MS = 8000;
 
 const initialLessonForm: LessonGenerationInput = {
   topic: "",
@@ -206,12 +208,18 @@ export default function GeneratorPage() {
   const [lessonStage, setLessonStage] = useState<LessonGenerationStage>("idle");
   const [youtubeGenerationState, setYoutubeGenerationState] =
     useState<YouTubeGenerationState>("idle");
-  const [notificationEmail, setNotificationEmail] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [jobId, setJobId] = useState<string | null>(null);
+  const [showFallback, setShowFallback] = useState(false);
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [notificationStatus, setNotificationStatus] = useState<
-    "idle" | "error"
+    "idle" | "error" | "submitted"
   >("idle");
   const [jobStatusUrl, setJobStatusUrl] = useState<string | null>(null);
   const [manualTranscript, setManualTranscript] = useState("");
+  const pollingIntervalRef = useRef<number | null>(null);
+  const fallbackTimeoutRef = useRef<number | null>(null);
 
   const [courseForm, setCourseForm] =
     useState<CourseGenerationInput>(initialCourseForm);
@@ -253,6 +261,36 @@ export default function GeneratorPage() {
   }, [mode, coursesLoaded]);
 
   useEffect(() => {
+    let active = true;
+    const supabase = getSupabaseBrowserClient();
+
+    if (!supabase) return;
+
+    const loadUserEmail = async () => {
+      const { data } = await supabase.auth.getUser();
+      if (!active || !data.user?.email) return;
+      setEmail((current) => current || data.user?.email || "");
+    };
+
+    void loadUserEmail();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (pollingIntervalRef.current) {
+        window.clearInterval(pollingIntervalRef.current);
+      }
+      if (fallbackTimeoutRef.current) {
+        window.clearTimeout(fallbackTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     if (youtubeGenerationState !== "processing_initial") return;
 
     const timeout = window.setTimeout(() => {
@@ -264,6 +302,17 @@ export default function GeneratorPage() {
     return () => window.clearTimeout(timeout);
   }, [youtubeGenerationState]);
 
+  const clearYoutubeTimers = () => {
+    if (pollingIntervalRef.current) {
+      window.clearInterval(pollingIntervalRef.current);
+      pollingIntervalRef.current = null;
+    }
+    if (fallbackTimeoutRef.current) {
+      window.clearTimeout(fallbackTimeoutRef.current);
+      fallbackTimeoutRef.current = null;
+    }
+  };
+
   const handleLessonChange = (
     field: keyof LessonGenerationInput,
     value: string
@@ -271,34 +320,152 @@ export default function GeneratorPage() {
     setLessonForm((prev) => ({ ...prev, [field]: value }));
   };
 
+  const pollYouTubeJob = async (nextJobId: string) => {
+    try {
+      const response = await fetch(`/api/youtube-jobs/${nextJobId}`, {
+        cache: "no-store",
+      });
+      const payload = (await response.json().catch(() => null)) as
+        | {
+            status?: string;
+            lesson_url?: string | null;
+            message?: string | null;
+            error?: string;
+          }
+        | null;
+
+      if (!response.ok) {
+        throw new Error(payload?.error || "We couldn’t check your lesson status.");
+      }
+
+      if (payload?.status === "ready" && payload.lesson_url) {
+        clearYoutubeTimers();
+        setYoutubeGenerationState("ready");
+        setIsGenerating(false);
+        setIsLessonGenerating(false);
+        router.push(payload.lesson_url);
+        return;
+      }
+
+      if (payload?.status === "needs_transcript") {
+        clearYoutubeTimers();
+        setIsGenerating(false);
+        setIsLessonGenerating(false);
+        setLessonStage("transcript_unavailable");
+        setYoutubeGenerationState("needs_transcript");
+        setShowFallback(true);
+        return;
+      }
+
+      if (payload?.status === "failed") {
+        throw new Error(payload.message || "We couldn’t finish this lesson automatically.");
+      }
+    } catch (pollError) {
+      clearYoutubeTimers();
+      const message =
+        pollError instanceof Error
+          ? pollError.message
+          : "We couldn’t check your lesson status.";
+      setError(message);
+      setLessonError(message);
+      setLessonStage("generation_failed");
+      setYoutubeGenerationState("failed");
+      setIsGenerating(false);
+      setIsLessonGenerating(false);
+    }
+  };
+
+  const startYouTubePolling = (nextJobId: string) => {
+    if (pollingIntervalRef.current) {
+      window.clearInterval(pollingIntervalRef.current);
+    }
+
+    pollingIntervalRef.current = window.setInterval(() => {
+      void pollYouTubeJob(nextJobId);
+    }, YOUTUBE_POLL_INTERVAL_MS);
+  };
+
+  const startFallbackTimer = () => {
+    if (fallbackTimeoutRef.current) {
+      window.clearTimeout(fallbackTimeoutRef.current);
+    }
+
+    fallbackTimeoutRef.current = window.setTimeout(() => {
+      setShowFallback(true);
+      setYoutubeGenerationState((current) =>
+        current === "processing_initial" ? "processing_extended" : current
+      );
+    }, YOUTUBE_FALLBACK_DELAY_MS);
+  };
+
+  const handleEmailWhenReady = async () => {
+    if (!jobId) return;
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      setNotificationStatus("error");
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    setNotificationStatus("idle");
+    setError(null);
+
+    try {
+      const response = await fetch(`/api/youtube-jobs/${jobId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: trimmedEmail }),
+      });
+
+      if (!response.ok && response.status !== 404 && response.status !== 405) {
+        const payload = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        throw new Error(payload?.error || "We couldn’t save your email.");
+      }
+
+      setNotificationStatus("submitted");
+    } catch (submitError) {
+      const message =
+        submitError instanceof Error
+          ? submitError.message
+          : "We couldn’t save your email.";
+      setNotificationStatus("error");
+      setError(message);
+    }
+  };
+
   const runLessonGeneration = async () => {
+    if (isGenerating || isLessonGenerating) return;
+
     setIsLessonGenerating(true);
+    setIsGenerating(false);
     setLessonError(null);
+    setError(null);
     setLessonDiagnostics([]);
     setLessonResult(null);
     setLessonStage("generating_lesson");
     setNotificationStatus("idle");
+    setShowFallback(false);
+    clearYoutubeTimers();
 
     try {
       const trimmedSourceUrl = lessonForm.source_url?.trim() || "";
       const trimmedManualTranscript = manualTranscript.trim();
       const isYouTubeGeneration = Boolean(trimmedSourceUrl && !trimmedManualTranscript);
-      const generationStartedAt = Date.now();
 
       if (trimmedSourceUrl && !trimmedManualTranscript) {
+        setIsGenerating(true);
         setYoutubeGenerationState("processing_initial");
         setLessonStage("validating_url");
         if (!parseYouTubeVideoId(trimmedSourceUrl)) {
+          clearYoutubeTimers();
+          setIsGenerating(false);
           setLessonStage("generation_failed");
           setYoutubeGenerationState("failed");
           setLessonError("Please enter a valid YouTube URL.");
-          return;
-        }
-        if (!notificationEmail.trim()) {
-          setLessonStage("generation_failed");
-          setYoutubeGenerationState("failed");
-          setNotificationStatus("error");
-          setLessonError("Please enter your email address.");
+          setError("Please enter a valid YouTube URL.");
           return;
         }
         setLessonStage("extracting_transcript");
@@ -311,24 +478,35 @@ export default function GeneratorPage() {
             source_url: trimmedSourceUrl,
             industry: lessonForm.industry?.trim() || undefined,
             profession: lessonForm.profession?.trim() || undefined,
-            email: notificationEmail.trim(),
+            email: email.trim() || undefined,
           }),
         });
 
         const jobPayload = (await jobResponse.json().catch(() => null)) as
-          | { error?: string; status_url?: string }
+          | { error?: string; id?: string; status_url?: string }
           | null;
 
         if (!jobResponse.ok) {
+          clearYoutubeTimers();
+          setIsGenerating(false);
           setLessonStage("generation_failed");
           setYoutubeGenerationState("failed");
-          setLessonError(jobPayload?.error || "We couldn’t start your lesson. Try again.");
+          const message = jobPayload?.error || "We couldn’t start your lesson. Try again.";
+          setLessonError(message);
+          setError(message);
           return;
         }
 
+        if (!jobPayload?.id) {
+          throw new Error("We couldn’t start your lesson. Try again.");
+        }
+
+        setJobId(jobPayload.id);
         setJobStatusUrl(jobPayload?.status_url || null);
-        setYoutubeGenerationState("email_submitted");
-        setLessonStage("idle");
+        setYoutubeGenerationState("processing_initial");
+        setLessonStage("generating_lesson");
+        startYouTubePolling(jobPayload.id);
+        startFallbackTimer();
         return;
       } else {
         setYoutubeGenerationState("idle");
@@ -393,12 +571,6 @@ export default function GeneratorPage() {
                 ];
           setLessonDiagnostics(diagnostics);
           if (isTranscriptFailureCode(errorCode)) {
-            if (isYouTubeGeneration) {
-              const elapsed = Date.now() - generationStartedAt;
-              if (elapsed < YOUTUBE_NEEDS_TRANSCRIPT_MIN_DELAY_MS) {
-                await wait(YOUTUBE_NEEDS_TRANSCRIPT_MIN_DELAY_MS - elapsed);
-              }
-            }
             setLessonStage("transcript_unavailable");
             setYoutubeGenerationState("needs_transcript");
             setLessonError(getTranscriptFallbackMessage(errorCode, errorMessage));
@@ -423,6 +595,8 @@ export default function GeneratorPage() {
       setYoutubeGenerationState(isYouTubeGeneration ? "ready" : "idle");
       setLessonStage("idle");
     } catch (error) {
+      clearYoutubeTimers();
+      setIsGenerating(false);
       setLessonStage("generation_failed");
       setYoutubeGenerationState("failed");
       const message =
@@ -436,8 +610,13 @@ export default function GeneratorPage() {
       setLessonError(
         process.env.NODE_ENV !== "production" ? message : "We could not generate the lesson."
       );
+      setError(
+        process.env.NODE_ENV !== "production" ? message : "We could not generate the lesson."
+      );
     } finally {
-      setIsLessonGenerating(false);
+      if (!isGenerating) {
+        setIsLessonGenerating(false);
+      }
     }
   };
 
@@ -602,218 +781,244 @@ export default function GeneratorPage() {
             <>
             <Card>
               <form onSubmit={handleLessonSubmit} action="" method="post">
-                <div className="grid gap-4">
-	                  <div className="grid gap-2">
-                    <label htmlFor="topic" className="text-sm font-medium">
-                      Topic
-                    </label>
-                    <Input
-                      id="topic"
-                      placeholder="e.g. Project kickoff meeting"
-                      value={lessonForm.topic}
-                      onChange={(event) =>
-                        handleLessonChange("topic", event.target.value)
-                      }
-                      required
-                    />
-	                  </div>
+                <div className="grid min-h-[520px] gap-4">
+                  {isGenerating ? (
+                    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-4 transition-all duration-300">
+                      <div className="flex items-center gap-3">
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--accent)]" />
+                        <div>
+                          <p className="text-sm font-semibold text-[var(--ink)]">
+                            Generating your lesson...
+                          </p>
+                          <p className="text-xs text-[var(--ink-faint)]">
+                            We are checking the video and preparing the lesson.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
 
-                  {lessonForm.source_url?.trim() && !manualTranscript.trim() ? (
+                  <fieldset
+                    disabled={isGenerating}
+                    className={`grid gap-4 transition-all duration-300 ${
+                      isGenerating
+                        ? "pointer-events-none opacity-45"
+                        : "opacity-100"
+                    }`}
+                  >
                     <div className="grid gap-2">
-                      <label htmlFor="youtube_email" className="text-sm font-medium">
-                        Email
+                      <label htmlFor="topic" className="text-sm font-medium">
+                        Topic
                       </label>
                       <Input
-                        id="youtube_email"
-                        type="email"
-                        placeholder="you@example.com"
-                        value={notificationEmail}
-                        onChange={(event) => {
-                          setNotificationEmail(event.target.value);
-                          setNotificationStatus("idle");
-                        }}
-                      />
-                    </div>
-                  ) : null}
-
-                  <div className="grid gap-2">
-                    <label htmlFor="source_url" className="text-sm font-medium">
-                      Source URL (optional)
-                    </label>
-                    <Input
-                      id="source_url"
-                      placeholder="https://www.youtube.com/watch?v=..."
-                      value={lessonForm.source_url}
-                      onChange={(event) =>
-                        handleLessonChange("source_url", event.target.value)
-                      }
-                    />
-                  </div>
-
-                  {youtubeGenerationState === "needs_transcript" ||
-                  manualTranscript.trim().length > 0 ? (
-                    <div className="grid gap-2">
-                      <label
-                        htmlFor="manual_transcript"
-                        className="text-sm font-medium"
-                      >
-                        Transcript
-                      </label>
-                      <Textarea
-                        id="manual_transcript"
-                        placeholder="Paste transcript text here..."
-                        value={manualTranscript}
-                        onChange={(event) => setManualTranscript(event.target.value)}
-                        rows={8}
-                      />
-                      <p className="text-xs text-[var(--ink-faint)]">
-                        Have a transcript? Paste it to speed things up.
-                      </p>
-                      {process.env.NODE_ENV !== "production" &&
-                      lessonDiagnostics.length > 0 ? (
-                        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] p-3">
-                          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
-                            Transcript debug (dev only)
-                          </p>
-                          <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-[var(--ink-muted)]">
-                            {lessonDiagnostics.map((detail) => (
-                              <li key={detail}>{detail}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      ) : null}
-                    </div>
-                  ) : null}
-
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div className="grid gap-2">
-                      <label htmlFor="level" className="text-sm font-medium">
-                        Level
-                      </label>
-                      <Select
-                        id="level"
-                        value={lessonForm.level}
+                        id="topic"
+                        placeholder="e.g. Project kickoff meeting"
+                        value={lessonForm.topic}
                         onChange={(event) =>
-                          handleLessonChange("level", event.target.value)
+                          handleLessonChange("topic", event.target.value)
                         }
                         required
-                      >
-                        <option value="">Select level</option>
-                        <option value="A2">A2</option>
-                        <option value="B1">B1</option>
-                        <option value="B2">B2</option>
-                        <option value="C1">C1</option>
-                      </Select>
+                      />
                     </div>
 
                     <div className="grid gap-2">
-                      <label htmlFor="industry" className="text-sm font-medium">
-                        Industry (optional)
+                      <label htmlFor="source_url" className="text-sm font-medium">
+                        Source URL (optional)
                       </label>
                       <Input
-                        id="industry"
-                        placeholder="e.g. Software"
-                        value={lessonForm.industry}
+                        id="source_url"
+                        placeholder="https://www.youtube.com/watch?v=..."
+                        value={lessonForm.source_url}
                         onChange={(event) =>
-                          handleLessonChange("industry", event.target.value)
+                          handleLessonChange("source_url", event.target.value)
                         }
                       />
                     </div>
 
-                    <div className="grid gap-2 md:col-span-2">
-                      <label htmlFor="profession" className="text-sm font-medium">
-                        Profession (optional)
-                      </label>
-                      <Input
-                        id="profession"
-                        placeholder="e.g. Product Manager"
-                        value={lessonForm.profession}
-                        onChange={(event) =>
-                          handleLessonChange("profession", event.target.value)
-                        }
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid gap-2">
-                    <label htmlFor="lesson_type" className="text-sm font-medium">
-                      Lesson Type
-                    </label>
-                    <Textarea
-                      id="lesson_type"
-                      placeholder="e.g. Meeting prep, presentation practice"
-                      value={lessonForm.lesson_type}
-                      onChange={(event) =>
-                        handleLessonChange("lesson_type", event.target.value)
-                      }
-                      required
-                    />
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-3">
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        void runLessonGeneration();
-                      }}
-                      disabled={isLessonGenerating}
-                      className="w-full rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-5 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55] sm:w-auto"
-                    >
-                      {isLessonGenerating ? "Generating..." : "Generate Lesson"}
-                    </Button>
-                    {isLessonGenerating ||
-                    youtubeGenerationState === "email_submitted" ? (
-                      <div className="grid gap-2 text-xs text-[var(--ink-faint)]">
-                        <p>
-                          {youtubeGenerationState === "processing_extended"
-                            ? "✨ Still working on your lesson..."
-                            : youtubeGenerationState === "email_submitted"
-                              ? "✨ Still working on your lesson..."
-                            : youtubeGenerationState === "processing_initial"
-                              ? "✨ Creating your lesson..."
-                              : "Generating lesson..."}
+                    {youtubeGenerationState === "needs_transcript" ||
+                    manualTranscript.trim().length > 0 ? (
+                      <div className="grid gap-2">
+                        <label
+                          htmlFor="manual_transcript"
+                          className="text-sm font-medium"
+                        >
+                          Transcript
+                        </label>
+                        <Textarea
+                          id="manual_transcript"
+                          placeholder="Paste transcript text here..."
+                          value={manualTranscript}
+                          onChange={(event) => setManualTranscript(event.target.value)}
+                          rows={8}
+                        />
+                        <p className="text-xs text-[var(--ink-faint)]">
+                          Have a transcript? Paste it to speed things up.
                         </p>
-                        {youtubeGenerationState === "email_submitted" ? (
-                          <div className="grid max-w-sm gap-1">
-                            <p className="font-medium text-[var(--ink)]">
-                              ✅ You’re all set.
+                        {process.env.NODE_ENV !== "production" &&
+                        lessonDiagnostics.length > 0 ? (
+                          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] p-3">
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
+                              Transcript debug (dev only)
                             </p>
-                            <p>We’ll send your lesson as soon as it’s ready.</p>
-                            <p>You can leave this page — we’ve got it from here.</p>
-                            {jobStatusUrl ? (
-                              <a
-                                href={jobStatusUrl}
-                                className="text-[var(--accent)] underline"
-                              >
-                                View lesson status
-                              </a>
-                            ) : null}
-                          </div>
-                        ) : null}
-                        {youtubeGenerationState === "processing_extended" ? (
-                          <div className="grid max-w-sm gap-2">
-                            <p>We’ll send you a link as soon as it’s ready.</p>
-                            {notificationStatus === "error" ? (
-                              <p className="text-[var(--accent-warm)]">
-                                Please enter a valid email address.
-                              </p>
-                            ) : null}
+                            <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-[var(--ink-muted)]">
+                              {lessonDiagnostics.map((detail) => (
+                                <li key={detail}>{detail}</li>
+                              ))}
+                            </ul>
                           </div>
                         ) : null}
                       </div>
                     ) : null}
-                    {!isLessonGenerating &&
-                    youtubeGenerationState === "needs_transcript" ? (
-                      <p className="text-xs text-[var(--accent-warm)]">
-                        Have a transcript? Paste it to speed things up.
-                      </p>
-                    ) : null}
-                    {lessonError && youtubeGenerationState !== "needs_transcript" ? (
-                      <p className="text-xs text-[var(--accent-warm)]">
-                        {lessonError}
-                      </p>
-                    ) : null}
-                  </div>
+
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <div className="grid gap-2">
+                        <label htmlFor="level" className="text-sm font-medium">
+                          Level
+                        </label>
+                        <Select
+                          id="level"
+                          value={lessonForm.level}
+                          onChange={(event) =>
+                            handleLessonChange("level", event.target.value)
+                          }
+                          required
+                        >
+                          <option value="">Select level</option>
+                          <option value="A2">A2</option>
+                          <option value="B1">B1</option>
+                          <option value="B2">B2</option>
+                          <option value="C1">C1</option>
+                        </Select>
+                      </div>
+
+                      <div className="grid gap-2">
+                        <label htmlFor="industry" className="text-sm font-medium">
+                          Industry (optional)
+                        </label>
+                        <Input
+                          id="industry"
+                          placeholder="e.g. Software"
+                          value={lessonForm.industry}
+                          onChange={(event) =>
+                            handleLessonChange("industry", event.target.value)
+                          }
+                        />
+                      </div>
+
+                      <div className="grid gap-2 md:col-span-2">
+                        <label htmlFor="profession" className="text-sm font-medium">
+                          Profession (optional)
+                        </label>
+                        <Input
+                          id="profession"
+                          placeholder="e.g. Product Manager"
+                          value={lessonForm.profession}
+                          onChange={(event) =>
+                            handleLessonChange("profession", event.target.value)
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid gap-2">
+                      <label htmlFor="lesson_type" className="text-sm font-medium">
+                        Lesson Type
+                      </label>
+                      <Textarea
+                        id="lesson_type"
+                        placeholder="e.g. Meeting prep, presentation practice"
+                        value={lessonForm.lesson_type}
+                        onChange={(event) =>
+                          handleLessonChange("lesson_type", event.target.value)
+                        }
+                        required
+                      />
+                    </div>
+                  </fieldset>
+
+                  {!isGenerating ? (
+                    <div className="flex flex-wrap items-center gap-3">
+                      <Button
+                        type="submit"
+                        disabled={isLessonGenerating}
+                        className="w-full rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-5 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55] sm:w-auto"
+                      >
+                        {isLessonGenerating ? "Generating..." : "Generate Lesson"}
+                      </Button>
+                      {lessonError && youtubeGenerationState !== "needs_transcript" ? (
+                        <p className="text-xs text-[var(--accent-warm)]">
+                          {lessonError}
+                        </p>
+                      ) : null}
+                    </div>
+                  ) : null}
+
+                  {showFallback ? (
+                    <div className="grid gap-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-card)] p-4 transition-all duration-300">
+                      <div>
+                        <p className="text-sm font-semibold text-[var(--ink)]">
+                          This is taking longer than expected...
+                        </p>
+                        <p className="mt-1 text-xs text-[var(--ink-faint)]">
+                          You can leave this page open while we keep checking, or add
+                          an email address for the ready link.
+                        </p>
+                      </div>
+                      <div className="grid gap-2 sm:max-w-md">
+                        <label
+                          htmlFor="fallback_email"
+                          className="text-sm font-medium"
+                        >
+                          Email (optional)
+                        </label>
+                        <Input
+                          id="fallback_email"
+                          type="email"
+                          placeholder="you@example.com"
+                          value={email}
+                          onChange={(event) => {
+                            setEmail(event.target.value);
+                            setNotificationStatus("idle");
+                            setError(null);
+                          }}
+                        />
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <Button
+                          type="button"
+                          onClick={handleEmailWhenReady}
+                          className="w-full rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-5 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55] sm:w-auto"
+                        >
+                          Email me when ready
+                        </Button>
+                        {jobStatusUrl ? (
+                          <a
+                            href={jobStatusUrl}
+                            className="text-xs text-[var(--accent)] underline"
+                          >
+                            View lesson status
+                          </a>
+                        ) : null}
+                      </div>
+                      {notificationStatus === "submitted" ? (
+                        <p className="text-xs font-medium text-[var(--ink)]">
+                          Email saved. We will send the lesson link when it is ready.
+                        </p>
+                      ) : null}
+                      {notificationStatus === "error" || error ? (
+                        <p className="text-xs text-[var(--accent-warm)]">
+                          {error || "Please enter a valid email address."}
+                        </p>
+                      ) : null}
+                    </div>
+                  ) : null}
+
+                  {!isLessonGenerating &&
+                  youtubeGenerationState === "needs_transcript" ? (
+                    <p className="text-xs text-[var(--accent-warm)]">
+                      Have a transcript? Paste it to speed things up.
+                    </p>
+                  ) : null}
                 </div>
               </form>
             </Card>

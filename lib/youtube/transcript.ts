@@ -204,18 +204,19 @@ async function fetchTranscriptViaSupadata(
     return { ok: false };
   }
 
-  const requestUrl = `https://api.supadata.ai/v1/transcript?url=https://www.youtube.com/watch?v=${videoId}&text=true`;
+  const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
+  const url = `https://api.supadata.ai/v1/transcript?url=${encodeURIComponent(
+    youtubeUrl
+  )}`;
   logTranscriptDebug("supadata.request", { videoId });
 
   try {
-    const response = await fetch(requestUrl, {
-      cache: "no-store",
-      next: { revalidate: 0 },
+    const response = await fetch(url, {
       headers: {
         "x-api-key": apiKey,
         Accept: "application/json",
       },
-    } as RequestInit & { next: { revalidate: number } });
+    });
 
     if (!response.ok) {
       const body = await response.text().catch(() => "");
@@ -231,28 +232,43 @@ async function fetchTranscriptViaSupadata(
       return { ok: false, reason: "transcript_fetch_failed" };
     }
 
-    const data = (await response.json().catch(() => null)) as
+    const rawBody = await response.text();
+    const data = (JSON.parse(rawBody || "null") as
       | {
           content?: unknown;
           language?: unknown;
           lang?: unknown;
           languageCode?: unknown;
         }
-      | null;
-    const content = Array.isArray(data?.content) ? data.content : [];
-    const chunks = content
-      .map((item) => {
-        if (!item || typeof item !== "object") return "";
-        const text = (item as { text?: unknown }).text;
-        return typeof text === "string" ? text : "";
-      })
-      .filter((text) => Boolean(text.trim()));
+      | null) ?? null;
+    const content = data?.content;
+    const arrayContent = Array.isArray(content) ? content : [];
+    const chunks =
+      typeof content === "string"
+        ? [content]
+        : arrayContent
+            .map((item) => {
+              if (!item || typeof item !== "object") return "";
+              const text = (item as { text?: unknown }).text;
+              return typeof text === "string" ? text : "";
+            })
+            .filter((text) => Boolean(text.trim()));
     const text = normalizeTranscriptText(chunks.join(" "));
+
+    logTranscriptDebug("supadata.raw_response", {
+      videoId,
+      keys: data && typeof data === "object" ? Object.keys(data) : [],
+      contentType: Array.isArray(content) ? "array" : typeof content,
+      contentItems: Array.isArray(content) ? content.length : undefined,
+      contentLength: typeof content === "string" ? content.length : undefined,
+      rawPreview: rawBody.slice(0, 500),
+    });
 
     if (!text) {
       logTranscriptDebug("supadata.empty_response", {
         videoId,
-        contentItems: content.length,
+        contentType: Array.isArray(content) ? "array" : typeof content,
+        contentItems: Array.isArray(content) ? content.length : 0,
       });
       diagnostics.push({
         code: "no_captions",
@@ -261,7 +277,7 @@ async function fetchTranscriptViaSupadata(
       return { ok: false, reason: "no_captions" };
     }
 
-    const chunkLanguage = content.find((item) => {
+    const chunkLanguage = arrayContent.find((item) => {
       if (!item || typeof item !== "object") return false;
       const lang = (item as { lang?: unknown; language?: unknown }).lang;
       const language = (item as { lang?: unknown; language?: unknown }).language;
@@ -288,7 +304,8 @@ async function fetchTranscriptViaSupadata(
       videoId,
       languageCode,
       textLength: text.length,
-      contentItems: content.length,
+      contentType: Array.isArray(content) ? "array" : typeof content,
+      contentItems: Array.isArray(content) ? content.length : undefined,
     });
 
     return { ok: true, text, languageCode };

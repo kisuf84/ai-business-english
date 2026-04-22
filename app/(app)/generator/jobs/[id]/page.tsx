@@ -13,8 +13,48 @@ type JobStatus = {
   lesson_url: string | null;
   title: string | null;
   needs_transcript: boolean;
+  last_error_code?: string | null;
+  last_error_message?: string | null;
   message: string | null;
 };
+
+function getStatusCopy(job: JobStatus) {
+  if (job.status === "queued") {
+    return {
+      title: "✨ Your lesson is in the queue...",
+      body: "We’ll start processing it shortly and email you when it’s ready.",
+    };
+  }
+
+  if (job.status === "processing") {
+    return {
+      title: "✨ Creating your lesson...",
+      body: "We’re turning the video into a structured Business English lesson.",
+    };
+  }
+
+  if (job.status === "ready") {
+    return {
+      title: "Your lesson is ready.",
+      body: "Opening it now...",
+    };
+  }
+
+  if (job.status === "failed") {
+    return {
+      title: "We couldn’t finish this lesson automatically.",
+      body:
+        job.message ||
+        "You can try another YouTube link or paste a transcript if you have one.",
+    };
+  }
+
+  return {
+    title: "Have a transcript? Paste it to finish your lesson.",
+    body:
+      "Some YouTube videos do not expose captions to external tools. If you paste the transcript, we can complete the lesson from here.",
+  };
+}
 
 export default function YouTubeJobPage({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -74,6 +114,15 @@ export default function YouTubeJobPage({ params }: { params: { id: string } }) {
     }
   };
 
+  const statusCopy = job ? getStatusCopy(job) : null;
+  const canContinueWithTranscript =
+    job?.status === "needs_transcript" ||
+    (job?.status === "failed" &&
+      (job.last_error_code === "no_captions" ||
+        job.last_error_code === "captions_disabled" ||
+        job.last_error_code === "unsupported_video" ||
+        job.last_error_code === "transcript_fetch_failed"));
+
   return (
     <section className="mobile-page-shell py-8">
       <div className="mx-auto max-w-[760px]">
@@ -93,26 +142,33 @@ export default function YouTubeJobPage({ params }: { params: { id: string } }) {
             </p>
           ) : null}
 
-          {job?.status === "queued" || job?.status === "processing" ? (
+          {job?.status === "queued" ||
+          job?.status === "processing" ||
+          job?.status === "ready" ? (
             <div className="grid gap-2">
               <p className="text-sm font-medium text-[var(--ink)]">
-                ✨ Creating your lesson...
+                {statusCopy?.title}
               </p>
               <p className="text-sm text-[var(--ink-muted)]">
-                We’ll email you a link as soon as it’s ready.
+                {statusCopy?.body}
               </p>
             </div>
           ) : null}
 
-          {job?.status === "needs_transcript" || job?.status === "failed" ? (
+          {canContinueWithTranscript ? (
             <div className="grid gap-4">
               <div>
                 <p className="text-sm font-medium text-[var(--ink)]">
-                  Have a transcript? Paste it to finish your lesson.
+                  {statusCopy?.title}
                 </p>
                 <p className="mt-1 text-sm text-[var(--ink-muted)]">
-                  We’ll use it to complete the lesson and send you the link.
+                  {statusCopy?.body}
                 </p>
+                {job?.last_error_message ? (
+                  <p className="mt-2 text-xs text-[var(--ink-faint)]">
+                    {job.last_error_message}
+                  </p>
+                ) : null}
               </div>
               <Textarea
                 value={transcript}
@@ -128,6 +184,22 @@ export default function YouTubeJobPage({ params }: { params: { id: string } }) {
               >
                 {isSubmitting ? "Continuing..." : "Continue Lesson"}
               </Button>
+            </div>
+          ) : null}
+
+          {job?.status === "failed" && !canContinueWithTranscript ? (
+            <div className="grid gap-2">
+              <p className="text-sm font-medium text-[var(--ink)]">
+                {statusCopy?.title}
+              </p>
+              <p className="text-sm text-[var(--ink-muted)]">
+                {statusCopy?.body}
+              </p>
+              {job.last_error_message ? (
+                <p className="text-xs text-[var(--ink-faint)]">
+                  {job.last_error_message}
+                </p>
+              ) : null}
             </div>
           ) : null}
 
