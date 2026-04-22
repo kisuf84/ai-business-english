@@ -36,44 +36,62 @@ function isRecoverableTranscriptError(code: string | null | undefined): boolean 
 async function sendReadyEmail(job: YouTubeLessonJob, lessonId: string) {
   if (!job.email) return false;
   const lessonUrl = `${getAppBaseUrl()}/lessons/${lessonId}`;
-  await sendEmail({
-    to: job.email,
-    subject: "Your lesson is ready",
-    html: [
-      "<p>Your Business English lesson is ready.</p>",
-      `<p><a href="${lessonUrl}">Open your lesson</a></p>`,
-    ].join(""),
-  });
-  return true;
+  try {
+    await sendEmail({
+      to: job.email,
+      subject: "Your lesson is ready",
+      html: [
+        "<p>Your Business English lesson is ready.</p>",
+        `<p><a href="${lessonUrl}">Open your lesson</a></p>`,
+      ].join(""),
+    });
+    return true;
+  } catch (error) {
+    console.warn("[youtube-job] ready_email_failed", { id: job.id, error });
+    return false;
+  }
 }
 
 async function sendNeedsTranscriptEmail(job: YouTubeLessonJob) {
   if (!job.email) return false;
   const recoveryUrl = `${getAppBaseUrl()}/generator/jobs/${job.id}`;
-  await sendEmail({
-    to: job.email,
-    subject: "We’re almost done with your lesson",
-    html: [
-      "<p>We’re almost done creating your lesson.</p>",
-      "<p>This video needs a transcript before we can finish it.</p>",
-      `<p><a href="${recoveryUrl}">Paste the transcript and continue</a></p>`,
-    ].join(""),
-  });
-  return true;
+  try {
+    await sendEmail({
+      to: job.email,
+      subject: "We’re almost done with your lesson",
+      html: [
+        "<p>We’re almost done creating your lesson.</p>",
+        "<p>This video needs a transcript before we can finish it.</p>",
+        `<p><a href="${recoveryUrl}">Paste the transcript and continue</a></p>`,
+      ].join(""),
+    });
+    return true;
+  } catch (error) {
+    console.warn("[youtube-job] needs_transcript_email_failed", {
+      id: job.id,
+      error,
+    });
+    return false;
+  }
 }
 
 async function sendFailedEmail(job: YouTubeLessonJob) {
   if (!job.email) return false;
   const recoveryUrl = `${getAppBaseUrl()}/generator/jobs/${job.id}`;
-  await sendEmail({
-    to: job.email,
-    subject: "We couldn’t finish your lesson",
-    html: [
-      "<p>We couldn’t finish this lesson automatically.</p>",
-      `<p>You can still continue here: <a href="${recoveryUrl}">open lesson job</a></p>`,
-    ].join(""),
-  });
-  return true;
+  try {
+    await sendEmail({
+      to: job.email,
+      subject: "We couldn’t finish your lesson",
+      html: [
+        "<p>We couldn’t finish this lesson automatically.</p>",
+        `<p>You can still continue here: <a href="${recoveryUrl}">open lesson job</a></p>`,
+      ].join(""),
+    });
+    return true;
+  } catch (error) {
+    console.warn("[youtube-job] failed_email_failed", { id: job.id, error });
+    return false;
+  }
 }
 
 export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{

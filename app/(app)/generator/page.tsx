@@ -175,6 +175,16 @@ function wait(ms: number) {
   });
 }
 
+function triggerYouTubeJobProcessing() {
+  void fetch("/api/cron/process-youtube-jobs", {
+    method: "GET",
+    cache: "no-store",
+    keepalive: true,
+  }).catch((error) => {
+    console.warn("[youtube-job] immediate processing trigger failed", error);
+  });
+}
+
 type YouTubeJobStatusPayload = {
   status?: string;
   lesson_url?: string | null;
@@ -494,6 +504,7 @@ export default function GeneratorPage() {
         setJobStatusUrl(jobPayload?.status_url || null);
         setYoutubeGenerationState("processing_initial");
         setLessonStage("generating_lesson");
+        triggerYouTubeJobProcessing();
         startYouTubePolling(jobPayload.id);
         startLoadingTimers(jobPayload.id);
         return;
