@@ -34,6 +34,7 @@ function isRecoverableTranscriptError(code: string | null | undefined): boolean 
 }
 
 async function sendReadyEmail(job: YouTubeLessonJob, lessonId: string) {
+  if (!job.email) return false;
   const lessonUrl = `${getAppBaseUrl()}/lessons/${lessonId}`;
   await sendEmail({
     to: job.email,
@@ -43,9 +44,11 @@ async function sendReadyEmail(job: YouTubeLessonJob, lessonId: string) {
       `<p><a href="${lessonUrl}">Open your lesson</a></p>`,
     ].join(""),
   });
+  return true;
 }
 
 async function sendNeedsTranscriptEmail(job: YouTubeLessonJob) {
+  if (!job.email) return false;
   const recoveryUrl = `${getAppBaseUrl()}/generator/jobs/${job.id}`;
   await sendEmail({
     to: job.email,
@@ -56,9 +59,11 @@ async function sendNeedsTranscriptEmail(job: YouTubeLessonJob) {
       `<p><a href="${recoveryUrl}">Paste the transcript and continue</a></p>`,
     ].join(""),
   });
+  return true;
 }
 
 async function sendFailedEmail(job: YouTubeLessonJob) {
+  if (!job.email) return false;
   const recoveryUrl = `${getAppBaseUrl()}/generator/jobs/${job.id}`;
   await sendEmail({
     to: job.email,
@@ -68,6 +73,7 @@ async function sendFailedEmail(job: YouTubeLessonJob) {
       `<p>You can still continue here: <a href="${recoveryUrl}">open lesson job</a></p>`,
     ].join(""),
   });
+  return true;
 }
 
 export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
@@ -111,10 +117,12 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
         });
 
         if (!shouldRetry) {
-          await sendNeedsTranscriptEmail(updated);
-          console.info("[youtube-job] needs_transcript_email_sent", {
-            id: updated.id,
-          });
+          const sent = await sendNeedsTranscriptEmail(updated);
+          if (sent) {
+            console.info("[youtube-job] needs_transcript_email_sent", {
+              id: updated.id,
+            });
+          }
         }
 
         return { id: claimed.id, status };
@@ -167,8 +175,10 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
       lessonId: lesson.id,
     });
 
-    await sendReadyEmail(ready, lesson.id);
-    console.info("[youtube-job] ready_email_sent", { id: ready.id });
+    const readyEmailSent = await sendReadyEmail(ready, lesson.id);
+    if (readyEmailSent) {
+      console.info("[youtube-job] ready_email_sent", { id: ready.id });
+    }
     return { id: ready.id, status: "ready" };
   } catch (error) {
     const message = error instanceof Error ? error.message : "unknown_error";
@@ -185,8 +195,10 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
     });
 
     if (updated.status === "failed") {
-      await sendFailedEmail(updated);
-      console.info("[youtube-job] failed_email_sent", { id: updated.id });
+      const failedEmailSent = await sendFailedEmail(updated);
+      if (failedEmailSent) {
+        console.info("[youtube-job] failed_email_sent", { id: updated.id });
+      }
     }
 
     return { id: updated.id, status: updated.status };

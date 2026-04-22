@@ -11,7 +11,7 @@ import {
 export type CreateYouTubeLessonJobInput = LessonGenerationInput & {
   source_url: string;
   video_id: string;
-  email: string;
+  email?: string | null;
 };
 
 export async function createYouTubeLessonJob(
@@ -26,7 +26,7 @@ export async function createYouTubeLessonJob(
       body: JSON.stringify({
         source_url: input.source_url,
         video_id: input.video_id,
-        email: input.email,
+        email: input.email || null,
         status: "queued",
         topic: input.topic || null,
         level: input.level || null,
@@ -99,6 +99,7 @@ function sanitizePatchForLog(
     Pick<
       YouTubeLessonJob,
       | "status"
+      | "email"
       | "transcript_text"
       | "lesson_id"
       | "title"
@@ -116,6 +117,8 @@ function sanitizePatchForLog(
         : patch.transcript_text === null
         ? null
         : `[${patch.transcript_text.length} chars]`,
+    email:
+      patch.email === undefined ? undefined : patch.email ? "[provided]" : null,
   };
 }
 
@@ -138,6 +141,7 @@ export async function updateYouTubeLessonJob(
     Pick<
       YouTubeLessonJob,
       | "status"
+      | "email"
       | "transcript_text"
       | "lesson_id"
       | "title"

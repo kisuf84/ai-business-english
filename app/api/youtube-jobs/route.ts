@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!isValidEmail(email)) {
+  if (email && !isValidEmail(email)) {
     return NextResponse.json(
       { error: "Please enter a valid email address." },
       { status: 400 }
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
       topic: payload.topic?.trim() || "YouTube lesson",
       source_url: sourceUrl,
       video_id: parsed.videoId,
-      email,
+      email: email || null,
       level: payload.level?.trim() || "B1",
       industry: payload.industry?.trim() || undefined,
       profession: payload.profession?.trim() || undefined,

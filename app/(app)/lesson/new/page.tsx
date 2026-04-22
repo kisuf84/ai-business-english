@@ -37,7 +37,6 @@ type YouTubeGenerationState =
   | "idle"
   | "processing_initial"
   | "processing_extended"
-  | "email_submitted"
   | "needs_transcript"
   | "ready"
   | "failed";
@@ -160,10 +159,6 @@ export default function LessonNewPage() {
   const [generationStage, setGenerationStage] = useState<GenerationStage>("idle");
   const [youtubeGenerationState, setYoutubeGenerationState] =
     useState<YouTubeGenerationState>("idle");
-  const [notificationEmail, setNotificationEmail] = useState("");
-  const [notificationStatus, setNotificationStatus] = useState<
-    "idle" | "error"
-  >("idle");
   const [jobStatusUrl, setJobStatusUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -191,7 +186,6 @@ export default function LessonNewPage() {
     setError(null);
     setResult(null);
     setGenerationStage("generating_lesson");
-    setNotificationStatus("idle");
 
     try {
       const trimmedSourceUrl = form.source_url?.trim() || "";
@@ -206,13 +200,6 @@ export default function LessonNewPage() {
           setError("Please enter a valid YouTube URL.");
           return;
         }
-        if (!notificationEmail.trim()) {
-          setGenerationStage("generation_failed");
-          setYoutubeGenerationState("failed");
-          setNotificationStatus("error");
-          setError("Please enter your email address.");
-          return;
-        }
         setGenerationStage("extracting_transcript");
 
         const jobResponse = await fetch("/api/youtube-jobs", {
@@ -223,7 +210,6 @@ export default function LessonNewPage() {
             source_url: trimmedSourceUrl,
             industry: form.industry?.trim() || undefined,
             profession: form.profession?.trim() || undefined,
-            email: notificationEmail.trim(),
           }),
         });
         const jobPayload = (await jobResponse.json().catch(() => null)) as
@@ -236,7 +222,11 @@ export default function LessonNewPage() {
           return;
         }
         setJobStatusUrl(jobPayload?.status_url || null);
-        setYoutubeGenerationState("email_submitted");
+        if (jobPayload?.status_url) {
+          router.push(jobPayload.status_url);
+          return;
+        }
+        setYoutubeGenerationState("processing_extended");
         setGenerationStage("idle");
         return;
       } else {
@@ -418,24 +408,6 @@ export default function LessonNewPage() {
                 />
               </div>
 
-              {form.source_url?.trim() ? (
-                <div className="grid gap-2">
-                  <label htmlFor="youtube_email" className="text-sm font-medium">
-                    Email
-                  </label>
-                  <Input
-                    id="youtube_email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={notificationEmail}
-                    onChange={(event) => {
-                      setNotificationEmail(event.target.value);
-                      setNotificationStatus("idle");
-                    }}
-                  />
-                </div>
-              ) : null}
-
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="grid gap-2">
                   <label htmlFor="level" className="text-sm font-medium">
@@ -509,24 +481,18 @@ export default function LessonNewPage() {
                 >
                   {isGenerating ? "Generating..." : "Generate Lesson"}
                 </Button>
-                {isGenerating || youtubeGenerationState === "email_submitted" ? (
+                {isGenerating ? (
                   <div className="grid gap-2 text-xs text-[var(--ink-faint)]">
                     <p>
                       {youtubeGenerationState === "processing_extended"
                         ? "✨ Still working on your lesson..."
-                        : youtubeGenerationState === "email_submitted"
-                          ? "✨ Still working on your lesson..."
                         : youtubeGenerationState === "processing_initial"
                           ? "✨ Creating your lesson..."
                           : "Generating lesson..."}
                     </p>
-                    {youtubeGenerationState === "email_submitted" ? (
-                      <div className="grid max-w-sm gap-1">
-                        <p className="font-medium text-[var(--ink)]">
-                          ✅ You’re all set.
-                        </p>
-                        <p>We’ll send your lesson as soon as it’s ready.</p>
-                        <p>You can leave this page — we’ve got it from here.</p>
+                    {youtubeGenerationState === "processing_extended" ? (
+                      <div className="grid max-w-sm gap-2">
+                        <p>This can take a little longer for some videos.</p>
                         {jobStatusUrl ? (
                           <a
                             href={jobStatusUrl}
@@ -534,16 +500,6 @@ export default function LessonNewPage() {
                           >
                             View lesson status
                           </a>
-                        ) : null}
-                      </div>
-                    ) : null}
-                    {youtubeGenerationState === "processing_extended" ? (
-                      <div className="grid max-w-sm gap-2">
-                        <p>We’ll send you a link as soon as it’s ready.</p>
-                        {notificationStatus === "error" ? (
-                          <p className="text-[var(--accent-warm)]">
-                            Please enter a valid email address.
-                          </p>
                         ) : null}
                       </div>
                     ) : null}

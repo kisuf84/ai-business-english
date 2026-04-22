@@ -20,7 +20,7 @@ create table if not exists public.youtube_lesson_jobs (
   id uuid primary key default gen_random_uuid(),
   source_url text not null,
   video_id text not null,
-  email text not null,
+  email text null,
   status text not null default 'queued',
   transcript_text text null,
   lesson_id uuid null references public.lessons(id) on delete set null,
