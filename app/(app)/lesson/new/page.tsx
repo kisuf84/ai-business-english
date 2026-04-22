@@ -16,6 +16,7 @@ import type {
 } from "../../../../types/lesson";
 import { parseYouTubeVideoId } from "../../../../lib/youtube/url";
 import { validateLessonOutputPayload } from "../../../../lib/validators/lesson";
+import { detectLessonSource } from "../../../../lib/content/sourceDetection";
 
 const initialForm: LessonGenerationInput = {
   topic: "",
@@ -162,6 +163,7 @@ function triggerYouTubeJobProcessing() {
 export default function LessonNewPage() {
   const router = useRouter();
   const [form, setForm] = useState<LessonGenerationInput>(initialForm);
+  const [sourceInput, setSourceInput] = useState("");
   const [result, setResult] = useState<LessonGenerationOutput | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -199,12 +201,21 @@ export default function LessonNewPage() {
 
     try {
       const trimmedSourceUrl = form.source_url?.trim() || "";
-      const isYouTubeGeneration = Boolean(trimmedSourceUrl);
+      const trimmedSourceInput = sourceInput.trim() || trimmedSourceUrl;
+      const detectedSource = trimmedSourceInput
+        ? detectLessonSource(trimmedSourceInput)
+        : null;
+      const sourceUrl =
+        detectedSource?.type === "youtube_url" ||
+        detectedSource?.type === "generic_url"
+          ? detectedSource.normalizedUrl || trimmedSourceInput
+          : "";
+      const isYouTubeGeneration = detectedSource?.type === "youtube_url";
       const generationStartedAt = Date.now();
-      if (trimmedSourceUrl) {
+      if (isYouTubeGeneration) {
         setYoutubeGenerationState("processing_initial");
         setGenerationStage("validating_url");
-        if (!parseYouTubeVideoId(trimmedSourceUrl)) {
+        if (!parseYouTubeVideoId(sourceUrl)) {
           setGenerationStage("generation_failed");
           setYoutubeGenerationState("failed");
           setError("Please enter a valid YouTube URL.");
@@ -217,7 +228,7 @@ export default function LessonNewPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             ...form,
-            source_url: trimmedSourceUrl,
+            source_url: sourceUrl,
             industry: form.industry?.trim() || undefined,
             profession: form.profession?.trim() || undefined,
           }),
@@ -254,7 +265,9 @@ export default function LessonNewPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             ...form,
-            source_url: form.source_url?.trim() || undefined,
+            source_url: sourceUrl || undefined,
+            source_text:
+              detectedSource?.type === "raw_text" ? trimmedSourceInput : undefined,
             industry: form.industry?.trim() || undefined,
             profession: form.profession?.trim() || undefined,
             transcript_attempt: transcriptAttempt,
@@ -321,6 +334,10 @@ export default function LessonNewPage() {
     setError(null);
 
     try {
+      const trimmedSourceInput = sourceInput.trim();
+      const savedSource = trimmedSourceInput
+        ? detectLessonSource(trimmedSourceInput)
+        : null;
       const previewLesson = JSON.parse(
         JSON.stringify(result)
       ) as LessonGenerationOutput;
@@ -336,7 +353,14 @@ export default function LessonNewPage() {
         body: JSON.stringify({
           input: {
             ...form,
-            source_url: form.source_url?.trim() || undefined,
+            source_url:
+              savedSource && savedSource.type !== "raw_text"
+                ? savedSource.normalizedUrl || trimmedSourceInput
+                : undefined,
+            source_text:
+              savedSource?.type === "raw_text"
+                ? trimmedSourceInput
+                : undefined,
             industry: form.industry?.trim() || undefined,
             profession: form.profession?.trim() || undefined,
           },
@@ -401,21 +425,19 @@ export default function LessonNewPage() {
                   placeholder="e.g. Project kickoff meeting"
                   value={form.topic}
                   onChange={(event) => handleChange("topic", event.target.value)}
-                  required
                 />
               </div>
 
               <div className="grid gap-2">
-                <label htmlFor="source_url" className="text-sm font-medium">
-                  Source URL (optional)
+                <label htmlFor="source_input" className="text-sm font-medium">
+                  Source URL or text (optional)
                 </label>
-                <Input
-                  id="source_url"
-                  placeholder="https://..."
-                  value={form.source_url}
-                  onChange={(event) =>
-                    handleChange("source_url", event.target.value)
-                  }
+                <Textarea
+                  id="source_input"
+                  placeholder="Paste a YouTube link, article link, or source text"
+                  value={sourceInput}
+                  onChange={(event) => setSourceInput(event.target.value)}
+                  rows={5}
                 />
               </div>
 

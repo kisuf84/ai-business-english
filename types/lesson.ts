@@ -1,6 +1,7 @@
 export type LessonGenerationInput = {
   topic: string;
   source_url?: string;
+  source_text?: string;
   level: string;
   industry?: string;
   profession?: string;
@@ -36,10 +37,11 @@ export type LessonGenerationOutput = {
 };
 
 export type LessonSourceMeta = {
-  source_kind: "youtube_transcript" | "manual";
+  source_kind: "youtube_transcript" | "webpage" | "raw_text" | "manual";
   source_url?: string | null;
   video_id?: string | null;
   transcript_language?: string | null;
+  title?: string | null;
 };
 
 export type LessonGenerationApiResponse = LessonGenerationOutput & {
@@ -61,6 +63,7 @@ export type LessonGenerationApiErrorCode =
   | "transcript_fetch_failed"
   | "unsupported_video"
   | "unknown_error"
+  | "source_extraction_failed"
   | "generation_failed";
 
 export type LessonGenerationApiError = {

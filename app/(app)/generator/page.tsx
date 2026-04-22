@@ -17,6 +17,7 @@ import type {
 import { parseYouTubeVideoId } from "../../../lib/youtube/url";
 import { validateLessonOutputPayload } from "../../../lib/validators/lesson";
 import { getSupabaseBrowserClient } from "../../../lib/supabase/client";
+import { detectLessonSource } from "../../../lib/content/sourceDetection";
 
 type LessonGenerationStage =
   | "idle"
@@ -197,6 +198,7 @@ export default function GeneratorPage() {
 
   const [lessonForm, setLessonForm] =
     useState<LessonGenerationInput>(initialLessonForm);
+  const [sourceInput, setSourceInput] = useState("");
   const [lessonResult, setLessonResult] = useState<LessonGenerationOutput | null>(
     null
   );
@@ -450,16 +452,26 @@ export default function GeneratorPage() {
     clearYoutubeTimers();
 
     try {
-      const trimmedSourceUrl = lessonForm.source_url?.trim() || "";
+      const trimmedSourceInput = sourceInput.trim();
       const trimmedManualTranscript = manualTranscript.trim();
-      const isYouTubeGeneration = Boolean(trimmedSourceUrl && !trimmedManualTranscript);
+      const detectedSource = trimmedSourceInput
+        ? detectLessonSource(trimmedSourceInput)
+        : null;
+      const sourceUrl =
+        detectedSource?.type === "youtube_url" ||
+        detectedSource?.type === "generic_url"
+          ? detectedSource.normalizedUrl || trimmedSourceInput
+          : "";
+      const isYouTubeGeneration = Boolean(
+        detectedSource?.type === "youtube_url" && !trimmedManualTranscript
+      );
 
-      if (trimmedSourceUrl && !trimmedManualTranscript) {
+      if (isYouTubeGeneration) {
         setIsGenerating(true);
         setLoadingPhase("generating");
         setYoutubeGenerationState("processing_initial");
         setLessonStage("validating_url");
-        if (!parseYouTubeVideoId(trimmedSourceUrl)) {
+        if (!parseYouTubeVideoId(sourceUrl)) {
           clearYoutubeTimers();
           setIsGenerating(false);
           setLessonStage("generation_failed");
@@ -475,7 +487,7 @@ export default function GeneratorPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             ...lessonForm,
-            source_url: trimmedSourceUrl,
+            source_url: sourceUrl,
             industry: lessonForm.industry?.trim() || undefined,
             profession: lessonForm.profession?.trim() || undefined,
           }),
@@ -522,7 +534,11 @@ export default function GeneratorPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             ...lessonForm,
-            source_url: lessonForm.source_url?.trim() || undefined,
+            source_url: sourceUrl || undefined,
+            source_text:
+              detectedSource?.type === "raw_text" && !trimmedManualTranscript
+                ? trimmedSourceInput
+                : undefined,
             industry: lessonForm.industry?.trim() || undefined,
             profession: lessonForm.profession?.trim() || undefined,
             manual_source_text: trimmedManualTranscript || undefined,
@@ -632,6 +648,10 @@ export default function GeneratorPage() {
     setLessonError(null);
 
     try {
+      const trimmedSourceInput = sourceInput.trim();
+      const savedSource = trimmedSourceInput
+        ? detectLessonSource(trimmedSourceInput)
+        : null;
       const previewLesson = JSON.parse(
         JSON.stringify(lessonResult)
       ) as LessonGenerationOutput;
@@ -647,7 +667,14 @@ export default function GeneratorPage() {
         body: JSON.stringify({
           input: {
             ...lessonForm,
-            source_url: lessonForm.source_url?.trim() || undefined,
+            source_url:
+              savedSource && savedSource.type !== "raw_text"
+                ? savedSource.normalizedUrl || trimmedSourceInput
+                : undefined,
+            source_text:
+              savedSource?.type === "raw_text"
+                ? trimmedSourceInput
+                : undefined,
             industry: lessonForm.industry?.trim() || undefined,
             profession: lessonForm.profession?.trim() || undefined,
           },
@@ -741,22 +768,24 @@ export default function GeneratorPage() {
                       onChange={(event) =>
                         handleLessonChange("topic", event.target.value)
                       }
-                      required
                     />
                   </div>
 
                   <div className="grid gap-2">
-                    <label htmlFor="source_url" className="text-sm font-medium">
-                      Source URL (optional)
+                    <label htmlFor="source_input" className="text-sm font-medium">
+                      Source URL or text (optional)
                     </label>
-                    <Input
-                      id="source_url"
-                      placeholder="https://www.youtube.com/watch?v=..."
-                      value={lessonForm.source_url}
-                      onChange={(event) =>
-                        handleLessonChange("source_url", event.target.value)
-                      }
+                    <Textarea
+                      id="source_input"
+                      placeholder="Paste a YouTube link, article link, or source text"
+                      value={sourceInput}
+                      onChange={(event) => setSourceInput(event.target.value)}
+                      rows={5}
                     />
+                    <p className="text-xs text-[var(--ink-faint)]">
+                      YouTube links use the transcript pipeline. Article links and
+                      pasted text generate directly.
+                    </p>
                   </div>
 
                   {youtubeGenerationState === "needs_transcript" ||

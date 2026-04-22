@@ -67,7 +67,7 @@ function isLessonQuestion(value: unknown): value is LessonQuestion {
 export function buildLessonPrompt(params: {
   input: LessonGenerationInput;
   sourceText: string;
-  sourceKind: "youtube_transcript" | "manual";
+  sourceKind: "youtube_transcript" | "webpage" | "raw_text" | "manual";
   videoId?: string | null;
 }): string {
   const { input, sourceText, sourceKind, videoId } = params;

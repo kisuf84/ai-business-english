@@ -17,9 +17,10 @@ export function validateLessonPayload(
 
   const hasTopic = Boolean(payload.topic?.trim());
   const hasSourceUrl = Boolean(payload.source_url?.trim());
+  const hasSourceText = Boolean(payload.source_text?.trim());
 
-  if (!hasTopic && !hasSourceUrl) {
-    errors.push("Topic or source URL is required.");
+  if (!hasTopic && !hasSourceUrl && !hasSourceText) {
+    errors.push("Topic, source URL, or source text is required.");
   }
 
   if (!payload.level?.trim()) {
