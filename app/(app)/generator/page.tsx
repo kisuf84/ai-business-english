@@ -32,10 +32,11 @@ type YouTubeGenerationState =
   | "needs_transcript"
   | "ready"
   | "failed";
+type LoadingPhase = "generating" | "almost_there" | "fallback";
 
-const YOUTUBE_EXTENDED_DELAY_MS = 7000;
+const YOUTUBE_ALMOST_THERE_DELAY_MS = 6000;
 const YOUTUBE_POLL_INTERVAL_MS = 2000;
-const YOUTUBE_FALLBACK_DELAY_MS = 8000;
+const YOUTUBE_FALLBACK_DELAY_MS = 12000;
 
 const initialLessonForm: LessonGenerationInput = {
   topic: "",
@@ -174,6 +175,13 @@ function wait(ms: number) {
   });
 }
 
+type YouTubeJobStatusPayload = {
+  status?: string;
+  lesson_url?: string | null;
+  message?: string | null;
+  error?: string;
+};
+
 export default function GeneratorPage() {
   const router = useRouter();
 
@@ -192,6 +200,7 @@ export default function GeneratorPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [jobId, setJobId] = useState<string | null>(null);
   const [showFallback, setShowFallback] = useState(false);
+  const [loadingPhase, setLoadingPhase] = useState<LoadingPhase>("generating");
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [notificationStatus, setNotificationStatus] = useState<
@@ -200,6 +209,7 @@ export default function GeneratorPage() {
   const [jobStatusUrl, setJobStatusUrl] = useState<string | null>(null);
   const [manualTranscript, setManualTranscript] = useState("");
   const pollingIntervalRef = useRef<number | null>(null);
+  const almostThereTimeoutRef = useRef<number | null>(null);
   const fallbackTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -226,28 +236,23 @@ export default function GeneratorPage() {
       if (pollingIntervalRef.current) {
         window.clearInterval(pollingIntervalRef.current);
       }
+      if (almostThereTimeoutRef.current) {
+        window.clearTimeout(almostThereTimeoutRef.current);
+      }
       if (fallbackTimeoutRef.current) {
         window.clearTimeout(fallbackTimeoutRef.current);
       }
     };
   }, []);
 
-  useEffect(() => {
-    if (youtubeGenerationState !== "processing_initial") return;
-
-    const timeout = window.setTimeout(() => {
-      setYoutubeGenerationState((current) =>
-        current === "processing_initial" ? "processing_extended" : current
-      );
-    }, YOUTUBE_EXTENDED_DELAY_MS);
-
-    return () => window.clearTimeout(timeout);
-  }, [youtubeGenerationState]);
-
   const clearYoutubeTimers = () => {
     if (pollingIntervalRef.current) {
       window.clearInterval(pollingIntervalRef.current);
       pollingIntervalRef.current = null;
+    }
+    if (almostThereTimeoutRef.current) {
+      window.clearTimeout(almostThereTimeoutRef.current);
+      almostThereTimeoutRef.current = null;
     }
     if (fallbackTimeoutRef.current) {
       window.clearTimeout(fallbackTimeoutRef.current);
@@ -262,46 +267,57 @@ export default function GeneratorPage() {
     setLessonForm((prev) => ({ ...prev, [field]: value }));
   };
 
+  const fetchYouTubeJobStatus = async (
+    nextJobId: string
+  ): Promise<YouTubeJobStatusPayload> => {
+    const response = await fetch(`/api/youtube-jobs/${nextJobId}`, {
+      cache: "no-store",
+    });
+    const payload = (await response.json().catch(() => null)) as
+      | YouTubeJobStatusPayload
+      | null;
+
+    if (!response.ok) {
+      throw new Error(payload?.error || "We couldn’t check your lesson status.");
+    }
+
+    return payload || {};
+  };
+
+  const handleYouTubeJobStatus = (
+    payload: YouTubeJobStatusPayload
+  ): boolean => {
+    if (payload.status === "ready" && payload.lesson_url) {
+      clearYoutubeTimers();
+      setYoutubeGenerationState("ready");
+      setIsGenerating(false);
+      setIsLessonGenerating(false);
+      setShowFallback(false);
+      router.push(payload.lesson_url);
+      return true;
+    }
+
+    if (payload.status === "needs_transcript") {
+      clearYoutubeTimers();
+      setIsGenerating(false);
+      setIsLessonGenerating(false);
+      setLessonStage("transcript_unavailable");
+      setYoutubeGenerationState("needs_transcript");
+      setShowFallback(false);
+      return true;
+    }
+
+    if (payload.status === "failed") {
+      throw new Error(payload.message || "We couldn’t finish this lesson automatically.");
+    }
+
+    return false;
+  };
+
   const pollYouTubeJob = async (nextJobId: string) => {
     try {
-      const response = await fetch(`/api/youtube-jobs/${nextJobId}`, {
-        cache: "no-store",
-      });
-      const payload = (await response.json().catch(() => null)) as
-        | {
-            status?: string;
-            lesson_url?: string | null;
-            message?: string | null;
-            error?: string;
-          }
-        | null;
-
-      if (!response.ok) {
-        throw new Error(payload?.error || "We couldn’t check your lesson status.");
-      }
-
-      if (payload?.status === "ready" && payload.lesson_url) {
-        clearYoutubeTimers();
-        setYoutubeGenerationState("ready");
-        setIsGenerating(false);
-        setIsLessonGenerating(false);
-        router.push(payload.lesson_url);
-        return;
-      }
-
-      if (payload?.status === "needs_transcript") {
-        clearYoutubeTimers();
-        setIsGenerating(false);
-        setIsLessonGenerating(false);
-        setLessonStage("transcript_unavailable");
-        setYoutubeGenerationState("needs_transcript");
-        setShowFallback(true);
-        return;
-      }
-
-      if (payload?.status === "failed") {
-        throw new Error(payload.message || "We couldn’t finish this lesson automatically.");
-      }
+      const payload = await fetchYouTubeJobStatus(nextJobId);
+      handleYouTubeJobStatus(payload);
     } catch (pollError) {
       clearYoutubeTimers();
       const message =
@@ -327,16 +343,46 @@ export default function GeneratorPage() {
     }, YOUTUBE_POLL_INTERVAL_MS);
   };
 
-  const startFallbackTimer = () => {
+  const startLoadingTimers = (nextJobId: string) => {
+    if (almostThereTimeoutRef.current) {
+      window.clearTimeout(almostThereTimeoutRef.current);
+    }
     if (fallbackTimeoutRef.current) {
       window.clearTimeout(fallbackTimeoutRef.current);
     }
 
-    fallbackTimeoutRef.current = window.setTimeout(() => {
-      setShowFallback(true);
+    almostThereTimeoutRef.current = window.setTimeout(() => {
+      setLoadingPhase("almost_there");
       setYoutubeGenerationState((current) =>
         current === "processing_initial" ? "processing_extended" : current
       );
+    }, YOUTUBE_ALMOST_THERE_DELAY_MS);
+
+    fallbackTimeoutRef.current = window.setTimeout(() => {
+      void (async () => {
+        try {
+          const payload = await fetchYouTubeJobStatus(nextJobId);
+          if (handleYouTubeJobStatus(payload)) return;
+
+          setLoadingPhase("fallback");
+          setShowFallback(true);
+          setYoutubeGenerationState((current) =>
+            current === "processing_initial" ? "processing_extended" : current
+          );
+        } catch (fallbackError) {
+          clearYoutubeTimers();
+          const message =
+            fallbackError instanceof Error
+              ? fallbackError.message
+              : "We couldn’t check your lesson status.";
+          setError(message);
+          setLessonError(message);
+          setLessonStage("generation_failed");
+          setYoutubeGenerationState("failed");
+          setIsGenerating(false);
+          setIsLessonGenerating(false);
+        }
+      })();
     }, YOUTUBE_FALLBACK_DELAY_MS);
   };
 
@@ -390,6 +436,7 @@ export default function GeneratorPage() {
     setLessonStage("generating_lesson");
     setNotificationStatus("idle");
     setShowFallback(false);
+    setLoadingPhase("generating");
     clearYoutubeTimers();
 
     try {
@@ -399,6 +446,7 @@ export default function GeneratorPage() {
 
       if (trimmedSourceUrl && !trimmedManualTranscript) {
         setIsGenerating(true);
+        setLoadingPhase("generating");
         setYoutubeGenerationState("processing_initial");
         setLessonStage("validating_url");
         if (!parseYouTubeVideoId(trimmedSourceUrl)) {
@@ -447,7 +495,7 @@ export default function GeneratorPage() {
         setYoutubeGenerationState("processing_initial");
         setLessonStage("generating_lesson");
         startYouTubePolling(jobPayload.id);
-        startFallbackTimer();
+        startLoadingTimers(jobPayload.id);
         return;
       } else {
         setYoutubeGenerationState("idle");
@@ -651,7 +699,9 @@ export default function GeneratorPage() {
                       <span className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--accent)]" />
                       <div>
                         <p className="text-sm font-semibold text-[var(--ink)]">
-                          Generating your lesson...
+                          {loadingPhase === "almost_there"
+                            ? "We’re almost there..."
+                            : "Generating your lesson..."}
                         </p>
                         <p className="text-xs text-[var(--ink-faint)]">
                           We are checking the video and preparing the lesson.
@@ -820,7 +870,7 @@ export default function GeneratorPage() {
                   <div className="grid gap-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-card)] p-4 transition-all duration-300">
                     <div>
                       <p className="text-sm font-semibold text-[var(--ink)]">
-                        This is taking longer than expected...
+                        We’re building your lesson. This might take a moment.
                       </p>
                       <p className="mt-1 text-xs text-[var(--ink-faint)]">
                         You can leave this page open while we keep checking, or add
@@ -852,7 +902,7 @@ export default function GeneratorPage() {
                         onClick={handleEmailWhenReady}
                         className="w-full rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-5 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55] sm:w-auto"
                       >
-                        Email me when ready
+                        Get notified when it’s ready
                       </Button>
                       {jobStatusUrl ? (
                         <a
