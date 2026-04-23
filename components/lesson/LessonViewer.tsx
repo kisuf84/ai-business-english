@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback, useMemo, type CSSProperties } from "react";
-import type { LessonGenerationOutput } from "../../types/lesson";
+import { useState, useCallback, useEffect, useMemo, type CSSProperties } from "react";
+import type { LessonGenerationOutput, LessonQuestion } from "../../types/lesson";
 import { useTheme } from "../../context/ThemeContext";
 import VocabCard from "./VocabCard";
 import QuestionCard from "./QuestionCard";
@@ -12,54 +12,167 @@ type Tab = {
   label: string;
 };
 
-const TABS: Tab[] = [
-  { id: "vocabulary", label: "Vocabulary" },
+const REQUIRED_TABS: Tab[] = [
+  { id: "word_bank", label: "Word Bank" },
   { id: "reading", label: "Reading Text" },
-  { id: "comprehension", label: "Comprehension" },
+  { id: "comprehension", label: "Reading Comprehension" },
+  { id: "vocabulary_exercise", label: "Vocabulary Exercise" },
   { id: "grammar", label: "Grammar" },
-  { id: "roleplay", label: "Role Play" },
-  { id: "quiz", label: "Quiz" },
+  { id: "final_assessment", label: "Final Assessment" },
 ];
 
+type QuestionSection =
+  | "comprehension"
+  | "vocabulary_exercise"
+  | "grammar"
+  | "final_assessment";
+
 type AnswerMap = Record<string, number>;
-type QuestionSection = "comprehension" | "grammar" | "quiz";
 type ValidationNoticeMap = Record<QuestionSection, string | null>;
 
 type LessonViewerProps = {
   lesson: LessonGenerationOutput;
 };
 
+function formatMissingQuestionList(numbers: number[]) {
+  if (numbers.length === 1) return String(numbers[0]);
+  if (numbers.length === 2) return `${numbers[0]} and ${numbers[1]}`;
+  return `${numbers.slice(0, -1).join(", ")}, and ${numbers[numbers.length - 1]}`;
+}
+
+function splitReadingIntoParagraphs(text: string): string[] {
+  const normalized = text.replace(/\r\n/g, "\n").trim();
+  if (!normalized) return [];
+
+  const paragraphs = normalized
+    .split(/\n\s*\n/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  if (paragraphs.length > 0) {
+    return paragraphs;
+  }
+
+  return [normalized];
+}
+
+function getQuestionsBySection(lesson: LessonGenerationOutput): Record<QuestionSection, LessonQuestion[]> {
+  return {
+    comprehension: lesson.reading_comprehension,
+    vocabulary_exercise: lesson.vocabulary_exercise,
+    grammar: lesson.grammar,
+    final_assessment: lesson.final_assessment,
+  };
+}
+
 export default function LessonViewer({ lesson }: LessonViewerProps) {
   const { theme } = useTheme();
+<<<<<<< HEAD
   const [activeTab, setActiveTab] = useState("vocabulary");
   const sectionPaddingX = "clamp(16px, 4vw, 28px)";
+=======
+  const [activeTab, setActiveTab] = useState("word_bank");
+  const sectionPaddingX = "28px";
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
 
-  const [compAnswers, setCompAnswers] = useState<AnswerMap>({});
-  const [compSubmitted, setCompSubmitted] = useState(false);
-
-  const [grammarAnswers, setGrammarAnswers] = useState<AnswerMap>({});
-  const [grammarSubmitted, setGrammarSubmitted] = useState(false);
-
-  const [quizAnswers, setQuizAnswers] = useState<AnswerMap>({});
-  const [quizSubmitted, setQuizSubmitted] = useState(false);
+  const [answers, setAnswers] = useState<Record<QuestionSection, AnswerMap>>({
+    comprehension: {},
+    vocabulary_exercise: {},
+    grammar: {},
+    final_assessment: {},
+  });
+  const [submitted, setSubmitted] = useState<Record<QuestionSection, boolean>>({
+    comprehension: false,
+    vocabulary_exercise: false,
+    grammar: false,
+    final_assessment: false,
+  });
   const [validationNotice, setValidationNotice] = useState<ValidationNoticeMap>({
     comprehension: null,
+    vocabulary_exercise: null,
     grammar: null,
-    quiz: null,
+    final_assessment: null,
   });
 
-  const formatMissingQuestionList = (numbers: number[]) => {
-    if (numbers.length === 1) return String(numbers[0]);
-    if (numbers.length === 2) return `${numbers[0]} and ${numbers[1]}`;
-    return `${numbers.slice(0, -1).join(", ")}, and ${numbers[numbers.length - 1]}`;
+  const readingParagraphs = splitReadingIntoParagraphs(lesson.reading_text);
+  const hasListening = Boolean(lesson.listening?.trim());
+  const tabs: Tab[] = hasListening
+    ? [...REQUIRED_TABS, { id: "listening", label: "Listening" }]
+    : REQUIRED_TABS;
+  const sectionQuestions = getQuestionsBySection(lesson);
+  const schemaIssues = useMemo(() => {
+    const issues: string[] = [];
+    if (lesson.word_bank.length !== 12) {
+      issues.push(`Word Bank count is ${lesson.word_bank.length}; expected 12.`);
+    }
+    if (readingParagraphs.length < 3) {
+      issues.push(`Reading Text has ${readingParagraphs.length} paragraphs; expected at least 3.`);
+    }
+    if (lesson.reading_comprehension.length !== 8) {
+      issues.push(
+        `Reading Comprehension count is ${lesson.reading_comprehension.length}; expected 8.`
+      );
+    }
+    if (lesson.vocabulary_exercise.length === 0) {
+      issues.push("Vocabulary Exercise is missing.");
+    }
+    if (lesson.grammar.length !== 8) {
+      issues.push(`Grammar count is ${lesson.grammar.length}; expected 8.`);
+    }
+    if (lesson.final_assessment.length < 15) {
+      issues.push(
+        `Final Assessment count is ${lesson.final_assessment.length}; expected at least 15.`
+      );
+    }
+    return issues;
+  }, [
+    lesson.final_assessment.length,
+    lesson.grammar.length,
+    lesson.reading_comprehension.length,
+    lesson.vocabulary_exercise.length,
+    lesson.word_bank.length,
+    readingParagraphs.length,
+  ]);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production" && schemaIssues.length > 0) {
+      console.warn("[LessonViewer] Required lesson schema issues detected", schemaIssues);
+    }
+  }, [schemaIssues]);
+
+  const computeScore = useCallback(
+    (section: QuestionSection) => {
+      if (!submitted[section]) return null;
+      const questions = sectionQuestions[section];
+      let correct = 0;
+      questions.forEach((q) => {
+        if (answers[section][q.id] === q.correct_index) {
+          correct += 1;
+        }
+      });
+      return { correct, total: questions.length };
+    },
+    [answers, sectionQuestions, submitted]
+  );
+
+  const sectionScores = {
+    comprehension: useMemo(() => computeScore("comprehension"), [computeScore]),
+    vocabulary_exercise: useMemo(
+      () => computeScore("vocabulary_exercise"),
+      [computeScore]
+    ),
+    grammar: useMemo(() => computeScore("grammar"), [computeScore]),
+    final_assessment: useMemo(
+      () => computeScore("final_assessment"),
+      [computeScore]
+    ),
   };
 
-  const buildMissingQuestionMessage = (numbers: number[]) => {
-    if (numbers.length === 1) {
-      return `Please answer Question ${numbers[0]} before submitting.`;
-    }
-    return `You still need to answer Questions ${formatMissingQuestionList(numbers)}.`;
-  };
+  const resetSection = useCallback((section: QuestionSection) => {
+    setAnswers((prev) => ({ ...prev, [section]: {} }));
+    setSubmitted((prev) => ({ ...prev, [section]: false }));
+    setValidationNotice((prev) => ({ ...prev, [section]: null }));
+  }, []);
 
   const getQuestionAnchorId = (section: QuestionSection, questionNumber: number) =>
     `${section}-question-${questionNumber}`;
@@ -77,92 +190,25 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
     }
   };
 
-  const compScore = useMemo(() => {
-    if (!compSubmitted) return null;
-    let correct = 0;
-    lesson.comprehension_questions.forEach((q) => {
-      if (compAnswers[q.id] === q.correct_index) correct++;
-    });
-    return { correct, total: lesson.comprehension_questions.length };
-  }, [compSubmitted, compAnswers, lesson.comprehension_questions]);
-
-  const grammarScore = useMemo(() => {
-    if (!grammarSubmitted) return null;
-    let correct = 0;
-    lesson.grammar_exercises.forEach((q) => {
-      if (grammarAnswers[q.id] === q.correct_index) correct++;
-    });
-    return { correct, total: lesson.grammar_exercises.length };
-  }, [grammarSubmitted, grammarAnswers, lesson.grammar_exercises]);
-
-  const quizScore = useMemo(() => {
-    if (!quizSubmitted) return null;
-    let correct = 0;
-    lesson.quiz.forEach((q) => {
-      if (quizAnswers[q.id] === q.correct_index) correct++;
-    });
-    return { correct, total: lesson.quiz.length };
-  }, [quizSubmitted, quizAnswers, lesson.quiz]);
-
-  const resetSection = useCallback((section: "comprehension" | "grammar" | "quiz") => {
-    if (section === "comprehension") {
-      setCompAnswers({});
-      setCompSubmitted(false);
-    } else if (section === "grammar") {
-      setGrammarAnswers({});
-      setGrammarSubmitted(false);
-    } else {
-      setQuizAnswers({});
-      setQuizSubmitted(false);
-    }
-    setValidationNotice((prev) => ({ ...prev, [section]: null }));
-  }, []);
-
-  const compAllAnswered = lesson.comprehension_questions.every(
-    (q) => compAnswers[q.id] !== undefined
-  );
-  const missingCompQuestions = lesson.comprehension_questions
-    .map((q, index) => ({ id: q.id, number: index + 1 }))
-    .filter((q) => compAnswers[q.id] === undefined)
-    .map((q) => q.number);
-
-  const grammarAllAnswered = lesson.grammar_exercises.every(
-    (q) => grammarAnswers[q.id] !== undefined
-  );
-  const missingGrammarQuestions = lesson.grammar_exercises
-    .map((q, index) => ({ id: q.id, number: index + 1 }))
-    .filter((q) => grammarAnswers[q.id] === undefined)
-    .map((q) => q.number);
-
-  const quizAllAnswered = lesson.quiz.every(
-    (q) => quizAnswers[q.id] !== undefined
-  );
-  const missingQuizQuestions = lesson.quiz
-    .map((q, index) => ({ id: q.id, number: index + 1 }))
-    .filter((q) => quizAnswers[q.id] === undefined)
-    .map((q) => q.number);
-
-  const handleSectionSubmit = (section: QuestionSection) => {
-    const missingBySection: Record<QuestionSection, number[]> = {
-      comprehension: missingCompQuestions,
-      grammar: missingGrammarQuestions,
-      quiz: missingQuizQuestions,
-    };
-    const missing = missingBySection[section];
+  const submitSection = (section: QuestionSection) => {
+    const questions = sectionQuestions[section];
+    const missing = questions
+      .map((q, index) => ({ id: q.id, number: index + 1 }))
+      .filter((item) => answers[section][item.id] === undefined)
+      .map((item) => item.number);
 
     if (missing.length > 0) {
-      setValidationNotice((prev) => ({
-        ...prev,
-        [section]: buildMissingQuestionMessage(missing),
-      }));
+      const message =
+        missing.length === 1
+          ? `Please answer Question ${missing[0]} before submitting.`
+          : `You still need to answer Questions ${formatMissingQuestionList(missing)}.`;
+      setValidationNotice((prev) => ({ ...prev, [section]: message }));
       scrollToFirstMissingQuestion(section, missing[0]);
       return;
     }
 
     setValidationNotice((prev) => ({ ...prev, [section]: null }));
-    if (section === "comprehension") setCompSubmitted(true);
-    if (section === "grammar") setGrammarSubmitted(true);
-    if (section === "quiz") setQuizSubmitted(true);
+    setSubmitted((prev) => ({ ...prev, [section]: true }));
   };
 
   const submitButtonStyle = (allAnswered: boolean): CSSProperties => ({
@@ -179,35 +225,113 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
     boxShadow: allAnswered ? theme.shadow.sm : "none",
   });
 
-  const splitReadingIntoParagraphs = (text: string): string[] => {
-    const normalized = text.replace(/\r\n/g, "\n").trim();
-    if (!normalized) return [];
+  const renderQuestionSection = (
+    section: QuestionSection,
+    title: string,
+    subtitle: string
+  ) => {
+    const questions = sectionQuestions[section];
+    const sectionAnswers = answers[section];
+    const allAnswered =
+      questions.length > 0 &&
+      questions.every((q) => sectionAnswers[q.id] !== undefined);
+    const isSubmitted = submitted[section];
+    const score = sectionScores[section];
 
-    const blocks = normalized.split(/\n\s*\n/).flatMap((block) => {
-      const trimmed = block.trim();
-      if (!trimmed) return [];
-      if (trimmed.length <= 420) return [trimmed];
+    return (
+      <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            marginBottom: "24px",
+          }}
+        >
+          <div>
+            <h3
+              style={{
+                fontFamily: theme.fonts.display,
+                fontSize: "22px",
+                color: theme.colors.ink,
+                marginBottom: "6px",
+              }}
+            >
+              {title}
+            </h3>
+            <p
+              style={{
+                fontFamily: theme.fonts.body,
+                fontSize: "13px",
+                color: theme.colors.inkMuted,
+              }}
+            >
+              {subtitle}
+            </p>
+          </div>
+        </div>
 
-      const sentences = trimmed.match(/[^.!?]+[.!?]?/g) ?? [trimmed];
-      const chunks: string[] = [];
-      let current = "";
+        {score ? (
+          <ScoreBanner
+            correct={score.correct}
+            total={score.total}
+            onReset={() => resetSection(section)}
+          />
+        ) : null}
 
-      for (const sentence of sentences) {
-        const next = current ? `${current} ${sentence.trim()}` : sentence.trim();
-        if (next.length > 420 && current) {
-          chunks.push(current);
-          current = sentence.trim();
-        } else {
-          current = next;
-        }
-      }
-      if (current) chunks.push(current);
-      return chunks;
-    });
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          {questions.map((q, index) => (
+            <div key={q.id} id={getQuestionAnchorId(section, index + 1)}>
+              <QuestionCard
+                number={index + 1}
+                question={q.question}
+                options={q.options}
+                correctIndex={q.correct_index}
+                instruction={q.instruction ?? ""}
+                sentence={q.sentence ?? q.question}
+                selectedAnswer={sectionAnswers[q.id] ?? null}
+                onSelect={(idx) => {
+                  setAnswers((prev) => ({
+                    ...prev,
+                    [section]: { ...prev[section], [q.id]: idx },
+                  }));
+                  setValidationNotice((prev) => ({ ...prev, [section]: null }));
+                }}
+                submitted={isSubmitted}
+              />
+            </div>
+          ))}
+        </div>
 
-    return blocks.length > 0 ? blocks : [normalized];
+        {!isSubmitted ? (
+          <div
+            style={{
+              marginTop: "24px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-end",
+            }}
+          >
+            {validationNotice[section] ? (
+              <p
+                style={{
+                  marginBottom: "10px",
+                  fontFamily: theme.fonts.body,
+                  fontSize: "13px",
+                  color: theme.colors.danger,
+                }}
+              >
+                {validationNotice[section]}
+              </p>
+            ) : null}
+            <button onClick={() => submitSection(section)} style={submitButtonStyle(allAnswered)}>
+              Submit Answers
+            </button>
+          </div>
+        ) : null}
+      </div>
+    );
   };
-  const readingParagraphs = splitReadingIntoParagraphs(lesson.reading_text);
 
   return (
     <div
@@ -216,7 +340,6 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
         fontFamily: theme.fonts.body,
       }}
     >
-      {/* Header */}
       <div
         style={{
           background: "transparent",
@@ -225,6 +348,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
         }}
       >
         <div style={{ padding: `0 ${sectionPaddingX}` }}>
+<<<<<<< HEAD
             <p
               style={{
                 fontFamily: theme.fonts.body,
@@ -273,11 +397,62 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
                 <span
                   key={i}
                   style={{
+=======
+          <p
+            style={{
+              fontFamily: theme.fonts.body,
+              fontSize: "11px",
+              fontWeight: 600,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: theme.colors.accent,
+              marginBottom: "8px",
+            }}
+          >
+            Lesson
+          </p>
+          <h2
+            style={{
+              fontFamily: theme.fonts.display,
+              fontSize: "28px",
+              fontWeight: 400,
+              color: theme.colors.ink,
+              lineHeight: 1.2,
+              marginBottom: "10px",
+            }}
+          >
+            {lesson.title}
+          </h2>
+          <p
+            style={{
+              fontFamily: theme.fonts.body,
+              fontSize: "14px",
+              color: theme.colors.inkMuted,
+              lineHeight: 1.6,
+              maxWidth: "640px",
+            }}
+          >
+            {lesson.summary}
+          </p>
+          <div
+            style={{
+              display: "flex",
+              gap: "12px",
+              marginTop: "20px",
+              flexWrap: "wrap",
+            }}
+          >
+            {lesson.objectives.map((obj, i) => (
+              <span
+                key={`${i}-${obj}`}
+                style={{
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
                   fontFamily: theme.fonts.body,
                   fontSize: "12px",
                   fontWeight: 500,
                   color: theme.colors.accent,
                   background: theme.colors.accentSoft,
+<<<<<<< HEAD
                     padding: "6px 12px",
                     borderRadius: theme.radius.pill,
                   }}
@@ -286,10 +461,19 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
                 </span>
               ))}
             </div>
+=======
+                  padding: "6px 14px",
+                  borderRadius: theme.radius.pill,
+                }}
+              >
+                {obj}
+              </span>
+            ))}
+          </div>
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
         </div>
       </div>
 
-      {/* Tabs */}
       <nav
         style={{
           background: "transparent",
@@ -304,6 +488,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
             padding: `0 ${sectionPaddingX}`,
           }}
         >
+<<<<<<< HEAD
           {TABS.map((tab) => {
             const isActive = activeTab === tab.id;
             let dotColor: string | null = null;
@@ -366,6 +551,35 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
       <div style={{ padding: `24px ${sectionPaddingX} 32px` }}>
         {/* Vocabulary */}
         {activeTab === "vocabulary" && (
+=======
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                fontFamily: theme.fonts.body,
+                fontSize: "13px",
+                fontWeight: activeTab === tab.id ? 600 : 500,
+                color: activeTab === tab.id ? theme.colors.accent : theme.colors.inkMuted,
+                background: "transparent",
+                border: "none",
+                borderBottom: `2px solid ${
+                  activeTab === tab.id ? theme.colors.accent : "transparent"
+                }`,
+                padding: "14px 16px",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </nav>
+
+      <div style={{ padding: `28px ${sectionPaddingX} 40px` }}>
+        {activeTab === "word_bank" ? (
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
           <div>
             <div style={{ marginBottom: "24px" }}>
               <h3
@@ -376,7 +590,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
                   marginBottom: "6px",
                 }}
               >
-                Vocabulary
+                Word Bank
               </h3>
               <p
                 style={{
@@ -395,20 +609,30 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
                 gap: "16px",
               }}
             >
-              {lesson.vocabulary.map((item, i) => (
-                <VocabCard
-                  key={i}
-                  term={item.term}
-                  definition={item.definition}
-                  index={i}
-                />
+              {lesson.word_bank.map((item, i) => (
+                <VocabCard key={`${item.term}-${i}`} term={item.term} definition={item.definition} index={i} />
               ))}
             </div>
           </div>
-        )}
+        ) : null}
 
-        {/* Reading Text */}
-        {activeTab === "reading" && (
+        {process.env.NODE_ENV !== "production" && schemaIssues.length > 0 ? (
+          <div
+            style={{
+              marginBottom: "18px",
+              border: `1px solid ${theme.colors.warning}`,
+              borderRadius: theme.radius.sm,
+              padding: "10px 14px",
+              color: theme.colors.warning,
+              fontSize: "12px",
+              lineHeight: 1.5,
+            }}
+          >
+            Schema warning: this lesson is missing required section constraints. Check console.
+          </div>
+        ) : null}
+
+        {activeTab === "reading" ? (
           <div>
             <h3
               style={{
@@ -447,198 +671,33 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
               ))}
             </div>
           </div>
-        )}
+        ) : null}
 
-        {/* Comprehension */}
-        {activeTab === "comprehension" && (
-          <div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                marginBottom: "24px",
-              }}
-            >
-              <div>
-                <h3
-                  style={{
-                    fontFamily: theme.fonts.display,
-                    fontSize: "22px",
-                    color: theme.colors.ink,
-                    marginBottom: "6px",
-                  }}
-                >
-                  Comprehension Questions
-                </h3>
-                <p
-                  style={{
-                    fontFamily: theme.fonts.body,
-                    fontSize: "13px",
-                    color: theme.colors.inkMuted,
-                  }}
-                >
-                  Answer all questions, then submit to check your work.
-                </p>
-              </div>
-            </div>
+        {activeTab === "comprehension"
+          ? renderQuestionSection(
+              "comprehension",
+              "Reading Comprehension",
+              "Answer all questions, then submit to check your work."
+            )
+          : null}
 
-            {compScore && (
-              <ScoreBanner
-                correct={compScore.correct}
-                total={compScore.total}
-                onReset={() => resetSection("comprehension")}
-              />
-            )}
+        {activeTab === "vocabulary_exercise"
+          ? renderQuestionSection(
+              "vocabulary_exercise",
+              "Vocabulary Exercise",
+              "Use context from the reading and the word bank."
+            )
+          : null}
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              {lesson.comprehension_questions.map((q, i) => (
-                <div key={q.id} id={getQuestionAnchorId("comprehension", i + 1)}>
-                  <QuestionCard
-                    number={i + 1}
-                    question={q.question}
-                    options={q.options}
-                    correctIndex={q.correct_index}
-                    selectedAnswer={compAnswers[q.id] ?? null}
-                    onSelect={(idx) => {
-                      setCompAnswers((prev) => ({ ...prev, [q.id]: idx }));
-                      setValidationNotice((prev) => ({ ...prev, comprehension: null }));
-                    }}
-                    submitted={compSubmitted}
-                  />
-                </div>
-              ))}
-            </div>
+        {activeTab === "grammar"
+          ? renderQuestionSection(
+              "grammar",
+              "Grammar",
+              "Choose the best option for each grammar-focused question."
+            )
+          : null}
 
-            {!compSubmitted && (
-              <div
-                style={{
-                  marginTop: "24px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-end",
-                }}
-              >
-                {validationNotice.comprehension ? (
-                  <p
-                    style={{
-                      marginBottom: "10px",
-                      fontFamily: theme.fonts.body,
-                      fontSize: "13px",
-                      color: theme.colors.danger,
-                    }}
-                  >
-                    {validationNotice.comprehension}
-                  </p>
-                ) : null}
-                <button
-                  onClick={() => handleSectionSubmit("comprehension")}
-                  style={submitButtonStyle(compAllAnswered)}
-                >
-                  Submit Answers
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Grammar */}
-        {activeTab === "grammar" && (
-          <div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                marginBottom: "24px",
-              }}
-            >
-              <div>
-                <h3
-                  style={{
-                    fontFamily: theme.fonts.display,
-                    fontSize: "22px",
-                    color: theme.colors.ink,
-                    marginBottom: "6px",
-                  }}
-                >
-                  Grammar Exercises
-                </h3>
-              <p
-                style={{
-                  fontFamily: theme.fonts.body,
-                  fontSize: "13px",
-                  color: theme.colors.inkMuted,
-                }}
-              >
-                  Choose the best option for each grammar-focused question, then submit.
-              </p>
-            </div>
-          </div>
-
-            {grammarScore && (
-              <ScoreBanner
-                correct={grammarScore.correct}
-                total={grammarScore.total}
-                onReset={() => resetSection("grammar")}
-              />
-            )}
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              {lesson.grammar_exercises.map((q, i) => (
-                <div key={q.id} id={getQuestionAnchorId("grammar", i + 1)}>
-                  <QuestionCard
-                    number={i + 1}
-                    question={q.question}
-                    options={q.options}
-                    correctIndex={q.correct_index}
-                    instruction={q.instruction ?? ""}
-                    sentence={q.sentence ?? q.question}
-                    selectedAnswer={grammarAnswers[q.id] ?? null}
-                    onSelect={(idx) => {
-                      setGrammarAnswers((prev) => ({ ...prev, [q.id]: idx }));
-                      setValidationNotice((prev) => ({ ...prev, grammar: null }));
-                    }}
-                    submitted={grammarSubmitted}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {!grammarSubmitted && (
-              <div
-                style={{
-                  marginTop: "24px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-end",
-                }}
-              >
-                {validationNotice.grammar ? (
-                  <p
-                    style={{
-                      marginBottom: "10px",
-                      fontFamily: theme.fonts.body,
-                      fontSize: "13px",
-                      color: theme.colors.danger,
-                    }}
-                  >
-                    {validationNotice.grammar}
-                  </p>
-                ) : null}
-                <button
-                  onClick={() => handleSectionSubmit("grammar")}
-                  style={submitButtonStyle(grammarAllAnswered)}
-                >
-                  Submit Answers
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Role Play */}
-        {activeTab === "roleplay" && (
+        {activeTab === "listening" && hasListening ? (
           <div>
             <h3
               style={{
@@ -648,7 +707,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
                 marginBottom: "20px",
               }}
             >
-              Role Play Scenario
+              Listening
             </h3>
             <div
               style={{
@@ -660,19 +719,6 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
                 boxShadow: theme.shadow.sm,
               }}
             >
-              <div
-                style={{
-                  fontFamily: theme.fonts.body,
-                  fontSize: "12px",
-                  fontWeight: 600,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: theme.colors.accent,
-                  marginBottom: "16px",
-                }}
-              >
-                Your Scenario
-              </div>
               <p
                 style={{
                   fontFamily: theme.fonts.body,
@@ -681,120 +727,19 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
                   lineHeight: 1.7,
                 }}
               >
-                {lesson.role_play}
+                {lesson.listening}
               </p>
-              <div
-                style={{
-                  marginTop: "24px",
-                  padding: "16px 20px",
-                  background: theme.colors.accentSoft,
-                  borderRadius: theme.radius.sm,
-                  fontFamily: theme.fonts.body,
-                  fontSize: "13px",
-                  color: theme.colors.accent,
-                  fontWeight: 500,
-                  lineHeight: 1.5,
-                }}
-              >
-                Tip: Practice this scenario with a partner or use the AI
-                Simulation to role play this conversation in real time.
-              </div>
             </div>
           </div>
-        )}
+        ) : null}
 
-        {/* Quiz */}
-        {activeTab === "quiz" && (
-          <div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                marginBottom: "24px",
-              }}
-            >
-              <div>
-                <h3
-                  style={{
-                    fontFamily: theme.fonts.display,
-                    fontSize: "22px",
-                    color: theme.colors.ink,
-                    marginBottom: "6px",
-                  }}
-                >
-                  Quiz
-                </h3>
-                <p
-                  style={{
-                    fontFamily: theme.fonts.body,
-                    fontSize: "13px",
-                    color: theme.colors.inkMuted,
-                  }}
-                >
-                  Test your understanding. Answer all questions, then submit.
-                </p>
-              </div>
-            </div>
-
-            {quizScore && (
-              <ScoreBanner
-                correct={quizScore.correct}
-                total={quizScore.total}
-                onReset={() => resetSection("quiz")}
-              />
-            )}
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              {lesson.quiz.map((q, i) => (
-                <div key={q.id} id={getQuestionAnchorId("quiz", i + 1)}>
-                  <QuestionCard
-                    number={i + 1}
-                    question={q.question}
-                    options={q.options}
-                    correctIndex={q.correct_index}
-                    selectedAnswer={quizAnswers[q.id] ?? null}
-                    onSelect={(idx) => {
-                      setQuizAnswers((prev) => ({ ...prev, [q.id]: idx }));
-                      setValidationNotice((prev) => ({ ...prev, quiz: null }));
-                    }}
-                    submitted={quizSubmitted}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {!quizSubmitted && (
-              <div
-                style={{
-                  marginTop: "24px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-end",
-                }}
-              >
-                {validationNotice.quiz ? (
-                  <p
-                    style={{
-                      marginBottom: "10px",
-                      fontFamily: theme.fonts.body,
-                      fontSize: "13px",
-                      color: theme.colors.danger,
-                    }}
-                  >
-                    {validationNotice.quiz}
-                  </p>
-                ) : null}
-                <button
-                  onClick={() => handleSectionSubmit("quiz")}
-                  style={submitButtonStyle(quizAllAnswered)}
-                >
-                  Submit Answers
-                </button>
-              </div>
-            )}
-          </div>
-        )}
+        {activeTab === "final_assessment"
+          ? renderQuestionSection(
+              "final_assessment",
+              "Final Assessment",
+              "Complete the full assessment to validate lesson mastery."
+            )
+          : null}
       </div>
     </div>
   );

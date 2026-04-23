@@ -794,6 +794,7 @@ export async function POST(request: Request) {
         );
       }
 
+<<<<<<< HEAD
       stage = "create_simulation";
       try {
         const simulation = await createSimulation(payload);
@@ -812,6 +813,24 @@ export async function POST(request: Request) {
           simulationId,
           reason: error instanceof Error ? error.message : String(error),
         });
+=======
+      try {
+        const simulation = await createSimulation(payload);
+        simulationId = simulation.id;
+      } catch (error) {
+        console.error("Simulation start persistence failed:", {
+          scenario_type: payload.scenario_type,
+          level: payload.level,
+          message: error instanceof Error ? error.message : "unknown_error",
+        });
+        return NextResponse.json(
+          {
+            error:
+              "Simulation save failed while starting this session. Please try again.",
+          },
+          { status: 500 }
+        );
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
       }
     }
 
@@ -828,6 +847,7 @@ export async function POST(request: Request) {
 
     const output: SimulationMessageOutput = { response, feedback, suggestions };
 
+<<<<<<< HEAD
     stage = "create_attempt";
     try {
       await createSimulationAttempt({
@@ -858,6 +878,34 @@ export async function POST(request: Request) {
       suggestionCount: output.suggestions.length,
     });
     return NextResponse.json({ simulation_id: simulationId, ...output });
+=======
+    let persistenceWarning: string | null = null;
+
+    try {
+      await createSimulationAttempt({
+        simulation_id: simulationId,
+        user_input: payload.user_input,
+        ai_response: output.response,
+        feedback_json: { ...output.feedback, suggestions: output.suggestions },
+      });
+    } catch (error) {
+      console.error("Simulation attempt persistence failed:", {
+        simulation_id: simulationId,
+        scenario_type: payload.scenario_type,
+        level: payload.level,
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+      persistenceWarning =
+        "Message generated, but saving this simulation turn failed.";
+    }
+
+    return NextResponse.json({
+      simulation_id: simulationId,
+      ...output,
+      attempt_saved: !persistenceWarning,
+      ...(persistenceWarning ? { persistence_warning: persistenceWarning } : {}),
+    });
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
   } catch (err) {
     console.error("[simulation/message] Full error:", err);
     const errorMessage =
@@ -877,7 +925,11 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
+<<<<<<< HEAD
         error: errorMessage === "Simulation message failed" ? PROCESSING_ERROR : errorMessage,
+=======
+        error: "Unexpected server issue while processing this simulation message.",
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
         ...(process.env.NODE_ENV !== "production" ? { details } : {}),
       },
       { status: 500 }

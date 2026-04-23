@@ -17,13 +17,13 @@ export default async function MyCoursesPage() {
       <div className="mx-auto max-w-[960px]">
         <div className="mb-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
-            My Courses
+            Premium Courses
           </p>
           <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">
-            My Courses
+            Premium Courses
           </h1>
           <p className="mt-3 text-sm text-[var(--ink-muted)]">
-            Your generated course drafts.
+            Your premium course library.
           </p>
         </div>
 
@@ -36,17 +36,11 @@ export default async function MyCoursesPage() {
         {!loadError && courses.length === 0 ? (
           <Card className="p-6">
             <h2 className="font-serif text-2xl text-[var(--ink)]">
-              No courses yet
+              No premium courses yet
             </h2>
             <p className="mt-2 text-sm text-[var(--ink-muted)]">
-              Generate your first course to start your drafts.
+              Premium courses will appear here when available.
             </p>
-            <Link
-              href="/generator"
-              className="mt-4 inline-flex rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-4 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55]"
-            >
-              Generate course
-            </Link>
           </Card>
         ) : null}
 

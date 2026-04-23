@@ -1,6 +1,10 @@
 "use client";
 
+<<<<<<< HEAD
 import { useEffect, useRef, useState } from "react";
+=======
+import { useState } from "react";
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
 import { useRouter } from "next/navigation";
 import Button from "../../../components/shared/Button";
 import Card from "../../../components/shared/Card";
@@ -10,10 +14,10 @@ import Textarea from "../../../components/shared/Textarea";
 import LessonViewer from "../../../components/lesson/LessonViewer";
 import type {
   LessonGenerationApiError,
-  LessonGenerationApiResponse,
   LessonGenerationInput,
   LessonGenerationOutput,
 } from "../../../types/lesson";
+<<<<<<< HEAD
 import { parseYouTubeVideoId } from "../../../lib/youtube/url";
 import { validateLessonOutputPayload } from "../../../lib/validators/lesson";
 import { getSupabaseBrowserClient } from "../../../lib/supabase/client";
@@ -38,6 +42,12 @@ type LoadingPhase = "generating" | "almost_there" | "fallback";
 const YOUTUBE_ALMOST_THERE_DELAY_MS = 6000;
 const YOUTUBE_POLL_INTERVAL_MS = 2000;
 const YOUTUBE_FALLBACK_DELAY_MS = 12000;
+=======
+import {
+  normalizeLessonOutput,
+  validateLessonOutputPayload,
+} from "../../../lib/validators/lesson";
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
 
 const initialLessonForm: LessonGenerationInput = {
   topic: "",
@@ -48,6 +58,7 @@ const initialLessonForm: LessonGenerationInput = {
   lesson_type: "",
 };
 
+<<<<<<< HEAD
 import type { VocabularyItem, LessonQuestion } from "../../../types/lesson";
 
 function isVocabularyArray(value: unknown): value is VocabularyItem[] {
@@ -139,6 +150,13 @@ function normalizeLessonOutput(raw: unknown): LessonGenerationApiResponse | null
         : undefined,
   };
 }
+=======
+type LessonGenerationStage =
+  | "idle"
+  | "generating_lesson"
+  | "transcript_unavailable"
+  | "generation_failed";
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
 
 function isTranscriptFailureCode(value: string | null): boolean {
   return (
@@ -207,6 +225,7 @@ export default function GeneratorPage() {
   const [lessonError, setLessonError] = useState<string | null>(null);
   const [lessonDiagnostics, setLessonDiagnostics] = useState<string[]>([]);
   const [lessonStage, setLessonStage] = useState<LessonGenerationStage>("idle");
+<<<<<<< HEAD
   const [youtubeGenerationState, setYoutubeGenerationState] =
     useState<YouTubeGenerationState>("idle");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -271,6 +290,9 @@ export default function GeneratorPage() {
       fallbackTimeoutRef.current = null;
     }
   };
+=======
+  const [rawSourceText, setRawSourceText] = useState("");
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
 
   const handleLessonChange = (
     field: keyof LessonGenerationInput,
@@ -452,6 +474,7 @@ export default function GeneratorPage() {
     clearYoutubeTimers();
 
     try {
+<<<<<<< HEAD
       const trimmedSourceInput = sourceInput.trim();
       const trimmedManualTranscript = manualTranscript.trim();
       const detectedSource = trimmedSourceInput
@@ -527,6 +550,20 @@ export default function GeneratorPage() {
 
       const maxAttempts = isYouTubeGeneration ? 2 : 1;
       let rawResult: unknown = null;
+=======
+      const response = await fetch("/api/lesson/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...lessonForm,
+          topic: lessonForm.topic?.trim(),
+          source_url: lessonForm.source_url?.trim() || undefined,
+          industry: lessonForm.industry?.trim() || undefined,
+          profession: lessonForm.profession?.trim() || undefined,
+          manual_source_text: rawSourceText.trim() || undefined,
+        }),
+      });
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
 
       for (let transcriptAttempt = 1; transcriptAttempt <= maxAttempts; transcriptAttempt += 1) {
         const response = await fetch("/api/lesson/generate", {
@@ -551,6 +588,7 @@ export default function GeneratorPage() {
           rawPayload && typeof rawPayload === "object"
             ? (rawPayload as LessonGenerationApiError)
             : null;
+<<<<<<< HEAD
 
         if (response.ok && apiPayload?.status === "still_processing") {
           setYoutubeGenerationState("processing_extended");
@@ -609,26 +647,76 @@ export default function GeneratorPage() {
       }
       setLessonResult(data);
       setYoutubeGenerationState(isYouTubeGeneration ? "ready" : "idle");
+=======
+        const errorCode =
+          typeof apiError?.error_code === "string" ? apiError.error_code : null;
+        const errorMessage =
+          typeof apiError?.error === "string"
+            ? apiError.error
+            : typeof apiError?.message === "string"
+              ? apiError.message
+              : "We could not generate the lesson.";
+
+        if (errorCode === "transcript_unavailable") {
+          setLessonStage("transcript_unavailable");
+        } else {
+          setLessonStage("generation_failed");
+        }
+
+        if (
+          Array.isArray(apiError?.details) &&
+          process.env.NODE_ENV !== "production"
+        ) {
+          setLessonDiagnostics(
+            apiError.details.filter((item): item is string => typeof item === "string")
+          );
+        }
+
+        setLessonError(errorMessage);
+        return;
+      }
+
+      const rawData = (await response.json()) as unknown;
+      const normalized = normalizeLessonOutput(rawData, { strict: true });
+      if (!normalized.ok) {
+        setLessonStage("generation_failed");
+        setLessonError(
+          "The lesson draft was malformed. Please generate again with clearer source text."
+        );
+        if (process.env.NODE_ENV !== "production") {
+          setLessonDiagnostics(normalized.errors);
+        }
+        return;
+      }
+
+      setLessonResult(normalized.data);
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
       setLessonStage("idle");
     } catch (error) {
       clearYoutubeTimers();
       setIsGenerating(false);
       setLessonStage("generation_failed");
+<<<<<<< HEAD
       setYoutubeGenerationState("failed");
       const message =
         error instanceof Error ? error.message : "We could not generate the lesson.";
+=======
+      setLessonError("Unexpected server issue while generating the lesson.");
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
       if (process.env.NODE_ENV !== "production") {
-        setLessonDiagnostics((prev) => [
-          ...prev,
-          `client_error: ${message}`,
+        setLessonDiagnostics([
+          error instanceof Error ? error.message : "unknown_generation_error",
         ]);
       }
+<<<<<<< HEAD
       setLessonError(
         process.env.NODE_ENV !== "production" ? message : "We could not generate the lesson."
       );
       setError(
         process.env.NODE_ENV !== "production" ? message : "We could not generate the lesson."
       );
+=======
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
     } finally {
       if (!isGenerating) {
         setIsLessonGenerating(false);
@@ -648,6 +736,7 @@ export default function GeneratorPage() {
     setLessonError(null);
 
     try {
+<<<<<<< HEAD
       const trimmedSourceInput = sourceInput.trim();
       const savedSource = trimmedSourceInput
         ? detectLessonSource(trimmedSourceInput)
@@ -656,8 +745,14 @@ export default function GeneratorPage() {
         JSON.stringify(lessonResult)
       ) as LessonGenerationOutput;
       const outputValidation = validateLessonOutputPayload(previewLesson);
+=======
+      const outputValidation = validateLessonOutputPayload(lessonResult);
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
       if (!outputValidation.ok) {
         setLessonError("Generated lesson is incomplete and cannot be saved yet.");
+        if (process.env.NODE_ENV !== "production") {
+          setLessonDiagnostics(outputValidation.errors);
+        }
         return;
       }
 
@@ -667,6 +762,7 @@ export default function GeneratorPage() {
         body: JSON.stringify({
           input: {
             ...lessonForm,
+<<<<<<< HEAD
             source_url:
               savedSource && savedSource.type !== "raw_text"
                 ? savedSource.normalizedUrl || trimmedSourceInput
@@ -679,11 +775,20 @@ export default function GeneratorPage() {
             profession: lessonForm.profession?.trim() || undefined,
           },
           output: previewLesson,
+=======
+            topic: lessonForm.topic?.trim(),
+            source_url: lessonForm.source_url?.trim() || undefined,
+            industry: lessonForm.industry?.trim() || undefined,
+            profession: lessonForm.profession?.trim() || undefined,
+          },
+          output: lessonResult,
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
         }),
       });
 
       if (!response.ok) {
         const payload = (await response.json().catch(() => null)) as
+<<<<<<< HEAD
           | { error?: string }
           | null;
         throw new Error(payload?.error || "save_failed");
@@ -706,6 +811,36 @@ export default function GeneratorPage() {
           ? message
           : "We couldn’t process your request. Try again."
       );
+=======
+          | { error?: string; details?: string[] }
+          | null;
+        setLessonError(payload?.error || "Lesson save failed. Please try again.");
+        if (process.env.NODE_ENV !== "production" && Array.isArray(payload?.details)) {
+          setLessonDiagnostics(payload.details);
+        }
+        return;
+      }
+
+      const data = (await response.json()) as
+        | { lesson_id?: string; id?: string; lesson_url?: string }
+        | null;
+      const lessonId = data?.lesson_id || data?.id;
+      const lessonUrl = data?.lesson_url;
+
+      if (typeof lessonUrl === "string" && lessonUrl.startsWith("/lessons/")) {
+        router.push(`${lessonUrl}?saved=1`);
+        return;
+      }
+
+      if (typeof lessonId === "string") {
+        router.push(`/lessons/${lessonId}?saved=1`);
+        return;
+      }
+
+      setLessonError("Lesson save completed, but lesson link was missing.");
+    } catch {
+      setLessonError("Lesson save failed. Please try again.");
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
     } finally {
       setIsLessonSaving(false);
     }
@@ -716,12 +851,13 @@ export default function GeneratorPage() {
       <div className="mx-auto max-w-[960px]">
         <div className="mb-8 sm:mb-10">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
-            Generator
+            Lesson Generator
           </p>
           <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">
             Lesson Generator
           </h1>
           <p className="mt-3 text-sm text-[var(--ink-muted)]">
+<<<<<<< HEAD
             Generate a structured Business English lesson from a topic, source
             link, or transcript.
           </p>
@@ -1005,6 +1141,180 @@ export default function GeneratorPage() {
             </div>
           ) : null}
         </div>
+=======
+            Generate structured Business English lessons from YouTube, article URLs,
+            or raw source text.
+          </p>
+        </div>
+
+        <Card>
+          <form onSubmit={handleLessonSubmit}>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <label htmlFor="topic" className="text-sm font-medium">
+                  Topic
+                </label>
+                <Input
+                  id="topic"
+                  placeholder="e.g. Project kickoff meeting"
+                  value={lessonForm.topic}
+                  onChange={(event) =>
+                    handleLessonChange("topic", event.target.value)
+                  }
+                />
+              </div>
+
+              <div className="grid gap-2">
+                <label htmlFor="source_url" className="text-sm font-medium">
+                  Source URL (optional)
+                </label>
+                <Input
+                  id="source_url"
+                  placeholder="YouTube or article URL"
+                  value={lessonForm.source_url}
+                  onChange={(event) =>
+                    handleLessonChange("source_url", event.target.value)
+                  }
+                />
+              </div>
+
+              <div className="grid gap-2">
+                <label htmlFor="raw_source_text" className="text-sm font-medium">
+                  Raw Source Text (optional)
+                </label>
+                <Textarea
+                  id="raw_source_text"
+                  placeholder="Paste source text or transcript for strict topic grounding..."
+                  value={rawSourceText}
+                  onChange={(event) => setRawSourceText(event.target.value)}
+                  rows={6}
+                />
+                {lessonStage === "transcript_unavailable" ? (
+                  <p className="text-xs text-[var(--accent-warm)]">
+                    Transcript unavailable. Paste source text to continue.
+                  </p>
+                ) : null}
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-2">
+                  <label htmlFor="level" className="text-sm font-medium">
+                    Level
+                  </label>
+                  <Select
+                    id="level"
+                    value={lessonForm.level}
+                    onChange={(event) =>
+                      handleLessonChange("level", event.target.value)
+                    }
+                    required
+                  >
+                    <option value="">Select level</option>
+                    <option value="A2">A2</option>
+                    <option value="B1">B1</option>
+                    <option value="B2">B2</option>
+                    <option value="C1">C1</option>
+                  </Select>
+                </div>
+
+                <div className="grid gap-2">
+                  <label htmlFor="industry" className="text-sm font-medium">
+                    Industry (optional)
+                  </label>
+                  <Input
+                    id="industry"
+                    placeholder="e.g. Software"
+                    value={lessonForm.industry}
+                    onChange={(event) =>
+                      handleLessonChange("industry", event.target.value)
+                    }
+                  />
+                </div>
+
+                <div className="grid gap-2 md:col-span-2">
+                  <label htmlFor="profession" className="text-sm font-medium">
+                    Profession (optional)
+                  </label>
+                  <Input
+                    id="profession"
+                    placeholder="e.g. Product Manager"
+                    value={lessonForm.profession}
+                    onChange={(event) =>
+                      handleLessonChange("profession", event.target.value)
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-2">
+                <label htmlFor="lesson_type" className="text-sm font-medium">
+                  Lesson Type
+                </label>
+                <Textarea
+                  id="lesson_type"
+                  placeholder="e.g. Meeting prep, presentation practice"
+                  value={lessonForm.lesson_type}
+                  onChange={(event) =>
+                    handleLessonChange("lesson_type", event.target.value)
+                  }
+                  required
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <Button
+                  type="button"
+                  onClick={() => {
+                    void runLessonGeneration();
+                  }}
+                  disabled={isLessonGenerating}
+                  className="rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-5 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55]"
+                >
+                  {isLessonGenerating ? "Generating..." : "Generate Lesson"}
+                </Button>
+                {lessonError ? (
+                  <p className="text-xs text-[var(--accent-warm)]">{lessonError}</p>
+                ) : null}
+              </div>
+
+              {process.env.NODE_ENV !== "production" && lessonDiagnostics.length > 0 ? (
+                <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] p-3">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
+                    Debug details
+                  </p>
+                  <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-[var(--ink-muted)]">
+                    {lessonDiagnostics.map((detail) => (
+                      <li key={detail}>{detail}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </div>
+          </form>
+        </Card>
+
+        {lessonResult ? (
+          <div className="mt-8">
+            <div className="flex flex-wrap items-center gap-3">
+              <h2 className="font-serif text-2xl text-[var(--ink)]">Lesson Preview</h2>
+              <Button
+                onClick={handleLessonSave}
+                disabled={isLessonSaving}
+                className="rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-4 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55]"
+              >
+                {isLessonSaving ? "Saving..." : "Save Lesson"}
+              </Button>
+            </div>
+            <p className="mt-2 text-xs text-[var(--ink-faint)]">
+              This lesson is a preview until you click Save Lesson.
+            </p>
+
+            <div className="mt-4">
+              <LessonViewer lesson={lessonResult} />
+            </div>
+          </div>
+        ) : null}
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
       </div>
     </section>
   );

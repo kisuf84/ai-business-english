@@ -47,7 +47,7 @@ export default async function CourseDetailPage({
       <div className="mx-auto max-w-[960px]">
         <p className="text-xs text-[var(--ink-muted)]">
           <Link href="/courses" className="hover:text-[var(--ink)]">
-            ← Back to courses
+            ← Back to premium courses
           </Link>
         </p>
         <h1 className="mt-3 font-serif text-3xl font-normal text-[var(--ink)]">

@@ -2,9 +2,9 @@ import OpenAI from "openai";
 import type {
   LessonGenerationInput,
   LessonGenerationOutput,
-  LessonQuestion,
-  VocabularyItem,
+  LessonSourceMeta,
 } from "../../types/lesson";
+import { normalizeLessonOutput } from "../validators/lesson";
 
 export async function generateLesson(prompt: string): Promise<string> {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -16,15 +16,16 @@ export async function generateLesson(prompt: string): Promise<string> {
   const response = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     max_tokens: 4096,
+    temperature: 0.2,
+    response_format: { type: "json_object" },
     messages: [
       {
         role: "system",
         content:
-          "You are an expert Business English curriculum designer. Return only valid JSON.",
+          "You design Business English lessons. Output must be strict JSON only and must follow all counts exactly.",
       },
       { role: "user", content: prompt },
     ],
-    temperature: 0.4,
   });
 
   const text = response.choices
@@ -39,101 +40,152 @@ export async function generateLesson(prompt: string): Promise<string> {
   return text;
 }
 
-function isVocabularyItem(value: unknown): value is VocabularyItem {
-  if (!value || typeof value !== "object") return false;
-  const item = value as Record<string, unknown>;
-  return typeof item.term === "string" && typeof item.definition === "string";
+export async function repairLesson(prompt: string): Promise<string> {
+  return generateLesson(prompt);
 }
 
-function isLessonQuestion(value: unknown): value is LessonQuestion {
-  if (!value || typeof value !== "object") return false;
-  const q = value as Record<string, unknown>;
-  const correctIndex =
-    typeof q.correct_index === "number"
-      ? (q.correct_index as number)
-      : typeof q.correct === "number"
-        ? (q.correct as number)
-        : -1;
-  return (
-    typeof q.id === "string" &&
-    typeof q.question === "string" &&
-    Array.isArray(q.options) &&
-    (q.options as unknown[]).every((o) => typeof o === "string") &&
-    correctIndex >= 0 &&
-    correctIndex < (q.options as unknown[]).length
-  );
+function truncateSourceText(value: string, maxLength = 12000): string {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  if (normalized.length <= maxLength) return normalized;
+  return `${normalized.slice(0, maxLength)}\n\n[Truncated source excerpt for token limits]`;
 }
 
 export function buildLessonPrompt(params: {
   input: LessonGenerationInput;
   sourceText: string;
+<<<<<<< HEAD
   sourceKind: "youtube_transcript" | "webpage" | "raw_text" | "manual";
+=======
+  sourceKind: LessonSourceMeta["source_kind"];
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
   videoId?: string | null;
 }): string {
   const { input, sourceText, sourceKind, videoId } = params;
 
   return [
-    "You are an expert Business English curriculum designer.",
-    "Respond ONLY with a valid JSON object. No markdown, no backticks, no preamble.",
+    "Create one Business English lesson strictly grounded in the provided source.",
+    "Do not invent facts, names, metrics, or events that are not supported by the source text.",
+    "If the source is incomplete, keep language generic and avoid unsupported details.",
+    "Keep all tasks on topic and anchored to source facts and vocabulary.",
+    "Do not omit required sections.",
+    "Do not return partial lessons.",
     "",
-    "The JSON must match this exact structure:",
+    "Return exactly one JSON object using this schema:",
     JSON.stringify(
       {
         title: "string",
         summary: "string",
-        objectives: ["string (3 items)"],
-        vocabulary: [
+        objectives: ["string", "string", "string"],
+        word_bank: [
           { term: "string", definition: "string" },
-          "5 items total",
+          "... exactly 12 items total",
         ],
-        reading_text: "string (150-250 words)",
-        comprehension_questions: [
+        reading_text:
+          "string with at least 3 substantial paragraphs and blank lines between paragraphs",
+        reading_comprehension: [
           {
-            id: "cq1",
+            id: "rc1",
             question: "string",
             options: ["A", "B", "C", "D"],
             correct_index: 0,
           },
-          "8 items total",
+          "... exactly 8 items total",
         ],
-        grammar_exercises: [
+        vocabulary_exercise: [
           {
-            id: "ge1",
-            question: "string",
-            options: ["A", "B", "C", "D"],
-            correct_index: 0,
-            instruction: "string (optional)",
-            sentence: "string (optional)",
-          },
-          "8 items total",
-        ],
-        role_play: "string",
-        quiz: [
-          {
-            id: "q1",
-            question: "string",
+            id: "ve1",
+            question: "string tied to word_bank and reading_text",
             options: ["A", "B", "C", "D"],
             correct_index: 0,
           },
-          "5 items total",
+          "... at least 8 items",
+        ],
+        grammar: [
+          {
+            id: "gr1",
+            question: "string tied directly to the lesson source",
+            options: ["A", "B", "C", "D"],
+            correct_index: 0,
+          },
+          "... exactly 8 items total",
+        ],
+        listening:
+          "string listening activity. If source is article/raw text, provide a practical listening adaptation or teacher-use prompt and do not reference a fake audio file.",
+        final_assessment: [
+          {
+            id: "fa1",
+            question: "string on topic",
+            options: ["A", "B", "C", "D"],
+            correct_index: 0,
+          },
+          "... at least 15 items",
         ],
       },
       null,
       2
     ),
     "",
-    "Rules:",
-    "- vocabulary: exactly 5 objects with term and definition strings",
-    "- comprehension_questions: exactly 8 objects; ids cq1 through cq8",
-    "- grammar_exercises: exactly 8 objects; ids ge1 through ge8",
-    "- quiz: exactly 5 objects; ids q1, q2, q3, q4, q5",
-    "- Every question object must use correct_index (not correct) as a valid 0-based index into the options array",
-    "- Maintain CEFR level strictly for vocabulary, sentence complexity, and question wording",
-    "- All exercises must directly reference the lesson topic and source context",
-    "- Use topic vocabulary in both comprehension and grammar questions",
-    "- Grammar exercises must reinforce grammar structures used in the reading text",
-    "- All content must be directly relevant to the source material below",
-    "- Keep output practical and workplace-focused",
+    "Hard constraints:",
+    "- Return all required sections in one complete JSON response.",
+    "- word_bank: exactly 12 items.",
+    "- reading_text: at least 3 substantial paragraphs separated by blank lines.",
+    "- reading_comprehension: exactly 8 questions.",
+    "- vocabulary_exercise: must exist and be tied to word_bank and reading_text.",
+    "- grammar: exactly 8 questions tied directly to source content.",
+    "- final_assessment: at least 15 questions and must remain on the same source topic.",
+    "- Every question must include exactly 4 options and a valid 0-based correct_index.",
+    "- Use only source-derived vocabulary when possible.",
+    "- Keep CEFR level alignment for wording and complexity.",
+    "",
+    `Topic: ${input.topic || "N/A"}`,
+    `Level: ${input.level}`,
+    `Industry: ${input.industry || "N/A"}`,
+    `Profession: ${input.profession || "N/A"}`,
+    `Lesson type: ${input.lesson_type}`,
+    `Source kind: ${sourceKind}`,
+    `Video ID: ${videoId || "N/A"}`,
+    "",
+    "Source text (authoritative grounding material):",
+    truncateSourceText(sourceText),
+  ].join("\n");
+}
+
+export function buildLessonRepairPrompt(params: {
+  input: LessonGenerationInput;
+  sourceText: string;
+  sourceKind: LessonSourceMeta["source_kind"];
+  videoId?: string | null;
+  brokenLesson: unknown;
+  validationErrors: string[];
+}): string {
+  const {
+    input,
+    sourceText,
+    sourceKind,
+    videoId,
+    brokenLesson,
+    validationErrors,
+  } = params;
+
+  return [
+    "Repair this malformed Business English lesson JSON.",
+    "Return one complete JSON lesson object in the required schema.",
+    "Do not return explanations.",
+    "Do not omit sections.",
+    "Fix every listed validation error.",
+    "",
+    "Validation errors to fix:",
+    ...validationErrors.map((item) => `- ${item}`),
+    "",
+    "Required schema and rules:",
+    "- word_bank: exactly 12 items.",
+    "- reading_text: at least 3 substantial paragraphs separated by blank lines.",
+    "- reading_comprehension: exactly 8 questions.",
+    "- vocabulary_exercise: must exist.",
+    "- grammar: exactly 8 questions and source-grounded.",
+    "- final_assessment: at least 15 questions.",
+    "- listening is optional for now.",
+    "- Every question must have 4 options and a valid correct_index.",
     "",
     `Topic: ${input.topic || "N/A"}`,
     `Level: ${input.level}`,
@@ -144,111 +196,22 @@ export function buildLessonPrompt(params: {
     `Video ID: ${videoId || "N/A"}`,
     "",
     "Source text:",
-    sourceText,
+    truncateSourceText(sourceText),
+    "",
+    "Malformed lesson JSON to repair:",
+    JSON.stringify(brokenLesson ?? {}, null, 2),
   ].join("\n");
 }
 
 export function validateLessonOutput(
   value: unknown
 ): { ok: true; data: LessonGenerationOutput } | { ok: false; error: string } {
-  if (!value || typeof value !== "object") {
-    return { ok: false, error: "Output must be an object." };
+  const normalized = normalizeLessonOutput(value, { strict: true });
+  if (!normalized.ok) {
+    return { ok: false, error: normalized.errors.join(" ") };
   }
 
-  const data = value as Record<string, unknown>;
-
-  if (typeof data.title !== "string") {
-    return { ok: false, error: "Missing or invalid title." };
-  }
-  if (typeof data.summary !== "string") {
-    return { ok: false, error: "Missing or invalid summary." };
-  }
-  if (
-    !Array.isArray(data.objectives) ||
-    !data.objectives.every((o) => typeof o === "string")
-  ) {
-    return { ok: false, error: "objectives must be a string array." };
-  }
-  if (
-    !Array.isArray(data.vocabulary) ||
-    !data.vocabulary.every(isVocabularyItem)
-  ) {
-    return {
-      ok: false,
-      error: "vocabulary must be an array of {term, definition} objects.",
-    };
-  }
-  if (typeof data.reading_text !== "string") {
-    return { ok: false, error: "Missing or invalid reading_text." };
-  }
-  if (
-    !Array.isArray(data.comprehension_questions) ||
-    !data.comprehension_questions.every(isLessonQuestion)
-  ) {
-    return {
-      ok: false,
-      error:
-        "comprehension_questions must be an array of question objects with id, question, options, correct_index.",
-    };
-  }
-  if (data.comprehension_questions.length !== 8) {
-    return { ok: false, error: "comprehension_questions must contain exactly 8 items." };
-  }
-  if (
-    !Array.isArray(data.grammar_exercises) ||
-    !data.grammar_exercises.every(isLessonQuestion)
-  ) {
-    return {
-      ok: false,
-      error:
-        "grammar_exercises must be an array of question objects with id, question, options, correct_index.",
-    };
-  }
-  if (data.grammar_exercises.length !== 8) {
-    return { ok: false, error: "grammar_exercises must contain exactly 8 items." };
-  }
-  if (typeof data.role_play !== "string") {
-    return { ok: false, error: "Missing or invalid role_play." };
-  }
-  if (!Array.isArray(data.quiz) || !data.quiz.every(isLessonQuestion)) {
-    return {
-      ok: false,
-      error:
-        "quiz must be an array of question objects with id, question, options, correct_index.",
-    };
-  }
-
-  const normalizeQuestion = (question: Record<string, unknown>): LessonQuestion => ({
-    id: question.id as string,
-    question: question.question as string,
-    options: question.options as string[],
-    correct_index:
-      typeof question.correct_index === "number"
-        ? question.correct_index
-        : (question.correct as number),
-    instruction:
-      typeof question.instruction === "string" ? question.instruction : undefined,
-    sentence: typeof question.sentence === "string" ? question.sentence : undefined,
-  });
-
-  return {
-    ok: true,
-    data: {
-      title: data.title,
-      summary: data.summary,
-      objectives: data.objectives as string[],
-      vocabulary: data.vocabulary as VocabularyItem[],
-      reading_text: data.reading_text,
-      comprehension_questions: (data.comprehension_questions as Record<string, unknown>[]).map(
-        normalizeQuestion
-      ),
-      grammar_exercises: (data.grammar_exercises as Record<string, unknown>[]).map(
-        normalizeQuestion
-      ),
-      role_play: data.role_play,
-      quiz: (data.quiz as Record<string, unknown>[]).map(normalizeQuestion),
-    },
-  };
+  return { ok: true, data: normalized.data };
 }
 
 export function parseAndValidateLessonOutput(
@@ -263,5 +226,17 @@ export function parseAndValidateLessonOutput(
     return validateLessonOutput(parsed);
   } catch {
     return { ok: false, error: "Model output is not valid JSON." };
+  }
+}
+
+export function parseLessonJson(raw: string): unknown | null {
+  try {
+    const stripped = raw
+      .replace(/^```(?:json)?\s*/i, "")
+      .replace(/\s*```\s*$/, "")
+      .trim();
+    return JSON.parse(stripped) as unknown;
+  } catch {
+    return null;
   }
 }

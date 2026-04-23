@@ -20,7 +20,7 @@ function getSourceBadge(lesson: LessonRecord): string | null {
       if (host.includes("youtube.com") || host.includes("youtu.be")) {
         return "YouTube";
       }
-      return "Manual";
+      return "Article";
     } catch {
       return "Manual";
     }

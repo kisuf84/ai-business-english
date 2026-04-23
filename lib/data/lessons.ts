@@ -82,6 +82,7 @@ export async function createLesson(params: {
   };
 
   if (isSupabaseEnabled()) {
+<<<<<<< HEAD
     try {
       const [created] = await supabaseRest<LessonRecord[]>("lessons", {
         method: "POST",
@@ -114,6 +115,34 @@ export async function createLesson(params: {
         error
       );
     }
+=======
+    const createdRows = await supabaseRest<LessonRecord[]>("lessons", {
+      method: "POST",
+      headers: {
+        Prefer: "return=representation",
+      },
+      body: JSON.stringify({
+        user_id: lessonPayload.user_id,
+        title: lessonPayload.title,
+        topic: lessonPayload.topic,
+        level: lessonPayload.level,
+        industry: lessonPayload.industry,
+        profession: lessonPayload.profession,
+        lesson_type: lessonPayload.lesson_type,
+        source_url: lessonPayload.source_url,
+        content_json: lessonPayload.content_json,
+        status: lessonPayload.status,
+        visibility: lessonPayload.visibility,
+      }),
+    });
+
+    const created = Array.isArray(createdRows) ? createdRows[0] : null;
+    if (!created || typeof created.id !== "string") {
+      throw new Error("lesson_insert_failed_no_record_returned");
+    }
+
+    return created;
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
   }
 
   return saveLocalLesson(lessonPayload);

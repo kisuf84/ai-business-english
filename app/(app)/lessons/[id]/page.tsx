@@ -3,11 +3,8 @@ import { getLessonById } from "../../../../lib/data/lessons";
 import LessonToolbar from "../../../../components/lesson/LessonToolbar";
 import Link from "next/link";
 import Card from "../../../../components/shared/Card";
-import type {
-  LessonGenerationOutput,
-  VocabularyItem,
-  LessonQuestion,
-} from "../../../../types/lesson";
+import type { LessonGenerationOutput } from "../../../../types/lesson";
+import { normalizeLessonOutput } from "../../../../lib/validators/lesson";
 
 function formatDate(value: string | null | undefined) {
   if (!value) return "Unknown";
@@ -15,100 +12,41 @@ function formatDate(value: string | null | undefined) {
   return Number.isNaN(parsed.getTime()) ? "Unknown" : parsed.toLocaleDateString();
 }
 
-function toStringArray(value: unknown): string[] {
-  if (!Array.isArray(value)) return [];
-  return value.filter((item): item is string => typeof item === "string");
-}
-
-function toVocabularyArray(value: unknown): VocabularyItem[] {
-  if (!Array.isArray(value)) return [];
-  return value.filter(
-    (item): item is VocabularyItem =>
-      item !== null &&
-      typeof item === "object" &&
-      typeof (item as Record<string, unknown>).term === "string" &&
-      typeof (item as Record<string, unknown>).definition === "string"
-  );
-}
-
-function toLessonQuestionArray(value: unknown): LessonQuestion[] {
-  if (!Array.isArray(value)) return [];
-  return value.flatMap((item) => {
-    if (!item || typeof item !== "object") return [];
-    const q = item as Record<string, unknown>;
-    const options = Array.isArray(q.options)
-      ? q.options.filter((opt): opt is string => typeof opt === "string")
-      : [];
-    const normalizedCorrectIndex =
-      typeof q.correct_index === "number"
-        ? q.correct_index
-        : typeof q.correct === "number"
-          ? q.correct
-          : -1;
-    if (
-      typeof q.id !== "string" ||
-      typeof q.question !== "string" ||
-      options.length === 0 ||
-      normalizedCorrectIndex < 0 ||
-      normalizedCorrectIndex >= options.length
-    ) {
-      return [];
-    }
-    return [
-      {
-        id: q.id,
-        question: q.question,
-        options,
-        correct_index: normalizedCorrectIndex,
-        instruction: typeof q.instruction === "string" ? q.instruction : undefined,
-        sentence: typeof q.sentence === "string" ? q.sentence : undefined,
-      } satisfies LessonQuestion,
-    ];
-  });
-}
-
 function parseLessonOutput(
   value: unknown,
   fallbackTitle: string
-): LessonGenerationOutput | null {
+): { lesson: LessonGenerationOutput | null; schemaIssues: string[] } {
   let candidate: unknown = value;
   if (typeof candidate === "string") {
     try {
       candidate = JSON.parse(candidate) as unknown;
     } catch {
-      return null;
+      return { lesson: null, schemaIssues: ["Lesson JSON parse failed."] };
     }
   }
 
-  if (!candidate || typeof candidate !== "object") return null;
-  const data = candidate as Record<string, unknown>;
+  if (!candidate || typeof candidate !== "object") {
+    return { lesson: null, schemaIssues: ["Lesson payload is not an object."] };
+  }
 
-  const lesson: LessonGenerationOutput = {
-    title:
-      typeof data.title === "string" && data.title.trim()
-        ? data.title
-        : fallbackTitle,
-    summary: typeof data.summary === "string" ? data.summary : "",
-    objectives: toStringArray(data.objectives),
-    vocabulary: toVocabularyArray(data.vocabulary),
-    reading_text: typeof data.reading_text === "string" ? data.reading_text : "",
-    comprehension_questions: toLessonQuestionArray(data.comprehension_questions),
-    grammar_exercises: toLessonQuestionArray(data.grammar_exercises),
-    role_play: typeof data.role_play === "string" ? data.role_play : "",
-    quiz: toLessonQuestionArray(data.quiz),
+  const strictCheck = normalizeLessonOutput(candidate, { strict: true });
+  const normalized = normalizeLessonOutput(candidate, {
+    strict: false,
+    allowLegacyFields: true,
+  });
+  if (!normalized.ok) {
+    return {
+      lesson: null,
+      schemaIssues: strictCheck.ok ? [] : strictCheck.errors,
+    };
+  }
+  return {
+    lesson: {
+      ...normalized.data,
+      title: normalized.data.title?.trim() || fallbackTitle,
+    },
+    schemaIssues: strictCheck.ok ? [] : strictCheck.errors,
   };
-
-  const hasMeaningfulContent =
-    Boolean(lesson.summary.trim()) ||
-    Boolean(lesson.reading_text.trim()) ||
-    Boolean(lesson.role_play.trim()) ||
-    lesson.objectives.length > 0 ||
-    lesson.vocabulary.length > 0 ||
-    lesson.comprehension_questions.length > 0 ||
-    lesson.grammar_exercises.length > 0 ||
-    lesson.quiz.length > 0;
-
-  return hasMeaningfulContent ? lesson : null;
 }
 
 export default async function LessonDetailPage({
@@ -130,9 +68,14 @@ export default async function LessonDetailPage({
     error = "We could not load this lesson right now.";
   }
 
-  const safeLesson = lessonRecord
+  const parsedLesson = lessonRecord
     ? parseLessonOutput(lessonRecord.content_json, lessonRecord.title || "Lesson")
-    : null;
+    : { lesson: null, schemaIssues: [] };
+  const safeLesson = parsedLesson.lesson;
+
+  if (process.env.NODE_ENV !== "production" && parsedLesson.schemaIssues.length > 0) {
+    console.warn("[LessonDetailPage] Lesson schema issues detected", parsedLesson.schemaIssues);
+  }
 
   return (
     <section className="py-10">
@@ -232,6 +175,13 @@ export default async function LessonDetailPage({
                 </p>
               </Card>
             )}
+            {process.env.NODE_ENV !== "production" && parsedLesson.schemaIssues.length > 0 ? (
+              <Card className="mt-4">
+                <p className="text-sm text-[var(--accent-warm)]">
+                  Dev note: required lesson schema checks failed for this record.
+                </p>
+              </Card>
+            ) : null}
           </>
         ) : null}
       </div>

@@ -20,7 +20,7 @@ export default function LandingPage() {
               Business English training, instantly generated.
             </h1>
             <p className="mt-5 text-base text-[var(--ink-muted)]">
-              Create polished lessons, courses, and workplace simulations in
+              Create polished lessons, premium course experiences, and workplace simulations in
               minutes. Built for professionals, teachers, and teams who need
               practical English for real work.
             </p>
@@ -63,7 +63,7 @@ export default function LandingPage() {
                 <div className="h-2 w-1/2 rounded-full bg-[var(--surface-hover)]" />
               </div>
               <p className="mt-4 text-xs text-[var(--ink-faint)]">
-                Structured objectives, vocabulary, reading, and role-play.
+                Structured objectives, word bank, reading, and final assessment.
               </p>
             </div>
           </Card>
@@ -133,11 +133,11 @@ export default function LandingPage() {
             <div className="flex items-center gap-2">
               <FeatureIcon />
               <h2 className="text-lg font-semibold text-[var(--ink)]">
-                Course Generator
+                Premium Courses
               </h2>
             </div>
             <p className="mt-2 text-sm text-[var(--ink-muted)]">
-              Build structured course outlines with modules and lesson titles.
+              Access structured premium course pathways for advanced practice.
             </p>
           </Card>
           <Card>

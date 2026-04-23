@@ -30,6 +30,8 @@ export type SimulationMessageOutput = {
     fluency: string;
   };
   suggestions: string[];
+  persistence_warning?: string;
+  attempt_saved?: boolean;
 };
 
 export type SimulationOverallFeedback = {

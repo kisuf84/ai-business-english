@@ -21,9 +21,9 @@ export default function LessonContent({ lesson }: LessonContentProps) {
           ))}
         </ul>
       </LessonSection>
-      <LessonSection title="Vocabulary">
+      <LessonSection title="Word Bank">
         <ul>
-          {lesson.vocabulary.map((item) => (
+          {lesson.word_bank.map((item) => (
             <li key={item.term}>{item.term}: {item.definition}</li>
           ))}
         </ul>
@@ -31,30 +31,39 @@ export default function LessonContent({ lesson }: LessonContentProps) {
       <LessonSection title="Reading Text">
         <p>{lesson.reading_text}</p>
       </LessonSection>
-      <LessonSection title="Comprehension Questions">
+      <LessonSection title="Reading Comprehension">
         <ul>
-          {lesson.comprehension_questions.map((item) => (
+          {lesson.reading_comprehension.map((item) => (
             <li key={item.id}>{item.question}</li>
           ))}
         </ul>
       </LessonSection>
-      <LessonSection title="Grammar Exercises">
+      <LessonSection title="Vocabulary Exercise">
         <ul>
-          {lesson.grammar_exercises.map((item) => (
+          {lesson.vocabulary_exercise.map((item) => (
+            <li key={item.id}>{item.question}</li>
+          ))}
+        </ul>
+      </LessonSection>
+      <LessonSection title="Grammar">
+        <ul>
+          {lesson.grammar.map((item) => (
             <li key={item.id}>{item.sentence ?? item.question}</li>
           ))}
         </ul>
       </LessonSection>
-      <LessonSection title="Role Play Scenario">
-        <p>{lesson.role_play}</p>
-      </LessonSection>
-      <LessonSection title="Quiz">
+      <LessonSection title="Final Assessment">
         <ul>
-          {lesson.quiz.map((item) => (
+          {lesson.final_assessment.map((item) => (
             <li key={item.id}>{item.question}</li>
           ))}
         </ul>
       </LessonSection>
+      {lesson.listening?.trim() ? (
+        <LessonSection title="Listening">
+          <p>{lesson.listening}</p>
+        </LessonSection>
+      ) : null}
     </div>
   );
 }

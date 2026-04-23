@@ -6,10 +6,10 @@ const plans = [
     name: "Starter",
     price: "Free",
     cadence: "for individuals",
-    description: "For individuals getting started with lesson and course generation.",
+    description: "For individuals getting started with lessons and simulations.",
     features: [
       "Unlimited lesson generation",
-      "Basic course outlines",
+      "Premium course access",
       "Simulation practice",
       "Private lesson library",
     ],
@@ -23,7 +23,7 @@ const plans = [
     features: [
       "Everything in Starter",
       "Advanced lesson formats",
-      "Course templates",
+      "Premium course pathways",
       "Priority support",
     ],
     highlight: true,

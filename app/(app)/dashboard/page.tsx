@@ -27,7 +27,8 @@ export default async function DashboardPage() {
   const recentLessons = lessons.slice(0, 3);
   const totalItems = lessons.length + courses.length;
   const lessonFill = totalItems === 0 ? 18 : Math.max(18, Math.round((lessons.length / totalItems) * 100));
-  const courseFill = totalItems === 0 ? 16 : Math.max(16, Math.round((courses.length / totalItems) * 100));
+  const courseFill =
+    totalItems === 0 ? 16 : Math.max(16, Math.round((courses.length / totalItems) * 100));
   const statCards = [
     {
       label: "Lessons",
@@ -38,12 +39,12 @@ export default async function DashboardPage() {
       copy: "Structured lessons created",
     },
     {
-      label: "Courses",
+      label: "Premium courses",
       icon: "C",
       tone: "bg-[rgba(34,197,229,0.18)] text-[#28c3eb]",
-      chip: "Courses",
+      chip: "Premium",
       value: courses.length,
-      copy: "Generated course drafts",
+      copy: "Premium courses available",
     },
     {
       label: "Library",
@@ -73,8 +74,13 @@ export default async function DashboardPage() {
           <h1 className="m-0 text-[28px] font-extrabold tracking-[-0.035em] text-[var(--ink)] sm:text-[32px] lg:text-[36px]">
             Good morning, Alex
           </h1>
+<<<<<<< HEAD
           <p className="mt-2 max-w-[760px] text-sm leading-[1.65] text-[var(--ink-muted)] sm:mt-[10px] sm:text-base">
             Here's your performance overview and learning progress across the current lesson and course workspace.
+=======
+          <p className="mt-[10px] max-w-[760px] text-base leading-[1.6] text-[var(--ink-muted)]">
+            Here's your performance overview and learning progress across lessons and premium courses.
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
           </p>
         </div>
         <div className="flex w-full items-center gap-3 self-start rounded-[16px] border border-[var(--border)] bg-white/[0.03] px-3 py-3 sm:w-auto sm:min-w-[210px] sm:rounded-[18px] sm:px-[18px] sm:py-[14px] xl:self-center">
@@ -119,8 +125,13 @@ export default async function DashboardPage() {
           <h2 className="m-0 text-[20px] font-bold tracking-[-0.02em] text-[var(--ink)] sm:text-[22px]">
             Workspace Content History
           </h2>
+<<<<<<< HEAD
           <div className="mb-4 mt-2 text-sm text-[var(--ink-muted)] sm:mb-[22px] sm:text-[15px]">
             Your lesson and course generation progress over time.
+=======
+          <div className="mb-[22px] mt-2 text-[15px] text-[var(--ink-muted)]">
+            Your lesson and premium content progress over time.
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
           </div>
 
           <div className="grid gap-4 lg:min-h-[380px] lg:grid-cols-[1fr_auto]">
@@ -160,9 +171,9 @@ export default async function DashboardPage() {
 
               <div className="grid gap-4 lg:grid-cols-[92px_1fr] lg:items-center">
                 <div className="text-sm leading-[1.5] text-[var(--ink-muted)]">
-                  Courses
+                  Premium courses
                   <br />
-                  in drafts
+                  in library
                 </div>
                 <div className="h-3 overflow-hidden rounded-full bg-white/[0.08]">
                   <span
@@ -312,6 +323,7 @@ export default async function DashboardPage() {
             </Card>
           </Link>
 
+<<<<<<< HEAD
           <Link href="/courses" className="block">
             <Card className="min-h-[160px] rounded-[16px] border border-[var(--border)] bg-[var(--surface-card)] p-4 shadow-sm sm:min-h-[180px] sm:rounded-[18px] sm:p-[22px]">
               <div className="grid h-11 w-11 place-items-center rounded-[12px] bg-[rgba(25,184,122,0.16)] text-base font-bold text-[#1ec584] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:h-[50px] sm:w-[50px] sm:rounded-[14px] sm:text-lg">
@@ -322,6 +334,18 @@ export default async function DashboardPage() {
               </div>
               <div className="mt-2 text-sm leading-[1.55] text-[var(--ink-muted)] sm:mt-[10px] sm:text-[15px]">
                 Assemble structured learning paths based on professional goals.
+=======
+          <Link href="/my-courses" className="block">
+            <Card className="min-h-[180px] rounded-[18px] border border-[var(--border)] bg-[var(--surface-card)] p-[22px] shadow-sm">
+              <div className="grid h-[50px] w-[50px] place-items-center rounded-[14px] bg-[rgba(25,184,122,0.16)] text-lg font-bold text-[#1ec584] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]">
+                C
+              </div>
+              <div className="mt-[18px] text-[18px] font-bold text-[var(--ink)]">
+                Premium Courses
+              </div>
+              <div className="mt-[10px] text-[15px] leading-[1.55] text-[var(--ink-muted)]">
+                Access curated premium course content from your workspace library.
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
               </div>
             </Card>
           </Link>

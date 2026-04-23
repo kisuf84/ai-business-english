@@ -1,5 +1,6 @@
 "use client";
 
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "../../../../components/shared/Button";
@@ -133,6 +134,9 @@ function normalizeLessonResponse(raw: unknown): LessonGenerationApiResponse | nu
         : undefined,
   };
 }
+=======
+import GeneratorPage from "../../generator/page";
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
 
 function isTranscriptFailureCode(value: string | undefined): boolean {
   return (
@@ -161,6 +165,7 @@ function triggerYouTubeJobProcessing() {
 }
 
 export default function LessonNewPage() {
+<<<<<<< HEAD
   const router = useRouter();
   const [form, setForm] = useState<LessonGenerationInput>(initialForm);
   const [sourceInput, setSourceInput] = useState("");
@@ -579,4 +584,7 @@ export default function LessonNewPage() {
       </div>
     </section>
   );
+=======
+  return <GeneratorPage />;
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
 }

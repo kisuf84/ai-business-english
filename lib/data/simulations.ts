@@ -56,6 +56,7 @@ export async function createSimulation(
   };
 
   if (isSupabaseEnabled()) {
+<<<<<<< HEAD
     try {
       const [created] = await supabaseRest<SimulationRecord[]>("simulations", {
         method: "POST",
@@ -78,6 +79,24 @@ export async function createSimulation(
         error
       );
     }
+=======
+    const createdRows = await supabaseRest<SimulationRecord[]>("simulations", {
+      method: "POST",
+      headers: { Prefer: "return=representation" },
+      body: JSON.stringify({
+        user_id: payload.user_id,
+        scenario_type: payload.scenario_type,
+        level: payload.level,
+        industry: payload.industry,
+        profession: payload.profession,
+      }),
+    });
+    const created = Array.isArray(createdRows) ? createdRows[0] : null;
+    if (!created || typeof created.id !== "string") {
+      throw new Error("simulation_insert_failed_no_record_returned");
+    }
+    return created;
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
   }
 
   const simulations = readAll<StoredSimulation>(DATA_PATH);
@@ -104,6 +123,7 @@ export async function createSimulationAttempt(params: {
   };
 
   if (isSupabaseEnabled()) {
+<<<<<<< HEAD
     try {
       const [created] = await supabaseRest<SimulationAttemptRecord[]>(
         "simulation_attempts",
@@ -128,6 +148,26 @@ export async function createSimulationAttempt(params: {
         error
       );
     }
+=======
+    const createdRows = await supabaseRest<SimulationAttemptRecord[]>(
+      "simulation_attempts",
+      {
+        method: "POST",
+        headers: { Prefer: "return=representation" },
+        body: JSON.stringify({
+          simulation_id: payload.simulation_id,
+          user_input: payload.user_input,
+          ai_response: payload.ai_response,
+          feedback_json: payload.feedback_json,
+        }),
+      }
+    );
+    const created = Array.isArray(createdRows) ? createdRows[0] : null;
+    if (!created || typeof created.id !== "string") {
+      throw new Error("simulation_attempt_insert_failed_no_record_returned");
+    }
+    return created;
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
   }
 
   const attempts = readAll<StoredAttempt>(ATTEMPTS_PATH);

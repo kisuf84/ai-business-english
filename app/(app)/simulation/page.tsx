@@ -478,6 +478,7 @@ export default function SimulationPage() {
   const [simulationId, setSimulationId] = useState<string | null>(null);
   const [simulationStarted, setSimulationStarted] = useState(false);
   const [simulationEnded, setSimulationEnded] = useState(false);
+<<<<<<< HEAD
   const [isMessageLoading, setIsMessageLoading] = useState(false);
   const [isStartingCustom, setIsStartingCustom] = useState(false);
   const [activeQuickStartId, setActiveQuickStartId] = useState<string | null>(null);
@@ -487,6 +488,12 @@ export default function SimulationPage() {
   const [conversationErrorDetails, setConversationErrorDetails] = useState<string | null>(null);
   const [customStartErrorDetails, setCustomStartErrorDetails] = useState<string | null>(null);
   const [quickStartErrorDetails, setQuickStartErrorDetails] = useState<string | null>(null);
+=======
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [errorDetails, setErrorDetails] = useState<string | null>(null);
+  const [saveWarning, setSaveWarning] = useState<string | null>(null);
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
 
   const loadHistory = async () => {
     setIsHistoryLoading(true);
@@ -530,6 +537,7 @@ export default function SimulationPage() {
     text: string;
     includeUserInHistory: boolean;
     historySeed?: ChatMessage[];
+<<<<<<< HEAD
     scenarioId?: string;
     scenarioType?: SimulationScenarioType;
     level?: string;
@@ -541,6 +549,14 @@ export default function SimulationPage() {
     | { ok: true }
     | { ok: false; message: string; details: string | null }
   > => {
+=======
+  }): Promise<boolean> => {
+    setIsLoading(true);
+    setError(null);
+    setErrorDetails(null);
+    setSaveWarning(null);
+
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
     const sourceHistory = params.historySeed ?? history;
     const nextHistory: ChatMessage[] = params.includeUserInHistory
       ? [
@@ -645,6 +661,9 @@ export default function SimulationPage() {
 
       setSimulationId(data.simulation_id);
       setHistory([...nextHistory, aiMessage]);
+      if (typeof data.persistence_warning === "string") {
+        setSaveWarning(data.persistence_warning);
+      }
       if (params.includeUserInHistory) {
         setUserInput("");
       }
@@ -834,7 +853,7 @@ export default function SimulationPage() {
     };
 
     try {
-      await fetch("/api/simulation/end", {
+      const response = await fetch("/api/simulation/end", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -842,8 +861,18 @@ export default function SimulationPage() {
           feedback: feedbackPayload,
         }),
       });
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        setSaveWarning(
+          payload?.error ||
+            "Simulation ended, but we could not save session feedback."
+        );
+      }
     } catch (err) {
       console.error("Failed to persist session feedback", err);
+      setSaveWarning("Simulation ended, but saving session feedback failed.");
     }
   };
 
@@ -860,6 +889,7 @@ export default function SimulationPage() {
     setSimulationStarted(false);
     setSimulationEnded(false);
     setUserInput("");
+<<<<<<< HEAD
     setConversationError(null);
     setConversationErrorDetails(null);
     setCustomStartError(null);
@@ -869,6 +899,12 @@ export default function SimulationPage() {
     setIsMessageLoading(false);
     setIsStartingCustom(false);
     setActiveQuickStartId(null);
+=======
+    setError(null);
+    setErrorDetails(null);
+    setSaveWarning(null);
+    setIsLoading(false);
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
     setActiveTab("conversation");
   };
 
@@ -942,6 +978,7 @@ export default function SimulationPage() {
           </p>
         </div>
 
+<<<<<<< HEAD
         {!isConversationFocusMode ? (
           <>
             <div className="my-6 flex items-center gap-3 sm:my-8 sm:gap-4">
@@ -950,6 +987,122 @@ export default function SimulationPage() {
                 Custom Simulation Generator
               </p>
               <div className="h-px flex-1 bg-[var(--border)]" />
+=======
+        <Card className="p-7">
+          <form onSubmit={handleSend}>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <label htmlFor="scenario_type" className="text-sm font-medium">
+                  Select a scenario
+                </label>
+                <Select
+                  id="scenario_type"
+                  value={selectedScenarioId}
+                  onChange={(event) => setSelectedScenarioId(event.target.value)}
+                  disabled={simulationStarted}
+                >
+                  {scenarioOptions.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.label}
+                    </option>
+                  ))}
+                </Select>
+              </div>
+
+              <div className="grid gap-2">
+                <label htmlFor="level" className="text-sm font-medium">
+                  Level
+                </label>
+                <Select
+                  id="level"
+                  value={level}
+                  onChange={(event) => setLevel(event.target.value)}
+                  disabled={simulationStarted}
+                  required
+                >
+                  <option value="">Select level</option>
+                  <option value="A2">A2</option>
+                  <option value="B1">B1</option>
+                  <option value="B2">B2</option>
+                  <option value="C1">C1</option>
+                </Select>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-2">
+                  <label htmlFor="industry" className="text-sm font-medium">
+                    Industry
+                  </label>
+                  <Select
+                    id="industry"
+                    value={industry}
+                    onChange={(event) => setIndustry(event.target.value)}
+                    disabled={simulationStarted}
+                  >
+                    <option value="">Select industry</option>
+                    {industryOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </Select>
+                </div>
+
+                <div className="grid gap-2">
+                  <label htmlFor="profession" className="text-sm font-medium">
+                    Business Role
+                  </label>
+                  <Select
+                    id="profession"
+                    value={role}
+                    onChange={(event) => setRole(event.target.value)}
+                    disabled={simulationStarted}
+                  >
+                    <option value="">Select business role</option>
+                    {roleOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </Select>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                {!simulationStarted ? (
+                  <Button
+                    type="button"
+                    onClick={() => void handleStartSimulation()}
+                    disabled={isLoading}
+                    className="rounded-lg border px-5 py-2 text-xs font-semibold transition-opacity hover:opacity-90"
+                    style={accentButtonStyle}
+                  >
+                    {isLoading ? "Starting..." : "Start Conversation"}
+                  </Button>
+                ) : null}
+                {simulationStarted || simulationEnded ? (
+                  <Button
+                    type="button"
+                    onClick={handleReset}
+                    disabled={isLoading}
+                    className="rounded-lg px-4 py-2 text-xs"
+                  >
+                    Start New Conversation
+                  </Button>
+                ) : null}
+                {error ? (
+                  <p className="text-xs text-[var(--accent-warm)]">{error}</p>
+                ) : null}
+                {saveWarning ? (
+                  <p className="text-xs text-[var(--accent-warm)]">{saveWarning}</p>
+                ) : null}
+                {process.env.NODE_ENV !== "production" && errorDetails ? (
+                  <p className="text-xs text-[var(--ink-faint)]">
+                    Debug: {errorDetails}
+                  </p>
+                ) : null}
+              </div>
+>>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
             </div>
 
             <Card className="p-4 sm:p-7" style={sectionCardStyle}>

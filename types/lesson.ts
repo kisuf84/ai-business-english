@@ -28,16 +28,22 @@ export type LessonGenerationOutput = {
   title: string;
   summary: string;
   objectives: string[];
-  vocabulary: VocabularyItem[];
+  word_bank: VocabularyItem[];
   reading_text: string;
-  comprehension_questions: MCQ[];
-  grammar_exercises: MCQ[];
-  role_play: string;
-  quiz: MCQ[];
+  reading_comprehension: MCQ[];
+  vocabulary_exercise: MCQ[];
+  grammar: MCQ[];
+  listening?: string;
+  final_assessment: MCQ[];
 };
 
 export type LessonSourceMeta = {
-  source_kind: "youtube_transcript" | "webpage" | "raw_text" | "manual";
+  source_kind:
+    | "youtube_transcript"
+    | "article_text"
+    | "webpage"
+    | "raw_text"
+    | "manual";
   source_url?: string | null;
   video_id?: string | null;
   transcript_language?: string | null;
@@ -60,6 +66,9 @@ export type LessonGenerationApiErrorCode =
   | "invalid_url"
   | "no_captions"
   | "captions_disabled"
+  | "unsupported_source"
+  | "empty_source_input"
+  | "transcript_unavailable"
   | "transcript_fetch_failed"
   | "unsupported_video"
   | "unknown_error"
