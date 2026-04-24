@@ -45,6 +45,7 @@ function isSupabaseEnabled() {
 type LessonRecordWithVideo = LessonRecord & {
   video_id?: string | null;
   transcript_text?: string | null;
+  transcript_segments?: Array<{ start: number; duration?: number; text: string }> | null;
 };
 
 function saveLocalLesson(lesson: LessonRecordWithVideo): LessonRecord {
@@ -59,6 +60,7 @@ export async function createLesson(params: {
   output: LessonGenerationOutput;
   user_id?: string | null;
   transcript_text?: string | null;
+  transcript_segments?: Array<{ start: number; duration?: number; text: string }> | null;
 }): Promise<LessonRecord> {
   const inputValidation = validateLessonPayload(params.input);
   if (!inputValidation.ok) {
@@ -80,6 +82,31 @@ export async function createLesson(params: {
       typeof params.input.source_text === "string" ? params.input.source_text.trim() : "";
     return fromInput || null;
   })();
+  const transcriptSegments = Array.isArray(params.transcript_segments)
+    ? params.transcript_segments
+        .filter((item) => item && typeof item === "object")
+        .map((item) => {
+          const start =
+            typeof item.start === "number" && Number.isFinite(item.start)
+              ? item.start
+              : null;
+          if (start === null || start < 0) return null;
+          const text = typeof item.text === "string" ? item.text.trim() : "";
+          if (!text) return null;
+          const duration =
+            typeof item.duration === "number" && Number.isFinite(item.duration) && item.duration >= 0
+              ? item.duration
+              : undefined;
+          return duration === undefined
+            ? { start, text }
+            : { start, duration, text };
+        })
+        .filter(
+          (
+            item
+          ): item is { start: number; duration?: number; text: string } => Boolean(item)
+        )
+    : null;
 
   const now = new Date().toISOString();
   const lessonPayload: LessonRecordWithVideo = {
@@ -97,6 +124,7 @@ export async function createLesson(params: {
     visibility: "private",
     video_id: videoId,
     transcript_text: transcriptText,
+    transcript_segments: transcriptSegments && transcriptSegments.length > 0 ? transcriptSegments : null,
     created_at: now,
     updated_at: now,
   };
@@ -121,6 +149,7 @@ export async function createLesson(params: {
         visibility: lessonPayload.visibility,
         video_id: lessonPayload.video_id,
         transcript_text: lessonPayload.transcript_text,
+        transcript_segments: lessonPayload.transcript_segments,
       }),
     });
 
@@ -210,6 +239,7 @@ export async function duplicateLesson(id: string): Promise<LessonRecord | null> 
     visibility: original.visibility,
     video_id: originalWithVideo.video_id ?? null,
     transcript_text: originalWithVideo.transcript_text ?? null,
+    transcript_segments: originalWithVideo.transcript_segments ?? null,
     created_at: now,
     updated_at: now,
   };

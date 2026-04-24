@@ -113,6 +113,9 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
   try {
     let transcriptText = claimed.transcript_text?.trim() || "";
     let transcriptLanguage: string | null = null;
+    let transcriptSegments:
+      | Array<{ start: number; duration?: number; text: string }>
+      | null = null;
 
     if (!transcriptText) {
       const transcript = await fetchYouTubeTranscriptSource(claimed.source_url);
@@ -148,6 +151,9 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
 
       transcriptText = transcript.sourceText;
       transcriptLanguage = transcript.languageCode;
+      transcriptSegments = Array.isArray(transcript.transcriptSegments)
+        ? transcript.transcriptSegments
+        : null;
       await updateYouTubeLessonJob(claimed.id, {
         transcript_text: transcriptText,
         last_error_code: null,
@@ -179,6 +185,7 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
       output: parsed.data,
       user_id: null,
       transcript_text: transcriptText,
+      transcript_segments: transcriptSegments,
     });
 
     const ready = await updateYouTubeLessonJob(claimed.id, {

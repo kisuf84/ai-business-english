@@ -22,6 +22,9 @@ alter table public.lessons
 alter table public.lessons
   add column if not exists transcript_text text null;
 
+alter table public.lessons
+  add column if not exists transcript_segments jsonb null;
+
 create table if not exists public.youtube_lesson_jobs (
   id uuid primary key default gen_random_uuid(),
   source_url text not null,

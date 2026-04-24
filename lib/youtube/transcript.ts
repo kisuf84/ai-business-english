@@ -42,6 +42,11 @@ type TranscriptSuccess = {
   videoId: string;
   sourceText: string;
   languageCode: string | null;
+  transcriptSegments?: Array<{
+    start: number;
+    duration?: number;
+    text: string;
+  }>;
   diagnostics: TranscriptDiagnostic[];
 };
 
@@ -56,7 +61,16 @@ type TranscriptError = {
 export type YouTubeTranscriptResult = TranscriptSuccess | TranscriptError;
 
 type TranscriptFetchResult =
-  | { ok: true; text: string; languageCode: string | null }
+  | {
+      ok: true;
+      text: string;
+      languageCode: string | null;
+      transcriptSegments?: Array<{
+        start: number;
+        duration?: number;
+        text: string;
+      }>;
+    }
   | { ok: false; reason?: Exclude<TranscriptFailureReason, "invalid_url"> };
 
 const USER_AGENT =
@@ -170,11 +184,80 @@ function normalizeTranscriptText(text: string): string {
     .trim();
 }
 
-function transcriptFromSegments(segments: Array<{ text?: string; lang?: string }>): {
+function asFiniteNumber(value: unknown): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  return null;
+}
+
+function normalizeTimedSegmentsFromUnknown(
+  segments: unknown[]
+): Array<{ start: number; duration?: number; text: string }> {
+  const normalized: Array<{ start: number; duration?: number; text: string }> = [];
+
+  for (const item of segments) {
+    if (!item || typeof item !== "object") continue;
+    const row = item as Record<string, unknown>;
+    const rawText =
+      typeof row.text === "string"
+        ? row.text
+        : typeof row.utf8 === "string"
+          ? row.utf8
+          : "";
+    const text = normalizeTranscriptText(decodeHtmlEntities(rawText));
+    if (!text) continue;
+
+    const startCandidate =
+      asFiniteNumber(row.start) ??
+      asFiniteNumber(row.startTime) ??
+      asFiniteNumber(row.start_time) ??
+      asFiniteNumber(row.offset) ??
+      asFiniteNumber(row.t);
+    if (startCandidate === null) continue;
+
+    const durationCandidate =
+      asFiniteNumber(row.duration) ??
+      asFiniteNumber(row.dur) ??
+      asFiniteNumber(row.durationMs) ??
+      asFiniteNumber(row.d);
+
+    const start =
+      startCandidate > 100000 ? startCandidate / 1000 : startCandidate;
+    const duration =
+      durationCandidate === null
+        ? undefined
+        : durationCandidate > 100000
+          ? durationCandidate / 1000
+          : durationCandidate;
+
+    const entry: { start: number; duration?: number; text: string } = {
+      start,
+      text,
+    };
+    if (typeof duration === "number" && Number.isFinite(duration) && duration >= 0) {
+      entry.duration = duration;
+    }
+    normalized.push(entry);
+  }
+
+  return normalized
+    .filter((item) => item.start >= 0)
+    .sort((a, b) => a.start - b.start);
+}
+
+function transcriptFromSegments(segments: unknown[]): {
   text: string;
   languageCode: string | null;
+  transcriptSegments?: Array<{ start: number; duration?: number; text: string }>;
 } | null {
-  const chunks = segments
+  const typedSegments = segments.filter(
+    (item): item is { text?: string; lang?: string } =>
+      Boolean(item && typeof item === "object")
+  );
+  const chunks = typedSegments
     .map((item) => (typeof item.text === "string" ? item.text : ""))
     .filter((item) => Boolean(item.trim()));
 
@@ -188,10 +271,13 @@ function transcriptFromSegments(segments: Array<{ text?: string; lang?: string }
   }
 
   const languageCode =
-    segments.find((item) => typeof item.lang === "string" && item.lang.trim())?.lang ??
-    null;
+    typedSegments.find((item) => typeof item.lang === "string" && item.lang.trim())
+      ?.lang ?? null;
+  const transcriptSegments = normalizeTimedSegmentsFromUnknown(segments);
 
-  return { text: normalized, languageCode };
+  return transcriptSegments.length > 0
+    ? { text: normalized, languageCode, transcriptSegments }
+    : { text: normalized, languageCode };
 }
 
 async function fetchTranscriptViaSupadata(
@@ -243,6 +329,7 @@ async function fetchTranscriptViaSupadata(
       | null) ?? null;
     const content = data?.content;
     const arrayContent = Array.isArray(content) ? content : [];
+    const timedSegments = normalizeTimedSegmentsFromUnknown(arrayContent);
     const chunks =
       typeof content === "string"
         ? [content]
@@ -308,7 +395,9 @@ async function fetchTranscriptViaSupadata(
       contentItems: Array.isArray(content) ? content.length : undefined,
     });
 
-    return { ok: true, text, languageCode };
+    return timedSegments.length > 0
+      ? { ok: true, text, languageCode, transcriptSegments: timedSegments }
+      : { ok: true, text, languageCode };
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Unknown Supadata transcript error.";
@@ -454,6 +543,7 @@ async function fetchTranscriptViaLibrary(
           ok: true,
           text: parsed.text,
           languageCode: parsed.languageCode,
+          transcriptSegments: parsed.transcriptSegments,
         };
       }
 
@@ -840,35 +930,104 @@ async function fetchText(url: string): Promise<{ ok: true; text: string } | { ok
   }
 }
 
-function parseTranscriptFromJson3(data: unknown): string | null {
+function parseTranscriptFromJson3(data: unknown): {
+  text: string;
+  transcriptSegments?: Array<{ start: number; duration?: number; text: string }>;
+} | null {
   if (!data || typeof data !== "object") return null;
   const events = (data as { events?: unknown }).events;
   if (!Array.isArray(events)) return null;
 
   const chunks: string[] = [];
+  const timedSegments: Array<{ start: number; duration?: number; text: string }> = [];
   for (const event of events) {
     if (!event || typeof event !== "object") continue;
+    const eventStartRaw = asFiniteNumber((event as { tStartMs?: unknown }).tStartMs);
+    const eventDurationRaw = asFiniteNumber((event as { dDurationMs?: unknown }).dDurationMs);
+    const eventStart =
+      eventStartRaw !== null && Number.isFinite(eventStartRaw)
+        ? eventStartRaw / 1000
+        : null;
+    const eventDuration =
+      eventDurationRaw !== null && Number.isFinite(eventDurationRaw)
+        ? eventDurationRaw / 1000
+        : undefined;
     const segs = (event as { segs?: unknown }).segs;
     if (!Array.isArray(segs)) continue;
 
+    const eventChunks: string[] = [];
     for (const segment of segs) {
       if (!segment || typeof segment !== "object") continue;
       const utf8 = (segment as { utf8?: unknown }).utf8;
       if (typeof utf8 === "string" && utf8.trim()) {
-        chunks.push(decodeHtmlEntities(utf8));
+        const decoded = decodeHtmlEntities(utf8);
+        chunks.push(decoded);
+        eventChunks.push(decoded);
       }
+    }
+
+    const eventText = normalizeTranscriptText(eventChunks.join(" "));
+    if (eventText && eventStart !== null && eventStart >= 0) {
+      const entry: { start: number; duration?: number; text: string } = {
+        start: eventStart,
+        text: eventText,
+      };
+      if (
+        typeof eventDuration === "number" &&
+        Number.isFinite(eventDuration) &&
+        eventDuration >= 0
+      ) {
+        entry.duration = eventDuration;
+      }
+      timedSegments.push(entry);
     }
   }
 
   if (chunks.length === 0) return null;
-  return normalizeTranscriptText(chunks.join(" "));
+  const text = normalizeTranscriptText(chunks.join(" "));
+  if (!text) return null;
+  return timedSegments.length > 0 ? { text, transcriptSegments: timedSegments } : { text };
 }
 
-function parseTranscriptFromXml(xml: string): string | null {
+function parseTranscriptFromXml(xml: string): {
+  text: string;
+  transcriptSegments?: Array<{ start: number; duration?: number; text: string }>;
+} | null {
   const srv3Matches = xml.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/g);
   const srv3Chunks: string[] = [];
+  const timedSegments: Array<{ start: number; duration?: number; text: string }> = [];
+
+  const parseXmlNumberAttribute = (attrs: string, name: string): number | null => {
+    const match = attrs.match(new RegExp(`${name}="([^"]+)"`));
+    if (!match) return null;
+    const parsed = Number(match[1]);
+    return Number.isFinite(parsed) ? parsed : null;
+  };
+
+  const pushTimedSegment = (
+    text: string,
+    start: number | null,
+    duration?: number | null
+  ) => {
+    const normalized = normalizeTranscriptText(text);
+    if (!normalized || start === null || start < 0) return;
+    const entry: { start: number; duration?: number; text: string } = {
+      start,
+      text: normalized,
+    };
+    if (typeof duration === "number" && Number.isFinite(duration) && duration >= 0) {
+      entry.duration = duration;
+    }
+    timedSegments.push(entry);
+  };
+
   for (const match of srv3Matches) {
+    const attributes = match[0] || "";
     const paragraph = match[1] || "";
+    const startMs = parseXmlNumberAttribute(attributes, "t");
+    const durationMs = parseXmlNumberAttribute(attributes, "d");
+    const paragraphStart = startMs === null ? null : startMs / 1000;
+    const paragraphDuration = durationMs === null ? undefined : durationMs / 1000;
     const segmentMatches = paragraph.matchAll(/<s\b[^>]*>([\s\S]*?)<\/s>/g);
     const segmentChunks: string[] = [];
     for (const segmentMatch of segmentMatches) {
@@ -877,20 +1036,33 @@ function parseTranscriptFromXml(xml: string): string | null {
     }
     const fallback = paragraph.replace(/<[^>]+>/g, " ");
     const value = segmentChunks.length > 0 ? segmentChunks.join(" ") : fallback;
-    if (value.trim()) srv3Chunks.push(value);
+    if (value.trim()) {
+      srv3Chunks.push(value);
+      pushTimedSegment(value, paragraphStart, paragraphDuration);
+    }
   }
   if (srv3Chunks.length > 0) {
-    return normalizeTranscriptText(srv3Chunks.join(" "));
+    const text = normalizeTranscriptText(srv3Chunks.join(" "));
+    if (!text) return null;
+    return timedSegments.length > 0 ? { text, transcriptSegments: timedSegments } : { text };
   }
 
   const matches = xml.matchAll(/<text\b[^>]*>([\s\S]*?)<\/text>/g);
   const chunks: string[] = [];
   for (const match of matches) {
+    const attributes = match[0] || "";
     const value = match[1] ? decodeHtmlEntities(match[1]) : "";
-    if (value.trim()) chunks.push(value);
+    if (value.trim()) {
+      chunks.push(value);
+      const start = parseXmlNumberAttribute(attributes, "start");
+      const duration = parseXmlNumberAttribute(attributes, "dur");
+      pushTimedSegment(value, start, duration);
+    }
   }
   if (chunks.length === 0) return null;
-  return normalizeTranscriptText(chunks.join(" "));
+  const text = normalizeTranscriptText(chunks.join(" "));
+  if (!text) return null;
+  return timedSegments.length > 0 ? { text, transcriptSegments: timedSegments } : { text };
 }
 
 function appendFmtJson3(url: string): string {
@@ -909,7 +1081,12 @@ function stripFmtJson3(url: string): string {
 async function fetchTranscriptFromTrack(
   track: CaptionTrack
 ): Promise<
-  | { ok: true; text: string; languageCode: string | null }
+  | {
+      ok: true;
+      text: string;
+      languageCode: string | null;
+      transcriptSegments?: Array<{ start: number; duration?: number; text: string }>;
+    }
   | { ok: false; code: "transcript_fetch_failed" | "transcript_parse_failed" }
 > {
   if (!track.baseUrl) {
@@ -923,9 +1100,14 @@ async function fetchTranscriptFromTrack(
       logTranscriptDebug("caption_track.json_success", {
         languageCode: track.languageCode,
         isAutoGenerated: track.isAutoGenerated,
-        textLength: parsed.length,
+        textLength: parsed.text.length,
       });
-      return { ok: true, text: parsed, languageCode: track.languageCode };
+      return {
+        ok: true,
+        text: parsed.text,
+        languageCode: track.languageCode,
+        transcriptSegments: parsed.transcriptSegments,
+      };
     }
     logTranscriptDebug("caption_track.json_parse_failed", {
       languageCode: track.languageCode,
@@ -951,9 +1133,14 @@ async function fetchTranscriptFromTrack(
   logTranscriptDebug("caption_track.xml_success", {
     languageCode: track.languageCode,
     isAutoGenerated: track.isAutoGenerated,
-    textLength: parsedXml.length,
+    textLength: parsedXml.text.length,
   });
-  return { ok: true, text: parsedXml, languageCode: track.languageCode };
+  return {
+    ok: true,
+    text: parsedXml.text,
+    languageCode: track.languageCode,
+    transcriptSegments: parsedXml.transcriptSegments,
+  };
 }
 
 function buildTimedTextFallbacks(videoId: string): CaptionTrack[] {
@@ -1056,6 +1243,7 @@ async function fetchTranscriptViaInnertube(
             ok: true,
             text: transcript.text,
             languageCode: transcript.languageCode,
+            transcriptSegments: transcript.transcriptSegments,
           };
         }
       }
@@ -1165,6 +1353,7 @@ async function fetchTranscriptViaCustomExtractor(
         ok: true,
         text: transcript.text,
         languageCode: transcript.languageCode,
+        transcriptSegments: transcript.transcriptSegments,
       };
     }
 
@@ -1314,6 +1503,7 @@ export async function fetchYouTubeTranscriptSource(
       videoId,
       sourceText: supadataResult.text,
       languageCode: supadataResult.languageCode,
+      transcriptSegments: supadataResult.transcriptSegments,
       diagnostics,
     };
   }
@@ -1331,6 +1521,7 @@ export async function fetchYouTubeTranscriptSource(
       videoId,
       sourceText: libraryResult.text,
       languageCode: libraryResult.languageCode,
+      transcriptSegments: libraryResult.transcriptSegments,
       diagnostics,
     };
   }
@@ -1348,6 +1539,7 @@ export async function fetchYouTubeTranscriptSource(
       videoId,
       sourceText: innertubeResult.text,
       languageCode: innertubeResult.languageCode,
+      transcriptSegments: innertubeResult.transcriptSegments,
       diagnostics,
     };
   }
@@ -1365,6 +1557,7 @@ export async function fetchYouTubeTranscriptSource(
       videoId,
       sourceText: customResult.text,
       languageCode: customResult.languageCode,
+      transcriptSegments: customResult.transcriptSegments,
       diagnostics,
     };
   }

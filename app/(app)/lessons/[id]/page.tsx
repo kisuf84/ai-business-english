@@ -83,6 +83,33 @@ export default async function LessonDetailPage({
       ? (((lessonRecord as { transcript_text?: string | null }).transcript_text || "").trim() ||
           null)
       : null;
+  const lessonTranscriptSegments =
+    lessonRecord &&
+    Array.isArray((lessonRecord as { transcript_segments?: unknown }).transcript_segments)
+      ? ((lessonRecord as {
+          transcript_segments?: Array<{ start?: unknown; duration?: unknown; text?: unknown }>;
+        }).transcript_segments || [])
+          .filter((item) => item && typeof item === "object")
+          .map((item) => {
+            const start =
+              typeof item.start === "number" && Number.isFinite(item.start)
+                ? item.start
+                : null;
+            if (start === null || start < 0) return null;
+            const duration =
+              typeof item.duration === "number" && Number.isFinite(item.duration) && item.duration >= 0
+                ? item.duration
+                : undefined;
+            const text = typeof item.text === "string" ? item.text.trim() : "";
+            if (!text) return null;
+            return duration === undefined ? { start, text } : { start, duration, text };
+          })
+          .filter(
+            (
+              item
+            ): item is { start: number; duration?: number; text: string } => Boolean(item)
+          )
+      : null;
 
   if (process.env.NODE_ENV !== "production" && parsedLesson.schemaIssues.length > 0) {
     console.warn("[LessonDetailPage] Lesson schema issues detected", parsedLesson.schemaIssues);
@@ -181,6 +208,7 @@ export default async function LessonDetailPage({
                   lesson={safeLesson}
                   videoId={lessonVideoId}
                   transcriptText={lessonTranscriptText}
+                  transcriptSegments={lessonTranscriptSegments}
                 />
               </Card>
             ) : (

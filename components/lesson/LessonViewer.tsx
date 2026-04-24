@@ -34,6 +34,7 @@ type LessonViewerProps = {
   lesson: LessonGenerationOutput;
   videoId?: string | null;
   transcriptText?: string | null;
+  transcriptSegments?: Array<{ start: number; duration?: number; text: string }> | null;
 };
 
 function formatMissingQuestionList(numbers: number[]) {
@@ -111,10 +112,107 @@ function extractProfessionalFocus(
   };
 }
 
+function formatTimestamp(seconds: number): string {
+  const clamped = Number.isFinite(seconds) ? Math.max(0, Math.floor(seconds)) : 0;
+  const mins = Math.floor(clamped / 60);
+  const secs = clamped % 60;
+  return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+}
+
+function sentenceCount(value: string): number {
+  const matches = value.match(/[.!?]+(?=\s|$)/g);
+  return matches ? matches.length : 0;
+}
+
+function splitPlainTranscriptParagraphs(text: string): string[] {
+  const normalized = text.replace(/\s+/g, " ").trim();
+  if (!normalized) return [];
+
+  const sentences =
+    normalized.match(/[^.!?]+[.!?]+(?=\s|$)|[^.!?]+$/g)?.map((item) => item.trim()) ?? [];
+  if (sentences.length === 0) return [normalized];
+
+  const paragraphs: string[] = [];
+  let buffer = "";
+  let sentenceBuffer = 0;
+  for (const sentence of sentences) {
+    const candidate = buffer ? `${buffer} ${sentence}` : sentence;
+    const nextSentences = sentenceBuffer + 1;
+    const shouldFlush = candidate.length >= 680 || nextSentences >= 4;
+    buffer = candidate;
+    sentenceBuffer = nextSentences;
+    if (shouldFlush) {
+      paragraphs.push(buffer.trim());
+      buffer = "";
+      sentenceBuffer = 0;
+    }
+  }
+  if (buffer.trim()) paragraphs.push(buffer.trim());
+  return paragraphs;
+}
+
+function groupTranscriptSegments(
+  segments: Array<{ start: number; duration?: number; text: string }>
+): Array<{ start: number; text: string }> {
+  const sorted = [...segments]
+    .filter(
+      (item) =>
+        item &&
+        Number.isFinite(item.start) &&
+        item.start >= 0 &&
+        typeof item.text === "string" &&
+        item.text.trim().length > 0
+    )
+    .sort((a, b) => a.start - b.start);
+  if (sorted.length === 0) return [];
+
+  const groups: Array<{ start: number; text: string }> = [];
+  let current: Array<{ start: number; text: string }> = [];
+
+  const flush = () => {
+    if (current.length === 0) return;
+    groups.push({
+      start: current[0].start,
+      text: current.map((item) => item.text.trim()).join(" ").replace(/\s+/g, " ").trim(),
+    });
+    current = [];
+  };
+
+  for (const segment of sorted) {
+    const normalizedText = segment.text.replace(/\s+/g, " ").trim();
+    if (!normalizedText) continue;
+    if (current.length === 0) {
+      current.push({ start: segment.start, text: normalizedText });
+      continue;
+    }
+
+    const previous = current[current.length - 1];
+    const candidateText = `${current.map((item) => item.text).join(" ")} ${normalizedText}`;
+    const candidateChars = candidateText.length;
+    const candidateSentences = sentenceCount(candidateText);
+    const gap = Math.max(0, segment.start - previous.start);
+    const maxedOut = candidateChars >= 760 || candidateSentences >= 5;
+    const naturalBreak =
+      (candidateChars >= 520 || candidateSentences >= 3) && gap > 18;
+
+    if (maxedOut || naturalBreak) {
+      flush();
+      current.push({ start: segment.start, text: normalizedText });
+      continue;
+    }
+
+    current.push({ start: segment.start, text: normalizedText });
+  }
+
+  flush();
+  return groups;
+}
+
 export default function LessonViewer({
   lesson,
   videoId,
   transcriptText,
+  transcriptSegments,
 }: LessonViewerProps) {
   const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState("word_bank");
@@ -149,6 +247,34 @@ export default function LessonViewer({
   const hasProfessionalFocus = Boolean(
     professionalFocus.profession || professionalFocus.industry
   );
+  const [transcriptStart, setTranscriptStart] = useState<number | null>(null);
+  const hasVideo = typeof videoId === "string" && videoId.trim().length > 0;
+  const normalizedVideoId = hasVideo ? videoId.trim() : null;
+  const transcriptParagraphs = useMemo(() => {
+    if (Array.isArray(transcriptSegments) && transcriptSegments.length > 0) {
+      return groupTranscriptSegments(transcriptSegments).map((item) => ({
+        ...item,
+        clickable: hasVideo,
+      }));
+    }
+    if (typeof transcriptText === "string" && transcriptText.trim().length > 0) {
+      return splitPlainTranscriptParagraphs(transcriptText).map((text) => ({
+        start: null as number | null,
+        text,
+        clickable: false,
+      }));
+    }
+    return [];
+  }, [hasVideo, transcriptSegments, transcriptText]);
+  const videoEmbedSrc = useMemo(() => {
+    if (!normalizedVideoId) return null;
+    const params = new URLSearchParams();
+    params.set("rel", "0");
+    if (typeof transcriptStart === "number" && Number.isFinite(transcriptStart)) {
+      params.set("start", String(Math.max(0, Math.floor(transcriptStart))));
+    }
+    return `https://www.youtube.com/embed/${normalizedVideoId}?${params.toString()}`;
+  }, [normalizedVideoId, transcriptStart]);
   const schemaIssues = useMemo(() => {
     const issues: string[] = [];
     if (lesson.word_bank.length !== 12) {
@@ -511,7 +637,7 @@ export default function LessonViewer({
             </div>
           ) : null}
 
-          {typeof videoId === "string" && videoId.trim().length > 0 ? (
+          {videoEmbedSrc ? (
             <div style={{ marginTop: "20px" }}>
               <p
                 style={{
@@ -538,7 +664,7 @@ export default function LessonViewer({
                 }}
               >
                 <iframe
-                  src={`https://www.youtube.com/embed/${videoId.trim()}?rel=0`}
+                  src={videoEmbedSrc}
                   title="Lesson video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -550,47 +676,113 @@ export default function LessonViewer({
                 />
               </div>
 
-              {typeof transcriptText === "string" && transcriptText.trim().length > 0 ? (
-                <div style={{ marginTop: "14px" }}>
-                  <details
-                    style={{
-                      border: `1px solid ${theme.colors.border}`,
-                      borderRadius: theme.radius.md,
-                      background: theme.colors.surface,
-                    }}
-                  >
-                    <summary
-                      style={{
-                        cursor: "pointer",
-                        listStyle: "none",
-                        padding: "12px 14px",
-                        fontFamily: theme.fonts.body,
-                        fontSize: "13px",
-                        fontWeight: 600,
-                        color: theme.colors.ink,
-                        userSelect: "none",
-                      }}
-                    >
-                      Transcript
-                    </summary>
-                    <div
-                      style={{
-                        borderTop: `1px solid ${theme.colors.border}`,
-                        padding: "12px 14px",
-                        maxHeight: "260px",
-                        overflowY: "auto",
-                        whiteSpace: "pre-wrap",
-                        fontFamily: theme.fonts.body,
-                        fontSize: "13px",
-                        lineHeight: 1.6,
-                        color: theme.colors.inkMuted,
-                      }}
-                    >
-                      {transcriptText}
-                    </div>
-                  </details>
+            </div>
+          ) : null}
+
+          {transcriptParagraphs.length > 0 ? (
+            <div style={{ marginTop: "14px" }}>
+              <details
+                style={{
+                  border: `1px solid ${theme.colors.border}`,
+                  borderRadius: theme.radius.md,
+                  background: theme.colors.surface,
+                }}
+              >
+                <summary
+                  style={{
+                    cursor: "pointer",
+                    listStyle: "none",
+                    padding: "12px 14px",
+                    fontFamily: theme.fonts.body,
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: theme.colors.ink,
+                    userSelect: "none",
+                  }}
+                >
+                  Transcript
+                </summary>
+                <div
+                  style={{
+                    borderTop: `1px solid ${theme.colors.border}`,
+                    padding: "12px 14px",
+                    maxHeight: "320px",
+                    overflowY: "auto",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
+                >
+                  {transcriptParagraphs.map((paragraph, index) => {
+                    const key = `${index}-${paragraph.start ?? "plain"}`;
+                    const clickable =
+                      paragraph.clickable && typeof paragraph.start === "number";
+                    const rowContent = (
+                      <>
+                        {typeof paragraph.start === "number" ? (
+                          <span
+                            style={{
+                              display: "inline-block",
+                              minWidth: "52px",
+                              marginRight: "8px",
+                              fontSize: "11px",
+                              fontWeight: 600,
+                              letterSpacing: "0.04em",
+                              color: theme.colors.accent,
+                            }}
+                          >
+                            {formatTimestamp(paragraph.start)}
+                          </span>
+                        ) : null}
+                        <span
+                          style={{
+                            fontFamily: theme.fonts.body,
+                            fontSize: "13px",
+                            lineHeight: 1.6,
+                            color: theme.colors.inkMuted,
+                            whiteSpace: "pre-wrap",
+                          }}
+                        >
+                          {paragraph.text}
+                        </span>
+                      </>
+                    );
+
+                    if (!clickable) {
+                      return (
+                        <div key={key} style={{ margin: 0 }}>
+                          {rowContent}
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => setTranscriptStart(paragraph.start)}
+                        style={{
+                          textAlign: "left",
+                          border: `1px solid ${theme.colors.border}`,
+                          borderRadius: theme.radius.md,
+                          background: theme.colors.surface,
+                          padding: "10px 12px",
+                          cursor: "pointer",
+                          transition: "background 0.15s ease",
+                        }}
+                        onMouseEnter={(event) => {
+                          event.currentTarget.style.background = theme.colors.accentSoft;
+                        }}
+                        onMouseLeave={(event) => {
+                          event.currentTarget.style.background = theme.colors.surface;
+                        }}
+                      >
+                        {rowContent}
+                      </button>
+                    );
+                  })}
                 </div>
-              ) : null}
+              </details>
             </div>
           ) : null}
         </div>
