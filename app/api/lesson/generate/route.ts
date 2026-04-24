@@ -19,11 +19,6 @@ import {
   repairLesson,
 } from "../../../../lib/ai/lesson";
 import { parseYouTubeVideoIdDetailed } from "../../../../lib/youtube/url";
-import { detectLessonSource } from "../../../../lib/content/sourceDetection";
-import { extractWebpageText } from "../../../../lib/content/extractWebpageText";
-
-const REQUIRED_FIELDS_ERROR = "Please complete all required fields";
-const PROCESSING_ERROR = "We couldn’t process your request. Try again.";
 
 type SourceExtractionResult =
   | {
@@ -174,19 +169,23 @@ async function extractSource(params: {
       const debugDetails = transcript.diagnostics.map(
         (item) => `${item.code}: ${item.message}`
       );
+      const isTranscriptUnavailable =
+        transcript.reason === "no_captions" ||
+        transcript.reason === "captions_disabled" ||
+        transcript.reason === "unsupported_video";
       const status =
         transcript.reason === "invalid_url"
           ? 400
-          : transcript.reason === "transcript_unavailable"
+          : isTranscriptUnavailable
             ? 422
-            : 502;
+          : 502;
 
       return {
         ok: false,
         status,
         payload: {
           error:
-            transcript.reason === "transcript_unavailable"
+            isTranscriptUnavailable
               ? "Transcript unavailable for this video. Paste source text to continue."
               : transcript.message,
           message: transcript.message,
@@ -246,45 +245,18 @@ export async function POST(request: Request) {
   try {
     const payload = (await request.json()) as LessonGenerationRequestInput;
 
-<<<<<<< HEAD
-    const trimmedSourceUrl = payload.source_url?.trim() || "";
-    const providedSourceText =
-      payload.source_text?.trim() || payload.manual_source_text?.trim() || "";
-    const transcriptAttempt = Math.max(1, Number(payload.transcript_attempt) || 1);
-    const sourceDetection = trimmedSourceUrl
-      ? detectLessonSource(trimmedSourceUrl)
-      : providedSourceText
-        ? detectLessonSource(providedSourceText)
-        : null;
-    const normalizedTopic =
-      payload.topic?.trim() ||
-      (providedSourceText
-        ? "Source text lesson"
-        : trimmedSourceUrl
-          ? sourceDetection?.type === "youtube_url"
-            ? "YouTube lesson"
-            : "Article lesson"
-          : "");
-    const normalizedSourceUrl =
-      sourceDetection?.type === "youtube_url" || sourceDetection?.type === "generic_url"
-        ? sourceDetection.normalizedUrl || trimmedSourceUrl
-        : "";
-
-    const normalizedInput: LessonGenerationInput = {
-      ...payload,
-      topic: normalizedTopic,
-      source_url: normalizedSourceUrl || undefined,
-      source_text: providedSourceText || undefined,
-=======
     const sourceUrl = payload.source_url?.trim() || "";
-    const rawSourceText = payload.manual_source_text?.trim() || "";
+    const rawSourceText =
+      payload.source_text?.trim() || payload.manual_source_text?.trim() || "";
     const normalizedTopic = payload.topic?.trim() || "";
 
     const normalizedInput: LessonGenerationInput = {
       ...payload,
-      topic: normalizedTopic || (rawSourceText ? "Source text lesson" : sourceUrl ? "Source lesson" : ""),
+      topic:
+        normalizedTopic ||
+        (rawSourceText ? "Source text lesson" : sourceUrl ? "Source lesson" : ""),
       source_url: sourceUrl || undefined,
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
+      source_text: rawSourceText || undefined,
       industry: payload.industry?.trim() || undefined,
       profession: payload.profession?.trim() || undefined,
     };
@@ -293,12 +265,7 @@ export async function POST(request: Request) {
     if (!validation.ok) {
       return NextResponse.json(
         {
-<<<<<<< HEAD
-          status: "failed",
-          error: REQUIRED_FIELDS_ERROR,
-=======
           error: "Please complete the required lesson fields.",
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
           error_code: "invalid_payload",
           details: validation.errors,
         } satisfies LessonGenerationApiError,
@@ -306,137 +273,13 @@ export async function POST(request: Request) {
       );
     }
 
-<<<<<<< HEAD
-    let sourceText = providedSourceText || normalizedInput.topic;
-    let sourceMeta: LessonGenerationApiResponse["source_meta"] = {
-      source_kind: providedSourceText ? "raw_text" : "manual",
-      source_url: normalizedInput.source_url ?? null,
-      video_id: null,
-      transcript_language: null,
-    };
-
-    if (!providedSourceText && normalizedSourceUrl) {
-      if (sourceDetection?.type === "generic_url") {
-        const extracted = await extractWebpageText(normalizedSourceUrl);
-
-        if (!extracted.ok) {
-          return NextResponse.json(
-            {
-              status: "failed",
-              error: extracted.message,
-              message: extracted.message,
-              error_code: "source_extraction_failed",
-              ...(process.env.NODE_ENV !== "production"
-                ? { details: [`reason: ${extracted.reason}`] }
-                : {}),
-            } satisfies LessonGenerationApiError,
-            { status: 422 }
-          );
-        }
-
-        sourceText = extracted.sourceText;
-        sourceMeta = {
-          source_kind: "webpage",
-          source_url: normalizedSourceUrl,
-          video_id: null,
-          transcript_language: null,
-          title: extracted.title ?? null,
-        };
-      } else {
-        const parsedUrl = parseYouTubeVideoIdDetailed(normalizedSourceUrl);
-        if (!parsedUrl.ok) {
-          const details = [`${parsedUrl.code}: could not extract a valid YouTube video ID`];
-          console.warn("YouTube URL parse failed", { sourceUrl: normalizedSourceUrl, details });
-          return NextResponse.json(
-            {
-              status: "failed",
-              error: "Please enter a valid YouTube URL.",
-              message: "Please enter a valid YouTube URL.",
-              error_code: "invalid_source_url",
-              details,
-            } satisfies LessonGenerationApiError,
-            { status: 400 }
-          );
-        }
-        const videoId = parsedUrl.videoId;
-
-        const transcript = await fetchYouTubeTranscriptSource(normalizedSourceUrl);
-        if (!transcript.ok) {
-          const debugDetails = transcript.diagnostics.map(
-            (item) => `${item.code}: ${item.message}`
-          );
-
-          console.warn("YouTube transcript ingestion failed", {
-            videoId: transcript.videoId ?? videoId,
-            reason: transcript.reason,
-            transcriptAttempt,
-            diagnostics: debugDetails,
-          });
-
-          if (transcript.reason !== "invalid_url" && transcriptAttempt < 2) {
-            return NextResponse.json(
-              {
-                status: "still_processing",
-                reason: "retrying",
-                error: "Still processing.",
-                message: "Still processing.",
-                error_code: transcript.reason,
-                ...(process.env.NODE_ENV !== "production"
-                  ? {
-                      details:
-                        debugDetails.length > 0
-                          ? debugDetails
-                          : [`reason: ${transcript.reason}`],
-                    }
-                  : {}),
-              } satisfies LessonGenerationApiError,
-              { status: 202 }
-            );
-          }
-
-          const status =
-            transcript.reason === "invalid_url"
-              ? 400
-              : transcript.reason === "transcript_fetch_failed" ||
-                  transcript.reason === "unknown_error"
-                ? 502
-                : 422;
-
-          return NextResponse.json(
-            {
-              status: "needs_transcript",
-              error: transcript.message,
-              message: transcript.message,
-              error_code: transcript.reason,
-              ...(process.env.NODE_ENV !== "production"
-                ? {
-                    details:
-                      debugDetails.length > 0
-                        ? debugDetails
-                        : [`reason: ${transcript.reason}`],
-                  }
-                : {}),
-            } satisfies LessonGenerationApiError,
-            { status }
-          );
-        }
-
-        sourceText = transcript.sourceText;
-        sourceMeta = {
-          source_kind: "youtube_transcript",
-          source_url: normalizedSourceUrl,
-          video_id: transcript.videoId,
-          transcript_language: transcript.languageCode,
-        };
-      }
-=======
     if (!sourceUrl && !rawSourceText && !normalizedTopic) {
       return NextResponse.json(
         {
           error:
             "Add a topic, a source URL, or raw source text before generating your lesson.",
           error_code: "empty_source_input",
-          details: ["topic/source_url/manual_source_text is empty"],
+          details: ["topic/source_url/source_text/manual_source_text is empty"],
         } satisfies LessonGenerationApiError,
         { status: 400 }
       );
@@ -454,7 +297,6 @@ export async function POST(request: Request) {
 
     if (!normalizedInput.topic && extracted.sourceTopicHint) {
       normalizedInput.topic = extracted.sourceTopicHint;
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
     }
 
     const prompt = buildLessonPrompt({
@@ -504,13 +346,8 @@ export async function POST(request: Request) {
       });
       return NextResponse.json(
         {
-<<<<<<< HEAD
-          status: "failed",
-          error: parsed.error,
-=======
           error:
             "Lesson generation failed quality checks. Please retry with clearer source content.",
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
           error_code: "generation_failed",
           ...(process.env.NODE_ENV !== "production"
             ? { details: normalized.errors }
@@ -521,14 +358,8 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({
-<<<<<<< HEAD
-      status: "ready",
-      ...parsed.data,
-      source_meta: sourceMeta,
-=======
       ...normalized.data,
       source_meta: extracted.sourceMeta,
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
     } satisfies LessonGenerationApiResponse);
   } catch (error) {
     console.error("[lesson/generate] Route failed", error);
@@ -536,12 +367,7 @@ export async function POST(request: Request) {
     if (error instanceof Error && error.message === "OPENAI_API_KEY_MISSING") {
       return NextResponse.json(
         {
-<<<<<<< HEAD
-          status: "failed",
-          error: "Lesson generation is unavailable: OPENAI_API_KEY is not configured.",
-=======
           error: "Lesson generation is unavailable right now. Please try again later.",
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
           error_code: "generation_failed",
           ...(process.env.NODE_ENV !== "production"
             ? { details: ["OPENAI_API_KEY is missing in server environment"] }
@@ -553,12 +379,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-<<<<<<< HEAD
-        status: "failed",
-        error: PROCESSING_ERROR,
-=======
         error: "Unexpected server issue while generating this lesson. Please retry.",
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
         error_code: "generation_failed",
         ...(process.env.NODE_ENV !== "production"
           ? {

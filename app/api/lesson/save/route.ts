@@ -51,14 +51,10 @@ export async function POST(request: Request) {
   const outputValidation = validateLessonOutputPayload(payload.output);
   if (!outputValidation.ok) {
     return NextResponse.json(
-<<<<<<< HEAD
-      { error: PROCESSING_ERROR, details: outputValidation.errors },
-=======
       {
         error: "Lesson content is incomplete. Please regenerate before saving.",
         details: outputValidation.errors,
       },
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
       { status: 400 }
     );
   }
@@ -81,13 +77,6 @@ export async function POST(request: Request) {
       user_id: null,
     });
 
-<<<<<<< HEAD
-    return NextResponse.json({ lesson, id: lesson.id });
-  } catch (error) {
-    console.error("[lesson/save] Failed to save lesson:", error);
-    return NextResponse.json(
-      { error: PROCESSING_ERROR },
-=======
     return NextResponse.json({
       id: lesson.id,
       lesson_id: lesson.id,
@@ -102,7 +91,6 @@ export async function POST(request: Request) {
     });
     return NextResponse.json(
       { error: "Lesson save failed. Please try again." },
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
       { status: 500 }
     );
   }

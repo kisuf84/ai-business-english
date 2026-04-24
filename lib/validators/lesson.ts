@@ -35,13 +35,8 @@ export function validateLessonPayload(
   const hasSourceUrl = Boolean(payload.source_url?.trim());
   const hasSourceText = Boolean(payload.source_text?.trim());
 
-<<<<<<< HEAD
   if (!hasTopic && !hasSourceUrl && !hasSourceText) {
-    errors.push("Topic, source URL, or source text is required.");
-=======
-  if (!hasTopic && !hasSourceUrl) {
-    errors.push("Add a topic or a source URL to generate a lesson.");
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
+    errors.push("Add a topic, source URL, or source text to generate a lesson.");
   }
 
   if (!payload.level?.trim()) {
@@ -369,57 +364,8 @@ export function normalizeLessonOutput(
 export function validateLessonOutputPayload(
   payload: LessonGenerationOutput
 ): ValidationResult {
-<<<<<<< HEAD
-  const errors: string[] = [];
-
-  if (!isNonEmptyString(payload.title)) {
-    errors.push("Title is required.");
-  }
-
-  if (!isNonEmptyString(payload.summary)) {
-    errors.push("Summary is required.");
-  }
-
-  if (!isNonEmptyStringArray(payload.objectives)) {
-    errors.push("Learning objectives are required.");
-  }
-
-  if (!isNonEmptyVocabularyArray(payload.vocabulary)) {
-    errors.push("Vocabulary list is required.");
-  }
-
-  if (!isNonEmptyString(payload.reading_text)) {
-    errors.push("Reading text is required.");
-  }
-
-  if (!isNonEmptyQuestionArray(payload.comprehension_questions)) {
-    errors.push("Comprehension questions are required.");
-  } else if (payload.comprehension_questions.length !== 8) {
-    errors.push("Comprehension questions must contain exactly 8 MCQs.");
-  }
-
-  if (!isNonEmptyQuestionArray(payload.grammar_exercises)) {
-    errors.push("Grammar exercises are required.");
-  } else if (payload.grammar_exercises.length !== 8) {
-    errors.push("Grammar exercises must contain exactly 8 MCQs.");
-  }
-
-  if (!isNonEmptyString(payload.role_play)) {
-    errors.push("Role play scenario is required.");
-  }
-
-  if (!isNonEmptyQuestionArray(payload.quiz)) {
-    errors.push("Quiz questions are required.");
-  }
-
-  return {
-    ok: errors.length === 0,
-    errors,
-  };
-=======
   const normalized = normalizeLessonOutput(payload, { strict: true });
   return normalized.ok
     ? { ok: true, errors: [] }
     : { ok: false, errors: normalized.errors };
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
 }

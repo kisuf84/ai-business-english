@@ -56,12 +56,6 @@ export async function POST(request: Request) {
   }
 
   if (!isNonEmptyString(payload.simulation_id)) {
-<<<<<<< HEAD
-    return NextResponse.json({ error: REQUIRED_FIELDS_ERROR }, { status: 400 });
-  }
-  if (!isValidSessionFeedback(payload.feedback)) {
-    return NextResponse.json({ error: PROCESSING_ERROR }, { status: 400 });
-=======
     return NextResponse.json(
       { error: "Simulation ID is required to save session feedback." },
       { status: 400 }
@@ -72,7 +66,6 @@ export async function POST(request: Request) {
       { error: "Session feedback is invalid. Please retry ending the simulation." },
       { status: 400 }
     );
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
   }
 
   try {
@@ -88,18 +81,12 @@ export async function POST(request: Request) {
     });
     return NextResponse.json(
       {
-<<<<<<< HEAD
-        ok: true,
-        persisted: false,
-        error: PROCESSING_ERROR,
-=======
         error: "Simulation save failed while ending this session.",
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
         ...(process.env.NODE_ENV !== "production"
           ? { details: error instanceof Error ? error.message : "unknown_end_error" }
           : {}),
       },
-      { status: 200 }
+      { status: 500 }
     );
   }
 }

@@ -67,13 +67,8 @@ function getQuestionsBySection(lesson: LessonGenerationOutput): Record<QuestionS
 
 export default function LessonViewer({ lesson }: LessonViewerProps) {
   const { theme } = useTheme();
-<<<<<<< HEAD
-  const [activeTab, setActiveTab] = useState("vocabulary");
-  const sectionPaddingX = "clamp(16px, 4vw, 28px)";
-=======
   const [activeTab, setActiveTab] = useState("word_bank");
-  const sectionPaddingX = "28px";
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
+  const sectionPaddingX = "clamp(16px, 4vw, 28px)";
 
   const [answers, setAnswers] = useState<Record<QuestionSection, AnswerMap>>({
     comprehension: {},
@@ -348,56 +343,6 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
         }}
       >
         <div style={{ padding: `0 ${sectionPaddingX}` }}>
-<<<<<<< HEAD
-            <p
-              style={{
-                fontFamily: theme.fonts.body,
-                fontSize: "11px",
-                fontWeight: 600,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                color: theme.colors.accent,
-                marginBottom: "8px",
-              }}
-            >
-              Lesson
-            </p>
-            <h2
-              style={{
-                fontFamily: theme.fonts.display,
-                fontSize: "clamp(24px, 5vw, 28px)",
-                fontWeight: 400,
-                color: theme.colors.ink,
-                lineHeight: 1.2,
-                marginBottom: "10px",
-              }}
-            >
-              {lesson.title}
-            </h2>
-            <p
-              style={{
-                fontFamily: theme.fonts.body,
-                fontSize: "14px",
-                color: theme.colors.inkMuted,
-                lineHeight: 1.6,
-                maxWidth: "640px",
-              }}
-            >
-              {lesson.summary}
-            </p>
-            <div
-              style={{
-                display: "flex",
-                gap: "12px",
-                marginTop: "20px",
-                flexWrap: "wrap",
-              }}
-            >
-              {lesson.objectives.map((obj, i) => (
-                <span
-                  key={i}
-                  style={{
-=======
           <p
             style={{
               fontFamily: theme.fonts.body,
@@ -446,22 +391,11 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
               <span
                 key={`${i}-${obj}`}
                 style={{
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
                   fontFamily: theme.fonts.body,
                   fontSize: "12px",
                   fontWeight: 500,
                   color: theme.colors.accent,
                   background: theme.colors.accentSoft,
-<<<<<<< HEAD
-                    padding: "6px 12px",
-                    borderRadius: theme.radius.pill,
-                  }}
-                >
-                  {obj}
-                </span>
-              ))}
-            </div>
-=======
                   padding: "6px 14px",
                   borderRadius: theme.radius.pill,
                 }}
@@ -470,7 +404,6 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
               </span>
             ))}
           </div>
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
         </div>
       </div>
 
@@ -488,70 +421,6 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
             padding: `0 ${sectionPaddingX}`,
           }}
         >
-<<<<<<< HEAD
-          {TABS.map((tab) => {
-            const isActive = activeTab === tab.id;
-            let dotColor: string | null = null;
-            if (tab.id === "comprehension" && compScore)
-              dotColor =
-                compScore.correct === compScore.total
-                  ? theme.colors.success
-                  : theme.colors.warning;
-            if (tab.id === "grammar" && grammarScore)
-              dotColor =
-                grammarScore.correct === grammarScore.total
-                  ? theme.colors.success
-                  : theme.colors.warning;
-            if (tab.id === "quiz" && quizScore)
-              dotColor =
-                quizScore.correct === quizScore.total
-                  ? theme.colors.success
-                  : theme.colors.warning;
-
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                style={{
-                  fontFamily: theme.fonts.body,
-                  fontSize: "13px",
-                  fontWeight: isActive ? 600 : 500,
-                  color: isActive ? theme.colors.accent : theme.colors.inkMuted,
-                  background: "transparent",
-                  border: "none",
-                  borderBottom: `2px solid ${isActive ? theme.colors.accent : "transparent"}`,
-                  padding: "12px 14px",
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  transition: "all 0.15s ease",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}
-              >
-                {tab.label}
-                {dotColor && (
-                  <span
-                    style={{
-                      width: "7px",
-                      height: "7px",
-                      borderRadius: "50%",
-                      background: dotColor,
-                      display: "inline-block",
-                    }}
-                  />
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </nav>
-
-      {/* Content */}
-      <div style={{ padding: `24px ${sectionPaddingX} 32px` }}>
-        {/* Vocabulary */}
-        {activeTab === "vocabulary" && (
-=======
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -579,7 +448,6 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
 
       <div style={{ padding: `28px ${sectionPaddingX} 40px` }}>
         {activeTab === "word_bank" ? (
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
           <div>
             <div style={{ marginBottom: "24px" }}>
               <h3

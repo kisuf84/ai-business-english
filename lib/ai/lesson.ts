@@ -53,11 +53,7 @@ function truncateSourceText(value: string, maxLength = 12000): string {
 export function buildLessonPrompt(params: {
   input: LessonGenerationInput;
   sourceText: string;
-<<<<<<< HEAD
-  sourceKind: "youtube_transcript" | "webpage" | "raw_text" | "manual";
-=======
   sourceKind: LessonSourceMeta["source_kind"];
->>>>>>> 2788ed7 (enforce lesson schema with repair pass and strict validation)
   videoId?: string | null;
 }): string {
   const { input, sourceText, sourceKind, videoId } = params;
