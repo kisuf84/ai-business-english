@@ -6,6 +6,7 @@ import type {
   LessonRecord,
 } from "../../types/lesson";
 import { getSupabaseAdminConfig, supabaseRest } from "../supabase/server";
+import { parseYouTubeVideoId } from "../youtube/url";
 import {
   validateLessonOutputPayload,
   validateLessonPayload,
@@ -41,9 +42,13 @@ function isSupabaseEnabled() {
   return Boolean(getSupabaseAdminConfig());
 }
 
-function saveLocalLesson(lesson: LessonRecord): LessonRecord {
-  const lessons = readAll();
-  lessons.unshift(lesson);
+type LessonRecordWithVideo = LessonRecord & {
+  video_id?: string | null;
+};
+
+function saveLocalLesson(lesson: LessonRecordWithVideo): LessonRecord {
+  const lessons = readAll() as LessonRecordWithVideo[];
+  lessons.unshift(lesson as LessonRecordWithVideo);
   writeAll(lessons);
   return lesson;
 }
@@ -62,9 +67,12 @@ export async function createLesson(params: {
   if (!outputValidation.ok) {
     throw new Error(`invalid_lesson_output:${outputValidation.errors.join(";")}`);
   }
+  const videoId = params.input.source_url
+    ? parseYouTubeVideoId(params.input.source_url)
+    : null;
 
   const now = new Date().toISOString();
-  const lessonPayload: LessonRecord = {
+  const lessonPayload: LessonRecordWithVideo = {
     id: crypto.randomUUID(),
     user_id: params.user_id ?? null,
     title: params.output.title,
@@ -77,12 +85,13 @@ export async function createLesson(params: {
     content_json: params.output,
     status: "saved",
     visibility: "private",
+    video_id: videoId,
     created_at: now,
     updated_at: now,
   };
 
   if (isSupabaseEnabled()) {
-    const createdRows = await supabaseRest<LessonRecord[]>("lessons", {
+    const createdRows = await supabaseRest<LessonRecordWithVideo[]>("lessons", {
       method: "POST",
       headers: {
         Prefer: "return=representation",
@@ -99,6 +108,7 @@ export async function createLesson(params: {
         content_json: lessonPayload.content_json,
         status: lessonPayload.status,
         visibility: lessonPayload.visibility,
+        video_id: lessonPayload.video_id,
       }),
     });
 
@@ -173,7 +183,8 @@ export async function duplicateLesson(id: string): Promise<LessonRecord | null> 
   }
 
   const now = new Date().toISOString();
-  const payload: Omit<LessonRecord, "id"> = {
+  const originalWithVideo = original as LessonRecordWithVideo;
+  const payload: Omit<LessonRecordWithVideo, "id"> = {
     user_id: original.user_id,
     title: original.title,
     topic: original.topic,
@@ -185,12 +196,13 @@ export async function duplicateLesson(id: string): Promise<LessonRecord | null> 
     content_json: original.content_json,
     status: "saved",
     visibility: original.visibility,
+    video_id: originalWithVideo.video_id ?? null,
     created_at: now,
     updated_at: now,
   };
 
   if (isSupabaseEnabled()) {
-    const [created] = await supabaseRest<LessonRecord[]>("lessons", {
+    const [created] = await supabaseRest<LessonRecordWithVideo[]>("lessons", {
       method: "POST",
       headers: {
         Prefer: "return=representation",
@@ -200,12 +212,12 @@ export async function duplicateLesson(id: string): Promise<LessonRecord | null> 
     return created;
   }
 
-  const lesson: LessonRecord = {
+  const lesson: LessonRecordWithVideo = {
     ...payload,
     id: crypto.randomUUID(),
   };
-  const lessons = readAll();
-  lessons.unshift(lesson);
+  const lessons = readAll() as LessonRecordWithVideo[];
+  lessons.unshift(lesson as LessonRecordWithVideo);
   writeAll(lessons);
   return lesson;
 }

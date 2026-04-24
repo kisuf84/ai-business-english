@@ -16,6 +16,9 @@ create table if not exists public.lessons (
   updated_at timestamp with time zone default now()
 );
 
+alter table public.lessons
+  add column if not exists video_id text null;
+
 create table if not exists public.youtube_lesson_jobs (
   id uuid primary key default gen_random_uuid(),
   source_url text not null,

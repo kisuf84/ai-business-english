@@ -25,10 +25,49 @@ export default async function SharedLessonPage({
     );
   }
 
+  const lessonVideoId =
+    typeof (lessonRecord as { video_id?: unknown }).video_id === "string"
+      ? (((lessonRecord as { video_id?: string | null }).video_id || "").trim() || null)
+      : null;
+
   return (
     <section>
       <h1>{lessonRecord.title}</h1>
       {error ? <p style={{ color: "crimson" }}>{error}</p> : null}
+      {lessonVideoId ? (
+        <div style={{ marginBottom: "16px" }}>
+          <p
+            style={{
+              fontSize: "11px",
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              marginBottom: "8px",
+            }}
+          >
+            Source Video
+          </p>
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              aspectRatio: "16 / 9",
+              overflow: "hidden",
+              borderRadius: "12px",
+              border: "1px solid var(--border)",
+              background: "var(--surface-raised)",
+            }}
+          >
+            <iframe
+              src={`https://www.youtube.com/embed/${lessonVideoId}?rel=0`}
+              title="Lesson video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{ width: "100%", height: "100%", border: "0" }}
+            />
+          </div>
+        </div>
+      ) : null}
       {(() => {
         const strictCheck = normalizeLessonOutput(lessonRecord.content_json, {
           strict: true,

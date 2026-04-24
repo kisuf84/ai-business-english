@@ -32,6 +32,7 @@ type ValidationNoticeMap = Record<QuestionSection, string | null>;
 
 type LessonViewerProps = {
   lesson: LessonGenerationOutput;
+  videoId?: string | null;
 };
 
 function formatMissingQuestionList(numbers: number[]) {
@@ -65,7 +66,51 @@ function getQuestionsBySection(lesson: LessonGenerationOutput): Record<QuestionS
   };
 }
 
-export default function LessonViewer({ lesson }: LessonViewerProps) {
+function extractProfessionalFocus(
+  lesson: LessonGenerationOutput
+): { profession: string | null; industry: string | null } {
+  const haystack = [lesson.summary, ...lesson.objectives, lesson.reading_text]
+    .filter((value) => typeof value === "string" && value.trim().length > 0)
+    .join(" ");
+
+  const professionMatch =
+    haystack.match(/\bfor (?:a|an) ([a-z][a-z\s&/-]{2,50})/i) ??
+    haystack.match(/\b(role|profession):\s*([a-z][a-z\s&/-]{2,50})/i);
+
+  const industryMatch =
+    haystack.match(/\bin (?:the )?([a-z][a-z\s&/-]{2,50}) industry\b/i) ??
+    haystack.match(/\bindustry:\s*([a-z][a-z\s&/-]{2,50})/i);
+
+  const rawProfession =
+    professionMatch && professionMatch[1]
+      ? professionMatch[1]
+      : professionMatch && professionMatch[2]
+        ? professionMatch[2]
+        : null;
+  const rawIndustry =
+    industryMatch && industryMatch[1]
+      ? industryMatch[1]
+      : industryMatch && industryMatch[2]
+        ? industryMatch[2]
+        : null;
+
+  const normalizeValue = (value: string | null) => {
+    if (!value) return null;
+    const cleaned = value
+      .replace(/[.,;:!?]+$/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (cleaned.length < 2 || cleaned.length > 60) return null;
+    return cleaned;
+  };
+
+  return {
+    profession: normalizeValue(rawProfession),
+    industry: normalizeValue(rawIndustry),
+  };
+}
+
+export default function LessonViewer({ lesson, videoId }: LessonViewerProps) {
   const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState("word_bank");
   const sectionPaddingX = "clamp(16px, 4vw, 28px)";
@@ -95,6 +140,10 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
     ? [...REQUIRED_TABS, { id: "listening", label: "Listening" }]
     : REQUIRED_TABS;
   const sectionQuestions = getQuestionsBySection(lesson);
+  const professionalFocus = useMemo(() => extractProfessionalFocus(lesson), [lesson]);
+  const hasProfessionalFocus = Boolean(
+    professionalFocus.profession || professionalFocus.industry
+  );
   const schemaIssues = useMemo(() => {
     const issues: string[] = [];
     if (lesson.word_bank.length !== 12) {
@@ -379,7 +428,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
           >
             {lesson.summary}
           </p>
-          <div
+	          <div
             style={{
               display: "flex",
               gap: "12px",
@@ -404,6 +453,99 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
               </span>
             ))}
           </div>
+
+          {hasProfessionalFocus ? (
+            <div
+              style={{
+                marginTop: "18px",
+                border: `1px solid ${theme.colors.border}`,
+                borderRadius: theme.radius.md,
+                padding: "14px 16px",
+                background: theme.colors.surface,
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: theme.fonts.body,
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: theme.colors.inkFaint,
+                  marginBottom: "8px",
+                }}
+              >
+                Professional Focus
+              </p>
+              {professionalFocus.profession ? (
+                <p
+                  style={{
+                    fontFamily: theme.fonts.body,
+                    fontSize: "14px",
+                    color: theme.colors.ink,
+                    lineHeight: 1.5,
+                    marginBottom: professionalFocus.industry ? "4px" : 0,
+                  }}
+                >
+                  Built for: {professionalFocus.profession}
+                </p>
+              ) : null}
+              {professionalFocus.industry ? (
+                <p
+                  style={{
+                    fontFamily: theme.fonts.body,
+                    fontSize: "14px",
+                    color: theme.colors.inkMuted,
+                    lineHeight: 1.5,
+                    margin: 0,
+                  }}
+                >
+                  Industry context: {professionalFocus.industry}
+                </p>
+              ) : null}
+            </div>
+          ) : null}
+
+          {typeof videoId === "string" && videoId.trim().length > 0 ? (
+            <div style={{ marginTop: "20px" }}>
+              <p
+                style={{
+                  fontFamily: theme.fonts.body,
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: theme.colors.inkFaint,
+                  marginBottom: "10px",
+                }}
+              >
+                Source Video
+              </p>
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "16 / 9",
+                  overflow: "hidden",
+                  borderRadius: theme.radius.md,
+                  border: `1px solid ${theme.colors.border}`,
+                  background: "var(--surface-raised)",
+                }}
+              >
+                <iframe
+                  src={`https://www.youtube.com/embed/${videoId.trim()}?rel=0`}
+                  title="Lesson video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    border: "0",
+                  }}
+                />
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
 
