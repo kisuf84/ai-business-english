@@ -1,5 +1,6 @@
 import type {
   LessonGenerationInput,
+  LessonGenerationOutput,
   YouTubeLessonJob,
 } from "../../types/lesson";
 import {
@@ -174,9 +175,19 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
       throw new Error(parsed.error);
     }
 
+    const outputWithSourceMeta = {
+      ...parsed.data,
+      source_meta: {
+        source_kind: "youtube_transcript" as const,
+        source_url: claimed.source_url,
+        video_id: claimed.video_id,
+        transcript_language: transcriptLanguage,
+      },
+    };
+
     const lesson = await createLesson({
       input,
-      output: parsed.data,
+      output: outputWithSourceMeta as LessonGenerationOutput,
       user_id: null,
     });
 

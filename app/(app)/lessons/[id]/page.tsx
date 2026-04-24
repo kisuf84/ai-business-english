@@ -3,7 +3,10 @@ import { getLessonById } from "../../../../lib/data/lessons";
 import LessonToolbar from "../../../../components/lesson/LessonToolbar";
 import Link from "next/link";
 import Card from "../../../../components/shared/Card";
-import type { LessonGenerationOutput } from "../../../../types/lesson";
+import type {
+  LessonGenerationApiResponse,
+  LessonSourceMeta,
+} from "../../../../types/lesson";
 import { normalizeLessonOutput } from "../../../../lib/validators/lesson";
 
 function formatDate(value: string | null | undefined) {
@@ -15,7 +18,7 @@ function formatDate(value: string | null | undefined) {
 function parseLessonOutput(
   value: unknown,
   fallbackTitle: string
-): { lesson: LessonGenerationOutput | null; schemaIssues: string[] } {
+): { lesson: LessonGenerationApiResponse | null; schemaIssues: string[] } {
   let candidate: unknown = value;
   if (typeof candidate === "string") {
     try {
@@ -34,6 +37,11 @@ function parseLessonOutput(
     strict: false,
     allowLegacyFields: true,
   });
+  const sourceMeta =
+    (candidate as { source_meta?: unknown }).source_meta &&
+    typeof (candidate as { source_meta?: unknown }).source_meta === "object"
+      ? ((candidate as { source_meta: LessonSourceMeta }).source_meta as LessonSourceMeta)
+      : undefined;
   if (!normalized.ok) {
     return {
       lesson: null,
@@ -44,6 +52,7 @@ function parseLessonOutput(
     lesson: {
       ...normalized.data,
       title: normalized.data.title?.trim() || fallbackTitle,
+      ...(sourceMeta ? { source_meta: sourceMeta } : {}),
     },
     schemaIssues: strictCheck.ok ? [] : strictCheck.errors,
   };
