@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useCallback, useEffect, useMemo, type CSSProperties } from "react";
-import type { LessonGenerationOutput, LessonQuestion } from "../../types/lesson";
+import type {
+  LessonGenerationApiResponse,
+  LessonGenerationOutput,
+  LessonQuestion,
+} from "../../types/lesson";
 import { useTheme } from "../../context/ThemeContext";
 import VocabCard from "./VocabCard";
 import QuestionCard from "./QuestionCard";
@@ -31,7 +35,7 @@ type AnswerMap = Record<string, number>;
 type ValidationNoticeMap = Record<QuestionSection, string | null>;
 
 type LessonViewerProps = {
-  lesson: LessonGenerationOutput;
+  lesson: LessonGenerationApiResponse;
 };
 
 function formatMissingQuestionList(numbers: number[]) {
@@ -90,6 +94,12 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
   });
 
   const readingParagraphs = splitReadingIntoParagraphs(lesson.reading_text);
+  const lessonVideoId =
+    lesson.source_meta?.source_kind === "youtube_transcript" &&
+    typeof lesson.source_meta.video_id === "string" &&
+    lesson.source_meta.video_id.trim().length > 0
+      ? lesson.source_meta.video_id.trim()
+      : null;
   const hasListening = Boolean(lesson.listening?.trim());
   const tabs: Tab[] = hasListening
     ? [...REQUIRED_TABS, { id: "listening", label: "Listening" }]
@@ -404,6 +414,47 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
               </span>
             ))}
           </div>
+
+          {lessonVideoId ? (
+            <div style={{ marginTop: "20px" }}>
+              <p
+                style={{
+                  fontFamily: theme.fonts.body,
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: theme.colors.inkFaint,
+                  marginBottom: "10px",
+                }}
+              >
+                Source Video
+              </p>
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "16 / 9",
+                  overflow: "hidden",
+                  borderRadius: theme.radius.md,
+                  border: `1px solid ${theme.colors.border}`,
+                  background: "var(--surface-raised)",
+                }}
+              >
+                <iframe
+                  src={`https://www.youtube.com/embed/${lessonVideoId}`}
+                  title="Lesson video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    border: "0",
+                  }}
+                />
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
 
