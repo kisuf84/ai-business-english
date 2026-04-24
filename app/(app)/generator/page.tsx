@@ -10,14 +10,12 @@ import Textarea from "../../../components/shared/Textarea";
 import LessonViewer from "../../../components/lesson/LessonViewer";
 import type {
   LessonGenerationApiError,
+  LessonGenerationApiResponse,
   LessonGenerationInput,
   LessonGenerationOutput,
 } from "../../../types/lesson";
 import { parseYouTubeVideoId } from "../../../lib/youtube/url";
-import {
-  normalizeLessonOutput,
-  validateLessonOutputPayload,
-} from "../../../lib/validators/lesson";
+import { validateLessonOutputPayload } from "../../../lib/validators/lesson";
 import { getSupabaseBrowserClient } from "../../../lib/supabase/client";
 import { detectLessonSource } from "../../../lib/content/sourceDetection";
 
@@ -28,7 +26,6 @@ type LessonGenerationStage =
   | "transcript_unavailable"
   | "generating_lesson"
   | "generation_failed";
-
 type YouTubeGenerationState =
   | "idle"
   | "processing_initial"
@@ -36,15 +33,7 @@ type YouTubeGenerationState =
   | "needs_transcript"
   | "ready"
   | "failed";
-
 type LoadingPhase = "generating" | "almost_there" | "fallback";
-
-type YouTubeJobStatusPayload = {
-  status?: string;
-  lesson_url?: string | null;
-  message?: string | null;
-  error?: string;
-};
 
 const YOUTUBE_ALMOST_THERE_DELAY_MS = 6000;
 const YOUTUBE_POLL_INTERVAL_MS = 2000;
@@ -53,16 +42,107 @@ const YOUTUBE_FALLBACK_DELAY_MS = 12000;
 const initialLessonForm: LessonGenerationInput = {
   topic: "",
   source_url: "",
-  source_text: "",
   level: "",
   industry: "",
   profession: "",
   lesson_type: "",
 };
 
+import type { VocabularyItem, LessonQuestion } from "../../../types/lesson";
+
+function isVocabularyArray(value: unknown): value is VocabularyItem[] {
+  return (
+    Array.isArray(value) &&
+    value.every(
+      (item) =>
+        item !== null &&
+        typeof item === "object" &&
+        typeof (item as Record<string, unknown>).term === "string" &&
+        typeof (item as Record<string, unknown>).definition === "string"
+    )
+  );
+}
+
+function isQuestionArray(value: unknown): value is LessonQuestion[] {
+  return (
+    Array.isArray(value) &&
+    value.every((item) => {
+      if (!item || typeof item !== "object") return false;
+      const q = item as Record<string, unknown>;
+      const options = Array.isArray(q.options) ? (q.options as unknown[]) : [];
+      const normalizedCorrectIndex =
+        typeof q.correct_index === "number"
+          ? q.correct_index
+          : typeof q.correct === "number"
+            ? q.correct
+            : -1;
+      return (
+        typeof q.id === "string" &&
+        typeof q.question === "string" &&
+        Array.isArray(q.options) &&
+        options.every((o) => typeof o === "string") &&
+        normalizedCorrectIndex >= 0 &&
+        normalizedCorrectIndex < options.length
+      );
+    })
+  );
+}
+
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === "string");
+}
+
+function normalizeLessonOutput(raw: unknown): LessonGenerationApiResponse | null {
+  if (!raw || typeof raw !== "object") {
+    return null;
+  }
+
+  const data = raw as Record<string, unknown>;
+  if (
+    typeof data.title !== "string" ||
+    typeof data.summary !== "string" ||
+    !isStringArray(data.objectives) ||
+    !isVocabularyArray(data.word_bank) ||
+    typeof data.reading_text !== "string" ||
+    !isQuestionArray(data.reading_comprehension) ||
+    !isQuestionArray(data.vocabulary_exercise) ||
+    !isQuestionArray(data.grammar) ||
+    !isQuestionArray(data.final_assessment)
+  ) {
+    return null;
+  }
+
+  const normalizeQuestion = (value: LessonQuestion): LessonQuestion => {
+    const q = value as LessonQuestion & { correct?: number };
+    return {
+      ...q,
+      correct_index:
+        typeof q.correct_index === "number" ? q.correct_index : (q.correct as number),
+    };
+  };
+
+  return {
+    title: data.title,
+    summary: data.summary,
+    objectives: data.objectives,
+    word_bank: data.word_bank,
+    reading_text: data.reading_text,
+    reading_comprehension: data.reading_comprehension.map(
+      normalizeQuestion
+    ),
+    vocabulary_exercise: data.vocabulary_exercise.map(normalizeQuestion),
+    grammar: data.grammar.map(normalizeQuestion),
+    final_assessment: data.final_assessment.map(normalizeQuestion),
+    listening: typeof data.listening === "string" ? data.listening : undefined,
+    source_meta:
+      data.source_meta && typeof data.source_meta === "object"
+        ? (data.source_meta as LessonGenerationApiResponse["source_meta"])
+        : undefined,
+  };
+}
+
 function isTranscriptFailureCode(value: string | null): boolean {
   return (
-    value === "transcript_unavailable" ||
     value === "no_captions" ||
     value === "captions_disabled" ||
     value === "unsupported_video" ||
@@ -72,20 +152,29 @@ function isTranscriptFailureCode(value: string | null): boolean {
 }
 
 function getTranscriptFallbackMessage(code: string | null, apiMessage: string | null) {
-  if (code === "transcript_unavailable") {
-    return "Transcript unavailable. Paste transcript text to continue.";
+  if (code === "no_captions") {
+    return "Have a transcript? Paste it to speed things up.";
   }
 
-  if (
-    code === "no_captions" ||
-    code === "captions_disabled" ||
-    code === "unsupported_video" ||
-    code === "transcript_fetch_failed"
-  ) {
+  if (code === "captions_disabled") {
+    return "Have a transcript? Paste it to speed things up.";
+  }
+
+  if (code === "unsupported_video") {
+    return "Have a transcript? Paste it to speed things up.";
+  }
+
+  if (code === "transcript_fetch_failed") {
     return "Have a transcript? Paste it to speed things up.";
   }
 
   return apiMessage || "Have a transcript? Paste it to speed things up.";
+}
+
+function wait(ms: number) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
 }
 
 function triggerYouTubeJobProcessing() {
@@ -98,36 +187,40 @@ function triggerYouTubeJobProcessing() {
   });
 }
 
+type YouTubeJobStatusPayload = {
+  status?: string;
+  lesson_url?: string | null;
+  message?: string | null;
+  error?: string;
+};
+
 export default function GeneratorPage() {
   const router = useRouter();
 
   const [lessonForm, setLessonForm] =
     useState<LessonGenerationInput>(initialLessonForm);
   const [sourceInput, setSourceInput] = useState("");
-  const [manualTranscript, setManualTranscript] = useState("");
-
   const [lessonResult, setLessonResult] = useState<LessonGenerationOutput | null>(
     null
   );
   const [isLessonGenerating, setIsLessonGenerating] = useState(false);
   const [isLessonSaving, setIsLessonSaving] = useState(false);
-
   const [lessonError, setLessonError] = useState<string | null>(null);
   const [lessonDiagnostics, setLessonDiagnostics] = useState<string[]>([]);
   const [lessonStage, setLessonStage] = useState<LessonGenerationStage>("idle");
-
   const [youtubeGenerationState, setYoutubeGenerationState] =
     useState<YouTubeGenerationState>("idle");
-  const [loadingPhase, setLoadingPhase] = useState<LoadingPhase>("generating");
-  const [showFallback, setShowFallback] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [jobId, setJobId] = useState<string | null>(null);
-  const [jobStatusUrl, setJobStatusUrl] = useState<string | null>(null);
-
+  const [showFallback, setShowFallback] = useState(false);
+  const [loadingPhase, setLoadingPhase] = useState<LoadingPhase>("generating");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [notificationStatus, setNotificationStatus] = useState<
     "idle" | "error" | "submitted"
   >("idle");
-
+  const [jobStatusUrl, setJobStatusUrl] = useState<string | null>(null);
+  const [manualTranscript, setManualTranscript] = useState("");
   const pollingIntervalRef = useRef<number | null>(null);
   const almostThereTimeoutRef = useRef<number | null>(null);
   const fallbackTimeoutRef = useRef<number | null>(null);
@@ -135,6 +228,7 @@ export default function GeneratorPage() {
   useEffect(() => {
     let active = true;
     const supabase = getSupabaseBrowserClient();
+
     if (!supabase) return;
 
     const loadUserEmail = async () => {
@@ -192,7 +286,6 @@ export default function GeneratorPage() {
     const response = await fetch(`/api/youtube-jobs/${nextJobId}`, {
       cache: "no-store",
     });
-
     const payload = (await response.json().catch(() => null)) as
       | YouTubeJobStatusPayload
       | null;
@@ -204,24 +297,26 @@ export default function GeneratorPage() {
     return payload || {};
   };
 
-  const handleYouTubeJobStatus = (payload: YouTubeJobStatusPayload): boolean => {
+  const handleYouTubeJobStatus = (
+    payload: YouTubeJobStatusPayload
+  ): boolean => {
     if (payload.status === "ready" && payload.lesson_url) {
       clearYoutubeTimers();
       setYoutubeGenerationState("ready");
-      setShowFallback(false);
+      setIsGenerating(false);
       setIsLessonGenerating(false);
-      setLessonStage("idle");
+      setShowFallback(false);
       router.push(payload.lesson_url);
       return true;
     }
 
     if (payload.status === "needs_transcript") {
       clearYoutubeTimers();
-      setYoutubeGenerationState("needs_transcript");
-      setShowFallback(false);
+      setIsGenerating(false);
       setIsLessonGenerating(false);
       setLessonStage("transcript_unavailable");
-      setLessonError("Transcript unavailable. Paste transcript text to continue.");
+      setYoutubeGenerationState("needs_transcript");
+      setShowFallback(false);
       return true;
     }
 
@@ -242,16 +337,12 @@ export default function GeneratorPage() {
         pollError instanceof Error
           ? pollError.message
           : "We couldn’t check your lesson status.";
+      setError(message);
       setLessonError(message);
       setLessonStage("generation_failed");
       setYoutubeGenerationState("failed");
+      setIsGenerating(false);
       setIsLessonGenerating(false);
-      if (process.env.NODE_ENV !== "production") {
-        setLessonDiagnostics((prev) => [
-          ...prev,
-          `poll_error: ${message}`,
-        ]);
-      }
     }
   };
 
@@ -297,9 +388,11 @@ export default function GeneratorPage() {
             fallbackError instanceof Error
               ? fallbackError.message
               : "We couldn’t check your lesson status.";
+          setError(message);
           setLessonError(message);
           setLessonStage("generation_failed");
           setYoutubeGenerationState("failed");
+          setIsGenerating(false);
           setIsLessonGenerating(false);
         }
       })();
@@ -312,11 +405,12 @@ export default function GeneratorPage() {
     const trimmedEmail = email.trim();
     if (!trimmedEmail) {
       setNotificationStatus("error");
-      setLessonError("Enter an email address to get notified, or keep this page open.");
+      setError("Enter an email address to get notified, or keep this page open.");
       return;
     }
 
     setNotificationStatus("idle");
+    setError(null);
 
     try {
       const response = await fetch(`/api/youtube-jobs/${jobId}`, {
@@ -333,33 +427,30 @@ export default function GeneratorPage() {
       }
 
       setNotificationStatus("submitted");
-      setLessonError(null);
     } catch (submitError) {
       const message =
         submitError instanceof Error
           ? submitError.message
           : "We couldn’t save your email.";
       setNotificationStatus("error");
-      setLessonError(message);
+      setError(message);
     }
   };
 
   const runLessonGeneration = async () => {
-    if (isLessonGenerating) return;
+    if (isGenerating || isLessonGenerating) return;
 
     setIsLessonGenerating(true);
+    setIsGenerating(false);
     setLessonError(null);
+    setError(null);
     setLessonDiagnostics([]);
     setLessonResult(null);
     setLessonStage("generating_lesson");
-
     setNotificationStatus("idle");
     setShowFallback(false);
     setLoadingPhase("generating");
-    setYoutubeGenerationState("idle");
     clearYoutubeTimers();
-
-    let isYouTubeAsyncFlow = false;
 
     try {
       const trimmedSourceInput = sourceInput.trim();
@@ -367,30 +458,29 @@ export default function GeneratorPage() {
       const detectedSource = trimmedSourceInput
         ? detectLessonSource(trimmedSourceInput)
         : null;
-
       const sourceUrl =
         detectedSource?.type === "youtube_url" ||
         detectedSource?.type === "generic_url"
           ? detectedSource.normalizedUrl || trimmedSourceInput
           : "";
+      const isYouTubeGeneration = Boolean(
+        detectedSource?.type === "youtube_url" && !trimmedManualTranscript
+      );
 
-      isYouTubeAsyncFlow =
-        Boolean(detectedSource?.type === "youtube_url") &&
-        trimmedManualTranscript.length === 0;
-
-      if (isYouTubeAsyncFlow) {
+      if (isYouTubeGeneration) {
+        setIsGenerating(true);
         setLoadingPhase("generating");
         setYoutubeGenerationState("processing_initial");
         setLessonStage("validating_url");
-
         if (!parseYouTubeVideoId(sourceUrl)) {
+          clearYoutubeTimers();
+          setIsGenerating(false);
           setLessonStage("generation_failed");
           setYoutubeGenerationState("failed");
           setLessonError("Please enter a valid YouTube URL.");
-          setIsLessonGenerating(false);
+          setError("Please enter a valid YouTube URL.");
           return;
         }
-
         setLessonStage("extracting_transcript");
 
         const jobResponse = await fetch("/api/youtube-jobs", {
@@ -398,7 +488,6 @@ export default function GeneratorPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             ...lessonForm,
-            topic: lessonForm.topic?.trim(),
             source_url: sourceUrl,
             industry: lessonForm.industry?.trim() || undefined,
             profession: lessonForm.profession?.trim() || undefined,
@@ -410,12 +499,13 @@ export default function GeneratorPage() {
           | null;
 
         if (!jobResponse.ok) {
-          const message =
-            jobPayload?.error || "We couldn’t start your lesson. Try again.";
-          setLessonError(message);
+          clearYoutubeTimers();
+          setIsGenerating(false);
           setLessonStage("generation_failed");
           setYoutubeGenerationState("failed");
-          setIsLessonGenerating(false);
+          const message = jobPayload?.error || "We couldn’t start your lesson. Try again.";
+          setLessonError(message);
+          setError(message);
           return;
         }
 
@@ -424,101 +514,124 @@ export default function GeneratorPage() {
         }
 
         setJobId(jobPayload.id);
-        setJobStatusUrl(jobPayload.status_url || null);
+        setJobStatusUrl(jobPayload?.status_url || null);
+        setYoutubeGenerationState("processing_initial");
         setLessonStage("generating_lesson");
-
         triggerYouTubeJobProcessing();
         startYouTubePolling(jobPayload.id);
         startLoadingTimers(jobPayload.id);
         return;
+      } else {
+        setYoutubeGenerationState("idle");
+        setLessonStage("generating_lesson");
       }
 
-      const response = await fetch("/api/lesson/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...lessonForm,
-          topic: lessonForm.topic?.trim(),
-          source_url: sourceUrl || undefined,
-          source_text:
-            detectedSource?.type === "raw_text" && !trimmedManualTranscript
-              ? trimmedSourceInput
-              : undefined,
-          industry: lessonForm.industry?.trim() || undefined,
-          profession: lessonForm.profession?.trim() || undefined,
-          manual_source_text: trimmedManualTranscript || undefined,
-          transcript_attempt: 1,
-        }),
-      });
+      const maxAttempts = isYouTubeGeneration ? 2 : 1;
+      let rawResult: unknown = null;
 
-      if (!response.ok) {
-        const rawError = (await response.json().catch(() => null)) as unknown;
-        const apiError =
-          rawError && typeof rawError === "object"
-            ? (rawError as LessonGenerationApiError)
+      for (let transcriptAttempt = 1; transcriptAttempt <= maxAttempts; transcriptAttempt += 1) {
+        const response = await fetch("/api/lesson/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...lessonForm,
+            source_url: sourceUrl || undefined,
+            source_text:
+              detectedSource?.type === "raw_text" && !trimmedManualTranscript
+                ? trimmedSourceInput
+                : undefined,
+            industry: lessonForm.industry?.trim() || undefined,
+            profession: lessonForm.profession?.trim() || undefined,
+            manual_source_text: trimmedManualTranscript || undefined,
+            transcript_attempt: transcriptAttempt,
+          }),
+        });
+
+        const rawPayload = (await response.json().catch(() => null)) as unknown;
+        const apiPayload =
+          rawPayload && typeof rawPayload === "object"
+            ? (rawPayload as LessonGenerationApiError)
             : null;
 
-        const errorCode =
-          typeof apiError?.error_code === "string" ? apiError.error_code : null;
-        const errorMessage =
-          typeof apiError?.error === "string"
-            ? apiError.error
-            : typeof apiError?.message === "string"
-              ? apiError.message
-              : "We could not generate the lesson.";
-
-        const detailItems = Array.isArray(apiError?.details)
-          ? apiError.details.filter((item): item is string => typeof item === "string")
-          : [];
-
-        if (process.env.NODE_ENV !== "production" && detailItems.length > 0) {
-          setLessonDiagnostics(detailItems);
+        if (response.ok && apiPayload?.status === "still_processing") {
+          setYoutubeGenerationState("processing_extended");
+          if (transcriptAttempt < maxAttempts) {
+            await wait(2500);
+            continue;
+          }
         }
 
-        if (isTranscriptFailureCode(errorCode)) {
-          setLessonStage("transcript_unavailable");
-          setYoutubeGenerationState("needs_transcript");
-          setLessonError(getTranscriptFallbackMessage(errorCode, errorMessage));
-          setIsLessonGenerating(false);
+        if (!response.ok || apiPayload?.status === "needs_transcript") {
+          const errorCode =
+            typeof apiPayload?.error_code === "string" ? apiPayload.error_code : null;
+          const errorMessage =
+            typeof apiPayload?.error === "string"
+              ? apiPayload.error
+              : typeof apiPayload?.message === "string"
+                ? apiPayload.message
+                : null;
+          const detailItems = Array.isArray(apiPayload?.details)
+            ? apiPayload.details.filter((item): item is string => typeof item === "string")
+            : typeof apiPayload?.details === "string"
+              ? [apiPayload.details]
+              : [];
+          const diagnostics =
+            detailItems.length > 0
+              ? [
+                  ...(errorCode ? [`error_code: ${errorCode}`] : []),
+                  ...detailItems,
+                ]
+              : [
+                  ...(errorCode ? [`error_code: ${errorCode}`] : []),
+                  ...(errorMessage ? [`message: ${errorMessage}`] : []),
+                  "details: none provided by API",
+                ];
+          setLessonDiagnostics(diagnostics);
+          if (isTranscriptFailureCode(errorCode)) {
+            setLessonStage("transcript_unavailable");
+            setYoutubeGenerationState("needs_transcript");
+            setLessonError(getTranscriptFallbackMessage(errorCode, errorMessage));
+            return;
+          }
+          setLessonStage("generation_failed");
+          setYoutubeGenerationState("failed");
+          setLessonError(errorMessage || "We could not generate the lesson.");
           return;
         }
 
-        setLessonStage("generation_failed");
-        setLessonError(errorMessage);
-        setIsLessonGenerating(false);
-        return;
+        rawResult = rawPayload;
+        break;
       }
 
-      const rawData = (await response.json()) as unknown;
-      const normalized = normalizeLessonOutput(rawData, { strict: true });
-      if (!normalized.ok) {
-        setLessonStage("generation_failed");
-        setLessonError(
-          "The lesson draft was malformed. Please generate again with clearer source text."
-        );
-        if (process.env.NODE_ENV !== "production") {
-          setLessonDiagnostics(normalized.errors);
-        }
-        setIsLessonGenerating(false);
-        return;
+      setLessonStage("generating_lesson");
+      const data = normalizeLessonOutput(rawResult);
+      if (!data) {
+        throw new Error("invalid_response");
       }
-
-      setLessonResult(normalized.data);
+      setLessonResult(data);
+      setYoutubeGenerationState(isYouTubeGeneration ? "ready" : "idle");
       setLessonStage("idle");
-      setIsLessonGenerating(false);
     } catch (error) {
       clearYoutubeTimers();
+      setIsGenerating(false);
       setLessonStage("generation_failed");
       setYoutubeGenerationState("failed");
-      setLessonError("Unexpected server issue while generating the lesson.");
+      const message =
+        error instanceof Error ? error.message : "We could not generate the lesson.";
       if (process.env.NODE_ENV !== "production") {
-        setLessonDiagnostics([
-          error instanceof Error ? error.message : "unknown_generation_error",
+        setLessonDiagnostics((prev) => [
+          ...prev,
+          `client_error: ${message}`,
         ]);
       }
-      setIsLessonGenerating(false);
+      setLessonError(
+        process.env.NODE_ENV !== "production" ? message : "We could not generate the lesson."
+      );
+      setError(
+        process.env.NODE_ENV !== "production" ? message : "We could not generate the lesson."
+      );
     } finally {
-      if (!isYouTubeAsyncFlow && lessonStage !== "generating_lesson") {
+      if (!isGenerating) {
         setIsLessonGenerating(false);
       }
     }
@@ -536,19 +649,18 @@ export default function GeneratorPage() {
     setLessonError(null);
 
     try {
-      const outputValidation = validateLessonOutputPayload(lessonResult);
-      if (!outputValidation.ok) {
-        setLessonError("Generated lesson is incomplete and cannot be saved yet.");
-        if (process.env.NODE_ENV !== "production") {
-          setLessonDiagnostics(outputValidation.errors);
-        }
-        return;
-      }
-
       const trimmedSourceInput = sourceInput.trim();
       const savedSource = trimmedSourceInput
         ? detectLessonSource(trimmedSourceInput)
         : null;
+      const previewLesson = JSON.parse(
+        JSON.stringify(lessonResult)
+      ) as LessonGenerationOutput;
+      const outputValidation = validateLessonOutputPayload(previewLesson);
+      if (!outputValidation.ok) {
+        setLessonError("Generated lesson is incomplete and cannot be saved yet.");
+        return;
+      }
 
       const response = await fetch("/api/lesson/save", {
         method: "POST",
@@ -556,7 +668,6 @@ export default function GeneratorPage() {
         body: JSON.stringify({
           input: {
             ...lessonForm,
-            topic: lessonForm.topic?.trim(),
             source_url:
               savedSource && savedSource.type !== "raw_text"
                 ? savedSource.normalizedUrl || trimmedSourceInput
@@ -568,41 +679,34 @@ export default function GeneratorPage() {
             industry: lessonForm.industry?.trim() || undefined,
             profession: lessonForm.profession?.trim() || undefined,
           },
-          output: lessonResult,
+          output: previewLesson,
         }),
       });
 
       if (!response.ok) {
         const payload = (await response.json().catch(() => null)) as
-          | { error?: string; details?: string[] }
+          | { error?: string }
           | null;
-        setLessonError(payload?.error || "Lesson save failed. Please try again.");
-        if (process.env.NODE_ENV !== "production" && Array.isArray(payload?.details)) {
-          setLessonDiagnostics(payload.details);
-        }
-        return;
+        throw new Error(payload?.error || "save_failed");
       }
 
-      const data = (await response.json()) as
-        | { lesson_id?: string; id?: string; lesson_url?: string }
-        | null;
-
-      const lessonId = data?.lesson_id || data?.id;
-      const lessonUrl = data?.lesson_url;
-
-      if (typeof lessonUrl === "string" && lessonUrl.startsWith("/lessons/")) {
-        router.push(`${lessonUrl}?saved=1`);
-        return;
+      const data = (await response.json()) as unknown;
+      if (
+        !data ||
+        typeof data !== "object" ||
+        typeof (data as { id?: unknown }).id !== "string"
+      ) {
+        throw new Error("invalid_response");
       }
-
-      if (typeof lessonId === "string") {
-        router.push(`/lessons/${lessonId}?saved=1`);
-        return;
-      }
-
-      setLessonError("Lesson save completed, but lesson link was missing.");
-    } catch {
-      setLessonError("Lesson save failed. Please try again.");
+      const lessonId = (data as { id: string }).id;
+      router.push(`/lessons/${lessonId}?saved=1`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "save_failed";
+      setLessonError(
+        message !== "save_failed" && message !== "invalid_response"
+          ? message
+          : "We couldn’t process your request. Try again."
+      );
     } finally {
       setIsLessonSaving(false);
     }
@@ -613,7 +717,7 @@ export default function GeneratorPage() {
       <div className="mx-auto max-w-[960px]">
         <div className="mb-8 sm:mb-10">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
-            Lesson Generator
+            Generator
           </p>
           <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">
             Lesson Generator
@@ -628,7 +732,7 @@ export default function GeneratorPage() {
           <Card>
             <form onSubmit={handleLessonSubmit} action="" method="post">
               <div className="grid min-h-[520px] gap-4">
-                {isLessonGenerating && youtubeGenerationState !== "idle" ? (
+                {isGenerating ? (
                   <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-4 transition-all duration-300">
                     <div className="flex items-center gap-3">
                       <span className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--accent)]" />
@@ -647,9 +751,9 @@ export default function GeneratorPage() {
                 ) : null}
 
                 <fieldset
-                  disabled={isLessonGenerating && youtubeGenerationState !== "idle"}
+                  disabled={isGenerating}
                   className={`grid gap-4 transition-all duration-300 ${
-                    isLessonGenerating && youtubeGenerationState !== "idle"
+                    isGenerating
                       ? "pointer-events-none opacity-45"
                       : "opacity-100"
                   }`}
@@ -688,7 +792,10 @@ export default function GeneratorPage() {
                   {youtubeGenerationState === "needs_transcript" ||
                   manualTranscript.trim().length > 0 ? (
                     <div className="grid gap-2">
-                      <label htmlFor="manual_transcript" className="text-sm font-medium">
+                      <label
+                        htmlFor="manual_transcript"
+                        className="text-sm font-medium"
+                      >
                         Transcript
                       </label>
                       <Textarea
@@ -783,7 +890,7 @@ export default function GeneratorPage() {
                   </div>
                 </fieldset>
 
-                {youtubeGenerationState === "idle" ? (
+                {!isGenerating ? (
                   <div className="flex flex-wrap items-center gap-3">
                     <Button
                       type="submit"
@@ -792,8 +899,10 @@ export default function GeneratorPage() {
                     >
                       {isLessonGenerating ? "Generating..." : "Generate Lesson"}
                     </Button>
-                    {lessonError ? (
-                      <p className="text-xs text-[var(--accent-warm)]">{lessonError}</p>
+                    {lessonError && youtubeGenerationState !== "needs_transcript" ? (
+                      <p className="text-xs text-[var(--accent-warm)]">
+                        {lessonError}
+                      </p>
                     ) : null}
                   </div>
                 ) : null}
@@ -810,7 +919,10 @@ export default function GeneratorPage() {
                       </p>
                     </div>
                     <div className="grid gap-2 sm:max-w-md">
-                      <label htmlFor="fallback_email" className="text-sm font-medium">
+                      <label
+                        htmlFor="fallback_email"
+                        className="text-sm font-medium"
+                      >
                         Email (optional)
                       </label>
                       <Input
@@ -821,7 +933,7 @@ export default function GeneratorPage() {
                         onChange={(event) => {
                           setEmail(event.target.value);
                           setNotificationStatus("idle");
-                          setLessonError(null);
+                          setError(null);
                         }}
                       />
                     </div>
@@ -847,9 +959,9 @@ export default function GeneratorPage() {
                         Email saved. We will send the lesson link when it is ready.
                       </p>
                     ) : null}
-                    {notificationStatus === "error" || lessonError ? (
+                    {notificationStatus === "error" || error ? (
                       <p className="text-xs text-[var(--accent-warm)]">
-                        {lessonError || "Please enter a valid email address."}
+                        {error || "Please enter a valid email address."}
                       </p>
                     ) : null}
                   </div>
@@ -879,7 +991,9 @@ export default function GeneratorPage() {
                   {isLessonSaving ? "Saving..." : "Save Lesson"}
                 </Button>
                 {isLessonSaving ? (
-                  <p className="text-xs text-[var(--ink-faint)]">Saving lesson...</p>
+                  <p className="text-xs text-[var(--ink-faint)]">
+                    Saving lesson...
+                  </p>
                 ) : null}
               </div>
               <p className="mt-2 text-xs text-[var(--ink-faint)]">
