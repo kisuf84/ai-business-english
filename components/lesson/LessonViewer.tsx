@@ -33,6 +33,7 @@ type ValidationNoticeMap = Record<QuestionSection, string | null>;
 type LessonViewerProps = {
   lesson: LessonGenerationOutput;
   videoId?: string | null;
+  transcriptText?: string | null;
 };
 
 function formatMissingQuestionList(numbers: number[]) {
@@ -110,7 +111,11 @@ function extractProfessionalFocus(
   };
 }
 
-export default function LessonViewer({ lesson, videoId }: LessonViewerProps) {
+export default function LessonViewer({
+  lesson,
+  videoId,
+  transcriptText,
+}: LessonViewerProps) {
   const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState("word_bank");
   const sectionPaddingX = "clamp(16px, 4vw, 28px)";
@@ -544,6 +549,48 @@ export default function LessonViewer({ lesson, videoId }: LessonViewerProps) {
                   }}
                 />
               </div>
+
+              {typeof transcriptText === "string" && transcriptText.trim().length > 0 ? (
+                <div style={{ marginTop: "14px" }}>
+                  <details
+                    style={{
+                      border: `1px solid ${theme.colors.border}`,
+                      borderRadius: theme.radius.md,
+                      background: theme.colors.surface,
+                    }}
+                  >
+                    <summary
+                      style={{
+                        cursor: "pointer",
+                        listStyle: "none",
+                        padding: "12px 14px",
+                        fontFamily: theme.fonts.body,
+                        fontSize: "13px",
+                        fontWeight: 600,
+                        color: theme.colors.ink,
+                        userSelect: "none",
+                      }}
+                    >
+                      Transcript
+                    </summary>
+                    <div
+                      style={{
+                        borderTop: `1px solid ${theme.colors.border}`,
+                        padding: "12px 14px",
+                        maxHeight: "260px",
+                        overflowY: "auto",
+                        whiteSpace: "pre-wrap",
+                        fontFamily: theme.fonts.body,
+                        fontSize: "13px",
+                        lineHeight: 1.6,
+                        color: theme.colors.inkMuted,
+                      }}
+                    >
+                      {transcriptText}
+                    </div>
+                  </details>
+                </div>
+              ) : null}
             </div>
           ) : null}
         </div>

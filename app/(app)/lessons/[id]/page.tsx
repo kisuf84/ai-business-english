@@ -77,6 +77,12 @@ export default async function LessonDetailPage({
     typeof (lessonRecord as { video_id?: unknown }).video_id === "string"
       ? (((lessonRecord as { video_id?: string | null }).video_id || "").trim() || null)
       : null;
+  const lessonTranscriptText =
+    lessonRecord &&
+    typeof (lessonRecord as { transcript_text?: unknown }).transcript_text === "string"
+      ? (((lessonRecord as { transcript_text?: string | null }).transcript_text || "").trim() ||
+          null)
+      : null;
 
   if (process.env.NODE_ENV !== "production" && parsedLesson.schemaIssues.length > 0) {
     console.warn("[LessonDetailPage] Lesson schema issues detected", parsedLesson.schemaIssues);
@@ -171,7 +177,11 @@ export default async function LessonDetailPage({
 
             {safeLesson ? (
               <Card className="mt-6 overflow-hidden p-0">
-                <LessonViewer lesson={safeLesson} videoId={lessonVideoId} />
+                <LessonViewer
+                  lesson={safeLesson}
+                  videoId={lessonVideoId}
+                  transcriptText={lessonTranscriptText}
+                />
               </Card>
             ) : (
               <Card className="mt-6">

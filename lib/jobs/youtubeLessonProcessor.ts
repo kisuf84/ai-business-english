@@ -178,6 +178,7 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
       input,
       output: parsed.data,
       user_id: null,
+      transcript_text: transcriptText,
     });
 
     const ready = await updateYouTubeLessonJob(claimed.id, {

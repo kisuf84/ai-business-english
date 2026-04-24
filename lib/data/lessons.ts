@@ -44,6 +44,7 @@ function isSupabaseEnabled() {
 
 type LessonRecordWithVideo = LessonRecord & {
   video_id?: string | null;
+  transcript_text?: string | null;
 };
 
 function saveLocalLesson(lesson: LessonRecordWithVideo): LessonRecord {
@@ -57,6 +58,7 @@ export async function createLesson(params: {
   input: LessonGenerationInput;
   output: LessonGenerationOutput;
   user_id?: string | null;
+  transcript_text?: string | null;
 }): Promise<LessonRecord> {
   const inputValidation = validateLessonPayload(params.input);
   if (!inputValidation.ok) {
@@ -70,6 +72,14 @@ export async function createLesson(params: {
   const videoId = params.input.source_url
     ? parseYouTubeVideoId(params.input.source_url)
     : null;
+  const transcriptText = (() => {
+    const explicit = typeof params.transcript_text === "string" ? params.transcript_text.trim() : "";
+    if (explicit) return explicit;
+    if (!videoId) return null;
+    const fromInput =
+      typeof params.input.source_text === "string" ? params.input.source_text.trim() : "";
+    return fromInput || null;
+  })();
 
   const now = new Date().toISOString();
   const lessonPayload: LessonRecordWithVideo = {
@@ -86,6 +96,7 @@ export async function createLesson(params: {
     status: "saved",
     visibility: "private",
     video_id: videoId,
+    transcript_text: transcriptText,
     created_at: now,
     updated_at: now,
   };
@@ -109,6 +120,7 @@ export async function createLesson(params: {
         status: lessonPayload.status,
         visibility: lessonPayload.visibility,
         video_id: lessonPayload.video_id,
+        transcript_text: lessonPayload.transcript_text,
       }),
     });
 
@@ -197,6 +209,7 @@ export async function duplicateLesson(id: string): Promise<LessonRecord | null> 
     status: "saved",
     visibility: original.visibility,
     video_id: originalWithVideo.video_id ?? null,
+    transcript_text: originalWithVideo.transcript_text ?? null,
     created_at: now,
     updated_at: now,
   };

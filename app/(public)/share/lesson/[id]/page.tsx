@@ -29,6 +29,11 @@ export default async function SharedLessonPage({
     typeof (lessonRecord as { video_id?: unknown }).video_id === "string"
       ? (((lessonRecord as { video_id?: string | null }).video_id || "").trim() || null)
       : null;
+  const lessonTranscriptText =
+    typeof (lessonRecord as { transcript_text?: unknown }).transcript_text === "string"
+      ? (((lessonRecord as { transcript_text?: string | null }).transcript_text || "").trim() ||
+          null)
+      : null;
 
   return (
     <section>
@@ -66,6 +71,44 @@ export default async function SharedLessonPage({
               style={{ width: "100%", height: "100%", border: "0" }}
             />
           </div>
+          {lessonTranscriptText ? (
+            <div style={{ marginTop: "12px" }}>
+              <details
+                style={{
+                  border: "1px solid var(--border)",
+                  borderRadius: "12px",
+                  background: "var(--surface)",
+                }}
+              >
+                <summary
+                  style={{
+                    cursor: "pointer",
+                    listStyle: "none",
+                    padding: "12px 14px",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    userSelect: "none",
+                  }}
+                >
+                  Transcript
+                </summary>
+                <div
+                  style={{
+                    borderTop: "1px solid var(--border)",
+                    padding: "12px 14px",
+                    maxHeight: "260px",
+                    overflowY: "auto",
+                    whiteSpace: "pre-wrap",
+                    fontSize: "13px",
+                    lineHeight: 1.6,
+                    color: "var(--ink-muted)",
+                  }}
+                >
+                  {lessonTranscriptText}
+                </div>
+              </details>
+            </div>
+          ) : null}
         </div>
       ) : null}
       {(() => {
