@@ -84,10 +84,12 @@ export default function LessonToolbar({
   };
 
   return (
-    <div style={{ marginTop: 12 }}>
-      <div style={{ display: "grid", gap: 12 }}>
+    <div className="mt-3">
+      <div className="grid gap-3">
         <div>
-          <label htmlFor="visibility">Visibility</label>
+          <label htmlFor="visibility" className="text-sm font-medium text-[var(--ink)]">
+            Visibility
+          </label>
           <Select
             id="visibility"
             value={currentVisibility}
@@ -102,7 +104,7 @@ export default function LessonToolbar({
         </div>
 
         {currentVisibility === "public" ? (
-          <p className="text-sm text-[var(--ink-muted)]">
+          <p className="break-all text-sm text-[var(--ink-muted)]">
             Share link:{" "}
             <a
               href={`/share/lesson/${lessonId}`}
@@ -113,14 +115,18 @@ export default function LessonToolbar({
           </p>
         ) : null}
 
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Button onClick={handleCopy}>Copy Lesson</Button>
-          <Button onClick={handleDownload}>Download .txt</Button>
-          {copied ? <span style={{ color: "#047857" }}>Copied</span> : null}
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+          <Button className="w-full sm:w-auto" onClick={handleCopy}>
+            Copy Lesson
+          </Button>
+          <Button className="w-full sm:w-auto" onClick={handleDownload}>
+            Download .txt
+          </Button>
+          {copied ? <span className="text-sm text-[#047857]">Copied</span> : null}
         </div>
 
         <LessonActions lessonId={lessonId} status={status} />
-        {error ? <p style={{ color: "crimson" }}>{error}</p> : null}
+        {error ? <p className="text-sm text-[crimson]">{error}</p> : null}
       </div>
     </div>
   );

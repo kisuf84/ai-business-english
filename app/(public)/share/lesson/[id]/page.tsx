@@ -125,8 +125,10 @@ export default async function SharedLessonPage({
       <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
         Shared Lesson
       </p>
-      <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">{lessonRecord.title}</h1>
-      <p className="mt-3 text-sm text-[var(--ink-muted)]">
+      <h1 className="mobile-safe-wrap mt-2 text-balance font-serif text-3xl font-normal text-[var(--ink)]">
+        {lessonRecord.title}
+      </h1>
+      <p className="mobile-safe-wrap mt-3 text-sm text-[var(--ink-muted)]">
         Level {lessonRecord.level} · {lessonRecord.topic}
       </p>
       {error ? <p style={{ color: "crimson" }}>{error}</p> : null}

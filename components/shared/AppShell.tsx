@@ -180,7 +180,7 @@ export default function AppShell({ children }: AppShellProps) {
 
   return (
     <div
-      className="font-ui min-h-screen bg-[var(--surface)] text-[var(--ink)]"
+      className="font-ui min-h-screen overflow-x-hidden bg-[var(--surface)] text-[var(--ink)]"
       style={{ fontFamily: '"Inter", system-ui, sans-serif' }}
     >
       <div className="flex min-h-screen w-full">
@@ -306,7 +306,7 @@ export default function AppShell({ children }: AppShellProps) {
           </div>
         </aside>
 
-        <main className="min-w-0 flex-1">
+        <main className="min-w-0 flex-1 overflow-x-hidden">
           <header
             className={`sticky top-0 z-30 flex min-h-[72px] flex-wrap items-center justify-between gap-3 px-3 py-3 backdrop-blur-[10px] sm:px-5 lg:flex-nowrap lg:px-7 ${
               isLight

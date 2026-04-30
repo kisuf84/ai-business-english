@@ -53,9 +53,9 @@ export default function LessonLibraryList({
       {lessons.map((lesson) => (
         <div key={lesson.id} className="relative">
           <Link href={`/lessons/${lesson.id}`} className="block">
-            <Card className="rounded-3xl p-6 pr-24">
+            <Card className="rounded-3xl p-5 sm:p-6 sm:pr-24">
               <div className="flex items-start justify-between gap-4">
-                <strong className="text-lg text-[var(--ink)]">
+                <strong className="mobile-safe-wrap text-lg text-[var(--ink)]">
                   {lesson.title}
                 </strong>
                 {lesson.status === "archived" ? (
@@ -76,10 +76,19 @@ export default function LessonLibraryList({
               </p>
             </Card>
           </Link>
+          <div className="mt-2 sm:hidden">
+            <button
+              onClick={() => void handleDelete(lesson.id)}
+              disabled={deletingId === lesson.id}
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-3 py-2 text-xs text-[var(--ink-muted)] transition hover:border-red-500/40 hover:text-red-400 disabled:opacity-40"
+            >
+              {deletingId === lesson.id ? "Deleting…" : "Delete"}
+            </button>
+          </div>
           <button
             onClick={() => void handleDelete(lesson.id)}
             disabled={deletingId === lesson.id}
-            className="absolute right-5 top-5 rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-3 py-1.5 text-xs text-[var(--ink-muted)] transition hover:border-red-500/40 hover:text-red-400 disabled:opacity-40"
+            className="absolute right-5 top-5 hidden rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-3 py-1.5 text-xs text-[var(--ink-muted)] transition hover:border-red-500/40 hover:text-red-400 disabled:opacity-40 sm:block"
           >
             {deletingId === lesson.id ? "Deleting…" : "Delete"}
           </button>

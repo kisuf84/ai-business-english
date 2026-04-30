@@ -123,13 +123,12 @@ export default async function LessonDetailPage({
             ← Back to lessons
           </Link>
         </p>
-        <h1 className="mt-3 font-serif text-3xl font-normal text-[var(--ink)]">
+        <h1 className="mobile-safe-wrap mt-3 text-balance font-serif text-3xl font-normal text-[var(--ink)]">
           {lessonRecord?.title || "Lesson"}
         </h1>
-        <p className="mt-2 text-sm text-[var(--ink-faint)]">
-          Lesson ID: {params.id}
-          {lessonRecord?.status === "archived" ? " • Archived" : ""}
-        </p>
+        {lessonRecord?.status === "archived" ? (
+          <p className="mt-2 text-sm text-[var(--ink-faint)]">Archived</p>
+        ) : null}
 
         <div className="mt-4 space-y-2 text-sm">
           {showSaved ? (
@@ -182,7 +181,7 @@ export default async function LessonDetailPage({
                     Share link
                   </p>
                   <Link
-                    className="mt-2 inline-flex text-sm text-[var(--ink)] underline-offset-4 hover:underline"
+                    className="mt-2 inline-flex break-all text-sm text-[var(--ink)] underline-offset-4 hover:underline"
                     href={`/share/lesson/${lessonRecord.id}`}
                   >
                     /share/lesson/{lessonRecord.id}

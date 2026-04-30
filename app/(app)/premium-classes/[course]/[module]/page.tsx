@@ -39,7 +39,7 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Premium Classes
           </p>
-          <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">
+          <h1 className="mobile-safe-wrap mt-2 text-balance font-serif text-3xl font-normal text-[var(--ink)]">
             {module.title}
           </h1>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--ink-muted)]">
@@ -71,7 +71,7 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
             <iframe
               title={module.title}
               src={module.iframeSrc}
-              className="h-[72vh] min-h-[420px] w-full border-0 sm:h-[80vh] sm:min-h-[720px]"
+              className="h-[68vh] min-h-[360px] w-full border-0 sm:h-[80vh] sm:min-h-[720px]"
             />
           </div>
         </Card>

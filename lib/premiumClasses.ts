@@ -59,18 +59,50 @@ function decodeHtmlEntities(value: string) {
     .trim();
 }
 
-function normalizeModuleTitle(value: string, number: number) {
-  const decoded = decodeHtmlEntities(value);
-  const modulePattern = new RegExp(`(Module\\s+${number}\\s*:\\s*.+)$`, "i");
-  const moduleMatch = decoded.match(modulePattern);
-  if (moduleMatch && moduleMatch[1]) {
-    return moduleMatch[1].trim();
-  }
-  return decoded;
+function escapeRegex(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function formatModuleFallback(courseTitle: string, number: number) {
-  return `${courseTitle} — Module ${number}`;
+function normalizeModuleTitle(value: string, courseTitle: string, number: number) {
+  const decoded = decodeHtmlEntities(value);
+  const normalizedSpaces = decoded.replace(/\s+/g, " ").trim();
+  const canonicalPrefix = `Module ${number}:`;
+
+  const prefixedPattern = new RegExp(
+    `^Module\\s+${number}\\s*[:\\-—–·]\\s*(.+?)(?:\\s*[—–-]\\s*.+)?$`,
+    "i"
+  );
+  const prefixedMatch = normalizedSpaces.match(prefixedPattern);
+  if (prefixedMatch) {
+    const cleanPart = prefixedMatch[1]?.trim();
+    return cleanPart ? `${canonicalPrefix} ${cleanPart}` : `Module ${number}`;
+  }
+
+  const coursePrefixPattern = new RegExp(
+    `^${escapeRegex(courseTitle)}\\s*[—–-]\\s*Module\\s+${number}(?::\\s*(.*))?$`,
+    "i"
+  );
+  const coursePrefixMatch = normalizedSpaces.match(coursePrefixPattern);
+  if (coursePrefixMatch) {
+    const cleanPart = (coursePrefixMatch[1] || "").trim();
+    return cleanPart ? `${canonicalPrefix} ${cleanPart}` : `Module ${number}`;
+  }
+
+  const anyModulePattern = new RegExp(
+    `\\bModule\\s+${number}\\b(?:\\s*[:\\-—–·]\\s*(.+?))?(?:\\s*[—–-]\\s*.+)?$`,
+    "i"
+  );
+  const anyModuleMatch = normalizedSpaces.match(anyModulePattern);
+  if (anyModuleMatch) {
+    const cleanPart = (anyModuleMatch[1] || "").trim();
+    return cleanPart ? `${canonicalPrefix} ${cleanPart}` : `Module ${number}`;
+  }
+
+  return `Module ${number}`;
+}
+
+function formatModuleFallback(_courseTitle: string, number: number) {
+  return `Module ${number}`;
 }
 
 async function readModuleTitle(filePath: string, courseTitle: string, number: number) {
@@ -80,7 +112,7 @@ async function readModuleTitle(filePath: string, courseTitle: string, number: nu
     if (!match) {
       return formatModuleFallback(courseTitle, number);
     }
-    return normalizeModuleTitle(match[1], number);
+    return normalizeModuleTitle(match[1], courseTitle, number);
   } catch {
     return formatModuleFallback(courseTitle, number);
   }
