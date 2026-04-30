@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Button from "../../../../../components/shared/Button";
 import Card from "../../../../../components/shared/Card";
 import Textarea from "../../../../../components/shared/Textarea";
@@ -35,8 +35,8 @@ function getStatusCopy(job: JobStatus) {
 
   if (job.status === "ready") {
     return {
-      title: "Your lesson is ready.",
-      body: "Opening it now...",
+      title: "Lesson ready.",
+      body: "Your lesson is complete and ready to open.",
     };
   }
 
@@ -57,7 +57,6 @@ function getStatusCopy(job: JobStatus) {
 }
 
 export default function YouTubeJobPage({ params }: { params: { id: string } }) {
-  const router = useRouter();
   const [job, setJob] = useState<JobStatus | null>(null);
   const [transcript, setTranscript] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -71,9 +70,6 @@ export default function YouTubeJobPage({ params }: { params: { id: string } }) {
       if (!response.ok) throw new Error("load_failed");
       const data = (await response.json()) as JobStatus;
       setJob(data);
-      if (data.status === "ready" && data.lesson_url) {
-        router.replace(data.lesson_url);
-      }
     } catch {
       setError("We couldn’t load this lesson job.");
     }
@@ -152,6 +148,16 @@ export default function YouTubeJobPage({ params }: { params: { id: string } }) {
               <p className="text-sm text-[var(--ink-muted)]">
                 {statusCopy?.body}
               </p>
+              {job?.status === "ready" && job.lesson_url ? (
+                <Link href={job.lesson_url} className="mt-2 inline-flex">
+                  <Button
+                    type="button"
+                    className="rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-5 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55]"
+                  >
+                    Open Lesson
+                  </Button>
+                </Link>
+              ) : null}
             </div>
           ) : null}
 

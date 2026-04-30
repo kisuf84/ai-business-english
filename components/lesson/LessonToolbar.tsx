@@ -39,13 +39,20 @@ export default function LessonToolbar({
       });
 
       if (!response.ok) {
-        throw new Error("Visibility update failed");
+        const payload = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        throw new Error(payload?.error || "Visibility update failed");
       }
 
       setCurrentVisibility(value);
       router.refresh();
-    } catch {
-      setError("We could not update visibility.");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "We could not update visibility. Please try again."
+      );
     } finally {
       setIsWorking(false);
     }
@@ -93,6 +100,18 @@ export default function LessonToolbar({
             <option value="public">Public</option>
           </Select>
         </div>
+
+        {currentVisibility === "public" ? (
+          <p className="text-sm text-[var(--ink-muted)]">
+            Share link:{" "}
+            <a
+              href={`/share/lesson/${lessonId}`}
+              className="text-[var(--ink)] underline-offset-4 hover:underline"
+            >
+              /share/lesson/{lessonId}
+            </a>
+          </p>
+        ) : null}
 
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           <Button onClick={handleCopy}>Copy Lesson</Button>

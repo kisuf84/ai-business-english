@@ -221,9 +221,11 @@ export default function GeneratorPage() {
   >("idle");
   const [jobStatusUrl, setJobStatusUrl] = useState<string | null>(null);
   const [manualTranscript, setManualTranscript] = useState("");
+  const [isRedirectingToLesson, setIsRedirectingToLesson] = useState(false);
   const pollingIntervalRef = useRef<number | null>(null);
   const almostThereTimeoutRef = useRef<number | null>(null);
   const fallbackTimeoutRef = useRef<number | null>(null);
+  const readyRedirectTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -255,6 +257,9 @@ export default function GeneratorPage() {
       if (fallbackTimeoutRef.current) {
         window.clearTimeout(fallbackTimeoutRef.current);
       }
+      if (readyRedirectTimeoutRef.current) {
+        window.clearTimeout(readyRedirectTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -270,6 +275,10 @@ export default function GeneratorPage() {
     if (fallbackTimeoutRef.current) {
       window.clearTimeout(fallbackTimeoutRef.current);
       fallbackTimeoutRef.current = null;
+    }
+    if (readyRedirectTimeoutRef.current) {
+      window.clearTimeout(readyRedirectTimeoutRef.current);
+      readyRedirectTimeoutRef.current = null;
     }
   };
 
@@ -306,7 +315,10 @@ export default function GeneratorPage() {
       setIsGenerating(false);
       setIsLessonGenerating(false);
       setShowFallback(false);
-      router.push(payload.lesson_url);
+      setIsRedirectingToLesson(true);
+      readyRedirectTimeoutRef.current = window.setTimeout(() => {
+        router.push(payload.lesson_url as string);
+      }, 900);
       return true;
     }
 
@@ -448,6 +460,7 @@ export default function GeneratorPage() {
     setLessonResult(null);
     setLessonStage("generating_lesson");
     setNotificationStatus("idle");
+    setIsRedirectingToLesson(false);
     setShowFallback(false);
     setLoadingPhase("generating");
     clearYoutubeTimers();
@@ -730,6 +743,14 @@ export default function GeneratorPage() {
 
         <div className="min-h-[560px] sm:min-h-[760px]">
           <Card>
+            {isRedirectingToLesson ? (
+              <div className="mb-4 rounded-2xl border border-[var(--accent-gold)] bg-[var(--accent-gold-soft)] p-4">
+                <p className="text-sm font-semibold text-[var(--ink)]">Lesson ready.</p>
+                <p className="text-xs text-[var(--ink-muted)]">
+                  Opening your lesson now...
+                </p>
+              </div>
+            ) : null}
             <form onSubmit={handleLessonSubmit} action="" method="post">
               <div className="grid min-h-[520px] gap-4">
                 {isGenerating ? (
@@ -838,6 +859,7 @@ export default function GeneratorPage() {
                         required
                       >
                         <option value="">Select level</option>
+                        <option value="A1">A1</option>
                         <option value="A2">A2</option>
                         <option value="B1">B1</option>
                         <option value="B2">B2</option>

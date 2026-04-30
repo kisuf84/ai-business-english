@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Card from "../shared/Card";
 import type { LessonRecord } from "../../types/lesson";
@@ -18,6 +18,10 @@ export default function LessonLibraryList({
 }) {
   const [lessons, setLessons] = useState(initialLessons);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLessons(initialLessons);
+  }, [initialLessons]);
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("Delete this lesson? This cannot be undone.")) return;

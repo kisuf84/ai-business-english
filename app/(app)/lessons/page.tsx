@@ -1,49 +1,62 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import Button from "../../../components/shared/Button";
 import Input from "../../../components/shared/Input";
 import Select from "../../../components/shared/Select";
 import Card from "../../../components/shared/Card";
 import LessonLibraryList from "../../../components/lesson/LessonLibraryList";
-import { listLessons } from "../../../lib/data/lessons";
 import type { LessonRecord } from "../../../types/lesson";
 
-type LessonsPageProps = {
-  searchParams?: {
-    q?: string;
-    level?: string;
-    showArchived?: string;
-  };
-};
+export default function LessonsPage() {
+  const [lessons, setLessons] = useState<LessonRecord[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
+  const [levelFilter, setLevelFilter] = useState("");
+  const [showArchived, setShowArchived] = useState(false);
 
-export default async function LessonsPage({ searchParams }: LessonsPageProps) {
-  let lessons: LessonRecord[] = [];
-  let error: string | null = null;
-  const query = searchParams?.q?.trim().toLowerCase() || "";
-  const levelFilter = searchParams?.level?.trim() || "";
-  const showArchived = searchParams?.showArchived === "1";
+  useEffect(() => {
+    const loadLessons = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await fetch("/api/lesson/list", { cache: "no-store" });
+        const payload = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | LessonRecord[]
+          | null;
+        if (!response.ok || !Array.isArray(payload)) {
+          throw new Error(
+            payload && !Array.isArray(payload) && payload.error
+              ? payload.error
+              : "We could not load lessons right now."
+          );
+        }
+        setLessons(payload);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "We could not load lessons right now.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  try {
-    lessons = await listLessons();
-  } catch {
-    error = "We could not load lessons right now.";
-  }
+    void loadLessons();
+  }, []);
 
-  const filteredLessons = lessons.filter((lesson) => {
-    if (!showArchived && lesson.status === "archived") {
-      return false;
-    }
-
-    if (levelFilter && lesson.level !== levelFilter) {
-      return false;
-    }
-
-    if (query) {
-      const haystack = `${lesson.title} ${lesson.topic}`.toLowerCase();
-      return haystack.includes(query);
-    }
-
-    return true;
-  });
+  const filteredLessons = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+    return lessons.filter((lesson) => {
+      if (!showArchived && lesson.status === "archived") return false;
+      if (levelFilter && lesson.level !== levelFilter) return false;
+      if (normalizedQuery) {
+        const haystack = `${lesson.title} ${lesson.topic}`.toLowerCase();
+        if (!haystack.includes(normalizedQuery)) return false;
+      }
+      return true;
+    });
+  }, [lessons, showArchived, levelFilter, query]);
 
   return (
     <section className="py-10">
@@ -61,58 +74,54 @@ export default async function LessonsPage({ searchParams }: LessonsPageProps) {
         </div>
 
         <Card>
-          <form>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="grid gap-2">
-                <label htmlFor="q" className="text-sm font-medium">
-                  Search
-                </label>
-                <Input
-                  id="q"
-                  name="q"
-                  placeholder="Search by title or topic"
-                  defaultValue={searchParams?.q || ""}
-                />
-              </div>
-              <div className="grid gap-2">
-                <label htmlFor="level" className="text-sm font-medium">
-                  Level
-                </label>
-                <Select id="level" name="level" defaultValue={levelFilter}>
-                  <option value="">All levels</option>
-                  <option value="A2">A2</option>
-                  <option value="B1">B1</option>
-                  <option value="B2">B2</option>
-                  <option value="C1">C1</option>
-                </Select>
-              </div>
-              <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)] md:col-span-2">
-                <input
-                  type="checkbox"
-                  name="showArchived"
-                  value="1"
-                  defaultChecked={showArchived}
-                />
-                Show archived lessons
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-2">
+              <label htmlFor="q" className="text-sm font-medium">
+                Search
               </label>
-              <div className="md:col-span-2">
-                <Button type="submit" className="rounded-lg px-4 py-2 text-xs">
-                  Apply filters
-                </Button>
-              </div>
+              <Input
+                id="q"
+                name="q"
+                placeholder="Search by title or topic"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+              />
             </div>
-          </form>
+            <div className="grid gap-2">
+              <label htmlFor="level" className="text-sm font-medium">
+                Level
+              </label>
+              <Select
+                id="level"
+                name="level"
+                value={levelFilter}
+                onChange={(event) => setLevelFilter(event.target.value)}
+              >
+                <option value="">All levels</option>
+                <option value="A1">A1</option>
+                <option value="A2">A2</option>
+                <option value="B1">B1</option>
+                <option value="B2">B2</option>
+                <option value="C1">C1</option>
+              </Select>
+            </div>
+            <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)] md:col-span-2">
+              <input
+                type="checkbox"
+                name="showArchived"
+                checked={showArchived}
+                onChange={(event) => setShowArchived(event.target.checked)}
+              />
+              Show archived lessons
+            </label>
+          </div>
         </Card>
 
-        {error ? (
-          <p className="mt-4 text-sm text-[var(--accent-warm)]">{error}</p>
-        ) : null}
+        {error ? <p className="mt-4 text-sm text-[var(--accent-warm)]">{error}</p> : null}
 
-        {!error && lessons.length === 0 ? (
+        {!error && !isLoading && lessons.length === 0 ? (
           <Card className="mt-6">
-            <h2 className="font-serif text-2xl text-[var(--ink)]">
-              No lessons yet
-            </h2>
+            <h2 className="font-serif text-2xl text-[var(--ink)]">No lessons yet</h2>
             <p className="mt-2 text-sm text-[var(--ink-muted)]">
               Create your first lesson to get started.
             </p>
@@ -124,7 +133,7 @@ export default async function LessonsPage({ searchParams }: LessonsPageProps) {
           </Card>
         ) : null}
 
-        {!error && lessons.length > 0 ? (
+        {!error && !isLoading && lessons.length > 0 ? (
           <LessonLibraryList initialLessons={filteredLessons} />
         ) : null}
       </div>

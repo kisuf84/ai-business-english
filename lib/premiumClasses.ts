@@ -59,6 +59,16 @@ function decodeHtmlEntities(value: string) {
     .trim();
 }
 
+function normalizeModuleTitle(value: string, number: number) {
+  const decoded = decodeHtmlEntities(value);
+  const modulePattern = new RegExp(`(Module\\s+${number}\\s*:\\s*.+)$`, "i");
+  const moduleMatch = decoded.match(modulePattern);
+  if (moduleMatch && moduleMatch[1]) {
+    return moduleMatch[1].trim();
+  }
+  return decoded;
+}
+
 function formatModuleFallback(courseTitle: string, number: number) {
   return `${courseTitle} — Module ${number}`;
 }
@@ -70,7 +80,7 @@ async function readModuleTitle(filePath: string, courseTitle: string, number: nu
     if (!match) {
       return formatModuleFallback(courseTitle, number);
     }
-    return decodeHtmlEntities(match[1]);
+    return normalizeModuleTitle(match[1], number);
   } catch {
     return formatModuleFallback(courseTitle, number);
   }

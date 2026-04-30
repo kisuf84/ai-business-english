@@ -205,3 +205,29 @@ export async function listSimulationSessions(
     attempts: grouped.get(simulation.id) ?? [],
   }));
 }
+
+export async function deleteSimulationSession(simulationId: string): Promise<void> {
+  const id = simulationId.trim();
+  if (!id) {
+    throw new Error("invalid_simulation_id");
+  }
+
+  if (isSupabaseEnabled()) {
+    await supabaseRest(`simulation_attempts?simulation_id=eq.${id}`, {
+      method: "DELETE",
+    });
+    await supabaseRest(`simulations?id=eq.${id}`, {
+      method: "DELETE",
+    });
+    return;
+  }
+
+  const simulations = readAll<StoredSimulation>(DATA_PATH).filter(
+    (simulation) => simulation.id !== id
+  );
+  const attempts = readAll<StoredAttempt>(ATTEMPTS_PATH).filter(
+    (attempt) => attempt.simulation_id !== id
+  );
+  writeAll(DATA_PATH, simulations);
+  writeAll(ATTEMPTS_PATH, attempts);
+}

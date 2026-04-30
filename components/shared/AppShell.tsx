@@ -43,7 +43,7 @@ export default function AppShell({ children }: AppShellProps) {
       label: "Library",
       items: [
         { href: "/my-courses", label: "Premium courses" },
-        { href: "/library", label: "Lesson library" },
+        { href: "/lessons", label: "Lesson library" },
         { href: "/premium-classes", label: "Premium Classes" },
         { href: "/for-teachers", label: "For Teachers" },
       ],

@@ -272,15 +272,25 @@ export async function updateLessonVisibility(
   const updated_at = new Date().toISOString();
 
   if (isSupabaseEnabled()) {
-    await supabaseRest(`lessons?id=eq.${id}`, {
+    const updatedRows = await supabaseRest<LessonRecord[]>(`lessons?id=eq.${id}`, {
       method: "PATCH",
+      headers: { Prefer: "return=representation" },
       body: JSON.stringify({ visibility, updated_at }),
     });
+    if (!Array.isArray(updatedRows) || updatedRows.length === 0) {
+      throw new Error("lesson_visibility_update_not_found");
+    }
     return;
   }
 
-  const lessons = readAll().map((lesson) =>
-    lesson.id === id ? { ...lesson, visibility, updated_at } : lesson
-  );
+  let found = false;
+  const lessons = readAll().map((lesson) => {
+    if (lesson.id !== id) return lesson;
+    found = true;
+    return { ...lesson, visibility, updated_at };
+  });
+  if (!found) {
+    throw new Error("lesson_visibility_update_not_found");
+  }
   writeAll(lessons);
 }

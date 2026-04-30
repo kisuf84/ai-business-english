@@ -473,6 +473,7 @@ export default function SimulationPage() {
   const [activeTab, setActiveTab] = useState<SimulationPageTab>("conversation");
   const [historySessions, setHistorySessions] = useState<HistorySessionItem[]>([]);
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
+  const [deletingSimulationId, setDeletingSimulationId] = useState<string | null>(null);
   const [historyError, setHistoryError] = useState<string | null>(null);
   const [expandedHistoryId, setExpandedHistoryId] = useState<string | null>(null);
   const [simulationId, setSimulationId] = useState<string | null>(null);
@@ -518,6 +519,35 @@ export default function SimulationPage() {
       setHistoryError(message);
     } finally {
       setIsHistoryLoading(false);
+    }
+  };
+
+  const handleDeleteHistorySession = async (simulationId: string) => {
+    if (deletingSimulationId) return;
+    setDeletingSimulationId(simulationId);
+    setHistoryError(null);
+    try {
+      const response = await fetch("/api/simulation/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ simulation_id: simulationId }),
+      });
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        throw new Error(payload?.error || "Failed to delete simulation.");
+      }
+      setHistorySessions((prev) =>
+        prev.filter((session) => session.simulation_id !== simulationId)
+      );
+      setExpandedHistoryId((prev) => (prev === simulationId ? null : prev));
+    } catch (err) {
+      setHistoryError(
+        err instanceof Error ? err.message : "We could not delete this simulation."
+      );
+    } finally {
+      setDeletingSimulationId(null);
     }
   };
 
@@ -1000,6 +1030,7 @@ export default function SimulationPage() {
                       required
                     >
                       <option value="">Select level</option>
+                      <option value="A1">A1</option>
                       <option value="A2">A2</option>
                       <option value="B1">B1</option>
                       <option value="B2">B2</option>
@@ -1445,9 +1476,21 @@ export default function SimulationPage() {
                         <p className="text-sm font-semibold text-[var(--ink)]">
                           {getScenarioTypeLabel(session.scenario_type)} • {session.level}
                         </p>
-                        <p className="text-xs text-[var(--ink-faint)]">
-                          {formatDateTime(session.created_at)}
-                        </p>
+                        <div className="flex items-center gap-3">
+                          <p className="text-xs text-[var(--ink-faint)]">
+                            {formatDateTime(session.created_at)}
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => void handleDeleteHistorySession(session.simulation_id)}
+                            disabled={deletingSimulationId === session.simulation_id}
+                            className="text-xs font-semibold text-[var(--accent-warm)] disabled:opacity-60"
+                          >
+                            {deletingSimulationId === session.simulation_id
+                              ? "Deleting..."
+                              : "Delete"}
+                          </button>
+                        </div>
                       </div>
                       <p className="mt-1 break-words text-xs leading-5 text-[var(--ink-muted)]">
                         Role: {session.profession || "Business Professional"} • Industry:{" "}

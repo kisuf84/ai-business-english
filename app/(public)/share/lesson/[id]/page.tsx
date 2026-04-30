@@ -68,9 +68,13 @@ export default async function SharedLessonPage({
 
   if (!lessonRecord || lessonRecord.visibility !== "public") {
     return (
-      <section>
-        <h1>Lesson Unavailable</h1>
-        <p>This lesson is not available to view.</p>
+      <section className="mobile-page-shell py-10">
+        <div className="mx-auto max-w-[960px]">
+          <h1 className="font-serif text-3xl text-[var(--ink)]">Lesson Unavailable</h1>
+          <p className="mt-3 text-sm text-[var(--ink-muted)]">
+            This lesson is not available to view.
+          </p>
+        </div>
       </section>
     );
   }
@@ -116,11 +120,18 @@ export default async function SharedLessonPage({
       : [];
 
   return (
-    <section>
-      <h1>{lessonRecord.title}</h1>
+    <section className="mobile-page-shell py-10">
+      <div className="mx-auto max-w-[960px]">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+        Shared Lesson
+      </p>
+      <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">{lessonRecord.title}</h1>
+      <p className="mt-3 text-sm text-[var(--ink-muted)]">
+        Level {lessonRecord.level} · {lessonRecord.topic}
+      </p>
       {error ? <p style={{ color: "crimson" }}>{error}</p> : null}
       {lessonVideoId ? (
-        <div style={{ marginBottom: "16px" }}>
+        <div style={{ margin: "20px 0 16px" }}>
           <p
             style={{
               fontSize: "11px",
@@ -246,6 +257,7 @@ export default async function SharedLessonPage({
           </>
         );
       })()}
+      </div>
     </section>
   );
 }
