@@ -19,12 +19,10 @@ export default function AppShell({ children }: AppShellProps) {
   const [user, setUser] = useState<{
     name: string;
     role: string;
-    email: string;
     avatarUrl: string | null;
   }>({
-    name: "Workspace User",
+    name: "Learner",
     role: "Member",
-    email: "",
     avatarUrl: null,
   });
   const [isAuthReady, setIsAuthReady] = useState(false);
@@ -80,9 +78,9 @@ export default function AppShell({ children }: AppShellProps) {
     } | null) => {
       const metadata = authUser?.user_metadata ?? {};
       const fullName =
+        (typeof metadata.preferred_name === "string" && metadata.preferred_name) ||
         (typeof metadata.full_name === "string" && metadata.full_name) ||
-        (typeof metadata.name === "string" && metadata.name) ||
-        "Workspace User";
+        "Learner";
       const avatar =
         (typeof metadata.avatar_url === "string" && metadata.avatar_url) ||
         (typeof metadata.picture === "string" && metadata.picture) ||
@@ -91,7 +89,6 @@ export default function AppShell({ children }: AppShellProps) {
       return {
         name: fullName,
         role: "Member",
-        email: authUser?.email || "",
         avatarUrl: avatar,
       };
     };
@@ -100,9 +97,8 @@ export default function AppShell({ children }: AppShellProps) {
       if (!hasSupabaseBrowserConfig()) {
         if (!active) return;
         setUser({
-          name: "Workspace User",
+          name: "Learner",
           role: "Member",
-          email: "",
           avatarUrl: null,
         });
         setIsAuthReady(true);
@@ -206,7 +202,7 @@ export default function AppShell({ children }: AppShellProps) {
                   {user.name}
                 </div>
                 <div className="mt-1 text-sm text-[var(--ink-muted)]">
-                  {user.email || user.role}
+                  {user.role}
                 </div>
               </div>
             </div>
@@ -463,7 +459,7 @@ export default function AppShell({ children }: AppShellProps) {
               )}
               <div className="min-w-0">
                 <p className="truncate text-sm font-bold text-[var(--ink)]">{user.name}</p>
-                <p className="truncate text-xs text-[var(--ink-muted)]">{user.email || user.role}</p>
+                <p className="truncate text-xs text-[var(--ink-muted)]">{user.role}</p>
               </div>
             </div>
           </div>

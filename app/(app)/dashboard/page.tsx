@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import Link from "next/link";
 import Card from "../../../components/shared/Card";
 import Button from "../../../components/shared/Button";
+import PersonalizedGreeting from "../../../components/shared/PersonalizedGreeting";
 import { listLessons } from "../../../lib/data/lessons";
 import { listCourses } from "../../../lib/data/courses";
 
@@ -71,9 +72,7 @@ export default async function DashboardPage() {
     >
       <div className="mb-5 flex flex-col justify-between gap-4 sm:mb-[22px] xl:mb-[26px] xl:flex-row xl:items-start">
         <div>
-          <h1 className="m-0 text-[28px] font-extrabold tracking-[-0.035em] text-[var(--ink)] sm:text-[32px] lg:text-[36px]">
-            Good morning, Alex
-          </h1>
+          <PersonalizedGreeting />
           <p className="mt-2 max-w-[760px] text-sm leading-[1.65] text-[var(--ink-muted)] sm:mt-[10px] sm:text-base">
             Here's your performance overview and learning progress across lessons and premium courses.
           </p>
@@ -228,8 +227,8 @@ export default async function DashboardPage() {
             <div className="mb-7 flex items-center gap-[14px]">
               <div className="h-[58px] w-[58px] shrink-0 rounded-full border-[3px] border-white/[0.08] bg-[linear-gradient(135deg,#2d66ff,#86a0ff)]" />
               <div>
-                <p className="text-sm font-semibold text-[var(--ink)]">Alex Morgan</p>
-                <p className="mt-1 text-sm text-[var(--ink-muted)]">Product Manager</p>
+                <p className="text-sm font-semibold text-[var(--ink)]">Learner</p>
+                <p className="mt-1 text-sm text-[var(--ink-muted)]">Learning profile</p>
                 <div className="mt-2 h-2 w-7 rounded-full bg-[var(--accent)]" />
               </div>
             </div>

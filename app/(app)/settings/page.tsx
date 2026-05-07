@@ -2,9 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Card from "../../../components/shared/Card";
+import { getSupabaseBrowserClient } from "../../../lib/supabase/client";
 
 export default function SettingsPage() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [email, setEmail] = useState("");
+  const [preferredName, setPreferredName] = useState("");
+  const [isSavingName, setIsSavingName] = useState(false);
+  const [nameStatus, setNameStatus] = useState<string | null>(null);
+  const [nameError, setNameError] = useState<string | null>(null);
 
   useEffect(() => {
     try {
@@ -14,6 +20,64 @@ export default function SettingsPage() {
       setTheme("light");
     }
   }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    const loadUser = async () => {
+      const supabase = getSupabaseBrowserClient();
+      if (!supabase) return;
+      const { data } = await supabase.auth.getUser();
+      if (!active || !data.user) return;
+
+      const metadata = data.user.user_metadata ?? {};
+      const existingPreferred =
+        (typeof metadata.preferred_name === "string" && metadata.preferred_name) ||
+        (typeof metadata.display_name === "string" && metadata.display_name) ||
+        (typeof metadata.name === "string" && metadata.name) ||
+        (typeof metadata.full_name === "string" && metadata.full_name) ||
+        "";
+
+      setPreferredName(existingPreferred);
+      setEmail(data.user.email || "");
+    };
+
+    void loadUser();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const handleSavePreferredName = async () => {
+    setNameError(null);
+    setNameStatus(null);
+    const value = preferredName.trim();
+    if (!value) {
+      setNameError("Preferred name cannot be empty.");
+      return;
+    }
+
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) {
+      setNameError("Authentication is not configured.");
+      return;
+    }
+
+    setIsSavingName(true);
+    const { error } = await supabase.auth.updateUser({
+      data: {
+        preferred_name: value,
+      },
+    });
+    setIsSavingName(false);
+
+    if (error) {
+      setNameError(error.message || "We could not update your preferred name.");
+      return;
+    }
+
+    setNameStatus("Preferred name updated.");
+  };
 
   return (
     <section className="py-10">
@@ -40,27 +104,52 @@ export default function SettingsPage() {
                 </p>
               </div>
               <span className="rounded-full border border-[var(--border)] px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] text-[var(--ink-faint)]">
-                Mocked
+                Active
               </span>
             </div>
             <div className="mt-5 flex items-center gap-4 border-t border-[var(--border)] pt-5">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--accent)] font-serif text-sm text-white">
-                A
+                {(preferredName.trim().charAt(0) || "U").toUpperCase()}
               </div>
               <div>
                 <p className="text-sm font-semibold text-[var(--ink)]">
-                  Alex Morgan
+                  {preferredName.trim() || "Learner"}
                 </p>
                 <p className="text-xs text-[var(--ink-muted)]">
-                  Product Manager
+                  Preferred workspace name
                 </p>
-                <p className="text-xs text-[var(--ink-faint)]">
-                  alex@company.com
-                </p>
+                {email ? <p className="text-xs text-[var(--ink-faint)]">{email}</p> : null}
               </div>
             </div>
-            <div className="mt-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3 text-xs text-[var(--ink-muted)]">
-              Google login and account management are coming next.
+            <div className="mt-4 space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3">
+              <label
+                htmlFor="preferred-name"
+                className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]"
+              >
+                Preferred name
+              </label>
+              <input
+                id="preferred-name"
+                type="text"
+                value={preferredName}
+                onChange={(event) => setPreferredName(event.target.value)}
+                maxLength={60}
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--ink)] outline-none transition focus:border-[var(--accent)]"
+              />
+              <button
+                type="button"
+                onClick={() => void handleSavePreferredName()}
+                disabled={isSavingName}
+                className="rounded-xl bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isSavingName ? "Saving..." : "Save preferred name"}
+              </button>
+              {nameStatus ? (
+                <p className="text-xs text-[var(--ink-muted)]">{nameStatus}</p>
+              ) : null}
+              {nameError ? (
+                <p className="text-xs text-[var(--accent-warm)]">{nameError}</p>
+              ) : null}
             </div>
           </Card>
 
