@@ -13,6 +13,7 @@ export default function AuthPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isConfigured] = useState(hasSupabaseBrowserConfig());
   const [nextPath, setNextPath] = useState("/dashboard");
 
@@ -20,7 +21,18 @@ export default function AuthPage() {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const next = params.get("next") || "/dashboard";
+    const oauthError = params.get("error");
+    const errorDescription = params.get("error_description");
     setNextPath(next);
+    if (!oauthError) return;
+
+    if (oauthError === "callback_failed") {
+      setError("Google sign-in failed. Please try again.");
+    } else if (oauthError === "missing_supabase_config") {
+      setError("Supabase auth is not configured correctly.");
+    } else {
+      setError(errorDescription || "Authentication failed. Please try again.");
+    }
   }, []);
 
   useEffect(() => {
@@ -67,6 +79,7 @@ export default function AuthPage() {
 
   const handleGoogleLogin = async () => {
     setError(null);
+    setStatusMessage(null);
 
     const supabase = getSupabaseBrowserClient();
     if (!supabase) {
@@ -77,9 +90,8 @@ export default function AuthPage() {
     }
 
     setIsLoading(true);
-    const redirectTo = `${window.location.origin}/auth?next=${encodeURIComponent(
-      nextPath
-    )}`;
+    setStatusMessage("Opening Google sign-in...");
+    const redirectTo = `${window.location.origin}/auth/callback`;
 
     const { error: signInError } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -90,6 +102,7 @@ export default function AuthPage() {
 
     if (signInError) {
       setError(signInError.message);
+      setStatusMessage(null);
       setIsLoading(false);
     }
   };
@@ -132,6 +145,9 @@ export default function AuthPage() {
 
           {error ? (
             <p className="mt-4 text-sm text-[var(--accent-warm)]">{error}</p>
+          ) : null}
+          {!error && statusMessage ? (
+            <p className="mt-4 text-sm text-[var(--ink-muted)]">{statusMessage}</p>
           ) : null}
         </Card>
       </div>
