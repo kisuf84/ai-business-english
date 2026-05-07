@@ -28,6 +28,7 @@ export default function AppShell({ children }: AppShellProps) {
     avatarUrl: null,
   });
   const [isAuthReady, setIsAuthReady] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const navGroups = [
@@ -163,6 +164,8 @@ export default function AppShell({ children }: AppShellProps) {
   }, [isMobileNavOpen]);
 
   const handleSignOut = async () => {
+    if (isSigningOut) return;
+    setIsSigningOut(true);
     const supabase = getSupabaseBrowserClient();
     if (supabase) {
       await supabase.auth.signOut();
@@ -222,13 +225,14 @@ export default function AppShell({ children }: AppShellProps) {
               <button
                 type="button"
                 onClick={() => void handleSignOut()}
+                disabled={isSigningOut}
                 className={`mt-4 w-full rounded-xl border px-4 py-2.5 text-sm font-semibold transition ${
                   isLight
                     ? "border-[var(--border)] bg-white/40 text-[var(--ink)] hover:bg-white/70"
                     : "border-white/10 bg-transparent text-white hover:bg-white/[0.05]"
-                }`}
+                } disabled:cursor-not-allowed disabled:opacity-60`}
               >
-                Sign out
+                {isSigningOut ? "Signing out..." : "Sign out"}
               </button>
             ) : null}
           </div>
@@ -384,6 +388,20 @@ export default function AppShell({ children }: AppShellProps) {
               >
                 Open generator
               </Link>
+              {isAuthReady ? (
+                <button
+                  type="button"
+                  onClick={() => void handleSignOut()}
+                  disabled={isSigningOut}
+                  className={`rounded-xl px-3 py-3 text-center text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-60 sm:px-[18px] sm:text-[15px] ${
+                    isLight
+                      ? "border border-[var(--border)] text-[var(--ink)] hover:bg-[var(--surface-hover)]"
+                      : "border border-white/10 text-white hover:bg-white/[0.05]"
+                  }`}
+                >
+                  {isSigningOut ? "Signing out..." : "Sign out"}
+                </button>
+              ) : null}
             </div>
           </header>
 
@@ -506,13 +524,14 @@ export default function AppShell({ children }: AppShellProps) {
               <button
                 type="button"
                 onClick={() => void handleSignOut()}
+                disabled={isSigningOut}
                 className={`w-full rounded-xl border px-4 py-3 text-sm font-semibold transition ${
                   isLight
                     ? "border-[var(--border)] bg-white/40 text-[var(--ink)] hover:bg-white/70"
                     : "border-white/10 bg-transparent text-white hover:bg-white/[0.05]"
-                }`}
+                } disabled:cursor-not-allowed disabled:opacity-60`}
               >
-                Sign out
+                {isSigningOut ? "Signing out..." : "Sign out"}
               </button>
             ) : null}
           </div>
