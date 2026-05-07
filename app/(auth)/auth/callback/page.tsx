@@ -14,14 +14,19 @@ export default function AuthCallbackPage() {
 
     const completeOAuth = async () => {
       try {
+        console.error("[auth-callback]", {
+          href: window.location.href,
+          search: window.location.search,
+          hash: window.location.hash,
+        });
+
         const supabase = getSupabaseBrowserClient();
         if (!supabase) {
           if (active) router.replace("/auth?error=missing_supabase_config");
           return;
         }
 
-        const { data: initialSessionData, error: initialSessionError } =
-          await supabase.auth.getSession();
+        const { data: initialSessionData, error: initialSessionError } = await supabase.auth.getSession();
         if (initialSessionError) {
           console.error("[auth-callback]", initialSessionError);
         }
@@ -30,38 +35,68 @@ export default function AuthCallbackPage() {
           return;
         }
 
-        const params = new URLSearchParams(window.location.search);
-        const code = params.get("code");
-        if (!code) {
-          router.replace(
-            "/auth?error=callback_failed&error_description=no_code_or_session"
-          );
-          return;
+        await new Promise((resolve) => window.setTimeout(resolve, 500));
+        const { data: delayedSessionData, error: delayedSessionError } = await supabase.auth.getSession();
+        if (delayedSessionError) {
+          console.error("[auth-callback]", delayedSessionError);
         }
-
-        const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
-        if (exchangeError) {
-          console.error("[auth-callback]", exchangeError);
-          router.replace(
-            `/auth?error=callback_failed&error_description=${encodeURIComponent(
-              exchangeError.message
-            )}`
-          );
-          return;
-        }
-
-        const { data: postExchangeSessionData, error: postExchangeSessionError } =
-          await supabase.auth.getSession();
-        if (postExchangeSessionError) {
-          console.error("[auth-callback]", postExchangeSessionError);
-        }
-        if (postExchangeSessionData.session) {
+        if (delayedSessionData.session) {
           router.replace("/dashboard");
           return;
         }
 
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code");
+        if (code) {
+          const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+          if (exchangeError) {
+            console.error("[auth-callback]", exchangeError);
+            router.replace(
+              `/auth?error=callback_failed&error_description=${encodeURIComponent(
+                exchangeError.message
+              )}`
+            );
+            return;
+          }
+
+          const { data: postExchangeSessionData, error: postExchangeSessionError } =
+            await supabase.auth.getSession();
+          if (postExchangeSessionError) {
+            console.error("[auth-callback]", postExchangeSessionError);
+          }
+          if (postExchangeSessionData.session) {
+            router.replace("/dashboard");
+            return;
+          }
+        }
+
+        const hash = window.location.hash || "";
+        const hasHashTokens =
+          hash.includes("access_token=") || hash.includes("refresh_token=");
+
+        if (hasHashTokens) {
+          await new Promise((resolve) => window.setTimeout(resolve, 500));
+          const { data: hashSessionData, error: hashSessionError } =
+            await supabase.auth.getSession();
+          if (hashSessionError) {
+            console.error("[auth-callback]", hashSessionError);
+          }
+          if (hashSessionData.session) {
+            router.replace("/dashboard");
+            return;
+          }
+          router.replace(
+            "/auth?error=callback_failed&error_description=hash_present_but_no_session"
+          );
+          return;
+        }
+
+        const hasSearch = window.location.search.length > 0;
+        const hasHash = hash.length > 0;
         router.replace(
-          "/auth?error=callback_failed&error_description=no_code_or_session"
+          `/auth?error=callback_failed&error_description=${encodeURIComponent(
+            `no_code_or_session|hasSearch=${hasSearch}|hasHash=${hasHash}`
+          )}`
         );
       } catch (callbackError) {
         console.error("[auth-callback]", callbackError);
