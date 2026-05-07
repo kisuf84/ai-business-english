@@ -27,7 +27,7 @@ export default function AuthPage() {
     if (!oauthError) return;
 
     if (oauthError === "callback_failed") {
-      setError("Google sign-in failed. Please try again.");
+      setError(errorDescription || "Google sign-in failed. Please try again.");
     } else if (oauthError === "missing_supabase_config") {
       setError("Supabase auth is not configured correctly.");
     } else {
@@ -101,6 +101,7 @@ export default function AuthPage() {
     });
 
     if (signInError) {
+      console.error("[google-oauth]", signInError);
       setError(signInError.message);
       setStatusMessage(null);
       setIsLoading(false);
