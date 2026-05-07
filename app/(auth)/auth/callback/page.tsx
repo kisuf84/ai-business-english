@@ -30,6 +30,13 @@ export default function AuthCallbackPage() {
         if (initialSessionError) {
           console.error("[auth-callback]", initialSessionError);
         }
+        console.log("[auth-callback-debug]", {
+          href: window.location.href,
+          search: window.location.search,
+          hash: window.location.hash,
+          session: Boolean(initialSessionData.session),
+          step: "initial_get_session",
+        });
         if (initialSessionData.session) {
           router.replace("/dashboard");
           return;
@@ -40,6 +47,13 @@ export default function AuthCallbackPage() {
         if (delayedSessionError) {
           console.error("[auth-callback]", delayedSessionError);
         }
+        console.log("[auth-callback-debug]", {
+          href: window.location.href,
+          search: window.location.search,
+          hash: window.location.hash,
+          session: Boolean(delayedSessionData.session),
+          step: "delayed_get_session",
+        });
         if (delayedSessionData.session) {
           router.replace("/dashboard");
           return;
@@ -64,6 +78,13 @@ export default function AuthCallbackPage() {
           if (postExchangeSessionError) {
             console.error("[auth-callback]", postExchangeSessionError);
           }
+          console.log("[auth-callback-debug]", {
+            href: window.location.href,
+            search: window.location.search,
+            hash: window.location.hash,
+            session: Boolean(postExchangeSessionData.session),
+            step: "post_exchange_get_session",
+          });
           if (postExchangeSessionData.session) {
             router.replace("/dashboard");
             return;
@@ -81,6 +102,13 @@ export default function AuthCallbackPage() {
           if (hashSessionError) {
             console.error("[auth-callback]", hashSessionError);
           }
+          console.log("[auth-callback-debug]", {
+            href: window.location.href,
+            search: window.location.search,
+            hash: window.location.hash,
+            session: Boolean(hashSessionData.session),
+            step: "hash_get_session",
+          });
           if (hashSessionData.session) {
             router.replace("/dashboard");
             return;
@@ -95,7 +123,7 @@ export default function AuthCallbackPage() {
         const hasHash = hash.length > 0;
         router.replace(
           `/auth?error=callback_failed&error_description=${encodeURIComponent(
-            `no_code_or_session|hasSearch=${hasSearch}|hasHash=${hasHash}`
+            `no_code_or_session|href=${window.location.href}|search=${window.location.search}|hash=${window.location.hash}|hasSearch=${hasSearch}|hasHash=${hasHash}`
           )}`
         );
       } catch (callbackError) {
