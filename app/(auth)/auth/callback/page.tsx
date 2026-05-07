@@ -13,22 +13,35 @@ export default function AuthCallbackPage() {
     let active = true;
 
     const completeOAuth = async () => {
-      const supabase = getSupabaseBrowserClient();
-      if (!supabase) {
-        if (active) router.replace("/auth?error=missing_supabase_config");
-        return;
-      }
-
       try {
+        const supabase = getSupabaseBrowserClient();
+        if (!supabase) {
+          if (active) router.replace("/auth?error=missing_supabase_config");
+          return;
+        }
+
+        const { data: initialSessionData, error: initialSessionError } =
+          await supabase.auth.getSession();
+        if (initialSessionError) {
+          console.error("[auth-callback]", initialSessionError);
+        }
+        if (initialSessionData.session) {
+          router.replace("/dashboard");
+          return;
+        }
+
         const params = new URLSearchParams(window.location.search);
         const code = params.get("code");
         if (!code) {
-          router.replace("/auth?error=callback_failed");
+          router.replace(
+            "/auth?error=callback_failed&error_description=no_code_or_session"
+          );
           return;
         }
 
         const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
         if (exchangeError) {
+          console.error("[auth-callback]", exchangeError);
           router.replace(
             `/auth?error=callback_failed&error_description=${encodeURIComponent(
               exchangeError.message
@@ -37,13 +50,32 @@ export default function AuthCallbackPage() {
           return;
         }
 
-        router.replace("/dashboard");
-      } catch {
+        const { data: postExchangeSessionData, error: postExchangeSessionError } =
+          await supabase.auth.getSession();
+        if (postExchangeSessionError) {
+          console.error("[auth-callback]", postExchangeSessionError);
+        }
+        if (postExchangeSessionData.session) {
+          router.replace("/dashboard");
+          return;
+        }
+
+        router.replace(
+          "/auth?error=callback_failed&error_description=no_code_or_session"
+        );
+      } catch (callbackError) {
+        console.error("[auth-callback]", callbackError);
         if (!active) return;
         setError("We couldn’t complete Google sign-in. Redirecting back to login...");
         window.setTimeout(() => {
           if (!active) return;
-          router.replace("/auth?error=callback_failed");
+          const message =
+            callbackError instanceof Error
+              ? callbackError.message
+              : "unknown_callback_error";
+          router.replace(
+            `/auth?error=callback_failed&error_description=${encodeURIComponent(message)}`
+          );
         }, 1200);
       }
     };
