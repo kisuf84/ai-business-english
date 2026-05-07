@@ -11,7 +11,9 @@ import {
 
 export default function AuthPage() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [isMagicLinkLoading, setIsMagicLinkLoading] = useState(false);
+  const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isConfigured] = useState(hasSupabaseBrowserConfig());
@@ -89,7 +91,7 @@ export default function AuthPage() {
       return;
     }
 
-    setIsLoading(true);
+    setIsGoogleLoading(true);
     setStatusMessage("Opening Google sign-in...");
     const redirectTo = `${window.location.origin}/auth/callback`;
 
@@ -104,8 +106,46 @@ export default function AuthPage() {
       console.error("[google-oauth]", signInError);
       setError(signInError.message);
       setStatusMessage(null);
-      setIsLoading(false);
+      setIsGoogleLoading(false);
     }
+  };
+
+  const handleMagicLinkLogin = async () => {
+    setError(null);
+    setStatusMessage(null);
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      setError("Please enter your email.");
+      return;
+    }
+
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) {
+      setError(
+        "Supabase environment variables are missing. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY."
+      );
+      return;
+    }
+
+    setIsMagicLinkLoading(true);
+    const emailRedirectTo = `${window.location.origin}/auth/callback`;
+
+    const { error: otpError } = await supabase.auth.signInWithOtp({
+      email: trimmedEmail,
+      options: {
+        emailRedirectTo,
+      },
+    });
+
+    if (otpError) {
+      setError(otpError.message || "We could not send the login link. Please try again.");
+      setIsMagicLinkLoading(false);
+      return;
+    }
+
+    setStatusMessage("Check your email for the login link.");
+    setIsMagicLinkLoading(false);
   };
 
   return (
@@ -168,9 +208,13 @@ export default function AuthPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
                 Continue learning
               </p>
-              <h2 className="mt-3 text-2xl font-semibold text-white">Welcome back</h2>
+              <h2 className="mt-3 text-2xl font-semibold text-white">Welcome to Langslate AI</h2>
               <p className="mt-2 text-sm leading-6 text-slate-300">
-                Sign in to continue building structured professional English lessons.
+                Your professional English workspace is ready.
+              </p>
+              <p className="mt-2 text-sm leading-6 text-slate-300">
+                Generate lessons from YouTube videos, articles, and business topics.
+                Practice vocabulary, speaking, simulations, and real-world communication.
               </p>
 
               {!isConfigured ? (
@@ -185,10 +229,10 @@ export default function AuthPage() {
                 <Button
                   type="button"
                   onClick={() => void handleGoogleLogin()}
-                  disabled={isLoading || !isConfigured}
+                  disabled={isGoogleLoading || isMagicLinkLoading || !isConfigured}
                   className="w-full rounded-xl border border-slate-200/20 bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100 disabled:opacity-60"
                 >
-                  {isLoading ? "Redirecting..." : "Continue with Google"}
+                  {isGoogleLoading ? "Redirecting..." : "Continue with Google"}
                 </Button>
               </div>
 
@@ -204,21 +248,21 @@ export default function AuthPage() {
                 <input
                   type="email"
                   placeholder="Work email"
-                  disabled
-                  className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-slate-400 placeholder:text-slate-500"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  disabled={isGoogleLoading || isMagicLinkLoading || !isConfigured}
+                  className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 disabled:cursor-not-allowed disabled:text-slate-400"
                 />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  disabled
-                  className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-slate-400 placeholder:text-slate-500"
-                />
+                <p className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-slate-300">
+                  Password login is not required. We will email you a secure login link.
+                </p>
                 <button
                   type="button"
-                  disabled
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm font-medium text-slate-400"
+                  onClick={() => void handleMagicLinkLogin()}
+                  disabled={isGoogleLoading || isMagicLinkLoading || !isConfigured}
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:text-slate-400"
                 >
-                  Email sign-in coming soon
+                  {isMagicLinkLoading ? "Sending..." : "Send login link"}
                 </button>
               </div>
 
