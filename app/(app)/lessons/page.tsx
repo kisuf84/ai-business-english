@@ -7,6 +7,7 @@ import Input from "../../../components/shared/Input";
 import Select from "../../../components/shared/Select";
 import Card from "../../../components/shared/Card";
 import LessonLibraryList from "../../../components/lesson/LessonLibraryList";
+import { authenticatedFetch } from "../../../lib/api/authenticatedFetch";
 import type { LessonRecord } from "../../../types/lesson";
 
 export default function LessonsPage() {
@@ -22,7 +23,9 @@ export default function LessonsPage() {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch("/api/lesson/list", { cache: "no-store" });
+        const response = await authenticatedFetch("/api/lesson/list", {
+          cache: "no-store",
+        });
         const payload = (await response.json().catch(() => null)) as
           | { error?: string }
           | LessonRecord[]

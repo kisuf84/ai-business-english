@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getSupabaseBrowserClient } from "../../../lib/supabase/client";
+import { authenticatedFetch } from "../../../lib/api/authenticatedFetch";
 import Button from "../../../components/shared/Button";
 import Card from "../../../components/shared/Card";
 import Input from "../../../components/shared/Input";
@@ -16,7 +18,6 @@ import type {
 } from "../../../types/lesson";
 import { parseYouTubeVideoId } from "../../../lib/youtube/url";
 import { validateLessonOutputPayload } from "../../../lib/validators/lesson";
-import { getSupabaseBrowserClient } from "../../../lib/supabase/client";
 import { detectLessonSource } from "../../../lib/content/sourceDetection";
 
 type LessonGenerationStage =
@@ -675,7 +676,7 @@ export default function GeneratorPage() {
         return;
       }
 
-      const response = await fetch("/api/lesson/save", {
+      const response = await authenticatedFetch("/api/lesson/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -68,10 +68,18 @@ function normalizeModuleTitle(value: string, courseTitle: string, number: number
   const normalizedSpaces = decoded.replace(/\s+/g, " ").trim();
   const canonicalPrefix = `Module ${number}:`;
 
+  const stripTrailingCourseName = (candidate: string) => {
+    const trailingCoursePattern = new RegExp(
+      `\\s*[—–-]\\s*${escapeRegex(courseTitle)}\\s*$`,
+      "i"
+    );
+    return candidate.replace(trailingCoursePattern, "").trim();
+  };
+
   const prefixedPattern = new RegExp(`^Module\\s+${number}\\s*[:\\-—–·]\\s*(.+)$`, "i");
   const prefixedMatch = normalizedSpaces.match(prefixedPattern);
   if (prefixedMatch) {
-    const cleanPart = prefixedMatch[1]?.trim();
+    const cleanPart = stripTrailingCourseName(prefixedMatch[1]?.trim() || "");
     return cleanPart ? `${canonicalPrefix} ${cleanPart}` : `Module ${number}`;
   }
 
@@ -81,14 +89,14 @@ function normalizeModuleTitle(value: string, courseTitle: string, number: number
   );
   const coursePrefixMatch = normalizedSpaces.match(coursePrefixPattern);
   if (coursePrefixMatch) {
-    const cleanPart = (coursePrefixMatch[1] || "").trim();
+    const cleanPart = stripTrailingCourseName((coursePrefixMatch[1] || "").trim());
     return cleanPart ? `${canonicalPrefix} ${cleanPart}` : `Module ${number}`;
   }
 
   const anyModulePattern = new RegExp(`\\bModule\\s+${number}\\b(?:\\s*[:\\-—–·]\\s*(.+))?$`, "i");
   const anyModuleMatch = normalizedSpaces.match(anyModulePattern);
   if (anyModuleMatch) {
-    const cleanPart = (anyModuleMatch[1] || "").trim();
+    const cleanPart = stripTrailingCourseName((anyModuleMatch[1] || "").trim());
     return cleanPart ? `${canonicalPrefix} ${cleanPart}` : `Module ${number}`;
   }
 

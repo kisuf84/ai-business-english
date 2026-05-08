@@ -8,6 +8,7 @@ import Select from "../../../components/shared/Select";
 import Textarea from "../../../components/shared/Textarea";
 import { useTheme } from "../../../context/ThemeContext";
 import { simulationCatalog } from "../../../lib/simulationCatalog";
+import { authenticatedFetch } from "../../../lib/api/authenticatedFetch";
 import type {
   SimulationMessageOutput,
   SimulationSessionFeedback,
@@ -494,7 +495,9 @@ export default function SimulationPage() {
     setIsHistoryLoading(true);
     setHistoryError(null);
     try {
-      const response = await fetch("/api/simulation/history");
+      const response = await authenticatedFetch("/api/simulation/history", {
+        cache: "no-store",
+      });
       if (!response.ok) {
         const payload = (await response.json().catch(() => null)) as
           | { error?: string; details?: string }
@@ -527,7 +530,7 @@ export default function SimulationPage() {
     setDeletingSimulationId(simulationId);
     setHistoryError(null);
     try {
-      const response = await fetch("/api/simulation/delete", {
+      const response = await authenticatedFetch("/api/simulation/delete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ simulation_id: simulationId }),
@@ -618,7 +621,7 @@ export default function SimulationPage() {
     }
 
     try {
-      const response = await fetch("/api/simulation/message", {
+      const response = await authenticatedFetch("/api/simulation/message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestPayload),
@@ -868,7 +871,7 @@ export default function SimulationPage() {
     };
 
     try {
-      const response = await fetch("/api/simulation/end", {
+      const response = await authenticatedFetch("/api/simulation/end", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
