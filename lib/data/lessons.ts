@@ -8,7 +8,7 @@ import type {
 import {
   getSupabaseAdminConfig,
   supabaseRest,
-  supabaseUserRest,
+  supabaseServiceRoleRest,
 } from "../supabase/server";
 import { parseYouTubeVideoId } from "../youtube/url";
 import {
@@ -63,7 +63,6 @@ export async function createLesson(params: {
   input: LessonGenerationInput;
   output: LessonGenerationOutput;
   user_id?: string | null;
-  accessToken?: string;
   transcript_text?: string | null;
   transcript_segments?: Array<{ start: number; duration?: number; text: string }> | null;
 }): Promise<LessonRecord> {
@@ -158,13 +157,7 @@ export async function createLesson(params: {
       },
       body: JSON.stringify(insertBody),
     } satisfies RequestInit;
-    const createdRows = params.accessToken
-      ? await supabaseUserRest<LessonRecordWithVideo[]>(
-          "lessons",
-          params.accessToken,
-          request
-        )
-      : await supabaseRest<LessonRecordWithVideo[]>("lessons", request);
+    const createdRows = await supabaseServiceRoleRest<LessonRecordWithVideo[]>("lessons", request);
 
     const created = Array.isArray(createdRows) ? createdRows[0] : null;
     if (!created || typeof created.id !== "string") {
@@ -178,16 +171,12 @@ export async function createLesson(params: {
 }
 
 export async function listLessons(
-  userId?: string,
-  accessToken?: string
+  userId?: string
 ): Promise<LessonRecord[]> {
   if (isSupabaseEnabled()) {
     if (userId) {
       const path = `lessons?select=*&user_id=eq.${userId}&order=created_at.desc`;
-      if (accessToken) {
-        return supabaseUserRest<LessonRecord[]>(path, accessToken);
-      }
-      return supabaseRest<LessonRecord[]>(path);
+      return supabaseServiceRoleRest<LessonRecord[]>(path);
     }
     return supabaseRest<LessonRecord[]>(
       "lessons?select=*&order=created_at.desc"

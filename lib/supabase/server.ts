@@ -68,7 +68,9 @@ async function supabaseRequest<T>(
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error(text || "Supabase request failed.");
+    throw new Error(
+      `[supabase:${config.keySource}] ${options.method || "GET"} ${path} failed (${response.status}): ${text || "Supabase request failed."}`
+    );
   }
 
   return (await response.json()) as T;

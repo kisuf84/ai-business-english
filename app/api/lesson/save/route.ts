@@ -16,6 +16,11 @@ const PROCESSING_ERROR = "We couldn’t process your request. Try again.";
 
 export async function POST(request: Request) {
   const authUser = await getRequestAuthUser(request);
+  console.info("[lesson/save] auth_check", {
+    authResolved: Boolean(authUser),
+    userId: authUser?.id ?? null,
+    hasBearerToken: Boolean(authUser?.access_token),
+  });
   if (!authUser) {
     console.error("[lesson/save] auth_failed");
     return NextResponse.json({ error: "Authentication required." }, { status: 401 });
@@ -82,7 +87,28 @@ export async function POST(request: Request) {
       input: payload.input,
       output: normalizedOutput.data,
       user_id: authUser.id,
-      accessToken: authUser.access_token,
+    });
+
+    console.info("[lesson/save] save_success", {
+      userId: authUser.id,
+      lessonId: lesson.id,
+      lessonUrl: `/lessons/${lesson.id}`,
+      insertPayloadKeys: [
+        "user_id",
+        "title",
+        "topic",
+        "level",
+        "industry",
+        "profession",
+        "lesson_type",
+        "source_url",
+        "content_json",
+        "status",
+        "visibility",
+        "video_id",
+        "transcript_text",
+        "transcript_segments",
+      ],
     });
 
     return NextResponse.json({
@@ -92,7 +118,9 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("[lesson/save] Failed to save lesson", {
+      authResolved: true,
       user_id: authUser.id,
+      hasBearerToken: Boolean(authUser.access_token),
       topic: payload.input.topic,
       level: payload.input.level,
       source_url: payload.input.source_url ? "provided" : "not_provided",
