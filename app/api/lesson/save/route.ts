@@ -17,6 +17,7 @@ const PROCESSING_ERROR = "We couldn’t process your request. Try again.";
 export async function POST(request: Request) {
   const authUser = await getRequestAuthUser(request);
   if (!authUser) {
+    console.error("[lesson/save] auth_failed");
     return NextResponse.json({ error: "Authentication required." }, { status: 401 });
   }
 
@@ -90,6 +91,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("[lesson/save] Failed to save lesson", {
+      user_id: authUser.id,
       topic: payload.input.topic,
       level: payload.input.level,
       source_url: payload.input.source_url ? "provided" : "not_provided",

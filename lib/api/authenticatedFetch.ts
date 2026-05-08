@@ -18,8 +18,19 @@ export async function authenticatedFetch(
     return fetch(input, { ...rest, headers });
   }
 
-  const { data } = await supabase.auth.getSession();
-  const accessToken = data.session?.access_token;
+  const resolveAccessToken = async (): Promise<string | null> => {
+    const { data: immediate } = await supabase.auth.getSession();
+    if (immediate.session?.access_token) {
+      return immediate.session.access_token;
+    }
+
+    // Supabase can hydrate browser session asynchronously after redirects.
+    await new Promise((resolve) => window.setTimeout(resolve, 300));
+    const { data: delayed } = await supabase.auth.getSession();
+    return delayed.session?.access_token ?? null;
+  };
+
+  const accessToken = await resolveAccessToken();
 
   if (requireAuth && !accessToken) {
     throw new Error("Authentication required.");
