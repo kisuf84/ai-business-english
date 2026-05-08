@@ -34,6 +34,37 @@ export default function AuthGuard({ children }: AuthGuardProps) {
         const next = pathname ? `?next=${encodeURIComponent(pathname)}` : "";
         router.replace(`/auth${next}`);
       };
+      const resolvePreferredName = (metadata: Record<string, unknown> | undefined) => {
+        if (!metadata) return "";
+        const candidates = [
+          metadata.preferred_name,
+          metadata.display_name,
+          metadata.name,
+          metadata.full_name,
+        ];
+        for (const candidate of candidates) {
+          if (typeof candidate === "string" && candidate.trim().length > 0) {
+            return candidate.trim();
+          }
+        }
+        return "";
+      };
+      const handlePostAuthRouting = (session: { user?: { user_metadata?: Record<string, unknown> } }) => {
+        const preferredName = resolvePreferredName(session.user?.user_metadata);
+        const isWelcomePage = pathname === "/welcome";
+
+        if (!preferredName && !isWelcomePage) {
+          router.replace("/welcome");
+          return false;
+        }
+
+        if (preferredName && isWelcomePage) {
+          router.replace("/dashboard");
+          return false;
+        }
+
+        return true;
+      };
 
       const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
         if (!active) return;
@@ -43,6 +74,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
             window.clearTimeout(fallbackTimer);
             fallbackTimer = null;
           }
+          if (!handlePostAuthRouting(session)) return;
           setReady(true);
           return;
         }
@@ -59,6 +91,9 @@ export default function AuthGuard({ children }: AuthGuardProps) {
       }
 
       if (data.session) {
+        if (!handlePostAuthRouting(data.session)) {
+          return;
+        }
         setReady(true);
         return;
       }

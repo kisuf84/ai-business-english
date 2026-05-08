@@ -68,10 +68,7 @@ function normalizeModuleTitle(value: string, courseTitle: string, number: number
   const normalizedSpaces = decoded.replace(/\s+/g, " ").trim();
   const canonicalPrefix = `Module ${number}:`;
 
-  const prefixedPattern = new RegExp(
-    `^Module\\s+${number}\\s*[:\\-—–·]\\s*(.+?)(?:\\s*[—–-]\\s*.+)?$`,
-    "i"
-  );
+  const prefixedPattern = new RegExp(`^Module\\s+${number}\\s*[:\\-—–·]\\s*(.+)$`, "i");
   const prefixedMatch = normalizedSpaces.match(prefixedPattern);
   if (prefixedMatch) {
     const cleanPart = prefixedMatch[1]?.trim();
@@ -88,10 +85,7 @@ function normalizeModuleTitle(value: string, courseTitle: string, number: number
     return cleanPart ? `${canonicalPrefix} ${cleanPart}` : `Module ${number}`;
   }
 
-  const anyModulePattern = new RegExp(
-    `\\bModule\\s+${number}\\b(?:\\s*[:\\-—–·]\\s*(.+?))?(?:\\s*[—–-]\\s*.+)?$`,
-    "i"
-  );
+  const anyModulePattern = new RegExp(`\\bModule\\s+${number}\\b(?:\\s*[:\\-—–·]\\s*(.+))?$`, "i");
   const anyModuleMatch = normalizedSpaces.match(anyModulePattern);
   if (anyModuleMatch) {
     const cleanPart = (anyModuleMatch[1] || "").trim();
@@ -108,11 +102,44 @@ function formatModuleFallback(_courseTitle: string, number: number) {
 async function readModuleTitle(filePath: string, courseTitle: string, number: number) {
   try {
     const html = await fs.readFile(filePath, "utf-8");
-    const match = html.match(/<title>(.*?)<\/title>/i);
-    if (!match) {
-      return formatModuleFallback(courseTitle, number);
+    const titleMatch = html.match(/<title>(.*?)<\/title>/i);
+    const fromTitle = titleMatch
+      ? normalizeModuleTitle(titleMatch[1], courseTitle, number)
+      : formatModuleFallback(courseTitle, number);
+    if (fromTitle !== `Module ${number}`) {
+      return fromTitle;
     }
-    return normalizeModuleTitle(match[1], courseTitle, number);
+
+    const headingMatches = Array.from(
+      html.matchAll(/<(h1|h2)[^>]*>(.*?)<\/\1>/gi)
+    ).map((match) =>
+      decodeHtmlEntities(
+        match[2]
+          .replace(/<[^>]+>/g, " ")
+          .replace(/\s+/g, " ")
+          .trim()
+      )
+    );
+
+    for (const heading of headingMatches) {
+      if (!heading) continue;
+      const normalizedHeading = normalizeModuleTitle(heading, courseTitle, number);
+      if (normalizedHeading !== `Module ${number}`) {
+        return normalizedHeading;
+      }
+
+      const cleanHeading = heading.replace(/\s+/g, " ").trim();
+      if (
+        cleanHeading &&
+        !new RegExp(`^Module\\s+${number}$`, "i").test(cleanHeading) &&
+        !new RegExp(`^${escapeRegex(courseTitle)}$`, "i").test(cleanHeading) &&
+        cleanHeading.length > 4
+      ) {
+        return `Module ${number}: ${cleanHeading}`;
+      }
+    }
+
+    return formatModuleFallback(courseTitle, number);
   } catch {
     return formatModuleFallback(courseTitle, number);
   }

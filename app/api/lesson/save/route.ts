@@ -9,11 +9,17 @@ import {
   validateLessonOutputPayload,
   validateLessonPayload,
 } from "../../../../lib/validators/lesson";
+import { getRequestAuthUser } from "../../../../lib/supabase/auth";
 
 const REQUIRED_FIELDS_ERROR = "Please complete all required fields";
 const PROCESSING_ERROR = "We couldn’t process your request. Try again.";
 
 export async function POST(request: Request) {
+  const authUser = await getRequestAuthUser(request);
+  if (!authUser) {
+    return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+  }
+
   let payload: {
     input: LessonGenerationInput;
     output: LessonGenerationOutput;
@@ -74,7 +80,7 @@ export async function POST(request: Request) {
     const lesson = await createLesson({
       input: payload.input,
       output: normalizedOutput.data,
-      user_id: null,
+      user_id: authUser.id,
     });
 
     return NextResponse.json({

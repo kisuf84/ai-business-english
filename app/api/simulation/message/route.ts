@@ -12,7 +12,9 @@ import {
 import {
   createSimulation,
   createSimulationAttempt,
+  getSimulationSessionById,
 } from "../../../../lib/data/simulations";
+import { getRequestAuthUser } from "../../../../lib/supabase/auth";
 
 type ScenarioKey =
   | "job_interview"
@@ -745,6 +747,11 @@ function buildSuggestions(input: SimulationMessageInput): string[] {
 }
 
 export async function POST(request: Request) {
+  const authUser = await getRequestAuthUser(request);
+  if (!authUser) {
+    return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+  }
+
   let payload: SimulationMessageInput;
   let stage = "parse";
   try {
@@ -797,7 +804,7 @@ export async function POST(request: Request) {
 
       stage = "create_simulation";
       try {
-        const simulation = await createSimulation(payload);
+        const simulation = await createSimulation(payload, authUser.id);
         simulationId = simulation.id;
         debugLog("persistence.simulation_created", {
           simulationId,
@@ -816,6 +823,14 @@ export async function POST(request: Request) {
           simulationId,
           reason: error instanceof Error ? error.message : String(error),
         });
+      }
+    } else {
+      const existing = await getSimulationSessionById(simulationId);
+      if (!existing || existing.user_id !== authUser.id) {
+        return NextResponse.json(
+          { error: "Simulation session not found." },
+          { status: 404 }
+        );
       }
     }
 

@@ -164,13 +164,21 @@ export async function createLesson(params: {
   return saveLocalLesson(lessonPayload);
 }
 
-export async function listLessons(): Promise<LessonRecord[]> {
+export async function listLessons(userId?: string): Promise<LessonRecord[]> {
   if (isSupabaseEnabled()) {
+    if (userId) {
+      return supabaseRest<LessonRecord[]>(
+        `lessons?select=*&user_id=eq.${userId}&order=created_at.desc`
+      );
+    }
     return supabaseRest<LessonRecord[]>(
       "lessons?select=*&order=created_at.desc"
     );
   }
 
+  if (userId) {
+    return readAll().filter((lesson) => lesson.user_id === userId);
+  }
   return readAll();
 }
 

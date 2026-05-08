@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { listSimulationSessions } from "../../../../lib/data/simulations";
 import type { SimulationSessionFeedback } from "../../../../types/simulation";
+import { getRequestAuthUser } from "../../../../lib/supabase/auth";
 
 function extractLessonLinks(text: string): string[] {
   const matches = text.match(/\/lessons\/[a-zA-Z0-9-]+/g) ?? [];
@@ -22,9 +23,14 @@ function isSessionFeedback(value: unknown): value is SimulationSessionFeedback {
   );
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const authUser = await getRequestAuthUser(request);
+  if (!authUser) {
+    return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+  }
+
   try {
-    const sessions = await listSimulationSessions(30);
+    const sessions = await listSimulationSessions(30, authUser.id);
     const payload = sessions.map((session) => {
       const feedbackAttempts = session.attempts.filter((attempt) => {
         const candidate = attempt.feedback_json as Record<string, unknown> | null;

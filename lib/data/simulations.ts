@@ -42,12 +42,13 @@ function isSupabaseEnabled() {
 }
 
 export async function createSimulation(
-  input: SimulationStartInput
+  input: SimulationStartInput,
+  userId: string
 ): Promise<SimulationRecord> {
   const now = new Date().toISOString();
   const payload: SimulationRecord = {
     id: crypto.randomUUID(),
-    user_id: null,
+    user_id: userId,
     scenario_type: input.scenario_type,
     level: input.level,
     industry: input.industry ?? null,
@@ -156,14 +157,16 @@ function toSafeTimestamp(value: string | null | undefined): number {
 }
 
 export async function listSimulationSessions(
-  limit = 20
+  limit = 20,
+  userId?: string
 ): Promise<SimulationSessionHistory[]> {
   const safeLimit = Number.isFinite(limit) ? Math.max(1, Math.min(100, limit)) : 20;
 
   if (isSupabaseEnabled()) {
-    const simulations = await supabaseRest<SimulationRecord[]>(
-      `simulations?select=*&order=created_at.desc&limit=${safeLimit}`
-    );
+    const scopedPath = userId
+      ? `simulations?select=*&user_id=eq.${userId}&order=created_at.desc&limit=${safeLimit}`
+      : `simulations?select=*&order=created_at.desc&limit=${safeLimit}`;
+    const simulations = await supabaseRest<SimulationRecord[]>(scopedPath);
     if (!simulations.length) return [];
 
     const ids = simulations.map((item) => item.id).filter(Boolean);
@@ -187,6 +190,7 @@ export async function listSimulationSessions(
   }
 
   const simulations = readAll<StoredSimulation>(DATA_PATH)
+    .filter((item) => (userId ? item.user_id === userId : true))
     .sort((a, b) => toSafeTimestamp(b.created_at) - toSafeTimestamp(a.created_at))
     .slice(0, safeLimit);
   const attempts = readAll<StoredAttempt>(ATTEMPTS_PATH).sort(
@@ -230,4 +234,21 @@ export async function deleteSimulationSession(simulationId: string): Promise<voi
   );
   writeAll(DATA_PATH, simulations);
   writeAll(ATTEMPTS_PATH, attempts);
+}
+
+export async function getSimulationSessionById(
+  simulationId: string
+): Promise<SimulationRecord | null> {
+  const id = simulationId.trim();
+  if (!id) return null;
+
+  if (isSupabaseEnabled()) {
+    const rows = await supabaseRest<SimulationRecord[]>(
+      `simulations?select=*&id=eq.${id}&limit=1`
+    );
+    return rows[0] ?? null;
+  }
+
+  const simulations = readAll<StoredSimulation>(DATA_PATH);
+  return simulations.find((item) => item.id === id) ?? null;
 }

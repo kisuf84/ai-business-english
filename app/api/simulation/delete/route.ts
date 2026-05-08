@@ -1,10 +1,19 @@
 import { NextResponse } from "next/server";
-import { deleteSimulationSession } from "../../../../lib/data/simulations";
+import {
+  deleteSimulationSession,
+  getSimulationSessionById,
+} from "../../../../lib/data/simulations";
+import { getRequestAuthUser } from "../../../../lib/supabase/auth";
 
 const REQUIRED_FIELDS_ERROR = "Please complete all required fields";
 const PROCESSING_ERROR = "We couldn’t process your request. Try again.";
 
 export async function POST(request: Request) {
+  const authUser = await getRequestAuthUser(request);
+  if (!authUser) {
+    return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+  }
+
   let payload: { simulation_id?: string };
 
   try {
@@ -19,6 +28,10 @@ export async function POST(request: Request) {
   }
 
   try {
+    const simulation = await getSimulationSessionById(simulationId);
+    if (!simulation || simulation.user_id !== authUser.id) {
+      return NextResponse.json({ error: "Simulation not found." }, { status: 404 });
+    }
     await deleteSimulationSession(simulationId);
     return NextResponse.json({ status: "ok" });
   } catch (error) {

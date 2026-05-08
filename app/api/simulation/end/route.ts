@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
-import { createSimulationSessionFeedback } from "../../../../lib/data/simulations";
+import {
+  createSimulationSessionFeedback,
+  getSimulationSessionById,
+} from "../../../../lib/data/simulations";
 import type { SimulationSessionFeedback } from "../../../../types/simulation";
+import { getRequestAuthUser } from "../../../../lib/supabase/auth";
 
 type EndSimulationPayload = {
   simulation_id?: string;
@@ -48,6 +52,11 @@ function isValidSessionFeedback(value: unknown): value is SimulationSessionFeedb
 }
 
 export async function POST(request: Request) {
+  const authUser = await getRequestAuthUser(request);
+  if (!authUser) {
+    return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+  }
+
   let payload: EndSimulationPayload;
   try {
     payload = (await request.json()) as EndSimulationPayload;
@@ -69,6 +78,11 @@ export async function POST(request: Request) {
   }
 
   try {
+    const simulation = await getSimulationSessionById(payload.simulation_id);
+    if (!simulation || simulation.user_id !== authUser.id) {
+      return NextResponse.json({ error: "Simulation not found." }, { status: 404 });
+    }
+
     const attempt = await createSimulationSessionFeedback({
       simulation_id: payload.simulation_id,
       feedback: payload.feedback,
