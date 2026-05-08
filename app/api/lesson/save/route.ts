@@ -82,6 +82,7 @@ export async function POST(request: Request) {
       input: payload.input,
       output: normalizedOutput.data,
       user_id: authUser.id,
+      accessToken: authUser.access_token,
     });
 
     return NextResponse.json({

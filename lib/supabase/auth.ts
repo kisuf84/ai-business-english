@@ -4,6 +4,7 @@ type SupabaseUser = {
   id: string;
   email?: string;
   user_metadata?: Record<string, unknown>;
+  access_token: string;
 };
 
 function readTokenFromAuthHeader(request: Request): string | null {
@@ -97,5 +98,6 @@ export async function getRequestAuthUser(request: Request): Promise<SupabaseUser
     id: data.user.id,
     email: data.user.email,
     user_metadata: data.user.user_metadata as Record<string, unknown> | undefined,
+    access_token: token,
   };
 }

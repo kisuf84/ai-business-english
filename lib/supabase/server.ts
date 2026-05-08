@@ -97,3 +97,29 @@ export async function supabaseServiceRoleRest<T>(
 
   return supabaseRequest<T>(config, path, options);
 }
+
+export async function supabaseUserRest<T>(
+  path: string,
+  accessToken: string,
+  options: RequestInit = {}
+): Promise<T> {
+  const url =
+    process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  const anonKey =
+    process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+  if (!url || !anonKey || !accessToken) {
+    throw new Error("Supabase user config not set.");
+  }
+
+  return supabaseRequest<T>(
+    { url, key: anonKey, keySource: "anon" },
+    path,
+    {
+      ...options,
+      headers: {
+        ...(options.headers || {}),
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+}

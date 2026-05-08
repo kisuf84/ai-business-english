@@ -10,7 +10,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const lessons = await listLessons(authUser.id);
+    const lessons = await listLessons(authUser.id, authUser.access_token);
     return NextResponse.json(lessons);
   } catch (error) {
     console.error("[lesson/list] failed", {

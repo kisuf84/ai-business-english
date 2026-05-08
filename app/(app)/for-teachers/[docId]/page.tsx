@@ -51,7 +51,7 @@ export default function TeacherLessonViewerPage({
               rel="noopener noreferrer"
               className="inline-flex w-full justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-2 text-xs font-semibold text-[var(--ink)] transition hover:border-[var(--accent-gold)] sm:w-auto"
             >
-              Open in Gamma
+              Present
             </Link>
           </div>
         </Card>

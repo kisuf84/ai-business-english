@@ -76,7 +76,7 @@ export default async function ForTeachersPage() {
             For Teachers
           </h1>
           <p className="mt-3 text-sm text-[var(--ink-muted)]">
-            Ready-to-use Gamma lesson resources for classroom and coaching sessions.
+            Ready-to-use lesson resources for classroom and coaching sessions.
           </p>
         </div>
 
@@ -89,7 +89,7 @@ export default async function ForTeachersPage() {
                     {resource.title}
                   </h2>
                   <p className="mt-1 text-xs text-[var(--ink-faint)]">
-                    Gamma lesson preview
+                    Lesson preview
                   </p>
 
                   <div className="mt-4 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)]">
@@ -105,7 +105,7 @@ export default async function ForTeachersPage() {
                         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[rgba(8,12,24,0.82)] via-transparent to-[rgba(8,12,24,0.2)]" />
                         <div className="pointer-events-none absolute inset-x-0 top-0 p-3">
                           <span className="inline-flex rounded-full border border-[rgba(232,193,91,0.36)] bg-[rgba(8,12,24,0.52)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--ink)]">
-                            Gamma Lesson
+                            Lesson Resource
                           </span>
                         </div>
                         <div className="pointer-events-none absolute inset-x-0 bottom-0 p-3">
@@ -132,7 +132,7 @@ export default async function ForTeachersPage() {
                         <div className="relative z-10 flex h-full flex-col justify-between p-4">
                           <div className="flex items-start justify-between gap-3">
                             <span className="inline-flex rounded-full border border-[rgba(232,193,91,0.36)] bg-[rgba(8,12,24,0.44)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--ink)]">
-                              Gamma Lesson
+                              Lesson Resource
                             </span>
                             <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-[rgba(232,193,91,0.38)] bg-[rgba(8,12,24,0.46)] text-xs font-bold text-[var(--ink)]">
                               {toMonogram(resource.title)}
@@ -165,7 +165,7 @@ export default async function ForTeachersPage() {
                       rel="noopener noreferrer"
                       className="inline-flex w-full justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-2 text-xs font-semibold text-[var(--ink)] transition hover:border-[var(--accent-gold)] sm:w-auto"
                     >
-                      Open in Gamma
+                      Present
                     </Link>
                   </div>
                 </div>

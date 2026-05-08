@@ -59,11 +59,6 @@ export default function LessonContent({ lesson }: LessonContentProps) {
           ))}
         </ul>
       </LessonSection>
-      {lesson.listening?.trim() ? (
-        <LessonSection title="Listening">
-          <p>{lesson.listening}</p>
-        </LessonSection>
-      ) : null}
     </div>
   );
 }

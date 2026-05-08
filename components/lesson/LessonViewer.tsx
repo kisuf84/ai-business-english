@@ -238,10 +238,7 @@ export default function LessonViewer({
   });
 
   const readingParagraphs = splitReadingIntoParagraphs(lesson.reading_text);
-  const hasListening = Boolean(lesson.listening?.trim());
-  const tabs: Tab[] = hasListening
-    ? [...REQUIRED_TABS, { id: "listening", label: "Listening" }]
-    : REQUIRED_TABS;
+  const tabs: Tab[] = REQUIRED_TABS;
   const sectionQuestions = getQuestionsBySection(lesson);
   const professionalFocus = useMemo(() => extractProfessionalFocus(lesson), [lesson]);
   const hasProfessionalFocus = Boolean(
@@ -945,42 +942,6 @@ export default function LessonViewer({
               "Choose the best option for each grammar-focused question."
             )
           : null}
-
-        {activeTab === "listening" && hasListening ? (
-          <div>
-            <h3
-              style={{
-                fontFamily: theme.fonts.display,
-                fontSize: "22px",
-                color: theme.colors.ink,
-                marginBottom: "20px",
-              }}
-            >
-              Listening
-            </h3>
-            <div
-              style={{
-                background: theme.colors.surface,
-                border: `1px solid ${theme.colors.border}`,
-                borderTop: `3px solid ${theme.colors.accent}`,
-                borderRadius: theme.radius.md,
-                padding: "32px",
-                boxShadow: theme.shadow.sm,
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: theme.fonts.body,
-                  fontSize: "15px",
-                  color: theme.colors.ink,
-                  lineHeight: 1.7,
-                }}
-              >
-                {lesson.listening}
-              </p>
-            </div>
-          </div>
-        ) : null}
 
         {activeTab === "final_assessment"
           ? renderQuestionSection(

@@ -5,7 +5,11 @@ import type {
   LessonGenerationOutput,
   LessonRecord,
 } from "../../types/lesson";
-import { getSupabaseAdminConfig, supabaseRest } from "../supabase/server";
+import {
+  getSupabaseAdminConfig,
+  supabaseRest,
+  supabaseUserRest,
+} from "../supabase/server";
 import { parseYouTubeVideoId } from "../youtube/url";
 import {
   validateLessonOutputPayload,
@@ -59,6 +63,7 @@ export async function createLesson(params: {
   input: LessonGenerationInput;
   output: LessonGenerationOutput;
   user_id?: string | null;
+  accessToken?: string;
   transcript_text?: string | null;
   transcript_segments?: Array<{ start: number; duration?: number; text: string }> | null;
 }): Promise<LessonRecord> {
@@ -130,28 +135,36 @@ export async function createLesson(params: {
   };
 
   if (isSupabaseEnabled()) {
-    const createdRows = await supabaseRest<LessonRecordWithVideo[]>("lessons", {
+    const insertBody = {
+      user_id: lessonPayload.user_id,
+      title: lessonPayload.title,
+      topic: lessonPayload.topic,
+      level: lessonPayload.level,
+      industry: lessonPayload.industry,
+      profession: lessonPayload.profession,
+      lesson_type: lessonPayload.lesson_type,
+      source_url: lessonPayload.source_url,
+      content_json: lessonPayload.content_json,
+      status: lessonPayload.status,
+      visibility: lessonPayload.visibility,
+      video_id: lessonPayload.video_id,
+      transcript_text: lessonPayload.transcript_text,
+      transcript_segments: lessonPayload.transcript_segments,
+    };
+    const request = {
       method: "POST",
       headers: {
         Prefer: "return=representation",
       },
-      body: JSON.stringify({
-        user_id: lessonPayload.user_id,
-        title: lessonPayload.title,
-        topic: lessonPayload.topic,
-        level: lessonPayload.level,
-        industry: lessonPayload.industry,
-        profession: lessonPayload.profession,
-        lesson_type: lessonPayload.lesson_type,
-        source_url: lessonPayload.source_url,
-        content_json: lessonPayload.content_json,
-        status: lessonPayload.status,
-        visibility: lessonPayload.visibility,
-        video_id: lessonPayload.video_id,
-        transcript_text: lessonPayload.transcript_text,
-        transcript_segments: lessonPayload.transcript_segments,
-      }),
-    });
+      body: JSON.stringify(insertBody),
+    } satisfies RequestInit;
+    const createdRows = params.accessToken
+      ? await supabaseUserRest<LessonRecordWithVideo[]>(
+          "lessons",
+          params.accessToken,
+          request
+        )
+      : await supabaseRest<LessonRecordWithVideo[]>("lessons", request);
 
     const created = Array.isArray(createdRows) ? createdRows[0] : null;
     if (!created || typeof created.id !== "string") {
@@ -164,12 +177,17 @@ export async function createLesson(params: {
   return saveLocalLesson(lessonPayload);
 }
 
-export async function listLessons(userId?: string): Promise<LessonRecord[]> {
+export async function listLessons(
+  userId?: string,
+  accessToken?: string
+): Promise<LessonRecord[]> {
   if (isSupabaseEnabled()) {
     if (userId) {
-      return supabaseRest<LessonRecord[]>(
-        `lessons?select=*&user_id=eq.${userId}&order=created_at.desc`
-      );
+      const path = `lessons?select=*&user_id=eq.${userId}&order=created_at.desc`;
+      if (accessToken) {
+        return supabaseUserRest<LessonRecord[]>(path, accessToken);
+      }
+      return supabaseRest<LessonRecord[]>(path);
     }
     return supabaseRest<LessonRecord[]>(
       "lessons?select=*&order=created_at.desc"
