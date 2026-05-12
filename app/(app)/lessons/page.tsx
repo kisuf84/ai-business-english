@@ -14,6 +14,7 @@ export default function LessonsPage() {
   const [lessons, setLessons] = useState<LessonRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [levelFilter, setLevelFilter] = useState("");
   const [showArchived, setShowArchived] = useState(false);
@@ -60,6 +61,33 @@ export default function LessonsPage() {
       return true;
     });
   }, [lessons, showArchived, levelFilter, query]);
+
+  const handleDeleteLesson = async (id: string) => {
+    if (deletingId) return;
+    if (!window.confirm("Delete this lesson? This cannot be undone.")) return;
+    setDeletingId(id);
+    setError(null);
+    try {
+      const response = await authenticatedFetch("/api/lesson/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+      if (!response.ok) {
+        throw new Error(payload?.error || "We could not delete this lesson.");
+      }
+      setLessons((prev) => prev.filter((lesson) => lesson.id !== id));
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "We could not delete this lesson."
+      );
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   return (
     <section className="py-10">
@@ -137,7 +165,11 @@ export default function LessonsPage() {
         ) : null}
 
         {!error && !isLoading && lessons.length > 0 ? (
-          <LessonLibraryList initialLessons={filteredLessons} />
+          <LessonLibraryList
+            lessons={filteredLessons}
+            deletingId={deletingId}
+            onDelete={handleDeleteLesson}
+          />
         ) : null}
       </div>
     </section>

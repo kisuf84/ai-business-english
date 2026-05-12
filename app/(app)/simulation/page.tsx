@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Button from "../../../components/shared/Button";
 import Card from "../../../components/shared/Card";
 import Select from "../../../components/shared/Select";
@@ -473,6 +473,7 @@ export default function SimulationPage() {
   const [history, setHistory] = useState<ChatMessage[]>([]);
   const [activeTab, setActiveTab] = useState<SimulationPageTab>("conversation");
   const [historySessions, setHistorySessions] = useState<HistorySessionItem[]>([]);
+  const [historyQuery, setHistoryQuery] = useState("");
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   const [deletingSimulationId, setDeletingSimulationId] = useState<string | null>(null);
   const [historyError, setHistoryError] = useState<string | null>(null);
@@ -553,6 +554,21 @@ export default function SimulationPage() {
       setDeletingSimulationId(null);
     }
   };
+
+  const filteredHistorySessions = useMemo(() => {
+    const normalizedQuery = historyQuery.trim().toLowerCase();
+    if (!normalizedQuery) return historySessions;
+    return historySessions.filter((session) => {
+      const scenarioLabel = getScenarioTypeLabel(session.scenario_type).toLowerCase();
+      const roleText = (session.profession || "").toLowerCase();
+      const industryText = (session.industry || "").toLowerCase();
+      return (
+        scenarioLabel.includes(normalizedQuery) ||
+        roleText.includes(normalizedQuery) ||
+        industryText.includes(normalizedQuery)
+      );
+    });
+  }, [historySessions, historyQuery]);
 
   useEffect(() => {
     if (activeTab === "history") {
@@ -1461,15 +1477,31 @@ export default function SimulationPage() {
                 </p>
               ) : null}
 
+              <div className="mb-4">
+                <label htmlFor="history-search" className="mb-1 block text-xs font-semibold text-[var(--ink-faint)]">
+                  Search history
+                </label>
+                <input
+                  id="history-search"
+                  type="text"
+                  value={historyQuery}
+                  onChange={(event) => setHistoryQuery(event.target.value)}
+                  placeholder="Search by scenario, role, or industry"
+                  className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink-faint)] focus:border-[var(--accent)] focus:outline-none"
+                />
+              </div>
+
               {isHistoryLoading ? (
                 <p className="text-sm text-[var(--ink-muted)]">Loading history...</p>
-              ) : historySessions.length === 0 ? (
+              ) : filteredHistorySessions.length === 0 ? (
                 <p className="text-sm text-[var(--ink-muted)]">
-                  No previous simulations yet. Complete a conversation to see it here.
+                  {historySessions.length === 0
+                    ? "No previous simulations yet. Complete a conversation to see it here."
+                    : "No history matches your search yet."}
                 </p>
               ) : (
                 <div className="space-y-3">
-                  {historySessions.map((session) => (
+                  {filteredHistorySessions.map((session) => (
                     <div
                       key={session.simulation_id}
                       className="rounded-2xl border p-4"

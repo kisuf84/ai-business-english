@@ -16,6 +16,7 @@ type AppShellProps = {
 export default function AppShell({ children }: AppShellProps) {
   const { mode, toggleTheme } = useTheme();
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [user, setUser] = useState<{
     name: string;
     role: string;
@@ -41,7 +42,6 @@ export default function AppShell({ children }: AppShellProps) {
     {
       label: "Library",
       items: [
-        { href: "/my-courses", label: "Premium courses" },
         { href: "/lessons", label: "Lesson library" },
         { href: "/premium-classes", label: "Premium Classes" },
         { href: "/for-teachers", label: "For Teachers" },
@@ -176,6 +176,14 @@ export default function AppShell({ children }: AppShellProps) {
     .map((part) => part[0]?.toUpperCase() || "")
     .join("");
   const isLight = mode === "light";
+  const navItemIcon = (label: string) =>
+    label
+      .split(" ")
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase() || "")
+      .join("");
 
   return (
     <div
@@ -183,9 +191,13 @@ export default function AppShell({ children }: AppShellProps) {
       style={{ fontFamily: '"Inter", system-ui, sans-serif' }}
     >
       <div className="flex min-h-screen w-full">
-        <aside className="hidden w-[280px] shrink-0 flex-col border-r border-[var(--sidebar-border)] bg-[image:var(--sidebar-bg)] px-[14px] py-[18px] lg:flex">
+        <aside
+          className={`hidden shrink-0 flex-col border-r border-[var(--sidebar-border)] bg-[image:var(--sidebar-bg)] py-[18px] transition-[width,padding] duration-200 lg:flex ${
+            isSidebarCollapsed ? "w-[88px] px-[10px]" : "w-[280px] px-[14px]"
+          }`}
+        >
           <div className="rounded-[18px] border border-white/5 bg-white/[0.05] p-4">
-            <div className="flex items-center gap-3">
+            <div className={`flex items-center ${isSidebarCollapsed ? "justify-center" : "gap-3"}`}>
               {user.avatarUrl ? (
                 <img
                   src={user.avatarUrl}
@@ -197,38 +209,45 @@ export default function AppShell({ children }: AppShellProps) {
                   {initials || "U"}
                 </div>
               )}
-              <div>
-                <div className="text-[17px] font-bold leading-[1.2] text-[var(--ink)]">
-                  {user.name}
+              {!isSidebarCollapsed ? (
+                <div>
+                  <div className="text-[17px] font-bold leading-[1.2] text-[var(--ink)]">
+                    {user.name}
+                  </div>
+                  <div className="mt-1 text-sm text-[var(--ink-muted)]">
+                    {user.role}
+                  </div>
                 </div>
-                <div className="mt-1 text-sm text-[var(--ink-muted)]">
-                  {user.role}
-                </div>
+              ) : null}
+            </div>
+
+            {!isSidebarCollapsed ? (
+              <div className="mt-[14px] inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-[14px] py-[10px] text-sm font-bold text-white">
+                <span className="inline-block h-[18px] w-[18px] rounded-full border-2 border-white" />
+                B2
               </div>
-            </div>
+            ) : null}
 
-            <div className="mt-[14px] inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-[14px] py-[10px] text-sm font-bold text-white">
-              <span className="inline-block h-[18px] w-[18px] rounded-full border-2 border-white" />
-              B2
-            </div>
-
-            <div className="mt-[14px] flex items-center gap-[10px] text-sm text-[var(--ink-muted)]">
-              <span className="h-[18px] w-[18px] border-b-2 border-l-2 border-[var(--ink-muted)] opacity-80 [transform:skewX(-12deg)]" />
-              Focus: Tech workspace
-            </div>
+            {!isSidebarCollapsed ? (
+              <div className="mt-[14px] flex items-center gap-[10px] text-sm text-[var(--ink-muted)]">
+                <span className="h-[18px] w-[18px] border-b-2 border-l-2 border-[var(--ink-muted)] opacity-80 [transform:skewX(-12deg)]" />
+                Focus: Tech workspace
+              </div>
+            ) : null}
 
             {isAuthReady ? (
               <button
                 type="button"
                 onClick={() => void handleSignOut()}
                 disabled={isSigningOut}
+                title="Sign out"
                 className={`mt-4 w-full rounded-xl border px-4 py-2.5 text-sm font-semibold transition ${
                   isLight
                     ? "border-[var(--border)] bg-white/40 text-[var(--ink)] hover:bg-white/70"
                     : "border-white/10 bg-transparent text-white hover:bg-white/[0.05]"
                 } disabled:cursor-not-allowed disabled:opacity-60`}
               >
-                {isSigningOut ? "Signing out..." : "Sign out"}
+                {isSigningOut ? "..." : isSidebarCollapsed ? "↩" : "Sign out"}
               </button>
             ) : null}
           </div>
@@ -236,9 +255,11 @@ export default function AppShell({ children }: AppShellProps) {
           <div className="flex-1 px-1 pb-1 pt-2">
             {navGroups.map((group) => (
               <div key={group.label} className="mt-4 first:mt-0">
-                <p className="px-3 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--ink-faint)]">
-                  {group.label}
-                </p>
+                {!isSidebarCollapsed ? (
+                  <p className="px-3 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--ink-faint)]">
+                    {group.label}
+                  </p>
+                ) : null}
                 <nav className="mt-2 space-y-1.5">
                   {group.items.map((item) => {
                     const isActive = pathname === item.href;
@@ -256,8 +277,15 @@ export default function AppShell({ children }: AppShellProps) {
                               : "text-[var(--ink-muted)] hover:bg-white/[0.05] hover:text-white"
                         }`}
                         href={item.href}
+                        title={item.label}
                       >
-                        {item.label}
+                        {isSidebarCollapsed ? (
+                          <span className="mx-auto text-[11px] font-semibold tracking-[0.06em]">
+                            {navItemIcon(item.label)}
+                          </span>
+                        ) : (
+                          item.label
+                        )}
                       </Link>
                     );
                   })}
@@ -265,44 +293,50 @@ export default function AppShell({ children }: AppShellProps) {
               </div>
             ))}
 
-            <div className="mt-4">
-              <p className="px-3 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--ink-faint)]">
-                Coming soon
-              </p>
-              <div className="mt-2 space-y-1.5">
-                {[
-                  "Session history",
-                  "Team management",
-                  "Subscription",
-                  "Speaking Coach",
-                ].map(
-                  (label) => (
-                    <div
-                      key={label}
-                      className="flex items-center justify-between rounded-[14px] px-[14px] py-3 text-[15px] text-[#7c89a4]"
-                    >
-                      <span>{label}</span>
-                      <span className="rounded-full border border-white/5 bg-white/[0.04] px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-[#7c89a4]">
-                        Soon
-                      </span>
-                    </div>
-                  )
-                )}
+            {!isSidebarCollapsed ? (
+              <div className="mt-4">
+                <p className="px-3 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--ink-faint)]">
+                  Coming soon
+                </p>
+                <div className="mt-2 space-y-1.5">
+                  {[
+                    "Session history",
+                    "Team management",
+                    "Subscription",
+                    "Speaking Coach",
+                  ].map(
+                    (label) => (
+                      <div
+                        key={label}
+                        className="flex items-center justify-between rounded-[14px] px-[14px] py-3 text-[15px] text-[#7c89a4]"
+                      >
+                        <span>{label}</span>
+                        <span className="rounded-full border border-white/5 bg-white/[0.04] px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-[#7c89a4]">
+                          Soon
+                        </span>
+                      </div>
+                    )
+                  )}
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
 
           <div className="mt-auto rounded-[18px] border border-white/5 bg-white/[0.05] p-4">
             <div className="inline-flex items-center gap-[10px] rounded-full bg-[#1ccaf1] px-4 py-2.5 text-sm font-extrabold text-[#06121b]">
               <span className="inline-block h-4 w-4 border-b-[3px] border-l-[3px] border-current [transform:skew(-20deg)_rotate(-45deg)]" />
-              {mode === "dark" ? "Dark workspace" : "Light workspace"}
+              {isSidebarCollapsed ? "Theme" : mode === "dark" ? "Dark workspace" : "Light workspace"}
             </div>
-            <div className="mt-3 text-sm text-[var(--ink-muted)]">
-              Generator and simulations stay pinned here for fast access.
-            </div>
-            <div className="mt-[10px] h-2 overflow-hidden rounded-full bg-white/[0.05]">
-              <span className="block h-full w-[42%] rounded-full bg-[var(--accent)]" />
-            </div>
+            {!isSidebarCollapsed ? (
+              <>
+                <div className="mt-3 text-sm text-[var(--ink-muted)]">
+                  Generator and simulations stay pinned here for fast access.
+                </div>
+                <div className="mt-[10px] h-2 overflow-hidden rounded-full bg-white/[0.05]">
+                  <span className="block h-full w-[42%] rounded-full bg-[var(--accent)]" />
+                </div>
+              </>
+            ) : null}
           </div>
         </aside>
 
@@ -331,6 +365,18 @@ export default function AppShell({ children }: AppShellProps) {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                 </svg>
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsSidebarCollapsed((prev) => !prev)}
+                aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+                className={`hidden h-11 w-11 shrink-0 items-center justify-center rounded-xl transition lg:inline-flex ${
+                  isLight
+                    ? "border border-[var(--border)] bg-transparent text-[var(--ink)] hover:bg-[var(--surface-hover)]"
+                    : "border border-white/10 bg-transparent text-white hover:bg-white/[0.05]"
+                }`}
+              >
+                <span className="text-lg leading-none">{isSidebarCollapsed ? "›" : "‹"}</span>
               </button>
               <div className="grid h-[34px] w-[34px] place-items-center rounded-[10px] bg-[linear-gradient(135deg,#2e55ff_0%,#5f7cff_100%)] text-base font-extrabold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]">
                 A

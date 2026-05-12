@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Card from "../shared/Card";
 import type { LessonRecord } from "../../types/lesson";
@@ -12,34 +11,14 @@ function formatDate(value: string | null | undefined) {
 }
 
 export default function LessonLibraryList({
-  initialLessons,
+  lessons,
+  deletingId,
+  onDelete,
 }: {
-  initialLessons: LessonRecord[];
+  lessons: LessonRecord[];
+  deletingId: string | null;
+  onDelete: (id: string) => void;
 }) {
-  const [lessons, setLessons] = useState(initialLessons);
-  const [deletingId, setDeletingId] = useState<string | null>(null);
-
-  useEffect(() => {
-    setLessons(initialLessons);
-  }, [initialLessons]);
-
-  const handleDelete = async (id: string) => {
-    if (!window.confirm("Delete this lesson? This cannot be undone.")) return;
-    setDeletingId(id);
-    try {
-      const response = await fetch("/api/lesson/delete", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
-      });
-      if (response.ok) {
-        setLessons((prev) => prev.filter((l) => l.id !== id));
-      }
-    } finally {
-      setDeletingId(null);
-    }
-  };
-
   if (lessons.length === 0) {
     return (
       <p className="mt-4 text-sm text-[var(--ink-muted)]">
@@ -78,7 +57,7 @@ export default function LessonLibraryList({
           </Link>
           <div className="mt-2 sm:hidden">
             <button
-              onClick={() => void handleDelete(lesson.id)}
+              onClick={() => onDelete(lesson.id)}
               disabled={deletingId === lesson.id}
               className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-3 py-2 text-xs text-[var(--ink-muted)] transition hover:border-red-500/40 hover:text-red-400 disabled:opacity-40"
             >
@@ -86,7 +65,7 @@ export default function LessonLibraryList({
             </button>
           </div>
           <button
-            onClick={() => void handleDelete(lesson.id)}
+            onClick={() => onDelete(lesson.id)}
             disabled={deletingId === lesson.id}
             className="absolute right-5 top-5 hidden rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-3 py-1.5 text-xs text-[var(--ink-muted)] transition hover:border-red-500/40 hover:text-red-400 disabled:opacity-40 sm:block"
           >
