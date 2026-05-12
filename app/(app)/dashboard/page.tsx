@@ -1,35 +1,48 @@
 export const dynamic = "force-dynamic";
 
 import Link from "next/link";
+import { cookies } from "next/headers";
 import Card from "../../../components/shared/Card";
-import Button from "../../../components/shared/Button";
 import PersonalizedGreeting from "../../../components/shared/PersonalizedGreeting";
 import { listLessons } from "../../../lib/data/lessons";
-import { listCourses } from "../../../lib/data/courses";
+import { listPremiumCourses } from "../../../lib/premiumClasses";
+import { getRequestAuthUser } from "../../../lib/supabase/auth";
 
 async function loadDashboardData() {
   try {
-    const [lessons, courses] = await Promise.all([listLessons(), listCourses()]);
+    const cookieStore = cookies();
+    const cookieHeader = cookieStore
+      .getAll()
+      .map((cookie) => `${cookie.name}=${cookie.value}`)
+      .join("; ");
+    const authRequest = new Request("http://localhost/dashboard", {
+      headers: cookieHeader ? { cookie: cookieHeader } : {},
+    });
+    const authUser = await getRequestAuthUser(authRequest);
+    const [lessons, premiumCourses] = await Promise.all([
+      listLessons(authUser?.id),
+      listPremiumCourses(),
+    ]);
     return {
       lessons: Array.isArray(lessons) ? lessons : [],
-      courses: Array.isArray(courses) ? courses : [],
+      premiumCourses: Array.isArray(premiumCourses) ? premiumCourses : [],
     };
   } catch (error) {
     console.error("Dashboard data load failed:", error);
     return {
       lessons: [],
-      courses: [],
+      premiumCourses: [],
     };
   }
 }
 
 export default async function DashboardPage() {
-  const { lessons, courses } = await loadDashboardData();
+  const { lessons, premiumCourses } = await loadDashboardData();
   const recentLessons = lessons.slice(0, 3);
-  const totalItems = lessons.length + courses.length;
+  const totalItems = lessons.length + premiumCourses.length;
   const lessonFill = totalItems === 0 ? 18 : Math.max(18, Math.round((lessons.length / totalItems) * 100));
   const courseFill =
-    totalItems === 0 ? 16 : Math.max(16, Math.round((courses.length / totalItems) * 100));
+    totalItems === 0 ? 16 : Math.max(16, Math.round((premiumCourses.length / totalItems) * 100));
   const statCards = [
     {
       label: "Lessons",
@@ -37,31 +50,15 @@ export default async function DashboardPage() {
       tone: "bg-[rgba(79,108,245,0.2)] text-[#5b7cff]",
       chip: "Generator",
       value: lessons.length,
-      copy: "Structured lessons created",
+      copy: "Lessons created",
     },
     {
       label: "Premium courses",
       icon: "C",
       tone: "bg-[rgba(34,197,229,0.18)] text-[#28c3eb]",
       chip: "Premium",
-      value: courses.length,
+      value: premiumCourses.length,
       copy: "Premium courses available",
-    },
-    {
-      label: "Library",
-      icon: "R",
-      tone: "bg-[rgba(25,184,122,0.16)] text-[#1ec584]",
-      chip: "Recent",
-      value: recentLessons.length,
-      copy: "Recent lessons pinned",
-    },
-    {
-      label: "Workspace",
-      icon: "W",
-      tone: "bg-[rgba(215,155,49,0.18)] text-[#e3a93b]",
-      chip: "Content",
-      value: totalItems,
-      copy: "Active items in progress",
     },
   ];
 
@@ -88,7 +85,7 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      <section className="mb-5 grid gap-3 sm:mb-[26px] sm:gap-[18px] md:grid-cols-2 2xl:grid-cols-4">
+      <section className="mb-5 grid gap-3 sm:mb-[26px] sm:gap-[18px] md:grid-cols-2">
         {statCards.map((card) => (
           <Card
             key={card.label}
@@ -114,7 +111,7 @@ export default async function DashboardPage() {
         ))}
       </section>
 
-      <section className="mb-6 grid items-start gap-4 sm:gap-6 xl:grid-cols-[minmax(0,2.2fr)_minmax(320px,1fr)]">
+      <section className="mb-6">
         <Card className="rounded-[20px] border border-[var(--border)] bg-[var(--surface-card)] p-4 shadow-sm sm:rounded-[22px] sm:p-7">
           <h2 className="m-0 text-[20px] font-bold tracking-[-0.02em] text-[var(--ink)] sm:text-[22px]">
             Workspace Content History
@@ -212,65 +209,6 @@ export default async function DashboardPage() {
             </div>
           </div>
         </Card>
-
-        <div className="flex flex-col gap-4 sm:gap-[22px]">
-          <Card className="rounded-[20px] border border-[var(--border)] bg-[var(--surface-card)] p-4 shadow-sm sm:rounded-[22px] sm:p-7">
-            <div className="mb-[18px] flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-              <h2 className="m-0 text-[20px] font-bold tracking-[-0.02em] text-[var(--ink)] sm:text-[22px]">
-                Your Profile
-              </h2>
-              <button className="w-full rounded-full border border-[var(--border)] bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-[var(--ink-muted)] sm:w-auto">
-                Preferences
-              </button>
-            </div>
-
-            <div className="mb-7 flex items-center gap-[14px]">
-              <div className="h-[58px] w-[58px] shrink-0 rounded-full border-[3px] border-white/[0.08] bg-[linear-gradient(135deg,#2d66ff,#86a0ff)]" />
-              <div>
-                <p className="text-sm font-semibold text-[var(--ink)]">Learner</p>
-                <p className="mt-1 text-sm text-[var(--ink-muted)]">Learning profile</p>
-                <div className="mt-2 h-2 w-7 rounded-full bg-[var(--accent)]" />
-              </div>
-            </div>
-
-            <div className="mb-[10px] text-[15px] font-bold text-[var(--ink)]">
-              Industry
-            </div>
-            <div className="mb-[18px] rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-[14px] text-[15px] text-[var(--ink-muted)]">
-              Tech
-            </div>
-
-            <div className="mb-[10px] text-[15px] font-bold text-[var(--ink)]">
-              CEFR Level
-            </div>
-            <div className="mb-[18px] rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-[14px] text-[15px] text-[var(--ink-muted)]">
-              B2
-            </div>
-
-            <Button className="w-full rounded-xl border-0 bg-[var(--accent)] px-4 py-4 text-base font-bold text-white hover:bg-[#5a78ff]">
-              Edit preferences
-            </Button>
-          </Card>
-
-          <Card className="rounded-[20px] border border-[var(--border)] bg-[var(--surface-card)] p-4 shadow-sm sm:rounded-[22px] sm:p-7">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--ink-faint)]">
-                  Workspace notes
-                </p>
-                <p className="mt-2 text-[20px] font-semibold tracking-[-0.03em] text-[var(--ink)]">
-                  Team management is still pending
-                </p>
-                <p className="mt-2 text-sm text-[var(--ink-muted)]">
-                  This panel preserves the reference structure while staying mapped to the current MVP scope.
-                </p>
-              </div>
-              <span className="inline-flex w-fit rounded-full border border-[var(--border)] bg-[var(--surface-raised)] px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--ink-muted)]">
-                Soon
-              </span>
-            </div>
-          </Card>
-        </div>
       </section>
 
       <section className="mt-2">
