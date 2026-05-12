@@ -12,6 +12,7 @@ export type CreateYouTubeLessonJobInput = LessonGenerationInput & {
   source_url: string;
   video_id: string;
   email?: string | null;
+  user_id?: string | null;
 };
 
 export async function createYouTubeLessonJob(
@@ -24,6 +25,7 @@ export async function createYouTubeLessonJob(
       method: "POST",
       headers: { Prefer: "return=representation" },
       body: JSON.stringify({
+        user_id: input.user_id ?? null,
         source_url: input.source_url,
         video_id: input.video_id,
         email: input.email || null,

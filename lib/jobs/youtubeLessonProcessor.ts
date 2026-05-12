@@ -183,7 +183,7 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
     const lesson = await createLesson({
       input,
       output: parsed.data,
-      user_id: null,
+      user_id: claimed.user_id ?? null,
       transcript_text: transcriptText,
       transcript_segments: transcriptSegments,
     });

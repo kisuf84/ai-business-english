@@ -116,6 +116,7 @@ export type YouTubeLessonJobStatus =
 
 export type YouTubeLessonJob = {
   id: string;
+  user_id: string | null;
   source_url: string;
   video_id: string;
   email: string | null;

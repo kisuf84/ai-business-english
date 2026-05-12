@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { LessonGenerationInput } from "../../../types/lesson";
 import { createYouTubeLessonJob } from "../../../lib/data/youtubeJobs";
 import { parseYouTubeVideoIdDetailed } from "../../../lib/youtube/url";
+import { getRequestAuthUser } from "../../../lib/supabase/auth";
 
 function isValidEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -23,6 +24,8 @@ function normalizeSourceUrl(payload: YouTubeJobCreatePayload): string {
 }
 
 export async function POST(request: Request) {
+  const authUser = await getRequestAuthUser(request);
+
   let payload: YouTubeJobCreatePayload;
 
   try {
@@ -54,6 +57,7 @@ export async function POST(request: Request) {
 
   try {
     const job = await createYouTubeLessonJob({
+      user_id: authUser?.id ?? null,
       topic: payload.topic?.trim() || "YouTube lesson",
       source_url: sourceUrl,
       video_id: parsed.videoId,

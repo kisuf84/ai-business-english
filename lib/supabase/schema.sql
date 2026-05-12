@@ -46,6 +46,9 @@ create table if not exists public.youtube_lesson_jobs (
   updated_at timestamp with time zone default now()
 );
 
+alter table public.youtube_lesson_jobs
+  add column if not exists user_id uuid null;
+
 create index if not exists youtube_lesson_jobs_status_created_at_idx
   on public.youtube_lesson_jobs(status, created_at);
 
