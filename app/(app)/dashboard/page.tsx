@@ -74,15 +74,6 @@ export default async function DashboardPage() {
             Here's your performance overview and learning progress across lessons and premium courses.
           </p>
         </div>
-        <div className="flex w-full items-center gap-3 self-start rounded-[16px] border border-[var(--border)] bg-white/[0.03] px-3 py-3 sm:w-auto sm:min-w-[210px] sm:rounded-[18px] sm:px-[18px] sm:py-[14px] xl:self-center">
-          <div className="relative h-5 w-5 rounded-[50%_50%_55%_45%] border-2 border-[#d79b31] rotate-[10deg] before:absolute before:inset-1 before:rounded-[50%_50%_55%_45%] before:border-2 before:border-[#d79b31] before:content-['']" />
-          <div className="min-w-0">
-            <strong className="block text-sm font-semibold text-[var(--ink)] sm:text-base">
-              5 day streak
-            </strong>
-            <span className="text-xs text-[var(--ink-muted)] sm:text-sm">Keep it up!</span>
-          </div>
-        </div>
       </div>
 
       <section className="mb-5 grid gap-3 sm:mb-[26px] sm:gap-[18px] md:grid-cols-2">
@@ -120,7 +111,7 @@ export default async function DashboardPage() {
             Your lesson and premium content progress over time.
           </div>
 
-          <div className="grid gap-4 lg:min-h-[380px] lg:grid-cols-[1fr_auto]">
+          <div className="grid gap-4 lg:min-h-[380px]">
             <div className="flex flex-col gap-[18px]">
               <div className="flex flex-wrap items-center gap-4">
                 <div className="flex h-10 w-16 items-center justify-center rounded-full bg-[var(--accent)] text-sm font-bold text-white">
@@ -201,12 +192,6 @@ export default async function DashboardPage() {
               </div>
             </div>
 
-            <div className="rounded-[16px] border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-4 text-left text-sm text-[var(--ink-muted)] lg:rounded-none lg:border-0 lg:bg-transparent lg:px-0 lg:py-0 lg:text-right lg:text-[15px]">
-              <div>Overall items</div>
-              <div className="mt-2 text-[24px] text-[var(--ink-muted)] sm:text-[28px] lg:mt-[106px]">
-                {totalItems}
-              </div>
-            </div>
           </div>
         </Card>
       </section>
