@@ -497,7 +497,7 @@ export default function GeneratorPage() {
         }
         setLessonStage("extracting_transcript");
 
-        const jobResponse = await fetch("/api/youtube-jobs", {
+        const jobResponse = await authenticatedFetch("/api/youtube-jobs", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
