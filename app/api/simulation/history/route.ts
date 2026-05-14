@@ -82,6 +82,7 @@ export async function GET(request: Request) {
       };
     });
 
+    console.info("[simulation-history] returned count", payload.length);
     return NextResponse.json(payload);
   } catch (error) {
     console.error("Simulation history route failed:", error);

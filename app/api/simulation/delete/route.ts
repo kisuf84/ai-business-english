@@ -13,6 +13,7 @@ export async function POST(request: Request) {
   if (!authUser) {
     return NextResponse.json({ error: "Authentication required." }, { status: 401 });
   }
+  console.info("[simulation-delete] auth user id", authUser.id);
 
   let payload: { simulation_id?: string };
 
@@ -26,15 +27,23 @@ export async function POST(request: Request) {
   if (!simulationId) {
     return NextResponse.json({ error: REQUIRED_FIELDS_ERROR }, { status: 400 });
   }
+  console.info("[simulation-delete] simulation id", simulationId);
 
   try {
     const simulation = await getSimulationSessionById(simulationId);
-    if (!simulation || simulation.user_id !== authUser.id) {
+    const ownsSimulation = Boolean(simulation && simulation.user_id === authUser.id);
+    console.info("[simulation-delete] ownership check result", {
+      found: Boolean(simulation),
+      ownsSimulation,
+    });
+    if (!ownsSimulation) {
       return NextResponse.json({ error: "Simulation not found." }, { status: 404 });
     }
-    await deleteSimulationSession(simulationId);
-    return NextResponse.json({ status: "ok" });
+    const result = await deleteSimulationSession(simulationId);
+    console.info("[simulation-delete] delete success", result);
+    return NextResponse.json({ status: "ok", ...result });
   } catch (error) {
+    console.error("[simulation-delete] delete failure", error);
     return NextResponse.json(
       {
         error: "Failed to delete simulation.",

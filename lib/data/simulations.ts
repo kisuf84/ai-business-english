@@ -150,6 +150,11 @@ export type SimulationSessionHistory = {
   attempts: SimulationAttemptRecord[];
 };
 
+export type SimulationDeleteResult = {
+  attemptsDeleted: number | null;
+  sessionsDeleted: number | null;
+};
+
 function toSafeTimestamp(value: string | null | undefined): number {
   if (!value) return 0;
   const parsed = new Date(value).getTime();
@@ -210,30 +215,49 @@ export async function listSimulationSessions(
   }));
 }
 
-export async function deleteSimulationSession(simulationId: string): Promise<void> {
+export async function deleteSimulationSession(
+  simulationId: string
+): Promise<SimulationDeleteResult> {
   const id = simulationId.trim();
   if (!id) {
     throw new Error("invalid_simulation_id");
   }
 
   if (isSupabaseEnabled()) {
-    await supabaseRest(`simulation_attempts?simulation_id=eq.${id}`, {
+    const deletedAttempts = await supabaseRest<SimulationAttemptRecord[]>(
+      `simulation_attempts?simulation_id=eq.${id}`,
+      {
+        method: "DELETE",
+        headers: { Prefer: "return=representation" },
+      }
+    );
+    const deletedSessions = await supabaseRest<SimulationRecord[]>(`simulations?id=eq.${id}`, {
       method: "DELETE",
+      headers: { Prefer: "return=representation" },
     });
-    await supabaseRest(`simulations?id=eq.${id}`, {
-      method: "DELETE",
-    });
-    return;
+    if (!Array.isArray(deletedSessions) || deletedSessions.length === 0) {
+      throw new Error("simulation_delete_failed_no_session_deleted");
+    }
+    return {
+      attemptsDeleted: Array.isArray(deletedAttempts) ? deletedAttempts.length : null,
+      sessionsDeleted: deletedSessions.length,
+    };
   }
 
-  const simulations = readAll<StoredSimulation>(DATA_PATH).filter(
-    (simulation) => simulation.id !== id
-  );
-  const attempts = readAll<StoredAttempt>(ATTEMPTS_PATH).filter(
-    (attempt) => attempt.simulation_id !== id
-  );
+  const currentSimulations = readAll<StoredSimulation>(DATA_PATH);
+  const currentAttempts = readAll<StoredAttempt>(ATTEMPTS_PATH);
+  const simulations = currentSimulations.filter((simulation) => simulation.id !== id);
+  const attempts = currentAttempts.filter((attempt) => attempt.simulation_id !== id);
+  const result = {
+    attemptsDeleted: currentAttempts.length - attempts.length,
+    sessionsDeleted: currentSimulations.length - simulations.length,
+  };
+  if (result.sessionsDeleted === 0) {
+    throw new Error("simulation_delete_failed_no_session_deleted");
+  }
   writeAll(DATA_PATH, simulations);
   writeAll(ATTEMPTS_PATH, attempts);
+  return result;
 }
 
 export async function getSimulationSessionById(

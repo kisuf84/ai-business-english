@@ -542,6 +542,12 @@ export default function SimulationPage() {
           | null;
         throw new Error(payload?.error || "Failed to delete simulation.");
       }
+      const payload = (await response.json().catch(() => null)) as
+        | { status?: string }
+        | null;
+      if (payload?.status !== "ok") {
+        throw new Error("Failed to delete simulation.");
+      }
       setHistorySessions((prev) =>
         prev.filter((session) => session.simulation_id !== simulationId)
       );
