@@ -1,6 +1,7 @@
 import LessonContent from "../../../../../components/lesson/LessonContent";
 import { getLessonById } from "../../../../../lib/data/lessons";
 import { normalizeLessonOutput } from "../../../../../lib/validators/lesson";
+import Card from "../../../../../components/shared/Card";
 
 function formatTimestamp(seconds: number): string {
   const clamped = Number.isFinite(seconds) ? Math.max(0, Math.floor(seconds)) : 0;
@@ -69,11 +70,13 @@ export default async function SharedLessonPage({
   if (!lessonRecord || lessonRecord.visibility !== "public") {
     return (
       <section className="mobile-page-shell py-10">
-        <div className="mx-auto max-w-[960px]">
-          <h1 className="font-serif text-3xl text-[var(--ink)]">Lesson Unavailable</h1>
+        <div className="lumen-page">
+          <Card className="p-6">
+          <h1 className="lumen-heading text-3xl text-[var(--ink)]">Lesson Unavailable</h1>
           <p className="mt-3 text-sm text-[var(--ink-muted)]">
             This lesson is not available to view.
           </p>
+          </Card>
         </div>
       </section>
     );
@@ -121,115 +124,55 @@ export default async function SharedLessonPage({
 
   return (
     <section className="mobile-page-shell py-10">
-      <div className="mx-auto max-w-[960px]">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+      <div className="lumen-page">
+      <p className="lumen-chip">
         Shared Lesson
       </p>
-      <h1 className="mobile-safe-wrap mt-2 text-balance font-serif text-3xl font-normal text-[var(--ink)]">
+      <h1 className="mobile-safe-wrap lumen-page-title mt-4">
         {lessonRecord.title}
       </h1>
       <p className="mobile-safe-wrap mt-3 text-sm text-[var(--ink-muted)]">
         Level {lessonRecord.level} · {lessonRecord.topic}
       </p>
-      {error ? <p style={{ color: "crimson" }}>{error}</p> : null}
+      {error ? <p className="mt-4 text-sm text-[var(--accent-warm)]">{error}</p> : null}
       {lessonVideoId ? (
-        <div style={{ margin: "20px 0 16px" }}>
-          <p
-            style={{
-              fontSize: "11px",
-              fontWeight: 600,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              marginBottom: "8px",
-            }}
-          >
+        <Card className="mt-6 p-4 sm:p-5">
+          <p className="lumen-label mb-3">
             Source Video
           </p>
-          <div
-            style={{
-              position: "relative",
-              width: "100%",
-              aspectRatio: "16 / 9",
-              overflow: "hidden",
-              borderRadius: "12px",
-              border: "1px solid var(--border)",
-              background: "var(--surface-raised)",
-            }}
-          >
+          <div className="relative aspect-video w-full overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface-raised)]">
             <iframe
               src={`https://www.youtube.com/embed/${lessonVideoId}?rel=0`}
               title="Lesson video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              style={{ width: "100%", height: "100%", border: "0" }}
+              className="h-full w-full border-0"
             />
           </div>
           {lessonTranscriptText || groupedSegments.length > 0 ? (
-            <div style={{ marginTop: "12px" }}>
-              <details
-                style={{
-                  border: "1px solid var(--border)",
-                  borderRadius: "12px",
-                  background: "var(--surface)",
-                }}
-              >
-                <summary
-                  style={{
-                    cursor: "pointer",
-                    listStyle: "none",
-                    padding: "12px 14px",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    userSelect: "none",
-                  }}
-                >
+            <div className="mt-3">
+              <details className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)]">
+                <summary className="cursor-pointer list-none select-none px-4 py-3 text-sm font-semibold text-[var(--ink)]">
                   Transcript
                 </summary>
-                <div
-                  style={{
-                    borderTop: "1px solid var(--border)",
-                    padding: "12px 14px",
-                    maxHeight: "320px",
-                    overflowY: "auto",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                  }}
-                >
+                <div className="flex max-h-[320px] flex-col gap-3 overflow-y-auto border-t border-[var(--border)] px-4 py-3">
                   {groupedSegments.length > 0
                     ? groupedSegments.map((segment, index) => (
                         <div key={`${index}-${segment.start}`}>
-                          <span
-                            style={{
-                              display: "inline-block",
-                              minWidth: "52px",
-                              marginRight: "8px",
-                              fontSize: "11px",
-                              fontWeight: 600,
-                              letterSpacing: "0.04em",
-                              color: "var(--accent)",
-                            }}
-                          >
+                          <span className="mr-2 inline-block min-w-[52px] font-mono text-[11px] font-semibold tracking-[0.04em] text-[var(--accent)]">
                             {formatTimestamp(segment.start)}
                           </span>
-                          <span
-                            style={{
-                              whiteSpace: "pre-wrap",
-                              fontSize: "13px",
-                              lineHeight: 1.6,
-                              color: "var(--ink-muted)",
-                            }}
-                          >
+                          <span className="whitespace-pre-wrap text-[13px] leading-6 text-[var(--ink-muted)]">
                             {segment.text}
                           </span>
                         </div>
                       ))
-                    : lessonTranscriptText}
+                    : <p className="whitespace-pre-wrap text-[13px] leading-6 text-[var(--ink-muted)]">{lessonTranscriptText}</p>}
                 </div>
               </details>
             </div>
           ) : null}
-        </div>
+        </Card>
       ) : null}
       {(() => {
         const strictCheck = normalizeLessonOutput(lessonRecord.content_json, {
@@ -246,12 +189,12 @@ export default async function SharedLessonPage({
           );
         }
         if (!normalized.ok) {
-          return <p>This lesson content is unavailable.</p>;
+          return <Card className="mt-6"><p className="text-sm text-[var(--ink-muted)]">This lesson content is unavailable.</p></Card>;
         }
         return (
           <>
             {process.env.NODE_ENV !== "production" && !strictCheck.ok ? (
-              <p style={{ color: "crimson" }}>
+              <p className="mt-4 text-sm text-[var(--accent-warm)]">
                 Dev note: required lesson schema checks failed for this shared lesson.
               </p>
             ) : null}

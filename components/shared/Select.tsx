@@ -9,7 +9,7 @@ export default function Select({
   ...props
 }: SelectProps) {
   const baseClassName =
-    "w-full rounded-lg border border-[var(--border)] bg-[var(--surface-card)] px-3 py-2 text-sm text-[var(--ink)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--border-strong)]";
+    "lumen-focus w-full rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3 text-sm font-medium text-[var(--ink)] shadow-sm backdrop-blur focus:border-[var(--accent)]";
 
   return (
     <select

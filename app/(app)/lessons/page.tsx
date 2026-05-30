@@ -90,24 +90,32 @@ export default function LessonsPage() {
   };
 
   return (
-    <section className="py-10">
-      <div className="mx-auto max-w-[960px]">
-        <div className="mb-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
-            Lesson Library
-          </p>
-          <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">
-            Your lessons
-          </h1>
-          <p className="mt-3 text-sm text-[var(--ink-muted)]">
-            Search, filter, and access saved lessons.
-          </p>
+    <section className="mobile-page-shell">
+      <div className="lumen-page">
+        <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+          <div>
+            <p className="lumen-chip">
+              Lesson Library
+            </p>
+            <h1 className="lumen-heading mt-4 text-balance text-4xl sm:text-5xl">
+              Your lessons
+            </h1>
+            <p className="mt-3 text-sm text-[var(--ink-muted)]">
+              Search, filter, and access saved lessons.
+            </p>
+          </div>
+          <Link
+            href="/lesson/new"
+            className="lumen-focus inline-flex w-full items-center justify-center rounded-full bg-[image:var(--aurora-line)] px-5 py-3 text-sm font-extrabold text-[var(--accent-ink)] shadow-glow transition hover:-translate-y-0.5 sm:w-auto"
+          >
+            New lesson
+          </Link>
         </div>
 
-        <Card>
+        <Card className="p-4 sm:p-6">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="grid gap-2">
-              <label htmlFor="q" className="text-sm font-medium">
+              <label htmlFor="q" className="lumen-label">
                 Search
               </label>
               <Input
@@ -119,7 +127,7 @@ export default function LessonsPage() {
               />
             </div>
             <div className="grid gap-2">
-              <label htmlFor="level" className="text-sm font-medium">
+              <label htmlFor="level" className="lumen-label">
                 Level
               </label>
               <Select
@@ -136,7 +144,7 @@ export default function LessonsPage() {
                 <option value="C1">C1</option>
               </Select>
             </div>
-            <label className="flex items-center gap-2 text-sm text-[var(--ink-muted)] md:col-span-2">
+            <label className="lumen-tile flex items-center gap-3 text-sm text-[var(--ink-muted)] md:col-span-2">
               <input
                 type="checkbox"
                 name="showArchived"
@@ -152,12 +160,12 @@ export default function LessonsPage() {
 
         {!error && !isLoading && lessons.length === 0 ? (
           <Card className="mt-6">
-            <h2 className="font-serif text-2xl text-[var(--ink)]">No lessons yet</h2>
+            <h2 className="lumen-heading text-3xl">No lessons yet</h2>
             <p className="mt-2 text-sm text-[var(--ink-muted)]">
               Create your first lesson to get started.
             </p>
             <Link href="/lesson/new" className="mt-4 inline-flex">
-              <Button className="rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-4 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55]">
+              <Button className="border-transparent bg-[image:var(--aurora-line)] text-[var(--accent-ink)]">
                 Create a lesson
               </Button>
             </Link>

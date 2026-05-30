@@ -45,16 +45,16 @@ const plans = [
 
 export default function PricingPage() {
   return (
-    <section className="py-10">
-      <div className="mx-auto max-w-[960px]">
-        <div className="mb-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--ink-faint)]">
+    <section className="mobile-page-shell">
+      <div className="lumen-page">
+        <div className="mb-7">
+          <p className="lumen-chip">
             Pricing
           </p>
-          <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">
+          <h1 className="lumen-page-title mt-4">
             Pricing
           </h1>
-          <p className="mt-4 text-sm text-[var(--ink-muted)]">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--ink-muted)]">
             Simple plans for individuals and teams.
           </p>
         </div>
@@ -63,28 +63,28 @@ export default function PricingPage() {
           {plans.map((plan) => (
             <Card
               key={plan.name}
-              className={`relative rounded-3xl p-7 ${
+              className={`relative p-7 ${
                 plan.highlight
-                  ? "border-[var(--accent-gold)] shadow-md"
+                  ? "border-[var(--border-strong)] shadow-glow"
                   : "border-[var(--border)]"
               }`}
             >
               {plan.highlight ? (
-                <span className="absolute right-6 top-6 rounded-full border border-[var(--accent-gold)] bg-[var(--accent-gold-soft)] px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] text-[var(--accent-gold)]">
+                <span className="lumen-chip absolute right-6 top-6">
                   Best value
                 </span>
               ) : null}
-              <h2 className="font-serif text-2xl text-[var(--ink)]">
+              <h2 className="lumen-heading text-2xl text-[var(--ink)]">
                 {plan.name}
               </h2>
               <p className="mt-2 text-sm text-[var(--ink-muted)]">
                 {plan.description}
               </p>
               <div className="mt-6">
-                <p className="text-3xl font-semibold text-[var(--ink)]">
+                <p className="lumen-heading text-4xl text-[var(--ink)]">
                   {plan.price}
                 </p>
-                <p className="text-xs uppercase tracking-[0.12em] text-[var(--ink-faint)]">
+                <p className="lumen-label mt-1">
                   {plan.cadence}
                 </p>
               </div>
@@ -94,10 +94,10 @@ export default function PricingPage() {
                 ))}
               </ul>
               <Button
-                className={`mt-6 w-full rounded-lg px-4 py-2 text-xs font-semibold ${
+                className={`mt-6 w-full px-4 py-3 text-xs ${
                   plan.highlight
-                    ? "border border-[var(--accent-gold)] bg-[var(--accent-gold)] text-[#0c0b0a] hover:bg-[#d4ad55]"
-                    : "border border-[var(--border-strong)] bg-[var(--surface-card)] text-[var(--ink)] hover:bg-[var(--surface-raised)]"
+                    ? "border-transparent bg-[image:var(--aurora-line)] text-[var(--accent-ink)] shadow-glow hover:opacity-95"
+                    : ""
                 }`}
               >
                 Choose {plan.name}

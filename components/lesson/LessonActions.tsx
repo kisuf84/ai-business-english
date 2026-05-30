@@ -65,7 +65,7 @@ export default function LessonActions({ lessonId, status }: LessonActionsProps) 
 
   return (
     <div>
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+      <div className="flex flex-wrap gap-2">
         <Button onClick={handleDuplicate} disabled={isWorking}>
           {isWorking ? "Working..." : "Duplicate"}
         </Button>
@@ -79,8 +79,8 @@ export default function LessonActions({ lessonId, status }: LessonActionsProps) 
           {isWorking ? "Working..." : "Delete"}
         </Button>
       </div>
-      {message ? <p style={{ color: "#047857" }}>{message}</p> : null}
-      {error ? <p style={{ color: "crimson" }}>{error}</p> : null}
+      {message ? <p className="mt-3 text-sm text-[var(--accent-strong)]">{message}</p> : null}
+      {error ? <p className="mt-3 text-sm text-[var(--accent-warm)]">{error}</p> : null}
     </div>
   );
 }

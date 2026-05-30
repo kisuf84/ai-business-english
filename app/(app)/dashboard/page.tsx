@@ -39,23 +39,19 @@ async function loadDashboardData() {
 export default async function DashboardPage() {
   const { lessons, premiumCourses } = await loadDashboardData();
   const recentLessons = lessons.slice(0, 3);
-  const totalItems = lessons.length + premiumCourses.length;
-  const lessonFill = totalItems === 0 ? 18 : Math.max(18, Math.round((lessons.length / totalItems) * 100));
-  const courseFill =
-    totalItems === 0 ? 16 : Math.max(16, Math.round((premiumCourses.length / totalItems) * 100));
   const statCards = [
     {
       label: "Lessons",
-      icon: "L",
-      tone: "bg-[rgba(79,108,245,0.2)] text-[#5b7cff]",
+      icon: "LE",
+      tone: "bg-[image:var(--grad-aurora)] text-[#0a0a14]",
       chip: "Generator",
       value: lessons.length,
       copy: "Lessons created",
     },
     {
       label: "Premium courses",
-      icon: "C",
-      tone: "bg-[rgba(34,197,229,0.18)] text-[#28c3eb]",
+      icon: "PC",
+      tone: "bg-[image:var(--grad-aurora)] text-[#0a0a14]",
       chip: "Premium",
       value: premiumCourses.length,
       copy: "Premium courses available",
@@ -65,140 +61,103 @@ export default async function DashboardPage() {
   return (
     <section
       className="mobile-page-shell font-ui mx-auto max-w-[1400px]"
-      style={{ fontFamily: '"Inter", system-ui, sans-serif' }}
     >
-      <div className="mb-5 flex flex-col justify-between gap-4 sm:mb-[22px] xl:mb-[26px] xl:flex-row xl:items-start">
+      <div className="hero mb-6">
         <div>
+          <p className="kicker mb-4">Dashboard</p>
           <PersonalizedGreeting />
-          <p className="mt-2 max-w-[760px] text-sm leading-[1.65] text-[var(--ink-muted)] sm:mt-[10px] sm:text-base">
-            Here's your performance overview and learning progress across lessons and premium courses.
+          <p className="hero-sub mt-2">
+            Manage generated lessons, simulations, premium course access, and teaching resources.
           </p>
+          <div className="hero-actions">
+            <Link href="/lesson/new" className="btn btn-aurora lumen-focus">
+              Create lesson
+            </Link>
+            <Link href="/simulation" className="btn btn-ghost lumen-focus">
+              Start simulation
+            </Link>
+          </div>
+        </div>
+        <div className="hero-side grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          {statCards.map((card) => (
+            <div key={card.label} className="stat-tile">
+              <div className={`icon font-mono text-[10px] font-bold ${card.tone}`}>
+                {card.icon}
+              </div>
+              <div className="v">{card.value}</div>
+              <div className="l">{card.copy}</div>
+              <span className="delta">{card.chip}</span>
+            </div>
+          ))}
         </div>
       </div>
 
-      <section className="mb-5 grid gap-3 sm:mb-[26px] sm:gap-[18px] md:grid-cols-2">
-        {statCards.map((card) => (
-          <Card
-            key={card.label}
-            className="min-h-[132px] rounded-[16px] border border-[var(--border)] bg-[var(--surface-card)] p-4 shadow-sm sm:min-h-[160px] sm:rounded-[18px] sm:p-[22px]"
-          >
-            <div className="mb-4 flex items-start justify-between gap-3 sm:mb-6 sm:gap-4">
-              <div
-                className={`grid h-11 w-11 place-items-center rounded-[12px] text-base font-bold shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:h-[50px] sm:w-[50px] sm:rounded-[14px] sm:text-lg ${card.tone}`}
-              >
-                {card.icon}
-              </div>
-              <div className="mobile-safe-wrap rounded-full bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-[var(--ink-muted)] sm:px-[14px] sm:py-2 sm:text-sm">
-                {card.chip}
-              </div>
-            </div>
-            <div className="text-[34px] font-extrabold leading-none tracking-[-0.04em] text-[var(--ink)] sm:text-[52px]">
-              {card.value}
-            </div>
-            <div className="mt-2 text-sm leading-[1.5] text-[var(--ink-muted)] sm:mt-[10px] sm:text-base">
-              {card.copy}
-            </div>
-          </Card>
-        ))}
-      </section>
-
-      <section className="mb-6">
-        <Card className="rounded-[20px] border border-[var(--border)] bg-[var(--surface-card)] p-4 shadow-sm sm:rounded-[22px] sm:p-7">
-          <h2 className="m-0 text-[20px] font-bold tracking-[-0.02em] text-[var(--ink)] sm:text-[22px]">
-            Workspace Content History
+      <section className="mb-6 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+        <Card className="p-5 sm:p-7">
+          <h2 className="lumen-heading m-0 text-[26px]">
+            Recent lesson activity
           </h2>
-          <div className="mb-4 mt-2 text-sm text-[var(--ink-muted)] sm:mb-[22px] sm:text-[15px]">
-            Your lesson and premium content progress over time.
-          </div>
-
-          <div className="grid gap-4 lg:min-h-[380px]">
-            <div className="flex flex-col gap-[18px]">
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="flex h-10 w-16 items-center justify-center rounded-full bg-[var(--accent)] text-sm font-bold text-white">
-                  B2
-                </div>
-                <div className="flex flex-wrap items-center gap-3 text-base text-[var(--ink-muted)]">
-                  <span>Current CEFR level</span>
-                  <div className="flex gap-1.5">
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <span
-                        key={index}
-                        className={`block h-[10px] w-7 rounded-full ${
-                          index < 4 ? "bg-[var(--accent)]" : "bg-white/[0.08]"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-1 grid gap-4 lg:grid-cols-[92px_1fr] lg:items-center">
-                <div className="text-sm leading-[1.5] text-[var(--ink-muted)]">
-                  Lessons
-                  <br />
-                  in library
-                </div>
-                <div className="h-3 overflow-hidden rounded-full bg-white/[0.08]">
-                  <span
-                    className="block h-full rounded-full bg-[var(--accent)]"
-                    style={{ width: `${lessonFill}%` }}
-                  />
-                </div>
-              </div>
-
-              <div className="grid gap-4 lg:grid-cols-[92px_1fr] lg:items-center">
-                <div className="text-sm leading-[1.5] text-[var(--ink-muted)]">
-                  Premium courses
-                  <br />
-                  in library
-                </div>
-                <div className="h-3 overflow-hidden rounded-full bg-white/[0.08]">
-                  <span
-                    className="block h-full rounded-full bg-[#22c5e5]"
-                    style={{ width: `${courseFill}%` }}
-                  />
-                </div>
-              </div>
-
-              <div className="mt-2 rounded-[16px] border border-[var(--border)] bg-[var(--surface-raised)] p-4 sm:rounded-[18px] sm:p-5">
-                <p className="text-sm font-semibold text-[var(--ink)]">Recent lesson activity</p>
-                <div className="mt-3 space-y-3">
-                  {recentLessons.length === 0 ? (
-                    <p className="text-sm text-[var(--ink-muted)]">
-                      No lessons generated yet. Create a lesson to start populating this dashboard.
+          <p className="mb-4 mt-2 text-sm text-[var(--ink-muted)] sm:mb-[22px] sm:text-[15px]">
+            Saved lessons from your real lesson library.
+          </p>
+          <div className="space-y-3">
+            {recentLessons.length === 0 ? (
+              <p className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] p-4 text-sm text-[var(--ink-muted)]">
+                No lessons generated yet. Create a lesson to start populating this dashboard.
+              </p>
+            ) : (
+              recentLessons.map((lesson, index) => (
+                <Link
+                  key={lesson.id}
+                  href={`/lessons/${lesson.id}`}
+                  className="lesson-card flex items-center justify-between gap-3 px-3 py-3 sm:px-4"
+                >
+                  <div className="min-w-0">
+                    <p className="mobile-safe-wrap text-sm font-semibold text-[var(--ink)]">
+                      {lesson.title}
                     </p>
-                  ) : (
-                    recentLessons.map((lesson, index) => (
-                      <Link
-                        key={lesson.id}
-                        href={`/lessons/${lesson.id}`}
-                        className="flex items-center justify-between gap-3 rounded-[14px] bg-white/[0.03] px-3 py-3 transition hover:bg-white/[0.06] sm:px-4"
-                      >
-                        <div className="min-w-0">
-                          <p className="mobile-safe-wrap text-sm font-semibold text-[var(--ink)]">
-                            {lesson.title}
-                          </p>
-                          <p className="mt-1 text-xs text-[var(--ink-muted)]">
-                            Recent lesson {index + 1}
-                          </p>
-                        </div>
-                        <span className="shrink-0 text-xs uppercase tracking-[0.12em] text-[var(--ink-faint)]">
-                          Open
-                        </span>
-                      </Link>
-                    ))
-                  )}
-                </div>
-              </div>
-            </div>
+                    <p className="mt-1 text-xs text-[var(--ink-muted)]">
+                      Recent lesson {index + 1}
+                    </p>
+                  </div>
+                  <span className="shrink-0 text-xs uppercase tracking-[0.12em] text-[var(--ink-faint)]">
+                    Open
+                  </span>
+                </Link>
+              ))
+            )}
+          </div>
+        </Card>
 
+        <Card className="p-5 sm:p-7">
+          <h2 className="lumen-heading m-0 text-[26px]">Workspace status</h2>
+          <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">
+            Langslate is ready for lesson generation, simulation practice, and resource access.
+          </p>
+          <div className="mt-5 grid gap-3">
+            <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] p-4">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+                CEFR level
+              </p>
+              <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
+                Set per lesson or simulation
+              </p>
+            </div>
+            <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] p-4">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+                Library
+              </p>
+              <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
+                {lessons.length} saved lesson{lessons.length === 1 ? "" : "s"}
+              </p>
+            </div>
           </div>
         </Card>
       </section>
 
       <section className="mt-2">
         <div className="mb-[18px] flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-end sm:gap-3">
-          <h3 className="m-0 text-[20px] font-bold tracking-[-0.02em] text-[var(--ink)] sm:text-[22px]">
+          <h3 className="lumen-heading m-0 text-[28px]">
             Quick Launch
           </h3>
           <div className="text-left text-sm text-[var(--ink-muted)] sm:text-right sm:text-[15px]">
@@ -206,59 +165,59 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="grid gap-3 sm:gap-[18px] md:grid-cols-2 2xl:grid-cols-4">
-          <Link href="/simulation" className="block">
-            <Card className="min-h-[160px] rounded-[16px] border border-[var(--border)] bg-[var(--surface-card)] p-4 shadow-sm sm:min-h-[180px] sm:rounded-[18px] sm:p-[22px]">
-              <div className="grid h-11 w-11 place-items-center rounded-[12px] bg-[rgba(79,108,245,0.2)] text-base font-bold text-[#5b7cff] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:h-[50px] sm:w-[50px] sm:rounded-[14px] sm:text-lg">
-                A
-              </div>
-              <div className="mt-4 text-[17px] font-bold text-[var(--ink)] sm:mt-[18px] sm:text-[18px]">
-                AI Simulation
-              </div>
-              <div className="mt-2 text-sm leading-[1.55] text-[var(--ink-muted)] sm:mt-[10px] sm:text-[15px]">
-                Run a guided communication simulation with structured feedback.
-              </div>
-            </Card>
-          </Link>
-
+        <div className="grid gap-3 sm:gap-[18px] md:grid-cols-2 xl:grid-cols-4">
           <Link href="/lesson/new" className="block">
-            <Card className="min-h-[160px] rounded-[16px] border border-[var(--border)] bg-[var(--surface-card)] p-4 shadow-sm sm:min-h-[180px] sm:rounded-[18px] sm:p-[22px]">
-              <div className="grid h-11 w-11 place-items-center rounded-[12px] bg-[rgba(34,197,229,0.18)] text-base font-bold text-[#28c3eb] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:h-[50px] sm:w-[50px] sm:rounded-[14px] sm:text-lg">
-                L
+            <Card className="lesson-card min-h-[170px] p-5 sm:min-h-[190px] sm:p-6">
+              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[image:var(--grad-aurora)] font-mono text-xs font-bold text-[#0a0a14] shadow-glow">
+                LE
               </div>
               <div className="mt-4 text-[17px] font-bold text-[var(--ink)] sm:mt-[18px] sm:text-[18px]">
-                Lesson Generator
+                Create lesson
               </div>
               <div className="mt-2 text-sm leading-[1.55] text-[var(--ink-muted)] sm:mt-[10px] sm:text-[15px]">
-                Build structured business English lessons from a single prompt flow.
+                Build structured business English lessons from a topic, URL, or transcript.
               </div>
             </Card>
           </Link>
 
-          <Link href="/my-courses" className="block">
-            <Card className="min-h-[160px] rounded-[16px] border border-[var(--border)] bg-[var(--surface-card)] p-4 shadow-sm sm:min-h-[180px] sm:rounded-[18px] sm:p-[22px]">
-              <div className="grid h-11 w-11 place-items-center rounded-[12px] bg-[rgba(25,184,122,0.16)] text-base font-bold text-[#1ec584] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:h-[50px] sm:w-[50px] sm:rounded-[14px] sm:text-lg">
-                C
+          <Link href="/simulation" className="block">
+            <Card className="lesson-card min-h-[170px] p-5 sm:min-h-[190px] sm:p-6">
+              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[image:var(--grad-aurora)] font-mono text-xs font-bold text-[#0a0a14] shadow-glow">
+                SI
               </div>
               <div className="mt-4 text-[17px] font-bold text-[var(--ink)] sm:mt-[18px] sm:text-[18px]">
-                Premium Courses
+                Start simulation
               </div>
               <div className="mt-2 text-sm leading-[1.55] text-[var(--ink-muted)] sm:mt-[10px] sm:text-[15px]">
-                Access curated premium course content from your workspace library.
+                Practice workplace communication with guided AI feedback.
               </div>
             </Card>
           </Link>
 
-          <Link href="/library" className="block">
-            <Card className="min-h-[160px] rounded-[16px] border border-[var(--border)] bg-[var(--surface-card)] p-4 shadow-sm sm:min-h-[180px] sm:rounded-[18px] sm:p-[22px]">
-              <div className="grid h-11 w-11 place-items-center rounded-[12px] bg-[rgba(215,155,49,0.18)] text-base font-bold text-[#e3a93b] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:h-[50px] sm:w-[50px] sm:rounded-[14px] sm:text-lg">
-                R
+          <Link href="/lessons" className="block">
+            <Card className="lesson-card min-h-[170px] p-5 sm:min-h-[190px] sm:p-6">
+              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[image:var(--grad-aurora)] font-mono text-xs font-bold text-[#0a0a14] shadow-glow">
+                LI
               </div>
               <div className="mt-4 text-[17px] font-bold text-[var(--ink)] sm:mt-[18px] sm:text-[18px]">
-                Lesson Library
+                View library
               </div>
               <div className="mt-2 text-sm leading-[1.55] text-[var(--ink-muted)] sm:mt-[10px] sm:text-[15px]">
                 Reopen saved material and keep generated lessons organized in one place.
+              </div>
+            </Card>
+          </Link>
+
+          <Link href="/for-teachers" className="block">
+            <Card className="lesson-card min-h-[170px] p-5 sm:min-h-[190px] sm:p-6">
+              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[image:var(--grad-aurora)] font-mono text-xs font-bold text-[#0a0a14] shadow-glow">
+                FT
+              </div>
+              <div className="mt-4 text-[17px] font-bold text-[var(--ink)] sm:mt-[18px] sm:text-[18px]">
+                Teacher resources
+              </div>
+              <div className="mt-2 text-sm leading-[1.55] text-[var(--ink-muted)] sm:mt-[10px] sm:text-[15px]">
+                Access resources prepared for teaching and classroom workflows.
               </div>
             </Card>
           </Link>

@@ -996,14 +996,14 @@ export default function SimulationPage() {
   const isConversationFocusMode = simulationStarted && !simulationEnded;
 
   return (
-    <section className="mobile-page-shell overflow-x-hidden py-6 sm:py-8 lg:py-10">
-      <div className="mx-auto max-w-[960px]">
+    <section className="mobile-page-shell overflow-x-hidden py-6 sm:py-8">
+      <div className="mx-auto max-w-[1120px]">
         <div className={isConversationFocusMode ? "mb-6" : "mb-8"}>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+          <p className="lumen-chip">
             Workplace Simulation
           </p>
-          <h1 className="mt-2 text-balance font-serif text-2xl font-normal text-[var(--ink)] sm:text-3xl md:text-[2.15rem]">
-            {isConversationFocusMode ? "Conversation In Progress" : "Simulation Hub"}
+          <h1 className="lumen-heading mt-4 text-balance text-4xl sm:text-5xl">
+            {isConversationFocusMode ? "Simulation in progress" : "Simulation Hub"}
           </h1>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--ink-muted)] sm:text-[15px]">
             {isConversationFocusMode
@@ -1026,7 +1026,7 @@ export default function SimulationPage() {
               <form onSubmit={handleSend}>
                 <div className="grid gap-4">
                   <div className="grid gap-2">
-                    <label htmlFor="scenario_type" className="text-sm font-medium">
+                    <label htmlFor="scenario_type" className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                       Select a scenario
                     </label>
                     <Select
@@ -1044,7 +1044,7 @@ export default function SimulationPage() {
                   </div>
 
                   <div className="grid gap-2">
-                    <label htmlFor="level" className="text-sm font-medium">
+                    <label htmlFor="level" className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                       Level
                     </label>
                     <Select
@@ -1065,7 +1065,7 @@ export default function SimulationPage() {
 
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="grid gap-2">
-                      <label htmlFor="industry" className="text-sm font-medium">
+                      <label htmlFor="industry" className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                         Industry
                       </label>
                       <Select
@@ -1084,7 +1084,7 @@ export default function SimulationPage() {
                     </div>
 
                     <div className="grid gap-2">
-                      <label htmlFor="profession" className="text-sm font-medium">
+                      <label htmlFor="profession" className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                         Business Role
                       </label>
                       <Select
@@ -1109,10 +1109,10 @@ export default function SimulationPage() {
                         type="button"
                         onClick={() => void handleStartSimulation()}
                         disabled={isAnyRequestLoading}
-                        className="w-full rounded-lg border px-5 py-2 text-xs font-semibold transition-opacity hover:opacity-90 sm:w-auto"
+                        className="w-full border-transparent bg-[image:var(--aurora-line)] px-5 py-3 text-xs font-extrabold text-[var(--accent-ink)] transition-opacity hover:opacity-90 sm:w-auto"
                         style={accentButtonStyle}
                       >
-                        {isStartingCustom ? "Starting..." : "Start Conversation"}
+                        {isStartingCustom ? "Starting..." : "Start Simulation"}
                       </Button>
                     ) : null}
                     {simulationStarted || simulationEnded ? (
@@ -1120,7 +1120,7 @@ export default function SimulationPage() {
                         type="button"
                         onClick={handleReset}
                         disabled={isAnyRequestLoading}
-                        className="w-full rounded-lg px-4 py-2 text-xs sm:w-auto"
+                        className="w-full px-4 py-3 text-xs sm:w-auto"
                       >
                         Start New Conversation
                       </Button>
@@ -1176,12 +1176,12 @@ export default function SimulationPage() {
                 return (
                   <Card
                     key={scenario.id}
-                    className="flex h-full min-w-0 flex-col gap-4 p-4 sm:p-6"
+                    className="flex h-full min-w-0 flex-col gap-4 p-4 transition hover:-translate-y-0.5 sm:p-6"
                     style={sectionCardStyle}
                   >
                     <div className="flex flex-col items-start justify-between gap-3 sm:flex-row">
                       <div className="min-w-0">
-                        <p className="text-base font-semibold leading-6 text-[var(--ink)] sm:text-lg">
+                        <p className="lumen-heading text-xl leading-tight">
                           {scenario.title}
                         </p>
                         <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">
@@ -1199,13 +1199,13 @@ export default function SimulationPage() {
                     </div>
 
                     <div className="flex flex-wrap gap-2 text-xs text-[var(--ink-faint)]">
-                      <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
+                      <span className="lumen-chip">
                         {scenario.duration}
                       </span>
-                      <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
+                      <span className="lumen-chip">
                         {scenario.role}
                       </span>
-                      <span className="rounded-full border border-[var(--border)] px-2.5 py-1">
+                      <span className="lumen-chip">
                         {scenario.industry}
                       </span>
                     </div>
@@ -1216,7 +1216,7 @@ export default function SimulationPage() {
                         type="button"
                         onClick={() => void handleStartCatalogScenario(scenario)}
                         disabled={simulationStarted || isAnyRequestLoading}
-                        className="w-full rounded-lg border px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-90 sm:w-auto"
+                        className="w-full border-transparent bg-[image:var(--aurora-line)] px-4 py-2.5 text-xs font-extrabold text-[var(--accent-ink)] transition-opacity hover:opacity-90 sm:w-auto"
                         style={accentButtonStyle}
                       >
                         {isCardStarting ? "Starting..." : "Start"}
@@ -1230,14 +1230,14 @@ export default function SimulationPage() {
         ) : null}
 
         <div className={isConversationFocusMode ? "mt-0" : "mt-8"}>
-          <div className="mb-4 flex flex-wrap items-center gap-2">
+          <div className="mb-4 inline-flex w-full flex-wrap items-center gap-1 rounded-full border border-[var(--border)] bg-[var(--glass)] p-1 backdrop-blur sm:w-auto">
             <button
               type="button"
               onClick={() => setActiveTab("conversation")}
-              className={`flex-1 rounded-lg border px-4 py-2 text-xs font-semibold transition sm:flex-none ${
+              className={`lumen-focus flex-1 rounded-full px-4 py-2 text-xs font-bold transition sm:flex-none ${
                 activeTab === "conversation"
-                  ? "border-[var(--accent)] bg-[var(--accent)] text-white"
-                  : "border-[var(--border)] text-[var(--ink-muted)] hover:bg-[var(--surface-hover)]"
+                  ? "bg-[image:var(--aurora-line)] text-[var(--accent-ink)]"
+                  : "text-[var(--ink-muted)] hover:bg-[var(--surface-hover)]"
               }`}
             >
               Conversation
@@ -1245,10 +1245,10 @@ export default function SimulationPage() {
             <button
               type="button"
               onClick={() => setActiveTab("history")}
-              className={`flex-1 rounded-lg border px-4 py-2 text-xs font-semibold transition sm:flex-none ${
+              className={`lumen-focus flex-1 rounded-full px-4 py-2 text-xs font-bold transition sm:flex-none ${
                 activeTab === "history"
-                  ? "border-[var(--accent)] bg-[var(--accent)] text-white"
-                  : "border-[var(--border)] text-[var(--ink-muted)] hover:bg-[var(--surface-hover)]"
+                  ? "bg-[image:var(--aurora-line)] text-[var(--accent-ink)]"
+                  : "text-[var(--ink-muted)] hover:bg-[var(--surface-hover)]"
               }`}
             >
               History
@@ -1279,14 +1279,14 @@ export default function SimulationPage() {
                         type="button"
                         onClick={handleEndConversation}
                         disabled={isMessageLoading}
-                        className="w-full rounded-lg px-4 py-2 text-xs sm:w-auto"
+                        className="w-full px-4 py-2.5 text-xs sm:w-auto"
                       >
                         End Conversation
                       </Button>
                     ) : null}
                   </div>
                 </Card>
-                <h2 className="font-serif text-xl text-[var(--ink)] sm:text-2xl">
+                <h2 className="lumen-heading text-3xl">
                   Conversation
                 </h2>
 
@@ -1336,7 +1336,7 @@ export default function SimulationPage() {
                               </span>
                             </div>
                             <div
-                              className="overflow-hidden rounded-2xl border px-4 py-3"
+                              className="overflow-hidden rounded-[var(--radius-md)] border px-4 py-3 shadow-sm backdrop-blur"
                               style={
                                 isUser
                                   ? {
@@ -1364,7 +1364,7 @@ export default function SimulationPage() {
 
                 {simulationEnded ? (
                   <Card className="mt-6 p-4 sm:p-6" style={sectionCardStyle}>
-                    <h3 className="text-lg font-semibold text-[var(--ink)]">Overall Feedback</h3>
+                    <h3 className="lumen-heading text-2xl">Overall Feedback</h3>
                     <ul className="mt-3 list-disc pl-5 text-sm leading-6 text-[var(--ink)]">
                       <li>Sentence structure: {conversationCoaching.overall.sentenceStructure}</li>
                       <li>Grammar: {conversationCoaching.overall.grammar}</li>
@@ -1385,7 +1385,7 @@ export default function SimulationPage() {
                         conversationCoaching.callouts.map((callout, index) => (
                           <div
                             key={`${callout.response.slice(0, 32)}-${index}`}
-                            className="rounded-2xl border p-4"
+                            className="rounded-[var(--radius-md)] border p-4"
                             style={feedbackBlockStyle}
                           >
                             <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--ink-faint)]">
@@ -1412,7 +1412,7 @@ export default function SimulationPage() {
                   <Card className="mt-6 p-4 sm:p-6" style={sectionCardStyle}>
                     <form onSubmit={handleSend}>
                       <div className="grid gap-3">
-                        <label htmlFor="user_input" className="text-sm font-medium">
+                        <label htmlFor="user_input" className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                           Your Message
                         </label>
                         <Textarea
@@ -1437,7 +1437,7 @@ export default function SimulationPage() {
                           <Button
                             type="submit"
                             disabled={isMessageLoading}
-                            className="w-full rounded-lg border px-5 py-2 text-xs font-semibold transition-opacity hover:opacity-90 sm:w-auto"
+                            className="w-full border-transparent bg-[image:var(--aurora-line)] px-5 py-3 text-xs font-extrabold text-[var(--accent-ink)] transition-opacity hover:opacity-90 sm:w-auto"
                             style={accentButtonStyle}
                           >
                             {isMessageLoading ? "Sending..." : "Send"}
@@ -1459,19 +1459,19 @@ export default function SimulationPage() {
             ) : (
               <Card className="p-4 sm:p-6" style={sectionCardStyle}>
                 <p className="text-sm text-[var(--ink-muted)]">
-                  Configure your scenario and click Start Conversation to open the live chat with Mara.
+                  Configure your scenario and click Start Simulation to open the live chat.
                 </p>
               </Card>
             )
           ) : (
             <Card className="p-4 sm:p-6" style={sectionCardStyle}>
               <div className="mb-4 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-                <h2 className="font-serif text-xl text-[var(--ink)] sm:text-2xl">History</h2>
+                <h2 className="lumen-heading text-3xl">History</h2>
                 <Button
                   type="button"
                   onClick={() => void loadHistory()}
                   disabled={isHistoryLoading}
-                  className="w-full rounded-lg px-4 py-2 text-xs sm:w-auto"
+                  className="w-full px-4 py-2.5 text-xs sm:w-auto"
                 >
                   {isHistoryLoading ? "Refreshing..." : "Refresh"}
                 </Button>
@@ -1493,7 +1493,7 @@ export default function SimulationPage() {
                   value={historyQuery}
                   onChange={(event) => setHistoryQuery(event.target.value)}
                   placeholder="Search by scenario, role, or industry"
-                  className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink-faint)] focus:border-[var(--accent)] focus:outline-none"
+                  className="lumen-focus w-full rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[var(--ink-faint)] focus:border-[var(--accent)]"
                 />
               </div>
 
@@ -1510,7 +1510,7 @@ export default function SimulationPage() {
                   {filteredHistorySessions.map((session) => (
                     <div
                       key={session.simulation_id}
-                      className="rounded-2xl border p-4"
+                      className="rounded-[var(--radius-md)] border p-4"
                       style={subtlePanelStyle}
                     >
                       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">

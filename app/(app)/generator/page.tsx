@@ -727,25 +727,46 @@ export default function GeneratorPage() {
   };
 
   return (
-    <section className="mobile-page-shell py-6 sm:py-8 lg:py-10">
-      <div className="mx-auto max-w-[960px]">
-        <div className="mb-8 sm:mb-10">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
-            Generator
-          </p>
-          <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">
-            Lesson Generator
-          </h1>
-          <p className="mt-3 text-sm text-[var(--ink-muted)]">
-            Generate a structured Business English lesson from a topic, source
-            link, or transcript.
-          </p>
+    <section className="mobile-page-shell">
+      <div className="mx-auto max-w-[1120px]">
+        <div className="mb-6 flex flex-col justify-between gap-4 sm:mb-7 lg:flex-row lg:items-end">
+          <div>
+            <p className="lumen-chip mb-4">Generator</p>
+            <h1 className="lumen-heading text-balance text-[38px] leading-[1.04] sm:text-[48px]">
+              Lesson Generator
+            </h1>
+            <p className="mt-3 max-w-[680px] text-sm leading-6 text-[var(--ink-muted)] sm:text-[15px]">
+              Generate a structured Business English lesson from a topic, source
+              link, or transcript.
+            </p>
+          </div>
+          <div className="hidden rounded-full border border-[var(--border)] bg-[var(--glass)] px-4 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)] backdrop-blur sm:inline-flex">
+            JSON validated output
+          </div>
         </div>
 
         <div className="min-h-[560px] sm:min-h-[760px]">
-          <Card>
+          <Card className="p-0">
+            <div className="border-b border-[var(--border)] px-5 py-5 sm:px-7 sm:py-6">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--ink-faint)]">
+                    New Lesson Flow
+                  </p>
+                  <h2 className="lumen-heading mt-2 text-2xl leading-tight sm:text-[30px]">
+                    Build the lesson brief
+                  </h2>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="lumen-chip">Topic</span>
+                  <span className="lumen-chip">Source</span>
+                  <span className="lumen-chip">Level</span>
+                </div>
+              </div>
+            </div>
+            <div className="p-5 sm:p-7">
             {isRedirectingToLesson ? (
-              <div className="mb-4 rounded-2xl border border-[var(--accent-gold)] bg-[var(--accent-gold-soft)] p-4">
+              <div className="mb-4 rounded-[14px] border border-[var(--accent-gold)] bg-[var(--accent-gold-soft)] p-4">
                 <p className="text-sm font-semibold text-[var(--ink)]">Lesson ready.</p>
                 <p className="text-xs text-[var(--ink-muted)]">
                   Opening your lesson now...
@@ -753,9 +774,9 @@ export default function GeneratorPage() {
               </div>
             ) : null}
             <form onSubmit={handleLessonSubmit} action="" method="post">
-              <div className="grid min-h-[520px] gap-4">
+              <div className="grid min-h-[520px] gap-5">
                 {isGenerating ? (
-                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-4 transition-all duration-300">
+                  <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass-strong)] p-4 transition-all duration-300">
                     <div className="flex items-center gap-3">
                       <span className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--accent)]" />
                       <div>
@@ -781,7 +802,7 @@ export default function GeneratorPage() {
                   }`}
                 >
                   <div className="grid gap-2">
-                    <label htmlFor="topic" className="text-sm font-medium">
+                    <label htmlFor="topic" className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                       Topic
                     </label>
                     <Input
@@ -795,7 +816,7 @@ export default function GeneratorPage() {
                   </div>
 
                   <div className="grid gap-2">
-                    <label htmlFor="source_input" className="text-sm font-medium">
+                    <label htmlFor="source_input" className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                       Source URL or text (optional)
                     </label>
                     <Textarea
@@ -805,7 +826,7 @@ export default function GeneratorPage() {
                       onChange={(event) => setSourceInput(event.target.value)}
                       rows={5}
                     />
-                    <p className="text-xs text-[var(--ink-faint)]">
+                    <p className="text-xs leading-5 text-[var(--ink-faint)]">
                       YouTube links use the transcript pipeline. Article links and
                       pasted text generate directly.
                     </p>
@@ -816,7 +837,7 @@ export default function GeneratorPage() {
                     <div className="grid gap-2">
                       <label
                         htmlFor="manual_transcript"
-                        className="text-sm font-medium"
+                        className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]"
                       >
                         Transcript
                       </label>
@@ -832,7 +853,7 @@ export default function GeneratorPage() {
                       </p>
                       {process.env.NODE_ENV !== "production" &&
                       lessonDiagnostics.length > 0 ? (
-                        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-raised)] p-3">
+                        <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] p-3">
                           <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                             Transcript debug (dev only)
                           </p>
@@ -848,7 +869,7 @@ export default function GeneratorPage() {
 
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="grid gap-2">
-                      <label htmlFor="level" className="text-sm font-medium">
+                      <label htmlFor="level" className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                         Level
                       </label>
                       <Select
@@ -869,7 +890,7 @@ export default function GeneratorPage() {
                     </div>
 
                     <div className="grid gap-2">
-                      <label htmlFor="industry" className="text-sm font-medium">
+                      <label htmlFor="industry" className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                         Industry (optional)
                       </label>
                       <Input
@@ -883,7 +904,7 @@ export default function GeneratorPage() {
                     </div>
 
                     <div className="grid gap-2 md:col-span-2">
-                      <label htmlFor="profession" className="text-sm font-medium">
+                      <label htmlFor="profession" className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                         Profession (optional)
                       </label>
                       <Input
@@ -898,7 +919,7 @@ export default function GeneratorPage() {
                   </div>
 
                   <div className="grid gap-2">
-                    <label htmlFor="lesson_type" className="text-sm font-medium">
+                    <label htmlFor="lesson_type" className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                       Lesson Type
                     </label>
                     <Textarea
@@ -918,7 +939,7 @@ export default function GeneratorPage() {
                     <Button
                       type="submit"
                       disabled={isLessonGenerating}
-                      className="w-full rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-5 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55] sm:w-auto"
+                      className="w-full border-transparent bg-[image:var(--aurora-line)] px-5 py-3 text-xs font-extrabold text-[var(--accent-ink)] shadow-glow hover:opacity-95 sm:w-auto"
                     >
                       {isLessonGenerating ? "Generating..." : "Generate Lesson"}
                     </Button>
@@ -931,7 +952,7 @@ export default function GeneratorPage() {
                 ) : null}
 
                 {showFallback ? (
-                  <div className="grid gap-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-card)] p-4 transition-all duration-300">
+                  <div className="grid gap-3 rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--glass)] p-4 transition-all duration-300">
                     <div>
                       <p className="text-sm font-semibold text-[var(--ink)]">
                         We’re building your lesson. This might take a moment.
@@ -944,7 +965,7 @@ export default function GeneratorPage() {
                     <div className="grid gap-2 sm:max-w-md">
                       <label
                         htmlFor="fallback_email"
-                        className="text-sm font-medium"
+                        className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]"
                       >
                         Email (optional)
                       </label>
@@ -964,7 +985,7 @@ export default function GeneratorPage() {
                       <Button
                         type="button"
                         onClick={handleEmailWhenReady}
-                        className="w-full rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-5 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55] sm:w-auto"
+                        className="w-full border-transparent bg-[image:var(--aurora-line)] px-5 py-3 text-xs font-extrabold text-[var(--accent-ink)] shadow-glow hover:opacity-95 sm:w-auto"
                       >
                         Get notified when it’s ready
                       </Button>
@@ -998,18 +1019,19 @@ export default function GeneratorPage() {
                 ) : null}
               </div>
             </form>
+            </div>
           </Card>
 
           {lessonResult ? (
             <div className="mt-8">
               <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                <h2 className="font-serif text-2xl text-[var(--ink)]">
+                <h2 className="lumen-heading text-3xl text-[var(--ink)]">
                   Lesson Preview
                 </h2>
                 <Button
                   onClick={handleLessonSave}
                   disabled={isLessonSaving}
-                  className="rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-4 py-2 text-xs font-semibold text-[#0c0b0a] hover:bg-[#d4ad55]"
+                  className="border-transparent bg-[image:var(--aurora-line)] px-4 py-2.5 text-xs font-extrabold text-[var(--accent-ink)] shadow-glow hover:opacity-95"
                 >
                   {isLessonSaving ? "Saving..." : "Save Lesson"}
                 </Button>

@@ -5,9 +5,15 @@ const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        display: ["var(--font-display)"],
+        sans: ["var(--font-ui)"],
+        mono: ["var(--font-mono)"],
+      },
       boxShadow: {
-        sm: "0 10px 30px rgba(0, 0, 0, 0.25)",
-        md: "0 16px 36px rgba(0, 0, 0, 0.3)",
+        sm: "var(--shadow-sm)",
+        md: "var(--shadow-md)",
+        glow: "var(--shadow-glow)",
       },
     },
   },

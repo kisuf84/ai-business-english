@@ -94,13 +94,13 @@ export default function WelcomePage() {
   };
 
   return (
-    <section className="min-h-[70vh] px-4 py-10 sm:px-6 sm:py-14">
+    <section className="mobile-page-shell flex min-h-[70vh] items-center px-4 py-10 sm:px-6 sm:py-14">
       <div className="mx-auto max-w-xl">
-        <Card className="rounded-3xl border border-[var(--border)] bg-[var(--surface-card)] p-6 shadow-sm sm:p-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+        <Card className="p-6 sm:p-8">
+          <p className="lumen-chip">
             Welcome
           </p>
-          <h1 className="mt-3 text-2xl font-semibold text-[var(--ink)] sm:text-3xl">
+          <h1 className="lumen-heading mt-4 text-3xl sm:text-4xl">
             What should we call you?
           </h1>
           <p className="mt-2 text-sm text-[var(--ink-muted)]">
@@ -114,12 +114,12 @@ export default function WelcomePage() {
               onChange={(event) => setPreferredName(event.target.value)}
               placeholder="e.g. Soufi"
               maxLength={60}
-              className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3 text-sm text-[var(--ink)] outline-none transition focus:border-[var(--accent)]"
+              className="lumen-focus w-full rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3 text-sm text-[var(--ink)] outline-none transition placeholder:text-[var(--ink-faint)] focus:border-[var(--accent)]"
             />
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full rounded-xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+              className="lumen-primary-action w-full px-4 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoading ? "Saving..." : "Continue"}
             </button>

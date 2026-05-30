@@ -3,23 +3,15 @@
 import { useEffect, useState } from "react";
 import Card from "../../../components/shared/Card";
 import { getSupabaseBrowserClient } from "../../../lib/supabase/client";
+import { useTheme } from "../../../context/ThemeContext";
 
 export default function SettingsPage() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const { mode: theme } = useTheme();
   const [email, setEmail] = useState("");
   const [preferredName, setPreferredName] = useState("");
   const [isSavingName, setIsSavingName] = useState(false);
   const [nameStatus, setNameStatus] = useState<string | null>(null);
   const [nameError, setNameError] = useState<string | null>(null);
-
-  useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem("theme");
-      setTheme(saved === "dark" ? "dark" : "light");
-    } catch {
-      setTheme("light");
-    }
-  }, []);
 
   useEffect(() => {
     let active = true;
@@ -80,13 +72,13 @@ export default function SettingsPage() {
   };
 
   return (
-    <section className="py-10">
+    <section className="py-6 sm:py-8">
       <div className="mx-auto max-w-[960px]">
         <div className="mb-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+          <p className="lumen-chip">
             Settings
           </p>
-          <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">
+          <h1 className="lumen-heading mt-4 text-4xl sm:text-5xl">
             Workspace settings
           </h1>
           <p className="mt-3 text-sm text-[var(--ink-muted)]">
@@ -95,20 +87,20 @@ export default function SettingsPage() {
         </div>
 
         <div className="grid gap-6">
-          <Card className="rounded-3xl p-6">
+          <Card className="p-6">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <h2 className="font-serif text-xl text-[var(--ink)]">Account</h2>
+                <h2 className="lumen-heading text-2xl">Account</h2>
                 <p className="mt-1 text-sm text-[var(--ink-muted)]">
                   Your current profile details.
                 </p>
               </div>
-              <span className="rounded-full border border-[var(--border)] px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] text-[var(--ink-faint)]">
+              <span className="lumen-chip">
                 Active
               </span>
             </div>
             <div className="mt-5 flex items-center gap-4 border-t border-[var(--border)] pt-5">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--accent)] font-serif text-sm text-white">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[image:var(--aurora-line)] font-mono text-sm font-bold text-[var(--accent-ink)]">
                 {(preferredName.trim().charAt(0) || "U").toUpperCase()}
               </div>
               <div>
@@ -121,10 +113,10 @@ export default function SettingsPage() {
                 {email ? <p className="text-xs text-[var(--ink-faint)]">{email}</p> : null}
               </div>
             </div>
-            <div className="mt-4 space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3">
+            <div className="mt-4 space-y-3 rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3">
               <label
                 htmlFor="preferred-name"
-                className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]"
+                className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]"
               >
                 Preferred name
               </label>
@@ -134,13 +126,13 @@ export default function SettingsPage() {
                 value={preferredName}
                 onChange={(event) => setPreferredName(event.target.value)}
                 maxLength={60}
-                className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--ink)] outline-none transition focus:border-[var(--accent)]"
+                className="lumen-focus w-full rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3 text-sm text-[var(--ink)] transition focus:border-[var(--accent)]"
               />
               <button
                 type="button"
                 onClick={() => void handleSavePreferredName()}
                 disabled={isSavingName}
-                className="rounded-xl bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+                className="lumen-focus rounded-full bg-[image:var(--aurora-line)] px-4 py-2.5 text-xs font-extrabold text-[var(--accent-ink)] transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSavingName ? "Saving..." : "Save preferred name"}
               </button>
@@ -153,15 +145,15 @@ export default function SettingsPage() {
             </div>
           </Card>
 
-          <Card className="rounded-3xl p-6">
+          <Card className="p-6">
             <div>
-              <h2 className="font-serif text-xl text-[var(--ink)]">Appearance</h2>
+              <h2 className="lumen-heading text-2xl">Appearance</h2>
               <p className="mt-1 text-sm text-[var(--ink-muted)]">
                 Control how your workspace looks and feels.
               </p>
             </div>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3">
+              <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                   Theme
                 </p>
@@ -169,10 +161,10 @@ export default function SettingsPage() {
                   {theme === "dark" ? "Dark mode enabled" : "Light mode enabled"}
                 </p>
                 <p className="mt-1 text-xs text-[var(--ink-muted)]">
-                  Toggle from the sidebar profile card.
+                  Toggle from the top bar.
                 </p>
               </div>
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3">
+              <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                   Mode
                 </p>
@@ -186,104 +178,104 @@ export default function SettingsPage() {
             </div>
           </Card>
 
-          <Card className="rounded-3xl p-6">
+          <Card className="p-6">
             <div>
-              <h2 className="font-serif text-xl text-[var(--ink)]">
-                Learning Preferences
+              <h2 className="lumen-heading text-2xl">
+                Lesson Defaults
               </h2>
               <p className="mt-1 text-sm text-[var(--ink-muted)]">
-                Set defaults for lesson generation and practice.
+                These values are chosen in each lesson or simulation flow.
               </p>
             </div>
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3">
+              <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                   Default level
                 </p>
                 <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
-                  B2
+                  Set per lesson
                 </p>
                 <p className="mt-1 text-xs text-[var(--ink-muted)]">
-                  CEFR standard
+                  A1-C1 in generator forms
                 </p>
               </div>
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3">
+              <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                   Industry focus
                 </p>
                 <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
-                  Technology
+                  Optional
                 </p>
                 <p className="mt-1 text-xs text-[var(--ink-muted)]">
-                  Used in lesson prompts
+                  Entered during generation
                 </p>
               </div>
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3">
+              <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                   Default visibility
                 </p>
                 <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
-                  Private
+                  Per lesson
                 </p>
                 <p className="mt-1 text-xs text-[var(--ink-muted)]">
-                  Change per lesson
+                  Managed from lesson details
                 </p>
               </div>
             </div>
           </Card>
 
-          <Card className="rounded-3xl p-6">
+          <Card className="p-6">
             <div>
-              <h2 className="font-serif text-xl text-[var(--ink)]">
+              <h2 className="lumen-heading text-2xl">
                 Workspace Defaults
               </h2>
               <p className="mt-1 text-sm text-[var(--ink-muted)]">
-                Configure how your team workspace behaves.
+                Current workspace behaviors available in the MVP.
               </p>
             </div>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3">
+              <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                   Lesson save mode
                 </p>
                 <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
-                  Auto-save on generation
+                  Manual save
                 </p>
                 <p className="mt-1 text-xs text-[var(--ink-muted)]">
-                  Keep every lesson draft.
+                  Save generated previews when ready.
                 </p>
               </div>
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3">
+              <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                   Sharing
                 </p>
                 <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
-                  Public links disabled
+                  Per lesson
                 </p>
                 <p className="mt-1 text-xs text-[var(--ink-muted)]">
-                  Enable per lesson when needed.
+                  Controlled from lesson details.
                 </p>
               </div>
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3">
+              <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                   Notifications
                 </p>
                 <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
-                  Weekly summary
+                  Not configured
                 </p>
                 <p className="mt-1 text-xs text-[var(--ink-muted)]">
-                  Activity recap delivered weekly.
+                  No scheduled digest in the MVP.
                 </p>
               </div>
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-3">
+              <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                   Team sharing
                 </p>
                 <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
-                  Invite-only
+                  Not configured
                 </p>
                 <p className="mt-1 text-xs text-[var(--ink-muted)]">
-                  Control access for collaborators.
+                  Single-workspace MVP behavior.
                 </p>
               </div>
             </div>

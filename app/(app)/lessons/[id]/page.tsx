@@ -116,18 +116,18 @@ export default async function LessonDetailPage({
   }
 
   return (
-    <section className="py-10">
-      <div className="mx-auto max-w-[960px]">
+    <section className="mobile-page-shell">
+      <div className="lumen-page">
         <p className="text-xs text-[var(--ink-muted)]">
-          <Link href="/lessons" className="hover:text-[var(--ink)]">
-            ← Back to lessons
+          <Link href="/lessons" className="lumen-chip hover:text-[var(--ink)]">
+            Back to lessons
           </Link>
         </p>
-        <h1 className="mobile-safe-wrap mt-3 text-balance font-serif text-3xl font-normal text-[var(--ink)]">
+        <h1 className="mobile-safe-wrap lumen-page-title mt-4">
           {lessonRecord?.title || "Lesson"}
         </h1>
         {lessonRecord?.status === "archived" ? (
-          <p className="mt-2 text-sm text-[var(--ink-faint)]">Archived</p>
+          <p className="lumen-chip mt-3">Archived</p>
         ) : null}
 
         <div className="mt-4 space-y-2 text-sm">
@@ -148,10 +148,10 @@ export default async function LessonDetailPage({
 
         {lessonRecord ? (
           <>
-            <Card className="mt-6 p-5 sm:p-6 lg:p-8">
+            <Card className="mt-6 p-5 sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-6">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
+                  <p className="lumen-label">
                     Status
                   </p>
                   <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
@@ -159,7 +159,7 @@ export default async function LessonDetailPage({
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
+                  <p className="lumen-label">
                     Visibility
                   </p>
                   <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
@@ -167,7 +167,7 @@ export default async function LessonDetailPage({
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
+                  <p className="lumen-label">
                     Created
                   </p>
                   <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
@@ -177,11 +177,11 @@ export default async function LessonDetailPage({
               </div>
               {lessonRecord.visibility === "public" ? (
                 <div className="mt-4">
-                  <p className="text-xs uppercase tracking-[0.1em] text-[var(--ink-faint)]">
+                  <p className="lumen-label">
                     Share link
                   </p>
                   <Link
-                    className="mt-2 inline-flex break-all text-sm text-[var(--ink)] underline-offset-4 hover:underline"
+                    className="mt-2 inline-flex break-all rounded-full border border-[var(--border)] bg-[var(--glass)] px-3 py-1.5 text-sm text-[var(--ink)] underline-offset-4 hover:underline"
                     href={`/share/lesson/${lessonRecord.id}`}
                   >
                     /share/lesson/{lessonRecord.id}
@@ -191,7 +191,7 @@ export default async function LessonDetailPage({
             </Card>
 
             {safeLesson ? (
-              <Card className="mt-6 p-5 sm:p-6 lg:p-8">
+              <Card className="mt-6 p-5 sm:p-6">
                 <LessonToolbar
                   lessonId={lessonRecord.id}
                   status={lessonRecord.status}

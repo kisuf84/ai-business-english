@@ -80,22 +80,26 @@ export default function AuthGuard({ children }: AuthGuardProps) {
         }
 
         if (event === "SIGNED_OUT") {
+          setReady(false);
           redirectToAuth();
         }
       });
+      const cleanup = () => {
+        listener.subscription.unsubscribe();
+      };
 
       const { data } = await supabase.auth.getSession();
       if (!active) {
-        listener.subscription.unsubscribe();
-        return;
+        cleanup();
+        return undefined;
       }
 
       if (data.session) {
         if (!handlePostAuthRouting(data.session)) {
-          return;
+          return cleanup;
         }
         setReady(true);
-        return;
+        return cleanup;
       }
 
       // Allow brief time for OAuth callback session hydration before redirect.
@@ -103,9 +107,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
         redirectToAuth();
       }, 800);
 
-      return () => {
-        listener.subscription.unsubscribe();
-      };
+      return cleanup;
     };
 
     let unsubscribe: (() => void) | undefined;
@@ -126,9 +128,14 @@ export default function AuthGuard({ children }: AuthGuardProps) {
 
   if (!ready) {
     return (
-      <section className="py-10">
-        <div className="mx-auto max-w-[960px] rounded-[28px] border border-[var(--border)] bg-[var(--surface-card)] p-8 shadow-sm">
-          <p className="text-sm text-[var(--ink-muted)]">Checking session...</p>
+      <section className="min-h-screen px-6 py-10 text-[var(--ink)]">
+        <div className="aurora" />
+        <div className="grain" />
+        <div className="mx-auto max-w-[520px] rounded-[var(--r-lg)] border border-[var(--glass-border)] bg-[var(--glass-strong)] p-6 shadow-sm backdrop-blur">
+          <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--ink-faint)]">
+            Langslate AI
+          </p>
+          <p className="mt-3 text-sm text-[var(--ink-muted)]">Checking session...</p>
         </div>
       </section>
     );

@@ -3,5 +3,5 @@ type TabsProps = {
 };
 
 export default function Tabs({ children }: TabsProps) {
-  return <div>{children}</div>;
+  return <div className="tabs max-w-full flex-wrap">{children}</div>;
 }

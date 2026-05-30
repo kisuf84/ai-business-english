@@ -151,16 +151,17 @@ export default function AuthCallbackPage() {
   }, [router]);
 
   return (
-    <section className="min-h-screen bg-slate-50 px-6 py-16 dark:bg-slate-950">
+    <section className="min-h-screen px-6 py-16 lumen-shell-bg text-[var(--ink)]">
       <div className="mx-auto max-w-lg">
-        <Card>
-          <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">
+        <Card className="p-6 sm:p-8">
+          <p className="lumen-chip mb-4">Authentication</p>
+          <h1 className="lumen-heading text-3xl">
             Signing you in...
           </h1>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+          <p className="mt-3 text-sm leading-6 text-[var(--ink-muted)]">
             Please wait while we securely log you into Langslate AI.
           </p>
-          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+          <p className="mt-1 text-sm text-[var(--ink-faint)]">
             You&rsquo;ll be redirected automatically.
           </p>
           {error ? <p className="mt-4 text-sm text-[var(--accent-warm)]">{error}</p> : null}

@@ -37,7 +37,7 @@ export default function PersonalizedGreeting() {
   }, []);
 
   return (
-    <h1 className="m-0 text-[28px] font-extrabold tracking-[-0.035em] text-[var(--ink)] sm:text-[32px] lg:text-[36px]">
+    <h1 className="lumen-heading m-0 text-balance text-[34px] leading-[1.02] sm:text-[44px] lg:text-[58px]">
       {name ? `Welcome back, ${name}` : "Welcome back"}
     </h1>
   );

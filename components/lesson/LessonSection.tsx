@@ -5,9 +5,9 @@ type LessonSectionProps = {
 
 export default function LessonSection({ title, children }: LessonSectionProps) {
   return (
-    <section style={{ marginBottom: 24 }}>
-      <h2 style={{ marginBottom: 10, fontSize: 18 }}>{title}</h2>
-      <div>{children}</div>
+    <section className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--glass)] p-5 backdrop-blur">
+      <h2 className="lumen-heading mb-3 text-2xl">{title}</h2>
+      <div className="text-sm leading-7 text-[var(--ink-muted)]">{children}</div>
     </section>
   );
 }

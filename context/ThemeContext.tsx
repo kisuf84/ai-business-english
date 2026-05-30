@@ -16,7 +16,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      const saved = window.localStorage.getItem("kl-theme");
+      const saved = window.localStorage.getItem("theme") ?? window.localStorage.getItem("kl-theme");
       const next: ThemeMode = saved === "light" ? "light" : "dark";
       setMode(next);
     } catch {
@@ -27,10 +27,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       window.localStorage.setItem("kl-theme", mode);
+      window.localStorage.setItem("theme", mode);
     } catch {
       // ignore persistence failures
     }
     document.documentElement.setAttribute("data-theme", mode);
+    document.documentElement.classList.toggle("dark", mode === "dark");
+    document.documentElement.classList.toggle("light", mode === "light");
   }, [mode]);
 
   const value = useMemo<ThemeContextValue>(
