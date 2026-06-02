@@ -14,6 +14,8 @@ import {
   buildLessonPrompt,
   buildLessonRepairPrompt,
   generateLesson,
+  isLessonGenerationMaxTokenError,
+  isLessonGenerationTimeoutError,
   parseLessonJson,
   parseAndValidateLessonOutput,
   repairLesson,
@@ -32,6 +34,21 @@ type SourceExtractionResult =
       status: number;
       payload: LessonGenerationApiError;
     };
+
+const GENERATION_TIMEOUT_MESSAGE =
+  "Lesson generation took longer than expected. Please try again.";
+
+function estimateLessonSize(value: unknown) {
+  const serialized = JSON.stringify(value ?? {});
+  return {
+    characters: serialized.length,
+    estimatedTokens: Math.ceil(serialized.length / 4),
+  };
+}
+
+function isIncompleteJsonError(error: string) {
+  return error === "Model output is not valid JSON.";
+}
 
 function parseHtmlToText(html: string): string {
   const articleMatch = html.match(/<article[\s\S]*?<\/article>/i);
@@ -261,8 +278,26 @@ export async function POST(request: Request) {
       profession: payload.profession?.trim() || undefined,
     };
 
+    console.info("[lesson-generate] request_received", {
+      inputType: sourceUrl
+        ? sourceUrl.includes("youtube.com") || sourceUrl.includes("youtu.be")
+          ? "youtube_url"
+          : "source_url"
+        : rawSourceText
+          ? "source_text"
+          : "topic",
+      hasTopic: Boolean(normalizedTopic),
+      hasSourceUrl: Boolean(sourceUrl),
+      hasSourceText: Boolean(rawSourceText),
+      level: normalizedInput.level || null,
+      lessonTypeProvided: Boolean(normalizedInput.lesson_type?.trim()),
+    });
+
     const validation = validateLessonPayload(normalizedInput);
     if (!validation.ok) {
+      console.warn("[lesson-generate] invalid_payload", {
+        errors: validation.errors,
+      });
       return NextResponse.json(
         {
           error: "Please complete the required lesson fields.",
@@ -292,12 +327,23 @@ export async function POST(request: Request) {
     });
 
     if (!extracted.ok) {
+      console.warn("[lesson-generate] source_extraction_failed", {
+        status: extracted.status,
+        errorCode: extracted.payload.error_code,
+        details: extracted.payload.details ?? [],
+      });
       return NextResponse.json(extracted.payload, { status: extracted.status });
     }
 
     if (!normalizedInput.topic && extracted.sourceTopicHint) {
       normalizedInput.topic = extracted.sourceTopicHint;
     }
+
+    console.info("[lesson-generate] source_ready", {
+      sourceKind: extracted.sourceMeta?.source_kind ?? "manual",
+      sourceTextLength: extracted.sourceText.length,
+      videoId: extracted.sourceMeta?.video_id ?? null,
+    });
 
     const prompt = buildLessonPrompt({
       input: normalizedInput,
@@ -306,8 +352,60 @@ export async function POST(request: Request) {
       videoId: extracted.sourceMeta?.video_id ?? null,
     });
 
-    const rawOutput = await generateLesson(prompt);
+    let rawOutput = "";
+    try {
+      const generated = await generateLesson(prompt);
+      rawOutput = generated.text;
+      console.info("[lesson-generate] openai_response", {
+        durationMs: generated.durationMs,
+        responseLength: rawOutput.length,
+        estimatedLessonSize: {
+          characters: rawOutput.length,
+          estimatedTokens: generated.estimatedOutputTokens,
+        },
+        finishReasons: generated.finishReasons,
+        usage: generated.usage,
+      });
+    } catch (error) {
+      console.error("[lesson-generate] openai_failed", {
+        message: error instanceof Error ? error.message : "unknown_openai_error",
+        timeout: isLessonGenerationTimeoutError(error),
+        maxTokenExhaustion: isLessonGenerationMaxTokenError(error),
+      });
+      if (
+        isLessonGenerationTimeoutError(error) ||
+        isLessonGenerationMaxTokenError(error)
+      ) {
+        return NextResponse.json(
+          {
+            error: GENERATION_TIMEOUT_MESSAGE,
+            error_code: "generation_failed",
+            ...(process.env.NODE_ENV !== "production"
+              ? {
+                  details: [
+                    isLessonGenerationMaxTokenError(error)
+                      ? "openai_finish_reason_length"
+                      : "openai_timeout",
+                  ],
+                }
+              : {}),
+          } satisfies LessonGenerationApiError,
+          { status: 504 }
+        );
+      }
+      throw error;
+    }
+
     const parsed = parseAndValidateLessonOutput(rawOutput);
+    if (!parsed.ok && isIncompleteJsonError(parsed.error)) {
+      console.error("[lesson-generate] incomplete_json", {
+        estimatedLessonSize: {
+          characters: rawOutput.length,
+          estimatedTokens: Math.ceil(rawOutput.length / 4),
+        },
+        error: parsed.error,
+      });
+    }
     let normalized =
       parsed.ok
         ? normalizeLessonOutput(parsed.data, { strict: true })
@@ -327,8 +425,49 @@ export async function POST(request: Request) {
         validationErrors: normalized.errors,
       });
 
-      const repairedRaw = await repairLesson(repairPrompt);
-      const repairedParsed = parseAndValidateLessonOutput(repairedRaw);
+      let repairedRaw: Awaited<ReturnType<typeof repairLesson>>;
+      try {
+        repairedRaw = await repairLesson(repairPrompt);
+      } catch (error) {
+        console.error("[lesson-generate] repair_failed", {
+          message: error instanceof Error ? error.message : "unknown_repair_error",
+          timeout: isLessonGenerationTimeoutError(error),
+          maxTokenExhaustion: isLessonGenerationMaxTokenError(error),
+        });
+        if (
+          isLessonGenerationTimeoutError(error) ||
+          isLessonGenerationMaxTokenError(error)
+        ) {
+          return NextResponse.json(
+            {
+              error: GENERATION_TIMEOUT_MESSAGE,
+              error_code: "generation_failed",
+              ...(process.env.NODE_ENV !== "production"
+                ? {
+                    details: [
+                      isLessonGenerationMaxTokenError(error)
+                        ? "repair_openai_finish_reason_length"
+                        : "repair_openai_timeout",
+                    ],
+                  }
+                : {}),
+            } satisfies LessonGenerationApiError,
+            { status: 504 }
+          );
+        }
+        throw error;
+      }
+      console.info("[lesson-generate] repair_response", {
+        durationMs: repairedRaw.durationMs,
+        responseLength: repairedRaw.text.length,
+        estimatedLessonSize: {
+          characters: repairedRaw.text.length,
+          estimatedTokens: repairedRaw.estimatedOutputTokens,
+        },
+        finishReasons: repairedRaw.finishReasons,
+        usage: repairedRaw.usage,
+      });
+      const repairedParsed = parseAndValidateLessonOutput(repairedRaw.text);
       normalized = repairedParsed.ok
         ? normalizeLessonOutput(repairedParsed.data, { strict: true })
         : {
@@ -344,10 +483,16 @@ export async function POST(request: Request) {
       console.error("[lesson/generate] Lesson failed strict validation after repair", {
         errors: normalized.errors,
       });
+      console.error("[lesson-generate] validation_failed", {
+        errors: normalized.errors,
+        estimatedLessonSize: estimateLessonSize(parseLessonJson(rawOutput) ?? rawOutput),
+        incompleteJson: normalized.errors.some(isIncompleteJsonError),
+      });
       return NextResponse.json(
         {
-          error:
-            "Lesson generation failed quality checks. Please retry with clearer source content.",
+          error: normalized.errors.some(isIncompleteJsonError)
+            ? GENERATION_TIMEOUT_MESSAGE
+            : "Lesson generation failed quality checks. Please retry with clearer source content.",
           error_code: "generation_failed",
           ...(process.env.NODE_ENV !== "production"
             ? { details: normalized.errors }
@@ -357,12 +502,22 @@ export async function POST(request: Request) {
       );
     }
 
+    console.info("[lesson-generate] success", {
+      title: normalized.data.title,
+      sourceKind: extracted.sourceMeta?.source_kind ?? "manual",
+      validation: "success",
+      estimatedLessonSize: estimateLessonSize(normalized.data),
+    });
+
     return NextResponse.json({
       ...normalized.data,
       source_meta: extracted.sourceMeta,
     } satisfies LessonGenerationApiResponse);
   } catch (error) {
     console.error("[lesson/generate] Route failed", error);
+    console.error("[lesson-generate] route_failed", {
+      message: error instanceof Error ? error.message : "unknown_generation_error",
+    });
 
     if (error instanceof Error && error.message === "OPENAI_API_KEY_MISSING") {
       return NextResponse.json(

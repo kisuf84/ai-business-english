@@ -173,8 +173,18 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
       sourceKind: "youtube_transcript",
       videoId: claimed.video_id,
     });
-    const rawOutput = await generateLesson(prompt);
-    const parsed = parseAndValidateLessonOutput(rawOutput);
+    const generated = await generateLesson(prompt);
+    console.info("[youtube-job] openai_response", {
+      id: claimed.id,
+      durationMs: generated.durationMs,
+      estimatedLessonSize: {
+        characters: generated.text.length,
+        estimatedTokens: generated.estimatedOutputTokens,
+      },
+      finishReasons: generated.finishReasons,
+      usage: generated.usage,
+    });
+    const parsed = parseAndValidateLessonOutput(generated.text);
 
     if (!parsed.ok) {
       throw new Error(parsed.error);

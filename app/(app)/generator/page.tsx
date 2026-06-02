@@ -567,6 +567,22 @@ export default function GeneratorPage() {
             ? (rawPayload as LessonGenerationApiError)
             : null;
 
+        if (!response.ok) {
+          console.warn("[lesson-generate] client_api_error", {
+            status: response.status,
+            errorCode:
+              typeof apiPayload?.error_code === "string"
+                ? apiPayload.error_code
+                : null,
+            message:
+              typeof apiPayload?.error === "string"
+                ? apiPayload.error
+                : typeof apiPayload?.message === "string"
+                  ? apiPayload.message
+                  : null,
+          });
+        }
+
         if (response.ok && apiPayload?.status === "still_processing") {
           setYoutubeGenerationState("processing_extended");
           if (transcriptAttempt < maxAttempts) {
@@ -620,7 +636,10 @@ export default function GeneratorPage() {
       setLessonStage("generating_lesson");
       const data = normalizeLessonOutput(rawResult);
       if (!data) {
-        throw new Error("invalid_response");
+        console.error("[lesson-generate] client_invalid_response_shape");
+        throw new Error(
+          "Lesson generation took longer than expected. Please try again."
+        );
       }
       setLessonResult(data);
       setYoutubeGenerationState(isYouTubeGeneration ? "ready" : "idle");
@@ -632,18 +651,13 @@ export default function GeneratorPage() {
       setYoutubeGenerationState("failed");
       const message =
         error instanceof Error ? error.message : "We could not generate the lesson.";
-      if (process.env.NODE_ENV !== "production") {
-        setLessonDiagnostics((prev) => [
-          ...prev,
-          `client_error: ${message}`,
-        ]);
-      }
-      setLessonError(
-        process.env.NODE_ENV !== "production" ? message : "We could not generate the lesson."
-      );
-      setError(
-        process.env.NODE_ENV !== "production" ? message : "We could not generate the lesson."
-      );
+      console.error("[lesson-generate] client_generation_failed", { message });
+      setLessonDiagnostics((prev) => [
+        ...prev,
+        `client_error: ${message}`,
+      ]);
+      setLessonError(message);
+      setError(message);
     } finally {
       if (!isGenerating) {
         setIsLessonGenerating(false);

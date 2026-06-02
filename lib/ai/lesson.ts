@@ -6,41 +6,112 @@ import type {
 } from "../../types/lesson";
 import { normalizeLessonOutput } from "../validators/lesson";
 
-export async function generateLesson(prompt: string): Promise<string> {
+const LESSON_MODEL = "gpt-4o-mini";
+const LESSON_MAX_OUTPUT_TOKENS = 10000;
+const LESSON_OPENAI_TIMEOUT_MS = 60_000;
+
+export type LessonGenerationModelResult = {
+  text: string;
+  durationMs: number;
+  finishReasons: string[];
+  usage: {
+    prompt_tokens?: number;
+    completion_tokens?: number;
+    total_tokens?: number;
+  } | null;
+  estimatedOutputTokens: number;
+};
+
+function isOpenAITimeoutError(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  const candidate = error as { name?: unknown; code?: unknown; message?: unknown };
+  const name = typeof candidate.name === "string" ? candidate.name : "";
+  const code = typeof candidate.code === "string" ? candidate.code : "";
+  const message = typeof candidate.message === "string" ? candidate.message : "";
+
+  return (
+    name === "APITimeoutError" ||
+    code === "ETIMEDOUT" ||
+    code === "ECONNABORTED" ||
+    message.toLowerCase().includes("timeout")
+  );
+}
+
+export function isLessonGenerationTimeoutError(error: unknown): boolean {
+  return error instanceof Error && error.message === "OPENAI_TIMEOUT";
+}
+
+export function isLessonGenerationMaxTokenError(error: unknown): boolean {
+  return error instanceof Error && error.message === "OPENAI_MAX_TOKENS_EXHAUSTED";
+}
+
+export async function generateLesson(prompt: string): Promise<LessonGenerationModelResult> {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     throw new Error("OPENAI_API_KEY_MISSING");
   }
 
-  const openai = new OpenAI({ apiKey });
-  const response = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    max_tokens: 4096,
-    temperature: 0.2,
-    response_format: { type: "json_object" },
-    messages: [
-      {
-        role: "system",
-        content:
-          "You design Business English lessons. Output must be strict JSON only and must follow all counts exactly.",
-      },
-      { role: "user", content: prompt },
-    ],
-  });
+  const startedAt = Date.now();
+  const openai = new OpenAI({ apiKey, timeout: LESSON_OPENAI_TIMEOUT_MS });
+  let response: Awaited<ReturnType<typeof openai.chat.completions.create>>;
+
+  try {
+    response = await openai.chat.completions.create({
+      model: LESSON_MODEL,
+      max_tokens: LESSON_MAX_OUTPUT_TOKENS,
+      temperature: 0.2,
+      response_format: { type: "json_object" },
+      messages: [
+        {
+          role: "system",
+          content:
+            "You design Business English lessons. Output must be strict JSON only and must follow all counts exactly.",
+        },
+        { role: "user", content: prompt },
+      ],
+    });
+  } catch (error) {
+    if (isOpenAITimeoutError(error)) {
+      throw new Error("OPENAI_TIMEOUT");
+    }
+    throw error;
+  }
 
   const text = response.choices
     .map((choice) => choice.message?.content ?? "")
     .join("\n")
     .trim();
+  const finishReasons = response.choices
+    .map((choice) => choice.finish_reason)
+    .filter((value): value is NonNullable<typeof value> => value !== null)
+    .map((value) => String(value));
+  const durationMs = Date.now() - startedAt;
+  const usage = response.usage
+    ? {
+        prompt_tokens: response.usage.prompt_tokens,
+        completion_tokens: response.usage.completion_tokens,
+        total_tokens: response.usage.total_tokens,
+      }
+    : null;
 
   if (!text) {
     throw new Error("OPENAI_EMPTY_RESPONSE");
   }
 
-  return text;
+  if (finishReasons.includes("length")) {
+    throw new Error("OPENAI_MAX_TOKENS_EXHAUSTED");
+  }
+
+  return {
+    text,
+    durationMs,
+    finishReasons,
+    usage,
+    estimatedOutputTokens: Math.ceil(text.length / 4),
+  };
 }
 
-export async function repairLesson(prompt: string): Promise<string> {
+export async function repairLesson(prompt: string): Promise<LessonGenerationModelResult> {
   return generateLesson(prompt);
 }
 
