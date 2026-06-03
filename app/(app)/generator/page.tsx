@@ -153,23 +153,19 @@ function isTranscriptFailureCode(value: string | null): boolean {
 }
 
 function getTranscriptFallbackMessage(code: string | null, apiMessage: string | null) {
-  if (code === "no_captions") {
-    return "Have a transcript? Paste it to speed things up.";
+  if (
+    code === "no_captions" ||
+    code === "captions_disabled" ||
+    code === "unsupported_video" ||
+    code === "transcript_fetch_failed"
+  ) {
+    return "Could not fetch transcript automatically. You can paste it manually.";
   }
 
-  if (code === "captions_disabled") {
-    return "Have a transcript? Paste it to speed things up.";
-  }
-
-  if (code === "unsupported_video") {
-    return "Have a transcript? Paste it to speed things up.";
-  }
-
-  if (code === "transcript_fetch_failed") {
-    return "Have a transcript? Paste it to speed things up.";
-  }
-
-  return apiMessage || "Have a transcript? Paste it to speed things up.";
+  return (
+    apiMessage ||
+    "Could not fetch transcript automatically. You can paste it manually."
+  );
 }
 
 function wait(ms: number) {
@@ -193,7 +189,41 @@ type YouTubeJobStatusPayload = {
   lesson_url?: string | null;
   message?: string | null;
   error?: string;
+  last_error_code?: string | null;
+  last_error_message?: string | null;
 };
+
+function getYouTubeLoadingCopy(
+  lessonStage: LessonGenerationStage,
+  youtubeState: YouTubeGenerationState,
+  loadingPhase: LoadingPhase
+) {
+  if (lessonStage === "validating_url") {
+    return {
+      title: "Starting YouTube lesson...",
+      detail: "We are validating the video link and creating the lesson job.",
+    };
+  }
+
+  if (lessonStage === "extracting_transcript") {
+    return {
+      title: "Fetching transcript...",
+      detail: "We are checking available captions before building the lesson.",
+    };
+  }
+
+  if (youtubeState === "processing_extended" || loadingPhase === "almost_there") {
+    return {
+      title: "Generating lesson...",
+      detail: "The transcript step is taking longer than usual, but we are still checking.",
+    };
+  }
+
+  return {
+    title: "Generating lesson...",
+    detail: "We are checking the video, fetching the transcript, and preparing the lesson.",
+  };
+}
 
 export default function GeneratorPage() {
   const router = useRouter();
@@ -310,6 +340,12 @@ export default function GeneratorPage() {
   const handleYouTubeJobStatus = (
     payload: YouTubeJobStatusPayload
   ): boolean => {
+    console.info("[youtube-job-status] payload", {
+      status: payload.status ?? null,
+      lastErrorCode: payload.last_error_code ?? null,
+      hasLessonUrl: Boolean(payload.lesson_url),
+    });
+
     if (payload.status === "ready" && payload.lesson_url) {
       clearYoutubeTimers();
       setYoutubeGenerationState("ready");
@@ -329,6 +365,20 @@ export default function GeneratorPage() {
       setIsLessonGenerating(false);
       setLessonStage("transcript_unavailable");
       setYoutubeGenerationState("needs_transcript");
+      setLessonError(
+        getTranscriptFallbackMessage(
+          payload.last_error_code ?? null,
+          payload.last_error_message ?? payload.message ?? null
+        )
+      );
+      setLessonDiagnostics([
+        ...(payload.last_error_code
+          ? [`error_code: ${payload.last_error_code}`]
+          : []),
+        ...(payload.last_error_message
+          ? [`message: ${payload.last_error_message}`]
+          : []),
+      ]);
       setShowFallback(false);
       return true;
     }
@@ -481,6 +531,16 @@ export default function GeneratorPage() {
         detectedSource?.type === "youtube_url" && !trimmedManualTranscript
       );
 
+      console.info("[youtube-ui] source_detected", {
+        detectedType: detectedSource?.type ?? null,
+        requestPath: isYouTubeGeneration
+          ? "youtube_job"
+          : trimmedManualTranscript
+            ? "direct_with_manual_transcript"
+            : "direct_lesson_generate",
+        hasManualTranscript: Boolean(trimmedManualTranscript),
+      });
+
       if (isYouTubeGeneration) {
         setIsGenerating(true);
         setLoadingPhase("generating");
@@ -511,6 +571,13 @@ export default function GeneratorPage() {
         const jobPayload = (await jobResponse.json().catch(() => null)) as
           | { error?: string; id?: string; status_url?: string }
           | null;
+
+        console.info("[youtube-ui] job_create_response", {
+          status: jobResponse.status,
+          ok: jobResponse.ok,
+          hasJobId: Boolean(jobPayload?.id),
+          statusUrl: jobPayload?.status_url ?? null,
+        });
 
         if (!jobResponse.ok) {
           clearYoutubeTimers();
@@ -740,6 +807,12 @@ export default function GeneratorPage() {
     }
   };
 
+  const youtubeLoadingCopy = getYouTubeLoadingCopy(
+    lessonStage,
+    youtubeGenerationState,
+    loadingPhase
+  );
+
   return (
     <section className="mobile-page-shell">
       <div className="mx-auto max-w-[1120px]">
@@ -795,12 +868,10 @@ export default function GeneratorPage() {
                       <span className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--accent)]" />
                       <div>
                         <p className="text-sm font-semibold text-[var(--ink)]">
-                          {loadingPhase === "almost_there"
-                            ? "We’re almost there..."
-                            : "Generating your lesson..."}
+                          {youtubeLoadingCopy.title}
                         </p>
                         <p className="text-xs text-[var(--ink-faint)]">
-                          We are checking the video and preparing the lesson.
+                          {youtubeLoadingCopy.detail}
                         </p>
                       </div>
                     </div>
@@ -863,7 +934,7 @@ export default function GeneratorPage() {
                         rows={8}
                       />
                       <p className="text-xs text-[var(--ink-faint)]">
-                        Have a transcript? Paste it to speed things up.
+                        Could not fetch transcript automatically. You can paste it manually.
                       </p>
                       {process.env.NODE_ENV !== "production" &&
                       lessonDiagnostics.length > 0 ? (
@@ -1028,7 +1099,8 @@ export default function GeneratorPage() {
                 {!isLessonGenerating &&
                 youtubeGenerationState === "needs_transcript" ? (
                   <p className="text-xs text-[var(--accent-warm)]">
-                    Have a transcript? Paste it to speed things up.
+                    {lessonError ||
+                      "Could not fetch transcript automatically. You can paste it manually."}
                   </p>
                 ) : null}
               </div>

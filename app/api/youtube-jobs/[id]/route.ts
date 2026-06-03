@@ -55,6 +55,12 @@ export async function GET(
       id: params.id,
       payload,
     });
+    console.info("[youtube-job-status] response", {
+      id: params.id,
+      status: payload.status,
+      lastErrorCode: payload.last_error_code,
+      hasLessonUrl: Boolean(payload.lesson_url),
+    });
 
     return NextResponse.json(
       payload,

@@ -25,6 +25,10 @@ function normalizeSourceUrl(payload: YouTubeJobCreatePayload): string {
 
 export async function POST(request: Request) {
   const authUser = await getRequestAuthUser(request);
+  console.info("[youtube-job] auth_resolved", {
+    authenticated: Boolean(authUser),
+    userId: authUser?.id ?? null,
+  });
 
   let payload: YouTubeJobCreatePayload;
 
@@ -40,6 +44,11 @@ export async function POST(request: Request) {
   const sourceUrl = normalizeSourceUrl(payload);
   const email = payload.email?.trim().toLowerCase() || "";
   const parsed = parseYouTubeVideoIdDetailed(sourceUrl);
+  console.info("[youtube-job] source_received", {
+    hasSourceUrl: Boolean(sourceUrl),
+    parsed: parsed.ok,
+    videoId: parsed.ok ? parsed.videoId : null,
+  });
 
   if (!parsed.ok) {
     return NextResponse.json(
@@ -83,7 +92,9 @@ export async function POST(request: Request) {
       { status: 202 }
     );
   } catch (error) {
-    console.error("[youtube-job] create_failed", error);
+    console.error("[youtube-job] create_failed", {
+      message: error instanceof Error ? error.message : "unknown_create_error",
+    });
     return NextResponse.json(
       { error: "We couldn’t start your lesson. Try again." },
       { status: 500 }

@@ -173,6 +173,12 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
       sourceKind: "youtube_transcript",
       videoId: claimed.video_id,
     });
+    console.info("[youtube-processor] generation_start", {
+      id: claimed.id,
+      videoId: claimed.video_id,
+      transcriptLength: transcriptText.length,
+      hasTranscriptSegments: Boolean(transcriptSegments?.length),
+    });
     const generated = await generateLesson(prompt);
     console.info("[youtube-job] openai_response", {
       id: claimed.id,
@@ -227,6 +233,12 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
     console.error("[youtube-job] processing_failed", {
       id: updated.id,
       status: updated.status,
+      message,
+    });
+    console.error("[youtube-processor] generation_failure", {
+      id: updated.id,
+      status: updated.status,
+      attempts: updated.attempts,
       message,
     });
 
