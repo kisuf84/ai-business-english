@@ -8,7 +8,7 @@ import { normalizeLessonOutput } from "../validators/lesson";
 
 const LESSON_MODEL = "gpt-4o-mini";
 const LESSON_MAX_OUTPUT_TOKENS = 10000;
-const LESSON_OPENAI_TIMEOUT_MS = 45_000;
+const LESSON_OPENAI_TIMEOUT_MS = 120_000;
 
 export type LessonGenerationModelResult = {
   text: string;
@@ -84,7 +84,7 @@ export async function generateLesson(prompt: string): Promise<LessonGenerationMo
     );
   } catch (error) {
     if (isOpenAITimeoutError(error)) {
-      throw new Error("OPENAI_TIMEOUT");
+      throw new Error("OPENAI_TIMEOUT", { cause: error });
     }
     throw error;
   }
