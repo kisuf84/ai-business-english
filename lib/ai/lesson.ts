@@ -8,7 +8,7 @@ import { normalizeLessonOutput } from "../validators/lesson";
 
 const LESSON_MODEL = "gpt-4o-mini";
 const LESSON_MAX_OUTPUT_TOKENS = 10000;
-const LESSON_OPENAI_TIMEOUT_MS = 60_000;
+const LESSON_OPENAI_TIMEOUT_MS = 45_000;
 
 export type LessonGenerationModelResult = {
   text: string;
@@ -31,9 +31,11 @@ function isOpenAITimeoutError(error: unknown): boolean {
 
   return (
     name === "APITimeoutError" ||
+    name === "APIConnectionTimeoutError" ||
     code === "ETIMEDOUT" ||
     code === "ECONNABORTED" ||
-    message.toLowerCase().includes("timeout")
+    message.toLowerCase().includes("timeout") ||
+    message.toLowerCase().includes("timed out")
   );
 }
 
@@ -52,24 +54,34 @@ export async function generateLesson(prompt: string): Promise<LessonGenerationMo
   }
 
   const startedAt = Date.now();
-  const openai = new OpenAI({ apiKey, timeout: LESSON_OPENAI_TIMEOUT_MS });
+  const openai = new OpenAI({
+    apiKey,
+    timeout: LESSON_OPENAI_TIMEOUT_MS,
+    maxRetries: 0,
+  });
   let response: Awaited<ReturnType<typeof openai.chat.completions.create>>;
 
   try {
-    response = await openai.chat.completions.create({
-      model: LESSON_MODEL,
-      max_tokens: LESSON_MAX_OUTPUT_TOKENS,
-      temperature: 0.2,
-      response_format: { type: "json_object" },
-      messages: [
-        {
-          role: "system",
-          content:
-            "You design Business English lessons. Output must be strict JSON only and must follow all counts exactly.",
-        },
-        { role: "user", content: prompt },
-      ],
-    });
+    response = await openai.chat.completions.create(
+      {
+        model: LESSON_MODEL,
+        max_tokens: LESSON_MAX_OUTPUT_TOKENS,
+        temperature: 0.2,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content:
+              "You design Business English lessons. Output must be strict JSON only and must follow all counts exactly.",
+          },
+          { role: "user", content: prompt },
+        ],
+      },
+      {
+        timeout: LESSON_OPENAI_TIMEOUT_MS,
+        maxRetries: 0,
+      }
+    );
   } catch (error) {
     if (isOpenAITimeoutError(error)) {
       throw new Error("OPENAI_TIMEOUT");
