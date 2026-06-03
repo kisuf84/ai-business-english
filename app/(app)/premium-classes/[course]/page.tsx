@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Card from "../../../../components/shared/Card";
+import PremiumModuleList from "../../../../components/premium/PremiumModuleList";
 import { getPremiumCourse, listPremiumCourses } from "../../../../lib/premiumClasses";
 
 export const dynamic = "force-static";
@@ -41,7 +42,7 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
             <div>
               <p className="text-sm font-semibold text-[var(--ink)]">{course.subtitle}</p>
               <p className="mt-1 text-sm text-[var(--ink-muted)]">
-                {course.moduleCount} modules available
+                Module 1 is available as a preview. Other modules require premium access.
               </p>
             </div>
             <Link
@@ -53,31 +54,7 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
           </div>
         </Card>
 
-        <div className="mt-6 grid gap-4">
-          {course.modules.map((module) => (
-            <Link
-              key={module.slug}
-              href={`/premium-classes/${course.slug}/${module.slug}`}
-              className="group block"
-            >
-              <Card className="lumen-card-link p-5 sm:p-6">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="lumen-label">
-                      Module {module.number}
-                    </p>
-                    <h2 className="mobile-safe-wrap lumen-heading mt-2 text-xl leading-snug text-[var(--ink)]">
-                      {module.title}
-                    </h2>
-                  </div>
-                  <span className="lumen-secondary-action px-3 py-1 text-[11px]">
-                    View
-                  </span>
-                </div>
-              </Card>
-            </Link>
-          ))}
-        </div>
+        <PremiumModuleList course={course} />
       </div>
     </section>
   );

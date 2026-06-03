@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Card from "../../../../../components/shared/Card";
+import PremiumModuleReader from "../../../../../components/premium/PremiumModuleReader";
 import { getPremiumModule, listPremiumCourses } from "../../../../../lib/premiumClasses";
 
 export const dynamic = "force-static";
@@ -31,10 +32,53 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
   const previousModule = currentIndex > 0 ? course.modules[currentIndex - 1] : null;
   const nextModule =
     currentIndex < course.modules.length - 1 ? course.modules[currentIndex + 1] : null;
+  const isPreviewModule = currentIndex === 0;
+
+  if (!isPreviewModule) {
+    return (
+      <section className="mobile-page-shell">
+        <div className="lumen-page">
+          <p className="lumen-chip">Premium Classes</p>
+          <h1 className="mobile-safe-wrap lumen-page-title mt-4">
+            Premium access required
+          </h1>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--ink-muted)]">
+            Module {module.number} is part of the premium course library. Module 1 is
+            available as a free preview for now.
+          </p>
+
+          <Card className="mt-6 p-5 sm:p-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm font-bold text-[var(--ink)]">{module.title}</p>
+                <p className="mt-1 text-sm text-[var(--ink-muted)]">
+                  Payment access is not enabled yet.
+                </p>
+              </div>
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <Link
+                  href={`/premium-classes/${course.slug}/${course.modules[0].slug}`}
+                  className="lumen-primary-action px-4 py-2 text-xs"
+                >
+                  Open preview
+                </Link>
+                <Link
+                  href={`/premium-classes/${course.slug}`}
+                  className="lumen-secondary-action"
+                >
+                  Back to Course
+                </Link>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="mobile-page-shell">
-      <div className="lumen-page-wide">
+      <div className="mx-auto w-full max-w-[1600px]">
         <div className="mb-6 sm:mb-8">
           <p className="lumen-chip">
             Premium Classes
@@ -47,7 +91,7 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
           </p>
         </div>
 
-        <Card className="p-4 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap gap-2">
               <span className="lumen-chip">
@@ -66,15 +110,7 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
           </div>
         </Card>
 
-        <Card className="mt-6 overflow-hidden p-2 sm:p-4">
-          <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-white">
-            <iframe
-              title={module.title}
-              src={module.iframeSrc}
-              className="h-[68vh] min-h-[360px] w-full border-0 sm:h-[80vh] sm:min-h-[720px]"
-            />
-          </div>
-        </Card>
+        <PremiumModuleReader title={module.title} iframeSrc={module.iframeSrc} />
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {previousModule ? (
@@ -89,12 +125,9 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
           )}
 
           {nextModule ? (
-            <Link
-              href={`/premium-classes/${course.slug}/${nextModule.slug}`}
-              className="lumen-primary-action px-4 py-2 text-xs"
-            >
-              Next: Module {nextModule.number}
-            </Link>
+            <span className="lumen-secondary-action opacity-70">
+              Next module locked
+            </span>
           ) : null}
         </div>
       </div>

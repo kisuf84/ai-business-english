@@ -39,6 +39,25 @@ type LoadingPhase = "generating" | "almost_there" | "fallback";
 const YOUTUBE_ALMOST_THERE_DELAY_MS = 6000;
 const YOUTUBE_POLL_INTERVAL_MS = 2000;
 const YOUTUBE_FALLBACK_DELAY_MS = 12000;
+const GENERATION_PROGRESS_COPY = [
+  {
+    title: "Preparing your lesson...",
+    detail: "We are organizing the brief and checking the required lesson structure.",
+  },
+  {
+    title: "Analyzing your source...",
+    detail: "We are reading the topic, source, or transcript before building activities.",
+  },
+  {
+    title: "Generating structured activities...",
+    detail: "We are creating vocabulary, reading, comprehension, grammar, role play, and quiz sections.",
+  },
+  {
+    title: "Finalizing your lesson...",
+    detail: "We are validating the lesson shape and preparing the preview.",
+  },
+];
+const GENERATION_PROGRESS_DELAYS_MS = [0, 8000, 30000, 65000];
 
 const initialLessonForm: LessonGenerationInput = {
   topic: "",
@@ -159,12 +178,12 @@ function getTranscriptFallbackMessage(code: string | null, apiMessage: string | 
     code === "unsupported_video" ||
     code === "transcript_fetch_failed"
   ) {
-    return "Could not fetch transcript automatically. You can paste it manually.";
+    return "We couldn’t access this video’s transcript automatically. It may be region-restricted, private, age-restricted, bot-protected, or have captions disabled. You can paste the transcript manually to continue.";
   }
 
   return (
     apiMessage ||
-    "Could not fetch transcript automatically. You can paste it manually."
+    "We couldn’t access this video’s transcript automatically. It may be region-restricted, private, age-restricted, bot-protected, or have captions disabled. You can paste the transcript manually to continue."
   );
 }
 
@@ -196,33 +215,39 @@ type YouTubeJobStatusPayload = {
 function getYouTubeLoadingCopy(
   lessonStage: LessonGenerationStage,
   youtubeState: YouTubeGenerationState,
-  loadingPhase: LoadingPhase
+  loadingPhase: LoadingPhase,
+  progressIndex: number
 ) {
+  const stagedCopy =
+    GENERATION_PROGRESS_COPY[
+      Math.min(Math.max(progressIndex, 0), GENERATION_PROGRESS_COPY.length - 1)
+    ];
+
   if (lessonStage === "validating_url") {
     return {
-      title: "Starting YouTube lesson...",
+      title: stagedCopy.title,
       detail: "We are validating the video link and creating the lesson job.",
     };
   }
 
   if (lessonStage === "extracting_transcript") {
     return {
-      title: "Fetching transcript...",
+      title: stagedCopy.title,
       detail: "We are checking available captions before building the lesson.",
     };
   }
 
   if (youtubeState === "processing_extended" || loadingPhase === "almost_there") {
     return {
-      title: "Generating lesson...",
-      detail: "The transcript step is taking longer than usual, but we are still checking.",
+      title: stagedCopy.title,
+      detail:
+        loadingPhase === "fallback"
+          ? "This can take 60–90 seconds for longer sources. We are still checking for the finished lesson."
+          : stagedCopy.detail,
     };
   }
 
-  return {
-    title: "Generating lesson...",
-    detail: "We are checking the video, fetching the transcript, and preparing the lesson.",
-  };
+  return stagedCopy;
 }
 
 export default function GeneratorPage() {
@@ -257,6 +282,8 @@ export default function GeneratorPage() {
   const almostThereTimeoutRef = useRef<number | null>(null);
   const fallbackTimeoutRef = useRef<number | null>(null);
   const readyRedirectTimeoutRef = useRef<number | null>(null);
+  const generationProgressTimeoutsRef = useRef<number[]>([]);
+  const [generationProgressIndex, setGenerationProgressIndex] = useState(0);
 
   useEffect(() => {
     let active = true;
@@ -291,8 +318,30 @@ export default function GeneratorPage() {
       if (readyRedirectTimeoutRef.current) {
         window.clearTimeout(readyRedirectTimeoutRef.current);
       }
+      generationProgressTimeoutsRef.current.forEach((timeoutId) => {
+        window.clearTimeout(timeoutId);
+      });
+      generationProgressTimeoutsRef.current = [];
     };
   }, []);
+
+  const clearGenerationProgressTimers = () => {
+    generationProgressTimeoutsRef.current.forEach((timeoutId) => {
+      window.clearTimeout(timeoutId);
+    });
+    generationProgressTimeoutsRef.current = [];
+  };
+
+  const startGenerationProgressTimers = () => {
+    clearGenerationProgressTimers();
+    setGenerationProgressIndex(0);
+    generationProgressTimeoutsRef.current = GENERATION_PROGRESS_DELAYS_MS.map(
+      (delay, index) =>
+        window.setTimeout(() => {
+          setGenerationProgressIndex(index);
+        }, delay)
+    );
+  };
 
   const clearYoutubeTimers = () => {
     if (pollingIntervalRef.current) {
@@ -348,6 +397,7 @@ export default function GeneratorPage() {
 
     if (payload.status === "ready" && payload.lesson_url) {
       clearYoutubeTimers();
+      clearGenerationProgressTimers();
       setYoutubeGenerationState("ready");
       setIsGenerating(false);
       setIsLessonGenerating(false);
@@ -361,6 +411,7 @@ export default function GeneratorPage() {
 
     if (payload.status === "needs_transcript") {
       clearYoutubeTimers();
+      clearGenerationProgressTimers();
       setIsGenerating(false);
       setIsLessonGenerating(false);
       setLessonStage("transcript_unavailable");
@@ -396,6 +447,7 @@ export default function GeneratorPage() {
       handleYouTubeJobStatus(payload);
     } catch (pollError) {
       clearYoutubeTimers();
+      clearGenerationProgressTimers();
       const message =
         pollError instanceof Error
           ? pollError.message
@@ -447,6 +499,7 @@ export default function GeneratorPage() {
           );
         } catch (fallbackError) {
           clearYoutubeTimers();
+          clearGenerationProgressTimers();
           const message =
             fallbackError instanceof Error
               ? fallbackError.message
@@ -514,6 +567,7 @@ export default function GeneratorPage() {
     setIsRedirectingToLesson(false);
     setShowFallback(false);
     setLoadingPhase("generating");
+    startGenerationProgressTimers();
     clearYoutubeTimers();
 
     try {
@@ -548,6 +602,7 @@ export default function GeneratorPage() {
         setLessonStage("validating_url");
         if (!parseYouTubeVideoId(sourceUrl)) {
           clearYoutubeTimers();
+          clearGenerationProgressTimers();
           setIsGenerating(false);
           setLessonStage("generation_failed");
           setYoutubeGenerationState("failed");
@@ -581,6 +636,7 @@ export default function GeneratorPage() {
 
         if (!jobResponse.ok) {
           clearYoutubeTimers();
+          clearGenerationProgressTimers();
           setIsGenerating(false);
           setLessonStage("generation_failed");
           setYoutubeGenerationState("failed");
@@ -688,11 +744,13 @@ export default function GeneratorPage() {
             setLessonStage("transcript_unavailable");
             setYoutubeGenerationState("needs_transcript");
             setLessonError(getTranscriptFallbackMessage(errorCode, errorMessage));
+            clearGenerationProgressTimers();
             return;
           }
           setLessonStage("generation_failed");
           setYoutubeGenerationState("failed");
           setLessonError(errorMessage || "We could not generate the lesson.");
+          clearGenerationProgressTimers();
           return;
         }
 
@@ -711,8 +769,10 @@ export default function GeneratorPage() {
       setLessonResult(data);
       setYoutubeGenerationState(isYouTubeGeneration ? "ready" : "idle");
       setLessonStage("idle");
+      clearGenerationProgressTimers();
     } catch (error) {
       clearYoutubeTimers();
+      clearGenerationProgressTimers();
       setIsGenerating(false);
       setLessonStage("generation_failed");
       setYoutubeGenerationState("failed");
@@ -810,8 +870,18 @@ export default function GeneratorPage() {
   const youtubeLoadingCopy = getYouTubeLoadingCopy(
     lessonStage,
     youtubeGenerationState,
-    loadingPhase
+    loadingPhase,
+    generationProgressIndex
   );
+  const generationLoadingCopy =
+    isGenerating || isLessonGenerating
+      ? getYouTubeLoadingCopy(
+          lessonStage,
+          youtubeGenerationState,
+          loadingPhase,
+          generationProgressIndex
+        )
+      : youtubeLoadingCopy;
 
   return (
     <section className="mobile-page-shell">
@@ -862,16 +932,16 @@ export default function GeneratorPage() {
             ) : null}
             <form onSubmit={handleLessonSubmit} action="" method="post">
               <div className="grid min-h-[520px] gap-5">
-                {isGenerating ? (
+                {isGenerating || isLessonGenerating ? (
                   <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass-strong)] p-4 transition-all duration-300">
                     <div className="flex items-center gap-3">
                       <span className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--accent)]" />
                       <div>
                         <p className="text-sm font-semibold text-[var(--ink)]">
-                          {youtubeLoadingCopy.title}
+                          {generationLoadingCopy.title}
                         </p>
                         <p className="text-xs text-[var(--ink-faint)]">
-                          {youtubeLoadingCopy.detail}
+                          {generationLoadingCopy.detail}
                         </p>
                       </div>
                     </div>
@@ -879,9 +949,9 @@ export default function GeneratorPage() {
                 ) : null}
 
                 <fieldset
-                  disabled={isGenerating}
+                  disabled={isGenerating || isLessonGenerating}
                   className={`grid gap-4 transition-all duration-300 ${
-                    isGenerating
+                    isGenerating || isLessonGenerating
                       ? "pointer-events-none opacity-45"
                       : "opacity-100"
                   }`}
@@ -934,7 +1004,7 @@ export default function GeneratorPage() {
                         rows={8}
                       />
                       <p className="text-xs text-[var(--ink-faint)]">
-                        Could not fetch transcript automatically. You can paste it manually.
+                        We couldn’t access this video’s transcript automatically. It may be region-restricted, private, age-restricted, bot-protected, or have captions disabled. You can paste the transcript manually to continue.
                       </p>
                       {process.env.NODE_ENV !== "production" &&
                       lessonDiagnostics.length > 0 ? (
@@ -1100,7 +1170,7 @@ export default function GeneratorPage() {
                 youtubeGenerationState === "needs_transcript" ? (
                   <p className="text-xs text-[var(--accent-warm)]">
                     {lessonError ||
-                      "Could not fetch transcript automatically. You can paste it manually."}
+                      "We couldn’t access this video’s transcript automatically. It may be region-restricted, private, age-restricted, bot-protected, or have captions disabled. You can paste the transcript manually to continue."}
                   </p>
                 ) : null}
               </div>

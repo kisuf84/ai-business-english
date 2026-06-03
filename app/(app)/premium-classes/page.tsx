@@ -1,5 +1,4 @@
-import Link from "next/link";
-import Card from "../../../components/shared/Card";
+import PremiumCourseSearch from "../../../components/premium/PremiumCourseSearch";
 import { listPremiumCourses } from "../../../lib/premiumClasses";
 
 export const dynamic = "force-static";
@@ -22,44 +21,7 @@ export default async function PremiumClassesPage() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {courses.map((course) => (
-            <Link
-              key={course.slug}
-              href={`/premium-classes/${course.slug}`}
-              className="group block"
-            >
-              <Card className="lumen-card-link h-full p-5 sm:p-6">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="lumen-label">
-                      {course.subtitle}
-                    </p>
-                    <h2 className="mobile-safe-wrap lumen-heading mt-2 text-xl leading-snug text-[var(--ink)]">
-                      {course.title}
-                    </h2>
-                  </div>
-                  <span className="lumen-secondary-action px-3 py-1 text-[11px]">
-                    Open
-                  </span>
-                </div>
-
-                <p className="mobile-safe-wrap mt-4 text-sm leading-6 text-[var(--ink-muted)]">
-                  {course.description}
-                </p>
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <span className="lumen-chip">
-                    {course.moduleCount} modules
-                  </span>
-                  <span className="lumen-chip">
-                    HTML viewer
-                  </span>
-                </div>
-              </Card>
-            </Link>
-          ))}
-        </div>
+        <PremiumCourseSearch courses={courses} />
       </div>
     </section>
   );
