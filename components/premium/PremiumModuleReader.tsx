@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../shared/Button";
 
 type PremiumModuleReaderProps = {
@@ -14,6 +14,15 @@ export default function PremiumModuleReader({
 }: PremiumModuleReaderProps) {
   const readerRef = useRef<HTMLDivElement | null>(null);
   const [isFocusMode, setIsFocusMode] = useState(false);
+
+  useEffect(() => {
+    const syncFocusMode = () => {
+      setIsFocusMode(document.fullscreenElement === readerRef.current);
+    };
+
+    document.addEventListener("fullscreenchange", syncFocusMode);
+    return () => document.removeEventListener("fullscreenchange", syncFocusMode);
+  }, []);
 
   const enterFocusMode = async () => {
     const node = readerRef.current;
@@ -43,18 +52,22 @@ export default function PremiumModuleReader({
   return (
     <div
       ref={readerRef}
-      className={`mt-6 overflow-hidden border border-[var(--border)] bg-[var(--surface)] ${
+      className={`min-h-0 flex-1 overflow-hidden bg-[var(--surface)] ${
         isFocusMode
-          ? "fixed inset-0 z-50 rounded-none p-2 sm:p-4"
-          : "rounded-[var(--radius-md)] p-1 sm:p-2"
+          ? "fixed inset-0 z-50 m-0 flex flex-col rounded-none p-0"
+          : "flex flex-col border-t border-[var(--border)]"
       }`}
     >
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border)] px-3 py-3 sm:px-4">
+      <div
+        className={`shrink-0 items-center justify-between gap-3 border-b border-[var(--border)] bg-[var(--surface)] px-3 py-2 sm:px-4 ${
+          isFocusMode ? "flex" : "flex flex-wrap"
+        }`}
+      >
         <div className="min-w-0">
           <p className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
             Focus reader
           </p>
-          <p className="mobile-safe-wrap mt-1 text-sm font-bold text-[var(--ink)]">
+          <p className="mobile-safe-wrap mt-0.5 text-xs font-bold text-[var(--ink)] sm:text-sm">
             {title}
           </p>
         </div>
@@ -71,10 +84,10 @@ export default function PremiumModuleReader({
       <iframe
         title={title}
         src={iframeSrc}
-        className={`w-full border-0 bg-white ${
+        className={`min-h-0 w-full flex-1 border-0 bg-white ${
           isFocusMode
-            ? "h-[calc(100vh-86px)]"
-            : "h-[72vh] min-h-[420px] sm:h-[84vh] sm:min-h-[760px]"
+            ? "h-[calc(100dvh-65px)]"
+            : "h-full"
         }`}
       />
     </div>

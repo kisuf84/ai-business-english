@@ -5,6 +5,7 @@ import type {
 } from "../../../../types/course";
 import { validateCoursePayload } from "../../../../lib/validators/course";
 import { createCourse } from "../../../../lib/data/courses";
+import { getRequestAuthUser } from "../../../../lib/supabase/auth";
 
 const REQUIRED_FIELDS_ERROR = "Please complete all required fields";
 const PROCESSING_ERROR = "We couldn’t process your request. Try again.";
@@ -31,6 +32,11 @@ function mockCourseResponse(
 }
 
 export async function POST(request: Request) {
+  const authUser = await getRequestAuthUser(request);
+  if (!authUser) {
+    return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+  }
+
   try {
     const payload = (await request.json()) as CourseGenerationInput;
     const normalizedPayload: CourseGenerationInput = {
@@ -57,7 +63,7 @@ export async function POST(request: Request) {
     await createCourse({
       input: normalizedPayload,
       output,
-      user_id: null,
+      user_id: authUser.id,
     });
 
     return NextResponse.json(output);

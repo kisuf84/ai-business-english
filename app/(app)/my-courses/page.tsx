@@ -1,15 +1,24 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 import Card from "../../../components/shared/Card";
 import { listCourses } from "../../../lib/data/courses";
+import { getAuthUserFromCookieHeader } from "../../../lib/supabase/auth";
 
 export default async function MyCoursesPage() {
   let courses = [] as Awaited<ReturnType<typeof listCourses>>;
   let loadError: string | null = null;
+  const authUser = await getAuthUserFromCookieHeader(cookies().toString());
 
-  try {
-    courses = await listCourses();
-  } catch {
-    loadError = "We could not load courses right now.";
+  if (!authUser) {
+    loadError = "Please sign in to view your courses.";
+  }
+
+  if (authUser) {
+    try {
+      courses = await listCourses(authUser.id);
+    } catch {
+      loadError = "We could not load courses right now.";
+    }
   }
 
   return (

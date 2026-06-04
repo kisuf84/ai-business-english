@@ -5,6 +5,8 @@ import Link from "next/link";
 import Card from "../../../../components/shared/Card";
 import type { LessonGenerationOutput } from "../../../../types/lesson";
 import { normalizeLessonOutput } from "../../../../lib/validators/lesson";
+import { cookies } from "next/headers";
+import { getAuthUserFromCookieHeader } from "../../../../lib/supabase/auth";
 
 function formatDate(value: string | null | undefined) {
   if (!value) return "Unknown";
@@ -61,11 +63,16 @@ export default async function LessonDetailPage({
   const showSaved = searchParams?.saved === "1";
   const showDuplicated = searchParams?.duplicated === "1";
   const showArchived = searchParams?.archived === "1";
+  const authUser = await getAuthUserFromCookieHeader(cookies().toString());
 
-  try {
-    lessonRecord = await getLessonById(params.id);
-  } catch {
-    error = "We could not load this lesson right now.";
+  if (!authUser) {
+    error = "Please sign in to view this lesson.";
+  } else {
+    try {
+      lessonRecord = await getLessonById(params.id, authUser.id);
+    } catch {
+      error = "We could not load this lesson right now.";
+    }
   }
 
   const parsedLesson = lessonRecord

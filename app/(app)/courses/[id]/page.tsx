@@ -2,6 +2,8 @@ import { getCourseById } from "../../../../lib/data/courses";
 import type { CourseModule } from "../../../../types/course";
 import Link from "next/link";
 import Card from "../../../../components/shared/Card";
+import { cookies } from "next/headers";
+import { getAuthUserFromCookieHeader } from "../../../../lib/supabase/auth";
 
 function getSafeModules(value: unknown): CourseModule[] {
   if (!value || typeof value !== "object") return [];
@@ -33,11 +35,16 @@ export default async function CourseDetailPage({
 }) {
   let courseRecord = null;
   let error: string | null = null;
+  const authUser = await getAuthUserFromCookieHeader(cookies().toString());
 
-  try {
-    courseRecord = await getCourseById(params.id);
-  } catch {
-    error = "We could not load this course right now.";
+  if (!authUser) {
+    error = "Please sign in to view this course.";
+  } else {
+    try {
+      courseRecord = await getCourseById(params.id, authUser.id);
+    } catch {
+      error = "We could not load this course right now.";
+    }
   }
 
   const safeModules = getSafeModules(courseRecord?.outline_json);

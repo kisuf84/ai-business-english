@@ -101,3 +101,14 @@ export async function getRequestAuthUser(request: Request): Promise<SupabaseUser
     access_token: token,
   };
 }
+
+export async function getAuthUserFromCookieHeader(
+  cookieHeader: string
+): Promise<SupabaseUser | null> {
+  if (!cookieHeader.trim()) return null;
+  return getRequestAuthUser(
+    new Request("http://localhost", {
+      headers: { cookie: cookieHeader },
+    })
+  );
+}

@@ -36,7 +36,9 @@ const navGroups: NavGroup[] = [
   {
     label: "Library",
     items: [
+      { href: "/my-courses", label: "My courses", icon: "MC" },
       { href: "/lessons", label: "Lesson library", icon: "LE" },
+      { href: "/premium-classes", label: "Premium Classes", icon: "PC" },
       { href: "/for-teachers", label: "For Teachers", icon: "FT" },
     ],
   },
@@ -148,6 +150,8 @@ export default function AppShell({ children }: AppShellProps) {
   const [isSigningOut, setIsSigningOut] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const isPremiumModuleReader =
+    /^\/premium-classes\/[^/]+\/[^/]+$/.test(pathname || "");
 
   const derivedPageTitle = pathname?.startsWith("/premium-classes")
     ? "Premium Classes"
@@ -353,7 +357,7 @@ export default function AppShell({ children }: AppShellProps) {
                 </p>
               </div>
 
-              <div className="mt-5 flex-1 overflow-y-auto pr-1">
+              <div className="mt-5 min-h-0 flex-1 overflow-y-auto pr-1">
                 {renderNavigation()}
               </div>
 
@@ -449,8 +453,22 @@ export default function AppShell({ children }: AppShellProps) {
             </div>
           </header>
 
-          <div className="px-[14px] py-[18px] sm:px-7 sm:py-7">
-            <div className="mx-auto max-w-[1400px]">{children}</div>
+          <div
+            className={
+              isPremiumModuleReader
+                ? "h-[calc(100dvh-var(--topbar-h))] overflow-hidden p-0"
+                : "px-[14px] py-[18px] sm:px-7 sm:py-7"
+            }
+          >
+            <div
+              className={
+                isPremiumModuleReader
+                  ? "h-full w-full max-w-none"
+                  : "mx-auto max-w-[1400px]"
+              }
+            >
+              {children}
+            </div>
           </div>
         </main>
       </div>
@@ -504,7 +522,7 @@ export default function AppShell({ children }: AppShellProps) {
             </div>
           </div>
 
-          <div className="mt-5 flex-1 overflow-y-auto pb-4">
+          <div className="mt-5 min-h-0 flex-1 overflow-y-auto pb-4">
             {renderNavigation(() => setIsMobileNavOpen(false))}
           </div>
 

@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
 import { archiveLesson } from "../../../../lib/data/lessons";
+import { getRequestAuthUser } from "../../../../lib/supabase/auth";
 
 const REQUIRED_FIELDS_ERROR = "Please complete all required fields";
 const PROCESSING_ERROR = "We couldn’t process your request. Try again.";
 
 export async function POST(request: Request) {
+  const authUser = await getRequestAuthUser(request);
+  if (!authUser) {
+    return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+  }
+
   let payload: { id?: string };
 
   try {
@@ -17,6 +23,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: REQUIRED_FIELDS_ERROR }, { status: 400 });
   }
 
-  await archiveLesson(payload.id);
-  return NextResponse.json({ status: "ok" });
+  try {
+    await archiveLesson(payload.id, authUser.id);
+    return NextResponse.json({ status: "ok" });
+  } catch {
+    return NextResponse.json({ error: "Lesson not found." }, { status: 404 });
+  }
 }

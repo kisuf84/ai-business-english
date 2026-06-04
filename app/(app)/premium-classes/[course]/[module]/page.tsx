@@ -77,60 +77,40 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
   }
 
   return (
-    <section className="mobile-page-shell">
-      <div className="mx-auto w-full max-w-[1600px]">
-        <div className="mb-6 sm:mb-8">
-          <p className="lumen-chip">
-            Premium Classes
-          </p>
-          <h1 className="mobile-safe-wrap lumen-page-title mt-4">
+    <section className="flex h-full min-h-0 w-full flex-col overflow-hidden">
+      <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-[var(--border)] bg-[var(--surface)] px-3 py-3 sm:px-5">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="lumen-chip">{course.title}</span>
+            <span className="lumen-chip">Module {module.number}</span>
+          </div>
+          <h1 className="mobile-safe-wrap mt-2 text-base font-extrabold leading-snug text-[var(--ink)] sm:text-lg">
             {module.title}
           </h1>
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--ink-muted)]">
-            {course.title} · Module {module.number} of {course.moduleCount}
-          </p>
         </div>
-
-        <Card className="p-4 sm:p-5">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap gap-2">
-              <span className="lumen-chip">
-                {course.title}
-              </span>
-              <span className="lumen-chip">
-                Module {module.number}
-              </span>
-            </div>
-            <Link
-              href={`/premium-classes/${course.slug}`}
-              className="lumen-secondary-action"
-            >
-              Back to Course
-            </Link>
-          </div>
-        </Card>
-
-        <PremiumModuleReader title={module.title} iframeSrc={module.iframeSrc} />
-
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-2">
           {previousModule ? (
             <Link
               href={`/premium-classes/${course.slug}/${previousModule.slug}`}
-              className="lumen-secondary-action"
+              className="lumen-secondary-action px-3 py-2 text-xs"
             >
-              Previous: Module {previousModule.number}
+              Previous
             </Link>
-          ) : (
-            <div />
-          )}
-
+          ) : null}
           {nextModule ? (
-            <span className="lumen-secondary-action opacity-70">
-              Next module locked
+            <span className="lumen-secondary-action px-3 py-2 text-xs opacity-70">
+              Next locked
             </span>
           ) : null}
+          <Link
+            href={`/premium-classes/${course.slug}`}
+            className="lumen-secondary-action px-3 py-2 text-xs"
+          >
+            Back to Course
+          </Link>
         </div>
       </div>
+      <PremiumModuleReader title={module.title} iframeSrc={module.iframeSrc} />
     </section>
   );
 }

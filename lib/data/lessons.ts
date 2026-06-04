@@ -189,51 +189,83 @@ export async function listLessons(
   return readAll();
 }
 
-export async function getLessonById(id: string): Promise<LessonRecord | null> {
+export async function getLessonById(
+  id: string,
+  userId?: string
+): Promise<LessonRecord | null> {
   if (isSupabaseEnabled()) {
+    const userFilter = userId ? `&user_id=eq.${encodeURIComponent(userId)}` : "";
     const results = await supabaseRest<LessonRecord[]>(
-      `lessons?select=*&id=eq.${id}`
+      `lessons?select=*&id=eq.${encodeURIComponent(id)}${userFilter}&limit=1`
     );
     return results[0] ?? null;
   }
 
   const lessons = readAll();
-  return lessons.find((lesson) => lesson.id === id) ?? null;
+  return (
+    lessons.find((lesson) => lesson.id === id && (!userId || lesson.user_id === userId)) ??
+    null
+  );
 }
 
-export async function deleteLesson(id: string): Promise<void> {
+export async function deleteLesson(id: string, userId: string): Promise<void> {
   if (isSupabaseEnabled()) {
-    await supabaseRest(`lessons?id=eq.${id}`, {
-      method: "DELETE",
-    });
+    const deletedRows = await supabaseRest<LessonRecord[]>(
+      `lessons?id=eq.${encodeURIComponent(id)}&user_id=eq.${encodeURIComponent(userId)}`,
+      {
+        method: "DELETE",
+        headers: { Prefer: "return=representation" },
+      }
+    );
+    if (!Array.isArray(deletedRows) || deletedRows.length === 0) {
+      throw new Error("lesson_delete_not_found");
+    }
     return;
   }
 
-  const lessons = readAll().filter((lesson) => lesson.id !== id);
+  const current = readAll();
+  const lessons = current.filter((lesson) => !(lesson.id === id && lesson.user_id === userId));
+  if (lessons.length === current.length) {
+    throw new Error("lesson_delete_not_found");
+  }
   writeAll(lessons);
 }
 
-export async function archiveLesson(id: string): Promise<void> {
+export async function archiveLesson(id: string, userId: string): Promise<void> {
   const updated_at = new Date().toISOString();
 
   if (isSupabaseEnabled()) {
-    await supabaseRest(`lessons?id=eq.${id}`, {
-      method: "PATCH",
-      body: JSON.stringify({ status: "archived", updated_at }),
-    });
+    const updatedRows = await supabaseRest<LessonRecord[]>(
+      `lessons?id=eq.${encodeURIComponent(id)}&user_id=eq.${encodeURIComponent(userId)}`,
+      {
+        method: "PATCH",
+        headers: { Prefer: "return=representation" },
+        body: JSON.stringify({ status: "archived", updated_at }),
+      }
+    );
+    if (!Array.isArray(updatedRows) || updatedRows.length === 0) {
+      throw new Error("lesson_archive_not_found");
+    }
     return;
   }
 
-  const lessons: LessonRecord[] = readAll().map((lesson) =>
-    lesson.id === id
-      ? { ...lesson, status: "archived" as const, updated_at }
-      : lesson
-  );
+  let found = false;
+  const lessons: LessonRecord[] = readAll().map((lesson) => {
+    if (lesson.id !== id || lesson.user_id !== userId) return lesson;
+    found = true;
+    return { ...lesson, status: "archived" as const, updated_at };
+  });
+  if (!found) {
+    throw new Error("lesson_archive_not_found");
+  }
   writeAll(lessons);
 }
 
-export async function duplicateLesson(id: string): Promise<LessonRecord | null> {
-  const original = await getLessonById(id);
+export async function duplicateLesson(
+  id: string,
+  userId: string
+): Promise<LessonRecord | null> {
+  const original = await getLessonById(id, userId);
   if (!original) {
     return null;
   }
@@ -241,7 +273,7 @@ export async function duplicateLesson(id: string): Promise<LessonRecord | null> 
   const now = new Date().toISOString();
   const originalWithVideo = original as LessonRecordWithVideo;
   const payload: Omit<LessonRecordWithVideo, "id"> = {
-    user_id: original.user_id,
+    user_id: userId,
     title: original.title,
     topic: original.topic,
     level: original.level,
@@ -282,16 +314,20 @@ export async function duplicateLesson(id: string): Promise<LessonRecord | null> 
 
 export async function updateLessonVisibility(
   id: string,
-  visibility: "private" | "public"
+  visibility: "private" | "public",
+  userId: string
 ): Promise<void> {
   const updated_at = new Date().toISOString();
 
   if (isSupabaseEnabled()) {
-    const updatedRows = await supabaseRest<LessonRecord[]>(`lessons?id=eq.${id}`, {
-      method: "PATCH",
-      headers: { Prefer: "return=representation" },
-      body: JSON.stringify({ visibility, updated_at }),
-    });
+    const updatedRows = await supabaseRest<LessonRecord[]>(
+      `lessons?id=eq.${encodeURIComponent(id)}&user_id=eq.${encodeURIComponent(userId)}`,
+      {
+        method: "PATCH",
+        headers: { Prefer: "return=representation" },
+        body: JSON.stringify({ visibility, updated_at }),
+      }
+    );
     if (!Array.isArray(updatedRows) || updatedRows.length === 0) {
       throw new Error("lesson_visibility_update_not_found");
     }
@@ -300,7 +336,7 @@ export async function updateLessonVisibility(
 
   let found = false;
   const lessons = readAll().map((lesson) => {
-    if (lesson.id !== id) return lesson;
+    if (lesson.id !== id || lesson.user_id !== userId) return lesson;
     found = true;
     return { ...lesson, visibility, updated_at };
   });

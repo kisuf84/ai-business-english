@@ -40,12 +40,12 @@ function isSupabaseEnabled() {
 export async function createCourse(params: {
   input: CourseGenerationInput;
   output: CourseGenerationOutput;
-  user_id?: string | null;
+  user_id: string;
 }): Promise<CourseRecord> {
   const now = new Date().toISOString();
   const coursePayload: CourseRecord = {
     id: crypto.randomUUID(),
-    user_id: params.user_id ?? null,
+    user_id: params.user_id,
     title: params.output.course_title,
     topic: params.input.topic,
     level: params.input.level,
@@ -83,24 +83,27 @@ export async function createCourse(params: {
   return coursePayload;
 }
 
-export async function listCourses(): Promise<CourseRecord[]> {
+export async function listCourses(userId: string): Promise<CourseRecord[]> {
   if (isSupabaseEnabled()) {
     return supabaseRest<CourseRecord[]>(
-      "courses?select=*&order=created_at.desc"
+      `courses?select=*&user_id=eq.${encodeURIComponent(userId)}&order=created_at.desc`
     );
   }
 
-  return readAll();
+  return readAll().filter((course) => course.user_id === userId);
 }
 
-export async function getCourseById(id: string): Promise<CourseRecord | null> {
+export async function getCourseById(
+  id: string,
+  userId: string
+): Promise<CourseRecord | null> {
   if (isSupabaseEnabled()) {
     const results = await supabaseRest<CourseRecord[]>(
-      `courses?select=*&id=eq.${id}`
+      `courses?select=*&id=eq.${encodeURIComponent(id)}&user_id=eq.${encodeURIComponent(userId)}&limit=1`
     );
     return results[0] ?? null;
   }
 
   const courses = readAll();
-  return courses.find((course) => course.id === id) ?? null;
+  return courses.find((course) => course.id === id && course.user_id === userId) ?? null;
 }

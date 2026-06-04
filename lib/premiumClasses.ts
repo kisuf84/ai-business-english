@@ -159,7 +159,12 @@ export async function listPremiumCourses(): Promise<PremiumCourse[]> {
   return Promise.all(
     slugs.map(async (slug) => {
       const directory = path.join(PREMIUM_CLASSES_ROOT, slug);
-      const entries = await fs.readdir(directory);
+      let entries: string[] = [];
+      try {
+        entries = await fs.readdir(directory);
+      } catch {
+        entries = [];
+      }
       const modules = await Promise.all(
         entries
           .filter((entry) => /^module_\d+\.html$/i.test(entry))
