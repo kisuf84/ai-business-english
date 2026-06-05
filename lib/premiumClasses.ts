@@ -1,18 +1,25 @@
 import { promises as fs } from "fs";
 import path from "path";
 
-const PREMIUM_CLASSES_ROOT = path.join(process.cwd(), "public", "premium-classes");
+const PREMIUM_CLASSES_PRIVATE_ROOT = path.join(
+  process.cwd(),
+  "premium-content",
+  "premium-classes"
+);
 
 export type PremiumCourseSlug =
   | "bricepremiumcourses1"
   | "bricepremiumcourses2"
-  | "bricepremiumcourses3";
+  | "bricepremiumcourses3"
+  | "executive-leadership-english";
 
 export type PremiumModule = {
   slug: string;
   title: string;
   number: number;
   iframeSrc: string;
+  isPreview: boolean;
+  isLocked: boolean;
 };
 
 export type PremiumCourse = {
@@ -20,31 +27,46 @@ export type PremiumCourse = {
   title: string;
   subtitle: string;
   description: string;
+  level: string;
   moduleCount: number;
   modules: PremiumModule[];
 };
 
+function getCourseRoot(slug: PremiumCourseSlug) {
+  return path.join(PREMIUM_CLASSES_PRIVATE_ROOT, slug);
+}
+
 const COURSE_META: Record<
   PremiumCourseSlug,
-  { title: string; subtitle: string; description: string }
+  { title: string; subtitle: string; description: string; level: string }
 > = {
   bricepremiumcourses1: {
     title: "Business Management English",
     subtitle: "Premium Course 1",
     description:
       "Leadership, meetings, decision-making, and corporate communication modules for business managers and team leads.",
+    level: "Professional",
   },
   bricepremiumcourses2: {
     title: "Finance & Accounting English",
     subtitle: "Premium Course 2",
     description:
       "Financial statements, budgeting, reporting, compliance, and executive finance communication in professional English.",
+    level: "Professional",
   },
   bricepremiumcourses3: {
     title: "Marketing & Advertising English",
     subtitle: "Premium Course 3",
     description:
       "Core marketing language, campaign planning, customer research, and promotional strategy across twelve modules.",
+    level: "Professional",
+  },
+  "executive-leadership-english": {
+    title: "Executive & Leadership English",
+    subtitle: "Sanitized Pilot Course",
+    description:
+      "Business English for leadership, executive communication, strategy, decision-making, and high-level professional contexts.",
+    level: "B2-C1",
   },
 };
 
@@ -107,6 +129,10 @@ function formatModuleFallback(_courseTitle: string, number: number) {
   return `Module ${number}`;
 }
 
+function isPreviewModule(number: number) {
+  return number === 1;
+}
+
 async function readModuleTitle(filePath: string, courseTitle: string, number: number) {
   try {
     const html = await fs.readFile(filePath, "utf-8");
@@ -158,13 +184,8 @@ export async function listPremiumCourses(): Promise<PremiumCourse[]> {
 
   return Promise.all(
     slugs.map(async (slug) => {
-      const directory = path.join(PREMIUM_CLASSES_ROOT, slug);
-      let entries: string[] = [];
-      try {
-        entries = await fs.readdir(directory);
-      } catch {
-        entries = [];
-      }
+      const directory = getCourseRoot(slug);
+      const entries = await fs.readdir(directory);
       const modules = await Promise.all(
         entries
           .filter((entry) => /^module_\d+\.html$/i.test(entry))
@@ -178,7 +199,9 @@ export async function listPremiumCourses(): Promise<PremiumCourse[]> {
               slug: moduleSlug,
               title: await readModuleTitle(path.join(directory, entry), courseTitle, number),
               number,
-              iframeSrc: `/premium-classes/${slug}/${entry}`,
+              iframeSrc: `/premium-content/${slug}/${moduleSlug}`,
+              isPreview: isPreviewModule(number),
+              isLocked: !isPreviewModule(number),
             } satisfies PremiumModule;
           })
       );
@@ -190,6 +213,7 @@ export async function listPremiumCourses(): Promise<PremiumCourse[]> {
         title: COURSE_META[slug].title,
         subtitle: COURSE_META[slug].subtitle,
         description: COURSE_META[slug].description,
+        level: COURSE_META[slug].level,
         moduleCount: sortedModules.length,
         modules: sortedModules,
       } satisfies PremiumCourse;
@@ -213,5 +237,26 @@ export async function getPremiumModule(courseSlug: string, moduleSlug: string) {
     course,
     module,
     currentIndex: course.modules.findIndex((item) => item.slug === moduleSlug),
+  };
+}
+
+export async function getPremiumModuleFilePath(
+  courseSlug: string,
+  moduleSlug: string
+) {
+  const entry = await getPremiumModule(courseSlug, moduleSlug);
+  if (!entry) {
+    return null;
+  }
+
+  const filePath = path.join(
+    PREMIUM_CLASSES_PRIVATE_ROOT,
+    entry.course.slug,
+    `${entry.module.slug}.html`
+  );
+
+  return {
+    ...entry,
+    filePath,
   };
 }

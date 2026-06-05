@@ -36,9 +36,8 @@ const navGroups: NavGroup[] = [
   {
     label: "Library",
     items: [
-      { href: "/my-courses", label: "My courses", icon: "MC" },
       { href: "/lessons", label: "Lesson library", icon: "LE" },
-      { href: "/premium-classes", label: "Premium Classes", icon: "PC" },
+      { href: "/premium-classes", label: "Premium Courses", icon: "PC" },
       { href: "/for-teachers", label: "For Teachers", icon: "FT" },
     ],
   },
@@ -154,7 +153,7 @@ export default function AppShell({ children }: AppShellProps) {
     /^\/premium-classes\/[^/]+\/[^/]+$/.test(pathname || "");
 
   const derivedPageTitle = pathname?.startsWith("/premium-classes")
-    ? "Premium Classes"
+    ? "Premium Courses"
     : undefined;
   const pageTitle =
     navGroups.flatMap((group) => group.items).find((item) => item.href === pathname)
