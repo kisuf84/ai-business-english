@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Card from "../../../components/shared/Card";
 import Button from "../../../components/shared/Button";
 import {
+  getSupabaseBrowserConfigDiagnostics,
   getSupabaseBrowserClient,
   hasSupabaseBrowserConfig,
 } from "../../../lib/supabase/client";
@@ -40,6 +41,13 @@ export default function AuthPage() {
       setError(errorDescription || "Authentication failed. Please try again.");
     }
   }, []);
+
+  useEffect(() => {
+    if (isConfigured) return;
+
+    const diagnostics = getSupabaseBrowserConfigDiagnostics();
+    console.warn("[auth] Supabase browser config missing", diagnostics);
+  }, [isConfigured]);
 
   useEffect(() => {
     let active = true;

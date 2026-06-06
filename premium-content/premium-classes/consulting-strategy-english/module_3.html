@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consulting Module 3: Client Meeting Communication — Consulting &amp; Strategy English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root{--navy:#0c1829;--navy-mid:#112240;--navy-light:#1a3357;--gold:#0ea5e9;--gold-light:#26c6da;--gold-bright:#38bdf8;--cream:#f0f4f8;--cream-dark:#dce8f0;--white:#ffffff;--text-light:#90b8cc;--text-mid:#4a7a96;--red-accent:#e53935;--green-accent:#00b86b;--teal:#0097a7;--sidebar-w:260px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);display:flex;min-height:100vh;overflow-x:hidden;}
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent;transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);}
+.sidebar-brand{padding:24px 22px 18px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-brand h1{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:700;color:var(--gold-bright);line-height:1.38;margin-bottom:3px;}
+.sidebar-brand .sub{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-mid);font-weight:500;}
+.level-badge{display:inline-block;margin-top:11px;background:var(--gold);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:1px;padding:3px 11px;border-radius:20px;text-transform:uppercase;}
+.sidebar-section-label{padding:20px 22px 7px;font-size:8.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--text-mid);font-weight:700;}
+.nav-item{display:flex;align-items:center;justify-content:space-between;padding:11px 22px;cursor:pointer;transition:all 0.18s;border-left:3px solid transparent;}
+.nav-item:hover{background:rgba(255,255,255,0.055);}
+.nav-item.active{background:rgba(245,184,0,0.12);border-left-color:var(--gold-light);}
+.nav-left{display:flex;align-items:center;gap:11px;}
+.nav-icon{font-size:15px;opacity:0.9;}
+.nav-label{font-size:13px;color:var(--text-light);font-weight:400;}
+.nav-item.active .nav-label{color:var(--white);font-weight:500;}
+.nav-badge{font-size:9.5px;font-weight:700;color:var(--navy);background:var(--gold-bright);padding:1px 7px;border-radius:12px;}
+#mob-btn{display:none;position:fixed;top:14px;left:14px;z-index:300;background:var(--navy);border:none;border-radius:10px;padding:10px 13px;cursor:pointer;color:var(--gold-bright);font-size:19px;box-shadow:0 3px 14px rgba(0,0,0,0.35);line-height:1;}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150;}
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;}
+.section{display:none;}.section.active{display:block;}
+.hero{background:linear-gradient(145deg,#06111f 0%,#0d1e35 50%,#081929 100%);padding:64px 64px 54px;position:relative;overflow:hidden;}
+.hero::before{content:'L1';position:absolute;right:-15px;bottom:-55px;font-family:'Playfair Display',serif;font-size:310px;font-weight:900;color:rgba(255,255,255,0.022);line-height:1;pointer-events:none;}
+.hero::after{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(245,184,0,0.05) 0%,transparent 70%);pointer-events:none;}
+.module-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);padding:7px 18px;border-radius:50px;font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-light);font-weight:600;margin-bottom:30px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4.6vw,58px);font-weight:900;color:var(--white);line-height:1.08;}
+.hero h2 .accent{color:var(--gold-bright);}
+.hero-desc{font-size:15px;color:var(--text-light);max-width:620px;line-height:1.78;margin-top:20px;font-weight:300;}
+.hero-stats{display:flex;gap:36px;margin-top:44px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;gap:3px;}
+.stat-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--gold-bright);line-height:1;}
+.stat-l{font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(160,180,210,0.7);font-weight:600;}
+.prog-wrap{background:var(--navy-mid);padding:16px 64px;display:flex;align-items:center;gap:20px;}
+.prog-label{font-size:11.5px;font-weight:600;color:var(--text-light);white-space:nowrap;}
+.prog-track{flex:1;height:6px;background:rgba(255,255,255,0.09);border-radius:6px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:6px;width:0%;transition:width 1s ease;}
+.prog-pct{font-size:12.5px;font-weight:700;color:var(--gold-bright);min-width:36px;text-align:right;}
+.content{padding:48px 60px;}
+.card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.card-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.card-bar{width:40px;height:3px;background:var(--gold-light);border-radius:3px;margin-bottom:20px;}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.outcome{display:flex;align-items:flex-start;gap:13px;background:var(--cream);border-radius:11px;padding:14px 16px;border-left:3px solid var(--gold-light);}
+.out-num{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--gold);line-height:1;min-width:24px;}
+.out-text{font-size:13.5px;color:var(--navy);line-height:1.52;}
+.speaking-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.speaking-card{background:var(--cream);border-radius:11px;padding:18px 20px;border-top:3px solid var(--gold-light);transition:transform 0.2s,box-shadow 0.2s;cursor:default;}
+.speaking-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(11,27,48,0.1);}
+.q-num{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;margin-bottom:8px;letter-spacing:1px;}
+.q-text{font-size:13.5px;color:var(--navy);line-height:1.55;}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.wb-card{background:var(--navy);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:transform 0.2s;cursor:default;}
+.wb-card:hover{transform:translateY(-2px);}
+.wb-emoji{font-size:28px;line-height:1;display:block;margin-bottom:2px;}
+.wb-term{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;color:var(--gold-bright);}
+.wb-def{font-size:12px;color:var(--text-light);line-height:1.52;}
+.reading-box{background:var(--cream);border-radius:12px;padding:26px 30px;margin-bottom:26px;border-left:4px solid var(--gold-light);}
+.reading-box h4{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.reading-box p{font-size:14px;color:#1a2e45;line-height:1.84;margin-bottom:13px;}
+.reading-box p:last-child{margin-bottom:0;}
+.mcq-block{margin-bottom:22px;}
+.mcq-q{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:11px;line-height:1.5;}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;}
+.mcq-opt{display:flex;align-items:center;gap:10px;background:var(--cream);border:2px solid var(--cream-dark);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.18s;font-size:13.5px;color:var(--navy);user-select:none;-webkit-tap-highlight-color:transparent;}
+.mcq-opt:hover{border-color:var(--gold-light);background:#fef8e0;}
+.mcq-opt.selected{border-color:var(--gold);background:#fff3c0;}
+.mcq-opt.correct{border-color:var(--green-accent);background:#e6f8ee;color:#0a6b35;}
+.mcq-opt.incorrect{border-color:var(--red-accent);background:#fdecea;color:#881a18;}
+.opt-letter{font-family:'DM Mono',monospace;font-size:10.5px;font-weight:700;width:23px;height:23px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy);}
+.mcq-opt.correct .opt-letter{background:var(--green-accent);color:white;}
+.mcq-opt.incorrect .opt-letter{background:var(--red-accent);color:white;}
+.lmcq-opt{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.12)!important;color:var(--text-light)!important;}
+.lmcq-opt:hover{border-color:var(--gold-light)!important;background:rgba(245,184,0,0.1)!important;}
+.lmcq-opt.selected{border-color:var(--gold)!important;background:rgba(245,184,0,0.18)!important;color:var(--gold-bright)!important;}
+.lmcq-opt.correct{border-color:var(--green-accent)!important;background:rgba(0,166,81,0.18)!important;color:#4dde9a!important;}
+.lmcq-opt.incorrect{border-color:var(--red-accent)!important;background:rgba(214,48,49,0.18)!important;color:#ff8b8b!important;}
+.check-btn{margin-top:15px;background:var(--navy);color:var(--gold-bright);border:none;padding:11px 26px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.check-btn:hover{background:var(--navy-light);}
+.l-check{background:rgba(255,255,255,0.1)!important;color:var(--gold-bright)!important;}
+.l-check:hover{background:rgba(255,255,255,0.18)!important;}
+.score-disp{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;margin-top:14px;}
+.ex-tabs{display:flex;gap:4px;margin-bottom:26px;background:var(--cream-dark);border-radius:12px;padding:4px;flex-wrap:wrap;}
+.ex-tab{flex:1;min-width:130px;text-align:center;padding:10px;border-radius:9px;font-size:12.5px;font-weight:500;cursor:pointer;color:var(--text-mid);transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.ex-tab.active{background:var(--navy);color:var(--gold-bright);}
+.gram-ref{background:var(--navy);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.gram-ref h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:14px;}
+.gram-rule{background:rgba(255,255,255,0.065);border-radius:9px;padding:14px 18px;margin-bottom:11px;border-left:3px solid var(--gold-light);}
+.gram-rule p,.gram-rule li{font-size:13px;color:var(--text-light);line-height:1.66;}
+.gram-rule code{font-family:'DM Mono',monospace;background:rgba(245,184,0,0.18);color:var(--gold-bright);padding:1px 6px;border-radius:4px;font-size:12px;}
+.gram-rule ul{padding-left:18px;}
+.gf-item{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:14px;color:var(--navy);line-height:2.2;margin-bottom:12px;}
+.gf-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);padding:2px 7px;width:160px;outline:none;text-align:center;}
+.gf-input.correct{border-color:var(--green-accent);color:var(--green-accent);}
+.gf-input.incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.tf-row{background:var(--cream);border-radius:10px;padding:13px 17px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.tf-stmt{font-size:13.5px;color:var(--navy);flex:1;line-height:1.52;}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;}
+.tf-btn{padding:7px 16px;border-radius:8px;border:2px solid var(--cream-dark);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:white;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.tf-btn:hover{border-color:var(--gold-light);}
+.tf-btn.sel-t,.tf-btn.sel-f{background:var(--navy);color:white;border-color:var(--navy);}
+.tf-btn.cor{background:var(--green-accent);color:white;border-color:var(--green-accent);}
+.tf-btn.wrg{background:var(--red-accent);color:white;border-color:var(--red-accent);}
+.writing-prompt{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.writing-prompt h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:10px;}
+.writing-prompt p{font-size:13.5px;color:var(--text-light);line-height:1.76;}
+.writing-tags{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
+.wtag{background:rgba(245,184,0,0.18);color:var(--gold-bright);font-size:11px;font-weight:600;letter-spacing:0.8px;padding:4px 12px;border-radius:20px;text-transform:uppercase;border:1px solid rgba(245,184,0,0.3);}
+.w-textarea{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;}
+.w-textarea:focus{border-color:var(--gold-light);background:white;}
+.w-counter{font-size:12px;color:var(--text-mid);text-align:right;margin-bottom:14px;}
+.w-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:6px;}
+.ac-btn{background:var(--gold);color:var(--navy);border:none;padding:13px 28px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(224,155,0,0.35);}
+.ac-btn:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.clear-btn{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:12px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.clear-btn:hover{border-color:var(--red-accent);color:var(--red-accent);}
+.fb-panel{display:none;background:#131e2e;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-panel.show{display:block;}
+.fb-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-title-row{display:flex;align-items:center;gap:10px;}
+.fb-emoji{font-size:20px;}
+.fb-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold-bright);}
+.fb-score-badge{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--gold-bright);}
+.fb-level{font-size:14px;font-weight:600;color:var(--gold-bright);}
+.fb-section{margin-bottom:14px;}
+.fb-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);margin-bottom:7px;}
+.fb-item{font-size:13px;color:var(--text-light);line-height:1.62;padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid var(--gold-light);}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);line-height:1.7;font-style:italic;}
+.listen-card{background:var(--navy);border-radius:16px;padding:28px 32px;margin-bottom:20px;}
+.listen-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.listen-icon{width:52px;height:52px;border-radius:14px;background:rgba(245,184,0,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.listen-meta{flex:1;}
+.listen-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-bright);margin-bottom:3px;}
+.listen-sub{font-size:12px;color:var(--text-mid);}
+.player-row{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px 18px;margin-bottom:14px;}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--navy);flex-shrink:0;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.play-btn:hover{background:var(--gold-bright);transform:scale(1.06);}
+.prog-audio{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.prog-audio-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.5s linear;}
+.time-disp{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:70px;text-align:right;}
+.speed-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.speed-label{font-size:11px;color:var(--text-mid);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.spd-btn{padding:5px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.spd-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.replay-btn{padding:5px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:auto;}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.trans-toggle{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);border-radius:9px;padding:10px 16px;cursor:pointer;margin-bottom:0;transition:background 0.18s;-webkit-tap-highlight-color:transparent;}
+.trans-toggle:hover{background:rgba(255,255,255,0.09);}
+.trans-label{font-size:12px;font-weight:600;color:var(--text-mid);letter-spacing:0.5px;}
+.trans-arrow{font-size:11px;color:var(--text-mid);transition:transform 0.22s;}
+.trans-toggle.open .trans-arrow{transform:rotate(180deg);}
+.trans-body{max-height:0;overflow:hidden;transition:max-height 0.36s ease;}
+.trans-body.open{max-height:800px;}
+.trans-text{font-size:13px;color:var(--text-light);line-height:1.78;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:0 0 9px 9px;border-top:1px solid rgba(255,255,255,0.06);}
+.listen-mcq-wrap{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+.listen-mcq-title{font-size:13px;font-weight:700;color:var(--gold-bright);letter-spacing:0.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.case-card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.case-header{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:12px;padding:22px 26px;margin-bottom:22px;}
+.case-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);font-weight:700;margin-bottom:8px;}
+.case-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.case-sub{font-size:12px;color:var(--text-mid);}
+.case-section{margin-bottom:18px;}
+.case-section h5{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.case-section p{font-size:14px;color:var(--navy);line-height:1.78;}
+.final-result{display:none;border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.final-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.final-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.final-score{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;line-height:1;}
+.final-verdict{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:8px;}
+.final-msg{font-size:14px;opacity:0.88;max-width:420px;margin:0 auto;line-height:1.68;}
+.ass-btn{margin-top:18px;background:var(--gold);color:var(--navy);border:none;padding:13px 32px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.ass-btn:hover{background:var(--gold-bright);}
+.retry-btn{display:none;margin-top:8px;margin-left:10px;background:rgba(255,255,255,0.15);color:var(--navy);border:1.5px solid var(--cream-dark);padding:11px 28px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.retry-btn:hover{background:rgba(255,255,255,0.25);}
+/* ─ Gap Fill & True/False ─ */
+.gf-block{background:var(--cream);border-radius:10px;padding:16px 18px;margin-bottom:12px;border-left:3px solid var(--gold-light);}
+.gf-sentence{font-size:14px;color:var(--navy);line-height:2.1;}
+.gf-fb{font-size:12.5px;margin-top:6px;min-height:18px;}
+.tf-block{background:var(--cream);border-radius:10px;padding:15px 18px;margin-bottom:10px;border-left:3px solid var(--gold-light);}
+.tf-q{font-size:14px;color:var(--navy);line-height:1.55;margin-bottom:10px;}
+.tf-fb{font-size:12.5px;margin-top:8px;min-height:18px;}
+/* ─ Listening player ─ */
+.l-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.l-icon{font-size:30px;line-height:1;}
+.l-sub{font-size:12px;color:var(--text-mid);margin-top:3px;}
+.l-player{background:var(--navy);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+.l-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.l-play-btn{background:var(--gold);color:var(--navy);border:none;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.l-play-btn:hover{background:var(--gold-bright);}
+.l-speed{background:rgba(255,255,255,0.1);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.18);padding:8px 12px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;outline:none;}
+.l-trans-btn{background:rgba(255,255,255,0.08);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.15);padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;transition:all 0.2s;}
+.l-trans-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.l-progress{display:flex;align-items:center;gap:12px;}
+.l-bar-track{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.l-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.3s linear;}
+.l-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:36px;text-align:right;}
+.l-transcript-box{background:rgba(11,27,48,0.04);border:1px solid var(--cream-dark);border-radius:10px;padding:18px 22px;margin-bottom:18px;}
+.l-transcript-text{font-size:13px;color:var(--navy);line-height:1.8;}
+/* ─ Case Studies ─ */
+.cs-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+.cs-sub{font-size:12.5px;color:var(--text-mid);margin-bottom:16px;}
+.cs-section{margin-bottom:20px;padding:18px 20px;background:var(--cream);border-radius:10px;border-left:3px solid var(--gold-light);}
+.cs-sh{font-size:13.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.cs-p{font-size:14px;color:var(--navy);line-height:1.78;}
+/* ─ Writing ─ */
+.writing-area{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;margin-top:14px;}
+.writing-area:focus{border-color:var(--gold-light);background:white;}
+.writing-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.w-count{font-size:12px;color:var(--text-mid);}
+.btn-primary{background:var(--gold);color:var(--navy);border:none;padding:12px 26px;border-radius:50px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-primary:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--red-accent);color:var(--red-accent);}
+/* ─ AI Feedback ─ */
+.fb-box{background:#0e1d2f;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-box.fb-warn{background:#2d1010;border-color:rgba(214,48,49,0.3);color:#f8a5a5;font-size:13.5px;line-height:1.7;}
+.fb-box.fb-loading{color:var(--text-light);font-size:13.5px;}
+.fb-score-row{display:flex;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap;}
+.fb-score{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;line-height:1;}
+.fb-summary{font-size:13.5px;color:var(--text-light);line-height:1.72;flex:1;}
+.fb-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.fb-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;}
+.fb-good .fb-col-title{color:var(--green-accent);}
+.fb-improve .fb-col-title{color:var(--gold-bright);}
+.fb-item{font-size:13px;color:var(--text-light);padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid rgba(255,255,255,0.15);line-height:1.6;}
+.fb-example{background:rgba(255,255,255,0.05);border-radius:9px;padding:12px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;}
+.fb-ex-label{font-weight:600;color:var(--gold-bright);font-style:normal;}
+/* ─ Grammar Review ─ */
+.gr-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.gr-icon{font-size:28px;}
+.gr-body{display:flex;flex-direction:column;gap:14px;}
+.gr-item{background:var(--cream);border-radius:10px;padding:16px 18px;border-left:3px solid var(--gold-light);}
+.gr-label{font-size:12.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.gr-examples{display:flex;flex-direction:column;gap:6px;}
+.gr-ex{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--navy);background:white;padding:8px 14px;border-radius:7px;border:1px solid var(--cream-dark);}
+.gr-note{font-size:12.5px;color:var(--text-mid);margin-top:10px;padding:8px 12px;background:rgba(224,155,0,0.07);border-radius:7px;border-left:2px solid var(--gold-light);}
+/* ─ Assessment result ─ */
+.assess-result{border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.assess-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.assess-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.assess-score{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;line-height:1;}
+.assess-label{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:6px;}
+.assess-detail{font-size:13.5px;opacity:0.88;}
+
+/* ─── Writing section ──────────────────────────────── */
+.w-task-header{margin-bottom:4px;}
+.w-task-pill{display:inline-block;background:rgba(224,155,0,0.15);color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 13px;border-radius:20px;border:1px solid rgba(224,155,0,0.3);margin-bottom:8px;}
+.w-prompt-box{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:13px;padding:22px 26px;margin:18px 0;border-left:4px solid var(--gold-light);}
+.w-prompt-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-bright);margin-bottom:10px;}
+.w-prompt-text{font-size:13.5px;color:var(--text-light);line-height:1.82;}
+.w-target{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;color:var(--gold-light);}
+.w-meta-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:8px 0 16px;}
+.w-counter{font-size:12.5px;color:var(--text-mid);font-family:'DM Mono',monospace;}
+
+/* ─── AI Feedback result box ────────────────────────── */
+.fb-result-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-result-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-result-label{font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-result-score{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-align:right;}
+.fb-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-check{display:inline-block;font-size:12.5px;font-weight:600;color:var(--green-accent);background:rgba(0,166,81,0.1);padding:5px 12px;border-radius:20px;}
+.fb-check.fb-check-warn{color:#f39c12;background:rgba(243,156,18,0.1);}
+.fb-suggest-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.fb-suggest-list{margin:0 0 14px 18px;padding:0;}
+.fb-suggest-list li{font-size:13px;color:var(--text-light);line-height:1.68;margin-bottom:4px;}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;margin-bottom:14px;}
+.fb-corrected-label{font-style:normal;font-weight:700;color:var(--gold-bright);}
+.fb-footer-stats{font-size:11.5px;color:rgba(155,179,204,0.5);border-top:1px solid rgba(255,255,255,0.07);padding-top:10px;margin-top:8px;font-family:'DM Mono',monospace;}
+.fb-warn-box{background:#2d1010;border:1px solid rgba(214,48,49,0.3);border-radius:10px;padding:14px 18px;color:#f8a5a5;font-size:13.5px;margin-top:14px;}
+.fb-loading-box{background:#111e2f;border-radius:10px;padding:18px 22px;color:var(--text-light);font-size:13.5px;margin-top:14px;display:flex;align-items:center;gap:10px;}
+
+/* ─── Gap Fill — Image 1 design ───────────────────────────────── */
+.gf-card{padding:32px 36px;}
+.gf-instr{font-size:13.5px;color:var(--text-mid);margin-bottom:22px;line-height:1.6;}
+.gf-bank-box{background:var(--cream);border-radius:14px;padding:20px 22px;margin-bottom:28px;border:1px solid var(--cream-dark);}
+.gf-bank-pills{display:flex;flex-wrap:wrap;gap:10px;}
+.gf-pill{background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:50px;cursor:default;transition:opacity 0.25s,transform 0.2s;}
+.gf-pill.gf-pill-used{opacity:0.28;text-decoration:line-through;}
+.gf-sentences{display:flex;flex-direction:column;gap:26px;}
+.gf-row{}
+.gf-sentence-text{font-size:14.5px;color:var(--navy);line-height:1.9;}
+.gf-blank-wrap{display:inline-block;position:relative;vertical-align:bottom;}
+.gf-underline-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14.5px;color:var(--navy);padding:1px 8px 2px;width:170px;outline:none;text-align:center;transition:border-color 0.2s;}
+.gf-underline-input::placeholder{color:rgba(90,120,153,0.5);font-size:13px;}
+.gf-underline-input.gf-correct{border-color:var(--green-accent);color:var(--green-accent);font-weight:600;}
+.gf-underline-input.gf-incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.gf-underline-input:disabled{background:transparent;}
+.gf-row-fb{margin-top:4px;min-height:18px;padding-left:4px;}
+.gf-fb-ok{font-size:12px;font-weight:700;color:var(--green-accent);}
+.gf-fb-err{font-size:12px;font-weight:600;color:var(--red-accent);}
+
+/* ─── True/False — Image 2 design ─────────────────────────────── */
+.tf-card{padding:32px 36px;}
+.tf-instr{font-size:13.5px;color:var(--gold);margin-bottom:22px;font-weight:500;}
+.tf-list{display:flex;flex-direction:column;gap:12px;}
+.tf-item{background:var(--cream);border-radius:12px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;transition:box-shadow 0.2s;}
+.tf-item[data-done]{opacity:0.92;}
+.tf-item-stmt{font-size:14px;color:var(--navy);line-height:1.58;flex:1;min-width:200px;}
+.tf-item-btns{display:flex;gap:10px;flex-shrink:0;}
+.tf-item-btn{padding:10px 26px;border-radius:9px;border:2px solid var(--cream-dark);font-size:13.5px;font-weight:700;cursor:pointer;background:white;font-family:'DM Sans',sans-serif;color:var(--navy);transition:all 0.18s;-webkit-tap-highlight-color:transparent;}
+.tf-item-btn:hover:not(:disabled){border-color:var(--gold-light);background:#fef8e0;}
+.tf-item-btn.tf-btn-correct{background:var(--green-accent);border-color:var(--green-accent);color:white;}
+.tf-item-btn.tf-btn-wrong{background:var(--red-accent);border-color:var(--red-accent);color:white;}
+.tf-item-btn:disabled{cursor:default;}
+.tf-item-fb{width:100%;margin-top:2px;min-height:18px;font-size:12.5px;}
+.tf-fb-ok{color:var(--green-accent);font-weight:700;}
+.tf-fb-err{color:var(--red-accent);font-weight:600;}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{display:inline-block;animation:spin 1s linear infinite;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}#mob-btn{display:flex;align-items:center;justify-content:center;}
+  #main{margin-left:0;}.hero{padding:60px 22px 40px;}.content{padding:28px 18px;}
+  .prog-wrap{padding:12px 22px;}.outcomes-grid,.speaking-grid,.wb-grid{grid-template-columns:1fr;}.hero-stats{gap:22px;}
+}
+@media(max-width:600px){
+  .hero{padding:56px 16px 36px;}.content{padding:22px 14px;}.card{padding:22px 18px;}
+  .listen-card{padding:20px 16px;}.reading-box{padding:18px 16px;}.player-row{flex-wrap:wrap;gap:10px;}.time-disp{min-width:auto;}
+}
+
+
+
+
+
+/* ─── Auto-Correction Report UI (Module 6+) ─────────────────────── */
+.fb-report-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-report-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:12px;}
+.fb-report-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-report-icon{font-size:16px;}
+.fb-report-score{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
+.fb-quick-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-cats{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.fb-cat-row{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 16px;}
+.fb-cat-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.fb-cat-icon{font-size:15px;}
+.fb-cat-label{font-size:13px;color:var(--white);}
+.fb-cat-good{font-size:11px;font-weight:700;color:#00c46a;background:rgba(0,196,106,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(0,196,106,0.3);}
+.fb-cat-sat{font-size:11px;font-weight:700;color:#f5b800;background:rgba(245,184,0,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(245,184,0,0.3);}
+.fb-cat-att{font-size:11px;font-weight:700;color:#e05c5c;background:rgba(224,92,92,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(224,92,92,0.3);}
+.fb-cat-comment{font-size:13px;color:var(--text-light);line-height:1.7;}
+.fb-corrected-block{background:rgba(255,255,255,0.04);border-left:3px solid var(--gold-light);border-radius:0 8px 8px 0;padding:11px 16px;font-size:13px;color:var(--text-light);line-height:1.72;margin-bottom:12px;font-style:italic;}
+.fb-corrected-tag{font-style:normal;font-weight:700;color:var(--gold-bright);display:block;margin-bottom:4px;}
+.fb-overall{font-size:13px;color:#00c46a;margin-bottom:10px;font-weight:500;}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ─── Gap-Fill Redesign (auto-graded) ───────────────────────────────────── */
+.gf-bank-label{font-size:11px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.gf-num{color:var(--gold-bright);font-weight:700;min-width:22px;display:inline-block;}
+.gf-btn-bar{display:flex;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.gf-check-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;font-size:13px;padding:10px 22px;border:none;border-radius:8px;cursor:pointer;transition:opacity .15s;}
+.gf-check-btn:hover{opacity:.88;}
+.gf-check-btn:disabled{cursor:not-allowed;opacity:.5;}
+.gf-reset-btn{background:rgba(255,255,255,0.07);color:var(--text-light);font-size:13px;font-weight:600;padding:10px 18px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;cursor:pointer;transition:background .15s;}
+.gf-reset-btn:hover{background:rgba(255,255,255,0.12);}
+.gf-score-display{font-size:15px;margin-left:4px;}
+.gf-pill-highlight{outline:2px solid var(--gold-bright) !important;opacity:1 !important;}
+.gf-fb-err strong{color:var(--gold-bright);}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+<style id="static-premium-override">
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0 !important;
+    display: block !important;
+    overflow-x: hidden !important;
+  }
+  .section,
+  .content,
+  .card,
+  #overviewContent,
+  #speakingContent,
+  #wordBankContent,
+  #readingContent,
+  #gramRevContent,
+  #writingContent,
+  #listeningContent,
+  #casesContent,
+  #assessContainer {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  #sidebar {
+    display: block !important;
+    position: sticky !important;
+    top: 16px !important;
+    transform: none !important;
+    float: left !important;
+    max-width: 300px !important;
+    width: calc(100% - 32px) !important;
+    margin: 16px 16px 24px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    z-index: 1 !important;
+    max-height: calc(100vh - 32px) !important;
+  }
+  #sidebar .nav-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    text-decoration: none !important;
+  }
+  #sidebar .nav-item.active {
+    background: rgba(255, 255, 255, 0.08) !important;
+  }
+  body:has(#sec-overview:target) #sidebar a[href="#sec-overview"],
+  body:has(#sec-speaking:target) #sidebar a[href="#sec-speaking"],
+  body:has(#sec-wordbank:target) #sidebar a[href="#sec-wordbank"],
+  body:has(#sec-reading:target) #sidebar a[href="#sec-reading"],
+  body:has(#sec-vocab:target) #sidebar a[href="#sec-vocab"],
+  body:has(#sec-grammar:target) #sidebar a[href="#sec-grammar"],
+  body:has(#sec-gramreview:target) #sidebar a[href="#sec-gramreview"],
+  body:has(#sec-writing:target) #sidebar a[href="#sec-writing"],
+  body:has(#sec-listening:target) #sidebar a[href="#sec-listening"],
+  body:has(#sec-cases:target) #sidebar a[href="#sec-cases"],
+  body:has(#sec-assessment:target) #sidebar a[href="#sec-assessment"] {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: inherit !important;
+  }
+  #main {
+    margin-left: 0 !important;
+    display: block !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: 16px 16px 24px 332px !important;
+    min-height: 100vh !important;
+  }
+  #main .section {
+    scroll-margin-top: 16px !important;
+  }
+  #main::after {
+    content: "" !important;
+    display: block !important;
+    clear: both !important;
+  }
+  .hero, .content, .prog-wrap { max-width: 1200px; margin-left: auto; margin-right: auto; }
+  #vex-0, #vex-1, #vex-2,
+  #gex-0, #gex-1, #gex-2,
+  [id^="wpanel-"],
+  .l-transcript-box {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .l-controls, .l-progress, .clear-btn, .ac-btn, .gf-btn-bar, .ass-btn, .retry-btn, .btn-primary, #final-res { display: none !important; }
+  .ex-tab, .mcq-opt, .tf-item-btn { pointer-events: none !important; }
+  .static-note {
+    margin: 24px 0 0;
+    padding: 16px 18px;
+    border: 1px solid rgba(17, 34, 64, 0.12);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.7);
+    font-size: 13px;
+    line-height: 1.6;
+    color: #1c2438;
+  }
+  #mob-btn, #overlay {
+    display: none !important;
+  }
+  @media (max-width: 900px) {
+    body {
+      display: block !important;
+    }
+    #sidebar {
+      position: relative !important;
+      top: auto !important;
+      float: none !important;
+      max-width: none !important;
+      border-right: none !important;
+      overflow: visible !important;
+      margin: 0 0 16px !important;
+      max-height: none !important;
+    }
+    #main {
+      width: 100% !important;
+      margin: 0 !important;
+      min-height: 0 !important;
+    }
+    .hero, .content, .prog-wrap { padding-left: 18px !important; padding-right: 18px !important; }
+  }
+</style></head>
+<body>
+
+
+<nav id="sidebar">
+  <div class="sidebar-brand"><h1>Consulting &amp; Strategy English</h1><div class="sub">Professional Course Series</div><span class="level-badge">B1&#8211;B2 Level</span></div>
+  <div class="sidebar-section-label">Module 3</div>
+  <a class="nav-item active" href="#sec-overview"><div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div></a>
+  <a class="nav-item" href="#sec-speaking"><div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div><span class="nav-badge">21</span></a>
+  <a class="nav-item" href="#sec-wordbank"><div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div><span class="nav-badge">21</span></a>
+  <a class="nav-item" href="#sec-reading"><div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div><span class="nav-badge">2</span></a>
+  <a class="nav-item" href="#sec-vocab"><div class="nav-left"><span class="nav-icon">🔤</span><span class="nav-label">Vocabulary</span></div><span class="nav-badge">3</span></a>
+  <a class="nav-item" href="#sec-grammar"><div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Grammar</span></div><span class="nav-badge">3</span></a>
+  <a class="nav-item" href="#sec-gramreview"><div class="nav-left"><span class="nav-icon">📋</span><span class="nav-label">Grammar Review</span></div></a>
+  <a class="nav-item" href="#sec-writing"><div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div><span class="nav-badge">AI</span></a>
+  <a class="nav-item" href="#sec-listening"><div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div><span class="nav-badge">4</span></a>
+  <a class="nav-item" href="#sec-cases"><div class="nav-left"><span class="nav-icon">🎯</span><span class="nav-label">Case Studies</span></div><span class="nav-badge">2</span></a>
+  <a class="nav-item" href="#sec-assessment"><div class="nav-left"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></div><span class="nav-badge">20</span></a>
+</nav>
+<main id="main">
+<section id="sec-overview" class="section active">
+  <div class="hero"><div class="module-pill">📅 &nbsp; Module 3 &nbsp;·&nbsp; Consulting &amp; Strategy English</div><h2>Client Meeting<br><span class="accent">Communication</span></h2><p class="hero-desc">Master the professional vocabulary and communication skills of high-performing consulting meetings — from steering committees and working sessions to facilitation, pushback management, synthesis, and written follow-up. Build the confidence to open meetings purposefully, manage difficult moments without defensiveness, drive meetings to decisions, and produce the written communication that turns meeting conversations into engagement progress.</p><div class="hero-stats"><div class="stat"><span class="stat-n">21</span><span class="stat-l">Key Terms</span></div><div class="stat"><span class="stat-n">11</span><span class="stat-l">Sections</span></div><div class="stat"><span class="stat-n">4</span><span class="stat-l">Audio Activities</span></div><div class="stat"><span class="stat-n">B1–B2</span><span class="stat-l">CEFR Level</span></div></div></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" id="progFill"></div></div><span class="prog-pct" id="progPct">0%</span></div>
+  <div class="content" id="overviewContent"><div class="card">
+    <div class="card-title">📘 What You Will Learn</div><div class="card-bar"></div>
+    <div class="outcomes-grid"><div class="outcome"><span class="out-num">01</span><span class="out-text">Identify and accurately use 21 essential terms for professional client meeting communication — covering meeting types, facilitation language, meeting structure, and follow-up</span></div><div class="outcome"><span class="out-num">02</span><span class="out-text">Read and analyse professional texts on how consultants run effective client meetings and the communication disciplines that distinguish high-performing consulting teams</span></div><div class="outcome"><span class="out-num">03</span><span class="out-text">Use appropriate language for opening and closing meetings, facilitating productive discussion, managing disagreement professionally, and moving a meeting to decision</span></div><div class="outcome"><span class="out-num">04</span><span class="out-text">Write a meeting agenda, meeting summary with action items, and a professional follow-up email after a difficult client conversation</span></div><div class="outcome"><span class="out-num">05</span><span class="out-text">Listen to a steering committee update, a working session with client pushback, a facilitated problem-solving workshop, and a closing presentation with questions</span></div><div class="outcome"><span class="out-num">06</span><span class="out-text">Open, facilitate, and close client meetings with professional confidence — managing the agenda, drawing out insight, handling difficult moments, and ensuring every meeting moves the engagement forward</span></div></div>
+  </div></div>
+</section>
+<section id="sec-speaking" class="section">
+  <div class="hero"><div class="module-pill">🎙️ &nbsp; Speaking Practice</div><h2>Discussion <span class="accent">Questions</span></h2><p class="hero-desc">Practise speaking about steering committees, working sessions, facilitation, pushback, silence, decision points, action items, and the professional disciplines that make consulting meetings effective.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:9%"></div></div><span class="prog-pct">9%</span></div>
+  <div class="content" id="speakingContent"><div class="card"><div class="card-title">🎙️ Discussion Questions</div><div class="card-bar"></div>
+    <div class="speaking-grid"><div class="speaking-card"><div class="q-num">Q01</div><div class="q-text">What is the difference between a 'steering committee' and a 'working session' in consulting — when would you use each?</div></div><div class="speaking-card"><div class="q-num">Q02</div><div class="q-text">What makes a consulting meeting effective — and what are the most common reasons consulting meetings fail to achieve their purpose?</div></div><div class="speaking-card"><div class="q-num">Q03</div><div class="q-text">What is an 'agenda' in a professional meeting context — and what should a consulting meeting agenda always include?</div></div><div class="speaking-card"><div class="q-num">Q04</div><div class="q-text">What is 'active listening' in a client meeting — and how is it different from simply not talking while the client speaks?</div></div><div class="speaking-card"><div class="q-num">Q05</div><div class="q-text">What is a 'decision point' in a meeting, and how do consultants move a conversation toward a decision professionally?</div></div><div class="speaking-card"><div class="q-num">Q06</div><div class="q-text">What is 'pushback' from a client — and how should a consultant respond to client disagreement with a finding or recommendation?</div></div><div class="speaking-card"><div class="q-num">Q07</div><div class="q-text">What is the difference between 'clarifying a question' and 'challenging a question' when a client asks something unexpected?</div></div><div class="speaking-card"><div class="q-num">Q08</div><div class="q-text">What is a 'parking lot' in a meeting context, and how and when should it be used?</div></div><div class="speaking-card"><div class="q-num">Q09</div><div class="q-text">What is the difference between a 'summary' and a 'synthesis' at the end of a meeting — and which is more valuable in a consulting context?</div></div><div class="speaking-card"><div class="q-num">Q10</div><div class="q-text">What does it mean to 'read the room' during a client meeting — and what specific signals should a consultant look for?</div></div><div class="speaking-card"><div class="q-num">Q11</div><div class="q-text">What is a 'straw man' proposal, and why is it a useful facilitation tool in client meetings?</div></div><div class="speaking-card"><div class="q-num">Q12</div><div class="q-text">What is the difference between an 'action item' and a 'next step' — and why does the distinction matter?</div></div><div class="speaking-card"><div class="q-num">Q13</div><div class="q-text">How do you professionally redirect a meeting that has gone off-topic without appearing rude or dismissive?</div></div><div class="speaking-card"><div class="q-num">Q14</div><div class="q-text">What is 'managing up' in a consulting context — and how does it apply to communicating with senior client stakeholders?</div></div><div class="speaking-card"><div class="q-num">Q15</div><div class="q-text">What is a 'pre-read' and why do professional consulting teams send them before important client meetings?</div></div><div class="speaking-card"><div class="q-num">Q16</div><div class="q-text">What does 'aligning expectations' mean before a client meeting — and how do you do it?</div></div><div class="speaking-card"><div class="q-num">Q17</div><div class="q-text">What is the role of silence in a professional meeting — and when should a consultant resist the urge to fill it?</div></div><div class="speaking-card"><div class="q-num">Q18</div><div class="q-text">How do you handle a situation where the client reveals information in a meeting that significantly changes your analysis?</div></div><div class="speaking-card"><div class="q-num">Q19</div><div class="q-text">What is the difference between facilitative language ('What do you think?') and directive language ('I recommend') — and when should you use each?</div></div><div class="speaking-card"><div class="q-num">Q20</div><div class="q-text">What is a 'hard stop' in a meeting context — and how do you manage time professionally when a meeting is running over?</div></div><div class="speaking-card"><div class="q-num">Q21</div><div class="q-text">If you were running a two-hour steering committee meeting for a market entry engagement and the client CEO challenged your central recommendation five minutes in, what would you do?</div></div></div>
+  </div></div>
+</section>
+<section id="sec-wordbank" class="section">
+  <div class="hero"><div class="module-pill">📚 &nbsp; Word Bank</div><h2>Meeting <span class="accent">Vocabulary</span></h2><p class="hero-desc">Study these 21 essential client meeting terms — the vocabulary of meeting structure, facilitation, pushback, synthesis, and professional written communication.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:18%"></div></div><span class="prog-pct">18%</span></div>
+  <div class="content" id="wordBankContent"><div class="card"><div class="card-title">📚 Key Legal Terms</div><div class="card-bar"></div>
+    <div class="wb-grid"><div class="wb-card"><span class="wb-emoji">📅</span><div class="wb-term">Steering Committee</div><div class="wb-def">A formal periodic meeting between the consulting team and the client's senior leadership — typically held every two to four weeks during a consulting engagement — at which progress is presented, key findings are shared, critical decisions are made, and the engagement's direction is calibrated. The steering committee is the most consequential client meeting in a consulting engagement because it is attended by the most senior decision-makers: the CEO, CFO, or business unit heads who have the authority to approve recommendations or redirect the team's work. Preparation for a steering committee is extensive: the deck is reviewed by the partner, talking points are rehearsed, and potential questions or objections are anticipated and prepared for in advance.</div></div><div class="wb-card"><span class="wb-emoji">💼</span><div class="wb-term">Working Session</div><div class="wb-def">A less formal, more interactive meeting between the consulting team and the client's day-to-day team — focused on collaborative problem-solving, data sharing, hypothesis testing, or interim findings review rather than formal progress presentation. Working sessions are the primary mechanism through which the consulting team accesses the client's internal knowledge: the people in working sessions know where the data is, what the organisation's real constraints are, and which recommendations will face implementation resistance. Effective working sessions feel like a genuine collaboration rather than an interrogation — the consultant's role is to ask excellent questions, listen carefully, and synthesise what is said into analytical insights.</div></div><div class="wb-card"><span class="wb-emoji">📋</span><div class="wb-term">Agenda</div><div class="wb-def">A structured document or verbal outline distributed before a meeting that specifies the topics to be covered, the time allocated to each, the format (discussion, decision, information), and any preparation the participants should complete in advance. A professional consulting meeting agenda is not simply a list of topics — it specifies the purpose of each item: is this item for information sharing, for discussion, or for decision? A well-crafted agenda also signals the meeting's overall purpose and allows participants to arrive prepared. Consulting teams typically send the agenda with the pre-read at least 24 hours before a meeting. An agenda-less meeting is a hallmark of poor meeting management.</div></div><div class="wb-card"><span class="wb-emoji">📄</span><div class="wb-term">Pre-Read</div><div class="wb-def">Materials distributed to meeting participants before the meeting — typically a deck or summary document — that allow participants to review key information in advance so that the meeting time can be used for discussion and decision rather than information transfer. Pre-reads are standard practice in consulting meetings and reflect a fundamental principle: meeting time is the most expensive and non-renewable resource in a client engagement. A meeting in which participants spend the first 20 minutes reading the deck is a meeting that has wasted 20 minutes of client time. The pre-read shifts information transfer outside the meeting and reserves meeting time for the higher-value activities of analysis, discussion, and decision.</div></div><div class="wb-card"><span class="wb-emoji">🎯</span><div class="wb-term">Decision Point</div><div class="wb-def">A specific moment in a meeting — typically preceded by a clear framing and a summary of the options — at which a decision is required from the meeting participants. Decision points must be explicitly identified by the meeting facilitator: without explicit identification, meetings frequently end without decisions, with participants unclear about what was agreed. Professional consulting language for identifying a decision point includes: 'At this point, we need to agree on...', 'To move the work forward, we need a decision on...', and 'The options as I see them are X and Y — which do you prefer?' The most common failure in consulting meetings is allowing a decision point to pass as discussion without explicitly calling it.</div></div><div class="wb-card"><span class="wb-emoji">🔄</span><div class="wb-term">Action Item</div><div class="wb-def">A specific task, committed to by a named individual, with a clear deadline — arising from a meeting discussion. Action items are the primary mechanism through which meeting decisions become real-world progress. A professional action item has three elements: what will be done (specific task), who will do it (named individual, not 'the team'), and by when (specific date, not 'soon' or 'next week'). At the end of every consulting meeting, the facilitator should read back the agreed action items, confirm the owner and deadline for each, and send a written summary within 24 hours. An action item that lacks any of these three elements is likely to be either ignored or disputed after the meeting.</div></div><div class="wb-card"><span class="wb-emoji">🅿️</span><div class="wb-term">Parking Lot</div><div class="wb-def">A designated space — typically a visible list on a whiteboard or in a shared document — where off-topic or out-of-scope issues raised during a meeting are captured for later discussion rather than being pursued immediately. The parking lot is a facilitation tool that serves two purposes: it prevents meetings from derailing into unproductive tangents, and it signals to the person who raised the issue that their concern has been heard and will be addressed — rather than simply dismissed. A parking lot item should always be reviewed at the end of the meeting with an explicit decision about what to do with it: schedule a separate discussion, add it to the next meeting agenda, or address it via email.</div></div><div class="wb-card"><span class="wb-emoji">🔊</span><div class="wb-term">Facilitation</div><div class="wb-def">The process of guiding a meeting or discussion toward a productive outcome — by managing the agenda, drawing out contributions from participants, keeping the discussion focused, summarising key points, managing time, and moving the group toward decisions and action items. A skilled facilitator in a consulting meeting is not passive: they actively structure the discussion, ensure all relevant perspectives are heard, surface disagreements rather than allowing them to remain implicit, and apply the necessary pressure to reach conclusions before the meeting ends. In client-facing consulting work, the Engagement Manager typically facilitates working sessions, while the Partner facilitates steering committees.</div></div><div class="wb-card"><span class="wb-emoji">⏸️</span><div class="wb-term">Silence</div><div class="wb-def">A deliberate pause in a meeting — used after asking a question, after presenting a provocative finding, or after a client makes a significant statement — to give participants time to think, to signal that the speaker has finished, or to create space for the client to speak. New consultants frequently make the mistake of filling silence with clarification, additional context, or nervous commentary — which prevents the client from responding and undermines the impact of the question or statement that preceded it. Experienced consultants use silence strategically: a two-second pause after 'What is your reaction to this finding?' is not awkward; it is productive. The client who fills the silence often reveals something more valuable than any question could have surfaced.</div></div><div class="wb-card"><span class="wb-emoji">🔍</span><div class="wb-term">Clarifying Question</div><div class="wb-def">A question asked during a client meeting to better understand what the client has said — to ensure the consulting team has correctly understood the client's meaning, intention, or concern before responding. Clarifying questions are essential in client meetings because clients frequently use shorthand, assume context, or describe their actual concern indirectly. Typical clarifying questions: 'When you say the market is saturated, what specifically are you referring to?', 'Can you help me understand what you mean by that?', or 'Just to make sure I have the right picture — are you saying X or Y?' A clarifying question defers the consultant's response until the client's actual concern is understood — preventing a response that addresses the wrong issue.</div></div><div class="wb-card"><span class="wb-emoji">🏗️</span><div class="wb-term">Straw Man</div><div class="wb-def">A preliminary or provisional proposal — deliberately incomplete or imperfect — presented to a client or team to provoke reaction and stimulate discussion rather than to be accepted as the final recommendation. The straw man approach is particularly useful in consulting meetings where the client is unable to articulate what they want but can easily identify what they don't want: 'We've put together an initial view on the go-to-market approach — think of it as a straw man designed to generate your reaction rather than represent our final recommendation. What works, what doesn't?' The response to a straw man often surfaces more specific and actionable client preferences than any open question could.</div></div><div class="wb-card"><span class="wb-emoji">📝</span><div class="wb-term">Meeting Summary</div><div class="wb-def">A written document produced after a client meeting — typically within 24 hours — that records the key discussion points, decisions made, and action items agreed. The meeting summary is more than a record: it is a tool for alignment. In the absence of a written summary, different participants frequently recall the meeting's conclusions differently — which creates confusion, disputes, and the need for additional meetings to re-establish what was agreed. A professional meeting summary has four sections: key discussion points (what was discussed), decisions made (what was agreed), action items (what will be done, by whom, by when), and next steps (upcoming meetings or milestones). The meeting summary is typically sent by the Engagement Manager.</div></div><div class="wb-card"><span class="wb-emoji">🚦</span><div class="wb-term">Pushback</div><div class="wb-def">A client's challenge or disagreement with a consulting finding, recommendation, or position — which may range from a genuine analytical concern to a politically motivated objection. Pushback is normal and healthy: a client who agrees with everything the consulting team says has either stopped engaging or has concerns they are not expressing. Professional response to pushback follows the 'acknowledge-understand-respond' pattern: acknowledge the concern without dismissing it, ask a clarifying question to understand the specific objection, and then respond to the actual concern rather than the surface statement. Never respond to pushback with defensiveness — it signals insecurity about the analysis.</div></div><div class="wb-card"><span class="wb-emoji">🔗</span><div class="wb-term">Synthesis</div><div class="wb-def">The integration of disparate discussion points, findings, or perspectives into a coherent, structured conclusion — the step beyond summary in which the facilitator not only recalls what was said but identifies the pattern or insight that emerges from it. Synthesis is the highest-value skill in a consulting meeting: while anyone can summarise ('So you've said X, Y, and Z'), synthesis requires analytical judgment ('What I'm hearing is that the core concern is A — is that right?'). A consultant who can synthesise a complex client discussion in real time — extracting the central concern, the key constraint, or the emerging decision — dramatically increases the value of the meeting for the client.</div></div><div class="wb-card"><span class="wb-emoji">📊</span><div class="wb-term">Status Update</div><div class="wb-def">A structured communication — in a meeting, email, or written report — that informs the client of the engagement's current progress against the agreed workplan, highlights any risks or delays, and confirms upcoming milestones. Status updates in consulting are formal and structured: they cover what has been completed since the last update, what is in progress, what is upcoming, and any issues or risks that require client attention or decision. A status update that only reports what is going well is incomplete — the most valuable element is the identification of issues and the proposed response, which demonstrates that the consulting team is in control of the engagement rather than simply reporting facts.</div></div><div class="wb-card"><span class="wb-emoji">🗝️</span><div class="wb-term">Alignment</div><div class="wb-def">The state of shared understanding and agreement between the consulting team and the client team — on the engagement's direction, findings, recommendations, and next steps. Achieving alignment is one of the primary purposes of client meetings: through working sessions, steering committees, and informal check-ins, the consulting team validates that its direction is consistent with the client's evolving priorities and that key stakeholders are not heading toward a situation where the final recommendation will be a surprise. Alignment is not the same as agreement: the client may disagree with a specific recommendation but still be aligned with the process. Misalignment — particularly when it is discovered late — is one of the most common causes of consulting recommendations that are not implemented.</div></div><div class="wb-card"><span class="wb-emoji">📣</span><div class="wb-term">Escalation</div><div class="wb-def">The process of bringing an unresolved issue, disagreement, or risk to a higher level of the client or consulting hierarchy for resolution — when the issue cannot be addressed at the working level. Escalation in a consulting context is typically managed by the Engagement Manager when a significant problem arises: a client team member who is not providing agreed data, a mid-engagement disagreement about scope, or a client working-level objection that cannot be resolved without senior approval. Escalation should be flagged to the Partner before it happens — so the partner can manage the senior client relationship appropriately — and should be framed as a joint problem to be solved rather than as a complaint.</div></div><div class="wb-card"><span class="wb-emoji">⏱️</span><div class="wb-term">Hard Stop</div><div class="wb-def">A fixed meeting end time that cannot be extended — typically because a senior participant has another commitment immediately following. A hard stop must be communicated at the start of the meeting and actively managed by the facilitator: if the meeting agenda is running behind, the facilitator must make explicit choices about what to defer, accelerate, or cut. The professional response to a hard stop that is approaching before the agenda is complete: 'We have fifteen minutes remaining and we still need to cover decisions on X and Y. I'd suggest we take ten minutes on X — which requires a decision today — and defer Y to the follow-up email. Does that work?' Managing a hard stop professionally demonstrates engagement management competence.</div></div><div class="wb-card"><span class="wb-emoji">✋</span><div class="wb-term">Open Question</div><div class="wb-def">A question that cannot be answered with 'yes' or 'no' — designed to draw out the client's thinking, perspective, or knowledge rather than to confirm or deny a specific hypothesis. Open questions are the primary tool for learning in a client meeting: 'What is your view on the competitive landscape?' 'How does your team currently approach this decision?' 'What would success look like for you?' Open questions invite narrative responses that surface context, constraint, and perspective that the consulting team cannot obtain from data alone. In working sessions, experienced consultants use open questions to draw out the client's most valuable knowledge — which is almost never the first thing the client says when asked a direct closed question.</div></div><div class="wb-card"><span class="wb-emoji">🔒</span><div class="wb-term">Closed Question</div><div class="wb-def">A question that can be answered with 'yes' or 'no', or with a choice from a defined set of options — used to confirm a specific fact, elicit a decision, or move a meeting to a resolution. Closed questions are the primary tool for driving decisions and confirming alignment: 'Do you agree with this finding?', 'Is option A or option B your preference?', 'Can we confirm that this is the agreed next step?' The mistake is using closed questions when open questions are needed — asking 'Do you agree with the market sizing?' when the real question is 'What is your reaction to the market sizing and why?' A skilled consultant alternates between open questions (to draw out) and closed questions (to confirm and decide).</div></div><div class="wb-card"><span class="wb-emoji">📬</span><div class="wb-term">Follow-Up Email</div><div class="wb-def">A professional communication sent after a client meeting — within 24 to 48 hours — that summarises key discussion points, confirms decisions made, specifies action items with owners and deadlines, and outlines next steps. The follow-up email is a critical piece of professional infrastructure in a consulting engagement: it creates a written record of what was agreed, prevents misalignment from developing between meetings, and signals to the client that the consulting team is organised and proactive. The follow-up email should be clear, brief, and specific — not a verbose meeting transcript. The most important sections: decisions confirmed (aligned with what the meeting was for) and action items (the specific tasks that will happen as a result of the meeting).</div></div></div>
+  </div></div>
+</section>
+<section id="sec-reading" class="section">
+  <div class="hero"><div class="module-pill">📖 &nbsp; Reading</div><h2>Texts &amp; <span class="accent">Comprehension</span></h2><p class="hero-desc">Read two professional texts on how consultants run effective client meetings — the disciplines that separate high-performing teams — and how to manage the most difficult moments in client conversations.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:27%"></div></div><span class="prog-pct">27%</span></div>
+  <div class="content" id="readingContent"><div class="card">
+      <div class="reading-box"><h4>Text 1: How Consultants Run Effective Client Meetings — The Disciplines That Separate High-Performing Teams</h4><p>A consulting engagement's success is substantially determined by the quality of its client meetings — not because the meetings themselves are where the analytical work happens, but because meetings are where the analytical work is validated, redirected, and converted into decisions. A team that produces excellent analysis but communicates it poorly in client meetings will struggle to achieve recommendations that are implemented. Conversely, a team that understands how to run meetings well — structuring discussions, drawing out the client's knowledge, managing disagreement professionally, and ending every meeting with clear decisions and action items — creates the conditions for implementation success even when the analysis is imperfect.</p><p>The most common reason consulting meetings fail to produce their intended value is the absence of explicit meeting architecture. This means: no pre-read distributed before the meeting (so participants spend the first twenty minutes reading rather than discussing), no agenda communicated in advance (so participants arrive without having thought about the meeting's purpose), no explicit identification of decision points (so the meeting ends in discussion rather than conclusion), and no summary of action items at the end (so participants leave with different understandings of what was agreed). These failures are not primarily failures of intelligence or analysis — they are failures of professional discipline. The most analytically excellent consulting team in the world produces no value if its meetings end without decisions.</p><p>The discipline that most distinguishes high-performing consulting teams in client meetings is the ability to synthesise. Most meeting participants can summarise what has been said; very few can extract, in real time, the insight that emerges from a complex discussion. When a client spending twenty minutes expressing concern about a recommendation is asked by a skilled consultant: 'What I'm hearing is that the core concern isn't the recommendation itself but the implementation risk — is that right?' — and the client says 'Yes, exactly' — the consultant has saved the meeting, redirected the engagement, and built significant client trust in ten seconds. The ability to synthesise — to name the pattern in what the client is saying — is among the most valued skills in consulting practice.</p></div>
+      <div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>
+      <div id="rmcq-0"></div>
+    </div><div class="card">
+      <div class="reading-box"><h4>Text 2: Managing Difficult Moments in Client Meetings — Pushback, Silence, and Sensitive Disagreement</h4><p>The most valuable professional skill in a client meeting is not the ability to present analysis confidently — it is the ability to handle the moments when the meeting goes wrong. A client who challenges a central finding, a room full of silence after a recommendation, a senior stakeholder who appears dismissive — these are the moments that test a consultant's professional composure and determine whether the engagement continues productively or begins to deteriorate. The good news is that these moments follow predictable patterns, and experienced consultants develop a set of reliable response approaches for each.</p><p>Client pushback — a challenge or disagreement with a finding or recommendation — is among the most common of these difficult moments. The instinctive but incorrect response is defensiveness: explaining at length why the analysis is correct, providing additional evidence, or becoming visibly flustered. This response signals insecurity, escalates the tension, and rarely resolves the objection. The professional response follows a consistent three-step pattern: first, acknowledge the concern without immediately agreeing or disagreeing ('That's an important point — thank you for raising it'); second, ask a clarifying question to understand the specific objection before responding ('Can you help me understand what specifically you're concerned about?'); third, respond to the specific concern that has been clarified, rather than to the surface statement. This approach — acknowledge, clarify, respond — de-escalates the tension, ensures the consultant understands the actual concern, and demonstrates professional confidence.</p><p>Silence is among the most mismanaged aspects of client meetings. Inexperienced consultants fill every silence with additional explanation, qualification, or nervous commentary — which prevents the client from responding, undermines the impact of what was just said, and signals a lack of confidence. A skilled consultant holds silence deliberately: after asking an important question, after presenting a significant finding, or after making a provocative recommendation. The silence gives the client space to think, signals that the consultant is genuinely interested in the client's response, and frequently surfaces information or perspectives that no amount of additional explanation could have produced. The professional rule: ask a question, then wait. If the silence feels uncomfortable, it is almost certainly more uncomfortable for you than for the client.</p></div>
+      <div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>
+      <div id="rmcq-1"></div>
+    </div></div>
+</section>
+<section id="sec-vocab" class="section">
+  <div class="hero"><div class="module-pill">🔤 &nbsp; Vocabulary Exercises</div><h2>Practice <span class="accent">Exercises</span></h2><p class="hero-desc">Three exercise types to master client meeting vocabulary: multiple choice, gap-fill, and true/false.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:36%"></div></div><span class="prog-pct">36%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab">Exercise 3 · True / False</div>
+    </div>
+    <div id="vex-0"></div>
+    <div id="vex-1" style="display:none"></div>
+    <div id="vex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-grammar" class="section">
+  <div class="hero"><div class="module-pill">✏️ &nbsp; Grammar</div><h2>Grammar <span class="accent">Exercises</span></h2><p class="hero-desc">Practise language for opening, structuring, and closing meetings; language for facilitation, pushback, and difficult moments; and professional written meeting communication — agendas and follow-up emails.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:45%"></div></div><span class="prog-pct">45%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active">Meeting Structure</div>
+      <div class="ex-tab">Facilitation Language</div>
+      <div class="ex-tab">Written Communication</div>
+    </div>
+    <div id="gex-0"></div>
+    <div id="gex-1" style="display:none"></div>
+    <div id="gex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-gramreview" class="section">
+  <div class="hero"><div class="module-pill">📋 &nbsp; Grammar Review</div><h2>Reference <span class="accent">Guide</span></h2><p class="hero-desc">Three reference boxes: language for opening, structuring, and closing client meetings; language for facilitation, pushback, and difficult moments; and professional language for written meeting communication.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:54%"></div></div><span class="prog-pct">54%</span></div>
+  <div class="content" id="gramRevContent"><div class="card" style="margin-bottom:24px;"><div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">Grammar Point 1: Language for Opening, Structuring, and Closing Client Meetings</div><div class="card-bar"></div></div></div><div class="gr-body"><div class="gr-item"><div class="gr-label">Opening Language — Setting Purpose, Agenda, and Tone</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">The first two minutes of a consulting meeting determine the tone for everything that follows. Professional opening language accomplishes four things: confirms the time available, states the meeting's purpose, outlines the agenda, and invites any additions. This signals to the client that the meeting is purposeful and that the team is in control.</p><div class="gr-examples"><div class="gr-ex">'Good morning. We have two hours — I'd like to use the first hour to present the findings and the second hour to reach decisions on the strategic options. Before we start, are there any additional agenda items?'</div><div class="gr-ex">'Our objectives for today are: [objective 1], [objective 2], and [objective 3]. We'll cover [topic A] from 9-9:45, [topic B] from 9:45-10:30, and use the final 30 minutes for decisions. Does that work?'</div><div class="gr-ex">'We circulated the pre-read on Monday — for those who've reviewed it, we'll move straight to discussion. For those who haven't, the core finding is on slide four.'</div><div class="gr-ex">'We have a hard stop at 3pm — I'll flag when we have fifteen minutes remaining to make sure we cover the decision items in time.'</div></div></div><div class="gr-item"><div class="gr-label">Decision Point Language — Identifying and Driving to Decisions</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">The most common failure in consulting meetings is allowing a decision point to pass as discussion. Explicit language for calling a decision point — and for presenting the options clearly — is essential.</p><div class="gr-examples"><div class="gr-ex">'At this point, we need to reach a decision on [topic]. The options as I see them are: [A], [B], [C]. Which direction does the group want to take?'</div><div class="gr-ex">'To move the analysis forward, we need to agree today on [specific decision]. Without this, we cannot complete [next workstream] before the next steering committee.'</div><div class="gr-ex">'We've discussed this thoroughly — I'd like to call it to a decision. Are there any remaining concerns before we confirm [direction]?'</div><div class="gr-ex">'The recommendation is [X]. We're asking for your approval to proceed on this basis, or for direction to explore an alternative — [A] or [B].'</div></div></div><div class="gr-item"><div class="gr-label">Closing Language — Confirming Decisions and Action Items</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">The close of a meeting must be structured and explicit. Participants should leave with identical understanding of what was decided and what will happen next. Ambiguity at the close is as damaging as absence of a decision.</p><div class="gr-examples"><div class="gr-ex">'Before we close, let me confirm the decisions: [decision 1], [decision 2]. And the action items: [task / owner / deadline]. Are there any corrections?'</div><div class="gr-ex">'To confirm next steps: we will [consulting action] by [date]; if you can [client action] by [date], we'll be on track for the steering committee on [date].'</div><div class="gr-ex">'One final check — is there anything we discussed today that we haven't captured in the decisions or action items?'</div><div class="gr-ex">'Thank you for a productive session. The meeting summary — including confirmed decisions and action items — will be with you by [time/date].'</div></div></div></div></div><div class="card" style="margin-bottom:24px;"><div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">Grammar Point 2: Language for Facilitation, Pushback, and Difficult Moments</div><div class="card-bar"></div></div></div><div class="gr-body"><div class="gr-item"><div class="gr-label">Facilitation Language — Drawing Out and Focusing Discussion</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">Effective facilitation uses open questions to draw out thinking and closed questions to confirm agreement. The rhythm of alternating between the two keeps discussion productive and moves toward decisions.</p><div class="gr-examples"><div class="gr-ex">Open questions to draw out: 'What is your reaction to this finding?' / 'What do you see as the primary barrier?' / 'How does your team currently approach this decision?'</div><div class="gr-ex">Closed questions to confirm: 'Do you agree with this characterisation?' / 'Is Option A or Option B your preference?' / 'Can we confirm this as the agreed next step?'</div><div class="gr-ex">Redirecting: 'That's an important point — I've added it to the parking lot. To stay on the agenda, can we return to [topic]?'</div><div class="gr-ex">Synthesising: 'What I'm hearing is that the core concern is [X] — is that right?' (then wait for confirmation before proceeding)'</div></div></div><div class="gr-item"><div class="gr-label">Pushback Language — Acknowledge, Clarify, Respond</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">The three-step pattern for handling client pushback professionally — acknowledge the concern, clarify the specific objection, respond to the specific concern — is the most reliable approach to maintaining composure and credibility under challenge.</p><div class="gr-examples"><div class="gr-ex">Step 1 — Acknowledge: 'That's an important concern — thank you for raising it.' / 'I'm glad you've raised that — it's a point we want to address.'</div><div class="gr-ex">Step 2 — Clarify: 'Can you help me understand what specifically you're concerned about?' / 'When you say the projection seems optimistic, are you questioning the growth rate, the market share, or the pricing assumption?'</div><div class="gr-ex">Step 3 — Respond: [respond specifically to what the client has identified — not to the original statement] 'On the growth rate specifically — here's the basis for that assumption: [evidence].'</div><div class="gr-ex">Avoid: Defensiveness ('Our analysis clearly shows...') / Over-explanation ('Let me walk through the methodology in detail...') / False agreement ('You're absolutely right — we'll revise it')</div></div></div><div class="gr-item"><div class="gr-label">Language for Managing Silence and Uncertainty</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">Strategic silence and honest uncertainty management are marks of professional confidence. Both require resisting the instinct to fill gaps with noise.</p><div class="gr-examples"><div class="gr-ex">After asking a question: ask it clearly, then stop. Wait. The silence is productive. Do not add 'does that make sense?' or 'any thoughts?' — these undermine the question.</div><div class="gr-ex">After a significant finding: present it clearly, then pause. Let the client react before offering explanation. Additional context before the client reacts is almost always unnecessary.</div><div class="gr-ex">When you don't know: 'I want to give you a precise answer rather than a rough one. Let me confirm by end of day tomorrow.' (never say 'I don't know' without a plan to find out).</div><div class="gr-ex">When unexpected information emerges: 'That's very helpful — thank you. Can I ask a few questions about this?' (pursue the new information actively — do not dismiss it or become defensive about its implications)</div></div></div></div></div><div class="card" style="margin-bottom:24px;"><div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">Grammar Point 3: Professional Language for Written Meeting Communication</div><div class="card-bar"></div></div></div><div class="gr-body"><div class="gr-item"><div class="gr-label">Agenda Writing — Clear, Specific, and Action-Oriented</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">A professional meeting agenda specifies not just the topics but the format and purpose of each item — making clear whether participants should arrive to receive information, contribute to discussion, or make a decision.</p><div class="gr-examples"><div class="gr-ex">Standard format: '[Item name] | [Time] | [Format: Information / Discussion / Decision] | [Owner] | [Preparation required]'</div><div class="gr-ex">For decision items: 'Entry Mode Decision [20 mins | Decision Required]: Background in pre-read pp. 8-12. Recommendation: Option A. Decision required: approval or direction. Owner: CEO (decision); Priya (present).'</div><div class="gr-ex">Opening item: 'Objectives and agenda confirmation [5 mins | Information]: Purpose of meeting; confirmation of agenda; any additions.'</div><div class="gr-ex">Closing item: 'Decisions, action items, and next steps [10 mins | Decision / Information]: Review and confirm decisions made; confirm action items with owners and deadlines; confirm next meeting.'</div></div></div><div class="gr-item"><div class="gr-label">Follow-Up Email Structure — The Four Sections</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">A professional follow-up email after a consulting meeting has four sections, each with a specific purpose. This structure prevents ambiguity and creates a durable written record of the meeting's outcomes.</p><div class="gr-examples"><div class="gr-ex">Section 1 — Key Discussion Points: 'The following topics were discussed: [brief summary of each — 1-2 sentences per topic]. Full discussion context is available in the deck circulated before the meeting.'</div><div class="gr-ex">Section 2 — Decisions Confirmed: 'The following decisions were confirmed during the meeting: [decision 1 — including any conditions or caveats]; [decision 2].' [If no decision was made, state: 'No decision was reached on [topic] — this will be addressed at [next meeting]'.]</div><div class="gr-ex">Section 3 — Action Items: 'Action Item 1: [Specific task] — Owner: [Named individual] — Due: [Specific date]. Action Item 2: [Specific task] — Owner: [Named individual] — Due: [Specific date].'</div><div class="gr-ex">Section 4 — Next Steps: 'The next [steering committee / working session] is scheduled for [date, time, location]. We will circulate the pre-read by [date]. If there are any corrections to the above, please let us know by [date] so we can incorporate them.'</div></div></div><div class="gr-item"><div class="gr-label">Register Calibration — Formal, Professional, and Clear</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">Follow-up emails and agendas require formal but not bureaucratic register. They should be clear enough that a participant who was not at the meeting could understand what was decided. They should never be vague about ownership or deadlines.</p><div class="gr-examples"><div class="gr-ex">Vague (avoid): 'We'll follow up on the pricing question soon.' → Specific: 'We will provide a written analysis of the pricing premium assumption by Thursday 5pm.'</div><div class="gr-ex">Vague (avoid): 'The team will revise the model.' → Specific: 'Priya (consulting) will revise the market sizing model to reflect the German state-level segmentation discussed today — circulating by Thursday 5pm.'</div><div class="gr-ex">Vague (avoid): 'There was some disagreement about the entry mode — we'll discuss further.' → Specific: 'The entry mode decision was not resolved in today's meeting. The CEO has requested that Options A and B be further tested against the Q3 operational capacity data before the next steering committee on [date].'</div><div class="gr-ex">Always: include a note if any items remain open — 'The following items were raised but not resolved during the meeting: [item] — to be addressed at [when] by [who].'</div></div></div></div></div></div>
+</section>
+<section id="sec-writing" class="section">
+  <div class="hero"><div class="module-pill">✍️ &nbsp; Writing + AI Feedback</div><h2>Writing <span class="accent">Activities</span></h2><p class="hero-desc">Write a professional steering committee agenda with decision items, formats, and ownership — and a follow-up email after a difficult client meeting with confirmed decisions, specific action items, and next steps. Receive AI feedback across Grammar, Vocabulary, Tone, Structure, and Fluency.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:63%"></div></div><span class="prog-pct">63%</span></div>
+  <div class="content" id="writingContent"><div class="ex-tabs"><div class="ex-tab active">Steering Committee Agenda</div><div class="ex-tab">Follow-Up Email</div></div><div id="wpanel-0" style="display:block"><div class="card"><div class="w-task-header"><div class="w-task-pill">Activity 1</div><div class="card-title" style="margin-top:10px;">Write a Steering Committee Meeting Agenda</div></div><div class="card-bar"></div><div class="w-prompt-box"><div class="w-prompt-label">📋 Steering Committee Agenda — Write a Steering Committee Meeting Agenda</div><div class="w-prompt-text">You are the Engagement Manager on the Meridian Market Entry engagement. Write a professional agenda for Steering Committee 3 (170-230 words including the agenda structure).<br><br>Meeting details:<br>• Date: Next Thursday, 9:00am–11:00am<br>• Hard stop: 11:00am (CEO has a board call)<br>• Location: Meridian HQ, London<br>• Attendees: CEO Elena Vasquez (decision-maker), CFO Marcus Webb, Head of Strategy Arjun Mehta; Partner James Chen, EM Priya Singh, BA Tom Williams<br><br>Agenda items to cover:<br>1. Market sizing and attractiveness findings — information, 30 mins<br>   Pre-read: slides 1-15 of the attached deck<br>2. Competitive landscape — information and discussion, 25 mins<br>   Pre-read: slides 16-28<br>3. Entry mode recommendation — decision required, 35 mins<br>   Options: A (joint venture Rhein Logistics), B (standalone), C (defer)<br>   Decision required: approval of recommended entry mode<br>4. Decisions, action items, and next steps — 10 mins<br><br>Your agenda should:<br>• Clearly state the purpose of the meeting and any preparation required<br>• Specify the format (information / discussion / decision) for each item<br>• Name the owner of each item<br>• Include the hard stop and a note about the pre-read<br><br>Use at least 5 vocabulary terms from this module.</div><div class="w-target">Target: 170–230 words</div></div><textarea class="w-textarea" id="w-area-0" placeholder="Write your response here…"></textarea><div class="w-meta-row"><span class="w-counter" id="w-count-0">0 words</span><div style="display:flex;gap:10px;"><button class="clear-btn">Clear</button><button class="ac-btn" id="w-btn-0">✨ Auto-Correct &amp; Get Feedback</button></div></div><div id="w-fb-0"></div></div></div><div id="wpanel-1" style="display:block"><div class="card"><div class="w-task-header"><div class="w-task-pill">Activity 2</div><div class="card-title" style="margin-top:10px;">Write a Follow-Up Email After a Difficult Steering Committee</div></div><div class="card-bar"></div><div class="w-prompt-box"><div class="w-prompt-label">📋 Follow-Up Email — Write a Follow-Up Email After a Difficult Steering Committee</div><div class="w-prompt-text">The Meridian Steering Committee 3 was difficult. The CEO challenged the market sizing methodology, the CFO raised a question about the 15% pricing premium assumption that could not be answered in the meeting, and the entry mode decision was not resolved — the CEO asked for further analysis on Options A and B before deciding.<br><br>Write the follow-up email from the Engagement Manager to all steering committee attendees (160-220 words).<br><br>Your email should:<br>• Open professionally — acknowledge the meeting without being sycophantic<br>• Summarise the key discussion points (briefly)<br>• Confirm what was decided (and what was not)<br>• Specify all action items with owner and deadline:<br>  - Priya: Revise market sizing to incorporate revised German federal-state segmentation — by Monday 5pm<br>  - Tom: Prepare written analysis of 15% pricing premium assumption with comparable market evidence — by Monday 5pm<br>  - Priya: Prepare deeper comparison of Options A and B against Q3 operational capacity — by Wednesday 5pm<br>  - Client team (Arjun): Share Q3 operational capacity data — by Friday 5pm<br>• Confirm the next steering committee date (the following Thursday, 9am)<br>• Invite corrections within 24 hours<br><br>Write in professional consulting register. Use at least 5 vocabulary terms from this module.</div><div class="w-target">Target: 160–220 words</div></div><textarea class="w-textarea" id="w-area-1" placeholder="Write your response here…"></textarea><div class="w-meta-row"><span class="w-counter" id="w-count-1">0 words</span><div style="display:flex;gap:10px;"><button class="clear-btn">Clear</button><button class="ac-btn" id="w-btn-1">✨ Auto-Correct &amp; Get Feedback</button></div></div><div id="w-fb-1"></div></div></div></div>
+</section>
+<section id="sec-listening" class="section">
+  <div class="hero"><div class="module-pill">🎧 &nbsp; Listening</div><h2>Audio <span class="accent">Activities</span></h2><p class="hero-desc">Listen to a steering committee opening with an immediate CEO challenge, a working session drawing out client knowledge with open questions, a problem-solving workshop facilitated to a decision, and a final presentation navigating CFO pushback on the financial case.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:72%"></div></div><span class="prog-pct">72%</span></div>
+  <div class="content" id="listeningContent"><div class="card" id="l-card-0"><div class="l-header"><span class="l-icon">📅</span><div><div class="card-title">The Steering Committee: Managing a Difficult Opening</div><div class="l-sub">Client Meeting · B2 Level · approx. 110 sec</div></div></div><div class="card-bar"></div><div class="l-player"><div class="l-controls"><button class="l-play-btn" id="l-play-0">&#9654; Play</button><select class="l-speed" id="l-speed-0"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option></select><button class="l-trans-btn" id="l-tbtn-0">&#128196; Transcript</button></div><div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-0"></div></div><span class="l-time" id="l-time-0">0:00</span></div></div><div class="l-transcript-box" id="l-trans-0" style="display:block"><p class="l-transcript-text">The Meridian Steering Committee 3 has just started. Present: Partner James Chen, EM Priya Singh; CEO Elena Vasquez, CFO Marcus Webb, Head of Strategy Arjun Mehta. Priya: Good morning, everyone. Thank you for making time. We have two hours with a hard stop at eleven — Elena, I know you have your board call. Today's objectives are: findings from the market sizing and competitive landscape workstreams, and a decision on entry mode. We circulated the pre-read on Tuesday — for those who've had a chance to review, we'll go straight to discussion of the findings; for those who haven't, the core findings are on slides four and sixteen. Before we start — any additions to the agenda? Elena: [immediately] I want to raise the market sizing methodology upfront. I've reviewed the pre-read and I'm not sure the German market definition we're using captures the full opportunity. Priya: [without defensiveness] That's an important concern — thank you for raising it at the start. Can you help me understand specifically what you're questioning — is it the geographic scope, the segment definition, or the size of the addressable market? Elena: The segment. You've limited the addressable market to third-party logistics for companies above €100 million revenue. We compete for companies well below that threshold in the UK. Priya: That's a fair challenge. The €100 million threshold was a modelling decision we made to focus on the segment where our technology premium is most defensible — but you're right that it creates a conservative bound. Let me be specific: at the €100 million threshold, the German addressable market is €28 billion. If we lower the threshold to €25 million — which is more consistent with our UK profile — the market could be 40-60% larger. Elena: That significantly changes the financial case. Priya: It does. Here's what I'd suggest: we proceed with today's discussion on the €100 million basis — which represents a conservative lower bound — and the team revises the model to include the €25 million segment before the next steering committee. Is that acceptable? Elena: Yes — proceed on that basis.</p></div><div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div><div id="lmcq-0"></div></div><div class="card" id="l-card-1"><div class="l-header"><span class="l-icon">💼</span><div><div class="card-title">The Working Session: Facilitating Client Knowledge</div><div class="l-sub">Client Working Session · B1–B2 Level · approx. 108 sec</div></div></div><div class="card-bar"></div><div class="l-player"><div class="l-controls"><button class="l-play-btn" id="l-play-1">&#9654; Play</button><select class="l-speed" id="l-speed-1"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option></select><button class="l-trans-btn" id="l-tbtn-1">&#128196; Transcript</button></div><div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-1"></div></div><span class="l-time" id="l-time-1">0:00</span></div></div><div class="l-transcript-box" id="l-trans-1" style="display:block"><p class="l-transcript-text">The team is running a working session with Meridian's Head of Strategy, Arjun Mehta, and two internal analysts. The goal is to understand Meridian's operational constraints in Germany — information the team cannot get from external data. Priya: Before we walk you through what we've found externally, I'd like to start with some questions that only your team can answer. [to Arjun] What do you see as the single biggest internal constraint on a successful German market entry? Arjun: Honestly? Management bandwidth. We have one person who could run a German operation — and she's currently running our North West UK expansion. Priya: That's really useful — thank you. [pause] Can I ask a follow-up? If she were available, what would the next biggest constraint be? Arjun: Fleet. We'd need to stand up a local fleet from scratch — or find a partner who has one. Priya: So the two critical constraints are: management talent and fleet. Arjun: Yes. Though I'd add a third — customer relationships. German enterprise logistics buyers expect a relationship before they'll give you a contract. Cold outreach won't work. Priya: That's the three constraints we'll build the go-to-market section around: management, fleet, and customer relationships. [to Maya] Maya — can you take a note? [Maya notes] Priya: One of the options we're considering addresses all three of those constraints simultaneously — a joint venture with a German operator who brings local management, an existing fleet, and established customer relationships. Before I say more, what's your initial reaction to a joint venture model? Arjun: Possible — but depends on who the partner is and what we'd give up in terms of control. Priya: What would make it attractive versus unattractive? Arjun: Attractive: partner brings customers we couldn't access alone. Unattractive: partner has equal or greater control over the market positioning.</p></div><div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div><div id="lmcq-1"></div></div><div class="card" id="l-card-2"><div class="l-header"><span class="l-icon">🎯</span><div><div class="card-title">The Problem-Solving Workshop: Facilitating to a Decision</div><div class="l-sub">Facilitated Workshop · B1–B2 Level · approx. 106 sec</div></div></div><div class="card-bar"></div><div class="l-player"><div class="l-controls"><button class="l-play-btn" id="l-play-2">&#9654; Play</button><select class="l-speed" id="l-speed-2"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option></select><button class="l-trans-btn" id="l-tbtn-2">&#128196; Transcript</button></div><div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-2"></div></div><span class="l-time" id="l-time-2">0:00</span></div></div><div class="l-transcript-box" id="l-trans-2" style="display:block"><p class="l-transcript-text">The team is running a half-day problem-solving workshop with Meridian's senior team to generate and evaluate options for the German entry. Priya is facilitating. Priya: This workshop has one objective: by 1pm, we want to have a recommended entry mode that everyone in this room is aligned behind. We'll work in two phases. Phase one: generate options without evaluating them — everything is on the table. Phase two: evaluate the options against four criteria — management bandwidth, fleet readiness, customer relationships, and Meridian's strategic control. Ready? Phase one — what are all the possible ways Meridian could enter the German market? [15 minutes of option generation — team produces: standalone entry, joint venture, acquisition, franchise model, agent model] Priya: Good — five options. Phase two. I'd like to evaluate each against the four criteria — I'll score them with the team. Management bandwidth first: standalone entry requires all Meridian management — no partner contribution. Score: high burden. Joint venture splits the management load. Score: moderate burden. [continues through all five options on all four criteria] [After scoring] Priya: The scoring puts joint venture clearly ahead on three of four criteria — the only dimension where standalone is preferred is strategic control. Before I call it to a vote, I want to check: does anyone see something the scoring has missed? Or does the scoring feel wrong in a way that's not captured by the criteria? [Silence] Priya: [waits four seconds] I'll take the silence as broad agreement with the scoring. To confirm alignment: on the basis of this analysis, the preferred option is joint venture — subject to identifying the right partner. [looks around room] Does anyone disagree with that characterisation? Elena: [after a pause] No — proceed on that basis. Let's move to partner criteria.</p></div><div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div><div id="lmcq-2"></div></div><div class="card" id="l-card-3"><div class="l-header"><span class="l-icon">📊</span><div><div class="card-title">The Final Presentation: Questions and Alignment</div><div class="l-sub">Final Client Presentation · B1–B2 Level · approx. 104 sec</div></div></div><div class="card-bar"></div><div class="l-player"><div class="l-controls"><button class="l-play-btn" id="l-play-3">&#9654; Play</button><select class="l-speed" id="l-speed-3"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option></select><button class="l-trans-btn" id="l-tbtn-3">&#128196; Transcript</button></div><div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-3"></div></div><span class="l-time" id="l-time-3">0:00</span></div></div><div class="l-transcript-box" id="l-trans-3" style="display:block"><p class="l-transcript-text">The final presentation to Meridian's C-suite. James Chen (partner) has presented the recommendations. The CEO, CFO, and Head of Strategy are asking questions. Marcus [CFO]: I want to push back on the financial case. The payback period on the joint venture model is 3.2 years. In my experience, European market entries for logistics companies consistently run 30-40% over the projected budget. If we apply a 35% cost overrun, the payback moves to 4.3 years — which is at the limit of what our board will accept. James: That's a fair challenge — and you're right that European market entry costs frequently exceed projections. The 3.2-year baseline assumes two things: the joint venture partner co-funds the fleet investment, and the Rhein Logistics partnership generates the projected customer referrals in months 1-12. I'd like to address each of those assumptions specifically. On the fleet: the Rhein partnership agreement that we're recommending includes a 60:40 cost-share on fleet acquisition — which is why the baseline is below the typical standalone entry payback. On the referrals: we've been conservative — the 18 customer referrals in months 1-12 represents less than 20% of Rhein's active client base. Marcus: What if the referrals underperform in year one? James: We modelled that specifically. If year-one referrals come in at 50% of projection — nine rather than eighteen — the payback extends to 3.9 years. Still within acceptable range, and the Year 2 revenue catch-up is significant because the pipeline builds on itself. Elena: I'm satisfied on the financial case. The real question for me is partner selection. What are the criteria for choosing Rhein over other potential partners? James: Three criteria drove the selection: customer access — Rhein's existing relationships with the five enterprise accounts that represent 60% of our projected year-one revenue; fleet composition — Rhein's electric fleet meets the 2028 Sustainability Directive requirement without additional investment from Meridian; and cultural fit — Rhein's management team has operated in the same target segment and at a comparable growth stage. We assessed five potential partners against these criteria. Rhein scored highest on all three. Elena: That's a clear basis. I'm prepared to approve the joint venture approach with Rhein Logistics as the preferred partner — subject to legal due diligence. James: Thank you. I'll confirm that decision in the meeting summary.</p></div><div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div><div id="lmcq-3"></div></div></div>
+</section>
+<section id="sec-cases" class="section">
+  <div class="hero"><div class="module-pill">🎯 &nbsp; Case Studies</div><h2>Real-World <span class="accent">Cases</span></h2><p class="hero-desc">Explore how Barbara Minto&#39;s Pyramid Principle transformed consulting communication — start with the answer, then provide the evidence — and what Jeff Bezos&#39;s ban on PowerPoint at Amazon teaches consulting teams about meeting design and the value of pre-reads.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:81%"></div></div><span class="prog-pct">81%</span></div>
+  <div class="content" id="casesContent"><div class="card"><div class="cs-tag">United States · Professional Communication · Ongoing · McKinsey Alumni Perspective</div><div class="card-title" style="margin-top:10px;">Case Study 1: The Pyramid Principle in Client Communication — How Barbara Minto's Framework Changed the Way Consultants Write and Speak</div><div class="cs-sub">How one McKinsey consultant's communication framework became the standard for structured professional communication — and what it means for client meetings</div><div class="card-bar"></div><div class="cs-section"><h4 class="cs-sh">Background</h4><p class="cs-p">Barbara Minto joined McKinsey & Company as one of the firm's first female consultants in 1963. During her time at McKinsey and in her subsequent consulting career, she developed a framework for structured communication that she published in The Minto Pyramid Principle (1987) — a book that has since sold over a million copies and is used as a core training document by McKinsey and most other major consulting firms worldwide. The Pyramid Principle is, at its core, a framework for ensuring that communication — whether written or verbal — begins with the main point and then provides the supporting arguments and evidence, rather than building to the conclusion at the end. This sounds simple, but it runs directly counter to the way most people are taught to write and speak academically, where the conclusion typically comes last.</p></div><div class="cs-section"><h4 class="cs-sh">The Pyramid Principle in Client Meetings</h4><p class="cs-p">The Pyramid Principle's most direct application in client meetings is in how consultants present findings and recommendations. The pyramid structure requires the presenter to begin with the answer — the conclusion, the recommendation, the 'so what' — and then provide the supporting arguments. 'We recommend Option A [answer]. We recommend it for three reasons [supporting arguments]. Reason one is... Reason two is... Reason three is... [evidence].' This structure is counterintuitive because it requires the speaker to commit to a position before providing all the evidence — but it is far more effective in client meetings because it answers the most important question first. A client who hears the recommendation before the analysis can evaluate the analysis against the recommendation; a client who hears the analysis first often disengages before the conclusion arrives.</p></div><div class="cs-section"><h4 class="cs-sh">Application to Meeting Communication Specifically</h4><p class="cs-p">In client meetings, the Pyramid Principle has four specific applications. First, in status updates: begin with the headline ('We are on track for the steering committee' or 'There is a risk to the timeline') rather than building to it through a chronological recitation of what the team has done. Second, in presentations of findings: begin with the most important finding, then provide the supporting evidence. Third, in responses to questions: answer the question first ('Yes, we've modelled that scenario'), then provide the explanation. Fourth, in synthesis during a meeting: capture the central insight first ('What I'm hearing is that the core concern is implementation risk') rather than summarising all the points made before identifying the pattern. The pyramid principle is not just a communication framework — in client meetings, it is a discipline of clarity under pressure.</p></div><div class="card-title" style="margin-top:22px;">Case Study Questions</div><div class="card-bar"></div><div id="csmcq-0"></div></div><div class="card"><div class="cs-tag">United Kingdom · Professional Services · Ongoing · Meeting Culture</div><div class="card-title" style="margin-top:10px;">Case Study 2: How Jeff Bezos Banned PowerPoint at Amazon — and What It Teaches Consulting Teams About Meeting Design</div><div class="cs-sub">Why Amazon's insistence on six-page narrative memos over PowerPoint presentations produces better decisions — and the implications for how consulting teams should design client meetings</div><div class="card-bar"></div><div class="cs-section"><h4 class="cs-sh">Background</h4><p class="cs-p">In the mid-2000s, Jeff Bezos made an unusual operational decision for a company of Amazon's scale: he banned PowerPoint presentations from most senior leadership meetings and replaced them with a six-page narrative memo — a structured written document that participants read in silence at the start of each meeting before any discussion begins. The rationale, as Bezos explained in his 2018 letter to shareholders, was that PowerPoint presentations allow presenters to hide weak thinking behind a structure of bullet points that appears organised but does not require genuine analytical coherence. A six-page narrative memo, by contrast, forces the author to construct a complete, coherent argument — one that cannot rely on visual structure, presenter energy, or the audience's willingness to fill analytical gaps.</p></div><div class="cs-section"><h4 class="cs-sh">What the Amazon Meeting Model Produces</h4><p class="cs-p">The Amazon model produces two things that are relevant to consulting practice. First, it forces complete analytical thinking before the meeting: if the argument cannot be written as a coherent narrative, it is not yet ready to be decided. This is a direct challenge to the consulting practice of presenting preliminary or incomplete analysis in client meetings — the argument for doing so being that 'we want client input before we finalise'. The Amazon model suggests that presenting incomplete thinking imposes analytical work on the client that the consulting team should have completed before the meeting. Second, it dramatically improves decision quality: a room full of senior people who have all read the same six-page document before discussing it is a fundamentally different decision-making environment than one in which some have read the pre-read and others have not.</p></div><div class="cs-section"><h4 class="cs-sh">What Consulting Teams Can Learn</h4><p class="cs-p">The Amazon model has three specific implications for consulting practice. First, the pre-read matters more than most teams treat it: a pre-read that is not read by all participants is equivalent to no pre-read. Teams that send pre-reads should consider whether the pre-read is compelling and concise enough that all participants will actually read it — not a sixty-slide deck but a four-to-six-page executive summary. Second, meeting time should be reserved for discussion and decision — not for information transfer. Any meeting that begins with the facilitator presenting information that participants could have reviewed in advance is wasting the most expensive meeting time: the first twenty minutes. Third, the quality of the preparation determines the quality of the decision. A decision made in a meeting where all participants are fully informed is categorically better than one made where only the presenting team has complete information.</p></div><div class="card-title" style="margin-top:22px;">Case Study Questions</div><div class="card-bar"></div><div id="csmcq-1"></div></div></div>
+</section>
+<section id="sec-assessment" class="section">
+  <div class="hero"><div class="module-pill">🏆 &nbsp; Final Assessment</div><h2>Module <span class="accent">Test</span></h2><p class="hero-desc">20 questions covering all module content. Pass mark: 70% (14/20). Two attempts allowed.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div><span class="prog-pct">90%</span></div>
+  <div class="content">
+    <div class="card">
+      <div class="card-title">🏆 Final Assessment</div><div class="card-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:22px;">Answer all 20 questions. You need 70% (14 correct) to pass. Attempts used: <strong id="att-disp">0 / 2</strong></p>
+      <div id="assessContainer"><div class="mcq-block" id="aq-0"><div class="mcq-q">1. What is a steering committee in a consulting engagement?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-0-0"><span class="opt-letter">A</span>An informal daily stand-up between the consulting team and the client's day-to-day team</div><div class="mcq-opt" id="ass-0-1"><span class="opt-letter">B</span>A formal periodic meeting with the client's senior leadership at which progress is presented, decisions are made, and direction is calibrated</div><div class="mcq-opt" id="ass-0-2"><span class="opt-letter">C</span>An internal consulting firm meeting to review analysis quality before client-facing meetings</div><div class="mcq-opt" id="ass-0-3"><span class="opt-letter">D</span>A planning meeting between the partner and engagement manager to prepare for the next client interaction</div></div></div><div class="mcq-block" id="aq-1"><div class="mcq-q">2. What does the pre-read serve in a consulting meeting?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-1-0"><span class="opt-letter">A</span>It allows the consulting team to test whether the client has read the analysis before the meeting begins</div><div class="mcq-opt" id="ass-1-1"><span class="opt-letter">B</span>It provides a record of the previous meeting's decisions for participants to review</div><div class="mcq-opt" id="ass-1-2"><span class="opt-letter">C</span>It allows participants to review key information in advance — reserving meeting time for discussion and decision rather than information transfer</div><div class="mcq-opt" id="ass-1-3"><span class="opt-letter">D</span>It is the primary deliverable of the working session phase of the engagement</div></div></div><div class="mcq-block" id="aq-2"><div class="mcq-q">3. In the steering committee listening activity, how did Priya respond to the CEO's immediate challenge on market sizing?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-2-0"><span class="opt-letter">A</span>She defended the methodology and provided additional evidence for the €100 million threshold</div><div class="mcq-opt" id="ass-2-1"><span class="opt-letter">B</span>She asked the partner to respond on the technical question</div><div class="mcq-opt" id="ass-2-2"><span class="opt-letter">C</span>She used the acknowledge-clarify-respond pattern — identifying the specific concern before responding</div><div class="mcq-opt" id="ass-2-3"><span class="opt-letter">D</span>She deferred the question and moved to the next agenda item</div></div></div><div class="mcq-block" id="aq-3"><div class="mcq-q">4. What are the three elements of a professional action item?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-3-0"><span class="opt-letter">A</span>Priority, effort required, and expected outcome</div><div class="mcq-opt" id="ass-3-1"><span class="opt-letter">B</span>What will be done, who will do it, and by when — specific task, named individual, and clear deadline</div><div class="mcq-opt" id="ass-3-2"><span class="opt-letter">C</span>Background, analysis, and recommendation — to ensure every action item is grounded in the engagement's work</div><div class="mcq-opt" id="ass-3-3"><span class="opt-letter">D</span>Source, owner, and status — tracking where the action came from and whether it has been completed</div></div></div><div class="mcq-block" id="aq-4"><div class="mcq-q">5. What does the Barbara Minto case study say the Pyramid Principle requires of the speaker?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-4-0"><span class="opt-letter">A</span>To present all evidence before committing to a recommendation — ensuring the answer is fully justified</div><div class="mcq-opt" id="ass-4-1"><span class="opt-letter">B</span>To use exactly three supporting arguments for every recommendation</div><div class="mcq-opt" id="ass-4-2"><span class="opt-letter">C</span>To commit to a position before providing all the evidence — counterintuitive but more effective in professional contexts</div><div class="mcq-opt" id="ass-4-3"><span class="opt-letter">D</span>To produce a written document before any verbal presentation in a client meeting</div></div></div><div class="mcq-block" id="aq-5"><div class="mcq-q">6. What does the working session listening activity reveal about the most effective way to start a client working session?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-5-0"><span class="opt-letter">A</span>Begin with the team's preliminary findings and ask the client to validate them</div><div class="mcq-opt" id="ass-5-1"><span class="opt-letter">B</span>Begin with questions that only the client can answer — drawing out internal knowledge before sharing external analysis</div><div class="mcq-opt" id="ass-5-2"><span class="opt-letter">C</span>Begin with the straw man proposal to get an immediate client reaction before any questions are asked</div><div class="mcq-opt" id="ass-5-3"><span class="opt-letter">D</span>Begin with a status update on all workstreams to confirm the engagement is on track</div></div></div><div class="mcq-block" id="aq-6"><div class="mcq-q">7. What is a parking lot in a meeting context?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-6-0"><span class="opt-letter">A</span>A designated space where off-topic issues raised during a meeting are captured for later discussion without derailing the current agenda</div><div class="mcq-opt" id="ass-6-1"><span class="opt-letter">B</span>The list of agenda items that were fully resolved and can be removed from future meeting agendas</div><div class="mcq-opt" id="ass-6-2"><span class="opt-letter">C</span>A risk register of issues that could derail the engagement and require immediate partner attention</div><div class="mcq-opt" id="ass-6-3"><span class="opt-letter">D</span>The section of the follow-up email dedicated to items that were discussed but not decided</div></div></div><div class="mcq-block" id="aq-7"><div class="mcq-q">8. What does the Amazon case study say about the first twenty minutes of a meeting?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-7-0"><span class="opt-letter">A</span>They set the tone and should be used to build rapport before the analytical discussion begins</div><div class="mcq-opt" id="ass-7-1"><span class="opt-letter">B</span>Any meeting that starts with the facilitator presenting information participants could have reviewed in advance wastes the most expensive meeting time</div><div class="mcq-opt" id="ass-7-2"><span class="opt-letter">C</span>They should always be reserved for status updates — to confirm the engagement is on track before substantive discussion</div><div class="mcq-opt" id="ass-7-3"><span class="opt-letter">D</span>Late arrivals in the first twenty minutes are normal and should be planned for</div></div></div><div class="mcq-block" id="aq-8"><div class="mcq-q">9. What is synthesis in a consulting meeting context?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-8-0"><span class="opt-letter">A</span>The production of a written document integrating all meeting discussion points into a structured output</div><div class="mcq-opt" id="ass-8-1"><span class="opt-letter">B</span>Recalling and recording every point made during a meeting for the meeting summary</div><div class="mcq-opt" id="ass-8-2"><span class="opt-letter">C</span>The integration of disparate discussion points into a coherent conclusion — identifying the pattern or insight that emerges</div><div class="mcq-opt" id="ass-8-3"><span class="opt-letter">D</span>A structured analytical technique for combining data from multiple sources into a single finding</div></div></div><div class="mcq-block" id="aq-9"><div class="mcq-q">10. In the final presentation listening activity, how did James respond to the CFO's concern about cost overruns?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-9-0"><span class="opt-letter">A</span>He disputed the 35% cost overrun assumption as inconsistent with the relevant comparable market entries</div><div class="mcq-opt" id="ass-9-1"><span class="opt-letter">B</span>He acknowledged the validity, identified the two specific assumptions underlying the baseline, and addressed each with evidence — including a modelled 50% referral underperformance scenario</div><div class="mcq-opt" id="ass-9-2"><span class="opt-letter">C</span>He proposed revising the financial model to incorporate a 35% contingency before the board discussion</div><div class="mcq-opt" id="ass-9-3"><span class="opt-letter">D</span>He asked the CFO what payback period the board would accept and committed to revising the recommendation</div></div></div><div class="mcq-block" id="aq-10"><div class="mcq-q">11. What is a hard stop?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-10-0"><span class="opt-letter">A</span>A strict limitation on the scope of a consulting engagement — work that cannot be included regardless of client requests</div><div class="mcq-opt" id="ass-10-1"><span class="opt-letter">B</span>A fixed meeting end time that cannot be extended — typically because a participant has another commitment immediately following</div><div class="mcq-opt" id="ass-10-2"><span class="opt-letter">C</span>A decision made by the partner that cannot be overridden by the client team</div><div class="mcq-opt" id="ass-10-3"><span class="opt-letter">D</span>A point in the meeting after which no new topics can be raised</div></div></div><div class="mcq-block" id="aq-11"><div class="mcq-q">12. What does the problem-solving workshop listening activity illustrate about facilitation?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-11-0"><span class="opt-letter">A</span>Facilitators should always recommend the preferred option at the start to anchor the discussion</div><div class="mcq-opt" id="ass-11-1"><span class="opt-letter">B</span>Effective workshop design separates divergent thinking (generating options) from convergent thinking (evaluating and deciding) — with explicit decision-calling at the end</div><div class="mcq-opt" id="ass-11-2"><span class="opt-letter">C</span>The most important facilitation skill is managing time — all other qualities are secondary</div><div class="mcq-opt" id="ass-11-3"><span class="opt-letter">D</span>Workshops should avoid explicit voting to prevent winners and losers</div></div></div><div class="mcq-block" id="aq-12"><div class="mcq-q">13. What is escalation in a consulting engagement?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-12-0"><span class="opt-letter">A</span>The process of increasing the size of the consulting team when a client's demands exceed the current team's capacity</div><div class="mcq-opt" id="ass-12-1"><span class="opt-letter">B</span>The process of bringing an unresolved issue to a higher level for resolution — when it cannot be addressed at the working level</div><div class="mcq-opt" id="ass-12-2"><span class="opt-letter">C</span>A formal complaint mechanism available to clients when they are dissatisfied with the consulting team's work</div><div class="mcq-opt" id="ass-12-3"><span class="opt-letter">D</span>The process by which a junior consultant's concerns are communicated to the partner</div></div></div><div class="mcq-block" id="aq-13"><div class="mcq-q">14. What does the Pyramid Principle case study say about how to apply the principle to status updates?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-13-0"><span class="opt-letter">A</span>Begin chronologically — what has been done, what is in progress, what is planned — before stating the overall status</div><div class="mcq-opt" id="ass-13-1"><span class="opt-letter">B</span>Begin with the headline ('we are on track' or 'there is a risk to the timeline') rather than building to it through a chronological narrative</div><div class="mcq-opt" id="ass-13-2"><span class="opt-letter">C</span>Status updates should always be written rather than verbal — the Pyramid Principle applies only to written communication</div><div class="mcq-opt" id="ass-13-3"><span class="opt-letter">D</span>Status updates should list all actions completed before identifying any issues or risks</div></div></div><div class="mcq-block" id="aq-14"><div class="mcq-q">15. What is alignment in a consulting engagement?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-14-0"><span class="opt-letter">A</span>The agreement between all members of the consulting team on their individual responsibilities and workstream ownership</div><div class="mcq-opt" id="ass-14-1"><span class="opt-letter">B</span>The state of shared understanding and agreement between consulting and client teams on direction, findings, and next steps</div><div class="mcq-opt" id="ass-14-2"><span class="opt-letter">C</span>The process of calibrating consulting recommendations against the client's existing strategy documents</div><div class="mcq-opt" id="ass-14-3"><span class="opt-letter">D</span>The contractual agreement between firm and client on scope, fees, and deliverables</div></div></div><div class="mcq-block" id="aq-15"><div class="mcq-q">16. What is the difference between a clarifying question and a closed question?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-15-0"><span class="opt-letter">A</span>A clarifying question is asked before the meeting begins; a closed question is asked during the meeting</div><div class="mcq-opt" id="ass-15-1"><span class="opt-letter">B</span>A clarifying question seeks to understand what the client has said before responding; a closed question is used to confirm a specific fact or elicit a decision</div><div class="mcq-opt" id="ass-15-2"><span class="opt-letter">C</span>A clarifying question is always open (cannot be answered yes/no); a closed question is always yes/no</div><div class="mcq-opt" id="ass-15-3"><span class="opt-letter">D</span>A clarifying question is the consultant's tool; a closed question is the client's tool for confirming information</div></div></div><div class="mcq-block" id="aq-16"><div class="mcq-q">17. What did Jeff Bezos's ban on PowerPoint reflect about meeting design, according to the case study?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-16-0"><span class="opt-letter">A</span>Meeting technology is the primary determinant of meeting quality — removing PowerPoint forces better thinking</div><div class="mcq-opt" id="ass-16-1"><span class="opt-letter">B</span>Meeting design is as important as meeting facilitation — the structure of a meeting determines what kind of thinking and deciding it can produce</div><div class="mcq-opt" id="ass-16-2"><span class="opt-letter">C</span>Senior meetings should be short — PowerPoint extends meeting time without improving decision quality</div><div class="mcq-opt" id="ass-16-3"><span class="opt-letter">D</span>All business communication should shift from visual to text-based formats</div></div></div><div class="mcq-block" id="aq-17"><div class="mcq-q">18. What is the professional follow-up email's most important function according to this module?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-17-0"><span class="opt-letter">A</span>It maintains the client relationship by demonstrating the consulting team's responsiveness and professionalism</div><div class="mcq-opt" id="ass-17-1"><span class="opt-letter">B</span>It creates a written record that prevents misalignment by confirming what was decided and what will happen next</div><div class="mcq-opt" id="ass-17-2"><span class="opt-letter">C</span>It provides the partner with a record of client feedback that can be used to improve future engagements</div><div class="mcq-opt" id="ass-17-3"><span class="opt-letter">D</span>It signals to the client that the consulting team is working outside normal business hours</div></div></div><div class="mcq-block" id="aq-18"><div class="mcq-q">19. What is a straw man proposal?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-18-0"><span class="opt-letter">A</span>A weak argument intentionally presented to be defeated — to demonstrate the consulting team's critical thinking</div><div class="mcq-opt" id="ass-18-1"><span class="opt-letter">B</span>A final recommendation that the team presents in a conservative form to allow the client to strengthen it</div><div class="mcq-opt" id="ass-18-2"><span class="opt-letter">C</span>A preliminary or provisional proposal designed to provoke client reaction and stimulate discussion rather than to be accepted as final</div><div class="mcq-opt" id="ass-18-3"><span class="opt-letter">D</span>A visual framework used in workshops to structure a complex multi-stakeholder discussion</div></div></div><div class="mcq-block" id="aq-19"><div class="mcq-q">20. What is the most important professional discipline in client meetings according to the first reading text?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-19-0"><span class="opt-letter">A</span>The ability to present analysis confidently without reference to notes or slides</div><div class="mcq-opt" id="ass-19-1"><span class="opt-letter">B</span>The ability to synthesise — to extract the insight that emerges from a complex discussion in real time</div><div class="mcq-opt" id="ass-19-2"><span class="opt-letter">C</span>The ability to manage time precisely — ending every meeting exactly at the agreed hard stop</div><div class="mcq-opt" id="ass-19-3"><span class="opt-letter">D</span>The ability to challenge client assumptions while maintaining the senior client relationship</div></div></div></div>
+      <div class="static-note">Interactive checks, AI feedback, and audio playback have been removed in this content-only review import.</div>
+    </div>
+  </div>
+</section>
+</main>
+
+</body>
+</html>

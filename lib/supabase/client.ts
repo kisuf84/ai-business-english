@@ -5,6 +5,13 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 let browserClient: SupabaseClient | null = null;
 
+export function getSupabaseBrowserConfigDiagnostics() {
+  return {
+    hasUrl: Boolean(supabaseUrl),
+    hasAnonKey: Boolean(supabaseAnonKey),
+  };
+}
+
 export function hasSupabaseBrowserConfig(): boolean {
   return Boolean(supabaseUrl && supabaseAnonKey);
 }

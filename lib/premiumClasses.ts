@@ -11,7 +11,10 @@ export type PremiumCourseSlug =
   | "bricepremiumcourses1"
   | "bricepremiumcourses2"
   | "bricepremiumcourses3"
-  | "executive-leadership-english";
+  | "executive-leadership-english"
+  | "consulting-strategy-english"
+  | "operations-manufacturing-english"
+  | "entrepreneurship-startups-english";
 
 export type PremiumModule = {
   slug: string;
@@ -68,7 +71,35 @@ const COURSE_META: Record<
       "Business English for leadership, executive communication, strategy, decision-making, and high-level professional contexts.",
     level: "B2-C1",
   },
+  "consulting-strategy-english": {
+    title: "Consulting & Strategy English",
+    subtitle: "Sanitized Review Course",
+    description:
+      "Business English for consulting, strategic analysis, client communication, recommendations, and professional advisory work.",
+    level: "B2-C1",
+  },
+  "operations-manufacturing-english": {
+    title: "Operations & Manufacturing English",
+    subtitle: "Sanitized Review Course",
+    description:
+      "Business English for operations, manufacturing, process improvement, supply chains, production reporting, and workplace communication.",
+    level: "B2-C1",
+  },
+  "entrepreneurship-startups-english": {
+    title: "Entrepreneurship & Startups English",
+    subtitle: "Sanitized Review Course",
+    description:
+      "Business English for startups, investor communication, business models, pitching, partnerships, and entrepreneurial decision-making.",
+    level: "B2-C1",
+  },
 };
+
+const FULLY_UNLOCKED_REVIEW_COURSES = new Set<PremiumCourseSlug>([
+  "executive-leadership-english",
+  "consulting-strategy-english",
+  "operations-manufacturing-english",
+  "entrepreneurship-startups-english",
+]);
 
 function decodeHtmlEntities(value: string) {
   return value
@@ -131,6 +162,14 @@ function formatModuleFallback(_courseTitle: string, number: number) {
 
 function isPreviewModule(number: number) {
   return number === 1;
+}
+
+function isModuleLocked(courseSlug: PremiumCourseSlug, number: number) {
+  if (FULLY_UNLOCKED_REVIEW_COURSES.has(courseSlug)) {
+    return false;
+  }
+
+  return !isPreviewModule(number);
 }
 
 async function readModuleTitle(filePath: string, courseTitle: string, number: number) {
@@ -201,7 +240,7 @@ export async function listPremiumCourses(): Promise<PremiumCourse[]> {
               number,
               iframeSrc: `/premium-content/${slug}/${moduleSlug}`,
               isPreview: isPreviewModule(number),
-              isLocked: !isPreviewModule(number),
+              isLocked: isModuleLocked(slug, number),
             } satisfies PremiumModule;
           })
       );

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consulting Module 1: Consulting Roles and Terminology — Consulting &amp; Strategy English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root{--navy:#0c1829;--navy-mid:#112240;--navy-light:#1a3357;--gold:#0ea5e9;--gold-light:#26c6da;--gold-bright:#38bdf8;--cream:#f0f4f8;--cream-dark:#dce8f0;--white:#ffffff;--text-light:#90b8cc;--text-mid:#4a7a96;--red-accent:#e53935;--green-accent:#00b86b;--teal:#0097a7;--sidebar-w:260px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);display:flex;min-height:100vh;overflow-x:hidden;}
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent;transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);}
+.sidebar-brand{padding:24px 22px 18px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-brand h1{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:700;color:var(--gold-bright);line-height:1.38;margin-bottom:3px;}
+.sidebar-brand .sub{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-mid);font-weight:500;}
+.level-badge{display:inline-block;margin-top:11px;background:var(--gold);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:1px;padding:3px 11px;border-radius:20px;text-transform:uppercase;}
+.sidebar-section-label{padding:20px 22px 7px;font-size:8.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--text-mid);font-weight:700;}
+.nav-item{display:flex;align-items:center;justify-content:space-between;padding:11px 22px;cursor:pointer;transition:all 0.18s;border-left:3px solid transparent;}
+.nav-item:hover{background:rgba(255,255,255,0.055);}
+.nav-item.active{background:rgba(245,184,0,0.12);border-left-color:var(--gold-light);}
+.nav-left{display:flex;align-items:center;gap:11px;}
+.nav-icon{font-size:15px;opacity:0.9;}
+.nav-label{font-size:13px;color:var(--text-light);font-weight:400;}
+.nav-item.active .nav-label{color:var(--white);font-weight:500;}
+.nav-badge{font-size:9.5px;font-weight:700;color:var(--navy);background:var(--gold-bright);padding:1px 7px;border-radius:12px;}
+#mob-btn{display:none;position:fixed;top:14px;left:14px;z-index:300;background:var(--navy);border:none;border-radius:10px;padding:10px 13px;cursor:pointer;color:var(--gold-bright);font-size:19px;box-shadow:0 3px 14px rgba(0,0,0,0.35);line-height:1;}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150;}
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;}
+.section{display:none;}.section.active{display:block;}
+.hero{background:linear-gradient(145deg,#06111f 0%,#0d1e35 50%,#081929 100%);padding:64px 64px 54px;position:relative;overflow:hidden;}
+.hero::before{content:'L1';position:absolute;right:-15px;bottom:-55px;font-family:'Playfair Display',serif;font-size:310px;font-weight:900;color:rgba(255,255,255,0.022);line-height:1;pointer-events:none;}
+.hero::after{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(245,184,0,0.05) 0%,transparent 70%);pointer-events:none;}
+.module-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);padding:7px 18px;border-radius:50px;font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-light);font-weight:600;margin-bottom:30px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4.6vw,58px);font-weight:900;color:var(--white);line-height:1.08;}
+.hero h2 .accent{color:var(--gold-bright);}
+.hero-desc{font-size:15px;color:var(--text-light);max-width:620px;line-height:1.78;margin-top:20px;font-weight:300;}
+.hero-stats{display:flex;gap:36px;margin-top:44px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;gap:3px;}
+.stat-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--gold-bright);line-height:1;}
+.stat-l{font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(160,180,210,0.7);font-weight:600;}
+.prog-wrap{background:var(--navy-mid);padding:16px 64px;display:flex;align-items:center;gap:20px;}
+.prog-label{font-size:11.5px;font-weight:600;color:var(--text-light);white-space:nowrap;}
+.prog-track{flex:1;height:6px;background:rgba(255,255,255,0.09);border-radius:6px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:6px;width:0%;transition:width 1s ease;}
+.prog-pct{font-size:12.5px;font-weight:700;color:var(--gold-bright);min-width:36px;text-align:right;}
+.content{padding:48px 60px;}
+.card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.card-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.card-bar{width:40px;height:3px;background:var(--gold-light);border-radius:3px;margin-bottom:20px;}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.outcome{display:flex;align-items:flex-start;gap:13px;background:var(--cream);border-radius:11px;padding:14px 16px;border-left:3px solid var(--gold-light);}
+.out-num{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--gold);line-height:1;min-width:24px;}
+.out-text{font-size:13.5px;color:var(--navy);line-height:1.52;}
+.speaking-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.speaking-card{background:var(--cream);border-radius:11px;padding:18px 20px;border-top:3px solid var(--gold-light);transition:transform 0.2s,box-shadow 0.2s;cursor:default;}
+.speaking-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(11,27,48,0.1);}
+.q-num{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;margin-bottom:8px;letter-spacing:1px;}
+.q-text{font-size:13.5px;color:var(--navy);line-height:1.55;}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.wb-card{background:var(--navy);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:transform 0.2s;cursor:default;}
+.wb-card:hover{transform:translateY(-2px);}
+.wb-emoji{font-size:28px;line-height:1;display:block;margin-bottom:2px;}
+.wb-term{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;color:var(--gold-bright);}
+.wb-def{font-size:12px;color:var(--text-light);line-height:1.52;}
+.reading-box{background:var(--cream);border-radius:12px;padding:26px 30px;margin-bottom:26px;border-left:4px solid var(--gold-light);}
+.reading-box h4{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.reading-box p{font-size:14px;color:#1a2e45;line-height:1.84;margin-bottom:13px;}
+.reading-box p:last-child{margin-bottom:0;}
+.mcq-block{margin-bottom:22px;}
+.mcq-q{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:11px;line-height:1.5;}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;}
+.mcq-opt{display:flex;align-items:center;gap:10px;background:var(--cream);border:2px solid var(--cream-dark);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.18s;font-size:13.5px;color:var(--navy);user-select:none;-webkit-tap-highlight-color:transparent;}
+.mcq-opt:hover{border-color:var(--gold-light);background:#fef8e0;}
+.mcq-opt.selected{border-color:var(--gold);background:#fff3c0;}
+.mcq-opt.correct{border-color:var(--green-accent);background:#e6f8ee;color:#0a6b35;}
+.mcq-opt.incorrect{border-color:var(--red-accent);background:#fdecea;color:#881a18;}
+.opt-letter{font-family:'DM Mono',monospace;font-size:10.5px;font-weight:700;width:23px;height:23px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy);}
+.mcq-opt.correct .opt-letter{background:var(--green-accent);color:white;}
+.mcq-opt.incorrect .opt-letter{background:var(--red-accent);color:white;}
+.lmcq-opt{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.12)!important;color:var(--text-light)!important;}
+.lmcq-opt:hover{border-color:var(--gold-light)!important;background:rgba(245,184,0,0.1)!important;}
+.lmcq-opt.selected{border-color:var(--gold)!important;background:rgba(245,184,0,0.18)!important;color:var(--gold-bright)!important;}
+.lmcq-opt.correct{border-color:var(--green-accent)!important;background:rgba(0,166,81,0.18)!important;color:#4dde9a!important;}
+.lmcq-opt.incorrect{border-color:var(--red-accent)!important;background:rgba(214,48,49,0.18)!important;color:#ff8b8b!important;}
+.check-btn{margin-top:15px;background:var(--navy);color:var(--gold-bright);border:none;padding:11px 26px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.check-btn:hover{background:var(--navy-light);}
+.l-check{background:rgba(255,255,255,0.1)!important;color:var(--gold-bright)!important;}
+.l-check:hover{background:rgba(255,255,255,0.18)!important;}
+.score-disp{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;margin-top:14px;}
+.ex-tabs{display:flex;gap:4px;margin-bottom:26px;background:var(--cream-dark);border-radius:12px;padding:4px;flex-wrap:wrap;}
+.ex-tab{flex:1;min-width:130px;text-align:center;padding:10px;border-radius:9px;font-size:12.5px;font-weight:500;cursor:pointer;color:var(--text-mid);transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.ex-tab.active{background:var(--navy);color:var(--gold-bright);}
+.gram-ref{background:var(--navy);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.gram-ref h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:14px;}
+.gram-rule{background:rgba(255,255,255,0.065);border-radius:9px;padding:14px 18px;margin-bottom:11px;border-left:3px solid var(--gold-light);}
+.gram-rule p,.gram-rule li{font-size:13px;color:var(--text-light);line-height:1.66;}
+.gram-rule code{font-family:'DM Mono',monospace;background:rgba(245,184,0,0.18);color:var(--gold-bright);padding:1px 6px;border-radius:4px;font-size:12px;}
+.gram-rule ul{padding-left:18px;}
+.gf-item{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:14px;color:var(--navy);line-height:2.2;margin-bottom:12px;}
+.gf-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);padding:2px 7px;width:160px;outline:none;text-align:center;}
+.gf-input.correct{border-color:var(--green-accent);color:var(--green-accent);}
+.gf-input.incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.tf-row{background:var(--cream);border-radius:10px;padding:13px 17px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.tf-stmt{font-size:13.5px;color:var(--navy);flex:1;line-height:1.52;}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;}
+.tf-btn{padding:7px 16px;border-radius:8px;border:2px solid var(--cream-dark);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:white;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.tf-btn:hover{border-color:var(--gold-light);}
+.tf-btn.sel-t,.tf-btn.sel-f{background:var(--navy);color:white;border-color:var(--navy);}
+.tf-btn.cor{background:var(--green-accent);color:white;border-color:var(--green-accent);}
+.tf-btn.wrg{background:var(--red-accent);color:white;border-color:var(--red-accent);}
+.writing-prompt{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.writing-prompt h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:10px;}
+.writing-prompt p{font-size:13.5px;color:var(--text-light);line-height:1.76;}
+.writing-tags{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
+.wtag{background:rgba(245,184,0,0.18);color:var(--gold-bright);font-size:11px;font-weight:600;letter-spacing:0.8px;padding:4px 12px;border-radius:20px;text-transform:uppercase;border:1px solid rgba(245,184,0,0.3);}
+.w-textarea{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;}
+.w-textarea:focus{border-color:var(--gold-light);background:white;}
+.w-counter{font-size:12px;color:var(--text-mid);text-align:right;margin-bottom:14px;}
+.w-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:6px;}
+.ac-btn{background:var(--gold);color:var(--navy);border:none;padding:13px 28px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(224,155,0,0.35);}
+.ac-btn:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.clear-btn{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:12px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.clear-btn:hover{border-color:var(--red-accent);color:var(--red-accent);}
+.fb-panel{display:none;background:#131e2e;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-panel.show{display:block;}
+.fb-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-title-row{display:flex;align-items:center;gap:10px;}
+.fb-emoji{font-size:20px;}
+.fb-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold-bright);}
+.fb-score-badge{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--gold-bright);}
+.fb-level{font-size:14px;font-weight:600;color:var(--gold-bright);}
+.fb-section{margin-bottom:14px;}
+.fb-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);margin-bottom:7px;}
+.fb-item{font-size:13px;color:var(--text-light);line-height:1.62;padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid var(--gold-light);}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);line-height:1.7;font-style:italic;}
+.listen-card{background:var(--navy);border-radius:16px;padding:28px 32px;margin-bottom:20px;}
+.listen-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.listen-icon{width:52px;height:52px;border-radius:14px;background:rgba(245,184,0,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.listen-meta{flex:1;}
+.listen-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-bright);margin-bottom:3px;}
+.listen-sub{font-size:12px;color:var(--text-mid);}
+.player-row{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px 18px;margin-bottom:14px;}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--navy);flex-shrink:0;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.play-btn:hover{background:var(--gold-bright);transform:scale(1.06);}
+.prog-audio{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.prog-audio-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.5s linear;}
+.time-disp{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:70px;text-align:right;}
+.speed-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.speed-label{font-size:11px;color:var(--text-mid);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.spd-btn{padding:5px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.spd-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.replay-btn{padding:5px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:auto;}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.trans-toggle{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);border-radius:9px;padding:10px 16px;cursor:pointer;margin-bottom:0;transition:background 0.18s;-webkit-tap-highlight-color:transparent;}
+.trans-toggle:hover{background:rgba(255,255,255,0.09);}
+.trans-label{font-size:12px;font-weight:600;color:var(--text-mid);letter-spacing:0.5px;}
+.trans-arrow{font-size:11px;color:var(--text-mid);transition:transform 0.22s;}
+.trans-toggle.open .trans-arrow{transform:rotate(180deg);}
+.trans-body{max-height:0;overflow:hidden;transition:max-height 0.36s ease;}
+.trans-body.open{max-height:800px;}
+.trans-text{font-size:13px;color:var(--text-light);line-height:1.78;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:0 0 9px 9px;border-top:1px solid rgba(255,255,255,0.06);}
+.listen-mcq-wrap{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+.listen-mcq-title{font-size:13px;font-weight:700;color:var(--gold-bright);letter-spacing:0.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.case-card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.case-header{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:12px;padding:22px 26px;margin-bottom:22px;}
+.case-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);font-weight:700;margin-bottom:8px;}
+.case-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.case-sub{font-size:12px;color:var(--text-mid);}
+.case-section{margin-bottom:18px;}
+.case-section h5{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.case-section p{font-size:14px;color:var(--navy);line-height:1.78;}
+.final-result{display:none;border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.final-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.final-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.final-score{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;line-height:1;}
+.final-verdict{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:8px;}
+.final-msg{font-size:14px;opacity:0.88;max-width:420px;margin:0 auto;line-height:1.68;}
+.ass-btn{margin-top:18px;background:var(--gold);color:var(--navy);border:none;padding:13px 32px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.ass-btn:hover{background:var(--gold-bright);}
+.retry-btn{display:none;margin-top:8px;margin-left:10px;background:rgba(255,255,255,0.15);color:var(--navy);border:1.5px solid var(--cream-dark);padding:11px 28px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.retry-btn:hover{background:rgba(255,255,255,0.25);}
+/* ─ Gap Fill & True/False ─ */
+.gf-block{background:var(--cream);border-radius:10px;padding:16px 18px;margin-bottom:12px;border-left:3px solid var(--gold-light);}
+.gf-sentence{font-size:14px;color:var(--navy);line-height:2.1;}
+.gf-fb{font-size:12.5px;margin-top:6px;min-height:18px;}
+.tf-block{background:var(--cream);border-radius:10px;padding:15px 18px;margin-bottom:10px;border-left:3px solid var(--gold-light);}
+.tf-q{font-size:14px;color:var(--navy);line-height:1.55;margin-bottom:10px;}
+.tf-fb{font-size:12.5px;margin-top:8px;min-height:18px;}
+/* ─ Listening player ─ */
+.l-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.l-icon{font-size:30px;line-height:1;}
+.l-sub{font-size:12px;color:var(--text-mid);margin-top:3px;}
+.l-player{background:var(--navy);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+.l-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.l-play-btn{background:var(--gold);color:var(--navy);border:none;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.l-play-btn:hover{background:var(--gold-bright);}
+.l-speed{background:rgba(255,255,255,0.1);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.18);padding:8px 12px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;outline:none;}
+.l-trans-btn{background:rgba(255,255,255,0.08);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.15);padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;transition:all 0.2s;}
+.l-trans-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.l-progress{display:flex;align-items:center;gap:12px;}
+.l-bar-track{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.l-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.3s linear;}
+.l-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:36px;text-align:right;}
+.l-transcript-box{background:rgba(11,27,48,0.04);border:1px solid var(--cream-dark);border-radius:10px;padding:18px 22px;margin-bottom:18px;}
+.l-transcript-text{font-size:13px;color:var(--navy);line-height:1.8;}
+/* ─ Case Studies ─ */
+.cs-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+.cs-sub{font-size:12.5px;color:var(--text-mid);margin-bottom:16px;}
+.cs-section{margin-bottom:20px;padding:18px 20px;background:var(--cream);border-radius:10px;border-left:3px solid var(--gold-light);}
+.cs-sh{font-size:13.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.cs-p{font-size:14px;color:var(--navy);line-height:1.78;}
+/* ─ Writing ─ */
+.writing-area{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;margin-top:14px;}
+.writing-area:focus{border-color:var(--gold-light);background:white;}
+.writing-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.w-count{font-size:12px;color:var(--text-mid);}
+.btn-primary{background:var(--gold);color:var(--navy);border:none;padding:12px 26px;border-radius:50px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-primary:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--red-accent);color:var(--red-accent);}
+/* ─ AI Feedback ─ */
+.fb-box{background:#0e1d2f;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-box.fb-warn{background:#2d1010;border-color:rgba(214,48,49,0.3);color:#f8a5a5;font-size:13.5px;line-height:1.7;}
+.fb-box.fb-loading{color:var(--text-light);font-size:13.5px;}
+.fb-score-row{display:flex;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap;}
+.fb-score{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;line-height:1;}
+.fb-summary{font-size:13.5px;color:var(--text-light);line-height:1.72;flex:1;}
+.fb-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.fb-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;}
+.fb-good .fb-col-title{color:var(--green-accent);}
+.fb-improve .fb-col-title{color:var(--gold-bright);}
+.fb-item{font-size:13px;color:var(--text-light);padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid rgba(255,255,255,0.15);line-height:1.6;}
+.fb-example{background:rgba(255,255,255,0.05);border-radius:9px;padding:12px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;}
+.fb-ex-label{font-weight:600;color:var(--gold-bright);font-style:normal;}
+/* ─ Grammar Review ─ */
+.gr-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.gr-icon{font-size:28px;}
+.gr-body{display:flex;flex-direction:column;gap:14px;}
+.gr-item{background:var(--cream);border-radius:10px;padding:16px 18px;border-left:3px solid var(--gold-light);}
+.gr-label{font-size:12.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.gr-examples{display:flex;flex-direction:column;gap:6px;}
+.gr-ex{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--navy);background:white;padding:8px 14px;border-radius:7px;border:1px solid var(--cream-dark);}
+.gr-note{font-size:12.5px;color:var(--text-mid);margin-top:10px;padding:8px 12px;background:rgba(224,155,0,0.07);border-radius:7px;border-left:2px solid var(--gold-light);}
+/* ─ Assessment result ─ */
+.assess-result{border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.assess-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.assess-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.assess-score{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;line-height:1;}
+.assess-label{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:6px;}
+.assess-detail{font-size:13.5px;opacity:0.88;}
+
+/* ─── Writing section ──────────────────────────────── */
+.w-task-header{margin-bottom:4px;}
+.w-task-pill{display:inline-block;background:rgba(224,155,0,0.15);color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 13px;border-radius:20px;border:1px solid rgba(224,155,0,0.3);margin-bottom:8px;}
+.w-prompt-box{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:13px;padding:22px 26px;margin:18px 0;border-left:4px solid var(--gold-light);}
+.w-prompt-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-bright);margin-bottom:10px;}
+.w-prompt-text{font-size:13.5px;color:var(--text-light);line-height:1.82;}
+.w-target{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;color:var(--gold-light);}
+.w-meta-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:8px 0 16px;}
+.w-counter{font-size:12.5px;color:var(--text-mid);font-family:'DM Mono',monospace;}
+
+/* ─── AI Feedback result box ────────────────────────── */
+.fb-result-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-result-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-result-label{font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-result-score{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-align:right;}
+.fb-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-check{display:inline-block;font-size:12.5px;font-weight:600;color:var(--green-accent);background:rgba(0,166,81,0.1);padding:5px 12px;border-radius:20px;}
+.fb-check.fb-check-warn{color:#f39c12;background:rgba(243,156,18,0.1);}
+.fb-suggest-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.fb-suggest-list{margin:0 0 14px 18px;padding:0;}
+.fb-suggest-list li{font-size:13px;color:var(--text-light);line-height:1.68;margin-bottom:4px;}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;margin-bottom:14px;}
+.fb-corrected-label{font-style:normal;font-weight:700;color:var(--gold-bright);}
+.fb-footer-stats{font-size:11.5px;color:rgba(155,179,204,0.5);border-top:1px solid rgba(255,255,255,0.07);padding-top:10px;margin-top:8px;font-family:'DM Mono',monospace;}
+.fb-warn-box{background:#2d1010;border:1px solid rgba(214,48,49,0.3);border-radius:10px;padding:14px 18px;color:#f8a5a5;font-size:13.5px;margin-top:14px;}
+.fb-loading-box{background:#111e2f;border-radius:10px;padding:18px 22px;color:var(--text-light);font-size:13.5px;margin-top:14px;display:flex;align-items:center;gap:10px;}
+
+/* ─── Gap Fill — Image 1 design ───────────────────────────────── */
+.gf-card{padding:32px 36px;}
+.gf-instr{font-size:13.5px;color:var(--text-mid);margin-bottom:22px;line-height:1.6;}
+.gf-bank-box{background:var(--cream);border-radius:14px;padding:20px 22px;margin-bottom:28px;border:1px solid var(--cream-dark);}
+.gf-bank-pills{display:flex;flex-wrap:wrap;gap:10px;}
+.gf-pill{background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:50px;cursor:default;transition:opacity 0.25s,transform 0.2s;}
+.gf-pill.gf-pill-used{opacity:0.28;text-decoration:line-through;}
+.gf-sentences{display:flex;flex-direction:column;gap:26px;}
+.gf-row{}
+.gf-sentence-text{font-size:14.5px;color:var(--navy);line-height:1.9;}
+.gf-blank-wrap{display:inline-block;position:relative;vertical-align:bottom;}
+.gf-underline-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14.5px;color:var(--navy);padding:1px 8px 2px;width:170px;outline:none;text-align:center;transition:border-color 0.2s;}
+.gf-underline-input::placeholder{color:rgba(90,120,153,0.5);font-size:13px;}
+.gf-underline-input.gf-correct{border-color:var(--green-accent);color:var(--green-accent);font-weight:600;}
+.gf-underline-input.gf-incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.gf-underline-input:disabled{background:transparent;}
+.gf-row-fb{margin-top:4px;min-height:18px;padding-left:4px;}
+.gf-fb-ok{font-size:12px;font-weight:700;color:var(--green-accent);}
+.gf-fb-err{font-size:12px;font-weight:600;color:var(--red-accent);}
+
+/* ─── True/False — Image 2 design ─────────────────────────────── */
+.tf-card{padding:32px 36px;}
+.tf-instr{font-size:13.5px;color:var(--gold);margin-bottom:22px;font-weight:500;}
+.tf-list{display:flex;flex-direction:column;gap:12px;}
+.tf-item{background:var(--cream);border-radius:12px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;transition:box-shadow 0.2s;}
+.tf-item[data-done]{opacity:0.92;}
+.tf-item-stmt{font-size:14px;color:var(--navy);line-height:1.58;flex:1;min-width:200px;}
+.tf-item-btns{display:flex;gap:10px;flex-shrink:0;}
+.tf-item-btn{padding:10px 26px;border-radius:9px;border:2px solid var(--cream-dark);font-size:13.5px;font-weight:700;cursor:pointer;background:white;font-family:'DM Sans',sans-serif;color:var(--navy);transition:all 0.18s;-webkit-tap-highlight-color:transparent;}
+.tf-item-btn:hover:not(:disabled){border-color:var(--gold-light);background:#fef8e0;}
+.tf-item-btn.tf-btn-correct{background:var(--green-accent);border-color:var(--green-accent);color:white;}
+.tf-item-btn.tf-btn-wrong{background:var(--red-accent);border-color:var(--red-accent);color:white;}
+.tf-item-btn:disabled{cursor:default;}
+.tf-item-fb{width:100%;margin-top:2px;min-height:18px;font-size:12.5px;}
+.tf-fb-ok{color:var(--green-accent);font-weight:700;}
+.tf-fb-err{color:var(--red-accent);font-weight:600;}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{display:inline-block;animation:spin 1s linear infinite;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}#mob-btn{display:flex;align-items:center;justify-content:center;}
+  #main{margin-left:0;}.hero{padding:60px 22px 40px;}.content{padding:28px 18px;}
+  .prog-wrap{padding:12px 22px;}.outcomes-grid,.speaking-grid,.wb-grid{grid-template-columns:1fr;}.hero-stats{gap:22px;}
+}
+@media(max-width:600px){
+  .hero{padding:56px 16px 36px;}.content{padding:22px 14px;}.card{padding:22px 18px;}
+  .listen-card{padding:20px 16px;}.reading-box{padding:18px 16px;}.player-row{flex-wrap:wrap;gap:10px;}.time-disp{min-width:auto;}
+}
+
+
+
+
+
+/* ─── Auto-Correction Report UI (Module 6+) ─────────────────────── */
+.fb-report-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-report-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:12px;}
+.fb-report-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-report-icon{font-size:16px;}
+.fb-report-score{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
+.fb-quick-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-cats{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.fb-cat-row{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 16px;}
+.fb-cat-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.fb-cat-icon{font-size:15px;}
+.fb-cat-label{font-size:13px;color:var(--white);}
+.fb-cat-good{font-size:11px;font-weight:700;color:#00c46a;background:rgba(0,196,106,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(0,196,106,0.3);}
+.fb-cat-sat{font-size:11px;font-weight:700;color:#f5b800;background:rgba(245,184,0,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(245,184,0,0.3);}
+.fb-cat-att{font-size:11px;font-weight:700;color:#e05c5c;background:rgba(224,92,92,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(224,92,92,0.3);}
+.fb-cat-comment{font-size:13px;color:var(--text-light);line-height:1.7;}
+.fb-corrected-block{background:rgba(255,255,255,0.04);border-left:3px solid var(--gold-light);border-radius:0 8px 8px 0;padding:11px 16px;font-size:13px;color:var(--text-light);line-height:1.72;margin-bottom:12px;font-style:italic;}
+.fb-corrected-tag{font-style:normal;font-weight:700;color:var(--gold-bright);display:block;margin-bottom:4px;}
+.fb-overall{font-size:13px;color:#00c46a;margin-bottom:10px;font-weight:500;}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ─── Gap-Fill Redesign (auto-graded) ───────────────────────────────────── */
+.gf-bank-label{font-size:11px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.gf-num{color:var(--gold-bright);font-weight:700;min-width:22px;display:inline-block;}
+.gf-btn-bar{display:flex;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.gf-check-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;font-size:13px;padding:10px 22px;border:none;border-radius:8px;cursor:pointer;transition:opacity .15s;}
+.gf-check-btn:hover{opacity:.88;}
+.gf-check-btn:disabled{cursor:not-allowed;opacity:.5;}
+.gf-reset-btn{background:rgba(255,255,255,0.07);color:var(--text-light);font-size:13px;font-weight:600;padding:10px 18px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;cursor:pointer;transition:background .15s;}
+.gf-reset-btn:hover{background:rgba(255,255,255,0.12);}
+.gf-score-display{font-size:15px;margin-left:4px;}
+.gf-pill-highlight{outline:2px solid var(--gold-bright) !important;opacity:1 !important;}
+.gf-fb-err strong{color:var(--gold-bright);}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+<style id="static-premium-override">
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0 !important;
+    display: block !important;
+    overflow-x: hidden !important;
+  }
+  .section,
+  .content,
+  .card,
+  #overviewContent,
+  #speakingContent,
+  #wordBankContent,
+  #readingContent,
+  #gramRevContent,
+  #writingContent,
+  #listeningContent,
+  #casesContent,
+  #assessContainer {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  #sidebar {
+    display: block !important;
+    position: sticky !important;
+    top: 16px !important;
+    transform: none !important;
+    float: left !important;
+    max-width: 300px !important;
+    width: calc(100% - 32px) !important;
+    margin: 16px 16px 24px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    z-index: 1 !important;
+    max-height: calc(100vh - 32px) !important;
+  }
+  #sidebar .nav-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    text-decoration: none !important;
+  }
+  #sidebar .nav-item.active {
+    background: rgba(255, 255, 255, 0.08) !important;
+  }
+  body:has(#sec-overview:target) #sidebar a[href="#sec-overview"],
+  body:has(#sec-speaking:target) #sidebar a[href="#sec-speaking"],
+  body:has(#sec-wordbank:target) #sidebar a[href="#sec-wordbank"],
+  body:has(#sec-reading:target) #sidebar a[href="#sec-reading"],
+  body:has(#sec-vocab:target) #sidebar a[href="#sec-vocab"],
+  body:has(#sec-grammar:target) #sidebar a[href="#sec-grammar"],
+  body:has(#sec-gramreview:target) #sidebar a[href="#sec-gramreview"],
+  body:has(#sec-writing:target) #sidebar a[href="#sec-writing"],
+  body:has(#sec-listening:target) #sidebar a[href="#sec-listening"],
+  body:has(#sec-cases:target) #sidebar a[href="#sec-cases"],
+  body:has(#sec-assessment:target) #sidebar a[href="#sec-assessment"] {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: inherit !important;
+  }
+  #main {
+    margin-left: 0 !important;
+    display: block !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: 16px 16px 24px 332px !important;
+    min-height: 100vh !important;
+  }
+  #main .section {
+    scroll-margin-top: 16px !important;
+  }
+  #main::after {
+    content: "" !important;
+    display: block !important;
+    clear: both !important;
+  }
+  .hero, .content, .prog-wrap { max-width: 1200px; margin-left: auto; margin-right: auto; }
+  #vex-0, #vex-1, #vex-2,
+  #gex-0, #gex-1, #gex-2,
+  [id^="wpanel-"],
+  .l-transcript-box {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .l-controls, .l-progress, .clear-btn, .ac-btn, .gf-btn-bar, .ass-btn, .retry-btn, .btn-primary, #final-res { display: none !important; }
+  .ex-tab, .mcq-opt, .tf-item-btn { pointer-events: none !important; }
+  .static-note {
+    margin: 24px 0 0;
+    padding: 16px 18px;
+    border: 1px solid rgba(17, 34, 64, 0.12);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.7);
+    font-size: 13px;
+    line-height: 1.6;
+    color: #1c2438;
+  }
+  #mob-btn, #overlay {
+    display: none !important;
+  }
+  @media (max-width: 900px) {
+    body {
+      display: block !important;
+    }
+    #sidebar {
+      position: relative !important;
+      top: auto !important;
+      float: none !important;
+      max-width: none !important;
+      border-right: none !important;
+      overflow: visible !important;
+      margin: 0 0 16px !important;
+      max-height: none !important;
+    }
+    #main {
+      width: 100% !important;
+      margin: 0 !important;
+      min-height: 0 !important;
+    }
+    .hero, .content, .prog-wrap { padding-left: 18px !important; padding-right: 18px !important; }
+  }
+</style></head>
+<body>
+
+
+<nav id="sidebar">
+  <div class="sidebar-brand"><h1>Consulting &amp; Strategy English</h1><div class="sub">Professional Course Series</div><span class="level-badge">B1&#8211;B2 Level</span></div>
+  <div class="sidebar-section-label">Module 1</div>
+  <a class="nav-item active" href="#sec-overview"><div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div></a>
+  <a class="nav-item" href="#sec-speaking"><div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div><span class="nav-badge">21</span></a>
+  <a class="nav-item" href="#sec-wordbank"><div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div><span class="nav-badge">21</span></a>
+  <a class="nav-item" href="#sec-reading"><div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div><span class="nav-badge">2</span></a>
+  <a class="nav-item" href="#sec-vocab"><div class="nav-left"><span class="nav-icon">🔤</span><span class="nav-label">Vocabulary</span></div><span class="nav-badge">3</span></a>
+  <a class="nav-item" href="#sec-grammar"><div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Grammar</span></div><span class="nav-badge">3</span></a>
+  <a class="nav-item" href="#sec-gramreview"><div class="nav-left"><span class="nav-icon">📋</span><span class="nav-label">Grammar Review</span></div></a>
+  <a class="nav-item" href="#sec-writing"><div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div><span class="nav-badge">AI</span></a>
+  <a class="nav-item" href="#sec-listening"><div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div><span class="nav-badge">4</span></a>
+  <a class="nav-item" href="#sec-cases"><div class="nav-left"><span class="nav-icon">🎯</span><span class="nav-label">Case Studies</span></div><span class="nav-badge">2</span></a>
+  <a class="nav-item" href="#sec-assessment"><div class="nav-left"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></div><span class="nav-badge">20</span></a>
+</nav>
+<main id="main">
+<section id="sec-overview" class="section active">
+  <div class="hero"><div class="module-pill">🎯 &nbsp; Module 1 &nbsp;·&nbsp; Consulting &amp; Strategy English</div><h2>Consulting Roles<br><span class="accent">and Terminology</span></h2><p class="hero-desc">Master the essential vocabulary of the consulting profession — the roles, structures, and working language of a major strategy consulting firm. From Business Analyst and Engagement Manager to Partner, from engagement and case to deck, workstream, and MECE — build the professional fluency to work confidently in consulting teams, communicate with clients, and understand the way the industry thinks about problems and solutions.</p><div class="hero-stats"><div class="stat"><span class="stat-n">21</span><span class="stat-l">Key Terms</span></div><div class="stat"><span class="stat-n">11</span><span class="stat-l">Sections</span></div><div class="stat"><span class="stat-n">4</span><span class="stat-l">Audio Activities</span></div><div class="stat"><span class="stat-n">B1–B2</span><span class="stat-l">CEFR Level</span></div></div></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" id="progFill"></div></div><span class="prog-pct" id="progPct">0%</span></div>
+  <div class="content" id="overviewContent"><div class="card">
+    <div class="card-title">📘 What You Will Learn</div><div class="card-bar"></div>
+    <div class="outcomes-grid"><div class="outcome"><span class="out-num">01</span><span class="out-text">Identify and accurately use 21 essential consulting industry terms covering firm structure, roles, engagement mechanics, and the basic vocabulary of professional consulting practice</span></div><div class="outcome"><span class="out-num">02</span><span class="out-text">Read and analyse professional texts on how consulting firms are structured and how a typical consulting engagement is organised and managed</span></div><div class="outcome"><span class="out-num">03</span><span class="out-text">Use appropriate language for describing consulting roles and hierarchies, precise vocabulary for engagement structure and deliverables, and professional register for client-facing communication</span></div><div class="outcome"><span class="out-num">04</span><span class="out-text">Draft a project introduction memo and a role clarification email using professional consulting language and appropriate formal register</span></div><div class="outcome"><span class="out-num">05</span><span class="out-text">Listen to a team staffing discussion, a client kick-off meeting, a case team working session, and a partner review conversation using authentic consulting vocabulary</span></div><div class="outcome"><span class="out-num">06</span><span class="out-text">Describe consulting roles and hierarchies accurately, explain engagement structure to clients and colleagues, and communicate professionally in the language of a major consulting firm</span></div></div>
+  </div></div>
+</section>
+<section id="sec-speaking" class="section">
+  <div class="hero"><div class="module-pill">🎙️ &nbsp; Speaking Practice</div><h2>Discussion <span class="accent">Questions</span></h2><p class="hero-desc">Practise speaking about consulting roles, firm hierarchy, engagement structure, frameworks, deliverables, and the professional norms of strategy consulting.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:9%"></div></div><span class="prog-pct">9%</span></div>
+  <div class="content" id="speakingContent"><div class="card"><div class="card-title">🎙️ Discussion Questions</div><div class="card-bar"></div>
+    <div class="speaking-grid"><div class="speaking-card"><div class="q-num">Q01</div><div class="q-text">What is management consulting, and what distinguishes it from other professional services such as accounting, law, or investment banking?</div></div><div class="speaking-card"><div class="q-num">Q02</div><div class="q-text">What is the typical hierarchy at a major consulting firm, and what are the key responsibilities at each level?</div></div><div class="speaking-card"><div class="q-num">Q03</div><div class="q-text">What is the difference between an 'engagement' and a 'project' — and why do consultants typically use the word 'engagement'?</div></div><div class="speaking-card"><div class="q-num">Q04</div><div class="q-text">What is a 'case' in consulting language, and how does it differ from the way lawyers use the same word?</div></div><div class="speaking-card"><div class="q-num">Q05</div><div class="q-text">What does a Business Analyst or Associate Consultant do on a typical consulting engagement?</div></div><div class="speaking-card"><div class="q-num">Q06</div><div class="q-text">What is the role of the Engagement Manager or Project Leader — and how does it differ from the Analyst role and the Partner role?</div></div><div class="speaking-card"><div class="q-num">Q07</div><div class="q-text">What is a 'deck' in consulting, and why is it the primary format for communicating findings and recommendations?</div></div><div class="speaking-card"><div class="q-num">Q08</div><div class="q-text">What is a 'framework' in consulting, and can you give examples of frameworks that are commonly used in strategy consulting?</div></div><div class="speaking-card"><div class="q-num">Q09</div><div class="q-text">What is a 'hypothesis-driven' approach to problem-solving, and how does it differ from data-first or conclusion-first approaches?</div></div><div class="speaking-card"><div class="q-num">Q10</div><div class="q-text">What is a 'workstream', and how is a consulting engagement typically divided into workstreams?</div></div><div class="speaking-card"><div class="q-num">Q11</div><div class="q-text">What is a 'deliverable', and what are the most common types of deliverable that consulting teams produce?</div></div><div class="speaking-card"><div class="q-num">Q12</div><div class="q-text">What is a 'stakeholder' in a consulting engagement, and why is stakeholder management considered a critical consulting skill?</div></div><div class="speaking-card"><div class="q-num">Q13</div><div class="q-text">What does 'billable hours' mean, and why do consulting firms track time in this way?</div></div><div class="speaking-card"><div class="q-num">Q14</div><div class="q-text">What is a 'practice area' at a consulting firm, and how do consultants typically develop expertise in a specific practice area?</div></div><div class="speaking-card"><div class="q-num">Q15</div><div class="q-text">What is a 'client team' versus a 'consulting team', and what are the typical points of collaboration between them?</div></div><div class="speaking-card"><div class="q-num">Q16</div><div class="q-text">What is 'scope' in a consulting context, and what is 'scope creep' — and why is it a common problem?</div></div><div class="speaking-card"><div class="q-num">Q17</div><div class="q-text">What is a 'subject matter expert' (SME), and when and how are SMEs typically used in a consulting engagement?</div></div><div class="speaking-card"><div class="q-num">Q18</div><div class="q-text">What is a 'partner' at a consulting firm — and how does the partner role differ from partners in a law firm or accounting firm?</div></div><div class="speaking-card"><div class="q-num">Q19</div><div class="q-text">What is a 'staffing model' for a consulting engagement, and what factors determine how many consultants are assigned to a case?</div></div><div class="speaking-card"><div class="q-num">Q20</div><div class="q-text">What is the difference between a strategy consulting firm (like McKinsey, BCG, or Bain) and an implementation or IT consulting firm?</div></div><div class="speaking-card"><div class="q-num">Q21</div><div class="q-text">If you were a new Business Analyst joining a consulting firm's first week, what vocabulary and professional norms would be most important to learn immediately?</div></div></div>
+  </div></div>
+</section>
+<section id="sec-wordbank" class="section">
+  <div class="hero"><div class="module-pill">📚 &nbsp; Word Bank</div><h2>Consulting <span class="accent">Vocabulary</span></h2><p class="hero-desc">Study these 21 essential consulting terms — the vocabulary of roles, engagements, problem-structuring, deliverables, and professional norms.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:18%"></div></div><span class="prog-pct">18%</span></div>
+  <div class="content" id="wordBankContent"><div class="card"><div class="card-title">📚 Key Legal Terms</div><div class="card-bar"></div>
+    <div class="wb-grid"><div class="wb-card"><span class="wb-emoji">📋</span><div class="wb-term">Engagement</div><div class="wb-def">The standard consulting term for a client project — preferred over 'project' because it implies an active, ongoing relationship and a scope of work rather than a one-time task. An engagement begins with a signed contract (the Statement of Work or SOW) and ends with the delivery of the agreed outputs. Engagements are typically categorised by type (strategy, operations, transformation, due diligence), by duration (sprint, short-term, or multi-phase), and by the team size required. The word 'engagement' also carries a professional connotation of deep client involvement — consultants are engaged, not merely hired.</div></div><div class="wb-card"><span class="wb-emoji">🎯</span><div class="wb-term">Case</div><div class="wb-def">The informal consulting term for an engagement — used conversationally within the firm to refer to the client project a team is working on. 'What case are you on?' is a standard first question among consultants. The case typically has a name (often the client's name and the type of work: 'the Meridian growth strategy case') and a team. At the start of a case, the team 'opens' it; at the end, they 'close' it. Case teams are assembled for each specific engagement based on the skills required and consultant availability.</div></div><div class="wb-card"><span class="wb-emoji">🏢</span><div class="wb-term">Partner</div><div class="wb-def">The most senior client-facing role at a consulting firm — responsible for originating new business, maintaining client relationships, and providing strategic oversight on engagements. Partners own the client relationship and are accountable for the quality of the firm's overall output to that client. At top-tier firms, becoming a partner typically requires 7-12 years of consulting experience. Partners are typically equity owners of the firm and share in its profits. In day-to-day engagement work, the partner is consulted on major decisions and presents final recommendations to the most senior client stakeholders.</div></div><div class="wb-card"><span class="wb-emoji">📊</span><div class="wb-term">Engagement Manager</div><div class="wb-def">The mid-level consulting role that manages the day-to-day operations of a consulting engagement — also called Project Leader at some firms. The Engagement Manager (EM) is responsible for structuring the problem, managing the team's work plan, maintaining the client relationship at the working level, and ensuring the quality of analysis and deliverables before they are presented to the Partner. The EM is the most demanding role in consulting in terms of both breadth and intensity: they must manage up (to the partner) and manage down (to the team of analysts) simultaneously.</div></div><div class="wb-card"><span class="wb-emoji">💼</span><div class="wb-term">Business Analyst</div><div class="wb-def">The entry-level consulting role for new hires joining directly from undergraduate study — also called Analyst or Associate Consultant depending on the firm. Business Analysts are responsible for conducting the primary research and quantitative analysis that underpins the team's recommendations: building financial models, conducting market research, performing interviews, synthesising data, and creating the slides that will eventually form the client deliverable. The Business Analyst role is intense, analytical, and primarily execution-focused: the analyst is given a 'module' or 'workstream' to own and is expected to drive it to completion.</div></div><div class="wb-card"><span class="wb-emoji">📐</span><div class="wb-term">Framework</div><div class="wb-def">A structured analytical lens — a set of organising categories or principles — used to structure a consulting problem or organise a set of findings. Common frameworks include Porter's Five Forces (for competitive analysis), the 3Cs (Company, Customer, Competitor), McKinsey's 7-S (for organisational alignment), the BCG matrix (for portfolio analysis), and MECE (Mutually Exclusive, Collectively Exhaustive — a logic structure for organising information). Frameworks are tools rather than answers: they help consultants and clients organise complexity, not replace the thinking required to understand it.</div></div><div class="wb-card"><span class="wb-emoji">💡</span><div class="wb-term">Hypothesis</div><div class="wb-def">An initial, provisional answer to the engagement's central question — stated before the full analysis is complete, to guide what analysis is actually needed. The hypothesis-driven approach is a defining feature of top-tier strategy consulting: rather than gathering all available data before forming a view, the team states an early hypothesis ('we believe the decline in profitability is driven primarily by pricing rather than volume') and then designs the analysis to test whether that hypothesis is supported or refuted. This approach is significantly faster than data-first analysis and forces teams to be explicit about their assumptions.</div></div><div class="wb-card"><span class="wb-emoji">📑</span><div class="wb-term">Deck</div><div class="wb-def">The PowerPoint (or equivalent) presentation document that is the primary output of most consulting work — named for its resemblance to a deck of cards. A consulting deck is not a presentation in the conventional sense: it is a structured analytical document in which each slide makes a single specific point (often stated in the 'headline' at the top of the slide) and the body of the slide provides the evidence for that point. Decks are used for everything: interim findings, final recommendations, status updates, and internal team discussions. Being able to build a rigorous, persuasive, visually clear consulting deck is one of the most important technical skills in the profession.</div></div><div class="wb-card"><span class="wb-emoji">🔀</span><div class="wb-term">Workstream</div><div class="wb-def">A defined component of the overall consulting engagement — a sub-project with its own scope, analytical questions, and deliverables that contributes to the overall case output. Large engagements are typically divided into workstreams, each owned by a different team member or small sub-team: for example, a market entry strategy engagement might have a 'market sizing' workstream, a 'competitive landscape' workstream, and a 'go-to-market' workstream. Workstream leads are responsible for driving their component to completion and integrating their findings into the overall team output.</div></div><div class="wb-card"><span class="wb-emoji">✅</span><div class="wb-term">Deliverable</div><div class="wb-def">The agreed output of a consulting engagement or a phase within it — the tangible work product that is handed over to the client. Deliverables are specified in the engagement contract (Statement of Work) and typically include: a final recommendations deck, an implementation plan, a financial model, a market analysis, or a set of workshops. The quality of deliverables is the primary basis on which a consulting firm's value is judged by the client. In internal consulting language, a deliverable is also any discrete piece of work that a team member produces and hands off to the broader team.</div></div><div class="wb-card"><span class="wb-emoji">🧩</span><div class="wb-term">MECE</div><div class="wb-def">Mutually Exclusive, Collectively Exhaustive — the foundational logic principle of consulting problem-structuring. A MECE breakdown divides a problem or category into components that do not overlap (mutually exclusive) and together cover the full space (collectively exhaustive). For example, a MECE market segmentation by size would divide all companies into exactly one size category with no company excluded. MECE is used to structure analytical frameworks, organise issues trees, and ensure that a slide's supporting points genuinely cover the full argument without duplication. Mastering MECE thinking is considered a core consulting competency.</div></div><div class="wb-card"><span class="wb-emoji">👥</span><div class="wb-term">Stakeholder</div><div class="wb-def">Any individual or group with a material interest in, or influence over, the outcome of a consulting engagement — including the client's internal decision-makers, the employees affected by recommendations, the regulators who must approve them, and the investors who fund them. Stakeholder management is the process of identifying, understanding, and appropriately engaging each stakeholder group throughout the engagement: ensuring decision-makers are aligned, concerns are heard and addressed, and the final recommendations have the buy-in required for implementation. Poor stakeholder management is one of the most common reasons that technically excellent consulting recommendations fail to be implemented.</div></div><div class="wb-card"><span class="wb-emoji">🏛️</span><div class="wb-term">Practice Area</div><div class="wb-def">A specialisation within a consulting firm — a defined domain of expertise in which the firm has deep knowledge, proprietary methodologies, and a track record of client work. Common practice areas include: Strategy, Operations, Organisation, Digital, Risk, Financial Services, Healthcare, and Sustainability. Consultants typically develop a primary practice area expertise over time, while remaining generalist enough to contribute across sectors. Practice areas have their own leadership, business development targets, and internal training programmes. Some practice areas are organised by function (what kind of work: strategy vs operations); others by sector (which industry: healthcare, financial services).</div></div><div class="wb-card"><span class="wb-emoji">📝</span><div class="wb-term">Scope</div><div class="wb-def">The defined boundaries of what a consulting engagement will and will not address — the explicit agreement between the firm and the client about what work will be done, on what timeline, and at what cost. Scope is documented in the Statement of Work and is one of the most important governance documents in a consulting relationship. 'Scope creep' — the gradual expansion of the work beyond the agreed boundaries — is a common challenge: clients often request additional analyses or topics that were not in the original scope, requiring the engagement manager to either include the work within the existing budget (reducing profitability) or have a conversation with the client about adjusting the scope and the fee.</div></div><div class="wb-card"><span class="wb-emoji">⏱️</span><div class="wb-term">Billable Hours</div><div class="wb-def">The hours of consulting work that are charged to a specific client engagement — as opposed to internal hours spent on firm administration, business development, training, or other non-client activities. Consulting firms charge clients based on the number of hours (or, in fixed-fee engagements, a pre-agreed total) and track consultant time in detailed timesheets. Utilisation — the percentage of a consultant's total hours that are billable to clients — is a key performance metric. New consultants typically target 70-80% billable utilisation; more senior consultants, who spend more time on business development and firm management, often have lower billable utilisation.</div></div><div class="wb-card"><span class="wb-emoji">🧑‍🏫</span><div class="wb-term">Subject Matter Expert</div><div class="wb-def">An individual with deep specialised knowledge in a specific domain — brought into a consulting engagement to provide technical expertise that the core consulting team does not possess. SMEs can be internal (a specialist within the consulting firm's network, such as a former regulator or a technical expert in a specific industry) or external (an academic, former executive, or industry specialist engaged as an adviser). SMEs are typically not full-time team members but are consulted at specific points in the engagement — for example, to review the regulatory section of a market entry analysis or to validate a technical assumption in a business case.</div></div><div class="wb-card"><span class="wb-emoji">📣</span><div class="wb-term">Workplan</div><div class="wb-def">The detailed timeline and task breakdown for a consulting engagement — mapping the work required over the duration of the case to specific days, team members, and outputs. The workplan is the Engagement Manager's primary operational tool: it shows what needs to be done, by whom, and by when, and is updated weekly as the engagement progresses. A well-structured workplan sequences activities so that outputs from earlier workstreams inform later ones, provides sufficient time for iteration and quality review, and builds in buffer for the inevitable unexpected challenges that arise on any complex engagement.</div></div><div class="wb-card"><span class="wb-emoji">📌</span><div class="wb-term">Staffing</div><div class="wb-def">The process of assembling the consulting team for a specific engagement — selecting which consultants at which levels will work on the case, for how many hours per week, and for how long. Staffing decisions are made by the Engagement Manager and Partner, often in consultation with a central staffing function. Consultants are staffed based on: their relevant sector or functional expertise, their availability (current engagement commitments), their development needs (what skills they need to build), and their personal preferences. Being 'put on a case' is consulting parlance for being staffed on an engagement.</div></div><div class="wb-card"><span class="wb-emoji">🗣️</span><div class="wb-term">Client Team</div><div class="wb-def">The client-side counterpart to the consulting team — the group of internal employees at the client organisation who work alongside the consultants, provide data and context, and are responsible for implementing the eventual recommendations. Client teams typically include a project sponsor (a senior executive who owns the engagement), a day-to-day project manager, and several functional experts or analysts. The quality of the client team and its engagement with the consulting team is one of the most important determinants of a consulting engagement's success: clients who actively participate produce better outcomes than those who treat consultants as external service providers.</div></div><div class="wb-card"><span class="wb-emoji">🔍</span><div class="wb-term">Issue Tree</div><div class="wb-def">A structured decomposition of a complex problem into its component sub-questions — organised as a tree diagram in which the root is the central problem and the branches are the subsidiary questions that must be answered to resolve it. Issue trees are used at the beginning of an engagement to structure the problem and design the analytical approach: before the team decides what analysis to do, they map out all the questions that need to be answered and ensure the structure is MECE. A well-constructed issue tree is one of the most valuable tools in consulting practice: it prevents teams from doing analysis that is not needed and ensures no important question is overlooked.</div></div><div class="wb-card"><span class="wb-emoji">🏷️</span><div class="wb-term">Statement of Work</div><div class="wb-def">The formal contract document that defines the scope, deliverables, timeline, team, and fees for a consulting engagement — abbreviated as SOW. The Statement of Work is the legal and commercial foundation of the engagement: it specifies exactly what the consulting firm is committed to deliver, by when, and at what cost. Any work performed outside the agreed scope requires a change order to the SOW. For consultants, understanding the SOW is essential: it defines what the client has paid for, what the team is accountable for, and where the boundaries of the engagement lie. Experienced clients always read the SOW carefully; inexperienced clients often discover its importance only when a dispute arises.</div></div></div>
+  </div></div>
+</section>
+<section id="sec-reading" class="section">
+  <div class="hero"><div class="module-pill">📖 &nbsp; Reading</div><h2>Texts &amp; <span class="accent">Comprehension</span></h2><p class="hero-desc">Read two professional texts on how a consulting firm is structured — the leverage model, roles, and progression — and how a consulting engagement is organised from kick-off to final presentation.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:27%"></div></div><span class="prog-pct">27%</span></div>
+  <div class="content" id="readingContent"><div class="card">
+      <div class="reading-box"><h4>Text 1: The Structure of a Consulting Firm — How the Hierarchy Works and Why It Is Designed the Way It Is</h4><p>The consulting firm hierarchy is designed around a fundamental economic principle: the firm creates value by deploying the analytical capabilities of junior consultants — who are relatively inexpensive to employ — against client problems, under the direction of senior consultants who have the experience and relationship capital to win and retain client work. This structure is often called the 'leverage model': partners generate revenue by leveraging the work of analysts and associates, allowing the firm to charge significantly more than the direct cost of the work performed. A partner who oversees three simultaneous engagements — each staffed with a team of five to eight consultants — generates substantial fee revenue while personally investing perhaps 30-40% of their time in direct client work.</p><p>At the entry level, Business Analysts (or Associate Consultants, depending on the firm) are the analytical workhorses of the engagement: they build models, conduct research, analyse data, and create the slides that will eventually be presented to the client. The Business Analyst role is explicitly an apprenticeship: new analysts are expected to develop rigorous analytical skills, learn the firm's problem-solving methodologies, and demonstrate the intellectual capability and professional judgment required for promotion. Most top-tier firms evaluate analysts over a two-to-three year period before making promotion decisions; analysts who progress become Consultants or Senior Consultants, with greater scope responsibility and client exposure.</p><p>The Engagement Manager (sometimes called Project Leader) is the role at which the consulting career trajectory changes most significantly. Below the EM level, success is primarily determined by the quality of individual analytical contribution. At and above the EM level, success is primarily determined by the ability to manage: to structure problems, to direct a team, to manage client relationships, to communicate recommendations persuasively to senior client stakeholders, and to anticipate and resolve the inevitable challenges that arise on complex engagements. Promotion to Partner is the most selective step in the consulting career: it requires not just exceptional track record of delivery but demonstrable ability to generate new business — because partners are expected to bring in revenue, not just serve existing clients.</p></div>
+      <div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>
+      <div id="rmcq-0"></div>
+    </div><div class="card">
+      <div class="reading-box"><h4>Text 2: How a Consulting Engagement Is Organised — From Kick-Off to Final Presentation</h4><p>A consulting engagement typically follows a predictable structure, even when the client problem and industry vary enormously. The engagement begins with a kick-off: a first meeting between the consulting team and the client team in which the problem is scoped, the approach is agreed, key stakeholders are identified, and the workplan is shared. The kick-off is one of the most important meetings in the engagement — it sets the tone for the client relationship, establishes working norms, and provides the team with direct access to the client data and context that will shape the subsequent analysis. A poorly run kick-off — one that fails to establish clear working relationships or to clarify the problem statement — can compromise the entire engagement.</p><p>The engagement then proceeds through a series of analytical workstreams, each producing interim outputs — typically in the form of slides or analytical documents — that are reviewed by the Engagement Manager and eventually by the partner before being shared with the client. Interim check-ins with the client — variously called 'steering committee meetings', 'progress updates', or 'working sessions' — occur at regular intervals to share findings, validate assumptions, and ensure the team's direction is aligned with the client's evolving priorities. These interim meetings are not just updates: they are opportunities to test hypotheses against the client's knowledge, to surface issues that the data cannot resolve, and to build the trust that makes the final recommendations credible.</p><p>The engagement concludes with a final presentation — typically a formal meeting with the most senior client stakeholders at which the team presents its findings and recommendations in a polished deck. The final presentation is the moment at which the engagement's value is most visible: a well-structured, clearly argued, evidence-based deck that addresses the client's central question and provides actionable recommendations demonstrates the full capability of the consulting team. But experienced consultants know that the final presentation should contain no surprises: by the time the final deck is presented, the key findings should have been shared, discussed, and broadly validated through the interim working sessions — ensuring that the recommendations are not rejected because they are unexpected, but rather endorsed because they are correct.</p></div>
+      <div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>
+      <div id="rmcq-1"></div>
+    </div></div>
+</section>
+<section id="sec-vocab" class="section">
+  <div class="hero"><div class="module-pill">🔤 &nbsp; Vocabulary Exercises</div><h2>Practice <span class="accent">Exercises</span></h2><p class="hero-desc">Three exercise types to master consulting vocabulary: multiple choice, gap-fill, and true/false.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:36%"></div></div><span class="prog-pct">36%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab">Exercise 3 · True / False</div>
+    </div>
+    <div id="vex-0"></div>
+    <div id="vex-1" style="display:none"></div>
+    <div id="vex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-grammar" class="section">
+  <div class="hero"><div class="module-pill">✏️ &nbsp; Grammar</div><h2>Grammar <span class="accent">Exercises</span></h2><p class="hero-desc">Practise language for describing consulting roles and hierarchies, vocabulary for engagement structure and process, and professional register for client-facing and internal communication.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:45%"></div></div><span class="prog-pct">45%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active">Roles and Hierarchy</div>
+      <div class="ex-tab">Engagement Structure</div>
+      <div class="ex-tab">Professional Register</div>
+    </div>
+    <div id="gex-0"></div>
+    <div id="gex-1" style="display:none"></div>
+    <div id="gex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-gramreview" class="section">
+  <div class="hero"><div class="module-pill">📋 &nbsp; Grammar Review</div><h2>Reference <span class="accent">Guide</span></h2><p class="hero-desc">Three reference boxes: language for describing roles and hierarchy accurately, vocabulary for engagement structure and process, and professional register for client-facing and internal communication.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:54%"></div></div><span class="prog-pct">54%</span></div>
+  <div class="content" id="gramRevContent"><div class="card" style="margin-bottom:24px;"><div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">Grammar Point 1: Language for Describing Roles and Hierarchy Accurately</div><div class="card-bar"></div></div></div><div class="gr-body"><div class="gr-item"><div class="gr-label">Using Precise Role Descriptions — Avoiding Vague Language</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">Consulting role descriptions require precision — vague language like 'does the analysis' or 'is senior' does not convey what a role actually involves. Precise role language specifies the responsibilities, the relationships, and the accountability of each level.</p><div class="gr-examples"><div class="gr-ex">Vague: 'The Business Analyst does the analytical work.' → Precise: 'The Business Analyst conducts primary research, builds financial models, and creates the slides forming the client deliverable — under the direction of the Engagement Manager.'</div><div class="gr-ex">Vague: 'The EM manages the project.' → Precise: 'The EM structures the problem, directs the team's analytical workstreams, maintains the client relationship at the working level, and ensures quality before partner review.'</div><div class="gr-ex">Vague: 'The Partner is the most senior person.' → Precise: 'The Partner owns the client relationship, provides strategic oversight, presents final recommendations to C-suite stakeholders, and is responsible for originating new business.'</div><div class="gr-ex">Vague: 'The SME helps with technical questions.' → Precise: 'The SME provides specialist domain expertise at specific points in the engagement — validating technical assumptions or regulatory analysis that the core team lacks the depth to assess independently.'</div></div></div><div class="gr-item"><div class="gr-label">Describing Progression Through the Consulting Hierarchy</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">Describing career progression in consulting requires language that captures both what changes and what stays the same between levels. The key transition is from individual analytical contribution to management and business development.</p><div class="gr-examples"><div class="gr-ex">'Analysts are promoted to Consultant after demonstrating analytical excellence and professional judgment — typically over a two-to-three year evaluation period.'</div><div class="gr-ex">'The transition from Consultant to Engagement Manager marks a fundamental shift: from individual contributor to team manager and client relationship holder.'</div><div class="gr-ex">'Promotion to Partner requires not just an exceptional delivery track record but demonstrable ability to generate new business — a requirement that separates the Partner from all other levels in the hierarchy.'</div><div class="gr-ex">'At each level of the consulting hierarchy, the balance shifts: from doing (analyst) to directing (EM) to originating (partner).'</div></div></div><div class="gr-item"><div class="gr-label">Distinguishing Between Levels in the Same Sentence</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">When describing multiple consulting roles simultaneously, parallel structure and contrast language help the listener track the distinctions clearly.</p><div class="gr-examples"><div class="gr-ex">'While analysts focus on individual workstream delivery, Engagement Managers focus on overall engagement management — structuring problems, directing teams, and maintaining client relationships.'</div><div class="gr-ex">'Partners own the client relationship; Engagement Managers manage the day-to-day; analysts execute the analysis.'</div><div class="gr-ex">'At the analyst level, success is measured by the quality of individual output; at the partner level, it is measured by the quality of the business generated.'</div><div class="gr-ex">'The Engagement Manager manages up to the partner and down to the team — a dual accountability that makes the role both the most demanding and the most developmental in the consulting career.'</div></div></div></div></div><div class="card" style="margin-bottom:24px;"><div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">Grammar Point 2: Vocabulary for Engagement Structure and Process</div><div class="card-bar"></div></div></div><div class="gr-body"><div class="gr-item"><div class="gr-label">Using Engagement Vocabulary Accurately</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">Core consulting vocabulary — engagement, case, workstream, deliverable, deck — must be used accurately in the correct context. These terms are not interchangeable and signal professional fluency when used precisely.</p><div class="gr-examples"><div class="gr-ex">Correct: 'We are on a three-month market entry engagement for a logistics client.' (engagement = formal client project)</div><div class="gr-ex">Correct: 'The case has four workstreams — market sizing, competitive analysis, customer research, and go-to-market.' (case = informal term; workstream = component of the case)</div><div class="gr-ex">Correct: 'The team's primary deliverable is a 50-slide recommendations deck for the C-suite presentation.' (deliverable = agreed output; deck = the PowerPoint document)</div><div class="gr-ex">Incorrect and to avoid: 'We are working on a project for a client' — 'project' is not the preferred professional term; use 'engagement' in formal and client-facing contexts.</div></div></div><div class="gr-item"><div class="gr-label">Describing Problem-Structuring Vocabulary</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">The vocabulary of consulting problem-structuring — hypothesis, framework, MECE, issue tree — has specific meanings that differ from everyday usage. Using these terms correctly signals analytical rigour.</p><div class="gr-examples"><div class="gr-ex">'The team opened the engagement with a clear hypothesis: that the profitability decline was driven primarily by pricing rather than volume — a testable claim that structured the subsequent analysis.'</div><div class="gr-ex">'The team used a three-branch issue tree to structure the problem — each branch MECE with the others and together covering the full space of strategic options.'</div><div class="gr-ex">'Porter's Five Forces provided the analytical framework for the competitive landscape workstream — organising the assessment of supplier power, buyer power, substitution threat, new entrant risk, and competitive rivalry.'</div><div class="gr-ex">'The team validated the MECE structure of their issue tree before beginning analysis — ensuring no question was counted twice and no important question was omitted.'</div></div></div><div class="gr-item"><div class="gr-label">Process Language — Describing What Happens During an Engagement</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">Describing engagement process in English requires sequential and causal language — how events lead to each other, and what each stage produces.</p><div class="gr-examples"><div class="gr-ex">Sequential: 'The engagement begins with a kick-off, proceeds through a series of analytical workstreams, and concludes with a final recommendations presentation to the C-suite.'</div><div class="gr-ex">Causal: 'The interim working sessions allow the team to test hypotheses against the client's knowledge — ensuring the final recommendations address the actual business problem rather than the team's initial assumption.'</div><div class="gr-ex">Conditional: 'If the client raises questions that fall outside the agreed scope, the EM must decide whether to absorb the work, raise a change order, or defer the question to a follow-on engagement.'</div><div class="gr-ex">Contrast: 'While the first half of the engagement focuses on problem diagnosis — understanding what is driving the performance gap — the second half focuses on solution design and implementation planning.'</div></div></div></div></div><div class="card" style="margin-bottom:24px;"><div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">Grammar Point 3: Professional Register for Client-Facing and Internal Communication</div><div class="card-bar"></div></div></div><div class="gr-body"><div class="gr-item"><div class="gr-label">Formal Language for Client Communication</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">Client-facing communication requires formal register that demonstrates professionalism, specificity, and respect for the client's time. The difference between informal and formal consulting language is not just tone — it is precision, structure, and completeness of information.</p><div class="gr-examples"><div class="gr-ex">Informal: 'We need your financial data asap.' → Formal: 'To complete the profitability analysis, we will need the last three years of divisional P&L statements by Wednesday. Could your finance team share these by end of day? This will allow us to complete the model in time for the steering committee on Friday.'</div><div class="gr-ex">Informal: 'That's not in scope.' → Formal: 'That question falls outside the scope defined in our Statement of Work. We could raise a change order to include it, or note it as a potential follow-on topic. Which approach would work better for you?'</div><div class="gr-ex">Informal: 'We found something interesting.' → Formal: 'I'd like to share a preliminary finding and welcome your reaction: our initial analysis suggests that pricing — not volume — is the primary driver of the profability decline. Does this align with your understanding?'</div><div class="gr-ex">Informal: 'Thanks everyone, talk soon.' → Formal: 'Thank you for the session. To summarise the agreed next steps: [list of actions with owners and dates]. Are there any other actions or clarifications before we close?'</div></div></div><div class="gr-item"><div class="gr-label">Specific Language for Presenting Findings</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">Presenting analytical findings requires language that distinguishes confidence levels, links findings to evidence, and invites client reaction without undermining the team's credibility.</p><div class="gr-examples"><div class="gr-ex">Strong finding: 'The analysis confirms that pricing is the primary driver — across all three product lines, a 5% price reduction in 2023 directly corresponds to the observed 8% margin decline.'</div><div class="gr-ex">Preliminary finding: 'Our initial analysis suggests that pricing is the primary driver — we are still validating this against the full cost data, but it appears directional.'</div><div class="gr-ex">Hypothesis to test: 'We are testing whether pricing or volume is the primary driver — the answer will determine whether the recommended solution is a pricing intervention or a volume growth programme.'</div><div class="gr-ex">Inviting client reaction: 'Does this finding align with your understanding of the business? We want to make sure we're not missing context that would change the interpretation.'</div></div></div><div class="gr-item"><div class="gr-label">Language for Managing Scope and Workplan Changes</div><p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">When scope changes or workplan disruptions occur, the language used determines whether the client perceives the team as in control or struggling. Proactive, specific, solution-oriented language maintains client confidence.</p><div class="gr-examples"><div class="gr-ex">'I want to flag that the competitive landscape workstream is tracking three days behind the workplan — due to delayed data access. We are exploring two alternative sources and will confirm the revised date by tomorrow.'</div><div class="gr-ex">'The request you've raised is outside our current scope. We have three options: include it in the current engagement via a change order, defer it to a follow-on piece of work, or address it at a high level within the existing fee.'</div><div class="gr-ex">'We've identified a dependency that wasn't visible at the start of the engagement: the go-to-market recommendations require the competitive analysis to be complete first. We are adjusting the workplan to sequence these correctly — this doesn't affect the final delivery date but does change the interim milestone.'</div><div class="gr-ex">'To maintain the agreed delivery date despite the data delay, we are reallocating two analyst-days from the go-to-market workstream to the competitive analysis — which is the critical path item. We will flag if this creates risk to any other deliverable.'</div></div></div></div></div></div>
+</section>
+<section id="sec-writing" class="section">
+  <div class="hero"><div class="module-pill">✍️ &nbsp; Writing + AI Feedback</div><h2>Writing <span class="accent">Activities</span></h2><p class="hero-desc">Write a project introduction memo for a new consulting engagement and a scope clarification email responding professionally to an out-of-scope client request. Receive AI feedback across Grammar, Vocabulary, Tone, Structure, and Fluency.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:63%"></div></div><span class="prog-pct">63%</span></div>
+  <div class="content" id="writingContent"><div class="ex-tabs"><div class="ex-tab active">Project Introduction Memo</div><div class="ex-tab">Scope Clarification Email</div></div><div id="wpanel-0" style="display:block"><div class="card"><div class="w-task-header"><div class="w-task-pill">Activity 1</div><div class="card-title" style="margin-top:10px;">Write a Project Introduction Memo</div></div><div class="card-bar"></div><div class="w-prompt-box"><div class="w-prompt-label">📋 Project Introduction Memo — Write a Project Introduction Memo</div><div class="w-prompt-text">You are the Engagement Manager on a new consulting engagement. Write a project introduction memo to send to the full team — both the consulting team and the client team — at the start of the engagement.<br><br>The engagement:<br>• Client: Meridian Logistics — a UK-based mid-market logistics company with £200M annual revenue<br>• Engagement: Market Entry Strategy — assessing potential expansion into three European markets (Germany, France, and the Netherlands) and recommending a sequenced go-to-market approach<br>• Duration: 12 weeks<br>• Consulting team: 1 Partner (James Chen), 1 Engagement Manager (you), 2 Business Analysts (Sarah Park, Tom Williams)<br>• Client team: Project Sponsor (CEO — Elena Vasquez), Day-to-Day Lead (Head of Strategy — Arjun Mehta), 2 internal analysts<br>• Kick-off meeting: Next Monday at 9am at Meridian's London HQ<br><br>Your memo should (200-260 words):<br>• Introduce the engagement purpose and central question<br>• Introduce the consulting and client team members and their roles<br>• Describe the high-level workplan structure and three workstreams<br>• Specify how the teams will work together (cadence, meetings, data sharing)<br>• Confirm the kick-off logistics<br><br>Write in professional consulting memo format. Use at least 6 vocabulary terms from this module.</div><div class="w-target">Target: 200–260 words</div></div><textarea class="w-textarea" id="w-area-0" placeholder="Write your response here…"></textarea><div class="w-meta-row"><span class="w-counter" id="w-count-0">0 words</span><div style="display:flex;gap:10px;"><button class="clear-btn">Clear</button><button class="ac-btn" id="w-btn-0">✨ Auto-Correct &amp; Get Feedback</button></div></div><div id="w-fb-0"></div></div></div><div id="wpanel-1" style="display:block"><div class="card"><div class="w-task-header"><div class="w-task-pill">Activity 2</div><div class="card-title" style="margin-top:10px;">Write a Scope Clarification Email to the Client</div></div><div class="card-bar"></div><div class="w-prompt-box"><div class="w-prompt-label">📋 Scope Clarification Email — Write a Scope Clarification Email to the Client</div><div class="w-prompt-text">Three weeks into the Meridian engagement, the client's CEO has asked the consulting team to also assess potential expansion into Spain and Italy — which are not in the current Statement of Work.<br><br>Write an email from the Engagement Manager to the client's day-to-day lead (Arjun Mehta) clarifying the scope situation (130-180 words).<br><br>Your email should:<br>• Acknowledge the CEO's request positively and professionally<br>• Explain clearly that Spain and Italy fall outside the current scope as defined in the Statement of Work<br>• Offer three options for how to address the request (include via change order / defer to follow-on / address at high level within current fee)<br>• Recommend one option with a brief reason<br>• Propose a time to discuss<br><br>Do not be confrontational or make the client feel they are wrong to ask — scope conversations should be professional and solution-oriented.<br><br>Use at least 4 vocabulary terms from this module.</div><div class="w-target">Target: 130–180 words</div></div><textarea class="w-textarea" id="w-area-1" placeholder="Write your response here…"></textarea><div class="w-meta-row"><span class="w-counter" id="w-count-1">0 words</span><div style="display:flex;gap:10px;"><button class="clear-btn">Clear</button><button class="ac-btn" id="w-btn-1">✨ Auto-Correct &amp; Get Feedback</button></div></div><div id="w-fb-1"></div></div></div></div>
+</section>
+<section id="sec-listening" class="section">
+  <div class="hero"><div class="module-pill">🎧 &nbsp; Listening</div><h2>Audio <span class="accent">Activities</span></h2><p class="hero-desc">Listen to a consulting team staffing discussion, the client kick-off meeting for a market entry engagement, an internal working session on MECE problem structure, and a partner deck review preparing for the final client presentation.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:72%"></div></div><span class="prog-pct">72%</span></div>
+  <div class="content" id="listeningContent"><div class="card" id="l-card-0"><div class="l-header"><span class="l-icon">📌</span><div><div class="card-title">Staffing the Engagement: Assembling the Case Team</div><div class="l-sub">Internal Firm Discussion · B1–B2 Level · approx. 110 sec</div></div></div><div class="card-bar"></div><div class="l-player"><div class="l-controls"><button class="l-play-btn" id="l-play-0">&#9654; Play</button><select class="l-speed" id="l-speed-0"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option></select><button class="l-trans-btn" id="l-tbtn-0">&#128196; Transcript</button></div><div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-0"></div></div><span class="l-time" id="l-time-0">0:00</span></div></div><div class="l-transcript-box" id="l-trans-0" style="display:block"><p class="l-transcript-text">Partner James Chen is speaking with the firm's staffing manager, Rachel, about assembling the team for the new Meridian engagement. James: Rachel, I need to staff the Meridian market entry case. I'm looking at a three-month engagement — probably two BAs and an EM. Who do you have available from the second of next month? Rachel: Let me pull up the availability tracker. From the EM pool — Priya Singh finishes the Hartwell case at the end of this week, so she's available from next Thursday. She has a strong logistics background from the Greenfield distribution engagement last year. James: Priya would be ideal. What's her development stage — is she ready to run a case of this size independently? Rachel: She is. She's managed two cases solo and the feedback from both partners was strong on client management and team direction. This would be a good stretch for her — it's more complex than what she's run before. James: Good. What about BAs? Rachel: Tom Williams is free — he just rolled off the Bellamy case and he's been flagged as wanting more quantitative modelling work. The Meridian engagement has a significant financial modelling workstream, so that's a good match. For the second BA, I'd suggest Maya Chen — she's newer, but she's coming off a consumer goods engagement and speaks German, which might be useful given you're assessing the German market. James: German-speaking BA for a Germany assessment — that's a real advantage. Can she handle a full workstream independently at this stage? Rachel: She'll need some coaching but Tom has offered to support junior team members and the EM is Priya. She should be fine. James: Confirm Priya as EM, Tom and Maya as BAs. I'll need the staffing confirmed this week so we can brief them on the case before the client kick-off on Monday.</p></div><div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div><div id="lmcq-0"></div></div><div class="card" id="l-card-1"><div class="l-header"><span class="l-icon">🎯</span><div><div class="card-title">The Client Kick-Off: Opening the Engagement</div><div class="l-sub">Client Meeting · B1–B2 Level · approx. 108 sec</div></div></div><div class="card-bar"></div><div class="l-player"><div class="l-controls"><button class="l-play-btn" id="l-play-1">&#9654; Play</button><select class="l-speed" id="l-speed-1"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option></select><button class="l-trans-btn" id="l-tbtn-1">&#128196; Transcript</button></div><div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-1"></div></div><span class="l-time" id="l-time-1">0:00</span></div></div><div class="l-transcript-box" id="l-trans-1" style="display:block"><p class="l-transcript-text">The Meridian consulting team is in the kick-off meeting at Meridian's London headquarters. Present: James Chen (Partner), Priya Singh (Engagement Manager), Tom Williams and Maya Chen (Business Analysts); and on the client side, Elena Vasquez (CEO), Arjun Mehta (Head of Strategy), and two internal analysts. James: Good morning, everyone. Thank you for making time this morning — this is exactly the kind of start that sets engagements up well. Let me briefly introduce the team and then I'd like to hand to Elena for the context before Priya walks us through the workplan. [introductions] Elena: Thank you. As you know from the briefing document, Meridian has been growing at around 15% annually for the past three years — primarily through winning new contracts in the UK. We're at a point now where we've extracted most of the growth available from our home market. The board wants a clear recommendation on which European markets to enter first and in what sequence — and they want it in twelve weeks. James: Understood. I want to share the hypothesis we're starting with — which we'll test and refine over the engagement. Our initial view is that Germany represents the highest-value opportunity for Meridian, primarily because of the size of the logistics market and Meridian's competitive positioning against German incumbents. But we need to test that against France and the Netherlands. I'd like to be explicit that this is a hypothesis to be tested, not a predetermined conclusion. Priya: Let me walk through the workplan. We've structured the engagement into three workstreams. The first is market sizing and attractiveness — owned by Maya — covering total addressable market, growth rates, and regulatory environment in each of the three countries. The second is competitive landscape — owned by Tom — assessing the incumbent players and Meridian's potential positioning against them. The third is go-to-market — which I'll lead — translating the market and competitive findings into a sequenced entry recommendation. Arjun: Can we add Spain and Italy to the scope? The CEO has flagged them as potentially interesting. Priya: We'd be happy to discuss that — I'll pick that up with you offline, Arjun, because it may affect the timeline and resource allocation. We'll come back to it after the meeting.</p></div><div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div><div id="lmcq-1"></div></div><div class="card" id="l-card-2"><div class="l-header"><span class="l-icon">📐</span><div><div class="card-title">The Working Session: Structuring the Analysis</div><div class="l-sub">Internal Team Meeting · B1–B2 Level · approx. 106 sec</div></div></div><div class="card-bar"></div><div class="l-player"><div class="l-controls"><button class="l-play-btn" id="l-play-2">&#9654; Play</button><select class="l-speed" id="l-speed-2"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option></select><button class="l-trans-btn" id="l-tbtn-2">&#128196; Transcript</button></div><div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-2"></div></div><span class="l-time" id="l-time-2">0:00</span></div></div><div class="l-transcript-box" id="l-trans-2" style="display:block"><p class="l-transcript-text">It is day three of the engagement. Priya (EM) is running the first internal team working session with Tom and Maya. Priya: Okay — we have the data from the kick-off and we need to agree the structure before we start doing any analysis. I want to make sure the issue tree is MECE before we go further. Tom, what's your initial cut on the competitive landscape structure? Tom: I've broken it down by incumbent type: national logistics giants, regional specialists, and express delivery operators. I think that's pretty clean. Priya: Is it MECE? Could the same company appear in two categories? Tom: DHL could arguably be in the national giants category and also the express delivery category. So no — it's not quite MECE. Priya: Right. So we need a cleaner cut. What's the relevant dimension — is it company size, service type, or geographic reach? Tom: Geographic reach is cleaner — national, regional, and local. Those are genuinely mutually exclusive. Priya: Good. Maya — what about the market sizing workstream? What's your issue tree structure? Maya: I've organised it around three questions: how big is the market today, how fast is it growing, and what are the barriers to entry. Priya: That's a reasonable starting structure. Is 'barriers to entry' a separate question or is it part of the attractiveness assessment? Maya: I think it might belong under attractiveness — along with regulatory environment and competitive intensity. If I separate them, it might not be MECE because barriers to entry affects both market size and attractiveness. Priya: You're right — it's a shared variable, not a standalone question. Let's restructure: market sizing covers what is the addressable market and how does it grow; market attractiveness covers what determines whether Meridian can win in this market — barriers, regulation, competitive intensity. Does that feel complete? Tom: What about the customer? Do we cover who Meridian would be selling to in each market? Priya: Good catch — that's a gap. Customer segmentation needs to be in the market sizing workstream. Let's add it. Now — are we MECE?</p></div><div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div><div id="lmcq-2"></div></div><div class="card" id="l-card-3"><div class="l-header"><span class="l-icon">📑</span><div><div class="card-title">The Partner Review: Preparing the Client Presentation</div><div class="l-sub">Internal Review · B1–B2 Level · approx. 104 sec</div></div></div><div class="card-bar"></div><div class="l-player"><div class="l-controls"><button class="l-play-btn" id="l-play-3">&#9654; Play</button><select class="l-speed" id="l-speed-3"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option></select><button class="l-trans-btn" id="l-tbtn-3">&#128196; Transcript</button></div><div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-3"></div></div><span class="l-time" id="l-time-3">0:00</span></div></div><div class="l-transcript-box" id="l-trans-3" style="display:block"><p class="l-transcript-text">Two days before the final client presentation. James Chen (Partner) is reviewing the deck with Priya (EM) and the two Business Analysts. James: I've reviewed the current draft and I want to go through the comments slide by slide. The overall structure is strong — the issue tree has been followed and the argument flows well. My main issue is with the headlines. Priya: Can you give us an example? James: Slide 14. The headline says 'Overview of German Logistics Market.' That's a label, not a message. What does the slide actually say? Tom: The slide shows that the German market is worth €28 billion, growing at 4.2% annually, with relatively low market concentration compared to France and the Netherlands. James: So the headline should say: 'Germany's €28B logistics market is growing at 4.2% annually with lower competitive concentration than France or the Netherlands — making it Meridian's highest-value entry opportunity.' That is a message. The current headline just tells you what's on the slide; the new one tells you what it means. Priya: Understood. We'll go through every headline and make sure each one states the 'so what' rather than the topic. James: Good. The second issue is the Germany recommendation on slide 32. The slide says 'Germany should be the primary market for Meridian.' But where's the logic? Why Germany and not France? The client will ask. Maya: We have a scoring matrix on slide 22 that ranks the three markets — Germany scores highest on market size, competitive positioning, and regulatory environment. James: Then slide 32 needs to reference that. The recommendation must connect back to the evidence. 'Based on the three-dimensional assessment on slide 22, Germany scores highest across market size, competitive positioning, and regulatory risk — making it the recommended primary entry market.' That's the complete argument. The client should not have to hold two slides in their head to follow the logic. Priya: No surprises in the final presentation. James: Exactly. The client should be nodding by slide 32, not surprised. If they're surprised, it means we haven't done the right interim work.</p></div><div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div><div id="lmcq-3"></div></div></div>
+</section>
+<section id="sec-cases" class="section">
+  <div class="hero"><div class="module-pill">🎯 &nbsp; Case Studies</div><h2>Real-World <span class="accent">Cases</span></h2><p class="hero-desc">Explore how McKinsey &amp; Company defined the vocabulary, methodology, and professional norms of modern strategy consulting — and how BCG&#39;s Growth-Share Matrix illustrates the power of a good framework to make complex decisions discussable.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:81%"></div></div><span class="prog-pct">81%</span></div>
+  <div class="content" id="casesContent"><div class="card"><div class="cs-tag">United States · Strategy Consulting · 1960s–Present · McKinsey & Company</div><div class="card-title" style="margin-top:10px;">Case Study 1: McKinsey & Company — The Firm That Defined Modern Strategy Consulting</div><div class="cs-sub">How McKinsey developed the vocabulary, methodology, and professional norms of strategy consulting — and why its model became the template for the industry</div><div class="card-bar"></div><div class="cs-section"><h4 class="cs-sh">Background</h4><p class="cs-p">McKinsey & Company is widely regarded as the most influential strategy consulting firm in the world — not simply because of its size or client roster but because it developed and exported the vocabulary, methodology, and professional norms that have shaped the entire consulting industry. Founded by James O. McKinsey in 1926 as an accounting and management consulting firm, it was transformed under Marvin Bower — who led the firm from 1950 to 1967 — into the model of professional strategy consulting that most major firms still follow today. Bower's most consequential contribution was not a specific framework or methodology but a set of professional values: that consultants should think of themselves as members of a profession, not employees of a company; that they should tell clients what they need to hear, not what they want to hear; and that client impact matters more than client satisfaction.</p></div><div class="cs-section"><h4 class="cs-sh">The McKinsey Model: Structures, Vocabulary, and Methodology</h4><p class="cs-p">Many of the terms most central to modern consulting vocabulary originated or were popularised at McKinsey. The 'hypothesis-driven' approach — stating an initial answer before conducting analysis and then testing it — is widely associated with McKinsey's problem-solving culture. MECE (Mutually Exclusive, Collectively Exhaustive) as a structuring principle was formalised and taught at McKinsey before becoming the industry standard. The 'pyramid principle' of communication — stating the conclusion first, then the supporting arguments, then the evidence — was developed by Barbara Minto while at McKinsey and published in The Minto Pyramid Principle (1987). The firm's emphasis on the 'deck' as the primary communication medium, structured so that each slide makes a single specific point stated in the headline, became the standard for consulting deliverables across the industry.</p></div><div class="cs-section"><h4 class="cs-sh">What McKinsey Teaches About Consulting Norms</h4><p class="cs-p">Beyond specific methodologies, the McKinsey model established several professional norms that remain central to consulting practice. First, the 'up or out' system: consultants who do not progress to the next level within a defined period leave the firm — creating a culture of continuous development and high performance expectations. Second, the distinction between 'obligation to dissent' and 'obligation to commit': once a team has debated a recommendation and the partner has made a final decision, all team members are expected to commit to that recommendation even if they initially disagreed. Third, the emphasis on 'client impact' rather than 'client satisfaction' — the goal is not to make clients happy but to make them more successful, even when that requires delivering difficult findings. These norms travel with McKinsey alumni — who have become CEOs, ministers, and founders of other consulting firms — propagating the firm's professional culture far beyond its direct client engagements.</p></div><div class="card-title" style="margin-top:22px;">Case Study Questions</div><div class="card-bar"></div><div id="csmcq-0"></div></div><div class="card"><div class="cs-tag">United Kingdom · Management Consulting · 1963–Present · Boston Consulting Group</div><div class="card-title" style="margin-top:10px;">Case Study 2: The BCG Matrix and the Power of a Good Framework — How a Simple Tool Transformed Strategic Planning</div><div class="cs-sub">How Bruce Henderson's two-by-two matrix became one of the most influential analytical frameworks in business history — and what it teaches about the role of frameworks in consulting</div><div class="card-bar"></div><div class="cs-section"><h4 class="cs-sh">Background</h4><p class="cs-p">The Boston Consulting Group (BCG) was founded by Bruce Henderson in Boston in 1963. BCG's most lasting contribution to management thinking was not its client work but a single analytical framework: the BCG Growth-Share Matrix, developed in 1970. The matrix categorises a company's business units or products into four quadrants based on two dimensions — relative market share and market growth rate — producing the now-famous labels: Stars (high share, high growth), Cash Cows (high share, low growth), Question Marks (low share, high growth), and Dogs (low share, low growth). The framework was initially developed to help large conglomerates allocate capital across their diverse business portfolios — but it became so influential that it reshaped how executives, investors, and analysts think about portfolio strategy.</p></div><div class="cs-section"><h4 class="cs-sh">Why the Matrix Worked</h4><p class="cs-p">The BCG matrix succeeded not because it was analytically perfect — economists have raised significant objections to its underlying assumptions — but because it provided a structured, visual, and memorable way to organise complex portfolio decisions. Before the matrix, executives had no common language for describing why some business units deserved investment and others deserved harvesting. The matrix gave them that language: 'We need to milk the Cash Cows to fund the Stars and decide which Question Marks to back.' This is precisely what a good consulting framework does: it does not provide the answer but provides the structure within which the answer can be found and communicated. The framework made complex resource allocation decisions discussable — and that is what made it valuable.</p></div><div class="cs-section"><h4 class="cs-sh">What the BCG Matrix Teaches About Frameworks in Consulting</h4><p class="cs-p">The BCG matrix offers a direct lesson about the role of frameworks in consulting practice. First, a framework is a lens, not an algorithm: it organises information in a useful way but does not replace the judgment required to make good decisions. A business unit that falls in the 'Dog' quadrant is not automatically a candidate for divestiture — context, capability, and strategic fit all matter. Second, the best frameworks are teachable and memorable: the BCG matrix can be explained in two minutes and remembered for a lifetime. Third, frameworks create common language: one of the most valuable things a consulting team does is give a client a shared vocabulary for discussing problems that were previously discussed inconsistently. The BCG matrix gave executives the word 'Cash Cow' — and that word changed how they thought about their portfolios.</p></div><div class="card-title" style="margin-top:22px;">Case Study Questions</div><div class="card-bar"></div><div id="csmcq-1"></div></div></div>
+</section>
+<section id="sec-assessment" class="section">
+  <div class="hero"><div class="module-pill">🏆 &nbsp; Final Assessment</div><h2>Module <span class="accent">Test</span></h2><p class="hero-desc">20 questions covering all module content. Pass mark: 70% (14/20). Two attempts allowed.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div><span class="prog-pct">90%</span></div>
+  <div class="content">
+    <div class="card">
+      <div class="card-title">🏆 Final Assessment</div><div class="card-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:22px;">Answer all 20 questions. You need 70% (14 correct) to pass. Attempts used: <strong id="att-disp">0 / 2</strong></p>
+      <div id="assessContainer"><div class="mcq-block" id="aq-0"><div class="mcq-q">1. What is an 'engagement' in consulting?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-0-0"><span class="opt-letter">A</span>An informal internal meeting at which the team discusses the client's problem</div><div class="mcq-opt" id="ass-0-1"><span class="opt-letter">B</span>The standard consulting term for a client project — implying an active, ongoing relationship and a defined scope of work</div><div class="mcq-opt" id="ass-0-2"><span class="opt-letter">C</span>A type of consulting work focused specifically on strategy rather than implementation</div><div class="mcq-opt" id="ass-0-3"><span class="opt-letter">D</span>The contract between the consulting firm and the client specifying the fee and payment terms</div></div></div><div class="mcq-block" id="aq-1"><div class="mcq-q">2. What does the leverage model in consulting mean?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-1-0"><span class="opt-letter">A</span>Partners generate revenue by leveraging their personal reputation and client network to win business</div><div class="mcq-opt" id="ass-1-1"><span class="opt-letter">B</span>The firm creates value by deploying junior consultants' analytical capabilities under senior direction, charging more than the direct cost of the work</div><div class="mcq-opt" id="ass-1-2"><span class="opt-letter">C</span>Analysts leverage the firm's proprietary databases to produce analysis clients cannot conduct independently</div><div class="mcq-opt" id="ass-1-3"><span class="opt-letter">D</span>The firm uses financial leverage to invest in client companies alongside its advisory work</div></div></div><div class="mcq-block" id="aq-2"><div class="mcq-q">3. What did the staffing discussion listening activity reveal about how consulting teams are assembled?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-2-0"><span class="opt-letter">A</span>Staffing decisions are made by the partner alone, without input from a staffing function</div><div class="mcq-opt" id="ass-2-1"><span class="opt-letter">B</span>Consultants are always staffed based purely on their availability — sector expertise is a secondary consideration</div><div class="mcq-opt" id="ass-2-2"><span class="opt-letter">C</span>Staffing considers availability, sector expertise, development stage, language skills, and team composition simultaneously</div><div class="mcq-opt" id="ass-2-3"><span class="opt-letter">D</span>Business Analysts are always paired with the same Engagement Manager across multiple engagements</div></div></div><div class="mcq-block" id="aq-3"><div class="mcq-q">4. What is MECE?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-3-0"><span class="opt-letter">A</span>A McKinsey proprietary framework for competitive analysis</div><div class="mcq-opt" id="ass-3-1"><span class="opt-letter">B</span>Mutually Exclusive, Collectively Exhaustive — a logic principle ensuring categories do not overlap and together cover the full space</div><div class="mcq-opt" id="ass-3-2"><span class="opt-letter">C</span>A billing model in which all consulting fees are fixed upfront in the Statement of Work</div><div class="mcq-opt" id="ass-3-3"><span class="opt-letter">D</span>An acronym for the four-stage consulting engagement process: Map, Execute, Communicate, Evaluate</div></div></div><div class="mcq-block" id="aq-4"><div class="mcq-q">5. What was the primary lesson from the BCG matrix case study about consulting frameworks?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-4-0"><span class="opt-letter">A</span>Frameworks must be analytically perfect and academically validated to be useful</div><div class="mcq-opt" id="ass-4-1"><span class="opt-letter">B</span>A good framework does not need to be analytically perfect — its value comes from structuring discussion, creating shared language, and making complex decisions communicable</div><div class="mcq-opt" id="ass-4-2"><span class="opt-letter">C</span>Frameworks are only useful when clients are unfamiliar with the analytical approach being used</div><div class="mcq-opt" id="ass-4-3"><span class="opt-letter">D</span>The best frameworks are proprietary and create competitive advantage for the firm that developed them</div></div></div><div class="mcq-block" id="aq-5"><div class="mcq-q">6. In the client kick-off listening activity, how did Priya handle the request to add Spain and Italy to the scope?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-5-0"><span class="opt-letter">A</span>She immediately agreed — client requests should always be accommodated to maintain the relationship</div><div class="mcq-opt" id="ass-5-1"><span class="opt-letter">B</span>She refused firmly, explaining that the Statement of Work cannot be changed once signed</div><div class="mcq-opt" id="ass-5-2"><span class="opt-letter">C</span>She acknowledged the request positively, noted it may affect timeline and resources, and proposed to discuss offline after the meeting</div><div class="mcq-opt" id="ass-5-3"><span class="opt-letter">D</span>She referred the question to the partner, who makes all scope decisions</div></div></div><div class="mcq-block" id="aq-6"><div class="mcq-q">7. What is a 'deck' in consulting?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-6-0"><span class="opt-letter">A</span>An informal briefing given by the partner to new team members at the start of a case</div><div class="mcq-opt" id="ass-6-1"><span class="opt-letter">B</span>The physical meeting room used for client presentations</div><div class="mcq-opt" id="ass-6-2"><span class="opt-letter">C</span>A structured analytical PowerPoint document in which each slide makes a single specific point</div><div class="mcq-opt" id="ass-6-3"><span class="opt-letter">D</span>The collection of analytical models and datasets that underpin a consulting recommendation</div></div></div><div class="mcq-block" id="aq-7"><div class="mcq-q">8. What is the hypothesis-driven approach?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-7-0"><span class="opt-letter">A</span>Collecting all available data before forming any view — ensuring conclusions are fully evidence-based</div><div class="mcq-opt" id="ass-7-1"><span class="opt-letter">B</span>Using the client's initial hypothesis as the basis for the engagement and testing it analytically</div><div class="mcq-opt" id="ass-7-2"><span class="opt-letter">C</span>Stating an initial provisional answer before full analysis — then designing analysis to test whether it is supported or refuted</div><div class="mcq-opt" id="ass-7-3"><span class="opt-letter">D</span>Using a standard industry framework as the hypothesis for every engagement</div></div></div><div class="mcq-block" id="aq-8"><div class="mcq-q">9. In the partner review listening activity, what was James's primary feedback on the slide headlines?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-8-0"><span class="opt-letter">A</span>The headlines contained factual errors that needed to be corrected before the presentation</div><div class="mcq-opt" id="ass-8-1"><span class="opt-letter">B</span>The headlines were too long — each should be no more than six words for impact</div><div class="mcq-opt" id="ass-8-2"><span class="opt-letter">C</span>The headlines were labels rather than messages — they described the slide content rather than stating the specific finding and its implication</div><div class="mcq-opt" id="ass-8-3"><span class="opt-letter">D</span>The headlines did not cite the data sources required to validate the claims being made</div></div></div><div class="mcq-block" id="aq-9"><div class="mcq-q">10. What does the McKinsey case study say was Marvin Bower's most consequential contribution?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-9-0"><span class="opt-letter">A</span>Developing the hypothesis-driven approach and the MECE structuring principle</div><div class="mcq-opt" id="ass-9-1"><span class="opt-letter">B</span>Expanding McKinsey from a US firm to a global partnership with 100+ offices</div><div class="mcq-opt" id="ass-9-2"><span class="opt-letter">C</span>Establishing professional values: think as professionals, tell clients what they need to hear, prioritise client impact</div><div class="mcq-opt" id="ass-9-3"><span class="opt-letter">D</span>Developing the pyramid principle — stating conclusions first, then supporting arguments, then evidence</div></div></div><div class="mcq-block" id="aq-10"><div class="mcq-q">11. What is a workstream?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-10-0"><span class="opt-letter">A</span>A series of client-facing meetings scheduled throughout the engagement</div><div class="mcq-opt" id="ass-10-1"><span class="opt-letter">B</span>A defined component of the overall engagement — a sub-project with its own scope, analytical questions, and deliverables</div><div class="mcq-opt" id="ass-10-2"><span class="opt-letter">C</span>The internal team meeting held weekly to review progress on the engagement</div><div class="mcq-opt" id="ass-10-3"><span class="opt-letter">D</span>A billing category used to separate different types of work on the same client account</div></div></div><div class="mcq-block" id="aq-11"><div class="mcq-q">12. In the working session listening activity, what was the central activity of the team meeting?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-11-0"><span class="opt-letter">A</span>Reviewing the final deck slides before submission to the partner</div><div class="mcq-opt" id="ass-11-1"><span class="opt-letter">B</span>Discussing the client's reaction to the preliminary findings from the first week</div><div class="mcq-opt" id="ass-11-2"><span class="opt-letter">C</span>Structuring the issue tree to ensure it is MECE before beginning the analysis</div><div class="mcq-opt" id="ass-11-3"><span class="opt-letter">D</span>Assigning specific data collection tasks to each team member</div></div></div><div class="mcq-block" id="aq-12"><div class="mcq-q">13. What is an issue tree?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-12-0"><span class="opt-letter">A</span>A chart showing all the stakeholders in a consulting engagement and their relationships</div><div class="mcq-opt" id="ass-12-1"><span class="opt-letter">B</span>A visual timeline showing the sequence of deliverables across an engagement</div><div class="mcq-opt" id="ass-12-2"><span class="opt-letter">C</span>A structured decomposition of a problem into component sub-questions organised to be MECE</div><div class="mcq-opt" id="ass-12-3"><span class="opt-letter">D</span>A risk register tracking potential problems that could affect the engagement's delivery</div></div></div><div class="mcq-block" id="aq-13"><div class="mcq-q">14. What does 'no surprises in the final presentation' mean in consulting?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-13-0"><span class="opt-letter">A</span>The team should avoid using shocking statistics or dramatic claims in the final deck</div><div class="mcq-opt" id="ass-13-1"><span class="opt-letter">B</span>Findings should already have been shared and validated through interim working sessions — so recommendations are endorsed because they are correct, not rejected because they are unexpected</div><div class="mcq-opt" id="ass-13-2"><span class="opt-letter">C</span>The deck must be reviewed by the partner three days before the final presentation</div><div class="mcq-opt" id="ass-13-3"><span class="opt-letter">D</span>The client should sign off on the recommendations before they are formally presented</div></div></div><div class="mcq-block" id="aq-14"><div class="mcq-q">15. What is a Statement of Work?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-14-0"><span class="opt-letter">A</span>A consultant's personal profile summarising their experience and sector expertise</div><div class="mcq-opt" id="ass-14-1"><span class="opt-letter">B</span>The formal contract document defining scope, deliverables, timeline, team, and fees for a consulting engagement</div><div class="mcq-opt" id="ass-14-2"><span class="opt-letter">C</span>A weekly status report submitted by the EM to the partner</div><div class="mcq-opt" id="ass-14-3"><span class="opt-letter">D</span>The internal document specifying the firm's methodology for a specific type of engagement</div></div></div><div class="mcq-block" id="aq-15"><div class="mcq-q">16. What does the BCG matrix case study say about why the matrix created value?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-15-0"><span class="opt-letter">A</span>It replaced managerial judgment with an objective analytical process</div><div class="mcq-opt" id="ass-15-1"><span class="opt-letter">B</span>It provided a language for discussing complex portfolio decisions — making resource allocation discussions communicable and memorable</div><div class="mcq-opt" id="ass-15-2"><span class="opt-letter">C</span>It was the first framework to use quantitative evidence to support strategic recommendations</div><div class="mcq-opt" id="ass-15-3"><span class="opt-letter">D</span>It was adopted by major business schools, which gave it credibility and widespread recognition</div></div></div><div class="mcq-block" id="aq-16"><div class="mcq-q">17. What is a Business Analyst's primary role on a consulting engagement?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-16-0"><span class="opt-letter">A</span>Managing the client relationship and presenting findings to senior stakeholders</div><div class="mcq-opt" id="ass-16-1"><span class="opt-letter">B</span>Providing specialist subject matter expertise that the core team lacks</div><div class="mcq-opt" id="ass-16-2"><span class="opt-letter">C</span>Conducting research, building models, and creating slides — the primary analytical execution of the engagement</div><div class="mcq-opt" id="ass-16-3"><span class="opt-letter">D</span>Overseeing the overall quality of the team's analytical output before partner review</div></div></div><div class="mcq-block" id="aq-17"><div class="mcq-q">18. What is 'scope creep'?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-17-0"><span class="opt-letter">A</span>When the consulting team works more slowly than expected, requiring additional time beyond the agreed timeline</div><div class="mcq-opt" id="ass-17-1"><span class="opt-letter">B</span>The gradual expansion of work beyond the agreed boundaries — often when clients request analyses not in the original scope</div><div class="mcq-opt" id="ass-17-2"><span class="opt-letter">C</span>When a consulting engagement grows to include multiple practice areas not originally planned</div><div class="mcq-opt" id="ass-17-3"><span class="opt-letter">D</span>When junior consultants request additional guidance that was not planned in the workplan</div></div></div><div class="mcq-block" id="aq-18"><div class="mcq-q">19. What does the final sentence of McKinsey case study say about the 'obligation to dissent' and 'obligation to commit' principle?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-18-0"><span class="opt-letter">A</span>Consultants may continue to dissent publicly even after the partner has made a final recommendation</div><div class="mcq-opt" id="ass-18-1"><span class="opt-letter">B</span>Once a team has debated and the partner has decided, all team members are expected to commit to the recommendation even if they initially disagreed</div><div class="mcq-opt" id="ass-18-2"><span class="opt-letter">C</span>Partners must present all dissenting views to the client alongside the final recommendation</div><div class="mcq-opt" id="ass-18-3"><span class="opt-letter">D</span>Analysts are obligated to commit to the analysis but not to the recommendation — only the partner commits</div></div></div><div class="mcq-block" id="aq-19"><div class="mcq-q">20. What does a well-structured consulting deck require on each slide, according to the module?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-19-0"><span class="opt-letter">A</span>At least one quantitative exhibit, a list of supporting bullet points, and a conclusion statement</div><div class="mcq-opt" id="ass-19-1"><span class="opt-letter">B</span>A label headline describing the content, followed by bullet points, followed by a chart</div><div class="mcq-opt" id="ass-19-2"><span class="opt-letter">C</span>A single specific point stated in the headline, with the body providing evidence for that specific point</div><div class="mcq-opt" id="ass-19-3"><span class="opt-letter">D</span>A question to prompt client discussion, followed by the team's analytical response</div></div></div></div>
+      <div class="static-note">Interactive checks, AI feedback, and audio playback have been removed in this content-only review import.</div>
+    </div>
+  </div>
+</section>
+</main>
+
+</body>
+</html>

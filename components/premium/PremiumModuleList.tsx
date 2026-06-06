@@ -33,12 +33,13 @@ export default function PremiumModuleList({ course }: PremiumModuleListProps) {
       ) : null}
 
       <div className="mt-6 grid gap-4">
-        {course.modules.map((module, index) => {
-          const isPreview = index === 0;
+        {course.modules.map((module) => {
+          const isPreview = module.isPreview;
+          const isLocked = module.isLocked;
           const card = (
             <Card
               className={`p-5 sm:p-6 ${
-                isPreview
+                !isLocked
                   ? "lumen-card-link"
                   : "opacity-75"
               }`}
@@ -47,10 +48,12 @@ export default function PremiumModuleList({ course }: PremiumModuleListProps) {
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="lumen-label">Module {module.number}</p>
-                    {isPreview ? (
+                    {isLocked ? (
+                      <span className="lumen-chip">Locked</span>
+                    ) : isPreview ? (
                       <span className="lumen-chip">Preview</span>
                     ) : (
-                      <span className="lumen-chip">Locked</span>
+                      <span className="lumen-chip">Open</span>
                     )}
                   </div>
                   <h2 className="mobile-safe-wrap lumen-heading mt-2 text-xl leading-snug text-[var(--ink)]">
@@ -58,13 +61,13 @@ export default function PremiumModuleList({ course }: PremiumModuleListProps) {
                   </h2>
                 </div>
                 <span className="lumen-secondary-action px-3 py-1 text-[11px]">
-                  {isPreview ? "View" : "Locked"}
+                  {isLocked ? "Locked" : "View"}
                 </span>
               </div>
             </Card>
           );
 
-          if (isPreview) {
+          if (!isLocked) {
             return (
               <Link
                 key={module.slug}

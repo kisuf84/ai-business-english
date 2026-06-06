@@ -32,9 +32,8 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
   const previousModule = currentIndex > 0 ? course.modules[currentIndex - 1] : null;
   const nextModule =
     currentIndex < course.modules.length - 1 ? course.modules[currentIndex + 1] : null;
-  const isPreviewModule = currentIndex === 0;
 
-  if (!isPreviewModule) {
+  if (module.isLocked) {
     return (
       <section className="mobile-page-shell">
         <div className="lumen-page">
@@ -97,7 +96,15 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
               Previous
             </Link>
           ) : null}
-          {nextModule ? (
+          {nextModule && !nextModule.isLocked ? (
+            <Link
+              href={`/premium-classes/${course.slug}/${nextModule.slug}`}
+              className="lumen-secondary-action px-3 py-2 text-xs"
+            >
+              Next
+            </Link>
+          ) : null}
+          {nextModule?.isLocked ? (
             <span className="lumen-secondary-action px-3 py-2 text-xs opacity-70">
               Next locked
             </span>

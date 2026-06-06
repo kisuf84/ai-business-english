@@ -37,18 +37,16 @@ function sanitizePremiumHtml(html: string) {
   const withoutScripts = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
   const immersiveOverride = `
 <style id="app-premium-override">
+  html {
+    scroll-behavior: smooth;
+  }
+
   html, body {
     overflow-x: hidden !important;
   }
 
   body {
     margin: 0 !important;
-  }
-
-  .sidebar,
-  #sidebar,
-  [class*="sidebar"] {
-    display: none !important;
   }
 
   .main,
@@ -59,7 +57,51 @@ function sanitizePremiumHtml(html: string) {
   .wrapper {
     margin-left: 0 !important;
     width: 100% !important;
+    min-width: 0 !important;
     max-width: none !important;
+  }
+
+  .sidebar,
+  #sidebar,
+  #mob-btn,
+  #overlay,
+  [class*="sidebar"] {
+    display: none !important;
+  }
+
+  .section,
+  .content,
+  .card,
+  #overviewContent,
+  #speakingContent,
+  #wordBankContent,
+  #readingContent,
+  #gramRevContent,
+  #writingContent,
+  #listeningContent,
+  #casesContent,
+  #assessContainer,
+  #vex-0,
+  #vex-1,
+  #vex-2,
+  #gex-0,
+  #gex-1,
+  #gex-2,
+  [id^="wpanel-"],
+  .l-transcript-box {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  #main {
+    display: block !important;
+    margin: 0 !important;
+    min-height: 100vh !important;
+  }
+
+  #main .section {
+    scroll-margin-top: 16px !important;
   }
 
   .hero,

@@ -463,13 +463,91 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 </style>
 
 <style id="static-premium-override">
-  #main { margin-left: 0 !important; width: 100% !important; }
-  .section { display: block !important; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0 !important;
+    display: block !important;
+    overflow-x: hidden !important;
+  }
+  .section,
+  .content,
+  .card,
+  #overviewContent,
+  #speakingContent,
+  #wordBankContent,
+  #readingContent,
+  #gramRevContent,
+  #writingContent,
+  #listeningContent,
+  #casesContent,
+  #assessContainer {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  #sidebar {
+    display: block !important;
+    position: sticky !important;
+    top: 16px !important;
+    transform: none !important;
+    float: left !important;
+    max-width: 300px !important;
+    width: calc(100% - 32px) !important;
+    margin: 16px 16px 24px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    z-index: 1 !important;
+    max-height: calc(100vh - 32px) !important;
+  }
+  #sidebar .nav-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    text-decoration: none !important;
+  }
+  #sidebar .nav-item.active {
+    background: rgba(255, 255, 255, 0.08) !important;
+  }
+  body:has(#sec-overview:target) #sidebar a[href="#sec-overview"],
+  body:has(#sec-speaking:target) #sidebar a[href="#sec-speaking"],
+  body:has(#sec-wordbank:target) #sidebar a[href="#sec-wordbank"],
+  body:has(#sec-reading:target) #sidebar a[href="#sec-reading"],
+  body:has(#sec-vocab:target) #sidebar a[href="#sec-vocab"],
+  body:has(#sec-grammar:target) #sidebar a[href="#sec-grammar"],
+  body:has(#sec-gramreview:target) #sidebar a[href="#sec-gramreview"],
+  body:has(#sec-writing:target) #sidebar a[href="#sec-writing"],
+  body:has(#sec-listening:target) #sidebar a[href="#sec-listening"],
+  body:has(#sec-cases:target) #sidebar a[href="#sec-cases"],
+  body:has(#sec-assessment:target) #sidebar a[href="#sec-assessment"] {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: inherit !important;
+  }
+  #main {
+    margin-left: 0 !important;
+    display: block !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: 16px 16px 24px 332px !important;
+    min-height: 100vh !important;
+  }
+  #main .section {
+    scroll-margin-top: 16px !important;
+  }
+  #main::after {
+    content: "" !important;
+    display: block !important;
+    clear: both !important;
+  }
   .hero, .content, .prog-wrap { max-width: 1200px; margin-left: auto; margin-right: auto; }
   #vex-0, #vex-1, #vex-2,
   #gex-0, #gex-1, #gex-2,
-  [id^="wpanel-"] { display: block !important; }
-  .l-transcript-box { display: block !important; }
+  [id^="wpanel-"],
+  .l-transcript-box {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
   .l-controls, .l-progress, .clear-btn, .ac-btn, .gf-btn-bar, .ass-btn, .retry-btn, .btn-primary, #final-res { display: none !important; }
   .ex-tab, .mcq-opt, .tf-item-btn { pointer-events: none !important; }
   .static-note {
@@ -482,14 +560,49 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
     line-height: 1.6;
     color: #1c2438;
   }
+  #mob-btn, #overlay {
+    display: none !important;
+  }
   @media (max-width: 900px) {
+    body {
+      display: block !important;
+    }
+    #sidebar {
+      position: relative !important;
+      top: auto !important;
+      float: none !important;
+      max-width: none !important;
+      border-right: none !important;
+      overflow: visible !important;
+      margin: 0 0 16px !important;
+      max-height: none !important;
+    }
+    #main {
+      width: 100% !important;
+      margin: 0 !important;
+      min-height: 0 !important;
+    }
     .hero, .content, .prog-wrap { padding-left: 18px !important; padding-right: 18px !important; }
   }
 </style></head>
 <body>
 
 
-
+<nav id="sidebar">
+  <div class="sidebar-brand"><h1>Executive &amp; Leadership English</h1><div class="sub">Professional Course Series</div><span class="level-badge">C1 Level</span></div>
+  <div class="sidebar-section-label">Module 3</div>
+  <a class="nav-item active" href="#sec-overview"><div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div></a>
+  <a class="nav-item" href="#sec-speaking"><div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div><span class="nav-badge">21</span></a>
+  <a class="nav-item" href="#sec-wordbank"><div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div><span class="nav-badge">21</span></a>
+  <a class="nav-item" href="#sec-reading"><div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div><span class="nav-badge">2</span></a>
+  <a class="nav-item" href="#sec-vocab"><div class="nav-left"><span class="nav-icon">🔤</span><span class="nav-label">Vocabulary</span></div><span class="nav-badge">3</span></a>
+  <a class="nav-item" href="#sec-grammar"><div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Grammar</span></div><span class="nav-badge">3</span></a>
+  <a class="nav-item" href="#sec-gramreview"><div class="nav-left"><span class="nav-icon">📋</span><span class="nav-label">Grammar Review</span></div></a>
+  <a class="nav-item" href="#sec-writing"><div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div><span class="nav-badge">AI</span></a>
+  <a class="nav-item" href="#sec-listening"><div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div><span class="nav-badge">4</span></a>
+  <a class="nav-item" href="#sec-cases"><div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Case Studies</span></div><span class="nav-badge">2</span></a>
+  <a class="nav-item" href="#sec-assessment"><div class="nav-left"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></div><span class="nav-badge">20</span></a>
+</nav>
 <main id="main">
 <section id="sec-overview" class="section active">
   <div class="hero"><div class="module-pill">🎯 &nbsp; Module 3 &nbsp;·&nbsp; Executive &amp; Leadership English</div><h2>Strategic<br><span class="accent">Communication</span></h2><p class="hero-desc">Master the vocabulary of strategic communication — from the pyramid principle, strategic framing, and message architecture through executive messaging, crisis communication, board communication, and investor relations language to stakeholder mapping, narrative transportation, spokesperson credibility, data storytelling, rhetorical structure, and communicating under uncertainty. Learn the language that executives, communications directors, and board members use to move organisations, shape stakeholder understanding, and lead through complexity.</p><div class="hero-stats"><div class="stat"><span class="stat-n">21</span><span class="stat-l">Key Terms</span></div><div class="stat"><span class="stat-n">11</span><span class="stat-l">Sections</span></div><div class="stat"><span class="stat-n">4</span><span class="stat-l">Audio Activities</span></div><div class="stat"><span class="stat-n">C1</span><span class="stat-l">CEFR Level</span></div></div></div>
@@ -582,7 +695,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
       <div class="card-title">🏆 Final Assessment</div><div class="card-bar"></div>
       <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:22px;">Answer all 20 questions. You need 70% (14 correct) to pass. Attempts used: <strong id="att-disp">0 / 2</strong></div>
       <div id="assessContainer"><div class="mcq-block" id="aq-0"><div class="mcq-q">1. What is 'the pyramid principle' and how does it invert the typical analytical communication sequence?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-0-0"><span class="opt-letter">A</span>The pyramid principle presents evidence first, then analysis, then recommendation — a more rigorous version of the analytical sequence</div><div class="mcq-opt" id="ass-0-1"><span class="opt-letter">B</span>The pyramid principle leads with the recommendation or conclusion, followed by supporting arguments, followed by evidence — inverting the analytical build-up (evidence → analysis → conclusion) in favour of executive communication (conclusion → arguments → evidence)</div><div class="mcq-opt" id="ass-0-2"><span class="opt-letter">C</span>The pyramid principle organises information from general to specific — broad strategic context before operational detail</div><div class="mcq-opt" id="ass-0-3"><span class="opt-letter">D</span>The pyramid principle presents all options equally before recommending one — ensuring the audience can evaluate alternatives</div></div></div><div class="mcq-block" id="aq-1"><div class="mcq-q">2. In the investor relations listening activity, what does Valentina acknowledge about her Q2 communication?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-1-0"><span class="opt-letter">A</span>That Q2 guidance was set incorrectly — the range was too narrow for the market conditions</div><div class="mcq-opt" id="ass-1-1"><span class="opt-letter">B</span>That she did not flag the Mexico SME issue early enough — Q2 was too late to identify the problem</div><div class="mcq-opt" id="ass-1-2"><span class="opt-letter">C</span>That in Q2 she described the Mexico SME conversion issue but did not describe a solution — that was a mistake</div><div class="mcq-opt" id="ass-1-3"><span class="opt-letter">D</span>That her Q2 investor call was too brief — she did not provide sufficient detail about the performance drivers</div></div></div><div class="mcq-block" id="aq-2"><div class="mcq-q">3. What is 'crisis communication' and what does the research consistently show about reputational outcomes?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-2-0"><span class="opt-letter">A</span>Crisis communication is the legal management of an adverse event — the most important factor is regulatory compliance</div><div class="mcq-opt" id="ass-2-1"><span class="opt-letter">B</span>Crisis communication is the strategic management of organisational communication during an adverse event — research shows the single most important factor in reputational outcomes is not what the crisis was but how the organisation communicated about it</div><div class="mcq-opt" id="ass-2-2"><span class="opt-letter">C</span>Crisis communication is primarily a media relations exercise — organisations that manage journalists well manage crises well</div><div class="mcq-opt" id="ass-2-3"><span class="opt-letter">D</span>Crisis communication is most important in the weeks after a crisis — the initial response is less significant than the sustained communication that follows</div></div></div><div class="mcq-block" id="aq-3"><div class="mcq-q">4. In the board presentation debrief listening activity, what does Carlos say Anita should have done when the board chair raised the integration risk?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-3-0"><span class="opt-letter">A</span>She should have redirected to more positive aspects of the acquisition case — maintaining narrative momentum</div><div class="mcq-opt" id="ass-3-1"><span class="opt-letter">B</span>She should have deferred to the COO — operational questions are better answered by the COO than the CEO</div><div class="mcq-opt" id="ass-3-2"><span class="opt-letter">C</span>She should have acknowledged the legitimacy of the concern before counter-arguing — not argued why the concern was not real, but why it was manageable</div><div class="mcq-opt" id="ass-3-3"><span class="opt-letter">D</span>She should have provided more data — the board chair needed more financial detail to be reassured</div></div></div><div class="mcq-block" id="aq-4"><div class="mcq-q">5. What is 'strategic framing' and how does it differ from spin?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-4-0"><span class="opt-letter">A</span>They are the same — strategic framing is the professional term for spin in executive communication contexts</div><div class="mcq-opt" id="ass-4-1"><span class="opt-letter">B</span>Strategic framing selects which accurate facts to emphasise in which context to create accurate and useful understanding. Spin misrepresents facts to serve a desired interpretation. The test: would an informed audience consider the framing accurate and fair?</div><div class="mcq-opt" id="ass-4-2"><span class="opt-letter">C</span>Strategic framing is for internal communication; spin is for external — they differ only in their audience</div><div class="mcq-opt" id="ass-4-3"><span class="opt-letter">D</span>Strategic framing is used by communications professionals; spin is used by politicians — they differ in their practitioners</div></div></div><div class="mcq-block" id="aq-5"><div class="mcq-q">6. In the crisis communication planning listening activity, why does Lorena recommend a holding statement in 30 minutes rather than waiting for complete information?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-5-0"><span class="opt-letter">A</span>Because the regulation requires a statement within 30 minutes of confirming a breach</div><div class="mcq-opt" id="ass-5-1"><span class="opt-letter">B</span>Because investors need to be notified immediately — any delay triggers a trading halt</div><div class="mcq-opt" id="ass-5-2"><span class="opt-letter">C</span>Because the security research firm is already posting on social media — waiting cedes the frame to whoever is speaking, while a proactive holding statement establishes the company as the authoritative source</div><div class="mcq-opt" id="ass-5-3"><span class="opt-letter">D</span>Because employee notification must precede external communication by 30 minutes under HR policy</div></div></div><div class="mcq-block" id="aq-6"><div class="mcq-q">7. What is 'message discipline' and what problem does the listening activity about all-hands preparation illustrate?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-6-0"><span class="opt-letter">A</span>Message discipline means using the same words in every communication — the listening activity shows the CEO adapting the message for different audiences</div><div class="mcq-opt" id="ass-6-1"><span class="opt-letter">B</span>Message discipline means limiting communication — the listening activity shows over-communication creating confusion</div><div class="mcq-opt" id="ass-6-2"><span class="opt-letter">C</span>Message discipline is the practice of all spokespersons communicating consistent key messages — the crisis communication session illustrates the failure: four different, partially contradictory descriptions of the same strategic change were circulating internally before any external communication</div><div class="mcq-opt" id="ass-6-3"><span class="opt-letter">D</span>Message discipline means communicating only in formal settings — the listening activity shows the risk of informal communication</div></div></div><div class="mcq-block" id="aq-7"><div class="mcq-q">8. What does 'the headline test' help communicators identify?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-7-0"><span class="opt-letter">A</span>Whether a communication is too long — the headline test measures word count against recommended length</div><div class="mcq-opt" id="ass-7-1"><span class="opt-letter">B</span>Whether a communication uses plain language — the headline test checks for jargon and technical vocabulary</div><div class="mcq-opt" id="ass-7-2"><span class="opt-letter">C</span>Whether the most important information in a communication is clear — by asking what a journalist's single-sentence summary would be and checking whether that matches the intended message</div><div class="mcq-opt" id="ass-7-3"><span class="opt-letter">D</span>Whether a communication is legally defensible — the headline test identifies statements that create potential legal liability</div></div></div><div class="mcq-block" id="aq-8"><div class="mcq-q">9. What is the Pyramid Principle case study's identified primary limitation of the framework?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-8-0"><span class="opt-letter">A</span>It only works in English — translation to Spanish and Portuguese reduces its structural clarity</div><div class="mcq-opt" id="ass-8-1"><span class="opt-letter">B</span>It is structurally excellent but lacks human elements — audience analysis, emotional resonance, and empathy must be built on top of the pyramid structure</div><div class="mcq-opt" id="ass-8-2"><span class="opt-letter">C</span>It is too complex for most communicators to apply consistently — the three structural rules are difficult to follow in real-time communication</div><div class="mcq-opt" id="ass-8-3"><span class="opt-letter">D</span>It is designed for written communication only — it cannot be applied to verbal presentations</div></div></div><div class="mcq-block" id="aq-9"><div class="mcq-q">10. According to the Latin American crisis communication case study, what is 'the paradox of crisis communication in Latin America'?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-9-0"><span class="opt-letter">A</span>The better the communication, the less media coverage it receives — well-managed crises attract minimal press attention</div><div class="mcq-opt" id="ass-9-1"><span class="opt-letter">B</span>Done well, a crisis can be an organisation's most powerful demonstration of what it stands for — genuine accountability in a low-trust environment is surprising and memorable, and customer bonds formed through well-managed crises are often stronger than those formed through normal experience</div><div class="mcq-opt" id="ass-9-2"><span class="opt-letter">C</span>The more quickly an organisation communicates, the less it is believed — speed creates the impression of lack of information</div><div class="mcq-opt" id="ass-9-3"><span class="opt-letter">D</span>Crisis communication is most effective when silent — organisations that say nothing allow media interest to pass faster than those that communicate</div></div></div><div class="mcq-block" id="aq-10"><div class="mcq-q">11. What is 'narrative transportation' and how is it relevant to executive communication?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-10-0"><span class="opt-letter">A</span>The process of translating a strategy into an operational plan — relevant when communicating complex strategic changes to operational leaders</div><div class="mcq-opt" id="ass-10-1"><span class="opt-letter">B</span>The communication of a transformation programme — relevant when an organisation is undergoing significant strategic change</div><div class="mcq-opt" id="ass-10-2"><span class="opt-letter">C</span>The psychological mechanism by which listeners become absorbed in a story and update their beliefs in ways parallel to the narrative's message — relevant because abstract strategic concepts are more effectively communicated through specific, vivid stories than through data and analysis alone</div><div class="mcq-opt" id="ass-10-3"><span class="opt-letter">D</span>The conveyance of information across different organisational levels — ensuring strategic messages reach frontline employees</div></div></div><div class="mcq-block" id="aq-11"><div class="mcq-q">12. What does Text 2 say is 'the single most important factor' in the reputational outcome of a crisis?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-11-0"><span class="opt-letter">A</span>The severity of the crisis — major crises produce worse reputational outcomes regardless of communication quality</div><div class="mcq-opt" id="ass-11-1"><span class="opt-letter">B</span>The CEO's personal credibility — leaders with high credibility manage crises better than those without</div><div class="mcq-opt" id="ass-11-2"><span class="opt-letter">C</span>Not what the crisis was but how the organisation communicated about it — early, accountable, empathetic, action-oriented communication enables recovery from apparently catastrophic crises</div><div class="mcq-opt" id="ass-11-3"><span class="opt-letter">D</span>The legal strategy — organisations with strong legal defence protect their reputation more effectively</div></div></div><div class="mcq-block" id="aq-12"><div class="mcq-q">13. What is 'communicating under uncertainty' and what structure does the listening activity suggest?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-12-0"><span class="opt-letter">A</span>Communicating without all the facts — expressing confidence even when the situation is unclear</div><div class="mcq-opt" id="ass-12-1"><span class="opt-letter">B</span>Three categories: what you know with certainty (specific and committed), what you believe with reasonable confidence (clearly flagged as an estimate), and what you genuinely cannot yet say (with a specific commitment about when you will know)</div><div class="mcq-opt" id="ass-12-2"><span class="opt-letter">C</span>Communicating nothing until the situation is fully resolved — uncertainty prevents responsible communication</div><div class="mcq-opt" id="ass-12-3"><span class="opt-letter">D</span>Communicating optimistically — leaders should frame uncertainty as opportunity rather than risk</div></div></div><div class="mcq-block" id="aq-13"><div class="mcq-q">14. According to Text 1, what does a 'build-up' document communicate to an executive reader who reads only the first two paragraphs?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-13-0"><span class="opt-letter">A</span>The context — enough background for the reader to understand what the document is about</div><div class="mcq-opt" id="ass-13-1"><span class="opt-letter">B</span>The key message — the first two paragraphs should always contain the most important information</div><div class="mcq-opt" id="ass-13-2"><span class="opt-letter">C</span>Nothing — because the conclusion is at the end, a partial read produces no useful information</div><div class="mcq-opt" id="ass-13-3"><span class="opt-letter">D</span>The supporting evidence — the early sections typically contain the most relevant data</div></div></div><div class="mcq-block" id="aq-14"><div class="mcq-q">15. What is 'spokesperson credibility' and what does the research show about its effect on communication?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-14-0"><span class="opt-letter">A</span>The size of the organisation represented — larger organisations have more credible spokespersons</div><div class="mcq-opt" id="ass-14-1"><span class="opt-letter">B</span>The seniority of the spokesperson — more senior leaders are more credible regardless of their communication track record</div><div class="mcq-opt" id="ass-14-2"><span class="opt-letter">C</span>A function of perceived expertise, trustworthiness, and goodwill — the same message delivered by a highly credible spokesperson produces significantly more attitude change than the same message delivered by a low-credibility spokesperson</div><div class="mcq-opt" id="ass-14-3"><span class="opt-letter">D</span>The communication training of the spokesperson — trained communicators are more credible than untrained ones regardless of other factors</div></div></div><div class="mcq-block" id="aq-15"><div class="mcq-q">16. What does 'audience analysis' require at the executive level, beyond demographics?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-15-0"><span class="opt-letter">A</span>Understanding the audience's communication preferences — written versus verbal, formal versus informal</div><div class="mcq-opt" id="ass-15-1"><span class="opt-letter">B</span>Understanding the audience's mental model of the issue, their interests, their likely objections, and what the communication needs to achieve for each audience segment</div><div class="mcq-opt" id="ass-15-2"><span class="opt-letter">C</span>Understanding the audience's technical expertise — calibrating the level of detail to the audience's knowledge</div><div class="mcq-opt" id="ass-15-3"><span class="opt-letter">D</span>Understanding the audience's reporting relationships — ensuring communication respects organisational hierarchy</div></div></div><div class="mcq-block" id="aq-16"><div class="mcq-q">17. In the all-hands preparation listening activity, what specific evidence does Anita plan to use to address the 'purpose is not genuine' narrative?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-16-0"><span class="opt-letter">A</span>The company's customer satisfaction scores — the highest in the sector, demonstrating customer-centricity</div><div class="mcq-opt" id="ass-16-1"><span class="opt-letter">B</span>The company's full cooperation with the regulatory investigation — demonstrating transparency</div><div class="mcq-opt" id="ass-16-2"><span class="opt-letter">C</span>The August decision to discontinue a profitable insurance product (€2.1M revenue) because it was not consistent with the company's purpose — a values-based commercial sacrifice most employees are unaware of</div><div class="mcq-opt" id="ass-16-3"><span class="opt-letter">D</span>The company's employee engagement scores — consistently above the industry average</div></div></div><div class="mcq-block" id="aq-17"><div class="mcq-q">18. What is 'data storytelling' and what is its most common failure?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-17-0"><span class="opt-letter">A</span>The use of charts and infographics — the most common failure is poor visual design</div><div class="mcq-opt" id="ass-17-1"><span class="opt-letter">B</span>The presentation of quantitative data within a narrative framework — the most common failure is presenting accurate but irrelevant data that does not answer the question the communication is designed to address</div><div class="mcq-opt" id="ass-17-2"><span class="opt-letter">C</span>The conversion of qualitative research into quantitative findings — the most common failure is insufficient sample sizes</div><div class="mcq-opt" id="ass-17-3"><span class="opt-letter">D</span>The translation of financial data into operational language — the most common failure is over-simplification that loses accuracy</div></div></div><div class="mcq-block" id="aq-18"><div class="mcq-q">19. What does the Pyramid Principle case study say senior communicators do with the framework?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-18-0"><span class="opt-letter">A</span>They apply it strictly — the three structural rules are the complete framework for effective executive communication</div><div class="mcq-opt" id="ass-18-1"><span class="opt-letter">B</span>They use it as the structural foundation and build the human elements — audience analysis, tone, empathy — on top of it</div><div class="mcq-opt" id="ass-18-2"><span class="opt-letter">C</span>They use it selectively — written communication benefits more than verbal communication</div><div class="mcq-opt" id="ass-18-3"><span class="opt-letter">D</span>They teach it to their teams rather than applying it personally — it is primarily a training framework</div></div></div><div class="mcq-block" id="aq-19"><div class="mcq-q">20. What is the Latin American crisis communication case study's overall argument about communicating with genuine accountability in the region?</div><div class="mcq-opts"><div class="mcq-opt" id="ass-19-0"><span class="opt-letter">A</span>Crisis communication is primarily a legal and regulatory challenge in Latin America — compliance is the key objective</div><div class="mcq-opt" id="ass-19-1"><span class="opt-letter">B</span>Crisis communication in Latin America requires more spending on PR and reputation management than in other regions</div><div class="mcq-opt" id="ass-19-2"><span class="opt-letter">C</span>The specific trust environment — fragile institutional trust, high media amplification, preference for personal accountability — creates both higher stakes for failures and a distinctive opportunity: genuine accountability differentiates organisations in a way that builds stronger trust than was possible before the crisis</div><div class="mcq-opt" id="ass-19-3"><span class="opt-letter">D</span>Crisis communication in Latin America is essentially the same as in other regions — the principles of good communication apply universally</div></div></div></div>
-      <div class="static-note">Interactive checks, AI feedback, and audio playback have been removed in this content-only pilot import.</div>
+      <div class="static-note">Interactive checks, AI feedback, and audio playback have been removed in this content-only review import.</div>
     </div>
   </div>
 </section>
