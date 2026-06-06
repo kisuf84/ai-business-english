@@ -6,6 +6,7 @@ import Button from "../shared/Button";
 type PremiumModuleReaderProps = {
   title: string;
   iframeSrc: string;
+  courseSlug: string;
 };
 
 const sectionLinks = [
@@ -27,7 +28,9 @@ type SectionId = (typeof sectionLinks)[number]["id"];
 export default function PremiumModuleReader({
   title,
   iframeSrc,
+  courseSlug,
 }: PremiumModuleReaderProps) {
+  const isBriceCourse = courseSlug.startsWith("bricepremiumcourses");
   const readerRef = useRef<HTMLDivElement | null>(null);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const iframeScrollCleanupRef = useRef<(() => void) | null>(null);
@@ -246,35 +249,37 @@ export default function PremiumModuleReader({
         )}
       </div>
       <div className="min-h-0 flex-1 overflow-hidden">
-        <div className="flex h-full min-h-0 flex-col lg:grid lg:grid-cols-[240px_minmax(0,1fr)]">
-          <aside className="border-b border-[var(--border)] bg-[var(--surface)] px-3 py-3 lg:sticky lg:top-0 lg:h-full lg:overflow-y-auto lg:border-b-0 lg:border-r lg:px-4">
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
-              Module sections
-            </p>
-            <nav className="mt-3">
-              <ul className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0">
-                {visibleSections.map((section) => {
-                  const isActive = activeSectionId === section.id;
+        <div className={`flex h-full min-h-0 flex-col ${isBriceCourse ? "" : "lg:grid lg:grid-cols-[240px_minmax(0,1fr)]"}`}>
+          {!isBriceCourse && (
+            <aside className="border-b border-[var(--border)] bg-[var(--surface)] px-3 py-3 lg:sticky lg:top-0 lg:h-full lg:overflow-y-auto lg:border-b-0 lg:border-r lg:px-4">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+                Module sections
+              </p>
+              <nav className="mt-3">
+                <ul className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0">
+                  {visibleSections.map((section) => {
+                    const isActive = activeSectionId === section.id;
 
-                  return (
-                    <li key={section.id} className="shrink-0 lg:shrink">
-                      <button
-                        type="button"
-                        onClick={() => handleSectionClick(section.id)}
-                        className={`w-full rounded-full border px-3 py-2 text-left text-xs font-semibold transition lg:rounded-2xl ${
-                          isActive
-                            ? "border-[var(--ink)] bg-[var(--ink)] text-[var(--surface)]"
-                            : "border-[var(--border)] bg-[var(--surface)] text-[var(--ink-muted)] hover:border-[var(--ink)] hover:text-[var(--ink)]"
-                        }`}
-                      >
-                        {section.label}
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
-          </aside>
+                    return (
+                      <li key={section.id} className="shrink-0 lg:shrink">
+                        <button
+                          type="button"
+                          onClick={() => handleSectionClick(section.id)}
+                          className={`w-full rounded-full border px-3 py-2 text-left text-xs font-semibold transition lg:rounded-2xl ${
+                            isActive
+                              ? "border-[var(--ink)] bg-[var(--ink)] text-[var(--surface)]"
+                              : "border-[var(--border)] bg-[var(--surface)] text-[var(--ink-muted)] hover:border-[var(--ink)] hover:text-[var(--ink)]"
+                          }`}
+                        >
+                          {section.label}
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+            </aside>
+          )}
           <div className="h-full min-h-0 bg-[var(--surface)]">
             <iframe
               ref={iframeRef}

@@ -117,7 +117,7 @@ export default async function PremiumModulePage({ params }: PremiumModulePagePro
           </Link>
         </div>
       </div>
-      <PremiumModuleReader title={module.title} iframeSrc={module.iframeSrc} />
+      <PremiumModuleReader title={module.title} iframeSrc={module.iframeSrc} courseSlug={course.slug} />
     </section>
   );
 }

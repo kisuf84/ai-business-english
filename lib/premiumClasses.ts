@@ -164,12 +164,8 @@ function isPreviewModule(number: number) {
   return number === 1;
 }
 
-function isModuleLocked(courseSlug: PremiumCourseSlug, number: number) {
-  if (FULLY_UNLOCKED_REVIEW_COURSES.has(courseSlug)) {
-    return false;
-  }
-
-  return !isPreviewModule(number);
+function isModuleLocked(_courseSlug: PremiumCourseSlug, _number: number) {
+  return false;
 }
 
 async function readModuleTitle(filePath: string, courseTitle: string, number: number) {
