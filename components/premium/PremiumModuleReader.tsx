@@ -30,7 +30,15 @@ export default function PremiumModuleReader({
   iframeSrc,
   courseSlug,
 }: PremiumModuleReaderProps) {
-  const isBriceCourse = courseSlug.startsWith("bricepremiumcourses");
+  const isBriceCourse = new Set([
+    "bricepremiumcourses1", "bricepremiumcourses2", "bricepremiumcourses3",
+    "bricepremiumcourses4", "bricepremiumcourses5", "bricepremiumcourses6",
+    "bricepremiumcourses7", "bricepremiumcourses8", "bricepremiumcourses9",
+    "bricepremiumcourses10", "bricepremiumcourses11", "bricepremiumcourses12",
+    "bricepremiumcourses13", "bricepremiumcourses14", "bricepremiumcourses15",
+    "bricepremiumcourses16", "bricepremiumcourses17", "bricepremiumcourses18",
+    "bricepremiumcourses19",
+  ]).has(courseSlug);
   const readerRef = useRef<HTMLDivElement | null>(null);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const iframeScrollCleanupRef = useRef<(() => void) | null>(null);

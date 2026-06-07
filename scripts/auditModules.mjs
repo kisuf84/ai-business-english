@@ -13,14 +13,29 @@ import { readFileSync } from "fs";
 import { join } from "path";
 
 const ROOT = new URL("../premium-content/premium-classes", import.meta.url).pathname;
-const COURSES = ["bricepremiumcourses1", "bricepremiumcourses2", "bricepremiumcourses3"];
-const MODULES = Array.from({ length: 12 }, (_, i) => `module_${i + 1}.html`);
+const COURSES = [
+  "bricepremiumcourses1", "bricepremiumcourses2", "bricepremiumcourses3",
+  "bricepremiumcourses4", "bricepremiumcourses5", "bricepremiumcourses6",
+  "bricepremiumcourses7", "bricepremiumcourses8", "bricepremiumcourses9",
+  "bricepremiumcourses10", "bricepremiumcourses11", "bricepremiumcourses12",
+  "bricepremiumcourses13", "bricepremiumcourses14", "bricepremiumcourses15",
+  "bricepremiumcourses16", "bricepremiumcourses17", "bricepremiumcourses18",
+  "bricepremiumcourses19",
+];
+// course5 has 13 modules, course18 has 5; use max 13 and skip missing files
+// course5 has 13 modules; all others 12; use max 13 and skip missing files
+const MODULES = Array.from({ length: 13 }, (_, i) => `module_${i + 1}.html`);
 
 // Containers that are known to be populated dynamically by JS
 const DYNAMIC_CONTAINERS = [
+  // courses 1-3 template
   "speakingGrid", "wordbankGrid", "readingContent", "writingContent",
   "grammarReviewContent", "vocab-ex-0", "grammar-ex-0",
   "listenContent", "casestudiesContent", "assessmentContent",
+  // courses 4-6 template (goTo/init* pattern)
+  "speakingContent", "overviewContent", "wordBankContent", "listeningContent",
+  "gramRevContent", "casesContent", "assessContainer",
+  "vex-0", "gex-0",
 ];
 
 function auditFile(filePath, courseName, moduleName) {
@@ -42,8 +57,10 @@ function auditFile(filePath, courseName, moduleName) {
   // Detect which JS function name is used
   const usesShowSection = /onclick="showSection\(/.test(html);
   const usesShowSec = /onclick="showSec\(/.test(html);
+  const usesGoTo = /onclick="goTo\(/.test(html);
   const hasShowSectionDef = /function showSection\b/.test(html);
   const hasShowSecDef = /function showSec\b/.test(html);
+  const hasGoToDef = /function goTo\b/.test(html);
   // Detect whether the function has already been patched with our mapping table.
   // Use \b to prevent showSection from matching the showSec pattern (prefix overlap).
   const hasFixedShowSection = /function showSection\b[^{]*\{[^}]*var M=/.test(html);
@@ -69,11 +86,18 @@ function auditFile(filePath, courseName, moduleName) {
   const sectionIds = new Set([...sectionElementIds, ...sectionElementIds2]);
 
   // ── ISSUE A: SIDEBAR NAV MATCHES ──────────────────────────────────────────
-  if (usesShowSection && !hasShowSectionDef) {
+  // For pre-rendered brice courses: showSection/showSec/goTo are all injected
+  // by route.ts at serve time, so missing definitions in the static file are expected
+  // once scripts are stripped (scriptCount = 0). Only flag if scripts are still present.
+  const scriptCount = (html.match(/<script\b/gi) || []).length;
+  if (usesShowSection && !hasShowSectionDef && scriptCount > 0) {
     issues.push(`MISSING_FN: showSection() used but not defined`);
   }
-  if (usesShowSec && !hasShowSecDef) {
+  if (usesShowSec && !hasShowSecDef && scriptCount > 0) {
     issues.push(`MISSING_FN: showSec() used but not defined`);
+  }
+  if (usesGoTo && !hasGoToDef && scriptCount > 0) {
+    issues.push(`MISSING_FN: goTo() used but not defined`);
   }
 
   // ID mappings applied by the fixed functions (showSection and showSec differ)
@@ -132,8 +156,8 @@ function auditFile(filePath, courseName, moduleName) {
   }
 
   // ── STATS ──────────────────────────────────────────────────────────────────
-  const navPattern = usesShowSection ? "showSection" : usesShowSec ? "showSec" : "anchor";
-  const fnDefined = usesShowSection ? hasShowSectionDef : usesShowSec ? hasShowSecDef : true;
+  const navPattern = usesShowSection ? "showSection" : usesShowSec ? "showSec" : usesGoTo ? "goTo" : "anchor";
+  const fnDefined = usesShowSection ? hasShowSectionDef : usesShowSec ? hasShowSecDef : usesGoTo ? hasGoToDef : true;
   const fnFixed = usesShowSection ? hasFixedShowSection : usesShowSec ? hasFixedShowSec : true;
   const navCount = onclickTargets.length || anchorLinks.filter(h => !h.startsWith("http")).length;
 
@@ -149,7 +173,7 @@ function auditFile(filePath, courseName, moduleName) {
     emptyList: emptySections,
     issues,
     needsPrerender: emptySections.length > 0,
-    needsNavFix: navMismatches.length > 0 || (usesShowSection && !hasShowSectionDef) || (usesShowSec && !hasShowSecDef),
+    needsNavFix: navMismatches.length > 0 || (usesShowSection && !hasShowSectionDef && scriptCount > 0) || (usesShowSec && !hasShowSecDef && scriptCount > 0) || (usesGoTo && !hasGoToDef && scriptCount > 0),
   };
 }
 

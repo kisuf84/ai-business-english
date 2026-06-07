@@ -11,10 +11,22 @@ export type PremiumCourseSlug =
   | "bricepremiumcourses1"
   | "bricepremiumcourses2"
   | "bricepremiumcourses3"
-  | "executive-leadership-english"
-  | "consulting-strategy-english"
-  | "operations-manufacturing-english"
-  | "entrepreneurship-startups-english";
+  | "bricepremiumcourses4"
+  | "bricepremiumcourses5"
+  | "bricepremiumcourses6"
+  | "bricepremiumcourses7"
+  | "bricepremiumcourses8"
+  | "bricepremiumcourses9"
+  | "bricepremiumcourses10"
+  | "bricepremiumcourses11"
+  | "bricepremiumcourses12"
+  | "bricepremiumcourses13"
+  | "bricepremiumcourses14"
+  | "bricepremiumcourses15"
+  | "bricepremiumcourses16"
+  | "bricepremiumcourses17"
+  | "bricepremiumcourses18"
+  | "bricepremiumcourses19";
 
 export type PremiumModule = {
   slug: string;
@@ -64,42 +76,119 @@ const COURSE_META: Record<
       "Core marketing language, campaign planning, customer research, and promotional strategy across twelve modules.",
     level: "Professional",
   },
-  "executive-leadership-english": {
-    title: "Executive & Leadership English",
-    subtitle: "Sanitized Pilot Course",
+  bricepremiumcourses4: {
+    title: "Legal & Compliance English",
+    subtitle: "Premium Course 4",
     description:
-      "Business English for leadership, executive communication, strategy, decision-making, and high-level professional contexts.",
-    level: "B2-C1",
+      "Essential English for legal professionals: contracts, compliance, court terms, IP, governance, and regulatory communication across twelve modules.",
+    level: "Professional",
   },
-  "consulting-strategy-english": {
-    title: "Consulting & Strategy English",
-    subtitle: "Sanitized Review Course",
-    description:
-      "Business English for consulting, strategic analysis, client communication, recommendations, and professional advisory work.",
-    level: "B2-C1",
-  },
-  "operations-manufacturing-english": {
-    title: "Operations & Manufacturing English",
-    subtitle: "Sanitized Review Course",
-    description:
-      "Business English for operations, manufacturing, process improvement, supply chains, production reporting, and workplace communication.",
-    level: "B2-C1",
-  },
-  "entrepreneurship-startups-english": {
+  bricepremiumcourses5: {
     title: "Entrepreneurship & Startups English",
-    subtitle: "Sanitized Review Course",
+    subtitle: "Premium Course 5",
     description:
-      "Business English for startups, investor communication, business models, pitching, partnerships, and entrepreneurial decision-making.",
-    level: "B2-C1",
+      "Business English for founders and startup professionals: pitching, funding, business models, MVP, market entry, and investor communication across thirteen modules.",
+    level: "Professional",
+  },
+  bricepremiumcourses6: {
+    title: "Consulting & Strategy English",
+    subtitle: "Premium Course 6",
+    description:
+      "Professional English for consultants: strategy frameworks, client communication, business case analysis, report writing, and delivering recommendations across twelve modules.",
+    level: "Professional",
+  },
+  bricepremiumcourses7: {
+    title: "Operations & Manufacturing English",
+    subtitle: "Premium Course 7",
+    description:
+      "Essential English for operations and manufacturing professionals: supply chain, logistics, quality control, process improvement, and factory floor communication across twelve modules.",
+    level: "Professional",
+  },
+  bricepremiumcourses8: {
+    title: "Executive & Leadership English",
+    subtitle: "Premium Course 8",
+    description:
+      "Advanced English for executives and senior leaders: boardroom communication, stakeholder management, crisis leadership, strategic vision, and executive presence across twelve modules.",
+    level: "Professional",
+  },
+  bricepremiumcourses9: {
+    title: "Real Estate & Property Management English",
+    subtitle: "Premium Course 9",
+    description:
+      "Professional English for real estate practitioners: property listings, client negotiations, lease agreements, market analysis, and property management communication across twelve modules.",
+    level: "Professional",
+  },
+  bricepremiumcourses10: {
+    title: "Hospitality & Tourism English",
+    subtitle: "Premium Course 10",
+    description:
+      "Essential English for hospitality and tourism professionals: guest services, hotel operations, travel industry vocabulary, customer relations, and event management across twelve modules.",
+    level: "Professional",
+  },
+  bricepremiumcourses11: {
+    title: "Medical & Healthcare Business English",
+    subtitle: "Premium Course 11",
+    description:
+      "Professional English for healthcare business contexts: medical administration, patient communication, clinical terminology, healthcare policy, and pharmaceutical industry language across twelve modules.",
+    level: "Professional",
+  },
+  bricepremiumcourses12: {
+    title: "Human Resources (HR) English",
+    subtitle: "Premium Course 12",
+    description:
+      "Comprehensive English for HR professionals: recruitment, talent management, performance reviews, employee relations, diversity and inclusion, and HR policy communication across twelve modules.",
+    level: "Professional",
+  },
+  bricepremiumcourses13: {
+    title: "Reading Practice: A1 Level",
+    subtitle: "Reading Course — Beginner",
+    description:
+      "Graded reading practice for A1 learners: short texts on personal life, home, school, and everyday situations with comprehension questions across four modules.",
+    level: "A1 Beginner",
+  },
+  bricepremiumcourses14: {
+    title: "Reading Practice: A2 Level",
+    subtitle: "Reading Course — Elementary",
+    description:
+      "Graded reading practice for A2 learners: texts on work, travel, daily life, and social situations with comprehension activities across four modules.",
+    level: "A2 Elementary",
+  },
+  bricepremiumcourses15: {
+    title: "Reading Practice: B1 Level",
+    subtitle: "Reading Course — Intermediate",
+    description:
+      "Graded reading practice for B1 learners: texts on business, society, technology, and travel with comprehension questions across four modules.",
+    level: "B1 Intermediate",
+  },
+  bricepremiumcourses16: {
+    title: "Reading Practice: B2 Level",
+    subtitle: "Reading Course — Upper Intermediate",
+    description:
+      "Graded reading practice for B2 learners: in-depth texts on global issues, business, environment, and psychology with comprehension activities across four modules.",
+    level: "B2 Upper Intermediate",
+  },
+  bricepremiumcourses17: {
+    title: "Reading Practice: C1 Level",
+    subtitle: "Reading Course — Advanced",
+    description:
+      "Advanced reading practice for C1 learners: challenging texts on society, business, ethics, technology, and psychology with detailed comprehension work across four modules.",
+    level: "C1 Advanced",
+  },
+  bricepremiumcourses18: {
+    title: "Business English Speaking",
+    subtitle: "Speaking Practice — All Levels",
+    description:
+      "Extensive speaking practice for business English learners: reading texts, discussion questions, and vocabulary exercises across five volumes covering a wide range of professional topics.",
+    level: "B1–C1",
+  },
+  bricepremiumcourses19: {
+    title: "Sales & Customer Service English",
+    subtitle: "Premium Course 19",
+    description:
+      "Professional English for sales and customer service: negotiation language, client communication, objection handling, product presentation, and CRM vocabulary across twelve modules.",
+    level: "Professional",
   },
 };
-
-const FULLY_UNLOCKED_REVIEW_COURSES = new Set<PremiumCourseSlug>([
-  "executive-leadership-english",
-  "consulting-strategy-english",
-  "operations-manufacturing-english",
-  "entrepreneurship-startups-english",
-]);
 
 function decodeHtmlEntities(value: string) {
   return value
