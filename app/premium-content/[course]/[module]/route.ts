@@ -58,10 +58,13 @@ function sanitizePremiumHtml(html: string, isBriceCourse: boolean, preserveScrip
   //     collapses them to a cramped top bar with max-height:220px
   // Force all sidebar variants to stay in left-column mode regardless of viewport width.
   const briceSidebarOverride = isBriceCourse ? `
+  /* ── Desktop: keep all sidebar variants always visible ───────────────────── */
+
   /* Courses 4–12: position:fixed #sidebar — cancel mobile translateX(-100%) */
   #sidebar {
     transform: none !important;
   }
+  /* Hide client's own mobile toggle; we inject our own (#mob-toggle) */
   #mob-btn {
     display: none !important;
   }
@@ -69,8 +72,7 @@ function sanitizePremiumHtml(html: string, isBriceCourse: boolean, preserveScrip
   #main {
     margin-left: var(--sidebar-w, 260px) !important;
   }
-  /* Course 19: body-direct-child nav.sidebar uses position:fixed —
-     prevent mobile breakpoint from switching it to position:relative */
+  /* Course 19: body-direct-child nav.sidebar — keep position:fixed at narrow viewports */
   body > nav.sidebar {
     position: fixed !important;
     width: var(--sidebar-w, 260px) !important;
@@ -78,8 +80,7 @@ function sanitizePremiumHtml(html: string, isBriceCourse: boolean, preserveScrip
     max-height: none !important;
     height: 100vh !important;
   }
-  /* B1/B2 mod 3-4: nav.sidebar is a sticky flex-child inside .main —
-     prevent mobile breakpoint from collapsing width + max-height */
+  /* B1/B2 mod 3-4: nav.sidebar is a sticky flex-child inside .main */
   .main > nav.sidebar {
     width: 280px !important;
     max-height: none !important;
@@ -89,11 +90,75 @@ function sanitizePremiumHtml(html: string, isBriceCourse: boolean, preserveScrip
     position: sticky !important;
     top: 0 !important;
   }
-  /* .main: restore row flex layout (B1/B2) and sidebar margin-left (course 19).
+  /* .main: restore row layout (B1/B2) and margin (course 19).
      --sidebar-w is 264px in course 19, undefined (→ 0px) in B1/B2. */
   .main {
     flex-direction: row !important;
     margin-left: var(--sidebar-w, 0px) !important;
+  }
+
+  /* ── Mobile drawer chrome: hidden on desktop ─────────────────────────────── */
+  #mob-toggle { display: none; }
+  #mob-overlay { display: none; }
+
+  /* ── Mobile (≤768px): collapsible drawer pattern ─────────────────────────── */
+  @media (max-width: 768px) {
+    /* All sidebar variants slide in from the left as an overlay drawer */
+    #sidebar,
+    body > nav.sidebar,
+    .main > nav.sidebar {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      height: 100vh !important;
+      width: 280px !important;
+      max-height: none !important;
+      z-index: 1000 !important;
+      overflow-y: auto !important;
+      transform: translateX(-100%) !important;
+      transition: transform 0.25s ease !important;
+    }
+    #sidebar.mob-open,
+    body > nav.sidebar.mob-open,
+    .main > nav.sidebar.mob-open {
+      transform: translateX(0) !important;
+    }
+    /* Sidebar is now an overlay — remove layout compensation from main content */
+    #main { margin-left: 0 !important; }
+    .main {
+      margin-left: 0 !important;
+      flex-direction: column !important;
+    }
+    /* Semi-transparent backdrop injected by initMobDrawer() */
+    #mob-overlay.mob-open {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 999;
+      cursor: pointer;
+    }
+    /* Floating hamburger button injected by initMobDrawer() */
+    #mob-toggle {
+      display: flex;
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 1001;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10, 22, 40, 0.85);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(4px);
+    }
   }
 ` : "";
 
@@ -264,22 +329,61 @@ function showCat(index, btn) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function openSidebar() {
-  var sb = document.getElementById('sidebar');
-  if (!sb) return;
-  sb.style.transform = 'translateX(0)';
-  sb.classList.add('open');
-  var ov = document.getElementById('overlay');
-  if (ov) ov.style.display = 'block';
+function getSidebar() {
+  return document.getElementById('sidebar')
+    || document.querySelector('body > nav.sidebar')
+    || document.querySelector('.main > nav.sidebar');
 }
 
-function closeSidebar() {
-  var sb = document.getElementById('sidebar');
+function openMobSidebar() {
+  var sb = getSidebar();
+  var ov = document.getElementById('mob-overlay');
+  var btn = document.getElementById('mob-toggle');
+  if (sb) sb.classList.add('mob-open');
+  if (ov) ov.classList.add('mob-open');
+  if (btn) btn.innerHTML = '&#10005;';
+}
+
+function closeMobSidebar() {
+  var sb = getSidebar();
+  var ov = document.getElementById('mob-overlay');
+  var btn = document.getElementById('mob-toggle');
+  if (sb) sb.classList.remove('mob-open');
+  if (ov) ov.classList.remove('mob-open');
+  if (btn) btn.innerHTML = '&#9776;';
+}
+
+function openSidebar() { openMobSidebar(); }
+function closeSidebar() { closeMobSidebar(); }
+
+function initMobDrawer() {
+  var sb = getSidebar();
   if (!sb) return;
-  sb.style.transform = '';
-  sb.classList.remove('open');
-  var ov = document.getElementById('overlay');
-  if (ov) ov.style.display = 'none';
+
+  var ov = document.createElement('div');
+  ov.id = 'mob-overlay';
+  ov.addEventListener('click', closeMobSidebar);
+  document.body.appendChild(ov);
+
+  var btn = document.createElement('button');
+  btn.id = 'mob-toggle';
+  btn.setAttribute('aria-label', 'Open navigation menu');
+  btn.innerHTML = '&#9776;';
+  btn.addEventListener('click', function() {
+    if (sb.classList.contains('mob-open')) {
+      closeMobSidebar();
+    } else {
+      openMobSidebar();
+    }
+  });
+  document.body.appendChild(btn);
+
+  sb.addEventListener('click', function(e) {
+    if (window.innerWidth > 768) return;
+    if (e.target.closest('a[href], .nav-item, button.sidebar-item')) {
+      setTimeout(closeMobSidebar, 80);
+    }
+  });
 }
 
 function initBriceNav() {
@@ -290,6 +394,7 @@ function initBriceNav() {
     btn.addEventListener('click', function() { showSection(name); });
   });
   showSection('overview');
+  initMobDrawer();
 }
 
 // B2 reading (course16): switchCat toggles pre-rendered category panels
