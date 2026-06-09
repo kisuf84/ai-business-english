@@ -90,11 +90,29 @@ function sanitizePremiumHtml(html: string, isBriceCourse: boolean, preserveScrip
     position: sticky !important;
     top: 0 !important;
   }
-  /* .main: restore row layout (B1/B2) and margin (course 19).
-     --sidebar-w is 264px in course 19, undefined (→ 0px) in B1/B2. */
+  /* .main: restore row layout (B1/B2 flex containers) and remove any margin.
+     Sidebar is a flex child in those layouts so no external margin is needed. */
   .main {
     flex-direction: row !important;
     margin-left: var(--sidebar-w, 0px) !important;
+  }
+  /* Courses 1, 3, 19: body > nav.sidebar is position:fixed OUTSIDE .main.
+     Higher specificity wins over the 0px fallback above; 260px matches the
+     sidebar width we enforce on body > nav.sidebar for --sidebar-w-less courses. */
+  body > nav.sidebar ~ .main {
+    margin-left: var(--sidebar-w, 260px) !important;
+  }
+  /* Course 1 mod 3–8: <aside class="sidebar"> (uses --sidebar not --sidebar-w).
+     Keep it fixed; restore left-margin on the sibling <main> content area. */
+  aside.sidebar {
+    position: fixed !important;
+    transform: none !important;
+    max-height: none !important;
+    height: 100vh !important;
+    width: var(--sidebar, var(--sidebar-w, 260px)) !important;
+  }
+  body > aside.sidebar ~ main {
+    margin-left: var(--sidebar, var(--sidebar-w, 260px)) !important;
   }
 
   /* ── Mobile drawer chrome: hidden on desktop ─────────────────────────────── */
@@ -106,6 +124,7 @@ function sanitizePremiumHtml(html: string, isBriceCourse: boolean, preserveScrip
     /* All sidebar variants slide in from the left as an overlay drawer */
     #sidebar,
     body > nav.sidebar,
+    aside.sidebar,
     .main > nav.sidebar {
       position: fixed !important;
       top: 0 !important;
@@ -120,12 +139,15 @@ function sanitizePremiumHtml(html: string, isBriceCourse: boolean, preserveScrip
     }
     #sidebar.mob-open,
     body > nav.sidebar.mob-open,
+    aside.sidebar.mob-open,
     .main > nav.sidebar.mob-open {
       transform: translateX(0) !important;
     }
     /* Sidebar is now an overlay — remove layout compensation from main content */
     #main { margin-left: 0 !important; }
-    .main {
+    .main,
+    body > nav.sidebar ~ .main,
+    body > aside.sidebar ~ main {
       margin-left: 0 !important;
       flex-direction: column !important;
     }
@@ -332,6 +354,7 @@ function showCat(index, btn) {
 function getSidebar() {
   return document.getElementById('sidebar')
     || document.querySelector('body > nav.sidebar')
+    || document.querySelector('body > aside.sidebar')
     || document.querySelector('.main > nav.sidebar');
 }
 

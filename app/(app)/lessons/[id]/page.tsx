@@ -1,12 +1,20 @@
+"use client";
+
+import { useState, useEffect, Suspense } from "react";
+import { useParams, useSearchParams } from "next/navigation";
 import LessonViewer from "../../../../components/lesson/LessonViewer";
-import { getLessonById } from "../../../../lib/data/lessons";
 import LessonToolbar from "../../../../components/lesson/LessonToolbar";
 import Link from "next/link";
 import Card from "../../../../components/shared/Card";
-import type { LessonGenerationOutput } from "../../../../types/lesson";
+import type { LessonGenerationOutput, LessonRecord } from "../../../../types/lesson";
 import { normalizeLessonOutput } from "../../../../lib/validators/lesson";
-import { cookies } from "next/headers";
-import { getAuthUserFromCookieHeader } from "../../../../lib/supabase/auth";
+import { authenticatedFetch } from "../../../../lib/api/authenticatedFetch";
+
+type LessonRecordExtended = LessonRecord & {
+  video_id?: string | null;
+  transcript_text?: string | null;
+  transcript_segments?: Array<{ start?: unknown; duration?: unknown; text?: unknown }> | null;
+};
 
 function formatDate(value: string | null | undefined) {
   if (!value) return "Unknown";
@@ -51,51 +59,62 @@ function parseLessonOutput(
   };
 }
 
-export default async function LessonDetailPage({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams?: { saved?: string; duplicated?: string; archived?: string };
-}) {
-  let lessonRecord = null;
-  let error: string | null = null;
-  const showSaved = searchParams?.saved === "1";
-  const showDuplicated = searchParams?.duplicated === "1";
-  const showArchived = searchParams?.archived === "1";
-  const authUser = await getAuthUserFromCookieHeader(cookies().toString());
+function LessonDetailContent() {
+  const params = useParams<{ id: string }>();
+  const searchParams = useSearchParams();
+  const [lessonRecord, setLessonRecord] = useState<LessonRecordExtended | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!authUser) {
-    error = "Please sign in to view this lesson.";
-  } else {
-    try {
-      lessonRecord = await getLessonById(params.id, authUser.id);
-    } catch {
-      error = "We could not load this lesson right now.";
+  const showSaved = searchParams.get("saved") === "1";
+  const showDuplicated = searchParams.get("duplicated") === "1";
+  const showArchived = searchParams.get("archived") === "1";
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await authenticatedFetch(`/api/lesson/${params.id}`);
+        if (res.status === 401) {
+          setError("Please sign in to view this lesson.");
+          return;
+        }
+        if (res.status === 404) {
+          return;
+        }
+        if (!res.ok) {
+          setError("We could not load this lesson right now.");
+          return;
+        }
+        const data = (await res.json()) as LessonRecordExtended;
+        setLessonRecord(data);
+      } catch (err) {
+        if (err instanceof Error && err.message === "Authentication required.") {
+          setError("Please sign in to view this lesson.");
+        } else {
+          setError("We could not load this lesson right now.");
+        }
+      } finally {
+        setLoading(false);
+      }
     }
-  }
+    void load();
+  }, [params.id]);
 
   const parsedLesson = lessonRecord
     ? parseLessonOutput(lessonRecord.content_json, lessonRecord.title || "Lesson")
     : { lesson: null, schemaIssues: [] };
   const safeLesson = parsedLesson.lesson;
   const lessonVideoId =
-    lessonRecord &&
-    typeof (lessonRecord as { video_id?: unknown }).video_id === "string"
-      ? (((lessonRecord as { video_id?: string | null }).video_id || "").trim() || null)
+    lessonRecord && typeof lessonRecord.video_id === "string"
+      ? lessonRecord.video_id.trim() || null
       : null;
   const lessonTranscriptText =
-    lessonRecord &&
-    typeof (lessonRecord as { transcript_text?: unknown }).transcript_text === "string"
-      ? (((lessonRecord as { transcript_text?: string | null }).transcript_text || "").trim() ||
-          null)
+    lessonRecord && typeof lessonRecord.transcript_text === "string"
+      ? lessonRecord.transcript_text.trim() || null
       : null;
   const lessonTranscriptSegments =
-    lessonRecord &&
-    Array.isArray((lessonRecord as { transcript_segments?: unknown }).transcript_segments)
-      ? ((lessonRecord as {
-          transcript_segments?: Array<{ start?: unknown; duration?: unknown; text?: unknown }>;
-        }).transcript_segments || [])
+    lessonRecord && Array.isArray(lessonRecord.transcript_segments)
+      ? lessonRecord.transcript_segments
           .filter((item) => item && typeof item === "object")
           .map((item) => {
             const start =
@@ -104,7 +123,9 @@ export default async function LessonDetailPage({
                 : null;
             if (start === null || start < 0) return null;
             const duration =
-              typeof item.duration === "number" && Number.isFinite(item.duration) && item.duration >= 0
+              typeof item.duration === "number" &&
+              Number.isFinite(item.duration) &&
+              item.duration >= 0
                 ? item.duration
                 : undefined;
             const text = typeof item.text === "string" ? item.text.trim() : "";
@@ -112,14 +133,18 @@ export default async function LessonDetailPage({
             return duration === undefined ? { start, text } : { start, duration, text };
           })
           .filter(
-            (
-              item
-            ): item is { start: number; duration?: number; text: string } => Boolean(item)
+            (item): item is { start: number; duration?: number; text: string } => Boolean(item)
           )
       : null;
 
-  if (process.env.NODE_ENV !== "production" && parsedLesson.schemaIssues.length > 0) {
-    console.warn("[LessonDetailPage] Lesson schema issues detected", parsedLesson.schemaIssues);
+  if (loading) {
+    return (
+      <section className="mobile-page-shell">
+        <div className="lumen-page">
+          <p className="text-sm text-[var(--ink-muted)]">Loading lesson…</p>
+        </div>
+      </section>
+    );
   }
 
   return (
@@ -158,25 +183,19 @@ export default async function LessonDetailPage({
             <Card className="mt-6 p-5 sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-6">
                 <div>
-                  <p className="lumen-label">
-                    Status
-                  </p>
+                  <p className="lumen-label">Status</p>
                   <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
                     {lessonRecord.status}
                   </p>
                 </div>
                 <div>
-                  <p className="lumen-label">
-                    Visibility
-                  </p>
+                  <p className="lumen-label">Visibility</p>
                   <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
                     {lessonRecord.visibility}
                   </p>
                 </div>
                 <div>
-                  <p className="lumen-label">
-                    Created
-                  </p>
+                  <p className="lumen-label">Created</p>
                   <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
                     {formatDate(lessonRecord.created_at)}
                   </p>
@@ -184,9 +203,7 @@ export default async function LessonDetailPage({
               </div>
               {lessonRecord.visibility === "public" ? (
                 <div className="mt-4">
-                  <p className="lumen-label">
-                    Share link
-                  </p>
+                  <p className="lumen-label">Share link</p>
                   <Link
                     className="mt-2 inline-flex break-all rounded-full border border-[var(--border)] bg-[var(--glass)] px-3 py-1.5 text-sm text-[var(--ink)] underline-offset-4 hover:underline"
                     href={`/share/lesson/${lessonRecord.id}`}
@@ -235,5 +252,13 @@ export default async function LessonDetailPage({
         ) : null}
       </div>
     </section>
+  );
+}
+
+export default function LessonDetailPage() {
+  return (
+    <Suspense>
+      <LessonDetailContent />
+    </Suspense>
   );
 }
