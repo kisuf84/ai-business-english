@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import Card from "../../../components/shared/Card";
 import PersonalizedGreeting from "../../../components/shared/PersonalizedGreeting";
 import { listLessons } from "../../../lib/data/lessons";
-import { listPremiumCourses } from "../../../lib/premiumClasses";
+import { listActivePremiumCourses } from "../../../lib/premiumClasses";
 import { getRequestAuthUser } from "../../../lib/supabase/auth";
 
 async function loadDashboardData() {
@@ -21,7 +21,7 @@ async function loadDashboardData() {
     const authUser = await getRequestAuthUser(authRequest);
     const [lessons, premiumCourses] = await Promise.all([
       listLessons(authUser?.id),
-      listPremiumCourses(),
+      listActivePremiumCourses(),
     ]);
     return {
       lessons: Array.isArray(lessons) ? lessons : [],

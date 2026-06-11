@@ -28,6 +28,8 @@ export type PremiumCourseSlug =
   | "bricepremiumcourses18"
   | "bricepremiumcourses19";
 
+export type CourseStatus = "active" | "hidden" | "draft";
+
 export type PremiumModule = {
   slug: string;
   title: string;
@@ -43,6 +45,7 @@ export type PremiumCourse = {
   subtitle: string;
   description: string;
   level: string;
+  status: CourseStatus;
   moduleCount: number;
   modules: PremiumModule[];
 };
@@ -53,7 +56,7 @@ function getCourseRoot(slug: PremiumCourseSlug) {
 
 const COURSE_META: Record<
   PremiumCourseSlug,
-  { title: string; subtitle: string; description: string; level: string }
+  { title: string; subtitle: string; description: string; level: string; status: CourseStatus }
 > = {
   bricepremiumcourses1: {
     title: "Business Management English",
@@ -61,6 +64,7 @@ const COURSE_META: Record<
     description:
       "Leadership, meetings, decision-making, and corporate communication modules for business managers and team leads.",
     level: "Professional",
+    status: "active",
   },
   bricepremiumcourses2: {
     title: "Finance & Accounting English",
@@ -68,6 +72,7 @@ const COURSE_META: Record<
     description:
       "Financial statements, budgeting, reporting, compliance, and executive finance communication in professional English.",
     level: "Professional",
+    status: "active",
   },
   bricepremiumcourses3: {
     title: "Marketing & Advertising English",
@@ -75,6 +80,7 @@ const COURSE_META: Record<
     description:
       "Core marketing language, campaign planning, customer research, and promotional strategy across twelve modules.",
     level: "Professional",
+    status: "active",
   },
   bricepremiumcourses4: {
     title: "Legal & Compliance English",
@@ -82,6 +88,7 @@ const COURSE_META: Record<
     description:
       "Essential English for legal professionals: contracts, compliance, court terms, IP, governance, and regulatory communication across twelve modules.",
     level: "Professional",
+    status: "active",
   },
   bricepremiumcourses5: {
     title: "Entrepreneurship & Startups English",
@@ -89,6 +96,7 @@ const COURSE_META: Record<
     description:
       "Business English for founders and startup professionals: pitching, funding, business models, MVP, market entry, and investor communication across thirteen modules.",
     level: "Professional",
+    status: "active",
   },
   bricepremiumcourses6: {
     title: "Consulting & Strategy English",
@@ -96,6 +104,7 @@ const COURSE_META: Record<
     description:
       "Professional English for consultants: strategy frameworks, client communication, business case analysis, report writing, and delivering recommendations across twelve modules.",
     level: "Professional",
+    status: "active",
   },
   bricepremiumcourses7: {
     title: "Operations & Manufacturing English",
@@ -103,6 +112,7 @@ const COURSE_META: Record<
     description:
       "Essential English for operations and manufacturing professionals: supply chain, logistics, quality control, process improvement, and factory floor communication across twelve modules.",
     level: "Professional",
+    status: "active",
   },
   bricepremiumcourses8: {
     title: "Executive & Leadership English",
@@ -110,6 +120,7 @@ const COURSE_META: Record<
     description:
       "Advanced English for executives and senior leaders: boardroom communication, stakeholder management, crisis leadership, strategic vision, and executive presence across twelve modules.",
     level: "Professional",
+    status: "active",
   },
   bricepremiumcourses9: {
     title: "Real Estate & Property Management English",
@@ -117,6 +128,7 @@ const COURSE_META: Record<
     description:
       "Professional English for real estate practitioners: property listings, client negotiations, lease agreements, market analysis, and property management communication across twelve modules.",
     level: "Professional",
+    status: "active",
   },
   bricepremiumcourses10: {
     title: "Hospitality & Tourism English",
@@ -124,6 +136,7 @@ const COURSE_META: Record<
     description:
       "Essential English for hospitality and tourism professionals: guest services, hotel operations, travel industry vocabulary, customer relations, and event management across twelve modules.",
     level: "Professional",
+    status: "active",
   },
   bricepremiumcourses11: {
     title: "Medical & Healthcare Business English",
@@ -131,6 +144,7 @@ const COURSE_META: Record<
     description:
       "Professional English for healthcare business contexts: medical administration, patient communication, clinical terminology, healthcare policy, and pharmaceutical industry language across twelve modules.",
     level: "Professional",
+    status: "active",
   },
   bricepremiumcourses12: {
     title: "Human Resources (HR) English",
@@ -138,13 +152,16 @@ const COURSE_META: Record<
     description:
       "Comprehensive English for HR professionals: recruitment, talent management, performance reviews, employee relations, diversity and inclusion, and HR policy communication across twelve modules.",
     level: "Professional",
+    status: "active",
   },
+  // ── Reading Packs ── hidden until client approves upload
   bricepremiumcourses13: {
     title: "Reading Practice: A1 Level",
     subtitle: "Reading Course — Beginner",
     description:
       "Graded reading practice for A1 learners: short texts on personal life, home, school, and everyday situations with comprehension questions across four modules.",
     level: "A1 Beginner",
+    status: "hidden",
   },
   bricepremiumcourses14: {
     title: "Reading Practice: A2 Level",
@@ -152,6 +169,7 @@ const COURSE_META: Record<
     description:
       "Graded reading practice for A2 learners: texts on work, travel, daily life, and social situations with comprehension activities across four modules.",
     level: "A2 Elementary",
+    status: "hidden",
   },
   bricepremiumcourses15: {
     title: "Reading Practice: B1 Level",
@@ -159,6 +177,7 @@ const COURSE_META: Record<
     description:
       "Graded reading practice for B1 learners: texts on business, society, technology, and travel with comprehension questions across four modules.",
     level: "B1 Intermediate",
+    status: "hidden",
   },
   bricepremiumcourses16: {
     title: "Reading Practice: B2 Level",
@@ -166,6 +185,7 @@ const COURSE_META: Record<
     description:
       "Graded reading practice for B2 learners: in-depth texts on global issues, business, environment, and psychology with comprehension activities across four modules.",
     level: "B2 Upper Intermediate",
+    status: "hidden",
   },
   bricepremiumcourses17: {
     title: "Reading Practice: C1 Level",
@@ -173,13 +193,16 @@ const COURSE_META: Record<
     description:
       "Advanced reading practice for C1 learners: challenging texts on society, business, ethics, technology, and psychology with detailed comprehension work across four modules.",
     level: "C1 Advanced",
+    status: "hidden",
   },
+  // ── Volumes ── hidden until client approves upload
   bricepremiumcourses18: {
     title: "Business English Speaking",
     subtitle: "Speaking Practice — All Levels",
     description:
       "Extensive speaking practice for business English learners: reading texts, discussion questions, and vocabulary exercises across five volumes covering a wide range of professional topics.",
     level: "B1–C1",
+    status: "hidden",
   },
   bricepremiumcourses19: {
     title: "Sales & Customer Service English",
@@ -187,6 +210,7 @@ const COURSE_META: Record<
     description:
       "Professional English for sales and customer service: negotiation language, client communication, objection handling, product presentation, and CRM vocabulary across twelve modules.",
     level: "Professional",
+    status: "active",
   },
 };
 
@@ -303,50 +327,66 @@ async function readModuleTitle(filePath: string, courseTitle: string, number: nu
   }
 }
 
-export async function listPremiumCourses(): Promise<PremiumCourse[]> {
-  const slugs = Object.keys(COURSE_META) as PremiumCourseSlug[];
+async function buildCourse(slug: PremiumCourseSlug): Promise<PremiumCourse> {
+  const directory = getCourseRoot(slug);
+  const entries = await fs.readdir(directory);
+  const modules = await Promise.all(
+    entries
+      .filter((entry) => /^module_\d+\.html$/i.test(entry))
+      .map(async (entry) => {
+        const numberMatch = entry.match(/^module_(\d+)\.html$/i);
+        const number = numberMatch ? Number(numberMatch[1]) : 0;
+        const moduleSlug = entry.replace(/\.html$/i, "");
+        const courseTitle = COURSE_META[slug].title;
 
-  return Promise.all(
-    slugs.map(async (slug) => {
-      const directory = getCourseRoot(slug);
-      const entries = await fs.readdir(directory);
-      const modules = await Promise.all(
-        entries
-          .filter((entry) => /^module_\d+\.html$/i.test(entry))
-          .map(async (entry) => {
-            const numberMatch = entry.match(/^module_(\d+)\.html$/i);
-            const number = numberMatch ? Number(numberMatch[1]) : 0;
-            const moduleSlug = entry.replace(/\.html$/i, "");
-            const courseTitle = COURSE_META[slug].title;
-
-            return {
-              slug: moduleSlug,
-              title: await readModuleTitle(path.join(directory, entry), courseTitle, number),
-              number,
-              iframeSrc: `/premium-content/${slug}/${moduleSlug}`,
-              isPreview: isPreviewModule(number),
-              isLocked: isModuleLocked(slug, number),
-            } satisfies PremiumModule;
-          })
-      );
-
-      const sortedModules = modules.sort((a, b) => a.number - b.number);
-
-      return {
-        slug,
-        title: COURSE_META[slug].title,
-        subtitle: COURSE_META[slug].subtitle,
-        description: COURSE_META[slug].description,
-        level: COURSE_META[slug].level,
-        moduleCount: sortedModules.length,
-        modules: sortedModules,
-      } satisfies PremiumCourse;
-    })
+        return {
+          slug: moduleSlug,
+          title: await readModuleTitle(path.join(directory, entry), courseTitle, number),
+          number,
+          iframeSrc: `/premium-content/${slug}/${moduleSlug}`,
+          isPreview: isPreviewModule(number),
+          isLocked: isModuleLocked(slug, number),
+        } satisfies PremiumModule;
+      })
   );
+
+  const sortedModules = modules.sort((a, b) => a.number - b.number);
+
+  return {
+    slug,
+    title: COURSE_META[slug].title,
+    subtitle: COURSE_META[slug].subtitle,
+    description: COURSE_META[slug].description,
+    level: COURSE_META[slug].level,
+    status: COURSE_META[slug].status,
+    moduleCount: sortedModules.length,
+    modules: sortedModules,
+  } satisfies PremiumCourse;
 }
 
-export async function getPremiumCourse(courseSlug: string) {
+/** Returns ALL courses including hidden ones. Used internally and for admin tooling. */
+export async function listPremiumCourses(): Promise<PremiumCourse[]> {
+  const slugs = Object.keys(COURSE_META) as PremiumCourseSlug[];
+  return Promise.all(slugs.map(buildCourse));
+}
+
+/**
+ * Returns only active courses. Use this for any user-facing listing:
+ * catalog, search, navigation, course counts, and static param generation.
+ * Changing a course's status from "hidden" to "active" in COURSE_META is all
+ * that's needed to publish it — no file imports or folder changes required.
+ */
+export async function listActivePremiumCourses(): Promise<PremiumCourse[]> {
   const courses = await listPremiumCourses();
+  return courses.filter((c) => c.status === "active");
+}
+
+/**
+ * Returns a course only if it is active. Hidden/draft courses resolve to null,
+ * which causes pages to return 404 and the content route to return 404.
+ */
+export async function getPremiumCourse(courseSlug: string) {
+  const courses = await listActivePremiumCourses();
   return courses.find((course) => course.slug === courseSlug) ?? null;
 }
 

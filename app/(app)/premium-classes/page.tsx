@@ -1,10 +1,10 @@
 import PremiumCourseSearch from "../../../components/premium/PremiumCourseSearch";
-import { listPremiumCourses } from "../../../lib/premiumClasses";
+import { listActivePremiumCourses } from "../../../lib/premiumClasses";
 
 export const dynamic = "force-static";
 
 export default async function PremiumClassesPage() {
-  const courses = await listPremiumCourses();
+  const courses = await listActivePremiumCourses();
 
   return (
     <section className="mobile-page-shell">

@@ -2,12 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Card from "../../../../components/shared/Card";
 import PremiumModuleList from "../../../../components/premium/PremiumModuleList";
-import { getPremiumCourse, listPremiumCourses } from "../../../../lib/premiumClasses";
+import { getPremiumCourse, listActivePremiumCourses } from "../../../../lib/premiumClasses";
 
 export const dynamic = "force-static";
 
 export async function generateStaticParams() {
-  const courses = await listPremiumCourses();
+  const courses = await listActivePremiumCourses();
   return courses.map((course) => ({ course: course.slug }));
 }
 
