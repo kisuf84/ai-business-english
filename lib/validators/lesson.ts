@@ -25,6 +25,7 @@ const REQUIRED_GRAMMAR_COUNT = 8;
 const MIN_VOCAB_EXERCISE_COUNT = 1;
 const MIN_FINAL_ASSESSMENT_COUNT = 15;
 const MIN_READING_PARAGRAPH_LENGTH = 220;
+const MIN_SPEAKING_QUESTIONS = 15;
 
 export function validateLessonPayload(
   payload: LessonGenerationInput
@@ -93,6 +94,8 @@ function toVocabularyArray(value: unknown): VocabularyItem[] {
 function toQuestionArray(value: unknown, idPrefix: string): LessonQuestion[] {
   if (!Array.isArray(value)) return [];
 
+  const seenQuestions = new Set<string>();
+
   return value.flatMap((item, index) => {
     if (!item || typeof item !== "object") return [];
     const row = item as Record<string, unknown>;
@@ -121,6 +124,12 @@ function toQuestionArray(value: unknown, idPrefix: string): LessonQuestion[] {
     if (!question || options.length < 2 || !validCorrectIndex) {
       return [];
     }
+
+    const dedupKey = question.trim().toLowerCase();
+    if (seenQuestions.has(dedupKey)) {
+      return [];
+    }
+    seenQuestions.add(dedupKey);
 
     return [
       {
@@ -223,6 +232,10 @@ export function normalizeLessonOutput(
   const summary = toNonEmptyString(data.summary) ?? "";
   const objectives = toStringArray(data.objectives);
 
+  const speakingQuestions = toStringArray(
+    getField(data, "speaking_questions", "speakingQuestions", "speaking")
+  );
+
   const wordBank = toVocabularyArray(
     allowLegacyFields
       ? getField(data, "word_bank", "wordBank", "vocabulary")
@@ -276,6 +289,7 @@ export function normalizeLessonOutput(
     title,
     summary,
     objectives,
+    speaking_questions: speakingQuestions,
     word_bank: wordBank,
     reading_text: readingText,
     reading_comprehension: readingComprehension,
@@ -298,6 +312,9 @@ export function normalizeLessonOutput(
   if (strict) {
     if (normalized.objectives.length < 3) {
       errors.push("Learning objectives must contain at least 3 items.");
+    }
+    if ((normalized.speaking_questions ?? []).length < MIN_SPEAKING_QUESTIONS) {
+      errors.push(`Speaking Questions must contain at least ${MIN_SPEAKING_QUESTIONS} items.`);
     }
     if (normalized.word_bank.length !== REQUIRED_WORD_BANK_COUNT) {
       errors.push(`Word Bank must contain exactly ${REQUIRED_WORD_BANK_COUNT} vocabulary cards.`);

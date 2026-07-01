@@ -157,6 +157,10 @@ export function buildLessonPrompt(params: {
         title: "string",
         summary: "string",
         objectives: ["string", "string", "string"],
+        speaking_questions: [
+          "string — open-ended discussion question based on the source",
+          "... exactly 15 questions total",
+        ],
         word_bank: [
           { term: "string", definition: "string" },
           "... exactly 12 items total",
@@ -208,6 +212,8 @@ export function buildLessonPrompt(params: {
     "",
     "Hard constraints:",
     "- Return all required sections in one complete JSON response.",
+    "- speaking_questions: exactly 15 open-ended discussion questions grounded in the source.",
+    "- Speaking questions must come before word_bank in the JSON.",
     "- word_bank: exactly 12 items.",
     "- reading_text: at least 3 substantial paragraphs separated by blank lines.",
     "- reading_comprehension: exactly 8 questions.",
@@ -267,6 +273,7 @@ export function buildLessonRepairPrompt(params: {
     ...validationErrors.map((item) => `- ${item}`),
     "",
     "Required schema and rules:",
+    "- speaking_questions: exactly 15 open-ended discussion questions grounded in the source.",
     "- word_bank: exactly 12 items.",
     "- reading_text: at least 3 substantial paragraphs separated by blank lines.",
     "- reading_comprehension: exactly 8 questions.",

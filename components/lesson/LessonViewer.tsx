@@ -13,6 +13,7 @@ type Tab = {
 };
 
 const REQUIRED_TABS: Tab[] = [
+  { id: "speaking", label: "Speaking" },
   { id: "word_bank", label: "Word Bank" },
   { id: "reading", label: "Reading Text" },
   { id: "comprehension", label: "Reading Comprehension" },
@@ -215,7 +216,7 @@ export default function LessonViewer({
   transcriptSegments,
 }: LessonViewerProps) {
   const { theme } = useTheme();
-  const [activeTab, setActiveTab] = useState("word_bank");
+  const [activeTab, setActiveTab] = useState("speaking");
   const sectionPaddingX = "clamp(16px, 4vw, 28px)";
 
   const [answers, setAnswers] = useState<Record<QuestionSection, AnswerMap>>({
@@ -274,6 +275,9 @@ export default function LessonViewer({
   }, [normalizedVideoId, transcriptStart]);
   const schemaIssues = useMemo(() => {
     const issues: string[] = [];
+    if ((lesson.speaking_questions ?? []).length < 15) {
+      issues.push(`Speaking Questions count is ${(lesson.speaking_questions ?? []).length}; expected at least 15.`);
+    }
     if (lesson.word_bank.length !== 12) {
       issues.push(`Word Bank count is ${lesson.word_bank.length}; expected 12.`);
     }
@@ -301,6 +305,7 @@ export default function LessonViewer({
     lesson.final_assessment.length,
     lesson.grammar.length,
     lesson.reading_comprehension.length,
+    lesson.speaking_questions,
     lesson.vocabulary_exercise.length,
     lesson.word_bank.length,
     readingParagraphs.length,
@@ -825,6 +830,65 @@ export default function LessonViewer({
       </nav>
 
       <div style={{ padding: `28px ${sectionPaddingX} 40px` }}>
+        {activeTab === "speaking" ? (
+          <div>
+            <div style={{ marginBottom: "24px" }}>
+              <h3
+                style={{
+                  fontFamily: theme.fonts.display,
+                  fontSize: "22px",
+                  color: theme.colors.ink,
+                  marginBottom: "6px",
+                }}
+              >
+                Speaking Activities
+              </h3>
+              <p
+                style={{
+                  fontFamily: theme.fonts.body,
+                  fontSize: "13px",
+                  color: theme.colors.inkMuted,
+                }}
+              >
+                {(lesson.speaking_questions ?? []).length} discussion questions to develop spoken fluency. Discuss with a partner or prepare structured responses.
+              </p>
+            </div>
+            <ol style={{ display: "flex", flexDirection: "column", gap: "12px", paddingLeft: 0, listStyle: "none" }}>
+              {(lesson.speaking_questions ?? []).map((q, i) => (
+                <li
+                  key={`sq-${i}`}
+                  style={{
+                    fontFamily: theme.fonts.body,
+                    fontSize: "15px",
+                    color: theme.colors.ink,
+                    lineHeight: 1.6,
+                    background: theme.colors.surface,
+                    border: `1px solid ${theme.colors.border}`,
+                    borderRadius: theme.radius.md,
+                    padding: "14px 18px",
+                    display: "flex",
+                    gap: "14px",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: theme.fonts.body,
+                      fontSize: "12px",
+                      fontWeight: 700,
+                      color: theme.colors.accent,
+                      minWidth: "24px",
+                      paddingTop: "2px",
+                    }}
+                  >
+                    {i + 1}.
+                  </span>
+                  <span>{q}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ) : null}
+
         {activeTab === "word_bank" ? (
           <div>
             <div style={{ marginBottom: "24px" }}>

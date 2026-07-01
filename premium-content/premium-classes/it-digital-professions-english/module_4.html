@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Module 4: IT Project Management Language — IT &amp; Digital Professions English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root{--navy:#0d1b2e;--navy-mid:#112240;--navy-light:#1a3357;--gold:#00bcd4;--gold-light:#26c6da;--gold-bright:#4dd0e1;--cream:#f0f4f8;--cream-dark:#dce8f0;--white:#ffffff;--text-light:#90b8cc;--text-mid:#4a7a96;--red-accent:#e53935;--green-accent:#00b86b;--teal:#0097a7;--sidebar-w:260px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);display:flex;min-height:100vh;overflow-x:hidden;}
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent;transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);}
+.sidebar-brand{padding:24px 22px 18px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-brand h1{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:700;color:var(--gold-bright);line-height:1.38;margin-bottom:3px;}
+.sidebar-brand .sub{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-mid);font-weight:500;}
+.level-badge{display:inline-block;margin-top:11px;background:var(--gold);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:1px;padding:3px 11px;border-radius:20px;text-transform:uppercase;}
+.sidebar-section-label{padding:20px 22px 7px;font-size:8.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--text-mid);font-weight:700;}
+.nav-item{display:flex;align-items:center;justify-content:space-between;padding:11px 22px;cursor:pointer;transition:all 0.18s;border-left:3px solid transparent;}
+.nav-item:hover{background:rgba(255,255,255,0.055);}
+.nav-item.active{background:rgba(245,184,0,0.12);border-left-color:var(--gold-light);}
+.nav-left{display:flex;align-items:center;gap:11px;}
+.nav-icon{font-size:15px;opacity:0.9;}
+.nav-label{font-size:13px;color:var(--text-light);font-weight:400;}
+.nav-item.active .nav-label{color:var(--white);font-weight:500;}
+.nav-badge{font-size:9.5px;font-weight:700;color:var(--navy);background:var(--gold-bright);padding:1px 7px;border-radius:12px;}
+#mob-btn{display:none;position:fixed;top:14px;left:14px;z-index:300;background:var(--navy);border:none;border-radius:10px;padding:10px 13px;cursor:pointer;color:var(--gold-bright);font-size:19px;box-shadow:0 3px 14px rgba(0,0,0,0.35);line-height:1;}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150;}
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;}
+.section{display:none;}.section.active{display:block;}
+.hero{background:linear-gradient(145deg,#06111f 0%,#0d1e35 50%,#081929 100%);padding:64px 64px 54px;position:relative;overflow:hidden;}
+.hero::before{content:'L1';position:absolute;right:-15px;bottom:-55px;font-family:'Playfair Display',serif;font-size:310px;font-weight:900;color:rgba(255,255,255,0.022);line-height:1;pointer-events:none;}
+.hero::after{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(245,184,0,0.05) 0%,transparent 70%);pointer-events:none;}
+.module-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);padding:7px 18px;border-radius:50px;font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-light);font-weight:600;margin-bottom:30px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4.6vw,58px);font-weight:900;color:var(--white);line-height:1.08;}
+.hero h2 .accent{color:var(--gold-bright);}
+.hero-desc{font-size:15px;color:var(--text-light);max-width:620px;line-height:1.78;margin-top:20px;font-weight:300;}
+.hero-stats{display:flex;gap:36px;margin-top:44px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;gap:3px;}
+.stat-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--gold-bright);line-height:1;}
+.stat-l{font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(160,180,210,0.7);font-weight:600;}
+.prog-wrap{background:var(--navy-mid);padding:16px 64px;display:flex;align-items:center;gap:20px;}
+.prog-label{font-size:11.5px;font-weight:600;color:var(--text-light);white-space:nowrap;}
+.prog-track{flex:1;height:6px;background:rgba(255,255,255,0.09);border-radius:6px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:6px;width:0%;transition:width 1s ease;}
+.prog-pct{font-size:12.5px;font-weight:700;color:var(--gold-bright);min-width:36px;text-align:right;}
+.content{padding:48px 60px;}
+.card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.card-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.card-bar{width:40px;height:3px;background:var(--gold-light);border-radius:3px;margin-bottom:20px;}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.outcome{display:flex;align-items:flex-start;gap:13px;background:var(--cream);border-radius:11px;padding:14px 16px;border-left:3px solid var(--gold-light);}
+.out-num{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--gold);line-height:1;min-width:24px;}
+.out-text{font-size:13.5px;color:var(--navy);line-height:1.52;}
+.speaking-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.speaking-card{background:var(--cream);border-radius:11px;padding:18px 20px;border-top:3px solid var(--gold-light);transition:transform 0.2s,box-shadow 0.2s;cursor:default;}
+.speaking-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(11,27,48,0.1);}
+.q-num{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;margin-bottom:8px;letter-spacing:1px;}
+.q-text{font-size:13.5px;color:var(--navy);line-height:1.55;}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.wb-card{background:var(--navy);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:transform 0.2s;cursor:default;}
+.wb-card:hover{transform:translateY(-2px);}
+.wb-emoji{font-size:28px;line-height:1;display:block;margin-bottom:2px;}
+.wb-term{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;color:var(--gold-bright);}
+.wb-def{font-size:12px;color:var(--text-light);line-height:1.52;}
+.reading-box{background:var(--cream);border-radius:12px;padding:26px 30px;margin-bottom:26px;border-left:4px solid var(--gold-light);}
+.reading-box h4{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.reading-box p{font-size:14px;color:#1a2e45;line-height:1.84;margin-bottom:13px;}
+.reading-box p:last-child{margin-bottom:0;}
+.mcq-block{margin-bottom:22px;}
+.mcq-q{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:11px;line-height:1.5;}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;}
+.mcq-opt{display:flex;align-items:center;gap:10px;background:var(--cream);border:2px solid var(--cream-dark);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.18s;font-size:13.5px;color:var(--navy);user-select:none;-webkit-tap-highlight-color:transparent;}
+.mcq-opt:hover{border-color:var(--gold-light);background:#fef8e0;}
+.mcq-opt.selected{border-color:var(--gold);background:#fff3c0;}
+.mcq-opt.correct{border-color:var(--green-accent);background:#e6f8ee;color:#0a6b35;}
+.mcq-opt.incorrect{border-color:var(--red-accent);background:#fdecea;color:#881a18;}
+.opt-letter{font-family:'DM Mono',monospace;font-size:10.5px;font-weight:700;width:23px;height:23px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy);}
+.mcq-opt.correct .opt-letter{background:var(--green-accent);color:white;}
+.mcq-opt.incorrect .opt-letter{background:var(--red-accent);color:white;}
+.lmcq-opt{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.12)!important;color:var(--text-light)!important;}
+.lmcq-opt:hover{border-color:var(--gold-light)!important;background:rgba(245,184,0,0.1)!important;}
+.lmcq-opt.selected{border-color:var(--gold)!important;background:rgba(245,184,0,0.18)!important;color:var(--gold-bright)!important;}
+.lmcq-opt.correct{border-color:var(--green-accent)!important;background:rgba(0,166,81,0.18)!important;color:#4dde9a!important;}
+.lmcq-opt.incorrect{border-color:var(--red-accent)!important;background:rgba(214,48,49,0.18)!important;color:#ff8b8b!important;}
+.check-btn{margin-top:15px;background:var(--navy);color:var(--gold-bright);border:none;padding:11px 26px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.check-btn:hover{background:var(--navy-light);}
+.l-check{background:rgba(255,255,255,0.1)!important;color:var(--gold-bright)!important;}
+.l-check:hover{background:rgba(255,255,255,0.18)!important;}
+.score-disp{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;margin-top:14px;}
+.ex-tabs{display:flex;gap:4px;margin-bottom:26px;background:var(--cream-dark);border-radius:12px;padding:4px;flex-wrap:wrap;}
+.ex-tab{flex:1;min-width:130px;text-align:center;padding:10px;border-radius:9px;font-size:12.5px;font-weight:500;cursor:pointer;color:var(--text-mid);transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.ex-tab.active{background:var(--navy);color:var(--gold-bright);}
+.gram-ref{background:var(--navy);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.gram-ref h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:14px;}
+.gram-rule{background:rgba(255,255,255,0.065);border-radius:9px;padding:14px 18px;margin-bottom:11px;border-left:3px solid var(--gold-light);}
+.gram-rule p,.gram-rule li{font-size:13px;color:var(--text-light);line-height:1.66;}
+.gram-rule code{font-family:'DM Mono',monospace;background:rgba(245,184,0,0.18);color:var(--gold-bright);padding:1px 6px;border-radius:4px;font-size:12px;}
+.gram-rule ul{padding-left:18px;}
+.gf-item{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:14px;color:var(--navy);line-height:2.2;margin-bottom:12px;}
+.gf-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);padding:2px 7px;width:160px;outline:none;text-align:center;}
+.gf-input.correct{border-color:var(--green-accent);color:var(--green-accent);}
+.gf-input.incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.tf-row{background:var(--cream);border-radius:10px;padding:13px 17px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.tf-stmt{font-size:13.5px;color:var(--navy);flex:1;line-height:1.52;}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;}
+.tf-btn{padding:7px 16px;border-radius:8px;border:2px solid var(--cream-dark);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:white;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.tf-btn:hover{border-color:var(--gold-light);}
+.tf-btn.sel-t,.tf-btn.sel-f{background:var(--navy);color:white;border-color:var(--navy);}
+.tf-btn.cor{background:var(--green-accent);color:white;border-color:var(--green-accent);}
+.tf-btn.wrg{background:var(--red-accent);color:white;border-color:var(--red-accent);}
+.writing-prompt{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.writing-prompt h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:10px;}
+.writing-prompt p{font-size:13.5px;color:var(--text-light);line-height:1.76;}
+.writing-tags{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
+.wtag{background:rgba(245,184,0,0.18);color:var(--gold-bright);font-size:11px;font-weight:600;letter-spacing:0.8px;padding:4px 12px;border-radius:20px;text-transform:uppercase;border:1px solid rgba(245,184,0,0.3);}
+.w-textarea{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;}
+.w-textarea:focus{border-color:var(--gold-light);background:white;}
+.w-counter{font-size:12px;color:var(--text-mid);text-align:right;margin-bottom:14px;}
+.w-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:6px;}
+.ac-btn{background:var(--gold);color:var(--navy);border:none;padding:13px 28px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(224,155,0,0.35);}
+.ac-btn:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.clear-btn{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:12px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.clear-btn:hover{border-color:var(--red-accent);color:var(--red-accent);}
+.fb-panel{display:none;background:#131e2e;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-panel.show{display:block;}
+.fb-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-title-row{display:flex;align-items:center;gap:10px;}
+.fb-emoji{font-size:20px;}
+.fb-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold-bright);}
+.fb-score-badge{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--gold-bright);}
+.fb-level{font-size:14px;font-weight:600;color:var(--gold-bright);}
+.fb-section{margin-bottom:14px;}
+.fb-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);margin-bottom:7px;}
+.fb-item{font-size:13px;color:var(--text-light);line-height:1.62;padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid var(--gold-light);}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);line-height:1.7;font-style:italic;}
+.listen-card{background:var(--navy);border-radius:16px;padding:28px 32px;margin-bottom:20px;}
+.listen-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.listen-icon{width:52px;height:52px;border-radius:14px;background:rgba(245,184,0,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.listen-meta{flex:1;}
+.listen-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-bright);margin-bottom:3px;}
+.listen-sub{font-size:12px;color:var(--text-mid);}
+.player-row{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px 18px;margin-bottom:14px;}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--navy);flex-shrink:0;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.play-btn:hover{background:var(--gold-bright);transform:scale(1.06);}
+.prog-audio{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.prog-audio-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.5s linear;}
+.time-disp{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:70px;text-align:right;}
+.speed-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.speed-label{font-size:11px;color:var(--text-mid);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.spd-btn{padding:5px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.spd-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.replay-btn{padding:5px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:auto;}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.trans-toggle{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);border-radius:9px;padding:10px 16px;cursor:pointer;margin-bottom:0;transition:background 0.18s;-webkit-tap-highlight-color:transparent;}
+.trans-toggle:hover{background:rgba(255,255,255,0.09);}
+.trans-label{font-size:12px;font-weight:600;color:var(--text-mid);letter-spacing:0.5px;}
+.trans-arrow{font-size:11px;color:var(--text-mid);transition:transform 0.22s;}
+.trans-toggle.open .trans-arrow{transform:rotate(180deg);}
+.trans-body{max-height:0;overflow:hidden;transition:max-height 0.36s ease;}
+.trans-body.open{max-height:800px;}
+.trans-text{font-size:13px;color:var(--text-light);line-height:1.78;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:0 0 9px 9px;border-top:1px solid rgba(255,255,255,0.06);}
+.listen-mcq-wrap{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+.listen-mcq-title{font-size:13px;font-weight:700;color:var(--gold-bright);letter-spacing:0.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.case-card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.case-header{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:12px;padding:22px 26px;margin-bottom:22px;}
+.case-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);font-weight:700;margin-bottom:8px;}
+.case-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.case-sub{font-size:12px;color:var(--text-mid);}
+.case-section{margin-bottom:18px;}
+.case-section h5{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.case-section p{font-size:14px;color:var(--navy);line-height:1.78;}
+.final-result{display:none;border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.final-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.final-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.final-score{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;line-height:1;}
+.final-verdict{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:8px;}
+.final-msg{font-size:14px;opacity:0.88;max-width:420px;margin:0 auto;line-height:1.68;}
+.ass-btn{margin-top:18px;background:var(--gold);color:var(--navy);border:none;padding:13px 32px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.ass-btn:hover{background:var(--gold-bright);}
+.retry-btn{display:none;margin-top:8px;margin-left:10px;background:rgba(255,255,255,0.15);color:var(--navy);border:1.5px solid var(--cream-dark);padding:11px 28px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.retry-btn:hover{background:rgba(255,255,255,0.25);}
+/* ─ Gap Fill & True/False ─ */
+.gf-block{background:var(--cream);border-radius:10px;padding:16px 18px;margin-bottom:12px;border-left:3px solid var(--gold-light);}
+.gf-sentence{font-size:14px;color:var(--navy);line-height:2.1;}
+.gf-fb{font-size:12.5px;margin-top:6px;min-height:18px;}
+.tf-block{background:var(--cream);border-radius:10px;padding:15px 18px;margin-bottom:10px;border-left:3px solid var(--gold-light);}
+.tf-q{font-size:14px;color:var(--navy);line-height:1.55;margin-bottom:10px;}
+.tf-fb{font-size:12.5px;margin-top:8px;min-height:18px;}
+/* ─ Listening player ─ */
+.l-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.l-icon{font-size:30px;line-height:1;}
+.l-sub{font-size:12px;color:var(--text-mid);margin-top:3px;}
+.l-player{background:var(--navy);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+.l-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.l-play-btn{background:var(--gold);color:var(--navy);border:none;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.l-play-btn:hover{background:var(--gold-bright);}
+.l-speed{background:rgba(255,255,255,0.1);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.18);padding:8px 12px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;outline:none;}
+.l-trans-btn{background:rgba(255,255,255,0.08);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.15);padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;transition:all 0.2s;}
+.l-trans-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.l-progress{display:flex;align-items:center;gap:12px;}
+.l-bar-track{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.l-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.3s linear;}
+.l-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:36px;text-align:right;}
+.l-transcript-box{background:rgba(11,27,48,0.04);border:1px solid var(--cream-dark);border-radius:10px;padding:18px 22px;margin-bottom:18px;}
+.l-transcript-text{font-size:13px;color:var(--navy);line-height:1.8;}
+/* ─ Case Studies ─ */
+.cs-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+.cs-sub{font-size:12.5px;color:var(--text-mid);margin-bottom:16px;}
+.cs-section{margin-bottom:20px;padding:18px 20px;background:var(--cream);border-radius:10px;border-left:3px solid var(--gold-light);}
+.cs-sh{font-size:13.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.cs-p{font-size:14px;color:var(--navy);line-height:1.78;}
+/* ─ Writing ─ */
+.writing-area{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;margin-top:14px;}
+.writing-area:focus{border-color:var(--gold-light);background:white;}
+.writing-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.w-count{font-size:12px;color:var(--text-mid);}
+.btn-primary{background:var(--gold);color:var(--navy);border:none;padding:12px 26px;border-radius:50px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-primary:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--red-accent);color:var(--red-accent);}
+/* ─ AI Feedback ─ */
+.fb-box{background:#0e1d2f;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-box.fb-warn{background:#2d1010;border-color:rgba(214,48,49,0.3);color:#f8a5a5;font-size:13.5px;line-height:1.7;}
+.fb-box.fb-loading{color:var(--text-light);font-size:13.5px;}
+.fb-score-row{display:flex;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap;}
+.fb-score{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;line-height:1;}
+.fb-summary{font-size:13.5px;color:var(--text-light);line-height:1.72;flex:1;}
+.fb-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.fb-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;}
+.fb-good .fb-col-title{color:var(--green-accent);}
+.fb-improve .fb-col-title{color:var(--gold-bright);}
+.fb-item{font-size:13px;color:var(--text-light);padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid rgba(255,255,255,0.15);line-height:1.6;}
+.fb-example{background:rgba(255,255,255,0.05);border-radius:9px;padding:12px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;}
+.fb-ex-label{font-weight:600;color:var(--gold-bright);font-style:normal;}
+/* ─ Grammar Review ─ */
+.gr-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.gr-icon{font-size:28px;}
+.gr-body{display:flex;flex-direction:column;gap:14px;}
+.gr-item{background:var(--cream);border-radius:10px;padding:16px 18px;border-left:3px solid var(--gold-light);}
+.gr-label{font-size:12.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.gr-examples{display:flex;flex-direction:column;gap:6px;}
+.gr-ex{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--navy);background:white;padding:8px 14px;border-radius:7px;border:1px solid var(--cream-dark);}
+.gr-note{font-size:12.5px;color:var(--text-mid);margin-top:10px;padding:8px 12px;background:rgba(224,155,0,0.07);border-radius:7px;border-left:2px solid var(--gold-light);}
+/* ─ Assessment result ─ */
+.assess-result{border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.assess-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.assess-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.assess-score{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;line-height:1;}
+.assess-label{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:6px;}
+.assess-detail{font-size:13.5px;opacity:0.88;}
+
+/* ─── Writing section ──────────────────────────────── */
+.w-task-header{margin-bottom:4px;}
+.w-task-pill{display:inline-block;background:rgba(224,155,0,0.15);color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 13px;border-radius:20px;border:1px solid rgba(224,155,0,0.3);margin-bottom:8px;}
+.w-prompt-box{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:13px;padding:22px 26px;margin:18px 0;border-left:4px solid var(--gold-light);}
+.w-prompt-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-bright);margin-bottom:10px;}
+.w-prompt-text{font-size:13.5px;color:var(--text-light);line-height:1.82;}
+.w-target{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;color:var(--gold-light);}
+.w-meta-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:8px 0 16px;}
+.w-counter{font-size:12.5px;color:var(--text-mid);font-family:'DM Mono',monospace;}
+
+/* ─── AI Feedback result box ────────────────────────── */
+.fb-result-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-result-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-result-label{font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-result-score{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-align:right;}
+.fb-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-check{display:inline-block;font-size:12.5px;font-weight:600;color:var(--green-accent);background:rgba(0,166,81,0.1);padding:5px 12px;border-radius:20px;}
+.fb-check.fb-check-warn{color:#f39c12;background:rgba(243,156,18,0.1);}
+.fb-suggest-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.fb-suggest-list{margin:0 0 14px 18px;padding:0;}
+.fb-suggest-list li{font-size:13px;color:var(--text-light);line-height:1.68;margin-bottom:4px;}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;margin-bottom:14px;}
+.fb-corrected-label{font-style:normal;font-weight:700;color:var(--gold-bright);}
+.fb-footer-stats{font-size:11.5px;color:rgba(155,179,204,0.5);border-top:1px solid rgba(255,255,255,0.07);padding-top:10px;margin-top:8px;font-family:'DM Mono',monospace;}
+.fb-warn-box{background:#2d1010;border:1px solid rgba(214,48,49,0.3);border-radius:10px;padding:14px 18px;color:#f8a5a5;font-size:13.5px;margin-top:14px;}
+.fb-loading-box{background:#111e2f;border-radius:10px;padding:18px 22px;color:var(--text-light);font-size:13.5px;margin-top:14px;display:flex;align-items:center;gap:10px;}
+
+/* ─── Gap Fill — Image 1 design ───────────────────────────────── */
+.gf-card{padding:32px 36px;}
+.gf-instr{font-size:13.5px;color:var(--text-mid);margin-bottom:22px;line-height:1.6;}
+.gf-bank-box{background:var(--cream);border-radius:14px;padding:20px 22px;margin-bottom:28px;border:1px solid var(--cream-dark);}
+.gf-bank-pills{display:flex;flex-wrap:wrap;gap:10px;}
+.gf-pill{background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:50px;cursor:default;transition:opacity 0.25s,transform 0.2s;}
+.gf-pill.gf-pill-used{opacity:0.28;text-decoration:line-through;}
+.gf-sentences{display:flex;flex-direction:column;gap:26px;}
+.gf-row{}
+.gf-sentence-text{font-size:14.5px;color:var(--navy);line-height:1.9;}
+.gf-blank-wrap{display:inline-block;position:relative;vertical-align:bottom;}
+.gf-underline-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14.5px;color:var(--navy);padding:1px 8px 2px;width:170px;outline:none;text-align:center;transition:border-color 0.2s;}
+.gf-underline-input::placeholder{color:rgba(90,120,153,0.5);font-size:13px;}
+.gf-underline-input.gf-correct{border-color:var(--green-accent);color:var(--green-accent);font-weight:600;}
+.gf-underline-input.gf-incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.gf-underline-input:disabled{background:transparent;}
+.gf-row-fb{margin-top:4px;min-height:18px;padding-left:4px;}
+.gf-fb-ok{font-size:12px;font-weight:700;color:var(--green-accent);}
+.gf-fb-err{font-size:12px;font-weight:600;color:var(--red-accent);}
+
+/* ─── True/False — Image 2 design ─────────────────────────────── */
+.tf-card{padding:32px 36px;}
+.tf-instr{font-size:13.5px;color:var(--gold);margin-bottom:22px;font-weight:500;}
+.tf-list{display:flex;flex-direction:column;gap:12px;}
+.tf-item{background:var(--cream);border-radius:12px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;transition:box-shadow 0.2s;}
+.tf-item[data-done]{opacity:0.92;}
+.tf-item-stmt{font-size:14px;color:var(--navy);line-height:1.58;flex:1;min-width:200px;}
+.tf-item-btns{display:flex;gap:10px;flex-shrink:0;}
+.tf-item-btn{padding:10px 26px;border-radius:9px;border:2px solid var(--cream-dark);font-size:13.5px;font-weight:700;cursor:pointer;background:white;font-family:'DM Sans',sans-serif;color:var(--navy);transition:all 0.18s;-webkit-tap-highlight-color:transparent;}
+.tf-item-btn:hover:not(:disabled){border-color:var(--gold-light);background:#fef8e0;}
+.tf-item-btn.tf-btn-correct{background:var(--green-accent);border-color:var(--green-accent);color:white;}
+.tf-item-btn.tf-btn-wrong{background:var(--red-accent);border-color:var(--red-accent);color:white;}
+.tf-item-btn:disabled{cursor:default;}
+.tf-item-fb{width:100%;margin-top:2px;min-height:18px;font-size:12.5px;}
+.tf-fb-ok{color:var(--green-accent);font-weight:700;}
+.tf-fb-err{color:var(--red-accent);font-weight:600;}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{display:inline-block;animation:spin 1s linear infinite;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}#mob-btn{display:flex;align-items:center;justify-content:center;}
+  #main{margin-left:0;}.hero{padding:60px 22px 40px;}.content{padding:28px 18px;}
+  .prog-wrap{padding:12px 22px;}.outcomes-grid,.speaking-grid,.wb-grid{grid-template-columns:1fr;}.hero-stats{gap:22px;}
+}
+@media(max-width:600px){
+  .hero{padding:56px 16px 36px;}.content{padding:22px 14px;}.card{padding:22px 18px;}
+  .listen-card{padding:20px 16px;}.reading-box{padding:18px 16px;}.player-row{flex-wrap:wrap;gap:10px;}.time-disp{min-width:auto;}
+}
+
+
+
+
+
+/* ─── Auto-Correction Report UI (Module 6+) ─────────────────────── */
+.fb-report-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-report-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:12px;}
+.fb-report-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-report-icon{font-size:16px;}
+.fb-report-score{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
+.fb-quick-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-cats{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.fb-cat-row{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 16px;}
+.fb-cat-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.fb-cat-icon{font-size:15px;}
+.fb-cat-label{font-size:13px;color:var(--white);}
+.fb-cat-good{font-size:11px;font-weight:700;color:#00c46a;background:rgba(0,196,106,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(0,196,106,0.3);}
+.fb-cat-sat{font-size:11px;font-weight:700;color:#f5b800;background:rgba(245,184,0,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(245,184,0,0.3);}
+.fb-cat-att{font-size:11px;font-weight:700;color:#e05c5c;background:rgba(224,92,92,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(224,92,92,0.3);}
+.fb-cat-comment{font-size:13px;color:var(--text-light);line-height:1.7;}
+.fb-corrected-block{background:rgba(255,255,255,0.04);border-left:3px solid var(--gold-light);border-radius:0 8px 8px 0;padding:11px 16px;font-size:13px;color:var(--text-light);line-height:1.72;margin-bottom:12px;font-style:italic;}
+.fb-corrected-tag{font-style:normal;font-weight:700;color:var(--gold-bright);display:block;margin-bottom:4px;}
+.fb-overall{font-size:13px;color:#00c46a;margin-bottom:10px;font-weight:500;}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ─── Gap-Fill Redesign (auto-graded) ───────────────────────────────────── */
+.gf-bank-label{font-size:11px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.gf-num{color:var(--gold-bright);font-weight:700;min-width:22px;display:inline-block;}
+.gf-btn-bar{display:flex;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.gf-check-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;font-size:13px;padding:10px 22px;border:none;border-radius:8px;cursor:pointer;transition:opacity .15s;}
+.gf-check-btn:hover{opacity:.88;}
+.gf-check-btn:disabled{cursor:not-allowed;opacity:.5;}
+.gf-reset-btn{background:rgba(255,255,255,0.07);color:var(--text-light);font-size:13px;font-weight:600;padding:10px 18px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;cursor:pointer;transition:background .15s;}
+.gf-reset-btn:hover{background:rgba(255,255,255,0.12);}
+.gf-score-display{font-size:15px;margin-left:4px;}
+.gf-pill-highlight{outline:2px solid var(--gold-bright) !important;opacity:1 !important;}
+.gf-fb-err strong{color:var(--gold-bright);}
+</style>
+</head>
+<body>
+<button id="mob-btn" onclick="openSidebar()">&#9776;</button>
+<div id="overlay" onclick="closeSidebar()"></div>
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h1>IT &amp; Digital Professions English</h1>
+    <div class="sub">Professional Course Series</div>
+    <span class="level-badge">B1&#8211;B2 Level</span>
+  </div>
+  <div class="sidebar-section-label">Module 4</div>
+  <div class="nav-item active" onclick="goTo('sec-overview')"><div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-speaking')"><div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-wordbank')"><div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-reading')"><div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-vocab')"><div class="nav-left"><span class="nav-icon">🔤</span><span class="nav-label">Vocabulary</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-grammar')"><div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Grammar</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-gramreview')"><div class="nav-left"><span class="nav-icon">📋</span><span class="nav-label">Grammar Review</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-writing')"><div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div><span class="nav-badge">AI</span></div>
+  <div class="nav-item" onclick="goTo('sec-listening')"><div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div><span class="nav-badge">4</span></div>
+  <div class="nav-item" onclick="goTo('sec-cases')"><div class="nav-left"><span class="nav-icon">💡</span><span class="nav-label">Case Studies</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-assessment')"><div class="nav-left"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></div><span class="nav-badge">20</span></div>
+</nav>
+<main id="main">
+<section id="sec-overview" class="section active">
+  <div class="hero"><div class="module-pill">📊 &nbsp; Module 4 &nbsp;·&nbsp; IT &amp; Digital Professions English</div><h2>IT Project<br><span class="accent">Management Language</span></h2><p class="hero-desc">Master the language of IT project management — from scope, milestones, and risk registers to agile ceremonies, stakeholder communication, and project status reporting. Build the vocabulary and professional fluency to manage, participate in, and communicate about IT projects with confidence.</p><div class="hero-stats"><div class="stat"><span class="stat-n">21</span><span class="stat-l">Key Terms</span></div><div class="stat"><span class="stat-n">11</span><span class="stat-l">Sections</span></div><div class="stat"><span class="stat-n">4</span><span class="stat-l">Audio Activities</span></div><div class="stat"><span class="stat-n">B1–B2</span><span class="stat-l">CEFR Level</span></div></div></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" id="progFill"></div></div><span class="prog-pct" id="progPct">0%</span></div>
+  <div class="content" id="overviewContent"></div>
+</section>
+<section id="sec-speaking" class="section">
+  <div class="hero"><div class="module-pill">🎙️ &nbsp; Speaking Practice</div><h2>Discussion <span class="accent">Questions</span></h2><p class="hero-desc">Use these questions to practise speaking about IT project management, delivery methodologies, and stakeholder communication.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:9%"></div></div><span class="prog-pct">9%</span></div>
+  <div class="content" id="speakingContent"></div>
+</section>
+<section id="sec-wordbank" class="section">
+  <div class="hero"><div class="module-pill">📚 &nbsp; Word Bank</div><h2>Project Management <span class="accent">Vocabulary</span></h2><p class="hero-desc">Study these 21 essential IT project management terms covering planning, agile frameworks, risk, and delivery. Each entry includes a precise professional definition.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:18%"></div></div><span class="prog-pct">18%</span></div>
+  <div class="content" id="wordBankContent"></div>
+</section>
+<section id="sec-reading" class="section">
+  <div class="hero"><div class="module-pill">📖 &nbsp; Reading</div><h2>Texts &amp; <span class="accent">Comprehension</span></h2><p class="hero-desc">Read two professional texts on agile vs waterfall methodology selection and IT project risk management, then answer comprehension questions.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:27%"></div></div><span class="prog-pct">27%</span></div>
+  <div class="content" id="readingContent"></div>
+</section>
+<section id="sec-vocab" class="section">
+  <div class="hero"><div class="module-pill">🔤 &nbsp; Vocabulary Exercises</div><h2>Practice <span class="accent">Exercises</span></h2><p class="hero-desc">Three exercise types to master IT project management vocabulary: multiple choice, gap-fill, and true/false.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:36%"></div></div><span class="prog-pct">36%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocab(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocab(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocab(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vex-0"></div>
+    <div id="vex-1" style="display:none"></div>
+    <div id="vex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-grammar" class="section">
+  <div class="hero"><div class="module-pill">✏️ &nbsp; Grammar</div><h2>Grammar <span class="accent">Exercises</span></h2><p class="hero-desc">Practise future forms in project planning, formal meeting language for project reviews, and concession and condition in project status communication.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:45%"></div></div><span class="prog-pct">45%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGram(0,this)">Future Forms</div>
+      <div class="ex-tab" onclick="showGram(1,this)">Meeting Language</div>
+      <div class="ex-tab" onclick="showGram(2,this)">Concession &amp; Condition</div>
+    </div>
+    <div id="gex-0"></div>
+    <div id="gex-1" style="display:none"></div>
+    <div id="gex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-gramreview" class="section">
+  <div class="hero"><div class="module-pill">📋 &nbsp; Grammar Review</div><h2>Reference <span class="accent">Guide</span></h2><p class="hero-desc">Three detailed grammar reference boxes covering future forms, formal meeting language, and concession and condition in project status reports.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:54%"></div></div><span class="prog-pct">54%</span></div>
+  <div class="content" id="gramRevContent"></div>
+</section>
+<section id="sec-writing" class="section">
+  <div class="hero"><div class="module-pill">✍️ &nbsp; Writing + AI Feedback</div><h2>Writing <span class="accent">Activities</span></h2><p class="hero-desc">Complete two professional IT project management writing tasks — a weekly status report and a risk register entry. Receive detailed AI feedback across Grammar, Vocabulary, Tone, Structure, and Fluency.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:63%"></div></div><span class="prog-pct">63%</span></div>
+  <div class="content" id="writingContent"></div>
+</section>
+<section id="sec-listening" class="section">
+  <div class="hero"><div class="module-pill">🎧 &nbsp; Listening</div><h2>Audio <span class="accent">Activities</span></h2><p class="hero-desc">Listen to four recordings — a project kick-off meeting, a sprint review, a risk escalation conversation, and a sprint retrospective — then answer comprehension questions.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:72%"></div></div><span class="prog-pct">72%</span></div>
+  <div class="content" id="listeningContent"></div>
+</section>
+<section id="sec-cases" class="section">
+  <div class="hero"><div class="module-pill">💡 &nbsp; Case Studies</div><h2>Real-World <span class="accent">Cases</span></h2><p class="hero-desc">Explore the NHS National Programme for IT — the largest IT project failure in history — and the challenges of scaling agile across large organisations.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:81%"></div></div><span class="prog-pct">81%</span></div>
+  <div class="content" id="casesContent"></div>
+</section>
+<section id="sec-assessment" class="section">
+  <div class="hero"><div class="module-pill">🏆 &nbsp; Final Assessment</div><h2>Module <span class="accent">Test</span></h2><p class="hero-desc">20 questions covering all module content. Pass mark: 70% (14/20). Two attempts allowed.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div><span class="prog-pct">90%</span></div>
+  <div class="content">
+    <div class="card">
+      <div class="card-title">🏆 Final Assessment</div><div class="card-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:22px;">Answer all 20 questions. You need 70% (14 correct) to pass. Attempts used: <strong id="att-disp">0 / 2</strong></p>
+      <div id="assessContainer"></div>
+      <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <button class="ass-btn" id="ass-sub" onclick="submitAss()">Submit Assessment</button>
+        <button class="retry-btn" id="ass-retry" onclick="resetAss()">&#8635; Try Again</button>
+      </div>
+      <div class="final-result" id="final-res"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<script>
+/* ═══════════════ DATA — IT Module 4: IT Project Management Language ═══════════════ */
+const outcomes=[
+  "Identify and accurately use 21 essential IT project management terms spanning planning, tracking, risk, and delivery",
+  "Read and analyse professional texts on agile project frameworks and risk management in IT projects",
+  "Use future forms, concession structures, and formal meeting language precisely in project management contexts",
+  "Draft a project status report and a risk register entry with professional precision",
+  "Listen to project kick-off meetings, sprint reviews, risk escalations, and stakeholder briefings",
+  "Discuss project planning, delivery approaches, stakeholder communication, and project failure with professional fluency"
+];
+const speakingQs=[
+  "What is project scope, and why is scope creep one of the most common causes of IT project failure?",
+  "What is the difference between a milestone and a deliverable in project management?",
+  "Who are the stakeholders in a typical IT project, and how do their interests sometimes conflict?",
+  "What is a critical path in project planning, and why does it matter for scheduling?",
+  "What is a Gantt chart, and when is it useful — and when is it not?",
+  "What is the difference between waterfall and agile project management? When would you choose each?",
+  "What is a kanban board, and how does it differ from a scrum board?",
+  "What is a burndown chart, and what does it tell you about sprint progress?",
+  "What is a project risk register, and what should each entry contain?",
+  "What is a change request, and why must changes be formally managed in IT projects?",
+  "What is resource allocation, and what challenges does it create in multi-project organisations?",
+  "What is a project charter, and what purpose does it serve before a project begins?",
+  "What are acceptance criteria, and who should define them?",
+  "What is a sprint retrospective, and how does it differ from a sprint review?",
+  "What is velocity in agile, and how should it be used and misused in planning?",
+  "What does escalation mean in a project management context, and when should a PM escalate?",
+  "What is a dependency in project scheduling, and what types of dependency exist?",
+  "How do you communicate bad news to a project stakeholder?",
+  "What is a project post-mortem, and what distinguishes a good one from a blame session?",
+  "If a project is running two weeks behind schedule, what options does a project manager have?",
+  "What is the iron triangle in project management, and what does it say about scope, time, and cost?"
+];
+const wordBank=[
+  {emoji:"📐",term:"Project Scope",def:"The boundaries of a project — what is included and what is explicitly excluded. A well-defined scope statement prevents scope creep (the gradual, uncontrolled expansion of project requirements) and provides the basis for estimating cost, time, and resources. Changes to scope must go through a formal change request process."},
+  {emoji:"🏁",term:"Milestone",def:"A significant checkpoint in a project timeline marking the completion of a major phase or deliverable. Milestones have no duration — they are points in time, not periods of work. Examples: 'design approved', 'beta launched', 'user acceptance testing complete'."},
+  {emoji:"📦",term:"Deliverable",def:"A tangible output produced by a project — a document, software component, system, or service handed over to the client or stakeholder. Deliverables should be clearly defined, measurable, and linked to acceptance criteria."},
+  {emoji:"👥",term:"Stakeholder",def:"Any individual, group, or organisation that has an interest in the project or is affected by its outcome. Stakeholders may be internal (project sponsor, development team) or external (clients, regulators, end users). Stakeholder management is a core project management discipline."},
+  {emoji:"⚠️",term:"Risk Register",def:"A document that records identified project risks, their likelihood and impact, the mitigation strategies in place, and the risk owner responsible for monitoring and managing each risk. A living document that must be reviewed and updated regularly throughout the project lifecycle."},
+  {emoji:"🎯",term:"Critical Path",def:"The longest sequence of dependent tasks in a project schedule — determining the earliest possible completion date. Any delay to a task on the critical path directly delays the overall project. Tasks not on the critical path have float — they can be delayed without affecting the end date."},
+  {emoji:"📊",term:"Gantt Chart",def:"A horizontal bar chart visualising a project schedule — showing tasks, their durations, start and end dates, and dependencies. Gantt charts are widely used in waterfall project management; in agile, sprint backlogs and kanban boards are often preferred."},
+  {emoji:"🌊",term:"Waterfall",def:"A sequential project management methodology in which each phase must be finished before the next starts — requirements before design, design before development, development before testing. Suitable for projects with well-understood, stable requirements."},
+  {emoji:"🏃",term:"Agile",def:"An iterative, incremental approach delivering value in short cycles (sprints), adapting to change, and emphasising collaboration. The Agile Manifesto (2001) defines the core values. Scrum and Kanban are the most common agile frameworks."},
+  {emoji:"🗂️",term:"Kanban",def:"An agile framework visualising workflow on a board with columns representing stages (Backlog, In Progress, In Review, Done). Kanban focuses on continuous flow and limiting work in progress (WIP) to reduce bottlenecks and improve throughput."},
+  {emoji:"📉",term:"Burndown Chart",def:"A graph showing remaining work (story points or hours) against time over a sprint. A line tracking above ideal indicates the team is behind; below means ahead. Used daily in scrum to track sprint progress."},
+  {emoji:"⚡",term:"Velocity",def:"The amount of work a scrum team completes per sprint, measured in story points. Used to forecast how much work can be delivered in future sprints. Velocity should be observed, not imposed — setting artificial velocity targets is a common anti-pattern."},
+  {emoji:"📋",term:"Backlog",def:"An ordered list of features, user stories, bug fixes, and tasks to be completed. The product backlog is maintained by the product owner. The sprint backlog is the subset selected for the current sprint. Items at the top should be detailed and estimated."},
+  {emoji:"🔁",term:"Retrospective",def:"A structured meeting at the end of each sprint in which the team reflects on what went well, what did not, and what they will change. Distinct from the sprint review, which focuses on the product rather than the process."},
+  {emoji:"🔗",term:"Dependency",def:"A relationship between tasks where one task cannot start or finish until another has started or finished. Dependencies must be identified and managed carefully — a delay in one dependent task can cascade through the schedule."},
+  {emoji:"🧑‍💼",term:"Resource Allocation",def:"The process of assigning people, budget, tools, and time to project tasks. Effective allocation balances workload, avoids over-allocation, and ensures the right skills are available when needed. Resource contention between projects is a common cause of delays."},
+  {emoji:"📝",term:"Change Request",def:"A formal document proposing a modification to the agreed project scope, schedule, budget, or technical approach. Change requests must be reviewed, assessed for impact, approved, and documented before implementation. Uncontrolled changes — scope creep — are a leading cause of project failure."},
+  {emoji:"📜",term:"Project Charter",def:"A document formally authorising a project and defining its objectives, key stakeholders, high-level scope, constraints, and the project manager's authority. Created at project initiation and approved by the project sponsor before detailed planning begins."},
+  {emoji:"✅",term:"Acceptance Criteria",def:"The conditions that a deliverable or user story must satisfy for the client, product owner, or stakeholder to formally accept it as complete. Acceptance criteria should be specific, measurable, and agreed before development begins."},
+  {emoji:"🚨",term:"Escalation",def:"The process of referring a project issue, risk, or decision upward in the management hierarchy when it cannot be resolved at the current level. A clear escalation path should be defined in the project charter. Too early wastes senior time; too late allows problems to compound."},
+  {emoji:"📈",term:"Burnup Chart",def:"A graph showing work completed against total project scope over time. Unlike a burndown chart (which shows remaining work), a burnup chart makes scope changes visible — if new work is added, the total line rises. Useful for tracking progress against a changing scope."}
+];
+const readingTexts=[
+  {title:"Text 1: Agile vs Waterfall — Choosing the Right Approach",
+   subtitle:"How project characteristics determine which methodology delivers the best outcome",
+   paragraphs:[
+    "The debate between agile and waterfall project management has defined IT project discourse for two decades — yet framing it as a choice between 'modern' and 'old-fashioned' misrepresents the reality. Both approaches have genuine strengths, and the right choice depends on the nature of the project, the stability of its requirements, the regulatory environment, and the relationship between the team and its stakeholders.",
+    "Waterfall is most appropriate when requirements are well understood and unlikely to change significantly. This applies in particular to heavily regulated environments — safety-critical systems, financial infrastructure, and healthcare IT — where comprehensive documentation and formal sign-off at each stage are legal or contractual requirements. It also applies where projects involve integrating with legacy systems with fixed interfaces, and where contractual obligations require fixed-price, fixed-scope delivery. Waterfall provides clear accountability at each stage and straightforward progress tracking. Its principal weakness is inflexibility: when requirements change — and in IT projects, they almost always do — waterfall teams must absorb changes through formal change requests (adding time and cost) or deliver software that no longer meets actual business needs.",
+    "Agile is most appropriate where requirements are expected to evolve, where early delivery of working software is valuable, and where the project team can maintain close collaboration with stakeholders. This applies most naturally to product development and to internal IT projects where the client organisation is available for regular review and feedback. The iterative nature of agile allows teams to learn from early deliveries and adjust course before significant investment has been made in the wrong direction. Agile's principal weakness is that it can be challenging in environments with strict contractual or regulatory requirements, and it demands a high level of stakeholder engagement that is not always available or sustainable."
+   ],
+   questions:[
+    {q:"What does the text say about framing the agile vs waterfall debate as modern vs old-fashioned?",opts:["It is accurate and useful","It misrepresents reality — both have genuine strengths and the right choice depends on the project","It is the view of most senior project managers","It only applies to large enterprise projects"],ans:1},
+    {q:"Where is waterfall most appropriate?",opts:["Fast-moving startups with changing requirements","Regulated environments, fixed-interface integrations, and contractual fixed-price deliveries","Internal IT projects with close stakeholder collaboration","Product development with evolving requirements"],ans:2},
+    {q:"What is waterfall's principal weakness?",opts:["Too much documentation","Too many team members required","Inflexibility — requirements changes require change requests or result in outdated software","Too expensive for most organisations"],ans:2},
+    {q:"Where is agile most appropriate?",opts:["Heavily regulated environments with legal documentation requirements","Fixed-price contractual environments","Where requirements are expected to evolve and early delivery of working software is valuable","Where the team has no direct access to stakeholders"],ans:2},
+    {q:"What does the iterative nature of agile allow?",opts:["Avoiding documentation entirely","Delivering the entire project in one release","Teams to learn from early deliveries and adjust before significant investment in the wrong direction","Bypassing formal change request processes"],ans:2},
+    {q:"What is agile's principal weakness?",opts:["It cannot be used with distributed teams","It produces lower quality software","Challenging in contractual or regulatory environments and demands high stakeholder engagement","It does not support automated testing"],ans:2},
+    {q:"What is described as a mark of a mature project management professional?",opts:["Always choosing agile","Always choosing waterfall for regulated projects","Understanding when each is genuinely appropriate rather than adopting methodology for ideological reasons","Having a PMP certification"],ans:2},
+    {q:"What happens in waterfall when requirements change?",opts:["The team switches to agile","Teams absorb changes via change requests or deliver software no longer meeting actual needs","The project is cancelled","Changes are automatically incorporated"],ans:1},
+    {q:"What is essential for agile to work effectively?",opts:["A certified scrum master on every team","Close ongoing collaboration with stakeholders and high stakeholder engagement","A fixed-price contract","A dedicated QA team"],ans:1},
+    {q:"To what does agile apply most naturally?",opts:["Safety-critical infrastructure projects","Legacy system integration projects","Product development and internal IT projects with available stakeholders","Fixed-price government contracts"],ans:2}
+   ]
+  },
+  {title:"Text 2: IT Project Risk Management",
+   subtitle:"Why risk management is not pessimism — it is professionalism",
+   paragraphs:[
+    "Risk management is one of the most underinvested disciplines in IT project management. Teams under delivery pressure tend to treat risk registers as compliance exercises — filling them in at the start of a project and then ignoring them until something goes wrong. This is precisely the wrong approach. A risk register is a living document: it should be reviewed at every significant project milestone, updated as new risks emerge, and used actively by the project manager to drive conversations with stakeholders and escalation decisions.",
+    "Effective risk assessment requires two dimensions: likelihood (how probable is it that this risk will materialise?) and impact (how severe would the consequences be?). Risks are typically scored on a three- or five-point scale for each dimension, and the scores are multiplied to produce a risk rating. The four standard risk responses are: avoid (change the plan to eliminate the risk), mitigate (reduce the likelihood or impact), transfer (shift the risk to a third party through insurance or contractual indemnities), and accept (acknowledge and proceed, typically with a contingency plan).",
+    "In IT projects specifically, several risk categories recur frequently. Technical risks include integration failures and dependencies on external systems that prove unreliable. Resource risks include key person dependency — the project depending on one or two individuals who may become unavailable — and skill gaps. Scope risks include unclear or changing requirements and scope creep accumulation. Schedule risks include underestimated task durations, dependency delays, and unrealistic deadlines. Governance risks include inadequate stakeholder engagement, unclear decision-making authority, and insufficient executive sponsorship."
+   ],
+   questions:[
+    {q:"What do teams under delivery pressure tend to do with risk registers?",opts:["Update them daily","Treat them as compliance exercises — fill in at the start then ignore","Share widely with all stakeholders","Delete them at project completion"],ans:1},
+    {q:"What is the purpose of risk management?",opts:["To predict every possible failure","To satisfy regulatory requirements","To ensure the team thinks systematically about what could go wrong and has responses ready","To avoid all risk and guarantee success"],ans:2},
+    {q:"What two dimensions are used in risk assessment?",opts:["Cost and time","Likelihood and impact","Severity and duration","Probability and proximity"],ans:1},
+    {q:"What are the four standard risk responses?",opts:["Plan, monitor, escalate, and close","Identify, assess, mitigate, and report","Avoid, mitigate, transfer, and accept","Prevent, reduce, share, and ignore"],ans:2},
+    {q:"What does 'transfer' as a risk response mean?",opts:["Moving the project to a different team","Shifting the risk to a third party through insurance or contractual indemnities","Transferring budget to cover the risk","Moving the risk to the next sprint"],ans:1},
+    {q:"What is 'key person dependency' as a resource risk?",opts:["Over-reliance on expensive contractors","The project depending on one or two individuals who may become unavailable","Too many people with the same skills","Assigning resources from multiple projects to one team"],ans:1},
+    {q:"How many risk categories are mentioned in the text?",opts:["Three","Four — technical, resource, scope, schedule","Five — technical, resource, scope, schedule, governance","Six"],ans:2},
+    {q:"What is described as a governance risk?",opts:["Integration failures","Scope creep and unclear requirements","Inadequate stakeholder engagement, unclear decision-making, insufficient sponsorship","Key person dependency"],ans:2},
+    {q:"What should happen to a risk register at every significant milestone?",opts:["It should be archived and a new one created","It should be reviewed, updated with new risks, and used to drive conversations","It should be sent to the client for approval","It should be deleted if no risks have materialised"],ans:1},
+    {q:"When does a high-likelihood, high-impact risk require attention?",opts:["Only when it materialises","Only in the closure stage","Immediately — it requires robust mitigation strategies","Only after the project sponsor reviews it"],ans:2}
+   ]
+  }
+];
+const vocabMCQ=[
+  {q:"What is scope creep in IT project management?",opts:["A formal process for adding new requirements","The gradual uncontrolled expansion of project requirements beyond original scope","A technique for reducing scope when over budget","A type of agile sprint planning ceremony"],ans:1},
+  {q:"What is the critical path in a project schedule?",opts:["The most expensive sequence of tasks","The longest sequence of dependent tasks determining the earliest completion date","The path data takes through the system","The sequence of approvals needed before a project starts"],ans:1},
+  {q:"What does a burndown chart show?",opts:["Total project expenditure","Completed work and total scope changes","Remaining work against time during a sprint","Team velocity against industry benchmarks"],ans:2},
+  {q:"What is a project charter?",opts:["A legal contract between client and vendor","A document formally authorising a project and defining its objectives, scope, and PM authority","A list of all milestones and deliverables","A technical specification for the system being built"],ans:1},
+  {q:"What is kanban used for?",opts:["Tracking financial expenditure","Visualising workflow with columns, limiting WIP, and improving throughput","Documenting all project risks","Tracking sprint velocity over time"],ans:1},
+  {q:"What is velocity in agile?",opts:["The speed of the CI/CD pipeline","The rate of budget consumption","The amount of work a team completes per sprint, used to forecast future delivery","The time to complete user acceptance testing"],ans:2},
+  {q:"What is a change request?",opts:["A request to change the project manager","A formal document proposing a modification to agreed scope, schedule, or budget","An informal stakeholder request for a small feature","A sprint planning document"],ans:1},
+  {q:"What is the purpose of acceptance criteria?",opts:["To define the technical architecture","The conditions a deliverable must satisfy for the stakeholder to formally accept it as complete","To identify project risks before development","To document non-functional requirements"],ans:1},
+  {q:"What does escalation mean in project management?",opts:["Increasing the project budget","Expanding project scope","Referring an issue or decision upward when it cannot be resolved at the current level","Upgrading the technical infrastructure"],ans:2},
+  {q:"What is a retrospective?",opts:["A meeting to review the product built","A post-project analysis of what went wrong","A structured end-of-sprint meeting to reflect on and improve the team's process","A risk review meeting with the sponsor"],ans:2}
+];
+const vocabGapFill=[
+  {before:"The project manager convened an emergency meeting after the third",blank:"change request",after:"in two weeks had extended the delivery date by six weeks — the team needed to either push back on the new requirements or formally revise the project plan and budget."},
+  {before:"The",blank:"critical path",after:"analysis revealed that the database migration task was the most time-sensitive activity — a delay of even two days would push the entire release date back."},
+  {before:"By sprint eight, the team's",blank:"velocity",after:"had stabilised at 34 story points per sprint, allowing the product owner to forecast that the remaining 102 points of backlog would require approximately three more sprints."},
+  {before:"The project",blank:"risk register",after:"identified a key-person dependency — the lead architect was the only team member who understood the legacy integration layer, and she was due to go on maternity leave in month four."},
+  {before:"The client accepted the first module after confirming that all ten",blank:"acceptance criteria",after:"had been met — including the sub-second response time requirement and the accessibility standard — and signed the formal acceptance document."},
+  {before:"After three months of unmanaged",blank:"project scope",after:"expansion, the project originally scoped for four developers over six months had grown to require eight developers and a twelve-month timeline, with no corresponding budget increase."},
+  {before:"The",blank:"burndown chart",after:"showed the team was consistently finishing sprints with 15-20% of planned work incomplete, suggesting sprint estimates were optimistic and needed recalibration."},
+  {before:"The",blank:"project charter",after:"was approved by the CTO in week one, giving the project manager the authority to allocate team members, engage vendors, and make decisions up to a £50,000 budget threshold without further board approval."},
+  {before:"The programme manager had to escalate the infrastructure procurement delay to the steering committee — the three-week slip would affect four dependent workstreams and could not be resolved within the project team's",blank:"escalation",after:"authority."},
+  {before:"Using a",blank:"kanban",after:"board rather than sprint-based scrum allowed the support team to handle incoming tickets continuously without sprint planning overhead — work was pulled into In Progress as capacity became available."}
+];
+const vocabTF=[
+  {stmt:"A milestone has a duration — it represents a period of work rather than a point in time.",ans:false},
+  {stmt:"Velocity should be used to forecast future sprint capacity and not imposed as a performance target on the team.",ans:true},
+  {stmt:"A burnup chart makes scope changes visible by showing both completed work and total project scope over time.",ans:true},
+  {stmt:"The critical path includes all tasks in the project, not just the longest sequence of dependent tasks.",ans:false},
+  {stmt:"A change request must be reviewed, assessed for impact, and approved before implementation.",ans:true},
+  {stmt:"Agile is always the best choice for IT projects regardless of regulatory environment or stakeholder availability.",ans:false},
+  {stmt:"A risk register is a static document created at the start of a project and not updated during delivery.",ans:false},
+  {stmt:"Acceptance criteria should be defined before development begins and used as the basis for testing.",ans:true},
+  {stmt:"In kanban, limiting work in progress (WIP) is a key mechanism for reducing bottlenecks.",ans:true},
+  {stmt:"A retrospective focuses on reviewing the product built during the sprint, not the team's process.",ans:false}
+];
+const grammarEx=[
+  {title:"Exercise 1: Future Forms in Project Planning Language",
+   instr:"Select the correct future form. IT project management uses a precise range of future forms — each carrying different levels of certainty, obligation, and conditionality.",
+   qs:[
+    {q:"'The system _____ go live on 15 March, subject to successful UAT.'",opts:["is going to","will","is due to","shall"],ans:2},
+    {q:"'We _____ deliver the first sprint increment by end of this week — the team committed to it in planning.'",opts:["shall","will","are going to","might"],ans:2},
+    {q:"'If the infrastructure procurement is delayed, the deployment _____ need to be rescheduled.'",opts:["is going to","will","shall","might"],ans:3},
+    {q:"'The project board _____ meet on the first Monday of every month to review progress.'",opts:["will be","is due to","shall","might"],ans:2},
+    {q:"'The vendor confirmed this morning that the servers _____ arrive on Wednesday — the delivery is booked.'",opts:["will","might","shall","are going to"],ans:3},
+    {q:"'At this rate, we _____ miss the Q3 deadline — the burndown shows we are already ten points behind.'",opts:["are going to","shall","will","are due to"],ans:0},
+    {q:"'The project manager _____ present the risk register to the steering committee at next week's meeting.'",opts:["might","is going to","is due to","will"],ans:2},
+    {q:"'If the acceptance criteria are not signed off by Friday, the sprint _____ not be marked complete.'",opts:["is not going to","will not","shall not","might not"],ans:1},
+    {q:"'The stakeholders _____ receive a weekly progress report every Friday afternoon via email.'",opts:["might","are going to","shall","will"],ans:2},
+    {q:"'We _____ discuss the scope change request at tomorrow's project board — it is already on the agenda.'",opts:["might","shall","will","are going to"],ans:2}
+   ]
+  },
+  {title:"Exercise 2: Formal Meeting Language for Project Reviews",
+   instr:"Select the most appropriate formal expression for use in project status meetings, steering committees, and sprint reviews.",
+   qs:[
+    {q:"To open a project status meeting: 'I'd like to _____ by reviewing our progress against the plan since our last meeting.'",opts:["start","begin","kick off","open"],ans:1},
+    {q:"To introduce a risk item: 'I'd like to _____ the infrastructure dependency risk for the committee's attention.'",opts:["show","flag","mention","bring up"],ans:1},
+    {q:"To confirm a decision: 'Can we _____ that the team will proceed with Option B, subject to budget sign-off?'",opts:["confirm","agree","note","record"],ans:0},
+    {q:"To postpone a discussion: 'Given the time constraints, I suggest we _____ the vendor evaluation to the next session.'",opts:["move","defer","push","delay"],ans:1},
+    {q:"To ask for an action: 'Could I ask _____ to take an action to circulate the updated schedule by Wednesday?'",opts:["someone","you","the team","each person"],ans:0},
+    {q:"To summarise actions: 'Before we close, let me _____ the actions we have agreed today.'",opts:["repeat","recap","say again","restate"],ans:1},
+    {q:"To challenge professionally: 'I'd like to _____ the assumption that the API integration will be complete by end of month.'",opts:["question","doubt","challenge","push back on"],ans:0},
+    {q:"To present a document formally: 'I am _____ the risk register for the committee's review and approval.'",opts:["presenting","showing","giving","tabling"],ans:3},
+    {q:"To put something on record: 'I'd like to _____ my concern that the current timeline does not include sufficient time for QA.'",opts:["say","put on record","mention","write down"],ans:1},
+    {q:"To close an item and move on: 'I think we have covered that item. Let us _____ to the next point on the agenda.'",opts:["go","move","proceed","advance"],ans:1}
+   ]
+  },
+  {title:"Exercise 3: Concession and Condition in Project Status Communication",
+   instr:"Select the best connective or structure for project status reports and stakeholder communications.",
+   qs:[
+    {q:"'The development work is on track. _____, the testing phase is running three days behind schedule.'",opts:["Although","However","Because","Despite"],ans:1},
+    {q:"'_____ the infrastructure delay, the team has maintained overall progress by accelerating work on the application layer.'",opts:["Because of","Notwithstanding","Although","Therefore"],ans:1},
+    {q:"'The project will meet its end-of-quarter deadline _____ the vendor delivers the integration package by 14 March.'",opts:["although","despite","provided that","because"],ans:2},
+    {q:"'_____ the testing phase was delayed, all critical defects have been resolved and the release is cleared for deployment.'",opts:["Because","Although","Therefore","In order to"],ans:1},
+    {q:"'The team has delivered all sprint commitments _____ working under significant resource constraints this week.'",opts:["because","despite","although","provided that"],ans:1},
+    {q:"'We are confident the project will complete on time _____ no further scope changes are introduced in the final two sprints.'",opts:["although","because","provided that","despite"],ans:2},
+    {q:"'_____ the change request has been approved, the revised timeline will be shared with all stakeholders by end of week.'",opts:["Although","Despite","Once","Because"],ans:2},
+    {q:"'The budget remains within tolerance _____ the three-day extension to the infrastructure workstream.'",opts:["although","despite","because of","provided that"],ans:1},
+    {q:"'We recommend escalating this risk to the steering committee _____ it cannot be resolved within the project team's authority.'",opts:["although","provided that","as","despite"],ans:2},
+    {q:"'The retrospective identified three process improvements. _____ these are implemented, the team expects to recover the two-day schedule slip.'",opts:["Although","Despite","If","Because"],ans:2}
+   ]
+  }
+];
+const grammarReview=[
+  {title:"Grammar Point 1: Future Forms in Project Management",
+   pts:[
+    {h:"Will vs Is Going To",
+     b:"'Will' expresses a decision at the moment of speaking or a confident prediction. 'Is going to' expresses a plan already decided or prediction based on present evidence. In project communication, 'going to' signals something already planned and committed to.",
+     ex:["'The team is going to deliver the increment by Friday.' (already planned)",
+         "'If we don't resolve this blocker today, we will miss the sprint goal.' (prediction at moment of speaking)",
+         "'The burndown is showing we are going to run over — we need to replan.' (prediction from evidence)",
+         "'I will send you the updated project schedule after this call.' (decision at moment of speaking)"]
+    },
+    {h:"Is Due To — Scheduled Events and Deadlines",
+     b:"'Is due to' signals an officially scheduled event. It is the preferred form for communicating scheduled milestones, deliveries, and meetings in project management.",
+     ex:["'The UAT phase is due to begin on 12 April.'",
+         "'The vendor is due to deliver the integration package by end of month.'",
+         "'The project board is due to review the risk register at next week's meeting.'",
+         "'The first sprint increment is due to be demonstrated to stakeholders on Friday.'"]
+    },
+    {h:"Shall — Formal Obligation in Project Documents",
+     b:"'Shall' expresses a binding obligation or formal commitment in project documents, contracts, and formal meeting minutes. It carries a stronger sense of obligation than 'will'.",
+     ex:["'The project manager shall provide a weekly status report to the steering committee.'",
+         "'Stakeholders shall be notified of any scope change within 48 hours of approval.'",
+         "'The team shall complete a sprint retrospective at the end of each sprint.'",
+         "'The risk register shall be reviewed at every project board meeting.'"]
+    }
+   ]
+  },
+  {title:"Grammar Point 2: Formal Meeting Language",
+   pts:[
+    {h:"Opening, Structuring, and Closing Discussions",
+     b:"Project meetings use a consistent register of formal expressions to open items, structure discussion, and close decisions. Using these signals professionalism and helps ensure meetings are productive.",
+     ex:["Opening: 'I'd like to begin by reviewing our progress against the plan.'",
+         "Flagging: 'I'd like to flag the vendor delay for the committee's attention.'",
+         "Proposing: 'Can we confirm that the team will proceed with the phased rollout?'",
+         "Deferring: 'Given the time available, I suggest we defer the vendor evaluation to the next session.'"]
+    },
+    {h:"Tabling Items and Putting Things on Record",
+     b:"Formal project meetings require specific language for presenting documents, raising concerns officially, and ensuring decisions are recorded.",
+     ex:["'I am tabling the updated risk register for the committee's review and approval.'",
+         "'I'd like to put on record my concern that the testing window is insufficient.'",
+         "'Before we move on, can we note that this decision is conditional on budget sign-off?'",
+         "'Let me recap the actions we have agreed before we close.'"]
+    },
+    {h:"Challenging and Questioning Professionally",
+     b:"Good project governance requires challenging assumptions constructively. The right language softens the challenge while maintaining its force.",
+     ex:["'I'd like to question the assumption that the integration will be complete by end of month.'",
+         "'I wonder whether we have fully accounted for the testing time in that estimate.'",
+         "'Could I ask what our contingency is if the vendor doesn't deliver on schedule?'",
+         "'I think we should test that assumption before we commit to the deadline.'"]
+    }
+   ]
+  },
+  {title:"Grammar Point 3: Concession and Condition in Status Reports",
+   pts:[
+    {h:"Acknowledging Issues While Maintaining Confidence",
+     b:"Project status reports must communicate problems honestly without undermining stakeholder confidence. Concession structures acknowledge a difficulty and immediately pivot to a positive or mitigating statement.",
+     ex:["'Although the infrastructure workstream is three days behind, the overall project remains on track.'",
+         "'The testing phase has encountered defects. However, all critical issues have been resolved.'",
+         "'Notwithstanding the vendor delay, the team has maintained progress by accelerating parallel workstreams.'",
+         "'The sprint velocity was lower than forecast this week. That said, all priority items were delivered.'"]
+    },
+    {h:"Expressing Conditions for Success",
+     b:"IT project communications frequently need to express conditional confidence — what must happen for the project to succeed. These formal conditional expressions are essential in status reports and risk communications.",
+     ex:["'The project will meet its deadline, provided that no further scope changes are introduced.'",
+         "'We can confirm delivery by Q3, subject to the vendor delivering the integration package by 14 March.'",
+         "'The budget remains within tolerance on condition that the infrastructure overrun does not extend beyond two days.'",
+         "'The team is on track, provided that UAT sign-off is received by Thursday.'"]
+    },
+    {h:"Linking Cause to Outcome",
+     b:"Status reports should explain the impact of events clearly. These expressions connect a cause to its project management consequence professionally.",
+     ex:["'The vendor delay has pushed the integration workstream back three days. As a result, the schedule has been extended by one week.'",
+         "'The team resolved the critical blocking defect on Tuesday. Consequently, the deployment was cleared to proceed.'",
+         "'Additional resource was allocated to testing last week. This has enabled the team to recover the two-day slip.'",
+         "'The scope change request was approved. This has extended the timeline by three weeks and increased budget by £24,000.'"]
+    }
+  ]
+  }
+];
+const writingTasks=[
+  {id:"w1",activity:"Activity 1",type:"Status Report",title:"Weekly Project Status Report",
+   prompt:"You are the Project Manager for a digital transformation project at Meridian Healthcare — migrating 12 hospital departments from a legacy patient records system to a new cloud-based Electronic Patient Record (EPR) system. The project is 16 weeks long.\n\nCurrent status (Week 8 of 16):\n• Overall: AMBER (one workstream at risk)\n• Infrastructure workstream: complete and GREEN\n• Data migration: GREEN — 6 of 12 departments migrated successfully\n• Training: AMBER — trainer availability caused a 5-day delay; tracking 5 days behind plan\n• Integration: RED — a third-party API from the pharmacy system has not been delivered; vendor now promising delivery in 2 weeks (originally due Week 6)\n• Budget: within tolerance (94% of planned spend at Week 8)\n• Next milestone: Pilot go-live for 3 departments (Week 10)\n\nWrite a formal weekly status report to the project sponsor (Chief Information Officer). Include: executive summary, status by workstream (RAG rating + 1-2 sentences each), key risks and issues, actions required from the sponsor, and forward look for the next 2 weeks. Use at least 6 vocabulary terms from this module.",
+   tags:["Status Report","Project Management","Stakeholder Communication","RAG Status","Healthcare IT"],
+   targetMin:180,targetMax:270},
+  {id:"w2",activity:"Activity 2",type:"Risk Register",title:"Complete a Risk Register Entry",
+   prompt:"You are the Project Manager for a fintech startup building a mobile payment application. You have identified the following risk:\n\nThe payment processing API you are integrating with is provided by a single third-party vendor. If that vendor experiences downtime or makes a breaking change to their API without sufficient notice, the core payment functionality will be unavailable to users. The vendor SLA guarantees 99.5% uptime but provides only 48 hours notice for breaking API changes.\n\nWrite a complete risk register entry including:\n• Risk ID and risk title\n• Risk description (2-3 sentences)\n• Risk category (technical / resource / scope / schedule / governance)\n• Likelihood rating (1-5) with justification\n• Impact rating (1-5) with justification\n• Overall risk rating (likelihood x impact)\n• Risk response strategy (avoid / mitigate / transfer / accept) with explanation\n• Specific mitigation actions (at least 3)\n• Risk owner\n• Review date\n\nUse at least 6 vocabulary terms from this module.",
+   tags:["Risk Register","Risk Management","Technical Risk","Third-Party Dependency","Project Planning"],
+   targetMin:150,targetMax:230}
+];
+const listeningActs=[
+  {id:0,title:"Project Kick-Off Meeting: Setting the Foundation",
+   sub:"Team Meeting · B1-B2 Level · approx. 111 sec",icon:"🚀",
+   transcript:"Good morning everyone. I am Kenji, the project manager for the EPR migration project, and this is our kick-off meeting. By the end of today, I want everyone to be clear on what we are building, how we are going to work together, and what success looks like. Let me start with the project charter. The project has been formally authorised by the CTO, with a budget of 1.2 million pounds and a delivery deadline of 31 October. Our project sponsor is the Chief Information Officer, Sarah Chen. The scope of this project is the migration of all patient records from the legacy PAS system to the new CloudEPR platform for all twelve hospital departments. What is explicitly out of scope is the migration of the financial and HR systems — those are a separate programme. Now — how are we going to work? We will be using an agile approach with two-week sprints. Each sprint will begin with a planning session on Monday morning and end with a sprint review and retrospective on the Friday afternoon. I will send the risk register to the team by end of this week — I want each workstream lead to review it and add any risks they can identify before our first sprint planning. On stakeholder engagement — the CIO will attend every sprint review. The department heads from each of the twelve hospitals will be invited to the relevant sprint review when their department's migration is in scope. The acceptance criteria for this project have been agreed with the CIO: all twelve departments successfully migrated, all clinical workflows tested and signed off, system performance within the agreed SLA thresholds, and training completed for all clinical staff. Let me be clear about escalation: if you identify a risk or issue that you cannot resolve within your workstream, you must bring it to me within 24 hours. Do not wait for the next sprint review. Issues that wait fester.",
+   qs:[
+    {q:"Who has formally authorised the project?",opts:["The Project Manager","The Head of IT","The CTO","The CIO"],ans:2},
+    {q:"What is the project budget and deadline?",opts:["800,000 pounds and 31 August","1.2 million pounds and 31 October","2 million pounds and 31 December","1.2 million pounds and 31 March"],ans:1},
+    {q:"What is explicitly out of scope?",opts:["The migration of patient records","The training of clinical staff","The migration of financial and HR systems","The integration with the pharmacy system"],ans:2},
+    {q:"How long are the project sprints?",opts:["One week","Two weeks","Three weeks","Four weeks"],ans:1},
+    {q:"When must risks and issues be brought to Kenji?",opts:["At the next sprint review","Within 24 hours — not waiting for the next sprint review","At the monthly steering committee","When fully investigated"],ans:1},
+    {q:"What are the four acceptance criteria mentioned?",opts:["Budget, timeline, quality, and stakeholder satisfaction","All departments migrated, clinical workflows signed off, performance within SLA, and training completed","Performance, security, availability, and compliance","Scope, cost, time, and quality"],ans:1},
+    {q:"Who will attend every sprint review?",opts:["All twelve department heads","The CTO","The CIO","The entire project team plus all stakeholders"],ans:2},
+    {q:"What does Kenji want workstream leads to do with the risk register?",opts:["Approve it and return it signed","Review it and add risks they can identify before the first sprint planning","Present it at the first sprint review","Translate it into their department's risk format"],ans:1}
+   ]
+  },
+  {id:1,title:"Sprint Review: Demonstrating Progress to Stakeholders",
+   sub:"Review Meeting · B2 Level · approx. 108 sec",icon:"📋",
+   transcript:"We are sitting in on the Sprint 4 review for the EPR migration project. Kenji, the project manager, is running the session. The CIO Sarah Chen and two department heads are in attendance. Kenji: Good afternoon everyone. Welcome to our Sprint 4 review. Today we will be demonstrating the work completed in this sprint and discussing our progress against the overall plan. I want to hand over first to Priya, our data migration lead, to walk you through what the team has delivered. Priya: In Sprint 4, we completed the data migration for two further departments — Cardiology and Radiology. That brings us to six out of twelve departments migrated, exactly on track with our plan. The team also resolved the data quality issue flagged in the last review — we found and corrected 847 records with formatting inconsistencies that would have caused errors in the new system. Sarah Chen: That is impressive. Were there complications with the Cardiology migration? Priya: One complexity — Cardiology uses a custom field structure not in the standard data model. We had to write a bespoke transformation script. It added one day to the migration for that department, but we absorbed it within the sprint without affecting the overall schedule. Kenji: Thank you Priya. Now — before we move to the retrospective — I want to be transparent about the pharmacy API integration risk. The vendor has confirmed a further one-week delay to their delivery. This risk is now rated Red on our risk register. I have already raised this with the programme director and we are exploring two mitigation options. I will present the options to the CIO and project board at our emergency risk session on Thursday. Sarah Chen: I appreciate the transparency, Kenji. Please make sure the options paper is with me by Wednesday morning so I can prepare.",
+   qs:[
+    {q:"Which departments were migrated in Sprint 4?",opts:["Orthopaedics and Neurology","Cardiology and Radiology","Oncology and Paediatrics","Emergency and Outpatients"],ans:1},
+    {q:"How many departments have been migrated in total after Sprint 4?",opts:["Four","Five","Six","Eight"],ans:2},
+    {q:"What data quality issue was resolved?",opts:["Duplicate patient records were merged","847 records with formatting inconsistencies causing errors were identified and corrected","Patient records from two departments were corrupted","The data encryption standard was updated"],ans:1},
+    {q:"What complication arose in the Cardiology migration?",opts:["The system was offline","Cardiology uses a custom field structure requiring a bespoke transformation script","The team lacked server access","Records were larger than expected"],ans:1},
+    {q:"What was the impact on the schedule?",opts:["It delayed the sprint by three days","No impact — the team had buffer","One day was added but absorbed within the sprint without affecting the overall schedule","The sprint was extended by one week"],ans:2},
+    {q:"What has happened to the pharmacy API risk?",opts:["It has been resolved","The vendor confirmed a further one-week delay — the risk is now Red","The team will build their own integration","The risk has been accepted and is Green"],ans:1},
+    {q:"Where has Kenji escalated the pharmacy API risk?",opts:["To the CTO","To the client board","To the programme director","To the vendor account manager"],ans:2},
+    {q:"By when does Sarah Chen want the options paper?",opts:["By end of Thursday","By Monday of the following week","By Wednesday morning","By the emergency session on Thursday afternoon"],ans:2}
+   ]
+  },
+  {id:2,title:"Risk Escalation: A Difficult Conversation with the Sponsor",
+   sub:"Stakeholder Meeting · B2 Level · approx. 104 sec",icon:"🚨",
+   transcript:"Kenji has requested an urgent meeting with CIO Sarah Chen to escalate the pharmacy API risk. He is accompanied by Amara, the integration workstream lead. Kenji: Sarah, thank you for making time at short notice. I need to bring a risk to your attention that has escalated beyond what the project team can manage independently. The pharmacy system vendor has confirmed that their API will not be ready until Week 12 of the project — six weeks later than originally contracted. Without the pharmacy integration, we cannot proceed to full go-live for any department. Amara has modelled two options. Amara: Option one is to delay the full go-live by six weeks to Week 22 — keeping all twelve departments in scope but pushing the delivery date past the 31 October contractual deadline. Option two is a phased go-live: we go live with eight departments at Week 16 as originally planned, using a manual workaround for pharmacy prescriptions. The remaining four departments with the highest pharmacy dependency go live at Week 22 after the integration is complete. Kenji: My recommendation is Option 2 — it delivers value to the organisation sooner and demonstrates project progress. But I want to be transparent: the manual workaround carries a clinical risk that needs assessment by the clinical governance team. I have flagged this and requested an assessment by Friday. Sarah Chen: This is not what I wanted to hear, but I appreciate you bringing it promptly. I am not prepared to accept Option 1 as it stands — we have a contractual commitment. I will need to speak to our legal team about the vendor's delay before Thursday. I support Option 2 in principle, but we need the clinical governance sign-off before I can formally approve it. Let us reconvene on Friday once you have the assessment.",
+   qs:[
+    {q:"How late has the pharmacy API vendor confirmed their delivery will be?",opts:["Two weeks","Four weeks","Six weeks — Week 12 instead of the contracted date","Eight weeks"],ans:2},
+    {q:"What is the consequence of missing the pharmacy integration?",opts:["The project will restart","The team will rebuild the integration","Full go-live cannot proceed for any department","The budget will increase"],ans:2},
+    {q:"What is Option 1?",opts:["A phased go-live with a manual workaround","Delay the full go-live by six weeks to Week 22 — keeping all departments in scope but missing the deadline","Cancel the pharmacy integration","Negotiate for an earlier partial delivery"],ans:1},
+    {q:"What is Option 2?",opts:["Full go-live at Week 22 for all twelve departments","Partial go-live at Week 16 for eight departments with a manual pharmacy workaround, then full go-live at Week 22","Immediate go-live using manual processes throughout","Reduce scope to eight departments permanently"],ans:1},
+    {q:"What is Kenji's recommendation?",opts:["Option 1 — delay the full go-live","Option 2 — phased go-live","Neither — escalate to the board","No recommendation yet"],ans:1},
+    {q:"What clinical risk does Kenji flag about Option 2?",opts:["The manual workaround carries a clinical risk needing assessment by the clinical governance team","Eight departments will have inadequate training","The pharmacy integration cannot be done by Week 22","Patient data may be lost"],ans:0},
+    {q:"Why is Sarah not prepared to accept Option 1?",opts:["It requires board approval","It pushes past the contractual deadline and there is a contractual commitment","It costs too much additional budget","It requires retraining all clinical staff"],ans:1},
+    {q:"What must happen before Sarah can formally approve Option 2?",opts:["The vendor must confirm Week 12 delivery in writing","The project board must vote","The full go-live must be postponed","The clinical governance sign-off must be received"],ans:3}
+   ]
+  },
+  {id:3,title:"Sprint Retrospective: Learning and Improving",
+   sub:"Team Meeting · B1-B2 Level · approx. 102 sec",icon:"🔁",
+   transcript:"The EPR migration project team is holding its Sprint 4 retrospective. Scrum master Marcus is facilitating. Marcus: Good afternoon team. This retrospective is a safe space — what is said here stays here. I want us to focus on three questions: what went well? What did not go well? And what will we commit to doing differently next sprint? Let us start with what went well. Priya: The data migration for Cardiology and Radiology went really smoothly once we had the transformation script sorted. The team collaborated well under pressure. Yuki: I would add — the daily standups have been much more effective since we started using the kanban board to track blockers. People are flagging issues earlier rather than sitting on them. Marcus: Let us capture both of those. What did not go well? Tom: Honestly, the sprint planning was too optimistic again. We committed to 40 points and delivered 34. We have done that three sprints in a row. Our velocity is clearly closer to 34-36, not 40. We need to plan to what we can actually deliver, not what we wish we could deliver. Marcus: That is a really important observation. What would we need to change? Tom: We need to use our actual velocity when planning the next sprint — not the velocity we aspire to. Marcus: Agreed. Let us commit to planning Sprint 5 at 35 points. Anyone else? Sarah: The documentation for the bespoke transformation scripts we are writing is not keeping pace with the development. In two sprints, no one is going to remember why we made the decisions we made. Marcus: Can we make documentation an acceptance criterion for any custom script? Let us say — no script is done unless it has an inline comment explaining the business logic. Team: Agreed.",
+   qs:[
+    {q:"What does Marcus say about the retrospective?",opts:["It will be shared with the CIO","It will be documented in the sprint report","It is a safe space — what is said here stays here","It must be approved by the PM"],ans:2},
+    {q:"What three questions does Marcus ask?",opts:["What did we build? What did we break? What will we fix?","What went well? What did not go well? What will we commit to doing differently?","What was in scope? What was blocked? What was cancelled?","What was delivered? What was deferred? What was cancelled?"],ans:1},
+    {q:"What positive change to the standup does Yuki highlight?",opts:["The standups are shorter","The scrum master no longer attends","Using the kanban board to track blockers has made people flag issues earlier","The standups now happen in the afternoon"],ans:2},
+    {q:"What problem does Tom identify with sprint planning?",opts:["The planning session takes too long","The team is consistently committing to more than they deliver — 40 points planned vs 34 delivered","The product owner is not available","Backlog items are not properly estimated"],ans:1},
+    {q:"How many sprints in a row has the team overcommitted?",opts:["One","Two","Three","Four"],ans:2},
+    {q:"What is Tom's proposed solution?",opts:["Add more developers","Plan based on actual velocity — not aspired velocity","Reduce sprint length to one week","Ask the product owner to reduce the backlog"],ans:1},
+    {q:"What documentation problem does Sarah identify?",opts:["Sprint reports are not sent to stakeholders","The risk register is not being updated","Documentation for bespoke transformation scripts is not keeping pace with development","The project charter has not been updated"],ans:2},
+    {q:"What new acceptance criterion does the team agree for custom scripts?",opts:["Reviewed by two senior engineers","100% test coverage before acceptance","No script is done unless it has an inline comment explaining the business logic","Approved by the project manager"],ans:2}
+   ]
+  }
+];
+const casesStudies=[
+  {tag:"United Kingdom · IT Project Management · 2003-2011 · Public Sector Failure",
+   title:"Case Study 1: The NHS National Programme for IT — Lessons from the Largest IT Project Failure in History",
+   sub:"What happened when the world's most ambitious IT project abandoned fundamental project management principles",
+   sections:[
+    {h:"Background",
+     t:"The NHS National Programme for IT (NPfIT) was launched in 2003 with extraordinary ambition: to create a single integrated electronic patient record system for the entire National Health Service in England. Worth approximately 12.7 billion pounds, it was awarded to a small number of large contractors. By 2011, when the programme was officially scrapped, it had spent over 9.8 billion pounds, delivered only a fraction of what was promised, and had become the world's most cited example of large-scale IT project failure. The parliamentary Public Accounts Committee described it as 'one of the worst and most expensive contracting fiascos in the history of the public sector'."},
+    {h:"The Project Management Failures",
+     t:"Post-mortems identified failures at every level. First, scope was defined nationally without adequate consultation with clinical end users whose workflows the system was supposed to support — leading to a product that was technically delivered but clinically unfit for purpose in many trusts. Second, the programme operated on a waterfall methodology with fixed multi-year contracts that allowed no mechanism for incorporating lessons learned during delivery. Third, risk management was inadequate — known risks including NHS organisational complexity, contractual dependencies on a small number of large vendors, and clinical staff resistance were identified early but not acted upon. Fourth, there was a fundamental failure of stakeholder management: clinicians were treated as end users rather than co-designers, and their feedback was systematically ignored."},
+    {h:"Lessons for IT Project Management",
+     t:"The NPfIT failure teaches lessons that apply to IT projects of any size. First, scope must be defined with — not imposed on — the people who will use the system. Stakeholder engagement is a design requirement, not just a communication task. Second, long-term waterfall contracts for complex evolving systems are inappropriate — the world changes and a methodology that cannot absorb change will fail. Third, risk registers must be acted upon, not merely maintained — identified but unmitigated risks are worse than useless because they create a false sense of security. Fourth, breaking large programmes into smaller independently deliverable projects creates accountability and reduces the cost of failure. Fifth, success is not measured by technical delivery, but by whether the system is used and delivers intended value."}
+   ],
+   qs:[
+    {q:"What was NPfIT designed to create?",opts:["A new payroll system for NHS staff","A single integrated electronic patient record system for the entire NHS in England","A digital billing system for NHS trusts","A cloud HR management platform"],ans:1},
+    {q:"Approximately how much was the programme worth when launched?",opts:["2.7 billion pounds","5.4 billion pounds","12.7 billion pounds","20 billion pounds"],ans:2},
+    {q:"What did the Public Accounts Committee call the programme?",opts:["A qualified success that delivered partial value","One of the worst and most expensive contracting fiascos in the history of the public sector","An ambitious project cancelled prematurely","A programme that failed due to external factors"],ans:1},
+    {q:"What was the first project management failure?",opts:["The programme ran out of budget in year two","Scope was defined nationally without adequate consultation with clinical end users","The technology chosen was not fit for purpose","The programme was not formally authorised"],ans:1},
+    {q:"What methodology prevented learning during delivery?",opts:["Agile with annual sprints","Kanban with no delivery deadlines","Waterfall with fixed multi-year contracts allowing no mechanism for incorporating lessons","Prince2 with quarterly milestone reviews"],ans:2},
+    {q:"What failure of stakeholder management is identified?",opts:["Clinicians were not informed","Clinicians were treated as end users not co-designers, and their feedback was ignored","The project sponsor did not attend any steering committees","Vendors were not consulted about requirements"],ans:1},
+    {q:"What lesson does the case study draw about risk registers?",opts:["They are only useful in waterfall projects","They must be acted upon — identified but unmitigated risks create a false sense of security and are worse than useless","They should only be maintained by the project sponsor","They are only relevant for programmes over 1 billion pounds"],ans:1},
+    {q:"What lesson is drawn about programme size?",opts:["Larger programmes are always more efficient","Size is determined by client requirements","Breaking large programmes into smaller independently deliverable projects creates accountability and reduces the cost of failure","Only large programmes require formal project management"],ans:2},
+    {q:"How does the case study define IT project success?",opts:["Delivered on time and within budget","Whether it was technically delivered","Not by technical delivery, but by whether it is used and delivers the intended value","Whether contractors were paid in full"],ans:2},
+    {q:"What does the case study say about scope definition and stakeholders?",opts:["Scope should be defined by the project manager alone","Scope must be defined with not imposed on the people who will use the system","Scope should be defined by the vendor","Scope definition is primarily a legal and contractual activity"],ans:1}
+   ]
+  },
+  {tag:"Industry · Agile Project Management · 2001-Present · Agile at Scale",
+   title:"Case Study 2: Agile at Scale — How Large Organisations Navigate the Challenge of Growing Agile",
+   sub:"The vocabulary, frameworks, and hard lessons of applying agile principles across large organisations",
+   sections:[
+    {h:"Background",
+     t:"The agile manifesto was written in 2001 by seventeen software developers who worked in small, co-located teams. Its principles were conceived in the context of small autonomous teams. As agile adoption spread from startups to large enterprises with hundreds of developers across multiple time zones, a new challenge emerged: how do you preserve agile benefits — speed, adaptability, cross-functional collaboration — while managing the coordination, governance, and alignment that large organisations require? This challenge has generated a proliferation of scaled agile frameworks — SAFe (Scaled Agile Framework), LeSS (Large-Scale Scrum), the Spotify model, and others — each offering a different answer."},
+    {h:"Key Vocabulary and Concepts",
+     t:"Scaling agile introduces a new vocabulary layer above the sprint level. A 'Program Increment' (PI) in SAFe is a 10-week planning cycle containing five two-week sprints plus an innovation and planning sprint. A 'PI Planning' event is a two-day face-to-face meeting where all teams align sprint goals, identify inter-team dependencies, and commit to a shared programme objective. 'Release trains' are groups of agile teams that plan, commit, and deploy together. For IT project managers in large organisations, this vocabulary is increasingly essential — job descriptions, project board discussions, and status reports routinely use these terms."},
+    {h:"Lessons from Practice",
+     t:"Scaling agile across large organisations has produced consistent lessons. First, agile at scale is not simply 'more agile' — it requires additional coordination mechanisms, explicit dependency management, and portfolio-level governance. Second, the most common failure is preserving the vocabulary while abandoning the values — teams call their work sprints and meetings retrospectives but operate with a waterfall mindset of fixed scope, fixed date, and minimal stakeholder engagement. Third, cross-team dependencies are the primary challenge — when one team's sprint goal depends on another's delivery, coordination can negate agile's speed advantages. Fourth, the choice of framework matters less than the commitment to genuine continuous improvement."}
+   ],
+   qs:[
+    {q:"In what year was the Agile Manifesto written?",opts:["1995","2001","2005","2008"],ans:1},
+    {q:"What challenge arose as agile spread to large enterprises?",opts:["Small teams became less productive","Agile certification costs became too high","How to preserve agile benefits while managing coordination and governance at scale","Large organisations did not have enough trained scrum masters"],ans:2},
+    {q:"What is a Program Increment (PI) in SAFe?",opts:["A single two-week sprint","A monthly release cycle","A 10-week planning cycle with five two-week sprints plus an innovation and planning sprint","A quarterly board review"],ans:2},
+    {q:"What happens at a PI Planning event?",opts:["Individual teams plan their own sprints independently","All teams align sprint goals, identify inter-team dependencies, and commit to a shared objective — typically over two days","The project sponsor reviews the programme budget","External stakeholders approve the programme backlog"],ans:1},
+    {q:"What is a release train in scaled agile?",opts:["A deployment mechanism for pushing code to production","A group of agile teams that plan, commit, and deploy together","A scheduled set of software releases throughout the year","A tool for managing dependencies between teams"],ans:1},
+    {q:"What is the first lesson from scaling agile?",opts:["Scaled agile is simply more agile — no additional mechanisms needed","All organisations should adopt SAFe","Agile at scale requires additional coordination, dependency management, and portfolio governance that small-team agile does not need","Large teams should break into independent small teams with no coordination"],ans:2},
+    {q:"What is the most common failure in scaling agile?",opts:["Teams become too large for effective retrospectives","Preserving the vocabulary while abandoning the values — using agile terms but operating with a waterfall mindset","SAFe is implemented incorrectly due to lack of training","PI planning events take too long"],ans:1},
+    {q:"What is the primary challenge in scaled agile?",opts:["Managing the product backlog across multiple teams","Communicating sprint velocity to senior stakeholders","Cross-team dependencies — when one team's goal depends on another's delivery, coordination can negate speed advantages","Finding qualified scrum masters for all teams"],ans:2},
+    {q:"What matters more than the choice of scaled agile framework?",opts:["The size of the organisation","The number of certified practitioners","The specific version of SAFe being used","The commitment to genuine continuous improvement — organisations that refine their process are more successful"],ans:3},
+    {q:"What does the case study say about organisations treating their process as something to be installed?",opts:["They scale agile more quickly","They produce higher quality software","They are invariably less successful than those treating it as something to be continuously refined","They comply better with the agile manifesto"],ans:2}
+   ]
+  }
+];
+const assessQs=[
+  {q:"What is scope creep?",opts:["A formal process for adding requirements","The gradual uncontrolled expansion of project requirements beyond original agreed scope","A technique for reducing scope when over budget","A type of agile sprint planning ceremony"],ans:1},
+  {q:"What is the critical path?",opts:["The most expensive tasks","The longest sequence of dependent tasks determining the earliest possible completion date","The path data takes through the system","The sequence of approvals needed before a project starts"],ans:1},
+  {q:"What does a burndown chart show?",opts:["Total expenditure against budget","Completed work and total scope changes","Remaining work against time during a sprint","Team velocity against benchmarks"],ans:2},
+  {q:"What is the purpose of a project charter?",opts:["Legal contract between client and vendor","Formally authorising a project and defining its objectives, scope, and PM authority","List of all milestones and deliverables","Technical specification for the system"],ans:1},
+  {q:"What is velocity in agile?",opts:["Speed of the CI/CD pipeline","Rate of budget consumption","Amount of work a team completes per sprint, used to forecast future delivery","Time to complete user acceptance testing"],ans:2},
+  {q:"What is a change request?",opts:["Request to change the project manager","Formal document proposing a modification to agreed scope, schedule, or budget","Informal stakeholder request for a small feature","A sprint planning document"],ans:1},
+  {q:"What is the difference between a milestone and a deliverable?",opts:["They are the same thing","A milestone is a budget checkpoint; a deliverable is a technical component","A milestone is a point in time with no duration; a deliverable is a tangible output","A milestone is internal; a deliverable is for external stakeholders"],ans:2},
+  {q:"What is the primary lesson from the NHS NPfIT case study about stakeholder engagement?",opts:["Stakeholders should be consulted after the system is built","Stakeholder engagement is a design requirement — scope must be defined with users, not imposed on them","Stakeholder engagement increases costs and should be minimised","Only clinical stakeholders need to be consulted in health IT"],ans:1},
+  {q:"What are the four standard risk responses?",opts:["Plan, monitor, report, and close","Identify, assess, mitigate, and accept","Avoid, mitigate, transfer, and accept","Prevent, reduce, share, and ignore"],ans:2},
+  {q:"What is a retrospective?",opts:["A meeting to review the product built","A post-project review of failures","A structured end-of-sprint meeting to reflect on and improve the team's process","A risk review meeting with the sponsor"],ans:2},
+  {q:"What is a Program Increment (PI) in SAFe?",opts:["A single two-week sprint","A monthly release cycle","A 10-week planning cycle with five two-week sprints plus an innovation sprint","A quarterly board review"],ans:2},
+  {q:"What future form signals an officially scheduled event?",opts:["Will","Is going to","Is due to","Might"],ans:2},
+  {q:"What does 'notwithstanding' mean in a project status report?",opts:["Because of","Despite — a problem exists but the following statement is still true","Therefore","Unless"],ans:1},
+  {q:"What is kanban's key mechanism for reducing bottlenecks?",opts:["Fixed-length sprints","Limiting work in progress (WIP)","Daily standup meetings","Regular retrospectives"],ans:1},
+  {q:"What do acceptance criteria define?",opts:["Project non-functional requirements","The conditions a deliverable must satisfy for the stakeholder to formally accept it as complete","Criteria for selecting the project team","Technical standards the system must meet"],ans:1},
+  {q:"What is the most common failure in scaling agile?",opts:["Teams become too large for retrospectives","SAFe implementation is too expensive","Preserving the vocabulary while abandoning the values — using agile terms but operating with a waterfall mindset","Not enough certified scrum masters available"],ans:2},
+  {q:"What formal meeting expression presents a document for committee review?",opts:["I am presenting","I am showing","I am tabling","I am giving"],ans:2},
+  {q:"What is resource allocation?",opts:["Selecting the technology stack","Assigning people, budget, tools, and time to tasks — balancing workload and avoiding over-allocation","Distributing test cases across QA engineers","Setting the budget for each sprint"],ans:1},
+  {q:"What does the NHS NPfIT case study say about identified but unmitigated risks?",opts:["They are better than no risk register","They are equivalent to no risk register","They are worse than useless because they create a false sense of security","They are acceptable if reviewed monthly"],ans:2},
+  {q:"What is a release train in scaled agile?",opts:["A deployment pipeline","A scheduled series of releases","A group of agile teams that plan, commit, and deploy together","A tool for managing inter-team dependencies"],ans:2}
+];
+
+
+// ── Navigation ──────────────────────────────────────────────
+function openSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='translateX(0)';sb.classList.add('open');document.getElementById('overlay').style.display='block';}
+function closeSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='';sb.classList.remove('open');document.getElementById('overlay').style.display='none';}
+function goTo(rawId){
+  // strip 'sec-' prefix if present for logic key
+  const id=rawId.replace(/^sec-/,'');
+  const secId='sec-'+id;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(secId);
+  if(sec){sec.classList.add('active');}
+  // mark active nav: match onclick containing this id
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    const oc=n.getAttribute('onclick')||'';
+    if(oc.includes("'"+secId+"'")||oc.includes('"'+secId+'"')){n.classList.add('active');}
+  });
+  window.scrollTo(0,0);
+  closeSidebar();
+  if(id==='overview') initOverview();
+  else if(id==='speaking') initSpeaking();
+  else if(id==='wordbank') initWordBank();
+  else if(id==='reading') initReading();
+  else if(id==='vocab') initVocab();
+  else if(id==='grammar') initGrammar();
+  else if(id==='gramreview') initGramReview();
+  else if(id==='writing') initWriting();
+  else if(id==='listening') initListening();
+  else if(id==='cases') initCases();
+  else if(id==='assessment') initAssessment();
+}
+
+// ── MCQ Engine ───────────────────────────────────────────────
+function renderMCQ2(containerId, questions, prefix, darkMode){
+  const c=document.getElementById(containerId);
+  if(!c)return;
+  let h='';
+  questions.forEach((item,i)=>{
+    const letters=['A','B','C','D'];
+    const dk=darkMode?'lmcq-opt':'';
+    h+=`<div class="mcq-block" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-opts">`;
+    item.opts.forEach((opt,j)=>{
+      h+=`<div class="mcq-opt ${dk}" onclick="pickOpt('${prefix}',${i},${j},${item.ans})" id="${prefix}-${i}-${j}">
+        <span class="opt-letter">${letters[j]}</span>${opt}</div>`;
+    });
+    h+=`</div></div>`;
+  });
+  c.innerHTML=h;
+}
+function pickOpt(prefix,qi,oi,ans){
+  const block=document.getElementById(prefix+'-q'+qi);
+  if(!block||block.dataset.done)return;
+  block.dataset.done='1';
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    if(j===ans)el.classList.add('correct');
+    else if(j===oi)el.classList.add('incorrect');
+    el.style.pointerEvents='none';
+  });
+}
+
+// ── Overview ─────────────────────────────────────────────────
+function initOverview(){
+  const c=document.getElementById('overviewContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card">
+    <div class="card-title">📘 What You Will Learn</div><div class="card-bar"></div>
+    <div class="outcomes-grid">${outcomes.map((o,i)=>`<div class="outcome"><span class="out-num">${String(i+1).padStart(2,'0')}</span><span class="out-text">${o}</span></div>`).join('')}</div>
+  </div>`;
+  setTimeout(()=>{
+    const pf=document.getElementById('progFill');
+    const pp=document.getElementById('progPct');
+    if(pf)pf.style.width='9%';
+    if(pp)pp.textContent='9%';
+  },300);
+}
+
+// ── Speaking ─────────────────────────────────────────────────
+function initSpeaking(){
+  const c=document.getElementById('speakingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">🎙️ Discussion Questions</div><div class="card-bar"></div>
+    <div class="speaking-grid">${speakingQs.map((q,i)=>`<div class="speaking-card"><div class="q-num">Q${String(i+1).padStart(2,'0')}</div><div class="q-text">${q}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Word Bank ─────────────────────────────────────────────────
+function initWordBank(){
+  const c=document.getElementById('wordBankContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">📚 Key Legal Terms</div><div class="card-bar"></div>
+    <div class="wb-grid">${wordBank.map(w=>`<div class="wb-card"><span class="wb-emoji">${w.emoji}</span><div class="wb-term">${w.term}</div><div class="wb-def">${w.def}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Reading ───────────────────────────────────────────────────
+function initReading(){
+  const c=document.getElementById('readingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  readingTexts.forEach((rt,ti)=>{
+    h+=`<div class="card">
+      <div class="reading-box"><h4>${rt.title}</h4>${rt.paragraphs.map(p=>`<p>${p}</p>`).join('')}</div>
+      <div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>
+      <div id="rmcq-${ti}"></div>
+    </div>`;
+  });
+  c.innerHTML=h;
+  readingTexts.forEach((_,ti)=>{
+    renderMCQ2('rmcq-'+ti, readingTexts[ti].questions, 'r'+ti, false);
+  });
+}
+
+// ── Vocabulary ────────────────────────────────────────────────
+let curVocab=0;
+function initVocab(){showVocab(0);}
+function showVocab(idx){
+  curVocab=idx;
+  document.querySelectorAll('#sec-vocab .ex-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  [0,1,2].forEach(i=>{
+    const p=document.getElementById('vex-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+  if(idx===0){renderMCQ2('vex-0',vocabMCQ,'vm0',false);}
+  else if(idx===1){renderGapFill('vex-1',vocabGapFill,'vg1');}
+  else if(idx===2){renderTF('vex-2',vocabTF,'vt2');}
+}
+function renderGapFill(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const blanks=items.map(function(it){return it.blank;});
+  let bankHtml='<div class="gf-bank-box"><div class="gf-bank-label">Word bank:</div><div class="gf-bank-pills">';
+  blanks.forEach(function(w){
+    bankHtml+='<span class="gf-pill" id="'+prefix+'-pill-'+w.replace(/\s+/g,'-')+'">'+w+'</span>';
+  });
+  bankHtml+='</div></div>';
+  let sentHtml='<div class="gf-sentences">';
+  items.forEach(function(item,i){
+    sentHtml+='<div class="gf-row" id="'+prefix+'-row'+i+'">'
+      +'<div class="gf-sentence-text"><span class="gf-num">'+(i+1)+'.</span> '+item.before
+      +' <span class="gf-blank-wrap"><input class="gf-underline-input" id="'+prefix+'-i'+i
+      +'" placeholder="\u2026" autocomplete="off" spellcheck="false"/>'
+      +'<span class="gf-underline"></span></span> '
+      +item.after+'</div>'
+      +'<div class="gf-row-fb" id="'+prefix+'-f'+i+'"></div>'
+      +'</div>';
+  });
+  sentHtml+='</div>';
+  const btnBar='<div class="gf-btn-bar">'
+    +'<button class="gf-check-btn" onclick="gradeGapFill(\''+prefix+'\',vocabGapFill)">Check Answers</button>'
+    +'<button class="gf-reset-btn" onclick="resetGapFill(\''+prefix+'\',vocabGapFill)">&#8635; Reset</button>'
+    +'<span class="gf-score-display" id="'+prefix+'-score"></span>'
+    +'</div>';
+  c.innerHTML='<div class="card gf-card">'
+    +'<div class="card-title">Exercise 2: Gap Fill</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="gf-instr">Type the correct word or phrase in each gap. Use the word bank for help. Click <strong>Check Answers</strong> when ready.</p>'
+    +bankHtml+sentHtml+btnBar
+    +'</div>';
+}
+function checkGF2(prefix,i,ans){}
+
+function gradeGapFill(prefix,items){
+  let correct=0;
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(!inp||!fb)return;
+    const val=inp.value.trim().toLowerCase().replace(/['']/g,"'");
+    const ans=item.blank.toLowerCase();
+    inp.disabled=true;
+    if(val===ans){
+      correct++;
+      inp.classList.add('gf-correct'); inp.classList.remove('gf-incorrect');
+      fb.innerHTML='<span class="gf-fb-ok">\u2713 Correct</span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-used');
+    } else {
+      inp.classList.add('gf-incorrect'); inp.classList.remove('gf-correct');
+      fb.innerHTML='<span class="gf-fb-err">\u2717 The answer is: <strong>'+item.blank+'</strong></span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-highlight');
+    }
+  });
+  const pct=Math.round(correct/items.length*100);
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl){
+    const col=pct>=80?'var(--green-accent)':pct>=50?'var(--gold-light)':'var(--red-accent)';
+    scoreEl.innerHTML='<span style="color:'+col+';font-weight:700;">'+correct+'/'+items.length+' \u2014 '+pct+'%</span>';
+  }
+}
+
+function resetGapFill(prefix,items){
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(inp){inp.value='';inp.disabled=false;inp.classList.remove('gf-correct','gf-incorrect');}
+    if(fb)fb.innerHTML='';
+    const ans=item.blank.toLowerCase();
+    const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+    if(pill){pill.classList.remove('gf-pill-used','gf-pill-highlight');}
+  });
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl)scoreEl.innerHTML='';
+}
+function renderTF(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='<div class="card tf-card">'
+    +'<div class="card-title">Exercise 3: True / False</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="tf-instr">Decide if each statement is TRUE or FALSE.</p>'
+    +'<div class="tf-list">';
+  items.forEach(function(item,i){
+    const stmt=item.statement||item.stmt||'';
+    const ans=item.ans;
+    h+='<div class="tf-item" id="'+prefix+'-row'+i+'">'
+      +'<div class="tf-item-stmt">'+(i+1)+'. '+stmt+'</div>'
+      +'<div class="tf-item-btns">'
+      +'<button class="tf-item-btn" id="'+prefix+'-T'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',true,'+ans+')">True</button>'
+      +'<button class="tf-item-btn" id="'+prefix+'-F'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',false,'+ans+')">False</button>'
+      +'</div>'
+      +'<div class="tf-item-fb" id="'+prefix+'-fb'+i+'"></div>'
+      +'</div>';
+  });
+  h+='</div></div>';
+  c.innerHTML=h;
+}
+
+function pickTF2(prefix,i,chosen,ans){
+  const row=document.getElementById(prefix+'-row'+i);
+  if(!row||row.dataset.done)return;
+  row.dataset.done='1';
+  const fb=document.getElementById(prefix+'-fb'+i);
+  const btnT=document.getElementById(prefix+'-T'+i);
+  const btnF=document.getElementById(prefix+'-F'+i);
+  const correct=chosen===ans;
+  if(btnT){
+    if(ans===true) btnT.classList.add('tf-btn-correct');
+    else if(chosen===true) btnT.classList.add('tf-btn-wrong');
+    btnT.disabled=true;
+  }
+  if(btnF){
+    if(ans===false) btnF.classList.add('tf-btn-correct');
+    else if(chosen===false) btnF.classList.add('tf-btn-wrong');
+    btnF.disabled=true;
+  }
+  if(fb){
+    fb.innerHTML=correct
+      ?'<span class="tf-fb-ok">✓ Correct!</span>'
+      :'<span class="tf-fb-err">✗ The correct answer is <strong>'+(ans?'True':'False')+'</strong>.</span>';
+  }
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+let curGram=0;
+function initGrammar(){showGram(0);}
+function showGram(idx){
+  curGram=idx;
+  document.querySelectorAll('#sec-grammar .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  [0,1,2].forEach(function(i){var p=document.getElementById('gex-'+i);if(p)p.style.display=i===idx?'block':'none';});
+  var ex=grammarEx[idx];
+  if(!document.getElementById('gex-'+idx).dataset.built){
+    document.getElementById('gex-'+idx).dataset.built='1';
+    var instr='<div class="card"><div class="card-title">'+ex.title+'</div><div class="card-bar"></div><p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">'+ex.instr+'</p><div id="gmcq-'+idx+'"></div></div>';
+    document.getElementById('gex-'+idx).innerHTML=instr;
+  }
+  renderMCQ2('gmcq-'+idx,ex.qs,'gm'+idx,false);
+}
+
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ──────────────────────────────────────────────────
+let curTask=0;
+function initWriting(){
+  const c=document.getElementById('writingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let html='<div class="ex-tabs">';
+  writingTasks.forEach(function(t,i){
+    html+='<div class="ex-tab'+(i===0?' active':'')+'" onclick="showTask('+i+')">'+t.type+'</div>';
+  });
+  html+='</div>';
+  writingTasks.forEach(function(t,i){
+    const minW=t.targetMin||120;
+    const promptFormatted=t.prompt.replace(/\n/g,'<br>');
+    html+='<div id="wpanel-'+i+'" style="display:'+(i===0?'block':'none')+'">'
+      +'<div class="card">'
+      +'<div class="w-task-header">'
+      +'<div class="w-task-pill">'+t.activity+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+t.title+'</div>'
+      +'</div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="w-prompt-box"><div class="w-prompt-label">📋 '+t.type+' — '+t.title+'</div>'
+      +'<div class="w-prompt-text">'+promptFormatted+'</div>'
+      +'<div class="w-target">Target: '+minW+'–'+(t.targetMax||200)+' words</div>'
+      +'</div>'
+      +'<textarea class="w-textarea" id="w-area-'+i+'" placeholder="Write your response here…" oninput="wCount('+i+')"></textarea>'
+      +'<div class="w-meta-row"><span class="w-counter" id="w-count-'+i+'">0 words</span>'
+      +'<div style="display:flex;gap:10px;">'
+      +'<button class="clear-btn" onclick="clearWriting('+i+')">Clear</button>'
+      +'<button class="ac-btn" id="w-btn-'+i+'" onclick="runAIFeedback('+i+')">✨ Auto-Correct &amp; Get Feedback</button>'
+      +'</div></div>'
+      +'<div id="w-fb-'+i+'"></div>'
+      +'</div></div>';
+  });
+  c.innerHTML=html;
+}
+function showTask(idx){
+  curTask=idx;
+  document.querySelectorAll('#sec-writing .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  writingTasks.forEach(function(_,i){
+    var p=document.getElementById('wpanel-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+}
+function wCount(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const wc=document.getElementById('w-count-'+idx);
+  if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  const min=writingTasks[idx].targetMin||120;
+  wc.textContent=words+' words';
+  wc.style.color=words>=min?'var(--green-accent)':'var(--text-mid)';
+}
+function clearWriting(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  if(ta)ta.value='';
+  if(fb)fb.innerHTML='';
+  wCount(idx);
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ───────────────────────────────────────────────────
+async function runAIFeedback(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  const btn=document.getElementById('w-btn-'+idx);
+  if(!ta||!fb)return;
+  const text=ta.value.trim();
+  const task=writingTasks[idx];
+  const minW=task.targetMin||120;
+  const words=text===''?0:text.trim().split(/\s+/).length;
+  if(words<30){
+    fb.innerHTML='<div class="fb-warn-box">⚠️ Please write at least 30 words before requesting feedback.</div>';
+    return;
+  }
+  btn.disabled=true;
+  btn.textContent='Analysing…';
+  fb.innerHTML='<div class="fb-loading-box"><span class="spin">⏳</span> AI is reviewing your writing…</div>';
+
+  // Rule-based context data
+  const sentences=text.split(/[.!?]+/).filter(s=>s.trim().length>3);
+  const avgSentLen=sentences.length?Math.round(words/sentences.length):0;
+  const goodLength=words>=minW&&words<=(task.targetMax||250);
+  const vocabTerms=["project scope","milestone","deliverable","stakeholder","risk register","critical path","Gantt chart","waterfall","agile","sprint","kanban","burndown chart","velocity","backlog","retrospective","dependency","resource allocation","change request","project charter","acceptance criteria","escalation"];
+  const vocabHits=vocabTerms.filter(t=>text.toLowerCase().includes(t));
+
+  const systemPrompt=`You are an expert Business English writing coach specialising in IT and Digital Professions English at B1-B2 level. You give SPECIFIC, TEXT-ANCHORED feedback — always quoting or referencing the student's actual words. Never give generic advice.
+
+Return ONLY a JSON object with these exact keys — no markdown, no extra text:
+{
+  "score": <integer 0-100>,
+  "level": <"Needs Work"|"Developing"|"Proficient"|"Advanced"|"Excellent">,
+  "overall": <1 sentence overall impression referencing the student's actual writing>,
+  "grammar": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about grammar in THIS text — quote or reference actual sentences>
+  },
+  "vocabulary": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about word choices in THIS text — suggest a precise improvement>
+  },
+  "tone": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about register and formality in THIS text>
+  },
+  "structure": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about paragraph organisation and logical flow in THIS text>
+  },
+  "fluency": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about sentence variety and connectives in THIS text — give a concrete example>
+  },
+  "corrected": <one improved version of the weakest sentence from the text — copy the original then rewrite it>
+}`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1200,
+        system:systemPrompt,
+        messages:[{role:'user',content:'Task: '+task.type+' — '+task.title+'\nPrompt: '+task.prompt+'\n\nStudent writing ('+words+' words):\n'+text}]
+      })
+    });
+    const data=await res.json();
+    let p;
+    try{
+      const raw=data.content[0].text.replace(/```json|```/g,'').trim();
+      p=JSON.parse(raw);
+    }catch(e){throw new Error('parse');}
+
+    const score=Math.min(100,Math.max(0,p.score||70));
+    const level=p.level||'Proficient';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':score>=50?'#e09b00':'#d63031';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const cats=[
+      {label:'Grammar',key:'grammar',icon:'📐'},
+      {label:'Vocabulary',key:'vocabulary',icon:'📖'},
+      {label:'Tone',key:'tone',icon:'🎙️'},
+      {label:'Structure',key:'structure',icon:'🏗️'},
+      {label:'Fluency',key:'fluency',icon:'✨'}
+    ];
+
+    let catsHtml='';
+    cats.forEach(function(cat){
+      const d=p[cat.key]||{};
+      catsHtml+='<div class="fb-cat-row">'
+        +'<div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span>'
+        +'<strong class="fb-cat-label">'+cat.label+':</strong>'
+        +ratingIcon(d.rating||'Satisfactory')+'</div>'
+        +'<div class="fb-cat-comment">'+(d.comment||'')+'</div>'
+        +'</div>';
+    });
+
+    const lengthOk=goodLength
+      ?'<span class="fb-check">✓ '+words+' words — within target</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3
+      ?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header">'
+      +'<div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div>'
+      +'</div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +(p.corrected?'<div class="fb-corrected-block"><span class="fb-corrected-tag">✏️ Suggested rewrite:</span> '+p.corrected+'</div>':'')
+      +(p.overall?'<div class="fb-overall">✓ Overall: '+p.overall+'</div>':'')
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSentLen+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }catch(err){
+    // Rule-based fallback — still structured with 5 categories
+    const formalConnectives=['therefore','furthermore','consequently','moreover','however','nevertheless','in addition','as a result','thus','hence'];
+    const connUsed=formalConnectives.filter(w=>text.toLowerCase().includes(w)).length;
+    const avgSL=sentences.length?Math.round(words/sentences.length):0;
+    const score=Math.min(100,Math.max(20,(goodLength?20:0)+(vocabHits.length>=3?20:vocabHits.length*5)+(avgSL>=8&&avgSL<=22?15:0)+(/^[A-Z]/.test(text)?10:0)+(connUsed>=1?15:0)+20));
+    const level=score>=85?'Advanced':score>=70?'Proficient':score>=50?'Developing':'Needs Work';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':'#e09b00';
+
+    const gramOk=text.match(/[A-Z][^.!?]*[.!?]/g);
+    const gramComment=gramOk&&gramOk.length>0?'Check subject-verb agreement and ensure consistent verb tense throughout your response.':'Ensure each sentence begins with a capital letter and ends with a full stop.';
+    const vocComment=vocabHits.length>=3?'Good use of module vocabulary. Consider replacing generic verbs with more precise professional alternatives.':'Consider incorporating more module vocabulary terms — aim for at least 3 in a formal legal or compliance response.';
+    const toneComment=/dear|hi |hey |thanks/i.test(text)?'Some phrasing appears too informal for a professional compliance context. Avoid casual openers and closers.':'The register appears appropriate for the task.';
+    const structComment=sentences.length<3?'Your response would benefit from clearer paragraph structure — aim for an opening, body, and conclusion.':connUsed===0?'Consider organising your response with a clear introduction, supporting points, and a conclusion.':'Good paragraph structure detected.';
+    const fluComment=connUsed===0?'Your response would benefit from one or more connecting phrases between paragraphs (e.g., "Furthermore," "As a result,") to improve logical flow.':'Good use of connectives to link ideas.';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const catsHtml=[
+      {icon:'📐',label:'Grammar',rating:gramOk?'Satisfactory':'Needs Attention',comment:gramComment},
+      {icon:'📖',label:'Vocabulary',rating:vocabHits.length>=3?'Good':'Needs Attention',comment:vocComment},
+      {icon:'🎙️',label:'Tone',rating:/dear|hi |hey |thanks/i.test(text)?'Needs Attention':'Satisfactory',comment:toneComment},
+      {icon:'🏗️',label:'Structure',rating:connUsed>0&&sentences.length>=3?'Good':'Satisfactory',comment:structComment},
+      {icon:'✨',label:'Fluency',rating:connUsed>=1?'Good':'Needs Attention',comment:fluComment}
+    ].map(function(cat){
+      return '<div class="fb-cat-row"><div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span><strong class="fb-cat-label">'+cat.label+':</strong>'+ratingIcon(cat.rating)+'</div><div class="fb-cat-comment">'+cat.comment+'</div></div>';
+    }).join('');
+
+    const lengthOk=goodLength?'<span class="fb-check">✓ '+words+' words — within target</span>':'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>':'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header"><div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div></div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSL+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }
+  btn.disabled=false;
+  btn.textContent='✨ Auto-Correct & Get Feedback';
+}
+
+// ── Listening TTS Engine ──────────────────────────────────────
+let ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+const voicePref=['Samantha','Karen','Victoria','Moira','Daniel','Google UK English Female','Google US English','en-GB','en-US'];
+function getBestVoice(){
+  const voices=window.speechSynthesis.getVoices();
+  for(var j=0;j<voicePref.length;j++){
+    var v=voices.find(function(vv){return vv.name===voicePref[j]||vv.name.includes(voicePref[j]);});
+    if(v)return v;
+  }
+  return voices.find(function(v){return v.lang&&v.lang.startsWith('en');})||voices[0]||null;
+}
+function initListening(){
+  const c=document.getElementById('listeningContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  listeningActs.forEach(function(act,i){
+    h+='<div class="card" id="l-card-'+i+'">'
+      +'<div class="l-header"><span class="l-icon">'+act.icon+'</span><div><div class="card-title">'+act.title+'</div><div class="l-sub">'+act.sub+'</div></div></div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="l-player">'
+      +'<div class="l-controls">'
+      +'<button class="l-play-btn" id="l-play-'+i+'" onclick="togglePlay('+i+')">&#9654; Play</button>'
+      +'<select class="l-speed" id="l-speed-'+i+'" onchange="changeSpeed('+i+')">'
+      +'<option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option>'
+      +'</select>'
+      +'<button class="l-trans-btn" id="l-tbtn-'+i+'" onclick="toggleTranscript('+i+')">&#128196; Transcript</button>'
+      +'</div>'
+      +'<div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-'+i+'"></div></div><span class="l-time" id="l-time-'+i+'">0:00</span></div>'
+      +'</div>'
+      +'<div class="l-transcript-box" id="l-trans-'+i+'" style="display:none"><p class="l-transcript-text">'+act.transcript+'</p></div>'
+      +'<div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>'
+      +'<div id="lmcq-'+i+'"></div>'
+      +'</div>';
+  });
+  c.innerHTML=h;
+  listeningActs.forEach(function(act,i){renderMCQ2('lmcq-'+i,act.qs,'la'+i,false);});
+  window.speechSynthesis.getVoices();
+}
+function togglePlay(idx){
+  if(ttsState.actIdx===idx&&ttsState.playing){pauseAudio(idx);}
+  else if(ttsState.actIdx===idx&&ttsState.paused){resumeAudio(idx);}
+  else{playAudio(idx);}
+}
+function playAudio(idx){
+  const act=listeningActs[idx];
+  if(!act)return;
+  if(ttsState.actIdx===idx&&ttsState.paused){
+    resumeAudio(idx); return;
+  }
+  stopAudio();
+  ttsState.actIdx=idx;
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.voice=getBestVoice();
+  utt.rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  utt.pitch=1.0;
+  utt.volume=1.0;
+  utt.onstart=()=>{ttsState.playing=true;ttsState.paused=false;ttsState.startTime=Date.now();updatePlayBtn(idx,true);startProg(idx,act.transcript.length);};
+  utt.onend=()=>{ttsState.playing=false;ttsState.paused=false;updatePlayBtn(idx,false);stopProg(idx,true);};
+  utt.onerror=()=>{ttsState.playing=false;updatePlayBtn(idx,false);stopProg(idx,false);};
+  ttsState.utterance=utt;
+  window.speechSynthesis.speak(utt);
+}
+function pauseAudio(idx){
+  if(window.speechSynthesis.speaking&&!window.speechSynthesis.paused){
+    window.speechSynthesis.pause();
+    ttsState.paused=true;ttsState.playing=false;
+    ttsState.elapsed+=Date.now()-ttsState.startTime;
+    updatePlayBtn(idx,false,true);
+    clearInterval(ttsState.progTimer);
+  }
+}
+function resumeAudio(idx){
+  window.speechSynthesis.resume();
+  ttsState.paused=false;ttsState.playing=true;
+  ttsState.startTime=Date.now();
+  updatePlayBtn(idx,true);
+  startProg(idx,listeningActs[idx].transcript.length,true);
+}
+function stopAudio(){
+  window.speechSynthesis.cancel();
+  if(ttsState.actIdx!==null){updatePlayBtn(ttsState.actIdx,false);stopProg(ttsState.actIdx,false);}
+  ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+}
+function updatePlayBtn(idx,playing,paused){
+  const btn=document.getElementById('l-play-'+idx);
+  if(!btn)return;
+  btn.textContent=playing?'⏸ Pause':paused?'▶ Resume':'▶ Play';
+}
+function startProg(idx,charLen,resume){
+  clearInterval(ttsState.progTimer);
+  const rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  const totalMs=(charLen/18)*1000/rate;
+  const elapsed=resume?ttsState.elapsed:0;
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  ttsState.progTimer=setInterval(()=>{
+    const spent=elapsed+(Date.now()-ttsState.startTime);
+    const pct=Math.min(100,(spent/totalMs)*100);
+    if(bar)bar.style.width=pct+'%';
+    const rem=Math.max(0,Math.round((totalMs-spent)/1000));
+    if(time)time.textContent=`${Math.floor(rem/60)}:${String(rem%60).padStart(2,'0')}`;
+    if(pct>=100)clearInterval(ttsState.progTimer);
+  },200);
+}
+function stopProg(idx,finished){
+  clearInterval(ttsState.progTimer);
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  if(bar)bar.style.width=finished?'100%':'0%';
+  if(time)time.textContent='0:00';
+}
+function changeSpeed(idx){
+  const sel=document.getElementById('l-speed-'+idx);
+  if(!sel)return;
+  if(ttsState.actIdx===idx&&(ttsState.playing||ttsState.paused)){
+    stopAudio(); playAudio(idx);
+  }
+}
+function toggleTranscript(idx){
+  const box=document.getElementById('l-trans-'+idx);
+  const btn=document.getElementById('l-tbtn-'+idx);
+  if(!box)return;
+  const open=box.style.display==='block';
+  box.style.display=open?'none':'block';
+  if(btn)btn.textContent=open?'📄 Show Transcript':'📄 Hide Transcript';
+}
+
+// ── Case Studies ──────────────────────────────────────────────
+function initCases(){
+  const c=document.getElementById('casesContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  casesStudies.forEach(function(cs,ci){
+    h+='<div class="card">'
+      +'<div class="cs-tag">'+cs.tag+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+cs.title+'</div>'
+      +'<div class="cs-sub">'+cs.sub+'</div>'
+      +'<div class="card-bar"></div>';
+    cs.sections.forEach(function(s){
+      h+='<div class="cs-section"><h4 class="cs-sh">'+s.h+'</h4><p class="cs-p">'+s.t+'</p></div>';
+    });
+    h+='<div class="card-title" style="margin-top:22px;">Case Study Questions</div><div class="card-bar"></div>'
+      +'<div id="csmcq-'+ci+'"></div></div>';
+  });
+  c.innerHTML=h;
+  casesStudies.forEach(function(cs,ci){renderMCQ2('csmcq-'+ci,cs.qs,'cs'+ci,false);});
+}
+
+// ── Final Assessment ──────────────────────────────────────────
+let assAnswers={};
+function initAssessment(){
+  const c=document.getElementById('assessContainer');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const letters=['A','B','C','D'];
+  let h='';
+  assessQs.forEach(function(item,i){
+    h+='<div class="mcq-block" id="aq-'+i+'">'
+      +'<div class="mcq-q">'+(i+1)+'. '+item.q+'</div>'
+      +'<div class="mcq-opts">';
+    item.opts.forEach(function(opt,j){
+      h+='<div class="mcq-opt" onclick="pickAss('+i+','+j+')" id="ass-'+i+'-'+j+'">'
+        +'<span class="opt-letter">'+letters[j]+'</span>'+opt+'</div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+  assAnswers={};
+  document.getElementById('final-res').style.display='none';
+  document.getElementById('ass-sub').style.display='inline-flex';
+}
+function pickAss(qi,oi){
+  const block=document.getElementById('aq-'+qi);
+  if(!block||block.dataset.done)return;
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    el.classList.toggle('selected',j===oi);
+  });
+  assAnswers[qi]=oi;
+}
+function submitAss(){
+  let attempts=parseInt(document.getElementById('att-disp')?.textContent||'0');
+  const maxAttempts=2;
+  if(attempts>=maxAttempts){
+    alert('You have used both attempts.');return;
+  }
+  const unanswered=assessQs.map((_,i)=>i).filter(i=>assAnswers[i]===undefined);
+  if(unanswered.length>0){
+    alert('Please answer all questions before submitting. Unanswered: '+unanswered.map(i=>i+1).join(', '));return;
+  }
+  // Mark answers
+  assessQs.forEach((item,i)=>{
+    const block=document.getElementById('aq-'+i);
+    if(!block)return;
+    block.dataset.done='1';
+    block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+      el.classList.remove('selected');
+      if(j===item.ans)el.classList.add('correct');
+      else if(j===assAnswers[i])el.classList.add('incorrect');
+      el.style.pointerEvents='none';
+    });
+  });
+  const correct=assessQs.filter((_,i)=>assAnswers[i]===assessQs[i].ans).length;
+  const pct=Math.round((correct/assessQs.length)*100);
+  const pass=pct>=70;
+  attempts++;
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent=attempts+' / 2';
+  const res=document.getElementById('final-res');
+  res.style.display='block';
+  const scoreColor=pass?'#00a651':'#d63031';
+  res.className='final-result '+(pass?'pass':'fail');
+  res.style.display='block';
+  res.innerHTML='<div class="final-score">'+pct+'<span style="font-size:22px">%</span></div>'
+    +'<div class="final-verdict">'+(pass?'🎉 Congratulations — You Passed!':'📚 Not Passed Yet')+'</div>'
+    +'<div class="final-msg">'+correct+' / '+assessQs.length+' correct · Pass mark: 70%</div>'
+    +(attempts<maxAttempts&&!pass?'<button class="btn-primary" onclick="resetAss()" style="margin-top:18px">Try Again (Attempt '+(attempts+1)+' of '+maxAttempts+')</button>':'')
+    +(attempts>=maxAttempts&&!pass?'<div style="margin-top:12px;font-size:13px;opacity:0.8;">Maximum attempts reached.</div>':'');
+  if(pass||attempts>=maxAttempts){
+    document.getElementById('ass-sub').style.display='none';
+  }
+}
+function resetAss(){
+  const c=document.getElementById('assessContainer');
+  if(c){c.dataset.built='';c.innerHTML='';}
+  assAnswers={};
+  const res=document.getElementById('final-res');
+  if(res){res.style.display='none';res.innerHTML='';}
+  const sub=document.getElementById('ass-sub');
+  if(sub)sub.style.display='inline-flex';
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent='0 / 2';
+  initAssessment();
+}
+
+// ── Bootstrap ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('mob-btn').addEventListener('click',openSidebar);
+  document.getElementById('overlay').addEventListener('click',closeSidebar);
+  goTo('overview');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

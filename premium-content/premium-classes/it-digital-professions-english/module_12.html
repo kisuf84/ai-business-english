@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Module 12: Innovation and Emerging Technologies — IT &amp; Digital Professions English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root{--navy:#0d1b2e;--navy-mid:#112240;--navy-light:#1a3357;--gold:#00bcd4;--gold-light:#26c6da;--gold-bright:#4dd0e1;--cream:#f0f4f8;--cream-dark:#dce8f0;--white:#ffffff;--text-light:#90b8cc;--text-mid:#4a7a96;--red-accent:#e53935;--green-accent:#00b86b;--teal:#0097a7;--sidebar-w:260px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);display:flex;min-height:100vh;overflow-x:hidden;}
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent;transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);}
+.sidebar-brand{padding:24px 22px 18px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-brand h1{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:700;color:var(--gold-bright);line-height:1.38;margin-bottom:3px;}
+.sidebar-brand .sub{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-mid);font-weight:500;}
+.level-badge{display:inline-block;margin-top:11px;background:var(--gold);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:1px;padding:3px 11px;border-radius:20px;text-transform:uppercase;}
+.sidebar-section-label{padding:20px 22px 7px;font-size:8.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--text-mid);font-weight:700;}
+.nav-item{display:flex;align-items:center;justify-content:space-between;padding:11px 22px;cursor:pointer;transition:all 0.18s;border-left:3px solid transparent;}
+.nav-item:hover{background:rgba(255,255,255,0.055);}
+.nav-item.active{background:rgba(245,184,0,0.12);border-left-color:var(--gold-light);}
+.nav-left{display:flex;align-items:center;gap:11px;}
+.nav-icon{font-size:15px;opacity:0.9;}
+.nav-label{font-size:13px;color:var(--text-light);font-weight:400;}
+.nav-item.active .nav-label{color:var(--white);font-weight:500;}
+.nav-badge{font-size:9.5px;font-weight:700;color:var(--navy);background:var(--gold-bright);padding:1px 7px;border-radius:12px;}
+#mob-btn{display:none;position:fixed;top:14px;left:14px;z-index:300;background:var(--navy);border:none;border-radius:10px;padding:10px 13px;cursor:pointer;color:var(--gold-bright);font-size:19px;box-shadow:0 3px 14px rgba(0,0,0,0.35);line-height:1;}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150;}
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;}
+.section{display:none;}.section.active{display:block;}
+.hero{background:linear-gradient(145deg,#06111f 0%,#0d1e35 50%,#081929 100%);padding:64px 64px 54px;position:relative;overflow:hidden;}
+.hero::before{content:'L1';position:absolute;right:-15px;bottom:-55px;font-family:'Playfair Display',serif;font-size:310px;font-weight:900;color:rgba(255,255,255,0.022);line-height:1;pointer-events:none;}
+.hero::after{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(245,184,0,0.05) 0%,transparent 70%);pointer-events:none;}
+.module-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);padding:7px 18px;border-radius:50px;font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-light);font-weight:600;margin-bottom:30px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4.6vw,58px);font-weight:900;color:var(--white);line-height:1.08;}
+.hero h2 .accent{color:var(--gold-bright);}
+.hero-desc{font-size:15px;color:var(--text-light);max-width:620px;line-height:1.78;margin-top:20px;font-weight:300;}
+.hero-stats{display:flex;gap:36px;margin-top:44px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;gap:3px;}
+.stat-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--gold-bright);line-height:1;}
+.stat-l{font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(160,180,210,0.7);font-weight:600;}
+.prog-wrap{background:var(--navy-mid);padding:16px 64px;display:flex;align-items:center;gap:20px;}
+.prog-label{font-size:11.5px;font-weight:600;color:var(--text-light);white-space:nowrap;}
+.prog-track{flex:1;height:6px;background:rgba(255,255,255,0.09);border-radius:6px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:6px;width:0%;transition:width 1s ease;}
+.prog-pct{font-size:12.5px;font-weight:700;color:var(--gold-bright);min-width:36px;text-align:right;}
+.content{padding:48px 60px;}
+.card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.card-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.card-bar{width:40px;height:3px;background:var(--gold-light);border-radius:3px;margin-bottom:20px;}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.outcome{display:flex;align-items:flex-start;gap:13px;background:var(--cream);border-radius:11px;padding:14px 16px;border-left:3px solid var(--gold-light);}
+.out-num{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--gold);line-height:1;min-width:24px;}
+.out-text{font-size:13.5px;color:var(--navy);line-height:1.52;}
+.speaking-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.speaking-card{background:var(--cream);border-radius:11px;padding:18px 20px;border-top:3px solid var(--gold-light);transition:transform 0.2s,box-shadow 0.2s;cursor:default;}
+.speaking-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(11,27,48,0.1);}
+.q-num{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;margin-bottom:8px;letter-spacing:1px;}
+.q-text{font-size:13.5px;color:var(--navy);line-height:1.55;}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.wb-card{background:var(--navy);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:transform 0.2s;cursor:default;}
+.wb-card:hover{transform:translateY(-2px);}
+.wb-emoji{font-size:28px;line-height:1;display:block;margin-bottom:2px;}
+.wb-term{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;color:var(--gold-bright);}
+.wb-def{font-size:12px;color:var(--text-light);line-height:1.52;}
+.reading-box{background:var(--cream);border-radius:12px;padding:26px 30px;margin-bottom:26px;border-left:4px solid var(--gold-light);}
+.reading-box h4{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.reading-box p{font-size:14px;color:#1a2e45;line-height:1.84;margin-bottom:13px;}
+.reading-box p:last-child{margin-bottom:0;}
+.mcq-block{margin-bottom:22px;}
+.mcq-q{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:11px;line-height:1.5;}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;}
+.mcq-opt{display:flex;align-items:center;gap:10px;background:var(--cream);border:2px solid var(--cream-dark);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.18s;font-size:13.5px;color:var(--navy);user-select:none;-webkit-tap-highlight-color:transparent;}
+.mcq-opt:hover{border-color:var(--gold-light);background:#fef8e0;}
+.mcq-opt.selected{border-color:var(--gold);background:#fff3c0;}
+.mcq-opt.correct{border-color:var(--green-accent);background:#e6f8ee;color:#0a6b35;}
+.mcq-opt.incorrect{border-color:var(--red-accent);background:#fdecea;color:#881a18;}
+.opt-letter{font-family:'DM Mono',monospace;font-size:10.5px;font-weight:700;width:23px;height:23px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy);}
+.mcq-opt.correct .opt-letter{background:var(--green-accent);color:white;}
+.mcq-opt.incorrect .opt-letter{background:var(--red-accent);color:white;}
+.lmcq-opt{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.12)!important;color:var(--text-light)!important;}
+.lmcq-opt:hover{border-color:var(--gold-light)!important;background:rgba(245,184,0,0.1)!important;}
+.lmcq-opt.selected{border-color:var(--gold)!important;background:rgba(245,184,0,0.18)!important;color:var(--gold-bright)!important;}
+.lmcq-opt.correct{border-color:var(--green-accent)!important;background:rgba(0,166,81,0.18)!important;color:#4dde9a!important;}
+.lmcq-opt.incorrect{border-color:var(--red-accent)!important;background:rgba(214,48,49,0.18)!important;color:#ff8b8b!important;}
+.check-btn{margin-top:15px;background:var(--navy);color:var(--gold-bright);border:none;padding:11px 26px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.check-btn:hover{background:var(--navy-light);}
+.l-check{background:rgba(255,255,255,0.1)!important;color:var(--gold-bright)!important;}
+.l-check:hover{background:rgba(255,255,255,0.18)!important;}
+.score-disp{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;margin-top:14px;}
+.ex-tabs{display:flex;gap:4px;margin-bottom:26px;background:var(--cream-dark);border-radius:12px;padding:4px;flex-wrap:wrap;}
+.ex-tab{flex:1;min-width:130px;text-align:center;padding:10px;border-radius:9px;font-size:12.5px;font-weight:500;cursor:pointer;color:var(--text-mid);transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.ex-tab.active{background:var(--navy);color:var(--gold-bright);}
+.gram-ref{background:var(--navy);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.gram-ref h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:14px;}
+.gram-rule{background:rgba(255,255,255,0.065);border-radius:9px;padding:14px 18px;margin-bottom:11px;border-left:3px solid var(--gold-light);}
+.gram-rule p,.gram-rule li{font-size:13px;color:var(--text-light);line-height:1.66;}
+.gram-rule code{font-family:'DM Mono',monospace;background:rgba(245,184,0,0.18);color:var(--gold-bright);padding:1px 6px;border-radius:4px;font-size:12px;}
+.gram-rule ul{padding-left:18px;}
+.gf-item{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:14px;color:var(--navy);line-height:2.2;margin-bottom:12px;}
+.gf-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);padding:2px 7px;width:160px;outline:none;text-align:center;}
+.gf-input.correct{border-color:var(--green-accent);color:var(--green-accent);}
+.gf-input.incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.tf-row{background:var(--cream);border-radius:10px;padding:13px 17px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.tf-stmt{font-size:13.5px;color:var(--navy);flex:1;line-height:1.52;}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;}
+.tf-btn{padding:7px 16px;border-radius:8px;border:2px solid var(--cream-dark);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:white;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.tf-btn:hover{border-color:var(--gold-light);}
+.tf-btn.sel-t,.tf-btn.sel-f{background:var(--navy);color:white;border-color:var(--navy);}
+.tf-btn.cor{background:var(--green-accent);color:white;border-color:var(--green-accent);}
+.tf-btn.wrg{background:var(--red-accent);color:white;border-color:var(--red-accent);}
+.writing-prompt{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.writing-prompt h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:10px;}
+.writing-prompt p{font-size:13.5px;color:var(--text-light);line-height:1.76;}
+.writing-tags{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
+.wtag{background:rgba(245,184,0,0.18);color:var(--gold-bright);font-size:11px;font-weight:600;letter-spacing:0.8px;padding:4px 12px;border-radius:20px;text-transform:uppercase;border:1px solid rgba(245,184,0,0.3);}
+.w-textarea{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;}
+.w-textarea:focus{border-color:var(--gold-light);background:white;}
+.w-counter{font-size:12px;color:var(--text-mid);text-align:right;margin-bottom:14px;}
+.w-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:6px;}
+.ac-btn{background:var(--gold);color:var(--navy);border:none;padding:13px 28px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(224,155,0,0.35);}
+.ac-btn:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.clear-btn{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:12px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.clear-btn:hover{border-color:var(--red-accent);color:var(--red-accent);}
+.fb-panel{display:none;background:#131e2e;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-panel.show{display:block;}
+.fb-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-title-row{display:flex;align-items:center;gap:10px;}
+.fb-emoji{font-size:20px;}
+.fb-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold-bright);}
+.fb-score-badge{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--gold-bright);}
+.fb-level{font-size:14px;font-weight:600;color:var(--gold-bright);}
+.fb-section{margin-bottom:14px;}
+.fb-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);margin-bottom:7px;}
+.fb-item{font-size:13px;color:var(--text-light);line-height:1.62;padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid var(--gold-light);}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);line-height:1.7;font-style:italic;}
+.listen-card{background:var(--navy);border-radius:16px;padding:28px 32px;margin-bottom:20px;}
+.listen-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.listen-icon{width:52px;height:52px;border-radius:14px;background:rgba(245,184,0,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.listen-meta{flex:1;}
+.listen-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-bright);margin-bottom:3px;}
+.listen-sub{font-size:12px;color:var(--text-mid);}
+.player-row{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px 18px;margin-bottom:14px;}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--navy);flex-shrink:0;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.play-btn:hover{background:var(--gold-bright);transform:scale(1.06);}
+.prog-audio{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.prog-audio-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.5s linear;}
+.time-disp{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:70px;text-align:right;}
+.speed-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.speed-label{font-size:11px;color:var(--text-mid);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.spd-btn{padding:5px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.spd-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.replay-btn{padding:5px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:auto;}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.trans-toggle{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);border-radius:9px;padding:10px 16px;cursor:pointer;margin-bottom:0;transition:background 0.18s;-webkit-tap-highlight-color:transparent;}
+.trans-toggle:hover{background:rgba(255,255,255,0.09);}
+.trans-label{font-size:12px;font-weight:600;color:var(--text-mid);letter-spacing:0.5px;}
+.trans-arrow{font-size:11px;color:var(--text-mid);transition:transform 0.22s;}
+.trans-toggle.open .trans-arrow{transform:rotate(180deg);}
+.trans-body{max-height:0;overflow:hidden;transition:max-height 0.36s ease;}
+.trans-body.open{max-height:800px;}
+.trans-text{font-size:13px;color:var(--text-light);line-height:1.78;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:0 0 9px 9px;border-top:1px solid rgba(255,255,255,0.06);}
+.listen-mcq-wrap{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+.listen-mcq-title{font-size:13px;font-weight:700;color:var(--gold-bright);letter-spacing:0.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.case-card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.case-header{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:12px;padding:22px 26px;margin-bottom:22px;}
+.case-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);font-weight:700;margin-bottom:8px;}
+.case-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.case-sub{font-size:12px;color:var(--text-mid);}
+.case-section{margin-bottom:18px;}
+.case-section h5{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.case-section p{font-size:14px;color:var(--navy);line-height:1.78;}
+.final-result{display:none;border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.final-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.final-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.final-score{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;line-height:1;}
+.final-verdict{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:8px;}
+.final-msg{font-size:14px;opacity:0.88;max-width:420px;margin:0 auto;line-height:1.68;}
+.ass-btn{margin-top:18px;background:var(--gold);color:var(--navy);border:none;padding:13px 32px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.ass-btn:hover{background:var(--gold-bright);}
+.retry-btn{display:none;margin-top:8px;margin-left:10px;background:rgba(255,255,255,0.15);color:var(--navy);border:1.5px solid var(--cream-dark);padding:11px 28px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.retry-btn:hover{background:rgba(255,255,255,0.25);}
+/* ─ Gap Fill & True/False ─ */
+.gf-block{background:var(--cream);border-radius:10px;padding:16px 18px;margin-bottom:12px;border-left:3px solid var(--gold-light);}
+.gf-sentence{font-size:14px;color:var(--navy);line-height:2.1;}
+.gf-fb{font-size:12.5px;margin-top:6px;min-height:18px;}
+.tf-block{background:var(--cream);border-radius:10px;padding:15px 18px;margin-bottom:10px;border-left:3px solid var(--gold-light);}
+.tf-q{font-size:14px;color:var(--navy);line-height:1.55;margin-bottom:10px;}
+.tf-fb{font-size:12.5px;margin-top:8px;min-height:18px;}
+/* ─ Listening player ─ */
+.l-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.l-icon{font-size:30px;line-height:1;}
+.l-sub{font-size:12px;color:var(--text-mid);margin-top:3px;}
+.l-player{background:var(--navy);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+.l-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.l-play-btn{background:var(--gold);color:var(--navy);border:none;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.l-play-btn:hover{background:var(--gold-bright);}
+.l-speed{background:rgba(255,255,255,0.1);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.18);padding:8px 12px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;outline:none;}
+.l-trans-btn{background:rgba(255,255,255,0.08);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.15);padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;transition:all 0.2s;}
+.l-trans-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.l-progress{display:flex;align-items:center;gap:12px;}
+.l-bar-track{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.l-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.3s linear;}
+.l-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:36px;text-align:right;}
+.l-transcript-box{background:rgba(11,27,48,0.04);border:1px solid var(--cream-dark);border-radius:10px;padding:18px 22px;margin-bottom:18px;}
+.l-transcript-text{font-size:13px;color:var(--navy);line-height:1.8;}
+/* ─ Case Studies ─ */
+.cs-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+.cs-sub{font-size:12.5px;color:var(--text-mid);margin-bottom:16px;}
+.cs-section{margin-bottom:20px;padding:18px 20px;background:var(--cream);border-radius:10px;border-left:3px solid var(--gold-light);}
+.cs-sh{font-size:13.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.cs-p{font-size:14px;color:var(--navy);line-height:1.78;}
+/* ─ Writing ─ */
+.writing-area{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;margin-top:14px;}
+.writing-area:focus{border-color:var(--gold-light);background:white;}
+.writing-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.w-count{font-size:12px;color:var(--text-mid);}
+.btn-primary{background:var(--gold);color:var(--navy);border:none;padding:12px 26px;border-radius:50px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-primary:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--red-accent);color:var(--red-accent);}
+/* ─ AI Feedback ─ */
+.fb-box{background:#0e1d2f;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-box.fb-warn{background:#2d1010;border-color:rgba(214,48,49,0.3);color:#f8a5a5;font-size:13.5px;line-height:1.7;}
+.fb-box.fb-loading{color:var(--text-light);font-size:13.5px;}
+.fb-score-row{display:flex;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap;}
+.fb-score{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;line-height:1;}
+.fb-summary{font-size:13.5px;color:var(--text-light);line-height:1.72;flex:1;}
+.fb-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.fb-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;}
+.fb-good .fb-col-title{color:var(--green-accent);}
+.fb-improve .fb-col-title{color:var(--gold-bright);}
+.fb-item{font-size:13px;color:var(--text-light);padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid rgba(255,255,255,0.15);line-height:1.6;}
+.fb-example{background:rgba(255,255,255,0.05);border-radius:9px;padding:12px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;}
+.fb-ex-label{font-weight:600;color:var(--gold-bright);font-style:normal;}
+/* ─ Grammar Review ─ */
+.gr-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.gr-icon{font-size:28px;}
+.gr-body{display:flex;flex-direction:column;gap:14px;}
+.gr-item{background:var(--cream);border-radius:10px;padding:16px 18px;border-left:3px solid var(--gold-light);}
+.gr-label{font-size:12.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.gr-examples{display:flex;flex-direction:column;gap:6px;}
+.gr-ex{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--navy);background:white;padding:8px 14px;border-radius:7px;border:1px solid var(--cream-dark);}
+.gr-note{font-size:12.5px;color:var(--text-mid);margin-top:10px;padding:8px 12px;background:rgba(224,155,0,0.07);border-radius:7px;border-left:2px solid var(--gold-light);}
+/* ─ Assessment result ─ */
+.assess-result{border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.assess-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.assess-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.assess-score{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;line-height:1;}
+.assess-label{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:6px;}
+.assess-detail{font-size:13.5px;opacity:0.88;}
+
+/* ─── Writing section ──────────────────────────────── */
+.w-task-header{margin-bottom:4px;}
+.w-task-pill{display:inline-block;background:rgba(224,155,0,0.15);color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 13px;border-radius:20px;border:1px solid rgba(224,155,0,0.3);margin-bottom:8px;}
+.w-prompt-box{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:13px;padding:22px 26px;margin:18px 0;border-left:4px solid var(--gold-light);}
+.w-prompt-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-bright);margin-bottom:10px;}
+.w-prompt-text{font-size:13.5px;color:var(--text-light);line-height:1.82;}
+.w-target{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;color:var(--gold-light);}
+.w-meta-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:8px 0 16px;}
+.w-counter{font-size:12.5px;color:var(--text-mid);font-family:'DM Mono',monospace;}
+
+/* ─── AI Feedback result box ────────────────────────── */
+.fb-result-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-result-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-result-label{font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-result-score{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-align:right;}
+.fb-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-check{display:inline-block;font-size:12.5px;font-weight:600;color:var(--green-accent);background:rgba(0,166,81,0.1);padding:5px 12px;border-radius:20px;}
+.fb-check.fb-check-warn{color:#f39c12;background:rgba(243,156,18,0.1);}
+.fb-suggest-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.fb-suggest-list{margin:0 0 14px 18px;padding:0;}
+.fb-suggest-list li{font-size:13px;color:var(--text-light);line-height:1.68;margin-bottom:4px;}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;margin-bottom:14px;}
+.fb-corrected-label{font-style:normal;font-weight:700;color:var(--gold-bright);}
+.fb-footer-stats{font-size:11.5px;color:rgba(155,179,204,0.5);border-top:1px solid rgba(255,255,255,0.07);padding-top:10px;margin-top:8px;font-family:'DM Mono',monospace;}
+.fb-warn-box{background:#2d1010;border:1px solid rgba(214,48,49,0.3);border-radius:10px;padding:14px 18px;color:#f8a5a5;font-size:13.5px;margin-top:14px;}
+.fb-loading-box{background:#111e2f;border-radius:10px;padding:18px 22px;color:var(--text-light);font-size:13.5px;margin-top:14px;display:flex;align-items:center;gap:10px;}
+
+/* ─── Gap Fill — Image 1 design ───────────────────────────────── */
+.gf-card{padding:32px 36px;}
+.gf-instr{font-size:13.5px;color:var(--text-mid);margin-bottom:22px;line-height:1.6;}
+.gf-bank-box{background:var(--cream);border-radius:14px;padding:20px 22px;margin-bottom:28px;border:1px solid var(--cream-dark);}
+.gf-bank-pills{display:flex;flex-wrap:wrap;gap:10px;}
+.gf-pill{background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:50px;cursor:default;transition:opacity 0.25s,transform 0.2s;}
+.gf-pill.gf-pill-used{opacity:0.28;text-decoration:line-through;}
+.gf-sentences{display:flex;flex-direction:column;gap:26px;}
+.gf-row{}
+.gf-sentence-text{font-size:14.5px;color:var(--navy);line-height:1.9;}
+.gf-blank-wrap{display:inline-block;position:relative;vertical-align:bottom;}
+.gf-underline-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14.5px;color:var(--navy);padding:1px 8px 2px;width:170px;outline:none;text-align:center;transition:border-color 0.2s;}
+.gf-underline-input::placeholder{color:rgba(90,120,153,0.5);font-size:13px;}
+.gf-underline-input.gf-correct{border-color:var(--green-accent);color:var(--green-accent);font-weight:600;}
+.gf-underline-input.gf-incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.gf-underline-input:disabled{background:transparent;}
+.gf-row-fb{margin-top:4px;min-height:18px;padding-left:4px;}
+.gf-fb-ok{font-size:12px;font-weight:700;color:var(--green-accent);}
+.gf-fb-err{font-size:12px;font-weight:600;color:var(--red-accent);}
+
+/* ─── True/False — Image 2 design ─────────────────────────────── */
+.tf-card{padding:32px 36px;}
+.tf-instr{font-size:13.5px;color:var(--gold);margin-bottom:22px;font-weight:500;}
+.tf-list{display:flex;flex-direction:column;gap:12px;}
+.tf-item{background:var(--cream);border-radius:12px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;transition:box-shadow 0.2s;}
+.tf-item[data-done]{opacity:0.92;}
+.tf-item-stmt{font-size:14px;color:var(--navy);line-height:1.58;flex:1;min-width:200px;}
+.tf-item-btns{display:flex;gap:10px;flex-shrink:0;}
+.tf-item-btn{padding:10px 26px;border-radius:9px;border:2px solid var(--cream-dark);font-size:13.5px;font-weight:700;cursor:pointer;background:white;font-family:'DM Sans',sans-serif;color:var(--navy);transition:all 0.18s;-webkit-tap-highlight-color:transparent;}
+.tf-item-btn:hover:not(:disabled){border-color:var(--gold-light);background:#fef8e0;}
+.tf-item-btn.tf-btn-correct{background:var(--green-accent);border-color:var(--green-accent);color:white;}
+.tf-item-btn.tf-btn-wrong{background:var(--red-accent);border-color:var(--red-accent);color:white;}
+.tf-item-btn:disabled{cursor:default;}
+.tf-item-fb{width:100%;margin-top:2px;min-height:18px;font-size:12.5px;}
+.tf-fb-ok{color:var(--green-accent);font-weight:700;}
+.tf-fb-err{color:var(--red-accent);font-weight:600;}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{display:inline-block;animation:spin 1s linear infinite;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}#mob-btn{display:flex;align-items:center;justify-content:center;}
+  #main{margin-left:0;}.hero{padding:60px 22px 40px;}.content{padding:28px 18px;}
+  .prog-wrap{padding:12px 22px;}.outcomes-grid,.speaking-grid,.wb-grid{grid-template-columns:1fr;}.hero-stats{gap:22px;}
+}
+@media(max-width:600px){
+  .hero{padding:56px 16px 36px;}.content{padding:22px 14px;}.card{padding:22px 18px;}
+  .listen-card{padding:20px 16px;}.reading-box{padding:18px 16px;}.player-row{flex-wrap:wrap;gap:10px;}.time-disp{min-width:auto;}
+}
+
+
+
+
+
+/* ─── Auto-Correction Report UI (Module 6+) ─────────────────────── */
+.fb-report-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-report-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:12px;}
+.fb-report-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-report-icon{font-size:16px;}
+.fb-report-score{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
+.fb-quick-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-cats{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.fb-cat-row{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 16px;}
+.fb-cat-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.fb-cat-icon{font-size:15px;}
+.fb-cat-label{font-size:13px;color:var(--white);}
+.fb-cat-good{font-size:11px;font-weight:700;color:#00c46a;background:rgba(0,196,106,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(0,196,106,0.3);}
+.fb-cat-sat{font-size:11px;font-weight:700;color:#f5b800;background:rgba(245,184,0,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(245,184,0,0.3);}
+.fb-cat-att{font-size:11px;font-weight:700;color:#e05c5c;background:rgba(224,92,92,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(224,92,92,0.3);}
+.fb-cat-comment{font-size:13px;color:var(--text-light);line-height:1.7;}
+.fb-corrected-block{background:rgba(255,255,255,0.04);border-left:3px solid var(--gold-light);border-radius:0 8px 8px 0;padding:11px 16px;font-size:13px;color:var(--text-light);line-height:1.72;margin-bottom:12px;font-style:italic;}
+.fb-corrected-tag{font-style:normal;font-weight:700;color:var(--gold-bright);display:block;margin-bottom:4px;}
+.fb-overall{font-size:13px;color:#00c46a;margin-bottom:10px;font-weight:500;}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ─── Gap-Fill Redesign (auto-graded) ───────────────────────────────────── */
+.gf-bank-label{font-size:11px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.gf-num{color:var(--gold-bright);font-weight:700;min-width:22px;display:inline-block;}
+.gf-btn-bar{display:flex;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.gf-check-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;font-size:13px;padding:10px 22px;border:none;border-radius:8px;cursor:pointer;transition:opacity .15s;}
+.gf-check-btn:hover{opacity:.88;}
+.gf-check-btn:disabled{cursor:not-allowed;opacity:.5;}
+.gf-reset-btn{background:rgba(255,255,255,0.07);color:var(--text-light);font-size:13px;font-weight:600;padding:10px 18px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;cursor:pointer;transition:background .15s;}
+.gf-reset-btn:hover{background:rgba(255,255,255,0.12);}
+.gf-score-display{font-size:15px;margin-left:4px;}
+.gf-pill-highlight{outline:2px solid var(--gold-bright) !important;opacity:1 !important;}
+.gf-fb-err strong{color:var(--gold-bright);}
+
+
+
+
+
+
+
+
+</style>
+</head>
+<body>
+<button id="mob-btn" onclick="openSidebar()">&#9776;</button>
+<div id="overlay" onclick="closeSidebar()"></div>
+<nav id="sidebar">
+  <div class="sidebar-brand"><h1>IT &amp; Digital Professions English</h1><div class="sub">Professional Course Series</div><span class="level-badge">B1&#8211;B2 Level</span></div>
+  <div class="sidebar-section-label">Module 12</div>
+  <div class="nav-item active" onclick="goTo('sec-overview')"><div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-speaking')"><div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-wordbank')"><div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-reading')"><div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-vocab')"><div class="nav-left"><span class="nav-icon">🔤</span><span class="nav-label">Vocabulary</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-grammar')"><div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Grammar</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-gramreview')"><div class="nav-left"><span class="nav-icon">📋</span><span class="nav-label">Grammar Review</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-writing')"><div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div><span class="nav-badge">AI</span></div>
+  <div class="nav-item" onclick="goTo('sec-listening')"><div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div><span class="nav-badge">4</span></div>
+  <div class="nav-item" onclick="goTo('sec-cases')"><div class="nav-left"><span class="nav-icon">💡</span><span class="nav-label">Case Studies</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-assessment')"><div class="nav-left"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></div><span class="nav-badge">20</span></div>
+</nav>
+<main id="main">
+<section id="sec-overview" class="section active">
+  <div class="hero"><div class="module-pill">🚀 &nbsp; Module 12 &nbsp;·&nbsp; IT &amp; Digital Professions English</div><h2>Innovation and<br><span class="accent">Emerging Technologies</span></h2><p class="hero-desc">Master the vocabulary of AI, machine learning, blockchain, IoT, quantum computing, and innovation strategy — from algorithmic bias and responsible AI to the Hype Cycle, crossing the chasm, and technology readiness levels. Build the critical language skills to evaluate technology claims, discuss ethics, and communicate about emerging trends with professional rigour and confidence.</p><div class="hero-stats"><div class="stat"><span class="stat-n">21</span><span class="stat-l">Key Terms</span></div><div class="stat"><span class="stat-n">11</span><span class="stat-l">Sections</span></div><div class="stat"><span class="stat-n">4</span><span class="stat-l">Audio Activities</span></div><div class="stat"><span class="stat-n">B1–B2</span><span class="stat-l">CEFR Level</span></div></div></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" id="progFill"></div></div><span class="prog-pct" id="progPct">0%</span></div>
+  <div class="content" id="overviewContent"></div>
+</section>
+<section id="sec-speaking" class="section">
+  <div class="hero"><div class="module-pill">🎙️ &nbsp; Speaking Practice</div><h2>Discussion <span class="accent">Questions</span></h2><p class="hero-desc">Practise speaking about emerging technologies, AI ethics, innovation strategy, and the adoption lifecycle.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:9%"></div></div><span class="prog-pct">9%</span></div>
+  <div class="content" id="speakingContent"></div>
+</section>
+<section id="sec-wordbank" class="section">
+  <div class="hero"><div class="module-pill">📚 &nbsp; Word Bank</div><h2>Innovation &amp; Technology <span class="accent">Vocabulary</span></h2><p class="hero-desc">Study these 21 essential terms covering AI, blockchain, IoT, quantum computing, and emerging technology strategy.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:18%"></div></div><span class="prog-pct">18%</span></div>
+  <div class="content" id="wordBankContent"></div>
+</section>
+<section id="sec-reading" class="section">
+  <div class="hero"><div class="module-pill">📖 &nbsp; Reading</div><h2>Texts &amp; <span class="accent">Comprehension</span></h2><p class="hero-desc">Read two professional texts on responsible AI development and the technology adoption lifecycle.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:27%"></div></div><span class="prog-pct">27%</span></div>
+  <div class="content" id="readingContent"></div>
+</section>
+<section id="sec-vocab" class="section">
+  <div class="hero"><div class="module-pill">🔤 &nbsp; Vocabulary Exercises</div><h2>Practice <span class="accent">Exercises</span></h2><p class="hero-desc">Three exercise types to master emerging technology vocabulary: multiple choice, gap-fill, and true/false.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:36%"></div></div><span class="prog-pct">36%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocab(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocab(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocab(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vex-0"></div>
+    <div id="vex-1" style="display:none"></div>
+    <div id="vex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-grammar" class="section">
+  <div class="hero"><div class="module-pill">✏️ &nbsp; Grammar</div><h2>Grammar <span class="accent">Exercises</span></h2><p class="hero-desc">Practise evaluative language for technology claims, speculative future forms for emerging technology, and concessive structures for balanced analysis.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:45%"></div></div><span class="prog-pct">45%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGram(0,this)">Evaluative Language</div>
+      <div class="ex-tab" onclick="showGram(1,this)">Speculative Futures</div>
+      <div class="ex-tab" onclick="showGram(2,this)">Concessive Structures</div>
+    </div>
+    <div id="gex-0"></div>
+    <div id="gex-1" style="display:none"></div>
+    <div id="gex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-gramreview" class="section">
+  <div class="hero"><div class="module-pill">📋 &nbsp; Grammar Review</div><h2>Reference <span class="accent">Guide</span></h2><p class="hero-desc">Three reference boxes: evaluative language in technology strategy, speculative future forms, and concessive structures for balanced technology analysis.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:54%"></div></div><span class="prog-pct">54%</span></div>
+  <div class="content" id="gramRevContent"></div>
+</section>
+<section id="sec-writing" class="section">
+  <div class="hero"><div class="module-pill">✍️ &nbsp; Writing + AI Feedback</div><h2>Writing <span class="accent">Activities</span></h2><p class="hero-desc">Write a technology horizon briefing for senior leadership and an AI-powered innovation proposal. Receive AI feedback across Grammar, Vocabulary, Tone, Structure, and Fluency.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:63%"></div></div><span class="prog-pct">63%</span></div>
+  <div class="content" id="writingContent"></div>
+</section>
+<section id="sec-listening" class="section">
+  <div class="hero"><div class="module-pill">🎧 &nbsp; Listening</div><h2>Audio <span class="accent">Activities</span></h2><p class="hero-desc">Listen to an emerging technology strategy meeting, an AI bias ethics review, a digital twin investment pitch, and a technology scouting briefing on three technologies to watch.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:72%"></div></div><span class="prog-pct">72%</span></div>
+  <div class="content" id="listeningContent"></div>
+</section>
+<section id="sec-cases" class="section">
+  <div class="hero"><div class="module-pill">💡 &nbsp; Case Studies</div><h2>Real-World <span class="accent">Cases</span></h2><p class="hero-desc">Explore the EU AI Act — the world's first comprehensive AI regulation — and blockchain's journey from revolutionary protocol to cautionary tale of emerging technology hype.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:81%"></div></div><span class="prog-pct">81%</span></div>
+  <div class="content" id="casesContent"></div>
+</section>
+<section id="sec-assessment" class="section">
+  <div class="hero"><div class="module-pill">🏆 &nbsp; Final Assessment</div><h2>Module <span class="accent">Test</span></h2><p class="hero-desc">20 questions covering all module content. Pass mark: 70% (14/20). Two attempts allowed.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div><span class="prog-pct">90%</span></div>
+  <div class="content">
+    <div class="card">
+      <div class="card-title">🏆 Final Assessment</div><div class="card-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:22px;">Answer all 20 questions. You need 70% (14 correct) to pass. Attempts used: <strong id="att-disp">0 / 2</strong></p>
+      <div id="assessContainer"></div>
+      <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <button class="ass-btn" id="ass-sub" onclick="submitAss()">Submit Assessment</button>
+        <button class="retry-btn" id="ass-retry" onclick="resetAss()">&#8635; Try Again</button>
+      </div>
+      <div class="final-result" id="final-res"></div>
+    </div>
+  </div>
+</section>
+</main>
+<script>
+/* ══ Module 12: Innovation and Emerging Technologies ══ */
+const outcomes=["Identify and accurately use 21 essential terms spanning AI, machine learning, blockchain, IoT, quantum computing, and emerging technology strategy", "Read and analyse professional texts on responsible AI development and the technology adoption lifecycle", "Use precise evaluative language, speculative future forms, and concessive structures when discussing emerging technology claims and risks", "Draft a technology horizon briefing for senior leadership and an innovation proposal with professional rigour", "Listen to emerging technology strategy discussions, AI ethics reviews, innovation pitches, and technology scouting briefings", "Discuss emerging technology trends, adoption risks, ethical implications, and innovation strategy with professional fluency and critical thinking"];
+const speakingQs=["What is the difference between artificial intelligence, machine learning, and deep learning?", "What is generative AI, and how does it differ from earlier AI systems that classified or predicted rather than created?", "What is the technology adoption lifecycle, and what do the terms 'early adopter', 'early majority', and 'laggard' mean?", "What is the crossing the chasm problem, and why do many technology innovations fail to achieve mainstream adoption?", "What is the Gartner Hype Cycle, and why is it useful for technology strategists?", "What is blockchain, and what problem was it originally designed to solve?", "What is the Internet of Things (IoT), and what are the security risks specific to IoT deployments?", "What is quantum computing, and what types of problems might it be able to solve that classical computers cannot?", "What is responsible AI, and what dimensions does it cover — fairness, explainability, privacy, accountability?", "What is algorithmic bias, and how can it emerge even when the training data appears neutral?", "What is the difference between narrow AI and general AI, and does artificial general intelligence currently exist?", "What is a large language model (LLM), and how does it differ from earlier natural language processing approaches?", "What is automation bias, and what risks does it create when humans over-trust AI systems?", "What is edge computing, and why does it matter for IoT and real-time AI applications?", "What is digital twin technology, and what industries are using it most actively?", "What is the difference between innovation and invention? Can you give an example of each?", "What is a technology roadmap, and how does it differ from a product roadmap?", "What is open source innovation, and what are the advantages and risks of building on open-source foundations?", "What ethical obligations do organisations have when deploying AI systems that make decisions about people?", "What is the role of regulation in emerging technology adoption, and can you give an example of regulation that shaped the trajectory of a technology?", "If you were a CTO advising a traditional manufacturer on which emerging technologies to invest in over the next three years, what would you prioritise and why?"];
+const wordBank=[{emoji:"🤖",term:"Artificial Intelligence",def:"The simulation of human intelligence processes by computer systems — including learning (acquiring information and applying rules), reasoning (using rules to reach conclusions), and self-correction. Modern AI is dominated by machine learning approaches that learn patterns from data rather than following explicitly programmed rules. The term encompasses a wide spectrum: from narrow AI (systems that perform a specific task) to the theoretical concept of artificial general intelligence (AGI) that would match human cognitive abilities broadly."},
+  {emoji:"🧠",term:"Machine Learning",def:"A subset of artificial intelligence in which systems learn to perform tasks by identifying patterns in data — rather than following explicitly programmed instructions. Machine learning models are trained on historical data, generalise from it to new inputs, and improve with more data. Major paradigms: supervised learning (labelled training data), unsupervised learning (finding patterns without labels), and reinforcement learning (learning from rewards and penalties)."},
+  {emoji:"🌊",term:"Deep Learning",def:"A subset of machine learning that uses neural networks with many layers (hence 'deep') to learn representations of data with multiple levels of abstraction. Deep learning has driven breakthroughs in image recognition, speech recognition, natural language processing, and generative AI. It requires large amounts of training data and significant compute but has achieved human-level or above-human-level performance on many specific tasks."},
+  {emoji:"✨",term:"Generative AI",def:"AI systems that can generate new content — text, images, audio, video, code, or 3D models — by learning the statistical patterns of training data and producing outputs that resemble but differ from the training examples. Large language models (LLMs) such as GPT-4 and Claude are examples of generative AI for text. Generative AI has rapidly expanded from research curiosity to enterprise tool — raising questions about authorship, intellectual property, accuracy, and misuse."},
+  {emoji:"🔗",term:"Blockchain",def:"A distributed, append-only ledger technology in which records (blocks) are cryptographically linked in a chain, stored across a decentralised network of nodes, and verified by consensus mechanisms rather than a central authority. Originally designed as the infrastructure for Bitcoin (2009), blockchain has been applied to smart contracts, supply chain provenance, digital identity, and decentralised finance (DeFi). The technology's actual adoption outside cryptocurrency remains narrower than early hype predicted."},
+  {emoji:"📡",term:"Internet of Things",def:"The network of physical devices — sensors, actuators, appliances, vehicles, industrial equipment — embedded with connectivity, sensors, and software that enables them to collect and exchange data over the internet. IoT generates enormous volumes of real-time operational data with applications in smart manufacturing, predictive maintenance, smart cities, healthcare monitoring, and logistics. Security is a significant concern: IoT devices often have limited processing power for encryption and are frequently unpatched."},
+  {emoji:"⚛️",term:"Quantum Computing",def:"A computing paradigm that uses quantum mechanical phenomena — superposition (a qubit can represent 0, 1, or both simultaneously), entanglement (qubits can be correlated in ways impossible for classical bits), and interference — to perform certain types of computation exponentially faster than classical computers. Quantum computers are not universally faster: they offer advantages for specific problem types including cryptography, optimisation, molecular simulation, and machine learning. Current quantum computers are noisy and error-prone; large-scale practical quantum advantage remains a research frontier."},
+  {emoji:"⚖️",term:"Responsible AI",def:"A framework of principles and practices for developing and deploying AI systems in a manner that is fair, transparent, explainable, accountable, secure, and respectful of privacy and human rights. Key dimensions: fairness (the system does not discriminate against protected groups), explainability (decisions can be explained in terms humans can understand), accountability (clear ownership of the system's outcomes), and robustness (the system behaves reliably under varied conditions). Responsible AI has become a regulatory and commercial imperative as AI systems make consequential decisions."},
+  {emoji:"🎯",term:"Algorithmic Bias",def:"Systematic and unfair discrimination in the outputs of an algorithm — arising from biased training data, biased feature selection, or biased objective functions. Algorithmic bias can perpetuate or amplify existing societal inequalities: a recruitment AI trained on historical hiring decisions may perpetuate historical discrimination; a credit-scoring model trained on data from redlined neighbourhoods may encode geographic bias. Identifying and mitigating algorithmic bias requires diverse teams, adversarial testing, and ongoing monitoring."},
+  {emoji:"🌐",term:"Edge Computing",def:"A distributed computing paradigm that processes data at or near the source — on the device, in a local gateway, or at a nearby data centre — rather than sending all data to a centralised cloud. Edge computing is essential for IoT and real-time AI applications where sending data to the cloud introduces unacceptable latency: autonomous vehicles must make decisions in milliseconds; a factory floor defect detection system cannot wait for a round-trip to a cloud server."},
+  {emoji:"🪞",term:"Digital Twin",def:"A virtual model of a physical object, process, or system — continuously synchronised with real-time data from the physical counterpart, enabling simulation, monitoring, and optimisation without physical intervention. Originally developed in aerospace and manufacturing for predictive maintenance and design validation, digital twins are now applied in city planning (simulating traffic flow and energy consumption), healthcare (personalised physiological models), and construction (building information modelling)."},
+  {emoji:"📈",term:"Hype Cycle",def:"A graphical representation developed by Gartner that maps the typical trajectory of an emerging technology through five phases: Technology Trigger (initial breakthrough), Peak of Inflated Expectations (over-hype), Trough of Disillusionment (failure of early implementations), Slope of Enlightenment (realistic understanding), and Plateau of Productivity (mainstream adoption). The Hype Cycle is a useful strategic tool for calibrating technology investment timing — avoiding both early over-investment and late under-investment."},
+  {emoji:"🌉",term:"Crossing the Chasm",def:"A concept from Geoffrey Moore's 1991 book of the same name describing the difficult transition from early adopter enthusiasm to mainstream market adoption. The 'chasm' is the gap between visionary early adopters (who will tolerate immaturity for competitive advantage) and the pragmatic early majority (who need a proven, complete solution). Many technically successful innovations fail to cross the chasm because they cannot make the transition from niche enthusiasm to broad practical utility."},
+  {emoji:"🔬",term:"Proof of Concept",def:"A limited experiment or pilot implementation designed to demonstrate that a technology, approach, or idea is technically feasible and valuable — before committing to full development or deployment. A PoC typically has a constrained scope, a limited timeframe, and defined success criteria. It answers the question: 'Can this work?' rather than 'Is this ready for production?' A successful PoC reduces technical risk for subsequent investment decisions."},
+  {emoji:"🏭",term:"Industry 4.0",def:"The fourth industrial revolution — the ongoing transformation of manufacturing and industry through the integration of cyber-physical systems, IoT, cloud computing, AI, and big data analytics. Industry 4.0 enables smart factories where machines communicate with each other, adjust their own parameters in response to sensor data, and coordinate production without human intervention. It represents a convergence of the physical and digital in industrial settings, also referred to as the Industrial Internet of Things (IIoT)."},
+  {emoji:"🛡️",term:"AI Governance",def:"The policies, procedures, standards, and oversight mechanisms that organisations establish to ensure AI systems are developed and used responsibly, in compliance with legal requirements and ethical principles. AI governance covers model development (training data standards, bias testing), deployment (approval processes, human oversight), monitoring (ongoing performance and fairness testing), and incident response (what happens when AI causes harm). It is increasingly required by regulators: the EU AI Act (2024) creates a risk-based regulatory framework for AI systems."},
+  {emoji:"🔮",term:"Emerging Technology",def:"A technology that is in the process of development or early adoption and whose full commercial and societal impact is not yet known. Emerging technologies are characterised by uncertainty, rapid change, and the potential for significant disruption. Identifying which emerging technologies will achieve mainstream adoption — and when — is one of the most valuable and difficult tasks in corporate strategy. Most emerging technologies fail to achieve the impact predicted at their peak of hype."},
+  {emoji:"🚀",term:"Innovation",def:"The process of creating new value by developing and applying new ideas, technologies, processes, or business models — or combining existing ones in novel ways. Innovation is distinguished from invention (creating something new) and improvement (making something better): innovation requires that a new idea is adopted and creates value. Disruptive innovation (Christensen, 1997) describes innovations that begin in low-end or new-market niches and progressively displace established products and companies."},
+  {emoji:"🧩",term:"Technology Stack",def:"The combination of technologies — programming languages, frameworks, databases, infrastructure, and tools — used to build and run a software application or system. Choosing the right technology stack involves trade-offs between performance, developer availability, cost, maturity, and future maintainability. In emerging technology contexts, organisations must decide whether to build on new, immature stacks that may offer competitive advantage or on mature, well-supported stacks that reduce delivery risk."},
+  {emoji:"🌱",term:"Technology Readiness Level",def:"A scale (originally developed by NASA, now widely used in industry and government) from TRL 1 (basic principles observed) to TRL 9 (system proven in operational environment) that describes the maturity of a specific technology. TRL is used to assess whether a technology is ready for investment, deployment, or procurement. A technology at TRL 1-3 is conceptual; TRL 4-6 is in development and testing; TRL 7-9 is operational. The scale helps organisations avoid investing in technologies that are not sufficiently mature for their use case."},
+  {emoji:"🔄",term:"Disruptive Innovation",def:"A concept introduced by Clayton Christensen in 1997 describing how innovations that begin by serving overlooked segments with simpler, cheaper, or more accessible products progressively improve and displace established market leaders. Classic examples: digital photography disrupting film; streaming disrupting DVD rental; smartphones disrupting dedicated cameras and GPS devices. Disruptive innovations are typically dismissed by incumbents as inferior — until they have already transformed the market. The concept is widely used but also widely misapplied: not every new technology is disruptive in Christensen's precise sense."}];
+const readingTexts=[{title:"Text 1: Responsible AI — Why Ethics Is Now a Technical Requirement",subtitle:"How AI systems encode bias, why fairness and explainability have become engineering disciplines, and what organisations must do",paragraphs:["Artificial intelligence systems are increasingly making or influencing consequential decisions about people — approving or denying credit applications, screening job candidates, determining insurance premiums, assessing welfare benefit eligibility, and flagging individuals for law enforcement attention. As AI moves from analytical tool to decision-maker, the ethical questions that were once the province of academic philosophy have become urgent practical engineering challenges. Bias, fairness, transparency, and accountability are no longer optional considerations — they are technical requirements that must be designed in from the start, tested throughout development, and monitored in deployment.", "Algorithmic bias is one of the most well-documented risks of AI deployment. It arises when the data used to train an AI model reflects historical patterns of discrimination — and the model learns to perpetuate them. Amazon's experimental recruitment AI, trained on a decade of hiring decisions made predominantly by and for men, learned to penalise CVs that included the word 'women's' (as in 'women's chess club') and to downgrade graduates of all-women's colleges. The system was encoding the historical bias of the organisation, not identifying the best candidates. The AI was not designed to discriminate — the discrimination emerged from the data. This is why responsible AI requires not just technical testing but interrogation of the training data, the objective function (what the model is optimising for), and the deployment context.", "Explainability — the ability to provide a human-understandable account of why an AI system reached a particular decision — has become both a regulatory requirement and a practical necessity. The EU's General Data Protection Regulation gives individuals the right not to be subject to solely automated decision-making that significantly affects them, and the right to obtain an explanation of the logic involved. The challenge is that the most accurate AI models — deep neural networks — are often the least explainable: their decision-making occurs through millions of numerical parameters that cannot be translated into intuitive reasoning. The tension between accuracy and explainability is one of the central challenges of responsible AI deployment. For high-stakes decisions, organisations may need to accept a less accurate but explainable model over a more accurate black box."],questions:[{q:"What categories of consequential decisions are AI systems now making or influencing?",opts:["Only low-stakes decisions such as content recommendations and search results", "High-stakes decisions including credit, employment, insurance, welfare, and law enforcement", "Primarily commercial decisions such as pricing and logistics optimisation", "Only decisions in highly regulated industries such as healthcare and finance"],ans:1},{q:"What does the text say about ethics in AI development?",opts:["Ethics is a philosophical question separate from technical engineering practice", "Bias, fairness, transparency, and accountability are now technical requirements that must be designed in, tested, and monitored", "Ethics should be addressed after deployment when real-world impacts can be measured", "Ethics is primarily a concern for the organisations deploying AI, not the engineers building it"],ans:1},{q:"How does algorithmic bias arise according to the text?",opts:["Deliberate programming decisions by engineers who encode their own prejudices", "Intentional design choices by organisations that want to discriminate", "When training data reflects historical patterns of discrimination and the model learns to perpetuate them", "When the mathematical algorithm used has structural flaws that disadvantage certain groups"],ans:2},{q:"What happened with Amazon's experimental recruitment AI?",opts:["It identified candidates with biased CVs and flagged them for human review", "It learned to penalise CVs mentioning women's activities and downgrade graduates of all-women's colleges — encoding historical organisational bias", "It was successfully deployed and then decommissioned when it became outdated", "It was found to be less accurate than traditional human recruitment processes"],ans:1},{q:"What three elements does the text say responsible AI requires interrogating?",opts:["The programming language, the deployment infrastructure, and the monitoring framework", "The training data, the objective function, and the deployment context", "The developer team, the approval process, and the governance documentation", "The accuracy metrics, the speed of processing, and the cost of deployment"],ans:1},{q:"What is explainability in AI?",opts:["The ability of developers to document how a model was built", "The ability to provide a human-understandable account of why an AI system reached a particular decision", "The accuracy of an AI model when tested against held-out validation data", "The transparency of the commercial terms under which an AI product is licensed"],ans:1},{q:"What does the EU GDPR give individuals regarding automated decisions?",opts:["The right to know the names of all AI systems that have processed their data", "The right not to be subject to solely automated decision-making that significantly affects them, and the right to an explanation", "The right to veto any automated decision made about them within 30 days", "The right to have their data deleted from all AI training datasets on request"],ans:1},{q:"What is the tension between accuracy and explainability described in the text?",opts:["More accurate models require more training data, which is more expensive to collect and label", "The most accurate AI models — deep neural networks — are often the least explainable", "Highly explainable models must use simpler programming languages that limit their capabilities", "Accurate models process decisions faster, leaving less time for explainability mechanisms"],ans:1},{q:"What does the text suggest organisations may need to accept for high-stakes decisions?",opts:["Higher operational costs to fund the additional review processes required", "A less accurate but explainable model over a more accurate black box", "External auditing by a certified AI ethics organisation before any deployment", "A longer development timeline to allow for comprehensive bias testing"],ans:1},{q:"What does the text say distinguishes Amazon's recruitment AI from intentional discrimination?",opts:["Amazon engineers were unaware of the historical bias in the organisation's hiring data", "The AI was not designed to discriminate — the discrimination emerged from the training data", "The AI was a research prototype never used in actual hiring decisions", "The discriminatory patterns were too subtle to detect without statistical analysis"],ans:1}]},
+  {title:"Text 2: The Technology Adoption Lifecycle — From Early Adopters to the Laggard Majority",subtitle:"Why technologies diffuse through markets in predictable patterns — and what this means for innovation strategy",paragraphs:["The technology adoption lifecycle, developed by Everett Rogers in his 1962 book Diffusion of Innovations, describes the predictable pattern through which a new technology spreads through a market or society. Rogers identified five adopter categories, arranged in a bell curve: innovators (2.5% — technology enthusiasts who adopt first, tolerating high risk and immaturity for the excitement of being first); early adopters (13.5% — visionaries who see strategic advantage in new technology and are willing to pioneer its use); the early majority (34% — pragmatists who adopt once a technology is proven and well-supported); the late majority (34% — conservative adopters who wait until a technology is standard practice); and laggards (16% — those who adopt only when they have no choice, or not at all). The distribution is asymmetric in its implications: the innovators and early adopters represent only 16% of the market but often determine whether a technology achieves the critical mass needed for mainstream adoption.", "Geoffrey Moore's 1991 refinement — Crossing the Chasm — identified a specific discontinuity in the adoption curve between early adopters and the early majority. Moore argued that early adopters and the early majority have fundamentally different needs: early adopters want breakthrough technology and are willing to tolerate incompleteness; the early majority wants a complete, proven, well-integrated solution with references and support. A technology that succeeds with early adopters may still fail to cross the chasm if it cannot transition from innovative but rough to mature and reliable. The chasm explains why the technology graveyard is full of technically impressive innovations that never achieved mainstream adoption.", "Gartner's Hype Cycle offers a complementary framework for understanding technology maturity, focusing specifically on the emotional and investment dynamics rather than the adopter categories. The cycle begins with a Technology Trigger — the first public demonstration of a technology generates media attention. This leads to the Peak of Inflated Expectations, where over-optimism drives excessive investment and unrealistic expectations. When early implementations fail to deliver the promised returns, the technology falls into the Trough of Disillusionment — it is declared a failure and investment retreats. Technologies that survive this phase begin the Slope of Enlightenment: practitioners understand both the real capabilities and the real limitations, and use cases that actually work emerge. Finally, the technology reaches the Plateau of Productivity — mainstream adoption, stable business models, and reliable implementations. AI, in various forms, has traversed this cycle multiple times; blockchain appears to be navigating its trough; quantum computing is near the peak of inflated expectations."],questions:[{q:"Who developed the technology adoption lifecycle and when?",opts:["Geoffrey Moore in 1991", "Clayton Christensen in 1997", "Everett Rogers in 1962", "Gartner in the early 1990s"],ans:2},{q:"What percentage of the market do innovators represent?",opts:["5%", "2.5%", "13.5%", "16%"],ans:1},{q:"What distinguishes early adopters from the early majority?",opts:["Early adopters are more technically qualified than the early majority", "Early adopters are motivated by strategic advantage and willing to pioneer; the early majority needs a proven, well-supported solution", "The early majority adopts faster than early adopters because they face less uncertainty", "Early adopters adopt for personal use; the early majority adopts for professional use"],ans:1},{q:"What is the 'chasm' identified by Geoffrey Moore?",opts:["The cost gap between enterprise and consumer technology products", "The gap between the capabilities promised by technology vendors and the reality of deployment", "The discontinuity between early adopters and the early majority — requiring a transition from innovative to mature", "The time gap between a technology being invented and its commercial release"],ans:2},{q:"What do innovators and early adopters together represent as a percentage of the market?",opts:["16%", "34%", "50%", "48%"],ans:0},{q:"What does the text say the 'technology graveyard' is full of?",opts:["Technologies that were technically inferior but better marketed", "Technically impressive innovations that never achieved mainstream adoption — unable to cross the chasm", "Technologies whose inventors were unable to secure sufficient investment", "Technologies that were disrupted before reaching mainstream adoption"],ans:1},{q:"What is the first phase of the Gartner Hype Cycle?",opts:["Peak of Inflated Expectations", "Trough of Disillusionment", "Technology Trigger", "Slope of Enlightenment"],ans:2},{q:"What causes the Trough of Disillusionment?",opts:["Technology vendors reducing investment due to slower-than-expected revenue growth", "Early implementations failing to deliver promised returns — leading to declarations of failure and retreating investment", "Regulatory restrictions limiting the deployment of the technology", "Competition from alternative technologies providing the same functionality"],ans:1},{q:"What characterises the Slope of Enlightenment?",opts:["Mainstream adoption and stable business models", "Excessive hype and unrealistic expectations", "Practitioners understanding real capabilities and limitations — use cases that actually work emerging", "Initial public demonstrations generating media attention"],ans:2},{q:"Where does the text say quantum computing is currently positioned in the Hype Cycle?",opts:["Near the Trough of Disillusionment", "On the Slope of Enlightenment", "Near the Plateau of Productivity", "Near the Peak of Inflated Expectations"],ans:3}]}];
+const vocabMCQ=[{q:"What is the key difference between machine learning and traditional software?",opts:["Machine learning runs faster than traditionally programmed software", "Machine learning systems learn patterns from data rather than following explicitly programmed rules", "Machine learning is only applicable to large enterprise organisations", "Machine learning requires significantly less computing power than traditional software"],ans:1},{q:"What is algorithmic bias?",opts:["An intentional choice by engineers to encode discrimination into AI systems", "Systematic and unfair discrimination in algorithm outputs — arising from biased training data, features, or objective functions", "The tendency of AI systems to perform better on tasks they are frequently asked to perform", "A statistical error that occurs when algorithms process too much data simultaneously"],ans:1},{q:"What is the 'crossing the chasm' problem?",opts:["The difficulty of scaling technology infrastructure from prototype to production", "The gap between early adopters willing to tolerate immaturity and the early majority who need a proven, complete solution", "The challenge of translating academic AI research into commercial applications", "The cost barrier that prevents smaller organisations from adopting emerging technologies"],ans:1},{q:"What is a digital twin?",opts:["A backup copy of digital assets stored in a geographically separate location", "A virtual model of a physical object or system continuously synchronised with real-time data from the physical counterpart", "A software simulation environment for testing applications before production deployment", "A replicated database that mirrors the primary database for disaster recovery"],ans:1},{q:"What is the Gartner Hype Cycle?",opts:["A framework measuring the commercial success of technology companies", "A graphical tool mapping the typical trajectory of emerging technology through five phases from trigger to plateau", "A ranking of the most overhyped technologies published annually by Gartner Research", "A model predicting the length of time it takes for technologies to achieve mainstream adoption"],ans:1},{q:"What is responsible AI?",opts:["A framework for developing AI that is optimised for maximum performance", "A set of principles and practices ensuring AI is fair, transparent, explainable, accountable, and respectful of rights", "A certification awarded to AI systems that have passed independent safety testing", "A regulatory standard published by the EU requiring all AI to be auditable"],ans:1},{q:"What is edge computing?",opts:["Computing performed at a central data centre close to the organisation's headquarters", "Processing data at or near the source rather than sending it to a centralised cloud", "A network architecture that places computing resources at the edge of the internet", "A security framework that limits computing access to the edge of an organisation's network"],ans:1},{q:"What is disruptive innovation according to Christensen?",opts:["Any technological innovation that significantly improves on an existing product", "Innovations that begin in low-end or new-market niches and progressively displace established market leaders", "Technologies that disrupt the normal operation of business processes", "Innovations that require complete disruption of existing processes before they can be adopted"],ans:1},{q:"What is a Technology Readiness Level?",opts:["A measure of how widely a technology has been adopted in a specific industry", "A scale from 1 to 9 describing the maturity of a specific technology from basic principles to operational proof", "A regulatory certification required before technology can be deployed in safety-critical applications", "A financial metric measuring return on technology investment"],ans:1},{q:"What is Industry 4.0?",opts:["The fourth version of a major industrial software platform", "The transformation of manufacturing through cyber-physical systems, IoT, cloud, AI, and big data", "The fourth iteration of the internet — following Web 1.0, 2.0, and 3.0", "The fourth generation of industrial robotics systems"],ans:1}];
+const vocabGapFill=[{before:"The engineering team ran a six-week",blank:"proof of concept",after:"to determine whether the large language model could accurately classify incoming customer support tickets by issue type and urgency — before committing to a full integration with the CRM platform."},{before:"The head of data science cautioned the board that the recruitment model showed signs of",blank:"algorithmic bias",after:"— candidates from certain postcodes were being systematically scored lower, a pattern that correlated with socioeconomic deprivation rather than any legitimate proxy for job performance."},{before:"The CTO presented a technology",blank:"hype cycle",after:"analysis at the annual strategy day, positioning generative AI on the Peak of Inflated Expectations and advising the board to invest cautiously until use cases with genuine operational value were more clearly established."},{before:"The factory deployed a",blank:"digital twin",after:"of its assembly line — a real-time virtual model fed by 340 sensors — that enabled the maintenance team to predict component failures an average of 72 hours before they occurred, reducing unplanned downtime by 43%."},{before:"The startup's product had strong traction with technology enthusiasts but was struggling to achieve broader adoption — a classic symptom of the",blank:"crossing the chasm",after:"challenge, where the needs of pragmatic mainstream buyers differed fundamentally from those of the early adopter segment the company had originally optimised for."},{before:"The procurement team evaluated the proposed AI decision-support system against the company's",blank:"responsible AI",after:"framework — checking for fairness testing documentation, an explainability mechanism for individual decisions, and a defined process for human override when the system's recommendation was contested."},{before:"The IoT project scope included 4,200 connected sensors across seven manufacturing sites, which required",blank:"edge computing",after:"at each site to process the 14 gigabytes of sensor data generated per hour locally — only transmitting exception alerts and aggregated summaries to the central cloud platform."},{before:"The innovation team mapped each emerging technology on a",blank:"technology readiness level",after:"scale to distinguish between technologies at TRL 4 that required further research investment and those at TRL 8 that were ready for operational deployment in the following financial year."},{before:"The board was concerned about the organisation's exposure to",blank:"disruptive innovation",after:"from a new market entrant offering a cloud-native alternative at one-third of the price of the incumbent system — initially targeting small business customers but with an explicit roadmap to move upmarket."},{before:"The AI governance committee reviewed the deployment proposal for the automated loan decision system and required the team to demonstrate",blank:"explainability",after:"— each declined application must generate a plain-language explanation of the specific factors that led to the decision, compliant with GDPR Article 22 requirements."}];
+const vocabTF=[{stmt:"Deep learning is a subset of machine learning that uses neural networks with many layers to learn complex representations of data.",ans:true},{stmt:"The technology adoption lifecycle places the early majority — pragmatic adopters who need proven solutions — as the second group to adopt a new technology after innovators.",ans:false},{stmt:"The Trough of Disillusionment in the Gartner Hype Cycle occurs after early implementations fail to deliver promised returns.",ans:true},{stmt:"Algorithmic bias can only arise when AI engineers deliberately encode discrimination into a system.",ans:false},{stmt:"Explainability in AI refers to the ability to provide a human-understandable account of why a system reached a particular decision.",ans:true},{stmt:"Quantum computers are universally faster than classical computers across all types of computation.",ans:false},{stmt:"The EU AI Act (2024) creates a risk-based regulatory framework for AI systems.",ans:true},{stmt:"A proof of concept is a full production deployment designed to demonstrate that a technology is ready for scale.",ans:false},{stmt:"Industry 4.0 refers to the integration of cyber-physical systems, IoT, cloud, AI, and big data in manufacturing.",ans:true},{stmt:"Disruptive innovations typically begin by targeting the most demanding, highest-value customers at the top of an existing market.",ans:false}];
+const grammarEx=[{title:"Exercise 1: Evaluative Language for Technology Claims",instr:"Select the most precise evaluative expression. Technology strategy documents, innovation briefings, and analyst reports require precise evaluative language — distinguishing between what is proven, what is promising, what is overhyped, and what remains uncertain. The right evaluative language calibrates expectations and builds credibility.",qs:[{q:"'The technology is _____ for specific optimisation use cases, but widespread commercial deployment remains several years away.'",opts:["proven", "promising", "confirmed", "ready"],ans:1},{q:"'The early results are _____, but the study involved only 50 participants and should not be treated as definitive evidence.'",opts:["conclusive", "encouraging", "certain", "robust"],ans:1},{q:"'Blockchain's actual adoption outside cryptocurrency has been _____ narrower than the hype cycle of 2017-2019 suggested it would be.'",opts:["far", "very", "considerably", "significantly"],ans:3},{q:"'The vendor's claims about the product's accuracy are _____ — independent testing has not replicated the performance described in their marketing materials.'",opts:["overstated", "wrong", "misleading", "inaccurate"],ans:0},{q:"'Quantum computing _____ to deliver commercial advantage for cryptography and drug discovery — but the timelines remain highly uncertain.'",opts:["is certain", "has the potential", "will", "is going"],ans:1},{q:"'The proof of concept produced _____ results that justify advancing to a pilot, though the production environment will be significantly more complex.'",opts:["strong", "sufficient", "adequate", "reasonable"],ans:0},{q:"'The technology is _____ — it performs reliably in controlled environments but has not yet been stress-tested at production scale.'",opts:["mature", "proven", "maturing", "ready"],ans:2},{q:"'Independent benchmarks _____ suggest that the model outperforms the incumbent solution by a margin that is practically significant.'",opts:["clearly", "consistently", "completely", "largely"],ans:1},{q:"'The organisational _____ to this technology has been slower than expected — cultural resistance is the primary barrier, not technical capability.'",opts:["adoption", "take-up", "uptake", "acceptance"],ans:2},{q:"'The technology _____ significant promise in laboratory conditions, but translating that into real-world deployments at scale has proved more challenging.'",opts:["shows", "demonstrates", "has shown", "displays"],ans:2}]},
+  {title:"Exercise 2: Speculative Future Forms for Emerging Technology Discussion",instr:"Select the correct speculative form. Discussions of emerging technologies necessarily involve uncertainty about the future. Different future forms signal different levels of confidence — from near-certainty to informed speculation to remote possibility.",qs:[{q:"'Quantum computers _____ classical computers for certain classes of optimisation problems within the next decade — though the timeline is contested.'",opts:["will outperform", "may outperform", "shall outperform", "are to outperform"],ans:1},{q:"'By 2030, AI _____ have transformed the way most knowledge workers approach research and writing tasks.'",opts:["will", "might", "may", "could"],ans:0},{q:"'Generative AI _____ create entirely new categories of work that do not exist today, just as the internet did.'",opts:["will certainly", "could", "shall", "must"],ans:1},{q:"'The technology _____ achieve mainstream adoption without a significant improvement in its reliability under real-world conditions.'",opts:["will not", "is unlikely to", "cannot", "would not"],ans:1},{q:"'If the regulatory framework _____ as expected, the market for autonomous vehicles _____ accelerate significantly from 2026.'",opts:["develops / will", "will develop / would", "developed / will", "develops / could"],ans:3},{q:"'Blockchain _____ have a role in supply chain provenance, but the use cases are likely to remain more limited than proponents claimed.'",opts:["will certainly", "may still", "shall still", "must"],ans:1},{q:"'The convergence of AI, IoT, and edge computing _____ the economics of industrial automation by the end of the decade.'",opts:["will likely transform", "shall transform", "is transforming", "has transformed"],ans:0},{q:"'_____ quantum computing achieve fault tolerance at scale, it _____ make current encryption standards obsolete.'",opts:["Should / would", "If / will", "Were / would", "Should / will"],ans:0},{q:"'The majority of organisations _____ still _____ experimenting with generative AI rather than deploying it at enterprise scale at this point next year.'",opts:["will / be", "are / be", "will / have been", "might / be"],ans:3},{q:"'Technology that seems futuristic today _____ become the baseline expectation within a decade — as cloud computing did.'",opts:["can", "may well", "will certainly", "should"],ans:1}]},
+  {title:"Exercise 3: Concessive Structures for Balanced Technology Analysis",instr:"Select the best concessive structure. Technology strategy documents must acknowledge both the potential and the limitations of emerging technologies — neither dismissing them nor overstating them. Concessive structures ('although', 'while', 'despite', 'even though', 'however') enable balanced, credible analysis.",qs:[{q:"'_____ generative AI has demonstrated impressive capabilities, the risk of hallucination — producing confident but false outputs — remains a significant limitation for high-stakes applications.'",opts:["Despite", "Although", "While", "However"],ans:1},{q:"'The blockchain pilot demonstrated clear benefits for supply chain provenance. _____, the implementation cost and complexity exceeded initial projections by a factor of three.'",opts:["Although", "Despite", "However", "While"],ans:2},{q:"'_____ its current limitations in error rates, quantum computing represents a genuinely transformative long-term technology that deserves strategic attention.'",opts:["Despite", "Although", "However", "While"],ans:0},{q:"'The technology performed well in the proof of concept. _____ this, we recommend a phased production rollout with enhanced monitoring rather than full deployment.'",opts:["Despite", "Notwithstanding", "Although", "However"],ans:1},{q:"'_____ the vendor's claims are compelling, independent verification of the performance benchmarks should be completed before the procurement decision is made.'",opts:["Despite", "Although", "However", "While"],ans:1},{q:"'IoT offers significant operational benefits. _____, the security implications of connecting operational technology to the internet must be addressed before deployment.'",opts:["Although", "Despite", "However", "While"],ans:2},{q:"'_____ acknowledging the potential of this technology, the board should be aware that most proof-of-concept results do not translate directly to production performance.'",opts:["While", "Despite", "Although", "Notwithstanding"],ans:0},{q:"'The AI model achieves 94% accuracy on the test dataset. _____, performance on real-world data in production environments has historically been 10-15 percentage points lower.'",opts:["Despite", "However", "Although", "While"],ans:1},{q:"'_____ early adopters have reported strong results, the majority of mainstream organisations will need a more complete solution before committing to deployment.'",opts:["Although", "Despite", "While", "However"],ans:2},{q:"'The technology _____ impressive in demonstration, _____ real-world deployments have consistently identified scalability challenges not present in controlled environments.'",opts:["is / while", "appears / however", "seems / but", "looks / although"],ans:1}]}];
+const grammarReview=[{title:"Grammar Point 1: Evaluative Language in Technology Strategy Documents",pts:[{h:"Distinguishing Degrees of Maturity and Readiness",b:"Technology strategy documents require precise vocabulary to describe where a technology sits on the maturity spectrum — distinguishing between early-stage potential and operational readiness. Vague terms like 'good' or 'advanced' lack precision; the vocabulary below communicates specific maturity assessments.",ex:["'Promising' — shows potential but not yet proven at scale.", "'Maturing' — improving reliability, but not yet ready for full production deployment.", "'Proven' — demonstrated in real-world conditions at meaningful scale.", "'Overstated / overhyped' — vendor or media claims exceed what independent evidence supports."]},{h:"Qualifying Extent and Scope",b:"Technology claims often need qualification — specifying the conditions under which they hold and the extent to which they have been validated. Adverbs of degree (significantly, considerably, marginally) and scope limiters (for specific use cases, under controlled conditions, in early pilots) prevent overgeneralisation.",ex:["'The technology demonstrates significant advantages for batch optimisation tasks — but not for real-time processing.'", "'Early pilots have shown encouraging results, though the sample sizes are too small to generalise.'", "'Performance improvements are marginal in most conditions — substantial only at extreme scale.'", "'The vendor's accuracy claims have not been independently replicated under real-world conditions.'"]},{h:"Formal Evaluative Vocabulary in Reports and Briefings",b:"Formal technology evaluations and briefings use a consistent vocabulary of assessment that signals analytical rigour — avoiding informal language that undercuts credibility.",ex:["'The evidence suggests / indicates / points toward...' (moderate confidence)", "'The findings are preliminary / inconclusive / limited to...' (scope qualification)", "'Independent benchmarks consistently demonstrate...' (high confidence)", "'The technology warrants / merits further investigation before...' (conditional endorsement)"]}]},
+  {title:"Grammar Point 2: Speculative Future Forms in Emerging Technology",pts:[{h:"Certainty Spectrum — From Near-Certain to Speculative",b:"Emerging technology discussions involve genuine uncertainty. Using precise future forms signals the analyst's confidence level — protecting credibility and enabling decision-makers to calibrate their own uncertainty appropriately.",ex:["Near-certain: 'AI will continue to improve — the trajectory is clear.' (will + infinitive)", "Probable: 'Quantum computing will likely achieve commercial advantage by 2030.' (will likely / is likely to)", "Possible: 'Blockchain may find viable use cases in regulated supply chains.' (may / could)", "Speculative: 'AGI might fundamentally change the nature of knowledge work.' (might)"]},{h:"Conditional Futures — 'If' and 'Should' for Contingent Predictions",b:"Many emerging technology predictions are contingent on specific conditions being met — regulatory approval, a technical breakthrough, sufficient investment, or market adoption reaching critical mass. Conditional structures express this contingency precisely.",ex:["'If the regulatory framework develops as expected, autonomous vehicles could achieve mainstream adoption by 2028.'", "'Should quantum error correction advance significantly, current encryption standards may need to be replaced within a decade.'", "'Were AI regulation to impose transparency requirements, explainable AI techniques would become mandatory in high-stakes deployments.'", "'Provided sufficient investment is maintained, the technology could reach TRL 8 within three years.'"]},{h:"'By + time expression' + Future Perfect for Long-Range Forecasting",b:"Innovation strategy documents often project over multi-year horizons. The future perfect ('will have + past participle') describes what will be completed or achieved by a specific future point.",ex:["'By 2030, AI will have transformed the workflow of most knowledge workers in high-income economies.'", "'Within a decade, quantum computing will have demonstrated commercial advantage in at least two to three problem domains.'", "'By the end of the decade, the regulatory landscape for AI will have been established in most major markets.'", "'By the time this technology reaches the Plateau of Productivity, the competitive advantage of early movers will have been substantially eroded.'"]}]},
+  {title:"Grammar Point 3: Concessive Structures for Balanced Technology Analysis",pts:[{h:"'Although' and 'While' — Clause-Level Concession",b:"Concessive clauses introduced by 'although' and 'while' acknowledge a limitation or counterargument before or after the main claim. They are essential for balanced technology analysis — preventing overly enthusiastic or overly dismissive assessments.",ex:["'Although generative AI has demonstrated impressive capabilities, hallucination remains a significant risk for high-stakes applications.'", "'While the pilot results are encouraging, the conditions were controlled and may not generalise to production.'", "'Although blockchain offers genuine benefits for provenance, implementation complexity has exceeded projections in most enterprise cases.'", "'While early adopters report strong results, the mainstream market will need a more complete solution before committing.'"]},{h:"'Despite' and 'Notwithstanding' — Noun Phrase Concession",b:"'Despite' and 'notwithstanding' introduce concession with a noun phrase rather than a full clause — making them more efficient in formal written analysis. 'Notwithstanding' is more formal and is used in legal and policy contexts.",ex:["'Despite its current limitations in error rates, quantum computing deserves strategic investment.'", "'Notwithstanding the vendor's strong performance in the proof of concept, full deployment requires further risk assessment.'", "'Despite the initial investment required, the long-term cost of ownership is significantly lower than the incumbent system.'", "'Notwithstanding regulatory uncertainty, market leaders are investing heavily in AI infrastructure.'"]},{h:"'However' and 'That Said' — Sentence-Level Contrast",b:"'However' and 'that said' introduce a contrasting or qualifying sentence after a positive statement — common in briefings and reports where alternating between claim and qualification creates analytical balance.",ex:["'The technology performed impressively in testing. However, production environments introduce complexity not present in controlled conditions.'", "'Early implementations have delivered strong ROI. That said, these are all from organisations with mature data capabilities.'", "'The vendor has an excellent track record in adjacent markets. However, this specific use case has not yet been validated at enterprise scale.'", "'The proof of concept was successful. That said, the scope was deliberately constrained and the full production challenge will be significantly harder.'"]}]}];
+const writingTasks=[{id:"w1",activity:"Activity 1",type:"Technology Horizon Briefing",title:"Write a Technology Horizon Briefing for Senior Leadership",prompt:"You are the Chief Technology Officer at Meridian Financial Services. The board has asked you to prepare a 'Technology Horizon Briefing' — a document that identifies the three emerging technologies most likely to affect the financial services industry over the next 3-5 years, and recommends how the organisation should respond to each.\n\nContext: Meridian is a traditional financial services firm with 3,400 employees, strong compliance capabilities, conservative risk appetite, and a technology estate that is partially modernised. The board is non-technical but commercially astute.\n\nTechnologies to cover:\n\n1. Generative AI — already being used by competitors for customer service automation, document analysis, and regulatory reporting. Meridian has run no pilots. Risk: falling behind competitors. Opportunity: significant efficiency gains. Concern: accuracy, bias, regulatory compliance.\n\n2. Quantum Computing — potential to break current encryption standards within 10-15 years. Meridian's encryption protocols would need to be replaced (post-quantum cryptography). Currently at early research stage — no immediate action required, but monitoring is essential.\n\n3. AI-Powered Fraud Detection — moving from rule-based to machine learning models. Competitors reporting 40% reduction in false positives. Meridian's current system generates 2,400 false positive alerts per month, consuming significant analyst time.\n\nFor each technology, write: a plain-language description (2-3 sentences), an assessment of the opportunity and risk (using appropriate hedging and evaluative language), and a specific recommendation (invest/pilot/monitor/defer).\nConclude with an overall strategic recommendation on the pace of technology adoption given Meridian's risk profile.\nUse at least 6 vocabulary terms from this module.",tags:["Technology Briefing", "Innovation Strategy", "Emerging Technology", "Board Communication", "Financial Services"],targetMin:240,targetMax:340},{id:"w2",activity:"Activity 2",type:"Innovation Proposal",title:"Write an Innovation Proposal: AI-Powered Customer Onboarding",prompt:"You are the Head of Innovation at Nexford Digital, a SaaS learning platform. You have identified an opportunity to use AI to transform the customer onboarding process — reducing time-to-value for new customers and improving 90-day retention.\n\nCurrent state:\n• New customers complete a 7-step manual onboarding process that takes an average of 9 days to complete\n• Only 61% of customers complete the full onboarding\n• 90-day retention for customers who complete onboarding: 68%. For those who do not: 31%\n• The support team spends 40% of their time answering onboarding questions\n\nProposed innovation:\n• An AI-powered onboarding assistant that personalises the onboarding sequence based on the customer's role, goals, and previous platform interactions\n• Natural language understanding to answer onboarding questions in real time\n• Predictive model that identifies customers at risk of abandoning onboarding and triggers proactive outreach\n• Automated progress tracking and personalised nudges\n\nProposed approach: 8-week proof of concept with 500 new customers, followed by evaluation before full rollout decision.\n\nWrite the innovation proposal including: the problem statement, the proposed solution, expected benefits (with appropriate hedging — these are projections not guarantees), key risks and mitigations, and the PoC plan. Use balanced evaluative language throughout — neither overclaiming nor underclaiming. Use at least 6 vocabulary terms from this module.",tags:["Innovation Proposal", "AI", "Customer Experience", "Proof of Concept", "SaaS"],targetMin:200,targetMax:290}];
+const listeningActs=[{id:0,title:"Technology Strategy Meeting: Prioritising Emerging Technologies",sub:"Strategy Session · B2 Level · approx. 110 sec",icon:"🔮",transcript:"The technology steering committee is reviewing the emerging technology landscape. The CTO, Priya, the Head of Innovation, Tom, and the CFO, Leila, are present. Priya: I want to focus today's session on three technologies we need to make decisions about: generative AI, blockchain for trade finance, and industrial IoT for our operations team. I have positioned each on the Hype Cycle and prepared a TRL assessment. Tom: Let me start with generative AI since that is the most pressing. Our competitors have all launched pilots in the last six months. We are the last significant player in our sector without one. Priya: Agreed. My recommendation is that we move immediately to a proof of concept — a constrained pilot using generative AI for internal document summarisation and compliance report drafting. Low risk, high value, no customer-facing implications. We can test the technology, build internal capability, and manage the regulatory exposure. Leila: What are the responsible AI implications? Priya: Significant, and we need to address them upfront. Any output used for regulatory purposes must have a human review step. We need an explainability requirement — staff must be able to understand why the AI produced a particular summary. And we need an audit trail. I am proposing we adopt the EU AI Act framework even before it is mandatory, because it will be. Tom: Blockchain for trade finance — I think we are firmly in the Trough of Disillusionment. Three of the five industry consortia we joined have either collapsed or produced no usable output in four years. Priya: I agree. My recommendation: monitor, do not invest. The technology has genuine potential for provenance but the coordination problem — getting all counterparties on the same protocol — has proved intractable. Leila: And IoT for operations? Priya: That is different. IoT is proven technology — TRL 8 to 9 for our use case. The issue is security: connecting our operational technology to the internet exposes us to cyberattack vectors we do not currently face. We need a security architecture review before we proceed, not a feasibility study — the technology is ready. The security posture is not.",qs:[{q:"What three technologies is the committee reviewing?",opts:["AI, blockchain, and quantum computing", "Generative AI, blockchain for trade finance, and industrial IoT", "Machine learning, IoT, and edge computing", "Generative AI, digital twins, and Industry 4.0"],ans:1},{q:"What does Priya recommend for generative AI?",opts:["A full enterprise deployment starting with customer-facing applications", "A proof of concept for internal document summarisation and compliance report drafting — low risk, no customer-facing implications", "Waiting until competitors have established clear use cases before committing", "Purchasing an enterprise licence from a major vendor rather than building internally"],ans:1},{q:"What responsible AI requirements does Priya propose for the generative AI pilot?",opts:["Full automation with no human oversight required for internal use cases", "Human review for regulatory outputs, explainability requirements, and an audit trail — and adopting the EU AI Act framework proactively", "A security review and penetration test of the AI system before deployment", "A bias audit by an external third party before any outputs are used internally"],ans:1},{q:"Where does Tom place blockchain on the Hype Cycle?",opts:["Peak of Inflated Expectations — still attracting excessive investment", "Slope of Enlightenment — practitioners beginning to understand real use cases", "Trough of Disillusionment — failed consortia and no usable output despite four years of investment", "Plateau of Productivity — mainstream adoption in trade finance beginning to emerge"],ans:2},{q:"What does Priya say is the fundamental problem with blockchain for trade finance?",opts:["The technology is not sufficiently mature for financial services use cases", "The cost of implementation exceeds the benefits in most realistic scenarios", "The coordination problem — getting all counterparties on the same protocol — has proved intractable", "The regulatory environment prevents blockchain from being used for financial transactions"],ans:2},{q:"What is Priya's TRL assessment for IoT for the committee's use case?",opts:["TRL 3 to 4 — still in development with significant unknowns", "TRL 5 to 6 — approaching readiness but requiring further validation", "TRL 8 to 9 — proven operational technology for this use case", "TRL 1 to 2 — basic principles established but significant research still required"],ans:2},{q:"What does Priya say is the barrier to IoT deployment — technology or security?",opts:["Technology — the IoT sensors available do not meet the precision requirements for the use case", "Both — the technology is maturing and the security architecture needs parallel development", "Security — the technology is ready but the security posture is not, and a security architecture review is needed first", "Neither — the barrier is cost, not technology readiness or security"],ans:2},{q:"What is Priya's recommendation on the EU AI Act framework?",opts:["Wait until it becomes mandatory to avoid unnecessary compliance costs", "Adopt the EU AI Act framework proactively before it becomes mandatory — because it will be", "Engage with the regulatory process to reduce the compliance burden before it is finalised", "Delegate EU AI Act compliance to the legal team while the technology team focuses on delivery"],ans:1}]},
+  {id:1,title:"AI Ethics Review: Bias in the Hiring Algorithm",sub:"Ethics Committee · B2 Level · approx. 108 sec",icon:"⚖️",transcript:"The AI ethics committee is reviewing a proposed deployment of an AI-powered CV screening system. The committee chair, Amara, is leading the review. The Head of HR Technology, Marcus, and an external ethics consultant, Dr Yuki Tanaka, are present. Amara: Dr Tanaka, you reviewed the model. What are your findings? Dr Tanaka: The model performs well on aggregate accuracy — 91% alignment with expert human reviewers. However, when I broke the results down by demographic group, I found a significant disparity. The model ranks candidates from certain universities 23% higher on average than equally qualified candidates from other institutions. When I traced this back to the training data, it became clear: the training set was based on 10 years of hiring decisions, and the most commonly hired candidates in that period came from a narrow set of universities. The model has learned that association and treats it as a signal of quality. Amara: Is this intentional discrimination? Dr Tanaka: No — the model was not designed to discriminate. This is algorithmic bias arising from biased historical data. But the effect is the same: systematic disadvantage for candidates from underrepresented institutions. The intent does not matter when the outcome is discriminatory. Marcus: Can we fix it? Dr Tanaka: Yes — but it requires retraining on a de-biased dataset and changing the objective function to explicitly penalise differential outcomes across institution types. It also requires ongoing monitoring after deployment. The fix is not a one-time patch. Amara: What about explainability? The candidates who are rejected will want to know why. Dr Tanaka: This is the other problem. The model is a gradient boosting ensemble — it is reasonably accurate but produces no plain-language explanation of why a candidate was ranked where they were. Under UK Equality Act obligations and GDPR Article 22, we need an explanation mechanism. My recommendation is that we pause this deployment until the bias has been addressed and an explanation interface has been built. Amara: I concur. This does not go live until both conditions are met.",qs:[{q:"What is the model's overall aggregate accuracy?",opts:["78% alignment with expert human reviewers", "83% alignment with expert human reviewers", "91% alignment with expert human reviewers", "95% alignment with expert human reviewers"],ans:2},{q:"What demographic disparity does Dr Tanaka identify?",opts:["The model scores male candidates 23% higher than female candidates on average", "The model ranks candidates from certain universities 23% higher than equally qualified candidates from other institutions", "The model scores candidates over 40 years old significantly lower than younger candidates", "The model penalises candidates with career gaps more heavily than expert reviewers do"],ans:1},{q:"What is the source of the bias according to Dr Tanaka?",opts:["Engineers deliberately encoded university preferences into the model's scoring rules", "The model was trained on 10 years of hiring decisions dominated by candidates from a narrow set of universities — it learned that association as a signal of quality", "The training dataset was intentionally curated to favour certain university types for strategic reasons", "The model uses a biased feature — university ranking — that was explicitly included by the design team"],ans:1},{q:"Does Dr Tanaka say the bias is intentional discrimination?",opts:["Yes — the design team encoded the bias deliberately to maintain existing hiring patterns", "No — it is algorithmic bias arising from biased historical data, not intentional design", "Partially — some of the bias is intentional and some is accidental", "The report cannot determine intent without further investigation"],ans:1},{q:"What does Dr Tanaka say about the legal implications of unintentional bias?",opts:["Unintentional bias is not legally actionable — intent is required to establish discrimination", "The intent does not matter when the outcome is discriminatory — systematic disadvantage still applies", "Unintentional bias is a minor legal risk compared to intentional discrimination", "The legal risk depends on whether candidates can prove the bias affected their specific application"],ans:1},{q:"What two technical changes are required to fix the bias?",opts:["Replacing the model with a simpler rule-based system and adding human review for all decisions", "Retraining on a de-biased dataset and changing the objective function to explicitly penalise differential outcomes across institution types", "Removing university data from the input features entirely and retraining the model from scratch", "Adding a human review step for all candidates flagged below the 50th percentile"],ans:1},{q:"What type of model is the CV screening system?",opts:["A deep learning neural network with a transformer architecture", "A logistic regression model with manually engineered features", "A gradient boosting ensemble", "A large language model fine-tuned on HR decision data"],ans:2},{q:"What is Amara's final decision on deployment?",opts:["Proceed with deployment with additional monitoring in place", "Pause deployment until both the bias issue and the explanation interface have been resolved", "Proceed with deployment for internal roles only, excluding external candidate screening", "Refer the decision to the board of directors for approval"],ans:1}]},
+  {id:2,title:"Innovation Pitch: Evaluating a Digital Twin Proposal",sub:"Investment Review · B2 Level · approx. 106 sec",icon:"🪞",transcript:"The innovation investment committee is reviewing a digital twin proposal from the operations team. The operations director, Kenji, is pitching. The CTO, Sarah, and the CFO, Tom, are evaluating. Kenji: I want to make the case for investing in a digital twin of our primary manufacturing facility. The proposal is a three-phase project over 18 months, with a total investment of £1.4 million. Tom: Before we get into the numbers — can you explain what a digital twin actually does that we cannot do with our existing monitoring systems? Kenji: Good question. Our current monitoring tells us what has happened — temperature reached a threshold, a machine reported an error code. A digital twin goes further: it creates a real-time virtual model of the physical facility, continuously synchronised with sensor data, that allows us to run simulations. We can ask: if we increase production speed by 15%, which component is most likely to fail first and when? We can answer that question without touching the physical plant. Sarah: What is the technology readiness level for this kind of implementation in manufacturing? Kenji: Very high — TRL 8 to 9. Siemens and GE have been running large-scale digital twins in manufacturing for over a decade. This is proven technology. Our proposal uses an established platform — Siemens MindSphere. We are not building novel technology; we are applying mature technology to our specific context. Tom: What is the expected return? Kenji: Based on the experience of comparable implementations — and I want to be clear that these are projections, not guarantees — we expect a 35% reduction in unplanned downtime and a 20% improvement in maintenance scheduling efficiency. At our current cost of unplanned downtime, that translates to approximately £480,000 per year. Payback period: roughly three years. Sarah: What are the risks? Kenji: Three main risks. First, data quality — the twin is only as good as the sensor data feeding it, and we have some legacy sensors that may need replacement. Second, change management — the maintenance team will need to learn a new way of working. Third, integration complexity with our existing MES system. All three are manageable. None are showstoppers. Tom: I am persuaded by the TRL argument. This is not experimental technology. Sarah? Sarah: Agreed. I recommend we approve Phase 1.",qs:[{q:"What is the total investment for the three-phase digital twin project?",opts:["£800,000 over 12 months", "£1.4 million over 18 months", "£2.1 million over 24 months", "£950,000 over 15 months"],ans:1},{q:"How does Kenji distinguish the digital twin from existing monitoring systems?",opts:["The digital twin is cheaper to operate than existing monitoring infrastructure", "Existing monitoring tells what has happened; a digital twin creates a real-time virtual model that enables simulation of future scenarios", "The digital twin provides higher-resolution data from more sensors than the current system", "The digital twin automatically resolves issues rather than just alerting the operations team"],ans:1},{q:"What example does Kenji give of a question a digital twin can answer?",opts:["Which supplier is most likely to cause a delivery disruption in the next quarter?", "If production speed increases by 15%, which component is most likely to fail first and when?", "What is the optimal temperature setting for each machine type to minimise energy consumption?", "How many units can the facility produce per hour at current staffing levels?"],ans:1},{q:"What TRL assessment does Kenji give for digital twins in manufacturing?",opts:["TRL 3 to 4 — still in development with significant unknowns", "TRL 5 to 6 — approaching readiness but requiring further validation", "TRL 7 — demonstrated in operational environment but not yet at full production scale", "TRL 8 to 9 — proven technology used by Siemens and GE for over a decade"],ans:3},{q:"What platform does the proposal use?",opts:["AWS IoT TwinMaker", "Azure Digital Twins", "Siemens MindSphere", "GE Predix"],ans:2},{q:"How does Kenji qualify the projected financial returns?",opts:["He presents them as confirmed figures based on contractual guarantees from the platform vendor", "He explicitly states these are projections not guarantees — based on comparable implementations", "He presents them as conservative estimates with the actual return likely to be higher", "He declines to provide financial projections until Phase 1 has been completed"],ans:1},{q:"What are the three risks Kenji identifies?",opts:["Technology immaturity, vendor dependency, and regulatory compliance", "Data quality from legacy sensors, change management for the maintenance team, and integration complexity with the existing MES system", "Cost overrun, delivery timeline, and security of the sensor network", "Staff resistance, data privacy regulations, and the performance of the Siemens platform"],ans:1},{q:"What is Tom's primary reason for being persuaded?",opts:["The projected £480,000 annual saving clearly exceeds the investment cost", "The technology readiness level — this is not experimental technology, it is proven and mature", "Siemens and GE have provided reference cases from comparable implementations", "The three-year payback period is within the committee's acceptable threshold"],ans:1}]},
+  {id:3,title:"Technology Scouting Briefing: What to Watch in the Next 18 Months",sub:"Strategy Briefing · B2 Level · approx. 104 sec",icon:"🌱",transcript:"The Head of Technology Strategy, Yuki, is briefing the executive team on three technologies to watch over the next 18 months. Yuki: I want to walk you through three technologies that are not yet mature enough to deploy but that we should be actively monitoring — because the window for developing capability before they become competitive requirements is closing. First: agentic AI. Until recently, AI systems responded to prompts — you asked, they answered. Agentic AI systems can plan and execute multi-step tasks autonomously: research a market, draft a proposal, review it against compliance rules, and send it for approval — without human intervention at each step. This is technically very early — lots of impressive demos, limited reliable production deployments. My assessment: this will be a significant capability within three years. Organisations that have been experimenting will have a head start. Second: synthetic data. Many AI models are limited by the availability of high-quality training data — especially in regulated industries where real data is difficult to share. Synthetic data — artificially generated data that has the statistical properties of real data but contains no real personal information — is increasingly used to train models without the privacy and compliance constraints of real data. The quality is improving rapidly. This is approaching TRL 6 for financial services use cases. Watch carefully. Third: post-quantum cryptography. Quantum computers capable of breaking current encryption are probably 10 to 15 years away — but organisations that depend on long-lived encrypted data — governments, banks, healthcare — need to start planning now. The migration from RSA and ECC encryption to post-quantum algorithms is complex and long-lead. The US National Institute of Standards and Technology finalised post-quantum cryptography standards in 2024. This is not an emerging technology story — it is a risk management story. My overall recommendation: allocate a modest scouting budget to each, identify two or three people who will become internal experts, and review progress quarterly. Do not over-invest — but do not ignore.",qs:[{q:"What is Yuki's overall purpose for the briefing?",opts:["To recommend immediate investment in three new technology platforms", "To present technologies not yet mature enough to deploy but important to monitor before they become competitive requirements", "To report on the outcomes of three proof of concept projects conducted in the previous quarter", "To present the organisation's technology roadmap for board approval"],ans:1},{q:"What distinguishes agentic AI from traditional AI systems according to Yuki?",opts:["Agentic AI is faster and cheaper to run than traditional AI", "Traditional AI systems respond to prompts; agentic AI can plan and execute multi-step tasks autonomously without human intervention at each step", "Agentic AI is designed specifically for enterprise use rather than consumer applications", "Agentic AI requires no training data — it reasons from first principles"],ans:1},{q:"What is Yuki's assessment of agentic AI's current production reliability?",opts:["Fully reliable in production — multiple large enterprises have deployed it at scale", "Approaching reliability — some production deployments with occasional edge cases", "Technically very early — impressive demos but limited reliable production deployments", "Not yet technically feasible — the underlying research has not been completed"],ans:2},{q:"What problem does synthetic data address?",opts:["The cost of collecting and labelling large volumes of real-world training data", "The limited availability of high-quality training data — especially in regulated industries where real data is difficult to share due to privacy and compliance constraints", "The lack of diversity in AI training datasets that leads to algorithmic bias", "The challenge of keeping AI training data current as the real world changes"],ans:1},{q:"What TRL does Yuki assign to synthetic data for financial services?",opts:["TRL 3 to 4", "TRL 5", "Approaching TRL 6", "TRL 7 to 8"],ans:2},{q:"What does Yuki say about the timeline for quantum computers breaking current encryption?",opts:["This is an imminent threat — quantum computers capable of breaking encryption will be available within 2-3 years", "Probably 10 to 15 years away — but long-lived encrypted data requires planning now", "The timeline is unknown — it could be 5 years or 50 years depending on research breakthroughs", "Post-quantum cryptography is already necessary — quantum computers can already break some encryption standards"],ans:1},{q:"What event does Yuki say makes post-quantum cryptography planning urgent?",opts:["A Chinese government announcement that they had achieved quantum supremacy in 2023", "The EU AI Act requiring post-quantum cryptography for regulated AI systems by 2025", "NIST finalising post-quantum cryptography standards in 2024 — providing a clear migration target", "A major banking sector data breach attributed to quantum-enabled decryption"],ans:2},{q:"What is Yuki's overall investment recommendation?",opts:["Invest heavily in all three technologies to build first-mover advantage", "Allocate a modest scouting budget to each, identify internal experts, and review quarterly — without over-investing", "Defer investment in all three until clearer commercial use cases emerge", "Invest in one technology chosen based on the highest potential ROI"],ans:1}]}];
+const casesStudies=[{tag:"Global · AI Regulation · 2023–2024 · Policy and Innovation",title:"Case Study 1: The EU AI Act — How Europe Chose to Regulate Artificial Intelligence",sub:"Why the world's first comprehensive AI law took a risk-based approach, what it requires, and how it is shaping global AI development",sections:[{h:"Background",t:"The European Union AI Act, formally adopted in 2024, is the world's first comprehensive legal framework for artificial intelligence — regulating AI systems based on the risk they pose to individuals' rights, safety, and wellbeing rather than the technology itself. The Act was first proposed by the European Commission in April 2021 and underwent three years of negotiation, significantly reshaped by the rapid emergence of large language models and generative AI in 2022 and 2023. The EU's approach reflects a deliberate regulatory philosophy: rather than imposing uniform rules on all AI, the Act creates a risk pyramid that imposes obligations proportionate to the stakes involved."},{h:"The Risk-Based Framework",t:"The AI Act divides AI systems into four risk categories. At the base are minimal-risk systems — AI-powered spam filters, video game AI, recommendation systems — that face no specific legal requirements. Above these are limited-risk systems — AI that interacts with users — subject to transparency obligations: users must know they are interacting with AI. High-risk AI systems — those used in critical infrastructure, employment, credit scoring, law enforcement, migration, and administration of justice — face the most stringent requirements: conformity assessments, data governance documentation, human oversight mechanisms, accuracy and robustness testing, and registration in an EU database. At the apex are unacceptable-risk systems, which are prohibited entirely: social scoring systems (like China's social credit system), subliminal manipulation techniques, and most uses of real-time biometric surveillance in public spaces. The Act also introduces specific rules for general-purpose AI models (such as large language models) — transparency obligations and, for the most powerful models, systemic risk assessments."},{h:"Implications for Technology Professionals",t:"The EU AI Act has profound implications for anyone building, deploying, or procuring AI systems. First, it establishes AI governance as a compliance discipline — organisations deploying high-risk AI must have documented processes for bias testing, human oversight, and incident reporting. Second, it creates extraterritorial effect: any AI system deployed to EU citizens or organisations falls within scope, regardless of where the developer is based. Third, the Act's documentation requirements — for training data, model capabilities, and intended use — are driving demand for explainability and audit trail capabilities that did not previously exist as requirements. Fourth, the Act has established the 'Brussels Effect': other jurisdictions including the UK, US, Canada, and Singapore are developing AI regulatory frameworks that draw heavily on the EU's risk-based approach. The EU AI Act may ultimately do for AI governance what GDPR did for data privacy — establish the global standard through the combination of regulatory ambition and market size."}],qs:[{q:"When was the EU AI Act formally adopted?",opts:["2021", "2022", "2023", "2024"],ans:3},{q:"What principle does the EU AI Act use to regulate AI rather than regulating the technology uniformly?",opts:["Country of origin — the law of the country where the AI was developed applies", "Technology type — different rules for different AI architectures", "Risk level — obligations are proportionate to the risk posed to individuals' rights and safety", "Company size — smaller developers face lighter regulation than large corporations"],ans:2},{q:"What types of AI systems are classified as high-risk?",opts:["Consumer entertainment and recommendation systems", "Spam filters and video game AI", "AI in critical infrastructure, employment, credit scoring, law enforcement, migration, and justice", "General-purpose AI models including large language models"],ans:2},{q:"What is prohibited under the EU AI Act?",opts:["Autonomous weapons systems and lethal autonomous drones", "Social scoring systems, subliminal manipulation, and most real-time biometric surveillance in public spaces", "AI systems with accuracy below 95% in high-stakes decision-making contexts", "AI systems trained on personal data without explicit consent"],ans:1},{q:"What transparency obligation applies to limited-risk AI systems?",opts:["Users must be provided with a full technical explanation of how the AI works", "Users must give explicit consent before interacting with an AI system", "Users must know they are interacting with AI", "Users must have the option to request a human alternative to any AI interaction"],ans:2},{q:"What is the 'Brussels Effect' as described in the case study?",opts:["The tendency for EU regulations to increase costs for non-EU technology companies", "Other jurisdictions developing AI regulatory frameworks that draw on the EU's risk-based approach — as happened with GDPR", "The concentration of AI research and development activity in EU countries following the Act's passage", "The requirement for AI systems used in Europe to be physically based in EU data centres"],ans:1},{q:"What does the Act's extraterritorial effect mean for global technology companies?",opts:["Only companies with offices in the EU must comply with the AI Act", "Any AI system deployed to EU citizens or organisations falls within scope — regardless of where the developer is based", "Companies can seek exemption from the Act if they are incorporated outside the EU", "Only AI systems that store data in the EU are subject to the Act's requirements"],ans:1},{q:"What does the case study say the AI Act is driving demand for?",opts:["Reduced use of AI in high-stakes applications", "Explainability and audit trail capabilities that did not previously exist as requirements", "Physical data centres located within EU borders for all AI training data", "Open-source AI models to enable compliance verification by regulators"],ans:1},{q:"What comparison does the case study draw between the AI Act and GDPR?",opts:["Both have been criticised for stifling innovation in EU technology sectors", "The AI Act may establish the global AI governance standard through regulatory ambition and market size — as GDPR did for data privacy", "Both have been adopted verbatim by most of the world's major economies", "GDPR was a failure compared to the AI Act, which takes a more practical approach"],ans:1},{q:"What specific requirements apply to high-risk AI systems under the Act?",opts:["Only transparency — users must know they are interacting with AI", "Registration in an EU database only", "Conformity assessments, data governance documentation, human oversight mechanisms, accuracy testing, and registration", "Periodic audits by EU-appointed external auditors every two years"],ans:2}]},
+  {tag:"Global · Blockchain · 2008–Present · Technology Adoption",title:"Case Study 2: Blockchain — From Revolutionary Protocol to Cautionary Tale of Hype and Selective Reality",sub:"Why the technology that was going to transform everything has transformed considerably less than predicted — and the lessons this holds for emerging technology strategy",sections:[{h:"Background",t:"When Satoshi Nakamoto published the Bitcoin whitepaper in 2008, blockchain technology was presented as a solution to a genuine and difficult problem: how to enable trustless, peer-to-peer financial transactions without requiring a central authority such as a bank or government. The technical solution — a distributed, cryptographically secured, append-only ledger maintained by consensus across a network of nodes — was elegant and genuinely novel. Bitcoin's success in creating a functioning cryptocurrency proved the concept. The technology's subsequent application to everything from supply chain management and land registries to voting systems and digital art (as NFTs) generated extraordinary hype between 2015 and 2022, attracting hundreds of billions of dollars in investment and producing thousands of proposed applications."},{h:"The Reality of Blockchain Adoption",t:"The gap between the hype and the reality has been stark. As of 2024, the majority of blockchain applications outside cryptocurrency and decentralised finance (DeFi) have either been abandoned, scaled back, or replatformed onto conventional databases. Walmart's blockchain-based food traceability project, Maersk and IBM's TradeLens supply chain platform (abandoned in 2022 despite £200 million in investment), and dozens of financial sector consortium blockchains all followed similar trajectories: promising pilots, intractable coordination problems, and eventual retreat. The fundamental challenge is that blockchain's technical properties — decentralisation, immutability, and trustlessness — are only valuable when the parties to a transaction genuinely do not trust each other and cannot rely on a central authority. In most enterprise scenarios, the parties do have a relationship, there is a central authority (the company or regulator), and the overhead of blockchain's consensus mechanisms is unnecessary. A conventional shared database is simpler, faster, cheaper, and equally reliable in these contexts."},{h:"Lessons for Technology Strategy",t:"Blockchain's trajectory offers a masterclass in emerging technology evaluation. First, identify the specific problem the technology solves — and ask whether that problem actually exists in your context. Blockchain solves trustless consensus; if trust exists or can be established, blockchain adds cost without adding value. Second, understand the coordination problem: enterprise blockchain requires all parties to use the same protocol — a challenge that has proved more intractable than technologists anticipated. Third, apply the Gartner Hype Cycle honestly: by 2019, a sophisticated technology strategist should have recognised blockchain as being at or past its Peak of Inflated Expectations and adjusted investment accordingly. Fourth, distinguish between the technology and the use case: cryptocurrency remains a functioning application of blockchain; most enterprise applications are not. The error was generalising from a specific functioning application to a sweeping claim that the underlying technology would transform everything."}],qs:[{q:"What problem did blockchain originally solve according to the case study?",opts:["How to store large volumes of data more efficiently than centralised databases", "How to enable trustless peer-to-peer financial transactions without requiring a central authority", "How to encrypt data in a way that was immune to quantum computing attacks", "How to verify the identity of users without requiring a password or biometric"],ans:1},{q:"What was Bitcoin's significance for blockchain technology?",opts:["It made blockchain technology commercially profitable for the first time", "It proved the concept — demonstrating that the technology could create a functioning cryptocurrency", "It attracted government investment in blockchain research globally", "It demonstrated that blockchain was superior to traditional databases for all financial applications"],ans:1},{q:"What happened to Maersk and IBM's TradeLens platform?",opts:["It became the standard for global supply chain tracking adopted by 500+ shipping companies", "It was acquired by a major logistics software provider and replatformed on conventional infrastructure", "It was abandoned in 2022 despite approximately £200 million in investment", "It was restructured as an open-source protocol and continues to operate independently"],ans:2},{q:"What is the fundamental challenge with blockchain adoption in enterprise contexts?",opts:["Enterprise networks do not have sufficient computing power to run blockchain consensus mechanisms", "Blockchain's regulatory status is uncertain in most jurisdictions, creating legal risk", "Blockchain's technical advantages — decentralisation, immutability, trustlessness — are only valuable when parties genuinely cannot rely on a central authority, which is rarely true in enterprise settings", "The energy consumption of blockchain consensus mechanisms is incompatible with corporate sustainability commitments"],ans:2},{q:"What does the case study say a conventional shared database offers compared to blockchain in most enterprise contexts?",opts:["Lower security but higher performance", "Equally trustworthy and significantly simpler, faster, and cheaper when parties have an established relationship", "Less transparency but greater speed for high-volume transactions", "A higher risk of data corruption but easier regulatory compliance"],ans:1},{q:"What is the first lesson the case study identifies for technology strategy?",opts:["Always wait for competitors to adopt a technology before investing", "Identify the specific problem the technology solves and ask whether that problem exists in your context", "Only invest in technologies with existing commercial implementations at scale", "Never invest in a technology that is at or past the Peak of Inflated Expectations"],ans:1},{q:"What does the case study say about the coordination problem in enterprise blockchain?",opts:["The coordination problem was solved by industry standards bodies in 2020", "The problem is primarily technical — different blockchains use incompatible cryptographic standards", "Getting all parties on the same protocol has proved more intractable than technologists anticipated", "The coordination problem only affects small consortia — large industry groups have successfully standardised"],ans:2},{q:"What distinction does the case study make about cryptocurrency versus enterprise blockchain?",opts:["Cryptocurrency has failed while enterprise blockchain has succeeded", "Both have failed — cryptocurrency is also in the Trough of Disillusionment", "Cryptocurrency remains a functioning application; most enterprise applications are not. The error was generalising from the specific to the universal", "Enterprise blockchain is more successful than cryptocurrency because it solves real business problems"],ans:2},{q:"What is the fourth lesson the case study identifies?",opts:["Apply the Gartner Hype Cycle honestly to calibrate investment timing", "Understand the coordination problem before committing to a consortium approach", "Distinguish between the technology and the use case — a specific functioning application does not validate universal claims", "Identify the specific problem the technology solves before investing"],ans:2},{q:"By what year does the case study suggest a sophisticated technology strategist should have recognised blockchain as past its Peak?",opts:["2015", "2017", "2019", "2021"],ans:2}]}];
+const assessQs=[{q:"What is machine learning?",opts:["Software that processes data faster than conventional programs", "A subset of AI in which systems learn to perform tasks by identifying patterns in data rather than following explicitly programmed rules", "A type of database optimised for AI workloads", "A programming language designed specifically for AI development"],ans:1},{q:"What is algorithmic bias?",opts:["Intentional discrimination encoded by engineers", "Systematic unfair discrimination in algorithm outputs from biased training data, features, or objective functions", "A statistical error occurring when algorithms process too much data", "A tendency for AI to perform better on frequent tasks"],ans:1},{q:"What is the 'chasm' in the technology adoption lifecycle?",opts:["The cost gap between enterprise and consumer technology", "The gap between promised and actual performance of technology products", "The discontinuity between early adopters and the early majority — requiring a transition from innovative to mature", "The time between a technology's invention and its commercial release"],ans:2},{q:"What is the first phase of the Gartner Hype Cycle?",opts:["Peak of Inflated Expectations", "Trough of Disillusionment", "Technology Trigger", "Slope of Enlightenment"],ans:2},{q:"What does the EU AI Act prohibit entirely?",opts:["All AI systems that make decisions about individuals", "AI systems used in hiring and credit scoring", "Social scoring systems, subliminal manipulation, and most real-time biometric surveillance in public spaces", "General-purpose AI models including large language models"],ans:2},{q:"What was blockchain's original purpose?",opts:["Storing large volumes of data more efficiently than centralised databases", "Enabling trustless peer-to-peer financial transactions without a central authority", "Encrypting data immune to quantum computing attacks", "Verifying user identity without passwords"],ans:1},{q:"What is responsible AI?",opts:["AI optimised for maximum performance", "Principles and practices ensuring AI is fair, transparent, explainable, accountable, and rights-respecting", "A certification for AI systems passing independent safety testing", "The EU regulatory standard for AI systems"],ans:1},{q:"What does a digital twin do?",opts:["Creates a backup copy of digital assets in a separate location", "Creates a real-time virtual model of a physical object synchronised with sensor data — enabling simulation and optimisation", "Tests software in a simulated environment before production deployment", "Mirrors a database for disaster recovery"],ans:1},{q:"When should causal language be used in technology analysis?",opts:["Whenever two phenomena are strongly correlated in the data", "Only when there is experimental or strong causal evidence — not based on correlation alone", "When stakeholders need clear, confident language for decision-making", "When the sample size is sufficiently large to be statistically significant"],ans:1},{q:"What is the lesson from the Moneyball case about analytics competitive advantage?",opts:["Analytical capability requires enormous investment to deliver measurable advantage", "The most valuable insight is counterintuitive — finding measures that are predictive but undervalued by the market", "Statistical models are always superior to human judgment in competitive contexts", "Analytics only delivers advantage in data-rich industries"],ans:1},{q:"What is disruptive innovation according to Christensen?",opts:["Any technological innovation significantly improving an existing product", "Innovations beginning in low-end niches that progressively displace established market leaders", "Technologies disrupting normal business process operations", "Innovations requiring complete process disruption before adoption"],ans:1},{q:"What speculative form signals moderate confidence about a future outcome?",opts:["'Will + infinitive' — near-certain prediction", "'May / could + infinitive' — possible outcome", "'Shall + infinitive' — formal commitment", "'Must + infinitive' — necessary outcome"],ans:1},{q:"What concessive structure introduces a qualification after a positive statement?",opts:["'Although' at the start of the sentence", "'Despite' followed by a noun phrase", "'However' at the start of a new sentence", "'While' in a subordinate clause"],ans:2},{q:"What is the key lesson from blockchain's enterprise adoption failure?",opts:["Blockchain is technically inferior to conventional databases in all enterprise contexts", "Technology with a proven specific application does not necessarily validate universal claims — context determines value", "Enterprise technology adoption always takes longer than consumer technology adoption", "Consortium approaches always fail due to coordination problems"],ans:1},{q:"What is Industry 4.0?",opts:["The fourth version of a major industrial software platform", "The transformation of manufacturing through cyber-physical systems, IoT, cloud, AI, and big data", "The fourth generation of internet infrastructure", "The fourth generation of industrial robotics systems"],ans:1},{q:"What did Dr Tanaka recommend in the AI ethics review?",opts:["Deploy with additional monitoring to detect bias post-launch", "Proceed with deployment for internal use only", "Pause deployment until bias is addressed and an explanation interface is built", "Replace the AI system with a rule-based approach to eliminate bias entirely"],ans:2},{q:"What evaluative expression signals technology with potential but not yet proven at scale?",opts:["'Proven'", "'Confirmed'", "'Promising'", "'Operational'"],ans:2},{q:"What is a Technology Readiness Level?",opts:["A measure of how widely a technology has been adopted in an industry", "A scale from 1 to 9 describing technology maturity from basic principles to operational proof", "A regulatory certification required before safety-critical deployment", "A financial metric measuring return on technology investment"],ans:1},{q:"What is the Brussels Effect as described in the EU AI Act case study?",opts:["EU technology regulations increase costs for non-EU companies", "Other jurisdictions develop regulatory frameworks drawing on the EU's risk-based approach — as happened with GDPR", "AI research concentrates in EU countries following the Act", "AI systems used in Europe must be physically based in EU data centres"],ans:1},{q:"What is Yuki's recommendation for the three scouting technologies in the technology briefing?",opts:["Invest heavily in all three for first-mover advantage", "Defer investment in all three until clearer commercial use cases emerge", "Allocate a modest scouting budget to each, identify internal experts, and review quarterly — without over-investing", "Invest in one technology chosen on highest potential ROI"],ans:2}];
+
+// ── Navigation ──────────────────────────────────────────────
+function openSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='translateX(0)';sb.classList.add('open');document.getElementById('overlay').style.display='block';}
+function closeSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='';sb.classList.remove('open');document.getElementById('overlay').style.display='none';}
+function goTo(rawId){
+  // strip 'sec-' prefix if present for logic key
+  const id=rawId.replace(/^sec-/,'');
+  const secId='sec-'+id;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(secId);
+  if(sec){sec.classList.add('active');}
+  // mark active nav: match onclick containing this id
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    const oc=n.getAttribute('onclick')||'';
+    if(oc.includes("'"+secId+"'")||oc.includes('"'+secId+'"')){n.classList.add('active');}
+  });
+  window.scrollTo(0,0);
+  closeSidebar();
+  if(id==='overview') initOverview();
+  else if(id==='speaking') initSpeaking();
+  else if(id==='wordbank') initWordBank();
+  else if(id==='reading') initReading();
+  else if(id==='vocab') initVocab();
+  else if(id==='grammar') initGrammar();
+  else if(id==='gramreview') initGramReview();
+  else if(id==='writing') initWriting();
+  else if(id==='listening') initListening();
+  else if(id==='cases') initCases();
+  else if(id==='assessment') initAssessment();
+}
+
+// ── MCQ Engine ───────────────────────────────────────────────
+function renderMCQ2(containerId, questions, prefix, darkMode){
+  const c=document.getElementById(containerId);
+  if(!c)return;
+  let h='';
+  questions.forEach((item,i)=>{
+    const letters=['A','B','C','D'];
+    const dk=darkMode?'lmcq-opt':'';
+    h+=`<div class="mcq-block" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-opts">`;
+    item.opts.forEach((opt,j)=>{
+      h+=`<div class="mcq-opt ${dk}" onclick="pickOpt('${prefix}',${i},${j},${item.ans})" id="${prefix}-${i}-${j}">
+        <span class="opt-letter">${letters[j]}</span>${opt}</div>`;
+    });
+    h+=`</div></div>`;
+  });
+  c.innerHTML=h;
+}
+function pickOpt(prefix,qi,oi,ans){
+  const block=document.getElementById(prefix+'-q'+qi);
+  if(!block||block.dataset.done)return;
+  block.dataset.done='1';
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    if(j===ans)el.classList.add('correct');
+    else if(j===oi)el.classList.add('incorrect');
+    el.style.pointerEvents='none';
+  });
+}
+
+// ── Overview ─────────────────────────────────────────────────
+function initOverview(){
+  const c=document.getElementById('overviewContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card">
+    <div class="card-title">📘 What You Will Learn</div><div class="card-bar"></div>
+    <div class="outcomes-grid">${outcomes.map((o,i)=>`<div class="outcome"><span class="out-num">${String(i+1).padStart(2,'0')}</span><span class="out-text">${o}</span></div>`).join('')}</div>
+  </div>`;
+  setTimeout(()=>{
+    const pf=document.getElementById('progFill');
+    const pp=document.getElementById('progPct');
+    if(pf)pf.style.width='9%';
+    if(pp)pp.textContent='9%';
+  },300);
+}
+
+// ── Speaking ─────────────────────────────────────────────────
+function initSpeaking(){
+  const c=document.getElementById('speakingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">🎙️ Discussion Questions</div><div class="card-bar"></div>
+    <div class="speaking-grid">${speakingQs.map((q,i)=>`<div class="speaking-card"><div class="q-num">Q${String(i+1).padStart(2,'0')}</div><div class="q-text">${q}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Word Bank ─────────────────────────────────────────────────
+function initWordBank(){
+  const c=document.getElementById('wordBankContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">📚 Key Legal Terms</div><div class="card-bar"></div>
+    <div class="wb-grid">${wordBank.map(w=>`<div class="wb-card"><span class="wb-emoji">${w.emoji}</span><div class="wb-term">${w.term}</div><div class="wb-def">${w.def}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Reading ───────────────────────────────────────────────────
+function initReading(){
+  const c=document.getElementById('readingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  readingTexts.forEach((rt,ti)=>{
+    h+=`<div class="card">
+      <div class="reading-box"><h4>${rt.title}</h4>${rt.paragraphs.map(p=>`<p>${p}</p>`).join('')}</div>
+      <div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>
+      <div id="rmcq-${ti}"></div>
+    </div>`;
+  });
+  c.innerHTML=h;
+  readingTexts.forEach((_,ti)=>{
+    renderMCQ2('rmcq-'+ti, readingTexts[ti].questions, 'r'+ti, false);
+  });
+}
+
+// ── Vocabulary ────────────────────────────────────────────────
+let curVocab=0;
+function initVocab(){showVocab(0);}
+function showVocab(idx){
+  curVocab=idx;
+  document.querySelectorAll('#sec-vocab .ex-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  [0,1,2].forEach(i=>{
+    const p=document.getElementById('vex-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+  if(idx===0){renderMCQ2('vex-0',vocabMCQ,'vm0',false);}
+  else if(idx===1){renderGapFill('vex-1',vocabGapFill,'vg1');}
+  else if(idx===2){renderTF('vex-2',vocabTF,'vt2');}
+}
+function renderGapFill(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const blanks=items.map(function(it){return it.blank;});
+  let bankHtml='<div class="gf-bank-box"><div class="gf-bank-label">Word bank:</div><div class="gf-bank-pills">';
+  blanks.forEach(function(w){
+    bankHtml+='<span class="gf-pill" id="'+prefix+'-pill-'+w.replace(/\s+/g,'-')+'">'+w+'</span>';
+  });
+  bankHtml+='</div></div>';
+  let sentHtml='<div class="gf-sentences">';
+  items.forEach(function(item,i){
+    sentHtml+='<div class="gf-row" id="'+prefix+'-row'+i+'">'
+      +'<div class="gf-sentence-text"><span class="gf-num">'+(i+1)+'.</span> '+item.before
+      +' <span class="gf-blank-wrap"><input class="gf-underline-input" id="'+prefix+'-i'+i
+      +'" placeholder="\u2026" autocomplete="off" spellcheck="false"/>'
+      +'<span class="gf-underline"></span></span> '
+      +item.after+'</div>'
+      +'<div class="gf-row-fb" id="'+prefix+'-f'+i+'"></div>'
+      +'</div>';
+  });
+  sentHtml+='</div>';
+  const btnBar='<div class="gf-btn-bar">'
+    +'<button class="gf-check-btn" onclick="gradeGapFill(\''+prefix+'\',vocabGapFill)">Check Answers</button>'
+    +'<button class="gf-reset-btn" onclick="resetGapFill(\''+prefix+'\',vocabGapFill)">&#8635; Reset</button>'
+    +'<span class="gf-score-display" id="'+prefix+'-score"></span>'
+    +'</div>';
+  c.innerHTML='<div class="card gf-card">'
+    +'<div class="card-title">Exercise 2: Gap Fill</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="gf-instr">Type the correct word or phrase in each gap. Use the word bank for help. Click <strong>Check Answers</strong> when ready.</p>'
+    +bankHtml+sentHtml+btnBar
+    +'</div>';
+}
+function checkGF2(prefix,i,ans){}
+
+function gradeGapFill(prefix,items){
+  let correct=0;
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(!inp||!fb)return;
+    const val=inp.value.trim().toLowerCase().replace(/['']/g,"'");
+    const ans=item.blank.toLowerCase();
+    inp.disabled=true;
+    if(val===ans){
+      correct++;
+      inp.classList.add('gf-correct'); inp.classList.remove('gf-incorrect');
+      fb.innerHTML='<span class="gf-fb-ok">\u2713 Correct</span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-used');
+    } else {
+      inp.classList.add('gf-incorrect'); inp.classList.remove('gf-correct');
+      fb.innerHTML='<span class="gf-fb-err">\u2717 The answer is: <strong>'+item.blank+'</strong></span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-highlight');
+    }
+  });
+  const pct=Math.round(correct/items.length*100);
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl){
+    const col=pct>=80?'var(--green-accent)':pct>=50?'var(--gold-light)':'var(--red-accent)';
+    scoreEl.innerHTML='<span style="color:'+col+';font-weight:700;">'+correct+'/'+items.length+' \u2014 '+pct+'%</span>';
+  }
+}
+
+function resetGapFill(prefix,items){
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(inp){inp.value='';inp.disabled=false;inp.classList.remove('gf-correct','gf-incorrect');}
+    if(fb)fb.innerHTML='';
+    const ans=item.blank.toLowerCase();
+    const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+    if(pill){pill.classList.remove('gf-pill-used','gf-pill-highlight');}
+  });
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl)scoreEl.innerHTML='';
+}
+function renderTF(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='<div class="card tf-card">'
+    +'<div class="card-title">Exercise 3: True / False</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="tf-instr">Decide if each statement is TRUE or FALSE.</p>'
+    +'<div class="tf-list">';
+  items.forEach(function(item,i){
+    const stmt=item.statement||item.stmt||'';
+    const ans=item.ans;
+    h+='<div class="tf-item" id="'+prefix+'-row'+i+'">'
+      +'<div class="tf-item-stmt">'+(i+1)+'. '+stmt+'</div>'
+      +'<div class="tf-item-btns">'
+      +'<button class="tf-item-btn" id="'+prefix+'-T'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',true,'+ans+')">True</button>'
+      +'<button class="tf-item-btn" id="'+prefix+'-F'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',false,'+ans+')">False</button>'
+      +'</div>'
+      +'<div class="tf-item-fb" id="'+prefix+'-fb'+i+'"></div>'
+      +'</div>';
+  });
+  h+='</div></div>';
+  c.innerHTML=h;
+}
+
+function pickTF2(prefix,i,chosen,ans){
+  const row=document.getElementById(prefix+'-row'+i);
+  if(!row||row.dataset.done)return;
+  row.dataset.done='1';
+  const fb=document.getElementById(prefix+'-fb'+i);
+  const btnT=document.getElementById(prefix+'-T'+i);
+  const btnF=document.getElementById(prefix+'-F'+i);
+  const correct=chosen===ans;
+  if(btnT){
+    if(ans===true) btnT.classList.add('tf-btn-correct');
+    else if(chosen===true) btnT.classList.add('tf-btn-wrong');
+    btnT.disabled=true;
+  }
+  if(btnF){
+    if(ans===false) btnF.classList.add('tf-btn-correct');
+    else if(chosen===false) btnF.classList.add('tf-btn-wrong');
+    btnF.disabled=true;
+  }
+  if(fb){
+    fb.innerHTML=correct
+      ?'<span class="tf-fb-ok">✓ Correct!</span>'
+      :'<span class="tf-fb-err">✗ The correct answer is <strong>'+(ans?'True':'False')+'</strong>.</span>';
+  }
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+let curGram=0;
+function initGrammar(){showGram(0);}
+function showGram(idx){
+  curGram=idx;
+  document.querySelectorAll('#sec-grammar .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  [0,1,2].forEach(function(i){var p=document.getElementById('gex-'+i);if(p)p.style.display=i===idx?'block':'none';});
+  var ex=grammarEx[idx];
+  if(!document.getElementById('gex-'+idx).dataset.built){
+    document.getElementById('gex-'+idx).dataset.built='1';
+    var instr='<div class="card"><div class="card-title">'+ex.title+'</div><div class="card-bar"></div><p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">'+ex.instr+'</p><div id="gmcq-'+idx+'"></div></div>';
+    document.getElementById('gex-'+idx).innerHTML=instr;
+  }
+  renderMCQ2('gmcq-'+idx,ex.qs,'gm'+idx,false);
+}
+
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ──────────────────────────────────────────────────
+let curTask=0;
+function initWriting(){
+  const c=document.getElementById('writingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let html='<div class="ex-tabs">';
+  writingTasks.forEach(function(t,i){
+    html+='<div class="ex-tab'+(i===0?' active':'')+'" onclick="showTask('+i+')">'+t.type+'</div>';
+  });
+  html+='</div>';
+  writingTasks.forEach(function(t,i){
+    const minW=t.targetMin||120;
+    const promptFormatted=t.prompt.replace(/\n/g,'<br>');
+    html+='<div id="wpanel-'+i+'" style="display:'+(i===0?'block':'none')+'">'
+      +'<div class="card">'
+      +'<div class="w-task-header">'
+      +'<div class="w-task-pill">'+t.activity+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+t.title+'</div>'
+      +'</div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="w-prompt-box"><div class="w-prompt-label">📋 '+t.type+' — '+t.title+'</div>'
+      +'<div class="w-prompt-text">'+promptFormatted+'</div>'
+      +'<div class="w-target">Target: '+minW+'–'+(t.targetMax||200)+' words</div>'
+      +'</div>'
+      +'<textarea class="w-textarea" id="w-area-'+i+'" placeholder="Write your response here…" oninput="wCount('+i+')"></textarea>'
+      +'<div class="w-meta-row"><span class="w-counter" id="w-count-'+i+'">0 words</span>'
+      +'<div style="display:flex;gap:10px;">'
+      +'<button class="clear-btn" onclick="clearWriting('+i+')">Clear</button>'
+      +'<button class="ac-btn" id="w-btn-'+i+'" onclick="runAIFeedback('+i+')">✨ Auto-Correct &amp; Get Feedback</button>'
+      +'</div></div>'
+      +'<div id="w-fb-'+i+'"></div>'
+      +'</div></div>';
+  });
+  c.innerHTML=html;
+}
+function showTask(idx){
+  curTask=idx;
+  document.querySelectorAll('#sec-writing .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  writingTasks.forEach(function(_,i){
+    var p=document.getElementById('wpanel-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+}
+function wCount(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const wc=document.getElementById('w-count-'+idx);
+  if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  const min=writingTasks[idx].targetMin||120;
+  wc.textContent=words+' words';
+  wc.style.color=words>=min?'var(--green-accent)':'var(--text-mid)';
+}
+function clearWriting(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  if(ta)ta.value='';
+  if(fb)fb.innerHTML='';
+  wCount(idx);
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ───────────────────────────────────────────────────
+async function runAIFeedback(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  const btn=document.getElementById('w-btn-'+idx);
+  if(!ta||!fb)return;
+  const text=ta.value.trim();
+  const task=writingTasks[idx];
+  const minW=task.targetMin||120;
+  const words=text===''?0:text.trim().split(/\s+/).length;
+  if(words<30){
+    fb.innerHTML='<div class="fb-warn-box">⚠️ Please write at least 30 words before requesting feedback.</div>';
+    return;
+  }
+  btn.disabled=true;
+  btn.textContent='Analysing…';
+  fb.innerHTML='<div class="fb-loading-box"><span class="spin">⏳</span> AI is reviewing your writing…</div>';
+
+  // Rule-based context data
+  const sentences=text.split(/[.!?]+/).filter(s=>s.trim().length>3);
+  const avgSentLen=sentences.length?Math.round(words/sentences.length):0;
+  const goodLength=words>=minW&&words<=(task.targetMax||250);
+  const vocabTerms=["artificial intelligence","machine learning","deep learning","generative AI","blockchain","Internet of Things","quantum computing","responsible AI","algorithmic bias","edge computing","digital twin","hype cycle","crossing the chasm","proof of concept","Industry 4.0","AI governance","emerging technology","innovation","technology stack","technology readiness level","disruptive innovation"];
+  const vocabHits=vocabTerms.filter(t=>text.toLowerCase().includes(t));
+
+  const systemPrompt=`You are an expert Business English writing coach specialising in IT and Digital Professions English at B1-B2 level. You give SPECIFIC, TEXT-ANCHORED feedback — always quoting or referencing the student's actual words. Never give generic advice.
+
+Return ONLY a JSON object with these exact keys — no markdown, no extra text:
+{
+  "score": <integer 0-100>,
+  "level": <"Needs Work"|"Developing"|"Proficient"|"Advanced"|"Excellent">,
+  "overall": <1 sentence overall impression referencing the student's actual writing>,
+  "grammar": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about grammar in THIS text — quote or reference actual sentences>
+  },
+  "vocabulary": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about word choices in THIS text — suggest a precise improvement>
+  },
+  "tone": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about register and formality in THIS text>
+  },
+  "structure": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about paragraph organisation and logical flow in THIS text>
+  },
+  "fluency": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about sentence variety and connectives in THIS text — give a concrete example>
+  },
+  "corrected": <one improved version of the weakest sentence from the text — copy the original then rewrite it>
+}`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1200,
+        system:systemPrompt,
+        messages:[{role:'user',content:'Task: '+task.type+' — '+task.title+'\nPrompt: '+task.prompt+'\n\nStudent writing ('+words+' words):\n'+text}]
+      })
+    });
+    const data=await res.json();
+    let p;
+    try{
+      const raw=data.content[0].text.replace(/```json|```/g,'').trim();
+      p=JSON.parse(raw);
+    }catch(e){throw new Error('parse');}
+
+    const score=Math.min(100,Math.max(0,p.score||70));
+    const level=p.level||'Proficient';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':score>=50?'#e09b00':'#d63031';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const cats=[
+      {label:'Grammar',key:'grammar',icon:'📐'},
+      {label:'Vocabulary',key:'vocabulary',icon:'📖'},
+      {label:'Tone',key:'tone',icon:'🎙️'},
+      {label:'Structure',key:'structure',icon:'🏗️'},
+      {label:'Fluency',key:'fluency',icon:'✨'}
+    ];
+
+    let catsHtml='';
+    cats.forEach(function(cat){
+      const d=p[cat.key]||{};
+      catsHtml+='<div class="fb-cat-row">'
+        +'<div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span>'
+        +'<strong class="fb-cat-label">'+cat.label+':</strong>'
+        +ratingIcon(d.rating||'Satisfactory')+'</div>'
+        +'<div class="fb-cat-comment">'+(d.comment||'')+'</div>'
+        +'</div>';
+    });
+
+    const lengthOk=goodLength
+      ?'<span class="fb-check">✓ '+words+' words — within target</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3
+      ?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header">'
+      +'<div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div>'
+      +'</div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +(p.corrected?'<div class="fb-corrected-block"><span class="fb-corrected-tag">✏️ Suggested rewrite:</span> '+p.corrected+'</div>':'')
+      +(p.overall?'<div class="fb-overall">✓ Overall: '+p.overall+'</div>':'')
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSentLen+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }catch(err){
+    // Rule-based fallback — still structured with 5 categories
+    const formalConnectives=['therefore','furthermore','consequently','moreover','however','nevertheless','in addition','as a result','thus','hence'];
+    const connUsed=formalConnectives.filter(w=>text.toLowerCase().includes(w)).length;
+    const avgSL=sentences.length?Math.round(words/sentences.length):0;
+    const score=Math.min(100,Math.max(20,(goodLength?20:0)+(vocabHits.length>=3?20:vocabHits.length*5)+(avgSL>=8&&avgSL<=22?15:0)+(/^[A-Z]/.test(text)?10:0)+(connUsed>=1?15:0)+20));
+    const level=score>=85?'Advanced':score>=70?'Proficient':score>=50?'Developing':'Needs Work';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':'#e09b00';
+
+    const gramOk=text.match(/[A-Z][^.!?]*[.!?]/g);
+    const gramComment=gramOk&&gramOk.length>0?'Check subject-verb agreement and ensure consistent verb tense throughout your response.':'Ensure each sentence begins with a capital letter and ends with a full stop.';
+    const vocComment=vocabHits.length>=3?'Good use of module vocabulary. Consider replacing generic verbs with more precise professional alternatives.':'Consider incorporating more module vocabulary terms — aim for at least 3 in a formal legal or compliance response.';
+    const toneComment=/dear|hi |hey |thanks/i.test(text)?'Some phrasing appears too informal for a professional compliance context. Avoid casual openers and closers.':'The register appears appropriate for the task.';
+    const structComment=sentences.length<3?'Your response would benefit from clearer paragraph structure — aim for an opening, body, and conclusion.':connUsed===0?'Consider organising your response with a clear introduction, supporting points, and a conclusion.':'Good paragraph structure detected.';
+    const fluComment=connUsed===0?'Your response would benefit from one or more connecting phrases between paragraphs (e.g., "Furthermore," "As a result,") to improve logical flow.':'Good use of connectives to link ideas.';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const catsHtml=[
+      {icon:'📐',label:'Grammar',rating:gramOk?'Satisfactory':'Needs Attention',comment:gramComment},
+      {icon:'📖',label:'Vocabulary',rating:vocabHits.length>=3?'Good':'Needs Attention',comment:vocComment},
+      {icon:'🎙️',label:'Tone',rating:/dear|hi |hey |thanks/i.test(text)?'Needs Attention':'Satisfactory',comment:toneComment},
+      {icon:'🏗️',label:'Structure',rating:connUsed>0&&sentences.length>=3?'Good':'Satisfactory',comment:structComment},
+      {icon:'✨',label:'Fluency',rating:connUsed>=1?'Good':'Needs Attention',comment:fluComment}
+    ].map(function(cat){
+      return '<div class="fb-cat-row"><div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span><strong class="fb-cat-label">'+cat.label+':</strong>'+ratingIcon(cat.rating)+'</div><div class="fb-cat-comment">'+cat.comment+'</div></div>';
+    }).join('');
+
+    const lengthOk=goodLength?'<span class="fb-check">✓ '+words+' words — within target</span>':'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>':'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header"><div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div></div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSL+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }
+  btn.disabled=false;
+  btn.textContent='✨ Auto-Correct & Get Feedback';
+}
+
+// ── Listening TTS Engine ──────────────────────────────────────
+let ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+const voicePref=['Samantha','Karen','Victoria','Moira','Daniel','Google UK English Female','Google US English','en-GB','en-US'];
+function getBestVoice(){
+  const voices=window.speechSynthesis.getVoices();
+  for(var j=0;j<voicePref.length;j++){
+    var v=voices.find(function(vv){return vv.name===voicePref[j]||vv.name.includes(voicePref[j]);});
+    if(v)return v;
+  }
+  return voices.find(function(v){return v.lang&&v.lang.startsWith('en');})||voices[0]||null;
+}
+function initListening(){
+  const c=document.getElementById('listeningContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  listeningActs.forEach(function(act,i){
+    h+='<div class="card" id="l-card-'+i+'">'
+      +'<div class="l-header"><span class="l-icon">'+act.icon+'</span><div><div class="card-title">'+act.title+'</div><div class="l-sub">'+act.sub+'</div></div></div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="l-player">'
+      +'<div class="l-controls">'
+      +'<button class="l-play-btn" id="l-play-'+i+'" onclick="togglePlay('+i+')">&#9654; Play</button>'
+      +'<select class="l-speed" id="l-speed-'+i+'" onchange="changeSpeed('+i+')">'
+      +'<option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option>'
+      +'</select>'
+      +'<button class="l-trans-btn" id="l-tbtn-'+i+'" onclick="toggleTranscript('+i+')">&#128196; Transcript</button>'
+      +'</div>'
+      +'<div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-'+i+'"></div></div><span class="l-time" id="l-time-'+i+'">0:00</span></div>'
+      +'</div>'
+      +'<div class="l-transcript-box" id="l-trans-'+i+'" style="display:none"><p class="l-transcript-text">'+act.transcript+'</p></div>'
+      +'<div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>'
+      +'<div id="lmcq-'+i+'"></div>'
+      +'</div>';
+  });
+  c.innerHTML=h;
+  listeningActs.forEach(function(act,i){renderMCQ2('lmcq-'+i,act.qs,'la'+i,false);});
+  window.speechSynthesis.getVoices();
+}
+function togglePlay(idx){
+  if(ttsState.actIdx===idx&&ttsState.playing){pauseAudio(idx);}
+  else if(ttsState.actIdx===idx&&ttsState.paused){resumeAudio(idx);}
+  else{playAudio(idx);}
+}
+function playAudio(idx){
+  const act=listeningActs[idx];
+  if(!act)return;
+  if(ttsState.actIdx===idx&&ttsState.paused){
+    resumeAudio(idx); return;
+  }
+  stopAudio();
+  ttsState.actIdx=idx;
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.voice=getBestVoice();
+  utt.rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  utt.pitch=1.0;
+  utt.volume=1.0;
+  utt.onstart=()=>{ttsState.playing=true;ttsState.paused=false;ttsState.startTime=Date.now();updatePlayBtn(idx,true);startProg(idx,act.transcript.length);};
+  utt.onend=()=>{ttsState.playing=false;ttsState.paused=false;updatePlayBtn(idx,false);stopProg(idx,true);};
+  utt.onerror=()=>{ttsState.playing=false;updatePlayBtn(idx,false);stopProg(idx,false);};
+  ttsState.utterance=utt;
+  window.speechSynthesis.speak(utt);
+}
+function pauseAudio(idx){
+  if(window.speechSynthesis.speaking&&!window.speechSynthesis.paused){
+    window.speechSynthesis.pause();
+    ttsState.paused=true;ttsState.playing=false;
+    ttsState.elapsed+=Date.now()-ttsState.startTime;
+    updatePlayBtn(idx,false,true);
+    clearInterval(ttsState.progTimer);
+  }
+}
+function resumeAudio(idx){
+  window.speechSynthesis.resume();
+  ttsState.paused=false;ttsState.playing=true;
+  ttsState.startTime=Date.now();
+  updatePlayBtn(idx,true);
+  startProg(idx,listeningActs[idx].transcript.length,true);
+}
+function stopAudio(){
+  window.speechSynthesis.cancel();
+  if(ttsState.actIdx!==null){updatePlayBtn(ttsState.actIdx,false);stopProg(ttsState.actIdx,false);}
+  ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+}
+function updatePlayBtn(idx,playing,paused){
+  const btn=document.getElementById('l-play-'+idx);
+  if(!btn)return;
+  btn.textContent=playing?'⏸ Pause':paused?'▶ Resume':'▶ Play';
+}
+function startProg(idx,charLen,resume){
+  clearInterval(ttsState.progTimer);
+  const rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  const totalMs=(charLen/18)*1000/rate;
+  const elapsed=resume?ttsState.elapsed:0;
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  ttsState.progTimer=setInterval(()=>{
+    const spent=elapsed+(Date.now()-ttsState.startTime);
+    const pct=Math.min(100,(spent/totalMs)*100);
+    if(bar)bar.style.width=pct+'%';
+    const rem=Math.max(0,Math.round((totalMs-spent)/1000));
+    if(time)time.textContent=`${Math.floor(rem/60)}:${String(rem%60).padStart(2,'0')}`;
+    if(pct>=100)clearInterval(ttsState.progTimer);
+  },200);
+}
+function stopProg(idx,finished){
+  clearInterval(ttsState.progTimer);
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  if(bar)bar.style.width=finished?'100%':'0%';
+  if(time)time.textContent='0:00';
+}
+function changeSpeed(idx){
+  const sel=document.getElementById('l-speed-'+idx);
+  if(!sel)return;
+  if(ttsState.actIdx===idx&&(ttsState.playing||ttsState.paused)){
+    stopAudio(); playAudio(idx);
+  }
+}
+function toggleTranscript(idx){
+  const box=document.getElementById('l-trans-'+idx);
+  const btn=document.getElementById('l-tbtn-'+idx);
+  if(!box)return;
+  const open=box.style.display==='block';
+  box.style.display=open?'none':'block';
+  if(btn)btn.textContent=open?'📄 Show Transcript':'📄 Hide Transcript';
+}
+
+// ── Case Studies ──────────────────────────────────────────────
+function initCases(){
+  const c=document.getElementById('casesContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  casesStudies.forEach(function(cs,ci){
+    h+='<div class="card">'
+      +'<div class="cs-tag">'+cs.tag+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+cs.title+'</div>'
+      +'<div class="cs-sub">'+cs.sub+'</div>'
+      +'<div class="card-bar"></div>';
+    cs.sections.forEach(function(s){
+      h+='<div class="cs-section"><h4 class="cs-sh">'+s.h+'</h4><p class="cs-p">'+s.t+'</p></div>';
+    });
+    h+='<div class="card-title" style="margin-top:22px;">Case Study Questions</div><div class="card-bar"></div>'
+      +'<div id="csmcq-'+ci+'"></div></div>';
+  });
+  c.innerHTML=h;
+  casesStudies.forEach(function(cs,ci){renderMCQ2('csmcq-'+ci,cs.qs,'cs'+ci,false);});
+}
+
+// ── Final Assessment ──────────────────────────────────────────
+let assAnswers={};
+function initAssessment(){
+  const c=document.getElementById('assessContainer');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const letters=['A','B','C','D'];
+  let h='';
+  assessQs.forEach(function(item,i){
+    h+='<div class="mcq-block" id="aq-'+i+'">'
+      +'<div class="mcq-q">'+(i+1)+'. '+item.q+'</div>'
+      +'<div class="mcq-opts">';
+    item.opts.forEach(function(opt,j){
+      h+='<div class="mcq-opt" onclick="pickAss('+i+','+j+')" id="ass-'+i+'-'+j+'">'
+        +'<span class="opt-letter">'+letters[j]+'</span>'+opt+'</div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+  assAnswers={};
+  document.getElementById('final-res').style.display='none';
+  document.getElementById('ass-sub').style.display='inline-flex';
+}
+function pickAss(qi,oi){
+  const block=document.getElementById('aq-'+qi);
+  if(!block||block.dataset.done)return;
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    el.classList.toggle('selected',j===oi);
+  });
+  assAnswers[qi]=oi;
+}
+function submitAss(){
+  let attempts=parseInt(document.getElementById('att-disp')?.textContent||'0');
+  const maxAttempts=2;
+  if(attempts>=maxAttempts){
+    alert('You have used both attempts.');return;
+  }
+  const unanswered=assessQs.map((_,i)=>i).filter(i=>assAnswers[i]===undefined);
+  if(unanswered.length>0){
+    alert('Please answer all questions before submitting. Unanswered: '+unanswered.map(i=>i+1).join(', '));return;
+  }
+  // Mark answers
+  assessQs.forEach((item,i)=>{
+    const block=document.getElementById('aq-'+i);
+    if(!block)return;
+    block.dataset.done='1';
+    block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+      el.classList.remove('selected');
+      if(j===item.ans)el.classList.add('correct');
+      else if(j===assAnswers[i])el.classList.add('incorrect');
+      el.style.pointerEvents='none';
+    });
+  });
+  const correct=assessQs.filter((_,i)=>assAnswers[i]===assessQs[i].ans).length;
+  const pct=Math.round((correct/assessQs.length)*100);
+  const pass=pct>=70;
+  attempts++;
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent=attempts+' / 2';
+  const res=document.getElementById('final-res');
+  res.style.display='block';
+  const scoreColor=pass?'#00a651':'#d63031';
+  res.className='final-result '+(pass?'pass':'fail');
+  res.style.display='block';
+  res.innerHTML='<div class="final-score">'+pct+'<span style="font-size:22px">%</span></div>'
+    +'<div class="final-verdict">'+(pass?'🎉 Congratulations — You Passed!':'📚 Not Passed Yet')+'</div>'
+    +'<div class="final-msg">'+correct+' / '+assessQs.length+' correct · Pass mark: 70%</div>'
+    +(attempts<maxAttempts&&!pass?'<button class="btn-primary" onclick="resetAss()" style="margin-top:18px">Try Again (Attempt '+(attempts+1)+' of '+maxAttempts+')</button>':'')
+    +(attempts>=maxAttempts&&!pass?'<div style="margin-top:12px;font-size:13px;opacity:0.8;">Maximum attempts reached.</div>':'');
+  if(pass||attempts>=maxAttempts){
+    document.getElementById('ass-sub').style.display='none';
+  }
+}
+function resetAss(){
+  const c=document.getElementById('assessContainer');
+  if(c){c.dataset.built='';c.innerHTML='';}
+  assAnswers={};
+  const res=document.getElementById('final-res');
+  if(res){res.style.display='none';res.innerHTML='';}
+  const sub=document.getElementById('ass-sub');
+  if(sub)sub.style.display='inline-flex';
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent='0 / 2';
+  initAssessment();
+}
+
+// ── Bootstrap ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('mob-btn').addEventListener('click',openSidebar);
+  document.getElementById('overlay').addEventListener('click',closeSidebar);
+  goTo('overview');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

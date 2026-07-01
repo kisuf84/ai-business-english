@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Module 5: User Interface and UX Design Terms — IT &amp; Digital Professions English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root{--navy:#0d1b2e;--navy-mid:#112240;--navy-light:#1a3357;--gold:#00bcd4;--gold-light:#26c6da;--gold-bright:#4dd0e1;--cream:#f0f4f8;--cream-dark:#dce8f0;--white:#ffffff;--text-light:#90b8cc;--text-mid:#4a7a96;--red-accent:#e53935;--green-accent:#00b86b;--teal:#0097a7;--sidebar-w:260px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);display:flex;min-height:100vh;overflow-x:hidden;}
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent;transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);}
+.sidebar-brand{padding:24px 22px 18px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-brand h1{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:700;color:var(--gold-bright);line-height:1.38;margin-bottom:3px;}
+.sidebar-brand .sub{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-mid);font-weight:500;}
+.level-badge{display:inline-block;margin-top:11px;background:var(--gold);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:1px;padding:3px 11px;border-radius:20px;text-transform:uppercase;}
+.sidebar-section-label{padding:20px 22px 7px;font-size:8.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--text-mid);font-weight:700;}
+.nav-item{display:flex;align-items:center;justify-content:space-between;padding:11px 22px;cursor:pointer;transition:all 0.18s;border-left:3px solid transparent;}
+.nav-item:hover{background:rgba(255,255,255,0.055);}
+.nav-item.active{background:rgba(245,184,0,0.12);border-left-color:var(--gold-light);}
+.nav-left{display:flex;align-items:center;gap:11px;}
+.nav-icon{font-size:15px;opacity:0.9;}
+.nav-label{font-size:13px;color:var(--text-light);font-weight:400;}
+.nav-item.active .nav-label{color:var(--white);font-weight:500;}
+.nav-badge{font-size:9.5px;font-weight:700;color:var(--navy);background:var(--gold-bright);padding:1px 7px;border-radius:12px;}
+#mob-btn{display:none;position:fixed;top:14px;left:14px;z-index:300;background:var(--navy);border:none;border-radius:10px;padding:10px 13px;cursor:pointer;color:var(--gold-bright);font-size:19px;box-shadow:0 3px 14px rgba(0,0,0,0.35);line-height:1;}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150;}
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;}
+.section{display:none;}.section.active{display:block;}
+.hero{background:linear-gradient(145deg,#06111f 0%,#0d1e35 50%,#081929 100%);padding:64px 64px 54px;position:relative;overflow:hidden;}
+.hero::before{content:'L1';position:absolute;right:-15px;bottom:-55px;font-family:'Playfair Display',serif;font-size:310px;font-weight:900;color:rgba(255,255,255,0.022);line-height:1;pointer-events:none;}
+.hero::after{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(245,184,0,0.05) 0%,transparent 70%);pointer-events:none;}
+.module-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);padding:7px 18px;border-radius:50px;font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-light);font-weight:600;margin-bottom:30px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4.6vw,58px);font-weight:900;color:var(--white);line-height:1.08;}
+.hero h2 .accent{color:var(--gold-bright);}
+.hero-desc{font-size:15px;color:var(--text-light);max-width:620px;line-height:1.78;margin-top:20px;font-weight:300;}
+.hero-stats{display:flex;gap:36px;margin-top:44px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;gap:3px;}
+.stat-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--gold-bright);line-height:1;}
+.stat-l{font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(160,180,210,0.7);font-weight:600;}
+.prog-wrap{background:var(--navy-mid);padding:16px 64px;display:flex;align-items:center;gap:20px;}
+.prog-label{font-size:11.5px;font-weight:600;color:var(--text-light);white-space:nowrap;}
+.prog-track{flex:1;height:6px;background:rgba(255,255,255,0.09);border-radius:6px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:6px;width:0%;transition:width 1s ease;}
+.prog-pct{font-size:12.5px;font-weight:700;color:var(--gold-bright);min-width:36px;text-align:right;}
+.content{padding:48px 60px;}
+.card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.card-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.card-bar{width:40px;height:3px;background:var(--gold-light);border-radius:3px;margin-bottom:20px;}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.outcome{display:flex;align-items:flex-start;gap:13px;background:var(--cream);border-radius:11px;padding:14px 16px;border-left:3px solid var(--gold-light);}
+.out-num{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--gold);line-height:1;min-width:24px;}
+.out-text{font-size:13.5px;color:var(--navy);line-height:1.52;}
+.speaking-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.speaking-card{background:var(--cream);border-radius:11px;padding:18px 20px;border-top:3px solid var(--gold-light);transition:transform 0.2s,box-shadow 0.2s;cursor:default;}
+.speaking-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(11,27,48,0.1);}
+.q-num{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;margin-bottom:8px;letter-spacing:1px;}
+.q-text{font-size:13.5px;color:var(--navy);line-height:1.55;}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.wb-card{background:var(--navy);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:transform 0.2s;cursor:default;}
+.wb-card:hover{transform:translateY(-2px);}
+.wb-emoji{font-size:28px;line-height:1;display:block;margin-bottom:2px;}
+.wb-term{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;color:var(--gold-bright);}
+.wb-def{font-size:12px;color:var(--text-light);line-height:1.52;}
+.reading-box{background:var(--cream);border-radius:12px;padding:26px 30px;margin-bottom:26px;border-left:4px solid var(--gold-light);}
+.reading-box h4{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.reading-box p{font-size:14px;color:#1a2e45;line-height:1.84;margin-bottom:13px;}
+.reading-box p:last-child{margin-bottom:0;}
+.mcq-block{margin-bottom:22px;}
+.mcq-q{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:11px;line-height:1.5;}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;}
+.mcq-opt{display:flex;align-items:center;gap:10px;background:var(--cream);border:2px solid var(--cream-dark);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.18s;font-size:13.5px;color:var(--navy);user-select:none;-webkit-tap-highlight-color:transparent;}
+.mcq-opt:hover{border-color:var(--gold-light);background:#fef8e0;}
+.mcq-opt.selected{border-color:var(--gold);background:#fff3c0;}
+.mcq-opt.correct{border-color:var(--green-accent);background:#e6f8ee;color:#0a6b35;}
+.mcq-opt.incorrect{border-color:var(--red-accent);background:#fdecea;color:#881a18;}
+.opt-letter{font-family:'DM Mono',monospace;font-size:10.5px;font-weight:700;width:23px;height:23px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy);}
+.mcq-opt.correct .opt-letter{background:var(--green-accent);color:white;}
+.mcq-opt.incorrect .opt-letter{background:var(--red-accent);color:white;}
+.lmcq-opt{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.12)!important;color:var(--text-light)!important;}
+.lmcq-opt:hover{border-color:var(--gold-light)!important;background:rgba(245,184,0,0.1)!important;}
+.lmcq-opt.selected{border-color:var(--gold)!important;background:rgba(245,184,0,0.18)!important;color:var(--gold-bright)!important;}
+.lmcq-opt.correct{border-color:var(--green-accent)!important;background:rgba(0,166,81,0.18)!important;color:#4dde9a!important;}
+.lmcq-opt.incorrect{border-color:var(--red-accent)!important;background:rgba(214,48,49,0.18)!important;color:#ff8b8b!important;}
+.check-btn{margin-top:15px;background:var(--navy);color:var(--gold-bright);border:none;padding:11px 26px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.check-btn:hover{background:var(--navy-light);}
+.l-check{background:rgba(255,255,255,0.1)!important;color:var(--gold-bright)!important;}
+.l-check:hover{background:rgba(255,255,255,0.18)!important;}
+.score-disp{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;margin-top:14px;}
+.ex-tabs{display:flex;gap:4px;margin-bottom:26px;background:var(--cream-dark);border-radius:12px;padding:4px;flex-wrap:wrap;}
+.ex-tab{flex:1;min-width:130px;text-align:center;padding:10px;border-radius:9px;font-size:12.5px;font-weight:500;cursor:pointer;color:var(--text-mid);transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.ex-tab.active{background:var(--navy);color:var(--gold-bright);}
+.gram-ref{background:var(--navy);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.gram-ref h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:14px;}
+.gram-rule{background:rgba(255,255,255,0.065);border-radius:9px;padding:14px 18px;margin-bottom:11px;border-left:3px solid var(--gold-light);}
+.gram-rule p,.gram-rule li{font-size:13px;color:var(--text-light);line-height:1.66;}
+.gram-rule code{font-family:'DM Mono',monospace;background:rgba(245,184,0,0.18);color:var(--gold-bright);padding:1px 6px;border-radius:4px;font-size:12px;}
+.gram-rule ul{padding-left:18px;}
+.gf-item{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:14px;color:var(--navy);line-height:2.2;margin-bottom:12px;}
+.gf-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);padding:2px 7px;width:160px;outline:none;text-align:center;}
+.gf-input.correct{border-color:var(--green-accent);color:var(--green-accent);}
+.gf-input.incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.tf-row{background:var(--cream);border-radius:10px;padding:13px 17px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.tf-stmt{font-size:13.5px;color:var(--navy);flex:1;line-height:1.52;}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;}
+.tf-btn{padding:7px 16px;border-radius:8px;border:2px solid var(--cream-dark);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:white;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.tf-btn:hover{border-color:var(--gold-light);}
+.tf-btn.sel-t,.tf-btn.sel-f{background:var(--navy);color:white;border-color:var(--navy);}
+.tf-btn.cor{background:var(--green-accent);color:white;border-color:var(--green-accent);}
+.tf-btn.wrg{background:var(--red-accent);color:white;border-color:var(--red-accent);}
+.writing-prompt{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.writing-prompt h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:10px;}
+.writing-prompt p{font-size:13.5px;color:var(--text-light);line-height:1.76;}
+.writing-tags{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
+.wtag{background:rgba(245,184,0,0.18);color:var(--gold-bright);font-size:11px;font-weight:600;letter-spacing:0.8px;padding:4px 12px;border-radius:20px;text-transform:uppercase;border:1px solid rgba(245,184,0,0.3);}
+.w-textarea{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;}
+.w-textarea:focus{border-color:var(--gold-light);background:white;}
+.w-counter{font-size:12px;color:var(--text-mid);text-align:right;margin-bottom:14px;}
+.w-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:6px;}
+.ac-btn{background:var(--gold);color:var(--navy);border:none;padding:13px 28px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(224,155,0,0.35);}
+.ac-btn:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.clear-btn{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:12px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.clear-btn:hover{border-color:var(--red-accent);color:var(--red-accent);}
+.fb-panel{display:none;background:#131e2e;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-panel.show{display:block;}
+.fb-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-title-row{display:flex;align-items:center;gap:10px;}
+.fb-emoji{font-size:20px;}
+.fb-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold-bright);}
+.fb-score-badge{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--gold-bright);}
+.fb-level{font-size:14px;font-weight:600;color:var(--gold-bright);}
+.fb-section{margin-bottom:14px;}
+.fb-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);margin-bottom:7px;}
+.fb-item{font-size:13px;color:var(--text-light);line-height:1.62;padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid var(--gold-light);}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);line-height:1.7;font-style:italic;}
+.listen-card{background:var(--navy);border-radius:16px;padding:28px 32px;margin-bottom:20px;}
+.listen-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.listen-icon{width:52px;height:52px;border-radius:14px;background:rgba(245,184,0,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.listen-meta{flex:1;}
+.listen-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-bright);margin-bottom:3px;}
+.listen-sub{font-size:12px;color:var(--text-mid);}
+.player-row{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px 18px;margin-bottom:14px;}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--navy);flex-shrink:0;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.play-btn:hover{background:var(--gold-bright);transform:scale(1.06);}
+.prog-audio{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.prog-audio-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.5s linear;}
+.time-disp{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:70px;text-align:right;}
+.speed-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.speed-label{font-size:11px;color:var(--text-mid);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.spd-btn{padding:5px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.spd-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.replay-btn{padding:5px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:auto;}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.trans-toggle{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);border-radius:9px;padding:10px 16px;cursor:pointer;margin-bottom:0;transition:background 0.18s;-webkit-tap-highlight-color:transparent;}
+.trans-toggle:hover{background:rgba(255,255,255,0.09);}
+.trans-label{font-size:12px;font-weight:600;color:var(--text-mid);letter-spacing:0.5px;}
+.trans-arrow{font-size:11px;color:var(--text-mid);transition:transform 0.22s;}
+.trans-toggle.open .trans-arrow{transform:rotate(180deg);}
+.trans-body{max-height:0;overflow:hidden;transition:max-height 0.36s ease;}
+.trans-body.open{max-height:800px;}
+.trans-text{font-size:13px;color:var(--text-light);line-height:1.78;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:0 0 9px 9px;border-top:1px solid rgba(255,255,255,0.06);}
+.listen-mcq-wrap{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+.listen-mcq-title{font-size:13px;font-weight:700;color:var(--gold-bright);letter-spacing:0.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.case-card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.case-header{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:12px;padding:22px 26px;margin-bottom:22px;}
+.case-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);font-weight:700;margin-bottom:8px;}
+.case-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.case-sub{font-size:12px;color:var(--text-mid);}
+.case-section{margin-bottom:18px;}
+.case-section h5{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.case-section p{font-size:14px;color:var(--navy);line-height:1.78;}
+.final-result{display:none;border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.final-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.final-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.final-score{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;line-height:1;}
+.final-verdict{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:8px;}
+.final-msg{font-size:14px;opacity:0.88;max-width:420px;margin:0 auto;line-height:1.68;}
+.ass-btn{margin-top:18px;background:var(--gold);color:var(--navy);border:none;padding:13px 32px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.ass-btn:hover{background:var(--gold-bright);}
+.retry-btn{display:none;margin-top:8px;margin-left:10px;background:rgba(255,255,255,0.15);color:var(--navy);border:1.5px solid var(--cream-dark);padding:11px 28px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.retry-btn:hover{background:rgba(255,255,255,0.25);}
+/* ─ Gap Fill & True/False ─ */
+.gf-block{background:var(--cream);border-radius:10px;padding:16px 18px;margin-bottom:12px;border-left:3px solid var(--gold-light);}
+.gf-sentence{font-size:14px;color:var(--navy);line-height:2.1;}
+.gf-fb{font-size:12.5px;margin-top:6px;min-height:18px;}
+.tf-block{background:var(--cream);border-radius:10px;padding:15px 18px;margin-bottom:10px;border-left:3px solid var(--gold-light);}
+.tf-q{font-size:14px;color:var(--navy);line-height:1.55;margin-bottom:10px;}
+.tf-fb{font-size:12.5px;margin-top:8px;min-height:18px;}
+/* ─ Listening player ─ */
+.l-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.l-icon{font-size:30px;line-height:1;}
+.l-sub{font-size:12px;color:var(--text-mid);margin-top:3px;}
+.l-player{background:var(--navy);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+.l-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.l-play-btn{background:var(--gold);color:var(--navy);border:none;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.l-play-btn:hover{background:var(--gold-bright);}
+.l-speed{background:rgba(255,255,255,0.1);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.18);padding:8px 12px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;outline:none;}
+.l-trans-btn{background:rgba(255,255,255,0.08);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.15);padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;transition:all 0.2s;}
+.l-trans-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.l-progress{display:flex;align-items:center;gap:12px;}
+.l-bar-track{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.l-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.3s linear;}
+.l-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:36px;text-align:right;}
+.l-transcript-box{background:rgba(11,27,48,0.04);border:1px solid var(--cream-dark);border-radius:10px;padding:18px 22px;margin-bottom:18px;}
+.l-transcript-text{font-size:13px;color:var(--navy);line-height:1.8;}
+/* ─ Case Studies ─ */
+.cs-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+.cs-sub{font-size:12.5px;color:var(--text-mid);margin-bottom:16px;}
+.cs-section{margin-bottom:20px;padding:18px 20px;background:var(--cream);border-radius:10px;border-left:3px solid var(--gold-light);}
+.cs-sh{font-size:13.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.cs-p{font-size:14px;color:var(--navy);line-height:1.78;}
+/* ─ Writing ─ */
+.writing-area{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;margin-top:14px;}
+.writing-area:focus{border-color:var(--gold-light);background:white;}
+.writing-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.w-count{font-size:12px;color:var(--text-mid);}
+.btn-primary{background:var(--gold);color:var(--navy);border:none;padding:12px 26px;border-radius:50px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-primary:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--red-accent);color:var(--red-accent);}
+/* ─ AI Feedback ─ */
+.fb-box{background:#0e1d2f;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-box.fb-warn{background:#2d1010;border-color:rgba(214,48,49,0.3);color:#f8a5a5;font-size:13.5px;line-height:1.7;}
+.fb-box.fb-loading{color:var(--text-light);font-size:13.5px;}
+.fb-score-row{display:flex;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap;}
+.fb-score{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;line-height:1;}
+.fb-summary{font-size:13.5px;color:var(--text-light);line-height:1.72;flex:1;}
+.fb-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.fb-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;}
+.fb-good .fb-col-title{color:var(--green-accent);}
+.fb-improve .fb-col-title{color:var(--gold-bright);}
+.fb-item{font-size:13px;color:var(--text-light);padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid rgba(255,255,255,0.15);line-height:1.6;}
+.fb-example{background:rgba(255,255,255,0.05);border-radius:9px;padding:12px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;}
+.fb-ex-label{font-weight:600;color:var(--gold-bright);font-style:normal;}
+/* ─ Grammar Review ─ */
+.gr-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.gr-icon{font-size:28px;}
+.gr-body{display:flex;flex-direction:column;gap:14px;}
+.gr-item{background:var(--cream);border-radius:10px;padding:16px 18px;border-left:3px solid var(--gold-light);}
+.gr-label{font-size:12.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.gr-examples{display:flex;flex-direction:column;gap:6px;}
+.gr-ex{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--navy);background:white;padding:8px 14px;border-radius:7px;border:1px solid var(--cream-dark);}
+.gr-note{font-size:12.5px;color:var(--text-mid);margin-top:10px;padding:8px 12px;background:rgba(224,155,0,0.07);border-radius:7px;border-left:2px solid var(--gold-light);}
+/* ─ Assessment result ─ */
+.assess-result{border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.assess-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.assess-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.assess-score{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;line-height:1;}
+.assess-label{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:6px;}
+.assess-detail{font-size:13.5px;opacity:0.88;}
+
+/* ─── Writing section ──────────────────────────────── */
+.w-task-header{margin-bottom:4px;}
+.w-task-pill{display:inline-block;background:rgba(224,155,0,0.15);color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 13px;border-radius:20px;border:1px solid rgba(224,155,0,0.3);margin-bottom:8px;}
+.w-prompt-box{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:13px;padding:22px 26px;margin:18px 0;border-left:4px solid var(--gold-light);}
+.w-prompt-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-bright);margin-bottom:10px;}
+.w-prompt-text{font-size:13.5px;color:var(--text-light);line-height:1.82;}
+.w-target{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;color:var(--gold-light);}
+.w-meta-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:8px 0 16px;}
+.w-counter{font-size:12.5px;color:var(--text-mid);font-family:'DM Mono',monospace;}
+
+/* ─── AI Feedback result box ────────────────────────── */
+.fb-result-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-result-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-result-label{font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-result-score{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-align:right;}
+.fb-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-check{display:inline-block;font-size:12.5px;font-weight:600;color:var(--green-accent);background:rgba(0,166,81,0.1);padding:5px 12px;border-radius:20px;}
+.fb-check.fb-check-warn{color:#f39c12;background:rgba(243,156,18,0.1);}
+.fb-suggest-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.fb-suggest-list{margin:0 0 14px 18px;padding:0;}
+.fb-suggest-list li{font-size:13px;color:var(--text-light);line-height:1.68;margin-bottom:4px;}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;margin-bottom:14px;}
+.fb-corrected-label{font-style:normal;font-weight:700;color:var(--gold-bright);}
+.fb-footer-stats{font-size:11.5px;color:rgba(155,179,204,0.5);border-top:1px solid rgba(255,255,255,0.07);padding-top:10px;margin-top:8px;font-family:'DM Mono',monospace;}
+.fb-warn-box{background:#2d1010;border:1px solid rgba(214,48,49,0.3);border-radius:10px;padding:14px 18px;color:#f8a5a5;font-size:13.5px;margin-top:14px;}
+.fb-loading-box{background:#111e2f;border-radius:10px;padding:18px 22px;color:var(--text-light);font-size:13.5px;margin-top:14px;display:flex;align-items:center;gap:10px;}
+
+/* ─── Gap Fill — Image 1 design ───────────────────────────────── */
+.gf-card{padding:32px 36px;}
+.gf-instr{font-size:13.5px;color:var(--text-mid);margin-bottom:22px;line-height:1.6;}
+.gf-bank-box{background:var(--cream);border-radius:14px;padding:20px 22px;margin-bottom:28px;border:1px solid var(--cream-dark);}
+.gf-bank-pills{display:flex;flex-wrap:wrap;gap:10px;}
+.gf-pill{background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:50px;cursor:default;transition:opacity 0.25s,transform 0.2s;}
+.gf-pill.gf-pill-used{opacity:0.28;text-decoration:line-through;}
+.gf-sentences{display:flex;flex-direction:column;gap:26px;}
+.gf-row{}
+.gf-sentence-text{font-size:14.5px;color:var(--navy);line-height:1.9;}
+.gf-blank-wrap{display:inline-block;position:relative;vertical-align:bottom;}
+.gf-underline-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14.5px;color:var(--navy);padding:1px 8px 2px;width:170px;outline:none;text-align:center;transition:border-color 0.2s;}
+.gf-underline-input::placeholder{color:rgba(90,120,153,0.5);font-size:13px;}
+.gf-underline-input.gf-correct{border-color:var(--green-accent);color:var(--green-accent);font-weight:600;}
+.gf-underline-input.gf-incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.gf-underline-input:disabled{background:transparent;}
+.gf-row-fb{margin-top:4px;min-height:18px;padding-left:4px;}
+.gf-fb-ok{font-size:12px;font-weight:700;color:var(--green-accent);}
+.gf-fb-err{font-size:12px;font-weight:600;color:var(--red-accent);}
+
+/* ─── True/False — Image 2 design ─────────────────────────────── */
+.tf-card{padding:32px 36px;}
+.tf-instr{font-size:13.5px;color:var(--gold);margin-bottom:22px;font-weight:500;}
+.tf-list{display:flex;flex-direction:column;gap:12px;}
+.tf-item{background:var(--cream);border-radius:12px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;transition:box-shadow 0.2s;}
+.tf-item[data-done]{opacity:0.92;}
+.tf-item-stmt{font-size:14px;color:var(--navy);line-height:1.58;flex:1;min-width:200px;}
+.tf-item-btns{display:flex;gap:10px;flex-shrink:0;}
+.tf-item-btn{padding:10px 26px;border-radius:9px;border:2px solid var(--cream-dark);font-size:13.5px;font-weight:700;cursor:pointer;background:white;font-family:'DM Sans',sans-serif;color:var(--navy);transition:all 0.18s;-webkit-tap-highlight-color:transparent;}
+.tf-item-btn:hover:not(:disabled){border-color:var(--gold-light);background:#fef8e0;}
+.tf-item-btn.tf-btn-correct{background:var(--green-accent);border-color:var(--green-accent);color:white;}
+.tf-item-btn.tf-btn-wrong{background:var(--red-accent);border-color:var(--red-accent);color:white;}
+.tf-item-btn:disabled{cursor:default;}
+.tf-item-fb{width:100%;margin-top:2px;min-height:18px;font-size:12.5px;}
+.tf-fb-ok{color:var(--green-accent);font-weight:700;}
+.tf-fb-err{color:var(--red-accent);font-weight:600;}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{display:inline-block;animation:spin 1s linear infinite;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}#mob-btn{display:flex;align-items:center;justify-content:center;}
+  #main{margin-left:0;}.hero{padding:60px 22px 40px;}.content{padding:28px 18px;}
+  .prog-wrap{padding:12px 22px;}.outcomes-grid,.speaking-grid,.wb-grid{grid-template-columns:1fr;}.hero-stats{gap:22px;}
+}
+@media(max-width:600px){
+  .hero{padding:56px 16px 36px;}.content{padding:22px 14px;}.card{padding:22px 18px;}
+  .listen-card{padding:20px 16px;}.reading-box{padding:18px 16px;}.player-row{flex-wrap:wrap;gap:10px;}.time-disp{min-width:auto;}
+}
+
+
+
+
+
+/* ─── Auto-Correction Report UI (Module 6+) ─────────────────────── */
+.fb-report-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-report-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:12px;}
+.fb-report-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-report-icon{font-size:16px;}
+.fb-report-score{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
+.fb-quick-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-cats{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.fb-cat-row{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 16px;}
+.fb-cat-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.fb-cat-icon{font-size:15px;}
+.fb-cat-label{font-size:13px;color:var(--white);}
+.fb-cat-good{font-size:11px;font-weight:700;color:#00c46a;background:rgba(0,196,106,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(0,196,106,0.3);}
+.fb-cat-sat{font-size:11px;font-weight:700;color:#f5b800;background:rgba(245,184,0,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(245,184,0,0.3);}
+.fb-cat-att{font-size:11px;font-weight:700;color:#e05c5c;background:rgba(224,92,92,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(224,92,92,0.3);}
+.fb-cat-comment{font-size:13px;color:var(--text-light);line-height:1.7;}
+.fb-corrected-block{background:rgba(255,255,255,0.04);border-left:3px solid var(--gold-light);border-radius:0 8px 8px 0;padding:11px 16px;font-size:13px;color:var(--text-light);line-height:1.72;margin-bottom:12px;font-style:italic;}
+.fb-corrected-tag{font-style:normal;font-weight:700;color:var(--gold-bright);display:block;margin-bottom:4px;}
+.fb-overall{font-size:13px;color:#00c46a;margin-bottom:10px;font-weight:500;}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ─── Gap-Fill Redesign (auto-graded) ───────────────────────────────────── */
+.gf-bank-label{font-size:11px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.gf-num{color:var(--gold-bright);font-weight:700;min-width:22px;display:inline-block;}
+.gf-btn-bar{display:flex;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.gf-check-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;font-size:13px;padding:10px 22px;border:none;border-radius:8px;cursor:pointer;transition:opacity .15s;}
+.gf-check-btn:hover{opacity:.88;}
+.gf-check-btn:disabled{cursor:not-allowed;opacity:.5;}
+.gf-reset-btn{background:rgba(255,255,255,0.07);color:var(--text-light);font-size:13px;font-weight:600;padding:10px 18px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;cursor:pointer;transition:background .15s;}
+.gf-reset-btn:hover{background:rgba(255,255,255,0.12);}
+.gf-score-display{font-size:15px;margin-left:4px;}
+.gf-pill-highlight{outline:2px solid var(--gold-bright) !important;opacity:1 !important;}
+.gf-fb-err strong{color:var(--gold-bright);}
+
+</style>
+</head>
+<body>
+<button id="mob-btn" onclick="openSidebar()">&#9776;</button>
+<div id="overlay" onclick="closeSidebar()"></div>
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <h1>IT &amp; Digital Professions English</h1>
+    <div class="sub">Professional Course Series</div>
+    <span class="level-badge">B1&#8211;B2 Level</span>
+  </div>
+  <div class="sidebar-section-label">Module 5</div>
+  <div class="nav-item active" onclick="goTo('sec-overview')"><div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-speaking')"><div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-wordbank')"><div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-reading')"><div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-vocab')"><div class="nav-left"><span class="nav-icon">🔤</span><span class="nav-label">Vocabulary</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-grammar')"><div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Grammar</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-gramreview')"><div class="nav-left"><span class="nav-icon">📋</span><span class="nav-label">Grammar Review</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-writing')"><div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div><span class="nav-badge">AI</span></div>
+  <div class="nav-item" onclick="goTo('sec-listening')"><div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div><span class="nav-badge">4</span></div>
+  <div class="nav-item" onclick="goTo('sec-cases')"><div class="nav-left"><span class="nav-icon">💡</span><span class="nav-label">Case Studies</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-assessment')"><div class="nav-left"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></div><span class="nav-badge">20</span></div>
+</nav>
+<main id="main">
+
+<section id="sec-overview" class="section active">
+  <div class="hero"><div class="module-pill">🎨 &nbsp; Module 5 &nbsp;·&nbsp; IT &amp; Digital Professions English</div><h2>User Interface and<br><span class="accent">UX Design Terms</span></h2><p class="hero-desc">Master the language of UX and UI design — from wireframes, prototypes, and user research to accessibility standards, design systems, and cognitive load. Build the vocabulary and professional fluency to participate in design critiques, understand research findings, and communicate design decisions across teams.</p><div class="hero-stats"><div class="stat"><span class="stat-n">21</span><span class="stat-l">Key Terms</span></div><div class="stat"><span class="stat-n">11</span><span class="stat-l">Sections</span></div><div class="stat"><span class="stat-n">4</span><span class="stat-l">Audio Activities</span></div><div class="stat"><span class="stat-n">B1–B2</span><span class="stat-l">CEFR Level</span></div></div></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" id="progFill"></div></div><span class="prog-pct" id="progPct">0%</span></div>
+  <div class="content" id="overviewContent"></div>
+</section>
+
+<section id="sec-speaking" class="section">
+  <div class="hero"><div class="module-pill">🎙️ &nbsp; Speaking Practice</div><h2>Discussion <span class="accent">Questions</span></h2><p class="hero-desc">Use these questions to practise speaking about UX design, user research, accessibility, and design decision-making.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:9%"></div></div><span class="prog-pct">9%</span></div>
+  <div class="content" id="speakingContent"></div>
+</section>
+
+<section id="sec-wordbank" class="section">
+  <div class="hero"><div class="module-pill">📚 &nbsp; Word Bank</div><h2>UX &amp; UI Design <span class="accent">Vocabulary</span></h2><p class="hero-desc">Study these 21 essential UI/UX design terms covering research, design, testing, and accessibility. Each entry includes a precise professional definition.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:18%"></div></div><span class="prog-pct">18%</span></div>
+  <div class="content" id="wordBankContent"></div>
+</section>
+
+<section id="sec-reading" class="section">
+  <div class="hero"><div class="module-pill">📖 &nbsp; Reading</div><h2>Texts &amp; <span class="accent">Comprehension</span></h2><p class="hero-desc">Read two professional texts on user-centred design principles and digital accessibility standards, then answer comprehension questions.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:27%"></div></div><span class="prog-pct">27%</span></div>
+  <div class="content" id="readingContent"></div>
+</section>
+
+<section id="sec-vocab" class="section">
+  <div class="hero"><div class="module-pill">🔤 &nbsp; Vocabulary Exercises</div><h2>Practice <span class="accent">Exercises</span></h2><p class="hero-desc">Three exercise types to master UX and UI design vocabulary: multiple choice, gap-fill, and true/false.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:36%"></div></div><span class="prog-pct">36%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocab(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocab(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocab(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vex-0"></div>
+    <div id="vex-1" style="display:none"></div>
+    <div id="vex-2" style="display:none"></div>
+  </div>
+</section>
+
+<section id="sec-grammar" class="section">
+  <div class="hero"><div class="module-pill">✏️ &nbsp; Grammar</div><h2>Grammar <span class="accent">Exercises</span></h2><p class="hero-desc">Practise noun phrases in design documentation, passive voice in specifications and handoff notes, and purpose and reason clauses in design rationale.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:45%"></div></div><span class="prog-pct">45%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGram(0,this)">Noun Phrases</div>
+      <div class="ex-tab" onclick="showGram(1,this)">Passive Voice</div>
+      <div class="ex-tab" onclick="showGram(2,this)">Purpose &amp; Reason</div>
+    </div>
+    <div id="gex-0"></div>
+    <div id="gex-1" style="display:none"></div>
+    <div id="gex-2" style="display:none"></div>
+  </div>
+</section>
+
+<section id="sec-gramreview" class="section">
+  <div class="hero"><div class="module-pill">📋 &nbsp; Grammar Review</div><h2>Reference <span class="accent">Guide</span></h2><p class="hero-desc">Three detailed grammar reference boxes covering noun phrases in design documentation, passive voice in specifications, and purpose and reason clauses in design rationale.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:54%"></div></div><span class="prog-pct">54%</span></div>
+  <div class="content" id="gramRevContent"></div>
+</section>
+
+<section id="sec-writing" class="section">
+  <div class="hero"><div class="module-pill">✍️ &nbsp; Writing + AI Feedback</div><h2>Writing <span class="accent">Activities</span></h2><p class="hero-desc">Complete two professional UX writing tasks — a usability test report and a design rationale document. Receive detailed AI feedback across Grammar, Vocabulary, Tone, Structure, and Fluency.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:63%"></div></div><span class="prog-pct">63%</span></div>
+  <div class="content" id="writingContent"></div>
+</section>
+
+<section id="sec-listening" class="section">
+  <div class="hero"><div class="module-pill">🎧 &nbsp; Listening</div><h2>Audio <span class="accent">Activities</span></h2><p class="hero-desc">Listen to four recordings — a module introduction, a design critique, a usability testing debrief, and an accessibility review — then answer comprehension questions.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:72%"></div></div><span class="prog-pct">72%</span></div>
+  <div class="content" id="listeningContent"></div>
+</section>
+
+<section id="sec-cases" class="section">
+  <div class="hero"><div class="module-pill">💡 &nbsp; Case Studies</div><h2>Real-World <span class="accent">Cases</span></h2><p class="hero-desc">Explore Don Norman's The Design of Everyday Things and its foundational influence on UX practice, and the Domino's v Robles case that made digital accessibility a legal obligation.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:81%"></div></div><span class="prog-pct">81%</span></div>
+  <div class="content" id="casesContent"></div>
+</section>
+
+<section id="sec-assessment" class="section">
+  <div class="hero"><div class="module-pill">🏆 &nbsp; Final Assessment</div><h2>Module <span class="accent">Test</span></h2><p class="hero-desc">20 questions covering all module content. Pass mark: 70% (14/20). Two attempts allowed.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div><span class="prog-pct">90%</span></div>
+  <div class="content">
+    <div class="card">
+      <div class="card-title">🏆 Final Assessment</div><div class="card-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:22px;">Answer all 20 questions. You need 70% (14 correct) to pass. Attempts used: <strong id="att-disp">0 / 2</strong></p>
+      <div id="assessContainer"></div>
+      <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <button class="ass-btn" id="ass-sub" onclick="submitAss()">Submit Assessment</button>
+        <button class="retry-btn" id="ass-retry" onclick="resetAss()">&#8635; Try Again</button>
+      </div>
+      <div class="final-result" id="final-res"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+<script>
+/* ══ Module 5: UI and UX Design Terms ══ */
+const outcomes=["Identify and accurately use 21 essential UI/UX design terms across research, design, testing, and handoff", "Read and analyse professional texts on user-centred design principles and accessibility standards", "Use noun phrases, passive voice, and purpose clauses precisely in design documentation and critique", "Draft a usability test report section and a design rationale document with professional precision", "Listen to design critique sessions, usability testing debriefs, and product design team discussions", "Discuss design decisions, user research findings, and accessibility requirements with professional fluency"];
+const speakingQs=["What is the difference between UI design and UX design? Are they the same job?", "What is a wireframe, and how does it differ from a prototype?", "What is a user persona, and how is one created?", "What is usability testing, and why is it done early rather than at the end of a project?", "What is the difference between qualitative and quantitative user research?", "What is a user journey map, and what insights can it reveal?", "What does accessibility mean in a digital design context, and what are the WCAG guidelines?", "What is a design system, and why do large product teams use them?", "What is the difference between a low-fidelity and a high-fidelity prototype?", "What is affordance in design, and can you give an example of good and poor affordance?", "What is information architecture, and why does it matter for navigation design?", "What is a heuristic evaluation, and how does it differ from usability testing?", "What is an A/B test in a UX context, and when would you use one?", "What is responsive design, and why is it now a minimum expectation?", "What is the difference between a style guide and a design system?", "What is cognitive load, and how can a designer reduce it?", "What is a call to action (CTA), and what makes one effective?", "What is card sorting, and what does it tell you about a user's mental model?", "How do you communicate a design decision to a developer who disagrees with it?", "What is the role of a UX designer in an agile development team?", "If you had only one day to evaluate the usability of an existing product, what would you do?"];
+const wordBank=[{emoji:"\ud83d\uddbc\ufe0f",term:"Wireframe",def:"A low-fidelity, schematic representation of a screen or interface \u2014 showing layout, content hierarchy, and functionality without colour, typography, or visual styling. Wireframes are used early in the design process to explore structure and communicate intent before investing time in high-fidelity design."},
+  {emoji:"\ud83c\udfad",term:"Prototype",def:"A simulation of a product or feature used to test design concepts with users before development begins. Prototypes range from low-fidelity paper sketches to high-fidelity interactive mockups built in tools like Figma or InVision. The fidelity level should match the research question being answered."},
+  {emoji:"\ud83d\udc64",term:"User Persona",def:"A fictional but research-based representation of a key user segment \u2014 capturing their goals, behaviours, frustrations, and context. Personas are used to align teams around a shared understanding of who they are designing for, and to make design decisions with a specific user in mind rather than an abstract average user."},
+  {emoji:"\ud83d\uddfa\ufe0f",term:"User Journey Map",def:"A visual representation of the steps a user takes to accomplish a goal, showing their actions, thoughts, emotions, and pain points at each stage. Journey maps reveal gaps and friction in the current experience and identify opportunities for improvement."},
+  {emoji:"\ud83d\udd2c",term:"Usability Testing",def:"A research method in which real users attempt to complete tasks using a product while a researcher observes and notes where they succeed, struggle, or fail. Usability testing identifies usability problems that cannot be found by design review alone. It should be conducted iteratively throughout the design process, not only at the end."},
+  {emoji:"\u267f",term:"Accessibility",def:"The practice of designing products that can be used by people with a wide range of abilities and disabilities \u2014 including visual, auditory, motor, and cognitive impairments. In digital design, accessibility is defined by the Web Content Accessibility Guidelines (WCAG), which specify criteria for perceivable, operable, understandable, and robust interfaces."},
+  {emoji:"\ud83c\udfd7\ufe0f",term:"Design System",def:"A centralised collection of reusable UI components, design tokens (colours, typography, spacing), guidelines, and patterns that define how a product looks and behaves. Design systems ensure consistency across products and teams, speed up design and development, and serve as the single source of truth for the product's visual language."},
+  {emoji:"\ud83e\uddf1",term:"Component",def:"A reusable, self-contained UI element \u2014 such as a button, input field, card, modal, or navigation bar \u2014 that can be combined to build interfaces. Components in a design system are documented with usage guidelines, states (default, hover, active, disabled, error), and responsive behaviour."},
+  {emoji:"\ud83d\udcd0",term:"Information Architecture",def:"The structural design of a digital product \u2014 how content is organised, labelled, and navigated. Good information architecture enables users to find what they need efficiently and reflects their mental model of the domain. Methods include card sorting (to understand user categorisation) and tree testing (to evaluate navigation effectiveness)."},
+  {emoji:"\ud83d\udd01",term:"Iterative Design",def:"A design process based on repeated cycles of designing, testing, and refining \u2014 rather than designing once and building. Each iteration incorporates learning from user testing and feedback, progressively improving the design. The principle is that no design is right first time, and that testing reveals what cannot be anticipated."},
+  {emoji:"\ud83c\udfaf",term:"Affordance",def:"A design property that signals to a user how an object should be used. A button looks clickable; a text field looks typeable; a drag handle looks draggable. Strong affordances reduce the need for instructions. Poor affordances \u2014 such as a clickable element that looks like static text \u2014 are a common source of usability failures."},
+  {emoji:"\ud83d\udccb",term:"Heuristic Evaluation",def:"A usability inspection method in which expert evaluators assess an interface against a set of established usability principles \u2014 most commonly Jakob Nielsen's 10 heuristics. Heuristic evaluations are fast and do not require users, but find different issues than usability testing with real users and are subject to evaluator bias."},
+  {emoji:"\ud83d\udcca",term:"A/B Test",def:"A controlled experiment in which two versions of a design (A and B) are shown to different segments of users simultaneously, and statistical analysis determines which performs better against a defined metric \u2014 such as conversion rate, click-through rate, or task completion. A/B testing is a quantitative method requiring sufficient traffic to be statistically valid."},
+  {emoji:"\ud83d\udcf1",term:"Responsive Design",def:"A design approach in which a layout adapts fluidly to different screen sizes and devices \u2014 typically using flexible grids, flexible images, and CSS media queries. A responsive design provides an optimised experience on desktop, tablet, and mobile without requiring separate designs for each. Now a minimum expectation for any web-based product."},
+  {emoji:"\ud83c\udfa8",term:"Style Guide",def:"A document specifying the visual design standards for a product \u2014 including colour palette, typography, iconography, spacing, and imagery guidelines. A style guide defines how the brand is expressed visually. It is a component of a design system but more limited \u2014 it covers appearance without specifying behaviour or providing coded components."},
+  {emoji:"\ud83e\udde0",term:"Cognitive Load",def:"The mental effort required to use an interface. Cognitive load theory distinguishes intrinsic load (the complexity of the task itself) from extraneous load (complexity introduced by poor design). UX design aims to minimise extraneous cognitive load \u2014 through clear language, logical grouping, progressive disclosure, and consistent patterns \u2014 so users can focus on their actual task."},
+  {emoji:"\ud83d\udce3",term:"Call to Action",def:"A UI element \u2014 typically a button or link \u2014 that prompts the user to take a specific desired action, such as 'Sign up', 'Buy now', 'Learn more', or 'Download'. Effective CTAs are visually prominent, use action-oriented language, communicate value, and appear in the right place in the user's decision-making journey."},
+  {emoji:"\ud83c\udccf",term:"Card Sorting",def:"A user research method in which participants group labelled cards into categories that make sense to them. Card sorting reveals users' mental models of how information should be organised and is used to inform information architecture and navigation design. Open card sorting generates categories; closed card sorting tests existing categories."},
+  {emoji:"\ud83d\udd0d",term:"User Research",def:"The systematic study of users \u2014 their goals, behaviours, mental models, contexts, and frustrations \u2014 to inform design decisions. Methods include interviews, surveys, usability tests, contextual inquiry, and analytics analysis. User research is the foundation of user-centred design: designing without it is designing for yourself, not your users."},
+  {emoji:"\u270f\ufe0f",term:"Low-Fidelity",def:"A design representation with minimal detail \u2014 rough sketches, simple wireframes, or paper prototypes that communicate structure and flow without visual polish. Low-fidelity artifacts are fast to create, easy to change, and encourage feedback on the concept rather than the execution. They are most valuable in early exploration stages."},
+  {emoji:"\ud83d\udda5\ufe0f",term:"High-Fidelity",def:"A design representation that closely resembles the finished product \u2014 including accurate colours, typography, spacing, imagery, and interactive behaviour. High-fidelity prototypes are used for detailed usability testing, stakeholder sign-off, and developer handoff. Tools like Figma produce high-fidelity designs that can be exported for development."}];
+const readingTexts=[{title:"Text 1: User-Centred Design \u2014 Principles and Practice",subtitle:"Why designing for users is not obvious \u2014 and how structured methods make it rigorous",paragraphs:["User-centred design (UCD) is a design philosophy and process that places the user at the centre of every decision — from the initial definition of a problem through to post-launch iteration. The term was popularised by Donald Norman in his 1986 book The Design of Everyday Things, which demonstrated that when products are difficult to use, the fault almost always lies with the design rather than the user. This principle — that design failure is a design problem, not a user problem — is the ethical and practical foundation of the UCD approach. In software and digital product design, UCD is operationalised through a cycle of research, ideation, prototyping, and testing that repeats until the design meets user needs.", "The UCD process typically begins with user research — interviews, contextual observation, and analytics analysis that build a picture of who the users are, what they are trying to accomplish, and where the current experience fails them. This research is synthesised into artefacts such as user personas (representing key user types), user journey maps (showing the end-to-end experience), and problem statements (defining the specific design challenge to be addressed). These artefacts are not decorative — they are working tools that keep the team anchored to real user needs throughout the design process, particularly when internal stakeholder preferences begin to diverge from evidence.", "The prototyping and testing phase is where UCD is most frequently misunderstood. Many organisations treat usability testing as a final quality gate — a check conducted at the end of development to confirm the design works. This is precisely backwards. The value of usability testing is highest when it is conducted iteratively on low-fidelity prototypes, before significant development investment has been made. A five-person usability test on a paper prototype can identify the majority of critical usability problems at a fraction of the cost of discovering them post-launch. The discipline of iterative design — designing, testing, learning, and redesigning — transforms design from a creative exercise into a rigorous, evidence-based practice."],questions:[{q:"Who popularised the term 'user-centred design' and in which book?",opts:["Jakob Nielsen in Usability Engineering", "Don Norman in The Design of Everyday Things (1986)", "Steve Jobs in a 1997 Apple product launch", "Alan Cooper in The Inmates Are Running the Asylum"],ans:1},{q:"What does the principle 'design failure is a design problem, not a user problem' mean?",opts:["Users should be trained to use difficult products", "When a product is hard to use, the design is responsible — not the user's intelligence or effort", "Designers are always at fault when products fail commercially", "Users should be consulted before any design decision"],ans:1},{q:"What are user personas used for?",opts:["To represent the preferences of the most valuable customers", "To create marketing materials for the product launch", "To represent key user types and keep the team anchored to real user needs throughout the design process", "To document the technical requirements of the system"],ans:2},{q:"What do user journey maps show?",opts:["The technical architecture of the product", "The steps a user takes to accomplish a goal, including their actions, thoughts, emotions, and pain points", "The timeline of the design process from research to launch", "The competitive landscape for the product"],ans:1},{q:"What are problem statements used for?",opts:["Documenting bugs found during usability testing", "Justifying the project budget to senior stakeholders", "Defining the specific design challenge to be addressed — anchored in user research", "Setting the technical specifications for development"],ans:2},{q:"What does the text say about organisations that treat usability testing as a final quality gate?",opts:["This is best practice — testing should only happen when the design is complete", "This is precisely backwards — testing is most valuable early on low-fidelity prototypes", "This is an acceptable approach for small teams with limited budgets", "This only applies to consumer products, not enterprise software"],ans:1},{q:"How many participants does the text suggest for an early usability test?",opts:["At least 30 for statistical validity", "At least 10 to cover different user types", "Five — enough to identify the majority of critical usability problems", "One — any user feedback is better than none"],ans:2},{q:"What does 'iterative design' transform design into?",opts:["A purely creative and subjective discipline", "A rigorous, evidence-based practice through repeated cycles of design, test, and learn", "A slower process with more meetings and documentation", "A practice that only experienced designers can follow"],ans:1},{q:"What is the purpose of conducting usability testing on low-fidelity prototypes?",opts:["To impress stakeholders with early progress", "To identify problems before significant development investment is made — at a fraction of post-launch cost", "To generate quantitative data for A/B testing", "To train developers in the design process"],ans:1},{q:"What does UCD stand for?",opts:["Universal Component Design", "User-Centred Design", "Unified Communication Design", "Usable Content Delivery"],ans:1}]},
+  {title:"Text 2: Accessibility in Digital Design \u2014 Standards, Obligations, and Practice",subtitle:"Why accessibility is not an optional extra \u2014 and how WCAG defines the standard",paragraphs:["Digital accessibility is the practice of designing and building products that can be used by people with a wide range of abilities and disabilities. This includes users with visual impairments (who may use screen readers or require high contrast), auditory impairments (who need captions for video content), motor impairments (who may use keyboard navigation or switch access rather than a mouse), and cognitive impairments (who benefit from clear language, consistent navigation, and reduced cognitive load). The business and ethical case for accessibility is strong: approximately 1 in 5 people in the UK has a disability of some kind, and accessible design typically improves usability for all users — not just those with disabilities.", "The international standard for web accessibility is the Web Content Accessibility Guidelines (WCAG), published by the World Wide Web Consortium (W3C). WCAG organises accessibility criteria around four principles, captured in the acronym POUR: content must be Perceivable (users must be able to perceive all information), Operable (all functionality must be operable without a mouse), Understandable (content and interfaces must be understandable), and Robust (content must work with assistive technologies). WCAG 2.1 defines three conformance levels — A (minimum), AA (standard required by most legal frameworks), and AAA (enhanced). In the UK, public sector websites are legally required to meet WCAG 2.1 AA under the Public Sector Bodies Accessibility Regulations 2018.", "In practice, the most common accessibility failures are also among the simplest to prevent. Images without alternative text (alt text) are inaccessible to screen reader users. Form fields without labels make it impossible for assistive technology to communicate what information is required. Colour contrast ratios that fail WCAG thresholds make text difficult or impossible to read for users with low vision or colour blindness. Interactive elements that can only be operated with a mouse exclude keyboard users. And content that flashes more than three times per second can trigger seizures in users with photosensitive epilepsy. None of these failures requires specialist knowledge to prevent — they require only awareness, tooling (automated accessibility checkers flag most of them), and a commitment to building accessibility in from the start rather than retrofitting it at the end."],questions:[{q:"What does digital accessibility include beyond visual impairment?",opts:["Only screen reader support for blind users", "Auditory, motor, and cognitive impairments as well as visual impairments", "Only compliance with legal requirements", "Only the use of larger text and higher contrast"],ans:1},{q:"What is WCAG?",opts:["A UK government body that regulates digital products", "The Web Content Accessibility Guidelines — the international standard for web accessibility", "A framework for measuring digital product performance", "A certification programme for accessible design agencies"],ans:1},{q:"What does the acronym POUR stand for?",opts:["Professional, Outstanding, Usable, Responsive", "Perceivable, Operable, Understandable, Robust", "Practical, Optimised, User-friendly, Reliable", "Proven, Observable, Universal, Readable"],ans:1},{q:"What WCAG conformance level is required by most legal frameworks?",opts:["Level A — minimum baseline", "Level AA — standard level required by most legal frameworks", "Level AAA — enhanced level", "There is no standard legal requirement"],ans:1},{q:"What UK regulation requires public sector websites to meet WCAG 2.1 AA?",opts:["The Digital Economy Act 2017", "The Equality Act 2010", "The Public Sector Bodies Accessibility Regulations 2018", "The Data Protection Act 2018"],ans:2},{q:"What is 'alt text' and why is it important?",opts:["Alternative text that appears when a page fails to load", "A description of an image that screen readers can convey to visually impaired users", "A text backup for when JavaScript is disabled", "A description of a video for search engine optimisation"],ans:1},{q:"What problem does poor colour contrast create?",opts:["It makes the page load more slowly", "It makes text difficult or impossible to read for users with low vision or colour blindness", "It causes accessibility checkers to fail automatically", "It prevents screen readers from functioning correctly"],ans:1},{q:"What does the text say about interactive elements that can only be operated with a mouse?",opts:["This is acceptable as most users have a mouse", "This excludes keyboard users who cannot use a mouse", "This only affects users with visual impairments", "This is a minor issue that rarely affects real users"],ans:1},{q:"What is the most practical approach to accessibility according to the text?",opts:["Retrofitting accessibility at the end of development", "Conducting accessibility audits after launch", "Building accessibility in from the start using automated checkers and awareness", "Hiring a specialist accessibility consultant for every project"],ans:2},{q:"Approximately what proportion of people in the UK has a disability of some kind?",opts:["1 in 20", "1 in 10", "1 in 5", "1 in 3"],ans:2}]}];
+const vocabMCQ=[{q:"What is a wireframe?",opts:["A high-fidelity interactive prototype used for developer handoff", "A low-fidelity schematic showing layout and structure without visual styling", "A document specifying colour palettes and typography", "A research method for understanding user behaviour"],ans:1},{q:"What is a user persona?",opts:["A real user recruited for usability testing", "A fictional but research-based representation of a key user segment", "A document listing all user requirements", "A statistical model of user behaviour derived from analytics"],ans:1},{q:"What does WCAG stand for?",opts:["Web Content Accessibility Guidelines", "World Class Accessible Graphics", "Web Component Architecture Guide", "Worldwide Content Availability Guidelines"],ans:0},{q:"What is a design system?",opts:["A process for running design sprints", "A collection of reusable UI components, design tokens, and guidelines that define a product's visual language", "A set of usability heuristics for evaluating interfaces", "A tool for conducting A/B tests"],ans:1},{q:"What is usability testing?",opts:["An expert review of an interface against established heuristics", "A statistical experiment comparing two design versions", "A method in which real users attempt tasks while a researcher observes", "An automated scan of a website for accessibility issues"],ans:2},{q:"What is affordance in design?",opts:["The emotional response a design evokes in users", "A design property that signals to users how an object should be used", "The number of features a product offers", "The speed at which a user can complete a task"],ans:1},{q:"What is the purpose of card sorting?",opts:["To organise design deliverables into project phases", "To sort user research data into themes", "To reveal how users categorise information — informing information architecture", "To evaluate visual design options with users"],ans:2},{q:"What is iterative design?",opts:["Designing a product once with extensive upfront planning", "Repeating cycles of designing, testing, and refining based on user feedback", "A method of generating many design options quickly", "A process for training junior designers"],ans:1},{q:"What is cognitive load in UX design?",opts:["The processing power required to render a web page", "The mental effort required to use an interface", "The number of decisions a designer must make", "The time it takes a user to complete a task"],ans:1},{q:"What is the difference between low-fidelity and high-fidelity design?",opts:["Low-fidelity is for mobile; high-fidelity is for desktop", "Low-fidelity has minimal detail for early exploration; high-fidelity closely resembles the finished product", "Low-fidelity is made in Figma; high-fidelity is made in code", "They are the same — the terms are interchangeable"],ans:1}];
+const vocabGapFill=[{before:"The design team created a",blank:"wireframe",after:"for the new dashboard before touching any visual design \u2014 a simple black-and-white layout showing where each panel, chart, and navigation element would sit."},{before:"During the first sprint review, the UX researcher presented three",blank:"user persona",after:"s derived from 24 user interviews \u2014 each representing a distinct segment with different goals, technical confidence, and primary use cases."},{before:"The product failed its external accessibility audit because several form fields had no associated labels, making them unusable for anyone relying on a",blank:"accessibility",after:"tool such as a screen reader."},{before:"The team built a",blank:"design system",after:"with 48 documented components \u2014 buttons, inputs, cards, modals, and data tables \u2014 each with usage guidelines, interaction states, and responsive behaviour, reducing design-to-development time by 40%."},{before:"After five rounds of",blank:"usability testing",after:"with representative users, the team identified that 80% of participants could not find the export function \u2014 it had been placed in a location that matched the designer's mental model but not the user's."},{before:"The",blank:"information architecture",after:"of the legacy portal was so poorly organised that users needed an average of 4.7 clicks to find a document that should have been two clicks away \u2014 a finding that justified a complete navigation redesign."},{before:"The designer argued for a high-contrast colour scheme on the grounds of",blank:"cognitive load",after:"\u2014 by reducing visual noise and making the primary action immediately obvious, users could complete the core task without having to scan the whole screen."},{before:"The team ran an",blank:"A/B test",after:"on two versions of the sign-up page \u2014 one with a single prominent call to action and one with three options \u2014 and found the single-CTA version converted 23% better over a two-week test period."},{before:"The lead designer created a",blank:"user journey map",after:"showing the end-to-end experience of a first-time user \u2014 from discovering the product through to completing their first key task \u2014 revealing three distinct moments of confusion that the team had not previously identified."},{before:"The developer handoff was completed using a",blank:"high-fidelity",after:"prototype in Figma, with all spacing, colour tokens, typography scales, and interactive states fully specified so that engineers could implement the design without repeated back-and-forth clarification."}];
+const vocabTF=[{stmt:"A wireframe includes full colour, typography, and visual styling to give stakeholders an accurate impression of the final product.",ans:false},{stmt:"Usability testing is most valuable when conducted iteratively on early prototypes, before significant development investment has been made.",ans:true},{stmt:"WCAG 2.1 AA is the conformance level required by most legal accessibility frameworks, including UK public sector regulations.",ans:true},{stmt:"A design system only covers visual appearance \u2014 it does not include component behaviour or interaction states.",ans:false},{stmt:"Affordance refers to a design property that signals to users how an object should be used.",ans:true},{stmt:"Card sorting is a quantitative research method used to test whether a navigation structure matches statistical usage patterns.",ans:false},{stmt:"Low-fidelity prototypes are most useful in the final stages of design for developer handoff.",ans:false},{stmt:"Cognitive load theory distinguishes between intrinsic load (task complexity) and extraneous load (design-imposed complexity).",ans:true},{stmt:"An A/B test requires sufficient user traffic to be statistically valid.",ans:true},{stmt:"A heuristic evaluation involves recruiting real users to complete tasks while a researcher observes.",ans:false}];
+const grammarEx=[{title:"Exercise 1: Noun Phrases in Design Documentation",instr:"Select the most precise noun phrase. Design documentation \u2014 specifications, research reports, and handoff notes \u2014 relies on dense, accurate noun phrases to communicate design decisions efficiently and without ambiguity.",qs:[{q:"The team conducted a _____ to evaluate the navigation structure before building the full prototype.",opts:["user test of navigation", "navigation usability evaluation", "tree testing exercise", "thing to check navigation"],ans:2},{q:"The _____ confirmed that three of the five participants could not locate the settings panel.",opts:["test results", "usability test findings", "what we found in testing", "testing outcomes"],ans:1},{q:"The component library includes a _____ for each interactive element, covering default, hover, active, and disabled states.",opts:["state documentation", "full set of interaction states", "list of all states", "interaction document"],ans:1},{q:"The _____ revealed that users expected the search function to be in the top-right corner, not embedded in the sidebar.",opts:["card sort", "card sorting exercise", "user research activity", "thing users did"],ans:1},{q:"The new _____ reduces extraneous cognitive load by grouping related actions under a single expandable panel.",opts:["navigation design", "collapsible navigation pattern", "nav thing", "design approach"],ans:1},{q:"The _____ specifies that all interactive elements must have a minimum touch target size of 44x44 pixels.",opts:["accessibility requirements", "WCAG 2.1 AA success criteria", "rules about accessibility", "accessibility document"],ans:1},{q:"The designer produced a _____ showing the step-by-step flow from account creation to first successful transaction.",opts:["user journey", "end-to-end user journey map", "journey document", "flow showing what users do"],ans:1},{q:"The _____ uses a 12-column grid, 24px gutter, and a maximum content width of 1200px.",opts:["layout spec", "responsive grid specification", "layout document", "design grid details"],ans:1},{q:"The _____ defines the colour tokens, typographic scale, and spacing system used across all product surfaces.",opts:["design system", "design system's visual foundations", "design document", "style information"],ans:1},{q:"The research team recruited _____ matching three distinct user personas for the moderated usability study.",opts:["some users", "twelve participants", "a group of people", "the right number of users"],ans:1}]},
+  {title:"Exercise 2: Passive Voice in Design Specifications and Handoff",instr:"Select the correct passive construction. Design specifications, accessibility documentation, and developer handoff notes use passive voice extensively to describe what the system does and what must be built \u2014 without specifying who is responsible.",qs:[{q:"All interactive elements _____ with a visible focus state that meets WCAG 2.1 AA contrast requirements.",opts:["must provide", "must be provided", "should provide", "need providing"],ans:1},{q:"The modal _____ when the user clicks outside the overlay or presses the Escape key.",opts:["should dismiss", "is dismissed", "dismisses", "will dismiss itself"],ans:1},{q:"Form validation errors _____ inline, below the relevant field, in red text with a warning icon.",opts:["should display", "are displayed", "display", "need to display"],ans:1},{q:"The design tokens _____ from the design system and must not be overridden at the component level.",opts:["inherit", "are inherited", "should inherit", "must inherit"],ans:1},{q:"The loading state _____ any time an asynchronous operation takes longer than 300 milliseconds.",opts:["is shown", "shows", "should show", "will be showing"],ans:0},{q:"Alt text _____ for every non-decorative image in accordance with the WCAG 2.1 success criterion 1.1.1.",opts:["must provide", "must be provided", "is providing", "provides"],ans:1},{q:"The prototype _____ reviewed by the product team before it is shared with external stakeholders.",opts:["should be", "should", "needs review", "is reviewing"],ans:0},{q:"Error messages _____ in plain language that tells the user what went wrong and how to fix it.",opts:["must write", "must be written", "are writing", "write"],ans:1},{q:"The colour contrast ratio _____ using an automated accessibility checker before the design is signed off.",opts:["must verify", "must be verified", "should verify", "needs verifying"],ans:1},{q:"The responsive breakpoints _____ in the component documentation and tested on real devices before release.",opts:["are specified", "are specifying", "specify", "must specify"],ans:0}]},
+  {title:"Exercise 3: Purpose and Reason Clauses in Design Rationale",instr:"Select the best connective or structure. Design rationale documents explain why design decisions were made. Purpose and reason clauses link a design choice to the user need or principle it serves \u2014 essential for communicating design decisions to developers and stakeholders.",qs:[{q:"The team chose a single-column layout for mobile _____ reduce horizontal scrolling and cognitive load on small screens.",opts:["because", "so that", "in order to", "despite"],ans:2},{q:"The font size was increased to 18px _____ meet WCAG 2.1 AA readability requirements for body text.",opts:["despite", "so that", "in order to", "because of"],ans:2},{q:"The onboarding flow was reduced from seven steps to three _____ users were abandoning the process at step four.",opts:["in order to", "despite", "so that", "because"],ans:3},{q:"The team added progressive disclosure to the settings panel _____ users could focus on the most common options without being overwhelmed.",opts:["in order to", "so that", "because", "despite"],ans:1},{q:"The error messages were rewritten in plain language _____ users could understand what went wrong without technical knowledge.",opts:["in order to", "so that", "because", "despite"],ans:1},{q:"The design uses a consistent iconography set _____ reduce the cognitive load of learning new symbols on each screen.",opts:["so that", "despite", "in order to", "because"],ans:2},{q:"A skip navigation link was added _____ keyboard users can bypass repeated navigation elements and reach main content directly.",opts:["despite", "so that", "in order to", "because"],ans:1},{q:"The CTA button colour was changed from grey to high-contrast blue _____ users were not recognising it as clickable.",opts:["so that", "in order to", "because", "despite"],ans:2},{q:"The design system was documented with usage guidelines _____ developers would not implement components inconsistently.",opts:["in order to", "so that", "because", "despite"],ans:1},{q:"A tooltip was added to the icon-only button _____ users who do not recognise the icon can discover its function on hover.",opts:["despite", "because", "so that", "in order to"],ans:3}]}];
+const grammarReview=[{title:"Grammar Point 1: Noun Phrases in Design Documentation",pts:[{h:"Pre-Modification in Design Language",b:"Design documentation uses densely pre-modified noun phrases \u2014 stacking adjectives, gerunds, and nouns before the head noun \u2014 to communicate specifications efficiently. Mastering these compounds is essential for reading and writing accurate handoff documentation.",ex:["'responsive grid specification' (adjective + noun + noun)", "'end-to-end user journey map' (adjective + noun + noun + noun)", "'collapsible navigation pattern' (adjective + noun + noun)", "'WCAG 2.1 AA success criterion' (proper noun + number + noun + noun)"]},{h:"Post-Modification \u2014 Prepositional Phrases and Relative Clauses",b:"Post-modifiers specify the scope, context, or function of a design element. They are common in accessibility requirements, component documentation, and research reports.",ex:["'all interactive elements with a minimum touch target of 44x44 pixels'", "'a user journey map showing the end-to-end experience of a first-time user'", "'the component state that appears when an input field contains a validation error'", "'the typographic scale defined in the design system's visual foundations'"]},{h:"Nominalisation in Design Reports",b:"Design reports use nominalisations to describe research activities, findings, and recommendations with formal authority. Knowing the verb-to-noun conversion enables accurate reading of UX research documentation.",ex:["research → finding: 'usability testing findings' (not 'what we found when we tested')", "evaluate → evaluation: 'heuristic evaluation' (not 'when experts evaluate the interface')", "test → testing: 'usability testing session' (not 'when we test')", "iterate → iteration: 'design iteration' (not 'when we change the design')"]}]},
+  {title:"Grammar Point 2: Passive Voice in Design Specifications",pts:[{h:"Why Design Specifications Use Passive Voice",b:"Design specifications describe what the system does and what must be built \u2014 not who is responsible for building it. The passive voice serves this purpose: it places the focus on the requirement, not the actor, and is appropriate when the responsible party is obvious from context (the developer) or deliberately unspecified.",ex:["'All images must be given alt text.' (mandatory — passive modal)", "'Error messages are displayed inline, below the relevant field.' (system behaviour)", "'The modal is dismissed when the user presses Escape.' (triggered behaviour)", "'The design tokens are inherited from the design system.' (architectural fact)"]},{h:"Passive Modals \u2014 Expressing Mandatory Requirements",b:"In design specifications and accessibility documentation, passive modals signal mandatory requirements impersonally. 'Must be' is the strongest; 'should be' signals a recommended practice; 'may be' signals an option.",ex:["'All form inputs must be labelled with a visible text label.' (mandatory — WCAG requirement)", "'Focus states should be clearly visible on all interactive elements.' (recommended best practice)", "'Tooltips may be used to provide additional context for icon-only buttons.' (optional)", "'The colour contrast ratio must be verified before the design is approved.' (mandatory process step)"]},{h:"Combining Active and Passive in Handoff Notes",b:"Effective handoff documentation combines active voice (for clarity about user-triggered actions) with passive voice (for system-triggered responses). This combination accurately captures the interaction model.",ex:["Active (user action): 'The user clicks the Submit button.'", "Passive (system response): 'The form data is validated and an inline error is displayed if any field is invalid.'", "Active: 'The user enters their email address.'", "Passive: 'A confirmation email is sent to the provided address within 30 seconds.'"]}]},
+  {title:"Grammar Point 3: Purpose and Reason in Design Rationale",pts:[{h:"Expressing Purpose \u2014 'In Order To', 'So That', 'To'",b:"Design rationale documents explain why a design decision was made in terms of the user need it serves. Purpose clauses link the design choice (the action) to its intended effect (the goal). The choice between 'in order to', 'so that', and simple 'to' depends on whether the subject of both clauses is the same.",ex:["'The font size was increased to 18px in order to meet WCAG readability requirements.' (same subject implied)", "'Progressive disclosure was introduced so that users can focus on common options without distraction.' (different subject)", "'The onboarding was shortened to reduce user drop-off at the registration stage.' (simple to + infinitive)", "'A skip link was added so that keyboard users can bypass repeated navigation elements.'"]},{h:"Expressing Reason \u2014 'Because', 'As', 'Since'",b:"Reason clauses explain what evidence or principle motivated a design decision. They are used in design reviews, retrospectives, and stakeholder presentations to justify choices.",ex:["'The layout was changed because usability testing showed that users could not locate the CTA.'", "'As the research identified three distinct user types, three separate onboarding paths were designed.'", "'The error message was rewritten since users reported not understanding the original technical language.'", "'The navigation was restructured because card sorting revealed a mismatch with users' mental models.'"]},{h:"Expressing Contrast \u2014 'Although', 'Despite', 'While'",b:"Design decisions often involve trade-offs. Contrast clauses acknowledge a competing factor or limitation while maintaining the primary rationale \u2014 essential for honest, balanced design documentation.",ex:["'Although the single-page layout reduces navigation clicks, it increases initial page weight — the trade-off was accepted based on performance testing.'", "'Despite the added development complexity, the accessible version was implemented from the start rather than retrofitted later.'", "'While the existing design met technical requirements, user testing revealed it failed to meet user expectations.'", "'The simpler design was chosen despite offering fewer features, because research showed users were overwhelmed by the current option density.'"]}]}];
+const writingTasks=[{id:"w1",activity:"Activity 1",type:"Usability Report",title:"Usability Test Report: Key Findings",prompt:"You are the UX researcher at Nexford Digital. Your team has just completed a moderated usability test of the new onboarding flow for your B2B SaaS product. You tested with 6 participants who matched your primary user persona \u2014 mid-level operations managers at companies with 50\u2013200 employees.\n\nKey findings from the test:\n\u2022 Task 1 (Create account): 6/6 completed successfully. Average time: 2m 14s. No significant issues.\n\u2022 Task 2 (Connect first data source): 4/6 completed. 2 failed. The failed participants could not find the 'Integrations' section \u2014 they looked in Settings, not in the left sidebar under 'Connect'.\n\u2022 Task 3 (Create first dashboard): 3/6 completed. 3 failed. All 3 failures occurred because participants did not realise the drag-and-drop widget selector required them to drag items onto the canvas \u2014 they kept clicking.\n\u2022 Task 4 (Share dashboard with a colleague): 5/6 completed. 1 failed. One participant spent 4 minutes looking for a 'Share' button before finding it in the kebab menu (three-dot menu).\n\u2022 Accessibility: The screen reader user (P4) was unable to complete Tasks 2 or 3 \u2014 the drag-and-drop widget had no keyboard alternative.\n\nWrite the Key Findings section of the usability test report. Include: a brief executive summary (2\u20133 sentences), a finding for each task (severity rating: Critical / High / Medium / Low, observation, and recommendation), and a prioritised list of the top 3 issues to fix before launch. Use formal UX research report language. Use at least 6 vocabulary terms from this module.",tags:["Usability Report", "User Research", "Professional Register", "UX Documentation", "Accessibility"],targetMin:200,targetMax:300},{id:"w2",activity:"Activity 2",type:"Design Rationale",title:"Design Rationale Document",prompt:"You are the lead UX designer at Brightfield Financial. Your team has redesigned the main navigation of your retail banking app \u2014 moving from a bottom tab bar (5 tabs) to a side-drawer navigation with grouped sections.\n\nThe decision was controversial: the product manager preferred keeping the tab bar because it is familiar, and the iOS guidelines recommend tab bars for primary navigation.\n\nYour rationale for the change:\n\u2022 User research (diary study + 8 interviews) found that users needed to access 11 distinct sections, not 5 \u2014 the tab bar required 4 sections to be buried under a 'More' tab\n\u2022 Usability testing showed 60% of users could not find features buried under 'More'\n\u2022 The new grouped side-drawer organises the 11 sections into 3 logical groups (Accounts, Payments, Services) matching the card-sorting results\n\u2022 The drawer was tested with 6 users \u2014 all 6 could find any section within 2 interactions\n\u2022 The design includes a persistent bottom bar with the 3 most-used actions (Home, Pay, Support) to retain the fast-access benefit of tab bars\n\nWrite a design rationale document explaining and justifying this decision. Address the PM's concerns directly and constructively. Use formal design documentation language. Use at least 6 vocabulary terms from this module.",tags:["Design Rationale", "Navigation Design", "UX Decision Making", "Stakeholder Communication", "Research-Led Design"],targetMin:180,targetMax:280}];
+const listeningActs=[{id:0,title:"Introduction: UI and UX Design Language",sub:"Overview \u00b7 B1\u2013B2 Level \u00b7 approx. 92 sec",icon:"\ud83c\udf93",transcript:"Welcome to Module Five of IT and Digital Professions English. In this module, we explore the language of user interface and user experience design \u2014 one of the fastest-growing and most cross-functional disciplines in the technology industry. UX design sits at the intersection of psychology, research, technology, and communication. It is the practice of understanding users \u2014 what they need, what they expect, and where they struggle \u2014 and translating those insights into interfaces that are usable, accessible, and satisfying. In this module, you will learn the vocabulary of the design profession: wireframes, prototypes, user personas, journey maps, usability testing, affordance, cognitive load, design systems, accessibility, and the WCAG guidelines. You will practise the grammar structures that define professional design communication: noun phrases for design specifications, passive voice for handoff documentation, and purpose and reason clauses for design rationale. The writing tasks will give you practice in the two most important written skills in UX practice \u2014 writing a usability test report and writing a design rationale document that justifies your decisions to stakeholders who may disagree with them. By the end of this module, you will have the vocabulary and the language confidence to participate in design critiques, understand research findings, communicate design decisions, and collaborate effectively with designers, developers, and product managers in a professional technology environment.",qs:[{q:"What is the focus of Module Five?",opts:["IT project management language", "User interface and UX design language", "Software development vocabulary", "Writing technical documentation"],ans:1},{q:"At the intersection of which four disciplines does UX design sit?",opts:["Art, technology, marketing, and management", "Psychology, research, technology, and communication", "Design, coding, testing, and deployment", "Strategy, finance, operations, and technology"],ans:1},{q:"Which vocabulary topics will the module cover?",opts:["Agile, scrum, sprints, and retrospectives", "Wireframes, prototypes, personas, usability testing, accessibility, and design systems", "APIs, endpoints, schemas, and authentication", "Risk registers, change requests, and project charters"],ans:1},{q:"What three grammar structures will the module practise?",opts:["Passive voice, hedging language, and conditionals", "Noun phrases, passive voice, and purpose and reason clauses", "Future forms, formal meeting language, and concession structures", "Reported speech, formal register, and complex sentences"],ans:1},{q:"What two writing tasks will students practise?",opts:["A README and an API endpoint reference", "A project status report and a risk register entry", "A usability test report and a design rationale document", "A code review and a technical specification section"],ans:2},{q:"What does the speaker say UX design is the practice of?",opts:["Creating visually beautiful interfaces", "Understanding users and translating insights into usable, accessible, satisfying interfaces", "Managing the development process for digital products", "Writing specifications for software engineers"],ans:1},{q:"What will students be able to do by the end of the module?",opts:["Qualify as a certified UX designer", "Code interactive prototypes in React", "Participate in design critiques, understand research, communicate decisions, and collaborate effectively", "Conduct independent usability testing studies"],ans:2},{q:"In which course series does this module appear?",opts:["Legal and Compliance English", "Business Communication English", "IT and Digital Professions English", "Finance and Accounting English"],ans:2}]},
+  {id:1,title:"Design Critique: Reviewing the New Onboarding Flow",sub:"Team Discussion \u00b7 B2 Level \u00b7 approx. 110 sec",icon:"\ud83d\uddbc\ufe0f",transcript:"We are observing a design critique session at a SaaS company. The lead UX designer, Priya, is presenting the new onboarding wireframes to the product team. Priya: Thanks everyone for joining. Today I want to walk through the updated onboarding wireframes and get your feedback before we move to high-fidelity. I'll start with the big picture \u2014 we are going from a seven-step onboarding to a three-step flow. The research was clear: 60% of users abandoned at step four. So we have stripped everything non-essential out of the initial setup. Tom from engineering: Priya, I like the direction. One question \u2014 in step two, you have a drag-and-drop widget for connecting a data source. Have you considered the accessibility implications? If it only works with a mouse, we are going to have a problem with keyboard users. Priya: Great catch, Tom. That is a known issue \u2014 I have a note in the spec that we need a keyboard alternative for the drag interaction. The WCAG requirement is that all functionality is operable without a mouse. I will make sure that is flagged in the handoff. Sarah from product: On step three \u2014 the dashboard creation. I am a bit worried about cognitive load here. There are twelve widget types visible at once. Could we introduce progressive disclosure \u2014 show the most common four by default and let users expand to see the rest? Priya: That is exactly the direction I was thinking. The user research showed that 80% of users only ever use three or four widget types regularly. Surfacing all twelve at once creates unnecessary noise. I will prototype two versions \u2014 the full palette and the progressive disclosure version \u2014 and we can test both with users before committing. Marcus from marketing: What is the call to action at the end of the flow? I want to make sure we are capturing intent while the user is engaged. Priya: The CTA at the end of onboarding is Invite your team \u2014 data shows that users who invite at least one colleague in the first session have a 40% higher 30-day retention rate. The copy and button design will be done at high-fidelity stage.",qs:[{q:"Why has the onboarding flow been reduced from seven steps to three?",opts:["The product manager requested a shorter onboarding for business reasons", "Research showed 60% of users abandoned at step four", "The engineering team said seven steps were too complex to build", "The previous design failed its accessibility audit"],ans:1},{q:"What accessibility concern does Tom raise about the drag-and-drop widget?",opts:["The widget does not work on mobile devices", "The widget requires a mouse — keyboard users cannot operate it, violating WCAG requirements", "The widget is too slow to load for users with slow connections", "The widget's colour contrast does not meet WCAG standards"],ans:1},{q:"What is the WCAG requirement Priya mentions?",opts:["All text must be at least 16px in size", "All functionality must be operable without a mouse", "All images must have alt text", "All forms must have visible labels"],ans:1},{q:"What issue does Sarah raise about step three?",opts:["The step is too long and takes too many clicks", "Twelve widget types visible at once creates too much cognitive load", "The step is missing a call to action", "The step requires users to connect a data source before creating a dashboard"],ans:1},{q:"What does the user research show about widget usage?",opts:["Users regularly use all twelve widget types", "80% of users only ever use three or four widget types regularly", "Users prefer to see all options upfront without any filtering", "Widget usage varies significantly between user segments"],ans:1},{q:"What solution does Priya propose for the widget cognitive load issue?",opts:["Remove the less popular widgets from the product entirely", "Create a personalised widget selector based on the user's role", "Prototype two versions — full palette and progressive disclosure — and test both with users", "Ask the product manager to decide which widgets to show"],ans:2},{q:"What is the CTA at the end of the onboarding flow?",opts:["Sign up for the premium plan", "Complete your profile", "Invite your team", "Connect your first data source"],ans:2},{q:"What retention impact does inviting a colleague have according to Priya?",opts:["Users who invite a colleague in the first session have a 40% higher 30-day retention rate", "Users who invite a colleague are twice as likely to upgrade to the paid plan", "Users who invite a colleague complete onboarding 30% faster", "There is no measurable retention impact from inviting colleagues"],ans:0}]},
+  {id:2,title:"Usability Testing Debrief: Key Findings",sub:"Research Debrief \u00b7 B2 Level \u00b7 approx. 107 sec",icon:"\ud83d\udd2c",transcript:"The UX research team at Nexford Digital is debriefing after a round of usability testing on the new onboarding flow. UX researcher Amara is presenting findings to the product manager, Leila. Amara: Thanks for making time, Leila. We ran six sessions yesterday and I want to walk you through the headline findings before the full report is ready. The good news first \u2014 task one, account creation, was a success. All six participants completed it, average time was just over two minutes, no major issues. Leila: Good. What about the integrations step? Amara: That is where we hit the first significant problem. Only four of six participants completed task two \u2014 connecting a data source. The two who failed both did the same thing: they looked for Integrations in Settings. The label Connect in the sidebar was not intuitive for them. I would rate this a High severity finding \u2014 it is blocking a core task for a third of users. Leila: What is the recommendation? Amara: Two options. One \u2014 move the Integrations section into Settings where users expect to find it. Two \u2014 rename Connect to something more explicit, like Integrations and Data Sources, and see if that reduces confusion. We should A/B test the labels before committing to a structural change. Leila: And the dashboard creation? Amara: That was our most critical finding. Only three of six completed it. All three failures happened because participants did not realise the widget selector worked by dragging \u2014 they kept clicking. There was no affordance signal that the items were draggable. And our screen reader participant could not complete it at all \u2014 there is no keyboard alternative for the drag interaction. That is a WCAG failure and it needs to be resolved before launch. I would rate this Critical. Leila: Agreed. What about the sharing task? Amara: Five of six completed it, but the one who failed spent four minutes searching for a Share button. It is hidden in the kebab menu \u2014 the three-dot menu in the top right. The kebab menu has poor discoverability. I would rate this Medium \u2014 it is a real problem, but it affected fewer participants and the workaround is findable given time.",qs:[{q:"What was the result of task one \u2014 account creation?",opts:["Three of six participants completed it successfully", "All six participants completed it with no major issues in just over two minutes", "Four of six completed it but all experienced confusion", "Only two participants completed it without assistance"],ans:1},{q:"What problem did participants have in task two \u2014 connecting a data source?",opts:["They could not understand the data source options available", "Two of six participants looked for Integrations in Settings rather than in the Connect sidebar section", "The connection process required too many steps", "Three participants experienced a technical error during connection"],ans:1},{q:"What severity rating does Amara give to the integrations finding?",opts:["Critical", "High", "Medium", "Low"],ans:1},{q:"What two options does Amara suggest for fixing the integrations issue?",opts:["Remove the integrations step or make it optional", "Move Integrations into Settings, or rename Connect to something more explicit — and A/B test the labels", "Redesign the entire sidebar navigation or remove the sidebar entirely", "Add a tooltip explaining where integrations are, or run more usability testing"],ans:1},{q:"What was the most critical finding from usability testing?",opts:["The screen reader user could not complete task one", "Only three of six participants completed dashboard creation — all failures due to no affordance that widgets were draggable, plus a WCAG failure", "The CTA at the end of onboarding was not noticed by any participants", "The account creation step took too long on average"],ans:1},{q:"Why could the screen reader user not complete the dashboard task?",opts:["The screen reader was not compatible with the testing tool", "There was no keyboard alternative for the drag interaction — a WCAG failure", "The screen reader misread the widget labels", "The participant had insufficient technical experience"],ans:1},{q:"What severity rating does Amara give to the dashboard creation finding?",opts:["Low", "Medium", "High", "Critical"],ans:3},{q:"What problem was found with the sharing task?",opts:["All six participants failed to find the share function", "The share function was hidden in the kebab menu and had poor discoverability — one participant spent four minutes searching", "The share function only worked for users with admin permissions", "The share function sent notifications to the wrong email address"],ans:1}]},
+  {id:3,title:"Accessibility Review: Meeting WCAG 2.1 AA",sub:"Technical Briefing \u00b7 B2 Level \u00b7 approx. 105 sec",icon:"\u267f",transcript:"Marcus, the front-end developer, and Yuki, the UX designer, are conducting a joint accessibility review of the new product before launch. Marcus: Yuki, I have run the automated accessibility checker and there are eleven flagged issues. I want to go through the critical ones with you. Yuki: Sure. What is the most serious? Marcus: The colour contrast on the secondary button. The text is grey on a light grey background \u2014 the contrast ratio is 2.8:1. WCAG 2.1 AA requires a minimum of 4.5:1 for normal text. It fails. Yuki: That is a design error on my side. I will update the token to use the dark grey \u2014 that will give us a 6.2:1 ratio which is well within AA. Marcus: Good. Second issue \u2014 the icon-only buttons in the toolbar. They have no accessible name. Screen readers will just read them as 'button' with no context. Yuki: They need aria-label attributes \u2014 each one should have a descriptive name that explains what it does. I will add those to the handoff spec. Can you implement them as aria-label on the button elements? Marcus: Yes, straightforward. Third \u2014 there are several images without alt text. Some of them are decorative, some are informational. Yuki: For the decorative ones \u2014 the background textures and the hero illustration \u2014 they should have an empty alt attribute, alt equals empty string, which tells screen readers to skip them. For the informational ones, like the dashboard screenshots in the feature list, they need descriptive alt text. I will go through them and mark which is which in the spec. Marcus: The other significant issue is focus management in the modal. When the modal opens, focus is not moved to it \u2014 keyboard users have no way of knowing it has appeared. And when the modal closes, focus is not returned to the trigger element. Yuki: Both of those are WCAG failures \u2014 focus must be managed on modal open and close. Can that be implemented in the modal component so it is automatic for all modals, not just this one? Marcus: Yes, I will build it into the base modal component. That way every modal across the product benefits from it. Yuki: Perfect. Let us make sure all of these are fixed and verified before we sign off the launch build.",qs:[{q:"What tool did Marcus use to identify the accessibility issues?",opts:["Manual keyboard testing", "An automated accessibility checker", "A screen reader test with a real user", "The WCAG documentation"],ans:1},{q:"What is the colour contrast ratio of the failing secondary button?",opts:["1.5:1", "2.8:1", "4.5:1", "6.2:1"],ans:1},{q:"What is the WCAG 2.1 AA minimum contrast ratio for normal text?",opts:["3:1", "4.5:1", "6:1", "7:1"],ans:1},{q:"What is the problem with the icon-only buttons?",opts:["They are too small for touch targets", "They have no accessible name — screen readers read them as 'button' without context", "They do not have hover states defined", "Their icons are not from the approved icon set"],ans:1},{q:"What solution does Yuki propose for the icon-only buttons?",opts:["Replace the icons with text labels", "Add tooltips that appear on hover", "Add aria-label attributes with descriptive names for each button", "Increase the size of the icons"],ans:2},{q:"What should decorative images have as their alt attribute?",opts:["A description of what the image looks like", "The filename of the image", "An empty string — alt equals empty string — so screen readers skip them", "The word 'decorative'"],ans:2},{q:"What is the focus management problem with the modal?",opts:["The modal does not close when Escape is pressed", "Focus is not moved to the modal when it opens, and not returned to the trigger when it closes", "The modal does not trap focus — users can tab out of it", "The modal's close button is not focusable"],ans:1},{q:"Why does Yuki suggest building focus management into the base modal component?",opts:["To make the code simpler to maintain", "So that every modal across the product benefits automatically — not just this one", "To avoid having to test each modal individually", "Because it is required by the design system guidelines"],ans:1}]}];
+const casesStudies=[{tag:"Industry \u00b7 UX Design \u00b7 1988\u2013Present \u00b7 Design Principles",title:"Case Study 1: Don Norman and the Design of Everyday Things \u2014 How a Book Changed Product Design",sub:"The principles of user-centred design and why affordance, feedback, and mental models still define how we evaluate interfaces",sections:[{h:"Background",t:"In 1988, cognitive scientist Donald Norman published The Design of Everyday Things \u2014 a book that transformed how designers, engineers, and product managers think about usability. Written initially as a critique of poorly designed everyday objects (doors that are pushed when they should be pulled, showers that are impossible to control, stove controls that do not correspond intuitively to the burners), the book introduced a vocabulary that has since become foundational in digital product design. Norman's central argument is that when people make mistakes using products, the fault almost always lies with the design \u2014 not the user's intelligence or effort. This principle, which he called user-centred design, was radical at a time when 'read the manual' was considered an acceptable response to usability failures."},{h:"Key Concepts and Their Application to Digital Design",t:"Norman introduced several concepts that have become standard in UX practice. Affordance refers to a design property that signals how an object should be used \u2014 a physical button affords pressing; a underlined blue link affords clicking. Feedback is the signal a system provides in response to a user's action \u2014 without feedback, users cannot tell whether their action was received or what the system is doing. A mental model is the user's internal representation of how a system works \u2014 good design matches the system's actual behaviour to the user's mental model, rather than requiring users to learn a new model. The conceptual model is what the designer intends the user to understand. When these two models do not align, confusion and errors result. In digital design, these concepts are applied constantly \u2014 in the decision to make buttons look like buttons, to provide loading states during asynchronous operations, and to structure navigation in a way that matches how users think about the information."},{h:"Relevance for IT and Digital Professionals",t:"The Design of Everyday Things matters for anyone working in technology \u2014 not just designers. Developers who understand affordance build more intuitive components. Product managers who understand mental models write better user stories. QA engineers who understand feedback loops write better test cases. The vocabulary Norman introduced \u2014 affordance, feedback, mental model, conceptual model, discoverability, mapping \u2014 is now the shared language of product teams. Understanding these concepts enables professionals from all disciplines to participate more effectively in design discussions, critique interfaces more precisely, and advocate for users when business or technical pressures push in a different direction. The book has sold over one million copies and is consistently listed as required reading for anyone entering the technology industry."}],qs:[{q:"When was The Design of Everyday Things first published?",opts:["1975", "1981", "1988", "1995"],ans:2},{q:"What was Norman's central argument?",opts:["Products should always come with comprehensive manuals", "When people make mistakes using products, the fault lies with the design — not the user", "Designers should prioritise aesthetics over usability", "Users should be trained to use complex products"],ans:1},{q:"What does 'affordance' mean in Norman's framework?",opts:["The emotional satisfaction a product provides", "A design property that signals how an object should be used", "The number of features a product offers", "The visual appeal of a user interface"],ans:1},{q:"What is 'feedback' in Norman's design framework?",opts:["The signal a system provides in response to a user's action", "Comments from users collected after a product launch", "The designer's assessment of a completed interface", "A user research method for gathering opinions"],ans:0},{q:"What is a 'mental model'?",opts:["The designer's intended representation of how a system works", "The technical architecture of a software system", "The user's internal representation of how a system works", "A diagram showing the user journey through a product"],ans:2},{q:"What problem occurs when a user's mental model does not align with the conceptual model?",opts:["The product performs poorly under load", "Users experience confusion and make errors", "The product fails its accessibility audit", "The development team cannot implement the design correctly"],ans:1},{q:"How is the concept of affordance applied in digital design?",opts:["By making all text in the same colour", "By ensuring buttons look like buttons and links look clickable — signalling how they should be used", "By providing extensive help documentation", "By using only standard operating system components"],ans:1},{q:"Why does the case study say the book matters for developers, not just designers?",opts:["Developers are responsible for implementing design decisions and need design training", "Developers who understand affordance build more intuitive components — the vocabulary is shared across the product team", "Developers are increasingly taking on design responsibilities in modern teams", "The book contains technical guidance on how to implement accessible components"],ans:1},{q:"What are two examples of applying Norman's feedback concept in digital products?",opts:["Using brand colours consistently and maintaining visual hierarchy", "Providing loading states during asynchronous operations and inline error messages on form validation", "Writing comprehensive API documentation and developer handoff notes", "Conducting usability testing and publishing the results publicly"],ans:1},{q:"How many copies has The Design of Everyday Things sold?",opts:["Over 100,000", "Over 500,000", "Over one million", "Over five million"],ans:2}]},
+  {tag:"Industry \u00b7 Accessibility \u00b7 2018\u2013Present \u00b7 Inclusive Design",title:"Case Study 2: The Business and Legal Case for Accessibility \u2014 Domino's Pizza v Robles and Beyond",sub:"How a US Supreme Court case transformed accessibility from a best practice into a legal obligation \u2014 and what it means for digital product teams",sections:[{h:"Background",t:"In 2016, Guillermo Robles, a blind man who uses a screen reader, sued Domino's Pizza in the United States after being unable to order food from their website or mobile app using his assistive technology. The case raised a fundamental question: does the Americans with Disabilities Act (ADA) \u2014 which prohibits discrimination against people with disabilities in places of public accommodation \u2014 apply to websites and apps? Domino's argued that because the ADA predated the web, it did not apply to digital products. The case was eventually ruled in favour of Robles \u2014 the Ninth Circuit Court of Appeals held that the ADA does apply to websites and apps that are connected to physical locations. In 2019, the Supreme Court declined to hear Domino's appeal, leaving the ruling in place. Domino's was required to make their digital products accessible to screen reader users."},{h:"The Broader Legal and Business Context",t:"The Domino's case is not isolated. In the United States, web accessibility lawsuits filed under the ADA increased dramatically through the late 2010s and 2020s, with thousands of cases filed annually against companies whose digital products excluded users with disabilities. In the United Kingdom, the Equality Act 2010 places a duty on service providers to make reasonable adjustments for disabled users \u2014 which courts and regulators have interpreted to include digital services. The Public Sector Bodies Accessibility Regulations 2018 legally require UK public sector websites and apps to meet WCAG 2.1 AA. Across the European Union, the European Accessibility Act requires many private sector digital products to be accessible from 2025. The legal landscape is moving consistently in one direction: accessibility is increasingly a legal obligation, not a choice."},{h:"Lessons for Digital Product Teams",t:"The Domino's case and the broader accessibility compliance trend carry clear practical lessons for digital product teams. First, retrofitting accessibility is significantly more expensive than building it in from the start \u2014 the earlier accessibility is considered, the cheaper it is to implement. Second, automated accessibility checkers catch only approximately 30\u201340% of accessibility issues \u2014 manual testing with screen readers and other assistive technologies, and testing with real disabled users, is essential. Third, accessibility benefits extend beyond disabled users \u2014 closed captions help users in noisy environments, keyboard navigation helps power users, and high-contrast modes help users in bright sunlight. Fourth, accessibility and usability are not in tension \u2014 well-designed accessible interfaces are typically cleaner, more logical, and easier for all users. Fifth, the legal risk of inaccessibility is now substantial \u2014 and is growing."}],qs:[{q:"Why did Guillermo Robles sue Domino's Pizza?",opts:["He received the wrong order and could not get a refund online", "He was unable to order food from their website or app using his screen reader assistive technology", "Domino's refused to hire him because of his disability", "Their app charged him more than sighted users for the same order"],ans:1},{q:"What was Domino's main legal argument in the case?",opts:["The website did meet accessibility standards under ADA", "The ADA predated the web and therefore did not apply to digital products", "Robles had not provided sufficient evidence of the accessibility failures", "The case should be heard in a different court"],ans:1},{q:"What did the Ninth Circuit Court of Appeals rule?",opts:["The ADA does not apply to websites or mobile apps under any circumstances", "The ADA applies to websites and apps that are connected to physical locations", "Companies must only make their mobile apps accessible, not websites", "Accessibility is a best practice but not a legal requirement under the ADA"],ans:1},{q:"What happened when Domino's appealed to the Supreme Court?",opts:["The Supreme Court ruled in Domino's favour", "The Supreme Court reversed the lower court's ruling", "The Supreme Court declined to hear the appeal, leaving the Ninth Circuit ruling in place", "The Supreme Court asked for the case to be reheard in a lower court"],ans:2},{q:"What UK legislation places a duty on service providers to make reasonable adjustments for disabled users?",opts:["The Human Rights Act 1998", "The Digital Economy Act 2017", "The Equality Act 2010", "The Consumer Rights Act 2015"],ans:2},{q:"What does the European Accessibility Act require from 2025?",opts:["All EU websites must achieve WCAG AAA level", "Many private sector digital products across the EU must be accessible", "Only public sector websites must be accessible in the EU", "All digital products must be tested by disabled users annually"],ans:1},{q:"What percentage of accessibility issues do automated checkers typically catch?",opts:["About 70–80%", "About 50–60%", "About 30–40%", "Nearly all — about 90%"],ans:2},{q:"What is one example of how accessibility benefits non-disabled users?",opts:["High-fidelity prototypes are easier to implement", "Closed captions help users in noisy environments — a feature designed for deaf users", "Design systems reduce development time", "Usability testing is faster when participants have diverse needs"],ans:1},{q:"What does the case study say about retrofitting accessibility?",opts:["Retrofitting is the most cost-effective approach for most teams", "Retrofitting accessibility is significantly more expensive than building it in from the start", "Retrofitting is only necessary for products serving public sector clients", "Retrofitting is equivalent in cost to building in accessibility from the start"],ans:1},{q:"What is the overall direction of the legal landscape regarding accessibility?",opts:["Regulators are reducing accessibility requirements in response to business lobbying", "Accessibility requirements are stable — no major changes are expected", "Accessibility is increasingly a legal obligation, not a choice — and the legal risk of inaccessibility is growing", "Accessibility laws only apply to large companies with significant market share"],ans:2}]}];
+const assessQs=[{q:"What is a wireframe?",opts:["A high-fidelity prototype for developer handoff", "A low-fidelity schematic showing layout and structure without visual styling", "A document specifying colour palettes and typography", "A research method for studying user behaviour"],ans:1},{q:"What is usability testing?",opts:["An expert review against established heuristics", "A statistical experiment comparing two design versions", "A method in which real users attempt tasks while a researcher observes where they succeed or fail", "An automated scan of a website for accessibility failures"],ans:2},{q:"What does the POUR acronym in WCAG stand for?",opts:["Professional, Outstanding, Usable, Responsive", "Perceivable, Operable, Understandable, Robust", "Practical, Optimised, User-friendly, Reliable", "Proven, Observable, Universal, Readable"],ans:1},{q:"What is a design system?",opts:["A process for running design sprints", "A collection of reusable UI components, design tokens, and guidelines defining a product's visual language", "A usability evaluation method using heuristics", "A tool for conducting A/B tests"],ans:1},{q:"What does 'affordance' mean in design?",opts:["The emotional response a design evokes", "A design property that signals to users how an object should be used", "The number of features a product offers", "The speed at which users complete a task"],ans:1},{q:"What is the purpose of card sorting?",opts:["To organise design deliverables into phases", "To sort research data into themes", "To reveal how users categorise information — informing information architecture", "To evaluate visual design options with users"],ans:2},{q:"What was Don Norman's central argument in The Design of Everyday Things?",opts:["Products should come with comprehensive manuals", "When products are difficult to use, the fault lies with the design — not the user", "Designers should prioritise aesthetics over usability", "Users need training to use complex products"],ans:1},{q:"In the Domino's v Robles case, what did the Ninth Circuit Court of Appeals rule?",opts:["The ADA does not apply to digital products", "The ADA applies to websites and apps connected to physical locations", "Accessibility is a best practice but not a legal requirement", "Companies must make mobile apps but not websites accessible"],ans:1},{q:"What is cognitive load in UX?",opts:["The processing power required to render a web page", "The mental effort required to use an interface", "The number of decisions a designer must make", "The time it takes users to complete a task"],ans:1},{q:"What is the difference between a low-fidelity and high-fidelity prototype?",opts:["Low-fidelity is for mobile; high-fidelity is for desktop", "Low-fidelity has minimal detail for early exploration; high-fidelity closely resembles the finished product", "Low-fidelity is made in Figma; high-fidelity is made in code", "They are the same — the terms are interchangeable"],ans:1},{q:"What WCAG conformance level is required by most legal frameworks?",opts:["Level A — minimum", "Level AA — standard", "Level AAA — enhanced", "No specific level is required"],ans:1},{q:"What does 'iterative design' mean?",opts:["Designing a product once with extensive upfront planning", "Repeating cycles of designing, testing, and refining based on user feedback", "Quickly generating many design concepts simultaneously", "A training method for junior designers"],ans:1},{q:"What is a user journey map?",opts:["A document listing all user requirements", "A visual showing the steps a user takes to accomplish a goal, including their emotions and pain points", "A technical diagram of the product's information architecture", "A statistical model of user behaviour from analytics"],ans:1},{q:"What is information architecture?",opts:["The visual hierarchy of a screen layout", "The technical structure of a website's database", "The structural design of a product — how content is organised, labelled, and navigated", "The process of writing content for digital products"],ans:2},{q:"What percentage of accessibility issues do automated checkers typically catch according to the case study?",opts:["70–80%", "50–60%", "30–40%", "Nearly all — 90%"],ans:2},{q:"What passive modal is used for mandatory requirements in design specifications?",opts:["Should be", "Could be", "Must be", "May be"],ans:2},{q:"What purpose clause is used when the subject of both clauses is different?",opts:["'In order to'", "'So that'", "'To'", "'Because'"],ans:1},{q:"What is a heuristic evaluation?",opts:["A test with real users completing specific tasks", "A statistical comparison of two design versions", "An expert review of an interface against established usability principles", "An automated scan for broken links and missing assets"],ans:2},{q:"What is the correct alt attribute for a purely decorative image?",opts:["alt='decorative'", "alt='image'", "No alt attribute needed — omit it entirely", "alt='' (an empty string)"],ans:3},{q:"What grammar structure links a design choice to its intended effect on the user?",opts:["'Although' — concession clause", "'However' — contrast clause", "'In order to' or 'so that' — purpose clause", "'Because' — reason clause"],ans:2}];
+
+// ── Navigation ──────────────────────────────────────────────
+function openSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='translateX(0)';sb.classList.add('open');document.getElementById('overlay').style.display='block';}
+function closeSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='';sb.classList.remove('open');document.getElementById('overlay').style.display='none';}
+function goTo(rawId){
+  // strip 'sec-' prefix if present for logic key
+  const id=rawId.replace(/^sec-/,'');
+  const secId='sec-'+id;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(secId);
+  if(sec){sec.classList.add('active');}
+  // mark active nav: match onclick containing this id
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    const oc=n.getAttribute('onclick')||'';
+    if(oc.includes("'"+secId+"'")||oc.includes('"'+secId+'"')){n.classList.add('active');}
+  });
+  window.scrollTo(0,0);
+  closeSidebar();
+  if(id==='overview') initOverview();
+  else if(id==='speaking') initSpeaking();
+  else if(id==='wordbank') initWordBank();
+  else if(id==='reading') initReading();
+  else if(id==='vocab') initVocab();
+  else if(id==='grammar') initGrammar();
+  else if(id==='gramreview') initGramReview();
+  else if(id==='writing') initWriting();
+  else if(id==='listening') initListening();
+  else if(id==='cases') initCases();
+  else if(id==='assessment') initAssessment();
+}
+
+// ── MCQ Engine ───────────────────────────────────────────────
+function renderMCQ2(containerId, questions, prefix, darkMode){
+  const c=document.getElementById(containerId);
+  if(!c)return;
+  let h='';
+  questions.forEach((item,i)=>{
+    const letters=['A','B','C','D'];
+    const dk=darkMode?'lmcq-opt':'';
+    h+=`<div class="mcq-block" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-opts">`;
+    item.opts.forEach((opt,j)=>{
+      h+=`<div class="mcq-opt ${dk}" onclick="pickOpt('${prefix}',${i},${j},${item.ans})" id="${prefix}-${i}-${j}">
+        <span class="opt-letter">${letters[j]}</span>${opt}</div>`;
+    });
+    h+=`</div></div>`;
+  });
+  c.innerHTML=h;
+}
+function pickOpt(prefix,qi,oi,ans){
+  const block=document.getElementById(prefix+'-q'+qi);
+  if(!block||block.dataset.done)return;
+  block.dataset.done='1';
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    if(j===ans)el.classList.add('correct');
+    else if(j===oi)el.classList.add('incorrect');
+    el.style.pointerEvents='none';
+  });
+}
+
+// ── Overview ─────────────────────────────────────────────────
+function initOverview(){
+  const c=document.getElementById('overviewContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card">
+    <div class="card-title">📘 What You Will Learn</div><div class="card-bar"></div>
+    <div class="outcomes-grid">${outcomes.map((o,i)=>`<div class="outcome"><span class="out-num">${String(i+1).padStart(2,'0')}</span><span class="out-text">${o}</span></div>`).join('')}</div>
+  </div>`;
+  setTimeout(()=>{
+    const pf=document.getElementById('progFill');
+    const pp=document.getElementById('progPct');
+    if(pf)pf.style.width='9%';
+    if(pp)pp.textContent='9%';
+  },300);
+}
+
+// ── Speaking ─────────────────────────────────────────────────
+function initSpeaking(){
+  const c=document.getElementById('speakingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">🎙️ Discussion Questions</div><div class="card-bar"></div>
+    <div class="speaking-grid">${speakingQs.map((q,i)=>`<div class="speaking-card"><div class="q-num">Q${String(i+1).padStart(2,'0')}</div><div class="q-text">${q}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Word Bank ─────────────────────────────────────────────────
+function initWordBank(){
+  const c=document.getElementById('wordBankContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">📚 Key Legal Terms</div><div class="card-bar"></div>
+    <div class="wb-grid">${wordBank.map(w=>`<div class="wb-card"><span class="wb-emoji">${w.emoji}</span><div class="wb-term">${w.term}</div><div class="wb-def">${w.def}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Reading ───────────────────────────────────────────────────
+function initReading(){
+  const c=document.getElementById('readingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  readingTexts.forEach((rt,ti)=>{
+    h+=`<div class="card">
+      <div class="reading-box"><h4>${rt.title}</h4>${rt.paragraphs.map(p=>`<p>${p}</p>`).join('')}</div>
+      <div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>
+      <div id="rmcq-${ti}"></div>
+    </div>`;
+  });
+  c.innerHTML=h;
+  readingTexts.forEach((_,ti)=>{
+    renderMCQ2('rmcq-'+ti, readingTexts[ti].questions, 'r'+ti, false);
+  });
+}
+
+// ── Vocabulary ────────────────────────────────────────────────
+let curVocab=0;
+function initVocab(){showVocab(0);}
+function showVocab(idx){
+  curVocab=idx;
+  document.querySelectorAll('#sec-vocab .ex-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  [0,1,2].forEach(i=>{
+    const p=document.getElementById('vex-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+  if(idx===0){renderMCQ2('vex-0',vocabMCQ,'vm0',false);}
+  else if(idx===1){renderGapFill('vex-1',vocabGapFill,'vg1');}
+  else if(idx===2){renderTF('vex-2',vocabTF,'vt2');}
+}
+function renderGapFill(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const blanks=items.map(function(it){return it.blank;});
+  let bankHtml='<div class="gf-bank-box"><div class="gf-bank-label">Word bank:</div><div class="gf-bank-pills">';
+  blanks.forEach(function(w){
+    bankHtml+='<span class="gf-pill" id="'+prefix+'-pill-'+w.replace(/\s+/g,'-')+'">'+w+'</span>';
+  });
+  bankHtml+='</div></div>';
+  let sentHtml='<div class="gf-sentences">';
+  items.forEach(function(item,i){
+    sentHtml+='<div class="gf-row" id="'+prefix+'-row'+i+'">'
+      +'<div class="gf-sentence-text"><span class="gf-num">'+(i+1)+'.</span> '+item.before
+      +' <span class="gf-blank-wrap"><input class="gf-underline-input" id="'+prefix+'-i'+i
+      +'" placeholder="\u2026" autocomplete="off" spellcheck="false"/>'
+      +'<span class="gf-underline"></span></span> '
+      +item.after+'</div>'
+      +'<div class="gf-row-fb" id="'+prefix+'-f'+i+'"></div>'
+      +'</div>';
+  });
+  sentHtml+='</div>';
+  const btnBar='<div class="gf-btn-bar">'
+    +'<button class="gf-check-btn" onclick="gradeGapFill(\''+prefix+'\',vocabGapFill)">Check Answers</button>'
+    +'<button class="gf-reset-btn" onclick="resetGapFill(\''+prefix+'\',vocabGapFill)">&#8635; Reset</button>'
+    +'<span class="gf-score-display" id="'+prefix+'-score"></span>'
+    +'</div>';
+  c.innerHTML='<div class="card gf-card">'
+    +'<div class="card-title">Exercise 2: Gap Fill</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="gf-instr">Type the correct word or phrase in each gap. Use the word bank for help. Click <strong>Check Answers</strong> when ready.</p>'
+    +bankHtml+sentHtml+btnBar
+    +'</div>';
+}
+function checkGF2(prefix,i,ans){}
+
+function gradeGapFill(prefix,items){
+  let correct=0;
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(!inp||!fb)return;
+    const val=inp.value.trim().toLowerCase().replace(/['']/g,"'");
+    const ans=item.blank.toLowerCase();
+    inp.disabled=true;
+    if(val===ans){
+      correct++;
+      inp.classList.add('gf-correct'); inp.classList.remove('gf-incorrect');
+      fb.innerHTML='<span class="gf-fb-ok">\u2713 Correct</span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-used');
+    } else {
+      inp.classList.add('gf-incorrect'); inp.classList.remove('gf-correct');
+      fb.innerHTML='<span class="gf-fb-err">\u2717 The answer is: <strong>'+item.blank+'</strong></span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-highlight');
+    }
+  });
+  const pct=Math.round(correct/items.length*100);
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl){
+    const col=pct>=80?'var(--green-accent)':pct>=50?'var(--gold-light)':'var(--red-accent)';
+    scoreEl.innerHTML='<span style="color:'+col+';font-weight:700;">'+correct+'/'+items.length+' \u2014 '+pct+'%</span>';
+  }
+}
+
+function resetGapFill(prefix,items){
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(inp){inp.value='';inp.disabled=false;inp.classList.remove('gf-correct','gf-incorrect');}
+    if(fb)fb.innerHTML='';
+    const ans=item.blank.toLowerCase();
+    const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+    if(pill){pill.classList.remove('gf-pill-used','gf-pill-highlight');}
+  });
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl)scoreEl.innerHTML='';
+}
+function renderTF(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='<div class="card tf-card">'
+    +'<div class="card-title">Exercise 3: True / False</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="tf-instr">Decide if each statement is TRUE or FALSE.</p>'
+    +'<div class="tf-list">';
+  items.forEach(function(item,i){
+    const stmt=item.statement||item.stmt||'';
+    const ans=item.ans;
+    h+='<div class="tf-item" id="'+prefix+'-row'+i+'">'
+      +'<div class="tf-item-stmt">'+(i+1)+'. '+stmt+'</div>'
+      +'<div class="tf-item-btns">'
+      +'<button class="tf-item-btn" id="'+prefix+'-T'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',true,'+ans+')">True</button>'
+      +'<button class="tf-item-btn" id="'+prefix+'-F'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',false,'+ans+')">False</button>'
+      +'</div>'
+      +'<div class="tf-item-fb" id="'+prefix+'-fb'+i+'"></div>'
+      +'</div>';
+  });
+  h+='</div></div>';
+  c.innerHTML=h;
+}
+
+function pickTF2(prefix,i,chosen,ans){
+  const row=document.getElementById(prefix+'-row'+i);
+  if(!row||row.dataset.done)return;
+  row.dataset.done='1';
+  const fb=document.getElementById(prefix+'-fb'+i);
+  const btnT=document.getElementById(prefix+'-T'+i);
+  const btnF=document.getElementById(prefix+'-F'+i);
+  const correct=chosen===ans;
+  if(btnT){
+    if(ans===true) btnT.classList.add('tf-btn-correct');
+    else if(chosen===true) btnT.classList.add('tf-btn-wrong');
+    btnT.disabled=true;
+  }
+  if(btnF){
+    if(ans===false) btnF.classList.add('tf-btn-correct');
+    else if(chosen===false) btnF.classList.add('tf-btn-wrong');
+    btnF.disabled=true;
+  }
+  if(fb){
+    fb.innerHTML=correct
+      ?'<span class="tf-fb-ok">✓ Correct!</span>'
+      :'<span class="tf-fb-err">✗ The correct answer is <strong>'+(ans?'True':'False')+'</strong>.</span>';
+  }
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+let curGram=0;
+function initGrammar(){showGram(0);}
+function showGram(idx){
+  curGram=idx;
+  document.querySelectorAll('#sec-grammar .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  [0,1,2].forEach(function(i){var p=document.getElementById('gex-'+i);if(p)p.style.display=i===idx?'block':'none';});
+  var ex=grammarEx[idx];
+  if(!document.getElementById('gex-'+idx).dataset.built){
+    document.getElementById('gex-'+idx).dataset.built='1';
+    var instr='<div class="card"><div class="card-title">'+ex.title+'</div><div class="card-bar"></div><p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">'+ex.instr+'</p><div id="gmcq-'+idx+'"></div></div>';
+    document.getElementById('gex-'+idx).innerHTML=instr;
+  }
+  renderMCQ2('gmcq-'+idx,ex.qs,'gm'+idx,false);
+}
+
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ──────────────────────────────────────────────────
+let curTask=0;
+function initWriting(){
+  const c=document.getElementById('writingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let html='<div class="ex-tabs">';
+  writingTasks.forEach(function(t,i){
+    html+='<div class="ex-tab'+(i===0?' active':'')+'" onclick="showTask('+i+')">'+t.type+'</div>';
+  });
+  html+='</div>';
+  writingTasks.forEach(function(t,i){
+    const minW=t.targetMin||120;
+    const promptFormatted=t.prompt.replace(/\n/g,'<br>');
+    html+='<div id="wpanel-'+i+'" style="display:'+(i===0?'block':'none')+'">'
+      +'<div class="card">'
+      +'<div class="w-task-header">'
+      +'<div class="w-task-pill">'+t.activity+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+t.title+'</div>'
+      +'</div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="w-prompt-box"><div class="w-prompt-label">📋 '+t.type+' — '+t.title+'</div>'
+      +'<div class="w-prompt-text">'+promptFormatted+'</div>'
+      +'<div class="w-target">Target: '+minW+'–'+(t.targetMax||200)+' words</div>'
+      +'</div>'
+      +'<textarea class="w-textarea" id="w-area-'+i+'" placeholder="Write your response here…" oninput="wCount('+i+')"></textarea>'
+      +'<div class="w-meta-row"><span class="w-counter" id="w-count-'+i+'">0 words</span>'
+      +'<div style="display:flex;gap:10px;">'
+      +'<button class="clear-btn" onclick="clearWriting('+i+')">Clear</button>'
+      +'<button class="ac-btn" id="w-btn-'+i+'" onclick="runAIFeedback('+i+')">✨ Auto-Correct &amp; Get Feedback</button>'
+      +'</div></div>'
+      +'<div id="w-fb-'+i+'"></div>'
+      +'</div></div>';
+  });
+  c.innerHTML=html;
+}
+function showTask(idx){
+  curTask=idx;
+  document.querySelectorAll('#sec-writing .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  writingTasks.forEach(function(_,i){
+    var p=document.getElementById('wpanel-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+}
+function wCount(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const wc=document.getElementById('w-count-'+idx);
+  if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  const min=writingTasks[idx].targetMin||120;
+  wc.textContent=words+' words';
+  wc.style.color=words>=min?'var(--green-accent)':'var(--text-mid)';
+}
+function clearWriting(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  if(ta)ta.value='';
+  if(fb)fb.innerHTML='';
+  wCount(idx);
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ───────────────────────────────────────────────────
+async function runAIFeedback(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  const btn=document.getElementById('w-btn-'+idx);
+  if(!ta||!fb)return;
+  const text=ta.value.trim();
+  const task=writingTasks[idx];
+  const minW=task.targetMin||120;
+  const words=text===''?0:text.trim().split(/\s+/).length;
+  if(words<30){
+    fb.innerHTML='<div class="fb-warn-box">⚠️ Please write at least 30 words before requesting feedback.</div>';
+    return;
+  }
+  btn.disabled=true;
+  btn.textContent='Analysing…';
+  fb.innerHTML='<div class="fb-loading-box"><span class="spin">⏳</span> AI is reviewing your writing…</div>';
+
+  // Rule-based context data
+  const sentences=text.split(/[.!?]+/).filter(s=>s.trim().length>3);
+  const avgSentLen=sentences.length?Math.round(words/sentences.length):0;
+  const goodLength=words>=minW&&words<=(task.targetMax||250);
+  const vocabTerms=["wireframe","prototype","user persona","user journey map","usability testing","accessibility","design system","component","information architecture","iterative design","affordance","heuristic evaluation","A/B test","responsive design","style guide","cognitive load","call to action","card sorting","user research","low-fidelity","high-fidelity"];
+  const vocabHits=vocabTerms.filter(t=>text.toLowerCase().includes(t));
+
+  const systemPrompt=`You are an expert Business English writing coach specialising in IT and Digital Professions English at B1-B2 level. You give SPECIFIC, TEXT-ANCHORED feedback — always quoting or referencing the student's actual words. Never give generic advice.
+
+Return ONLY a JSON object with these exact keys — no markdown, no extra text:
+{
+  "score": <integer 0-100>,
+  "level": <"Needs Work"|"Developing"|"Proficient"|"Advanced"|"Excellent">,
+  "overall": <1 sentence overall impression referencing the student's actual writing>,
+  "grammar": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about grammar in THIS text — quote or reference actual sentences>
+  },
+  "vocabulary": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about word choices in THIS text — suggest a precise improvement>
+  },
+  "tone": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about register and formality in THIS text>
+  },
+  "structure": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about paragraph organisation and logical flow in THIS text>
+  },
+  "fluency": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about sentence variety and connectives in THIS text — give a concrete example>
+  },
+  "corrected": <one improved version of the weakest sentence from the text — copy the original then rewrite it>
+}`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1200,
+        system:systemPrompt,
+        messages:[{role:'user',content:'Task: '+task.type+' — '+task.title+'\nPrompt: '+task.prompt+'\n\nStudent writing ('+words+' words):\n'+text}]
+      })
+    });
+    const data=await res.json();
+    let p;
+    try{
+      const raw=data.content[0].text.replace(/```json|```/g,'').trim();
+      p=JSON.parse(raw);
+    }catch(e){throw new Error('parse');}
+
+    const score=Math.min(100,Math.max(0,p.score||70));
+    const level=p.level||'Proficient';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':score>=50?'#e09b00':'#d63031';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const cats=[
+      {label:'Grammar',key:'grammar',icon:'📐'},
+      {label:'Vocabulary',key:'vocabulary',icon:'📖'},
+      {label:'Tone',key:'tone',icon:'🎙️'},
+      {label:'Structure',key:'structure',icon:'🏗️'},
+      {label:'Fluency',key:'fluency',icon:'✨'}
+    ];
+
+    let catsHtml='';
+    cats.forEach(function(cat){
+      const d=p[cat.key]||{};
+      catsHtml+='<div class="fb-cat-row">'
+        +'<div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span>'
+        +'<strong class="fb-cat-label">'+cat.label+':</strong>'
+        +ratingIcon(d.rating||'Satisfactory')+'</div>'
+        +'<div class="fb-cat-comment">'+(d.comment||'')+'</div>'
+        +'</div>';
+    });
+
+    const lengthOk=goodLength
+      ?'<span class="fb-check">✓ '+words+' words — within target</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3
+      ?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header">'
+      +'<div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div>'
+      +'</div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +(p.corrected?'<div class="fb-corrected-block"><span class="fb-corrected-tag">✏️ Suggested rewrite:</span> '+p.corrected+'</div>':'')
+      +(p.overall?'<div class="fb-overall">✓ Overall: '+p.overall+'</div>':'')
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSentLen+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }catch(err){
+    // Rule-based fallback — still structured with 5 categories
+    const formalConnectives=['therefore','furthermore','consequently','moreover','however','nevertheless','in addition','as a result','thus','hence'];
+    const connUsed=formalConnectives.filter(w=>text.toLowerCase().includes(w)).length;
+    const avgSL=sentences.length?Math.round(words/sentences.length):0;
+    const score=Math.min(100,Math.max(20,(goodLength?20:0)+(vocabHits.length>=3?20:vocabHits.length*5)+(avgSL>=8&&avgSL<=22?15:0)+(/^[A-Z]/.test(text)?10:0)+(connUsed>=1?15:0)+20));
+    const level=score>=85?'Advanced':score>=70?'Proficient':score>=50?'Developing':'Needs Work';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':'#e09b00';
+
+    const gramOk=text.match(/[A-Z][^.!?]*[.!?]/g);
+    const gramComment=gramOk&&gramOk.length>0?'Check subject-verb agreement and ensure consistent verb tense throughout your response.':'Ensure each sentence begins with a capital letter and ends with a full stop.';
+    const vocComment=vocabHits.length>=3?'Good use of module vocabulary. Consider replacing generic verbs with more precise professional alternatives.':'Consider incorporating more module vocabulary terms — aim for at least 3 in a formal legal or compliance response.';
+    const toneComment=/dear|hi |hey |thanks/i.test(text)?'Some phrasing appears too informal for a professional compliance context. Avoid casual openers and closers.':'The register appears appropriate for the task.';
+    const structComment=sentences.length<3?'Your response would benefit from clearer paragraph structure — aim for an opening, body, and conclusion.':connUsed===0?'Consider organising your response with a clear introduction, supporting points, and a conclusion.':'Good paragraph structure detected.';
+    const fluComment=connUsed===0?'Your response would benefit from one or more connecting phrases between paragraphs (e.g., "Furthermore," "As a result,") to improve logical flow.':'Good use of connectives to link ideas.';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const catsHtml=[
+      {icon:'📐',label:'Grammar',rating:gramOk?'Satisfactory':'Needs Attention',comment:gramComment},
+      {icon:'📖',label:'Vocabulary',rating:vocabHits.length>=3?'Good':'Needs Attention',comment:vocComment},
+      {icon:'🎙️',label:'Tone',rating:/dear|hi |hey |thanks/i.test(text)?'Needs Attention':'Satisfactory',comment:toneComment},
+      {icon:'🏗️',label:'Structure',rating:connUsed>0&&sentences.length>=3?'Good':'Satisfactory',comment:structComment},
+      {icon:'✨',label:'Fluency',rating:connUsed>=1?'Good':'Needs Attention',comment:fluComment}
+    ].map(function(cat){
+      return '<div class="fb-cat-row"><div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span><strong class="fb-cat-label">'+cat.label+':</strong>'+ratingIcon(cat.rating)+'</div><div class="fb-cat-comment">'+cat.comment+'</div></div>';
+    }).join('');
+
+    const lengthOk=goodLength?'<span class="fb-check">✓ '+words+' words — within target</span>':'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>':'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header"><div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div></div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSL+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }
+  btn.disabled=false;
+  btn.textContent='✨ Auto-Correct & Get Feedback';
+}
+
+// ── Listening TTS Engine ──────────────────────────────────────
+let ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+const voicePref=['Samantha','Karen','Victoria','Moira','Daniel','Google UK English Female','Google US English','en-GB','en-US'];
+function getBestVoice(){
+  const voices=window.speechSynthesis.getVoices();
+  for(var j=0;j<voicePref.length;j++){
+    var v=voices.find(function(vv){return vv.name===voicePref[j]||vv.name.includes(voicePref[j]);});
+    if(v)return v;
+  }
+  return voices.find(function(v){return v.lang&&v.lang.startsWith('en');})||voices[0]||null;
+}
+function initListening(){
+  const c=document.getElementById('listeningContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  listeningActs.forEach(function(act,i){
+    h+='<div class="card" id="l-card-'+i+'">'
+      +'<div class="l-header"><span class="l-icon">'+act.icon+'</span><div><div class="card-title">'+act.title+'</div><div class="l-sub">'+act.sub+'</div></div></div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="l-player">'
+      +'<div class="l-controls">'
+      +'<button class="l-play-btn" id="l-play-'+i+'" onclick="togglePlay('+i+')">&#9654; Play</button>'
+      +'<select class="l-speed" id="l-speed-'+i+'" onchange="changeSpeed('+i+')">'
+      +'<option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option>'
+      +'</select>'
+      +'<button class="l-trans-btn" id="l-tbtn-'+i+'" onclick="toggleTranscript('+i+')">&#128196; Transcript</button>'
+      +'</div>'
+      +'<div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-'+i+'"></div></div><span class="l-time" id="l-time-'+i+'">0:00</span></div>'
+      +'</div>'
+      +'<div class="l-transcript-box" id="l-trans-'+i+'" style="display:none"><p class="l-transcript-text">'+act.transcript+'</p></div>'
+      +'<div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>'
+      +'<div id="lmcq-'+i+'"></div>'
+      +'</div>';
+  });
+  c.innerHTML=h;
+  listeningActs.forEach(function(act,i){renderMCQ2('lmcq-'+i,act.qs,'la'+i,false);});
+  window.speechSynthesis.getVoices();
+}
+function togglePlay(idx){
+  if(ttsState.actIdx===idx&&ttsState.playing){pauseAudio(idx);}
+  else if(ttsState.actIdx===idx&&ttsState.paused){resumeAudio(idx);}
+  else{playAudio(idx);}
+}
+function playAudio(idx){
+  const act=listeningActs[idx];
+  if(!act)return;
+  if(ttsState.actIdx===idx&&ttsState.paused){
+    resumeAudio(idx); return;
+  }
+  stopAudio();
+  ttsState.actIdx=idx;
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.voice=getBestVoice();
+  utt.rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  utt.pitch=1.0;
+  utt.volume=1.0;
+  utt.onstart=()=>{ttsState.playing=true;ttsState.paused=false;ttsState.startTime=Date.now();updatePlayBtn(idx,true);startProg(idx,act.transcript.length);};
+  utt.onend=()=>{ttsState.playing=false;ttsState.paused=false;updatePlayBtn(idx,false);stopProg(idx,true);};
+  utt.onerror=()=>{ttsState.playing=false;updatePlayBtn(idx,false);stopProg(idx,false);};
+  ttsState.utterance=utt;
+  window.speechSynthesis.speak(utt);
+}
+function pauseAudio(idx){
+  if(window.speechSynthesis.speaking&&!window.speechSynthesis.paused){
+    window.speechSynthesis.pause();
+    ttsState.paused=true;ttsState.playing=false;
+    ttsState.elapsed+=Date.now()-ttsState.startTime;
+    updatePlayBtn(idx,false,true);
+    clearInterval(ttsState.progTimer);
+  }
+}
+function resumeAudio(idx){
+  window.speechSynthesis.resume();
+  ttsState.paused=false;ttsState.playing=true;
+  ttsState.startTime=Date.now();
+  updatePlayBtn(idx,true);
+  startProg(idx,listeningActs[idx].transcript.length,true);
+}
+function stopAudio(){
+  window.speechSynthesis.cancel();
+  if(ttsState.actIdx!==null){updatePlayBtn(ttsState.actIdx,false);stopProg(ttsState.actIdx,false);}
+  ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+}
+function updatePlayBtn(idx,playing,paused){
+  const btn=document.getElementById('l-play-'+idx);
+  if(!btn)return;
+  btn.textContent=playing?'⏸ Pause':paused?'▶ Resume':'▶ Play';
+}
+function startProg(idx,charLen,resume){
+  clearInterval(ttsState.progTimer);
+  const rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  const totalMs=(charLen/18)*1000/rate;
+  const elapsed=resume?ttsState.elapsed:0;
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  ttsState.progTimer=setInterval(()=>{
+    const spent=elapsed+(Date.now()-ttsState.startTime);
+    const pct=Math.min(100,(spent/totalMs)*100);
+    if(bar)bar.style.width=pct+'%';
+    const rem=Math.max(0,Math.round((totalMs-spent)/1000));
+    if(time)time.textContent=`${Math.floor(rem/60)}:${String(rem%60).padStart(2,'0')}`;
+    if(pct>=100)clearInterval(ttsState.progTimer);
+  },200);
+}
+function stopProg(idx,finished){
+  clearInterval(ttsState.progTimer);
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  if(bar)bar.style.width=finished?'100%':'0%';
+  if(time)time.textContent='0:00';
+}
+function changeSpeed(idx){
+  const sel=document.getElementById('l-speed-'+idx);
+  if(!sel)return;
+  if(ttsState.actIdx===idx&&(ttsState.playing||ttsState.paused)){
+    stopAudio(); playAudio(idx);
+  }
+}
+function toggleTranscript(idx){
+  const box=document.getElementById('l-trans-'+idx);
+  const btn=document.getElementById('l-tbtn-'+idx);
+  if(!box)return;
+  const open=box.style.display==='block';
+  box.style.display=open?'none':'block';
+  if(btn)btn.textContent=open?'📄 Show Transcript':'📄 Hide Transcript';
+}
+
+// ── Case Studies ──────────────────────────────────────────────
+function initCases(){
+  const c=document.getElementById('casesContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  casesStudies.forEach(function(cs,ci){
+    h+='<div class="card">'
+      +'<div class="cs-tag">'+cs.tag+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+cs.title+'</div>'
+      +'<div class="cs-sub">'+cs.sub+'</div>'
+      +'<div class="card-bar"></div>';
+    cs.sections.forEach(function(s){
+      h+='<div class="cs-section"><h4 class="cs-sh">'+s.h+'</h4><p class="cs-p">'+s.t+'</p></div>';
+    });
+    h+='<div class="card-title" style="margin-top:22px;">Case Study Questions</div><div class="card-bar"></div>'
+      +'<div id="csmcq-'+ci+'"></div></div>';
+  });
+  c.innerHTML=h;
+  casesStudies.forEach(function(cs,ci){renderMCQ2('csmcq-'+ci,cs.qs,'cs'+ci,false);});
+}
+
+// ── Final Assessment ──────────────────────────────────────────
+let assAnswers={};
+function initAssessment(){
+  const c=document.getElementById('assessContainer');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const letters=['A','B','C','D'];
+  let h='';
+  assessQs.forEach(function(item,i){
+    h+='<div class="mcq-block" id="aq-'+i+'">'
+      +'<div class="mcq-q">'+(i+1)+'. '+item.q+'</div>'
+      +'<div class="mcq-opts">';
+    item.opts.forEach(function(opt,j){
+      h+='<div class="mcq-opt" onclick="pickAss('+i+','+j+')" id="ass-'+i+'-'+j+'">'
+        +'<span class="opt-letter">'+letters[j]+'</span>'+opt+'</div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+  assAnswers={};
+  document.getElementById('final-res').style.display='none';
+  document.getElementById('ass-sub').style.display='inline-flex';
+}
+function pickAss(qi,oi){
+  const block=document.getElementById('aq-'+qi);
+  if(!block||block.dataset.done)return;
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    el.classList.toggle('selected',j===oi);
+  });
+  assAnswers[qi]=oi;
+}
+function submitAss(){
+  let attempts=parseInt(document.getElementById('att-disp')?.textContent||'0');
+  const maxAttempts=2;
+  if(attempts>=maxAttempts){
+    alert('You have used both attempts.');return;
+  }
+  const unanswered=assessQs.map((_,i)=>i).filter(i=>assAnswers[i]===undefined);
+  if(unanswered.length>0){
+    alert('Please answer all questions before submitting. Unanswered: '+unanswered.map(i=>i+1).join(', '));return;
+  }
+  // Mark answers
+  assessQs.forEach((item,i)=>{
+    const block=document.getElementById('aq-'+i);
+    if(!block)return;
+    block.dataset.done='1';
+    block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+      el.classList.remove('selected');
+      if(j===item.ans)el.classList.add('correct');
+      else if(j===assAnswers[i])el.classList.add('incorrect');
+      el.style.pointerEvents='none';
+    });
+  });
+  const correct=assessQs.filter((_,i)=>assAnswers[i]===assessQs[i].ans).length;
+  const pct=Math.round((correct/assessQs.length)*100);
+  const pass=pct>=70;
+  attempts++;
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent=attempts+' / 2';
+  const res=document.getElementById('final-res');
+  res.style.display='block';
+  const scoreColor=pass?'#00a651':'#d63031';
+  res.className='final-result '+(pass?'pass':'fail');
+  res.style.display='block';
+  res.innerHTML='<div class="final-score">'+pct+'<span style="font-size:22px">%</span></div>'
+    +'<div class="final-verdict">'+(pass?'🎉 Congratulations — You Passed!':'📚 Not Passed Yet')+'</div>'
+    +'<div class="final-msg">'+correct+' / '+assessQs.length+' correct · Pass mark: 70%</div>'
+    +(attempts<maxAttempts&&!pass?'<button class="btn-primary" onclick="resetAss()" style="margin-top:18px">Try Again (Attempt '+(attempts+1)+' of '+maxAttempts+')</button>':'')
+    +(attempts>=maxAttempts&&!pass?'<div style="margin-top:12px;font-size:13px;opacity:0.8;">Maximum attempts reached.</div>':'');
+  if(pass||attempts>=maxAttempts){
+    document.getElementById('ass-sub').style.display='none';
+  }
+}
+function resetAss(){
+  const c=document.getElementById('assessContainer');
+  if(c){c.dataset.built='';c.innerHTML='';}
+  assAnswers={};
+  const res=document.getElementById('final-res');
+  if(res){res.style.display='none';res.innerHTML='';}
+  const sub=document.getElementById('ass-sub');
+  if(sub)sub.style.display='inline-flex';
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent='0 / 2';
+  initAssessment();
+}
+
+// ── Bootstrap ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('mob-btn').addEventListener('click',openSidebar);
+  document.getElementById('overlay').addEventListener('click',closeSidebar);
+  goTo('overview');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

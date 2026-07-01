@@ -17,7 +17,6 @@ const HTML_HEADERS = {
 
 /**
  * Replace the direct Anthropic browser fetch with our server-side proxy.
- * This is the ONLY modification made to any premium content file.
  */
 function patchAnthropicUrl(html: string): string {
   return html
@@ -29,6 +28,26 @@ function patchAnthropicUrl(html: string): string {
       /\s*'anthropic-dangerous-direct-browser-access'\s*:\s*'true',?\s*/g,
       " "
     );
+}
+
+/**
+ * Inject a nav-scroll fix so that clicking any .nav-item scrolls the viewport
+ * to the newly-active section instead of to position 0 (the hero banner).
+ * Covers all nav patterns: data-section listeners AND onclick="showSection()".
+ */
+function patchNavScroll(html: string): string {
+  const script = `<script>
+(function(){
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.nav-item'))return;
+    setTimeout(function(){
+      var el=document.querySelector('.section.active,.section-panel.active');
+      if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+    },0);
+  });
+})();
+</script>`;
+  return html.includes("</body>") ? html.replace("</body>", script + "\n</body>") : html + script;
 }
 
 export async function GET(_: Request, { params }: PremiumContentRouteProps) {
@@ -44,7 +63,7 @@ export async function GET(_: Request, { params }: PremiumContentRouteProps) {
 
   const html = await fs.readFile(entry.filePath, "utf-8");
 
-  return new NextResponse(patchAnthropicUrl(html), {
+  return new NextResponse(patchNavScroll(patchAnthropicUrl(html)), {
     status: 200,
     headers: HTML_HEADERS,
   });

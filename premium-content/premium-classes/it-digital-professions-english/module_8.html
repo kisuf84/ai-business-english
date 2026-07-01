@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Module 8: Explaining Technology to Non-Experts — IT &amp; Digital Professions English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root{--navy:#0d1b2e;--navy-mid:#112240;--navy-light:#1a3357;--gold:#00bcd4;--gold-light:#26c6da;--gold-bright:#4dd0e1;--cream:#f0f4f8;--cream-dark:#dce8f0;--white:#ffffff;--text-light:#90b8cc;--text-mid:#4a7a96;--red-accent:#e53935;--green-accent:#00b86b;--teal:#0097a7;--sidebar-w:260px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);display:flex;min-height:100vh;overflow-x:hidden;}
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent;transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);}
+.sidebar-brand{padding:24px 22px 18px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-brand h1{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:700;color:var(--gold-bright);line-height:1.38;margin-bottom:3px;}
+.sidebar-brand .sub{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-mid);font-weight:500;}
+.level-badge{display:inline-block;margin-top:11px;background:var(--gold);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:1px;padding:3px 11px;border-radius:20px;text-transform:uppercase;}
+.sidebar-section-label{padding:20px 22px 7px;font-size:8.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--text-mid);font-weight:700;}
+.nav-item{display:flex;align-items:center;justify-content:space-between;padding:11px 22px;cursor:pointer;transition:all 0.18s;border-left:3px solid transparent;}
+.nav-item:hover{background:rgba(255,255,255,0.055);}
+.nav-item.active{background:rgba(245,184,0,0.12);border-left-color:var(--gold-light);}
+.nav-left{display:flex;align-items:center;gap:11px;}
+.nav-icon{font-size:15px;opacity:0.9;}
+.nav-label{font-size:13px;color:var(--text-light);font-weight:400;}
+.nav-item.active .nav-label{color:var(--white);font-weight:500;}
+.nav-badge{font-size:9.5px;font-weight:700;color:var(--navy);background:var(--gold-bright);padding:1px 7px;border-radius:12px;}
+#mob-btn{display:none;position:fixed;top:14px;left:14px;z-index:300;background:var(--navy);border:none;border-radius:10px;padding:10px 13px;cursor:pointer;color:var(--gold-bright);font-size:19px;box-shadow:0 3px 14px rgba(0,0,0,0.35);line-height:1;}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150;}
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;}
+.section{display:none;}.section.active{display:block;}
+.hero{background:linear-gradient(145deg,#06111f 0%,#0d1e35 50%,#081929 100%);padding:64px 64px 54px;position:relative;overflow:hidden;}
+.hero::before{content:'L1';position:absolute;right:-15px;bottom:-55px;font-family:'Playfair Display',serif;font-size:310px;font-weight:900;color:rgba(255,255,255,0.022);line-height:1;pointer-events:none;}
+.hero::after{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(245,184,0,0.05) 0%,transparent 70%);pointer-events:none;}
+.module-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);padding:7px 18px;border-radius:50px;font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-light);font-weight:600;margin-bottom:30px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4.6vw,58px);font-weight:900;color:var(--white);line-height:1.08;}
+.hero h2 .accent{color:var(--gold-bright);}
+.hero-desc{font-size:15px;color:var(--text-light);max-width:620px;line-height:1.78;margin-top:20px;font-weight:300;}
+.hero-stats{display:flex;gap:36px;margin-top:44px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;gap:3px;}
+.stat-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--gold-bright);line-height:1;}
+.stat-l{font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(160,180,210,0.7);font-weight:600;}
+.prog-wrap{background:var(--navy-mid);padding:16px 64px;display:flex;align-items:center;gap:20px;}
+.prog-label{font-size:11.5px;font-weight:600;color:var(--text-light);white-space:nowrap;}
+.prog-track{flex:1;height:6px;background:rgba(255,255,255,0.09);border-radius:6px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:6px;width:0%;transition:width 1s ease;}
+.prog-pct{font-size:12.5px;font-weight:700;color:var(--gold-bright);min-width:36px;text-align:right;}
+.content{padding:48px 60px;}
+.card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.card-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.card-bar{width:40px;height:3px;background:var(--gold-light);border-radius:3px;margin-bottom:20px;}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.outcome{display:flex;align-items:flex-start;gap:13px;background:var(--cream);border-radius:11px;padding:14px 16px;border-left:3px solid var(--gold-light);}
+.out-num{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--gold);line-height:1;min-width:24px;}
+.out-text{font-size:13.5px;color:var(--navy);line-height:1.52;}
+.speaking-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.speaking-card{background:var(--cream);border-radius:11px;padding:18px 20px;border-top:3px solid var(--gold-light);transition:transform 0.2s,box-shadow 0.2s;cursor:default;}
+.speaking-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(11,27,48,0.1);}
+.q-num{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;margin-bottom:8px;letter-spacing:1px;}
+.q-text{font-size:13.5px;color:var(--navy);line-height:1.55;}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.wb-card{background:var(--navy);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:transform 0.2s;cursor:default;}
+.wb-card:hover{transform:translateY(-2px);}
+.wb-emoji{font-size:28px;line-height:1;display:block;margin-bottom:2px;}
+.wb-term{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;color:var(--gold-bright);}
+.wb-def{font-size:12px;color:var(--text-light);line-height:1.52;}
+.reading-box{background:var(--cream);border-radius:12px;padding:26px 30px;margin-bottom:26px;border-left:4px solid var(--gold-light);}
+.reading-box h4{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.reading-box p{font-size:14px;color:#1a2e45;line-height:1.84;margin-bottom:13px;}
+.reading-box p:last-child{margin-bottom:0;}
+.mcq-block{margin-bottom:22px;}
+.mcq-q{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:11px;line-height:1.5;}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;}
+.mcq-opt{display:flex;align-items:center;gap:10px;background:var(--cream);border:2px solid var(--cream-dark);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.18s;font-size:13.5px;color:var(--navy);user-select:none;-webkit-tap-highlight-color:transparent;}
+.mcq-opt:hover{border-color:var(--gold-light);background:#fef8e0;}
+.mcq-opt.selected{border-color:var(--gold);background:#fff3c0;}
+.mcq-opt.correct{border-color:var(--green-accent);background:#e6f8ee;color:#0a6b35;}
+.mcq-opt.incorrect{border-color:var(--red-accent);background:#fdecea;color:#881a18;}
+.opt-letter{font-family:'DM Mono',monospace;font-size:10.5px;font-weight:700;width:23px;height:23px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy);}
+.mcq-opt.correct .opt-letter{background:var(--green-accent);color:white;}
+.mcq-opt.incorrect .opt-letter{background:var(--red-accent);color:white;}
+.lmcq-opt{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.12)!important;color:var(--text-light)!important;}
+.lmcq-opt:hover{border-color:var(--gold-light)!important;background:rgba(245,184,0,0.1)!important;}
+.lmcq-opt.selected{border-color:var(--gold)!important;background:rgba(245,184,0,0.18)!important;color:var(--gold-bright)!important;}
+.lmcq-opt.correct{border-color:var(--green-accent)!important;background:rgba(0,166,81,0.18)!important;color:#4dde9a!important;}
+.lmcq-opt.incorrect{border-color:var(--red-accent)!important;background:rgba(214,48,49,0.18)!important;color:#ff8b8b!important;}
+.check-btn{margin-top:15px;background:var(--navy);color:var(--gold-bright);border:none;padding:11px 26px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.check-btn:hover{background:var(--navy-light);}
+.l-check{background:rgba(255,255,255,0.1)!important;color:var(--gold-bright)!important;}
+.l-check:hover{background:rgba(255,255,255,0.18)!important;}
+.score-disp{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;margin-top:14px;}
+.ex-tabs{display:flex;gap:4px;margin-bottom:26px;background:var(--cream-dark);border-radius:12px;padding:4px;flex-wrap:wrap;}
+.ex-tab{flex:1;min-width:130px;text-align:center;padding:10px;border-radius:9px;font-size:12.5px;font-weight:500;cursor:pointer;color:var(--text-mid);transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.ex-tab.active{background:var(--navy);color:var(--gold-bright);}
+.gram-ref{background:var(--navy);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.gram-ref h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:14px;}
+.gram-rule{background:rgba(255,255,255,0.065);border-radius:9px;padding:14px 18px;margin-bottom:11px;border-left:3px solid var(--gold-light);}
+.gram-rule p,.gram-rule li{font-size:13px;color:var(--text-light);line-height:1.66;}
+.gram-rule code{font-family:'DM Mono',monospace;background:rgba(245,184,0,0.18);color:var(--gold-bright);padding:1px 6px;border-radius:4px;font-size:12px;}
+.gram-rule ul{padding-left:18px;}
+.gf-item{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:14px;color:var(--navy);line-height:2.2;margin-bottom:12px;}
+.gf-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);padding:2px 7px;width:160px;outline:none;text-align:center;}
+.gf-input.correct{border-color:var(--green-accent);color:var(--green-accent);}
+.gf-input.incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.tf-row{background:var(--cream);border-radius:10px;padding:13px 17px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.tf-stmt{font-size:13.5px;color:var(--navy);flex:1;line-height:1.52;}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;}
+.tf-btn{padding:7px 16px;border-radius:8px;border:2px solid var(--cream-dark);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:white;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.tf-btn:hover{border-color:var(--gold-light);}
+.tf-btn.sel-t,.tf-btn.sel-f{background:var(--navy);color:white;border-color:var(--navy);}
+.tf-btn.cor{background:var(--green-accent);color:white;border-color:var(--green-accent);}
+.tf-btn.wrg{background:var(--red-accent);color:white;border-color:var(--red-accent);}
+.writing-prompt{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.writing-prompt h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:10px;}
+.writing-prompt p{font-size:13.5px;color:var(--text-light);line-height:1.76;}
+.writing-tags{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
+.wtag{background:rgba(245,184,0,0.18);color:var(--gold-bright);font-size:11px;font-weight:600;letter-spacing:0.8px;padding:4px 12px;border-radius:20px;text-transform:uppercase;border:1px solid rgba(245,184,0,0.3);}
+.w-textarea{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;}
+.w-textarea:focus{border-color:var(--gold-light);background:white;}
+.w-counter{font-size:12px;color:var(--text-mid);text-align:right;margin-bottom:14px;}
+.w-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:6px;}
+.ac-btn{background:var(--gold);color:var(--navy);border:none;padding:13px 28px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(224,155,0,0.35);}
+.ac-btn:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.clear-btn{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:12px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.clear-btn:hover{border-color:var(--red-accent);color:var(--red-accent);}
+.fb-panel{display:none;background:#131e2e;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-panel.show{display:block;}
+.fb-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-title-row{display:flex;align-items:center;gap:10px;}
+.fb-emoji{font-size:20px;}
+.fb-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold-bright);}
+.fb-score-badge{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--gold-bright);}
+.fb-level{font-size:14px;font-weight:600;color:var(--gold-bright);}
+.fb-section{margin-bottom:14px;}
+.fb-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);margin-bottom:7px;}
+.fb-item{font-size:13px;color:var(--text-light);line-height:1.62;padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid var(--gold-light);}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);line-height:1.7;font-style:italic;}
+.listen-card{background:var(--navy);border-radius:16px;padding:28px 32px;margin-bottom:20px;}
+.listen-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.listen-icon{width:52px;height:52px;border-radius:14px;background:rgba(245,184,0,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.listen-meta{flex:1;}
+.listen-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-bright);margin-bottom:3px;}
+.listen-sub{font-size:12px;color:var(--text-mid);}
+.player-row{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px 18px;margin-bottom:14px;}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--navy);flex-shrink:0;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.play-btn:hover{background:var(--gold-bright);transform:scale(1.06);}
+.prog-audio{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.prog-audio-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.5s linear;}
+.time-disp{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:70px;text-align:right;}
+.speed-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.speed-label{font-size:11px;color:var(--text-mid);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.spd-btn{padding:5px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.spd-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.replay-btn{padding:5px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:auto;}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.trans-toggle{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);border-radius:9px;padding:10px 16px;cursor:pointer;margin-bottom:0;transition:background 0.18s;-webkit-tap-highlight-color:transparent;}
+.trans-toggle:hover{background:rgba(255,255,255,0.09);}
+.trans-label{font-size:12px;font-weight:600;color:var(--text-mid);letter-spacing:0.5px;}
+.trans-arrow{font-size:11px;color:var(--text-mid);transition:transform 0.22s;}
+.trans-toggle.open .trans-arrow{transform:rotate(180deg);}
+.trans-body{max-height:0;overflow:hidden;transition:max-height 0.36s ease;}
+.trans-body.open{max-height:800px;}
+.trans-text{font-size:13px;color:var(--text-light);line-height:1.78;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:0 0 9px 9px;border-top:1px solid rgba(255,255,255,0.06);}
+.listen-mcq-wrap{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+.listen-mcq-title{font-size:13px;font-weight:700;color:var(--gold-bright);letter-spacing:0.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.case-card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.case-header{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:12px;padding:22px 26px;margin-bottom:22px;}
+.case-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);font-weight:700;margin-bottom:8px;}
+.case-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.case-sub{font-size:12px;color:var(--text-mid);}
+.case-section{margin-bottom:18px;}
+.case-section h5{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.case-section p{font-size:14px;color:var(--navy);line-height:1.78;}
+.final-result{display:none;border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.final-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.final-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.final-score{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;line-height:1;}
+.final-verdict{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:8px;}
+.final-msg{font-size:14px;opacity:0.88;max-width:420px;margin:0 auto;line-height:1.68;}
+.ass-btn{margin-top:18px;background:var(--gold);color:var(--navy);border:none;padding:13px 32px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.ass-btn:hover{background:var(--gold-bright);}
+.retry-btn{display:none;margin-top:8px;margin-left:10px;background:rgba(255,255,255,0.15);color:var(--navy);border:1.5px solid var(--cream-dark);padding:11px 28px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.retry-btn:hover{background:rgba(255,255,255,0.25);}
+/* ─ Gap Fill & True/False ─ */
+.gf-block{background:var(--cream);border-radius:10px;padding:16px 18px;margin-bottom:12px;border-left:3px solid var(--gold-light);}
+.gf-sentence{font-size:14px;color:var(--navy);line-height:2.1;}
+.gf-fb{font-size:12.5px;margin-top:6px;min-height:18px;}
+.tf-block{background:var(--cream);border-radius:10px;padding:15px 18px;margin-bottom:10px;border-left:3px solid var(--gold-light);}
+.tf-q{font-size:14px;color:var(--navy);line-height:1.55;margin-bottom:10px;}
+.tf-fb{font-size:12.5px;margin-top:8px;min-height:18px;}
+/* ─ Listening player ─ */
+.l-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.l-icon{font-size:30px;line-height:1;}
+.l-sub{font-size:12px;color:var(--text-mid);margin-top:3px;}
+.l-player{background:var(--navy);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+.l-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.l-play-btn{background:var(--gold);color:var(--navy);border:none;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.l-play-btn:hover{background:var(--gold-bright);}
+.l-speed{background:rgba(255,255,255,0.1);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.18);padding:8px 12px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;outline:none;}
+.l-trans-btn{background:rgba(255,255,255,0.08);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.15);padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;transition:all 0.2s;}
+.l-trans-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.l-progress{display:flex;align-items:center;gap:12px;}
+.l-bar-track{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.l-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.3s linear;}
+.l-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:36px;text-align:right;}
+.l-transcript-box{background:rgba(11,27,48,0.04);border:1px solid var(--cream-dark);border-radius:10px;padding:18px 22px;margin-bottom:18px;}
+.l-transcript-text{font-size:13px;color:var(--navy);line-height:1.8;}
+/* ─ Case Studies ─ */
+.cs-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+.cs-sub{font-size:12.5px;color:var(--text-mid);margin-bottom:16px;}
+.cs-section{margin-bottom:20px;padding:18px 20px;background:var(--cream);border-radius:10px;border-left:3px solid var(--gold-light);}
+.cs-sh{font-size:13.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.cs-p{font-size:14px;color:var(--navy);line-height:1.78;}
+/* ─ Writing ─ */
+.writing-area{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;margin-top:14px;}
+.writing-area:focus{border-color:var(--gold-light);background:white;}
+.writing-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.w-count{font-size:12px;color:var(--text-mid);}
+.btn-primary{background:var(--gold);color:var(--navy);border:none;padding:12px 26px;border-radius:50px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-primary:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--red-accent);color:var(--red-accent);}
+/* ─ AI Feedback ─ */
+.fb-box{background:#0e1d2f;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-box.fb-warn{background:#2d1010;border-color:rgba(214,48,49,0.3);color:#f8a5a5;font-size:13.5px;line-height:1.7;}
+.fb-box.fb-loading{color:var(--text-light);font-size:13.5px;}
+.fb-score-row{display:flex;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap;}
+.fb-score{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;line-height:1;}
+.fb-summary{font-size:13.5px;color:var(--text-light);line-height:1.72;flex:1;}
+.fb-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.fb-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;}
+.fb-good .fb-col-title{color:var(--green-accent);}
+.fb-improve .fb-col-title{color:var(--gold-bright);}
+.fb-item{font-size:13px;color:var(--text-light);padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid rgba(255,255,255,0.15);line-height:1.6;}
+.fb-example{background:rgba(255,255,255,0.05);border-radius:9px;padding:12px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;}
+.fb-ex-label{font-weight:600;color:var(--gold-bright);font-style:normal;}
+/* ─ Grammar Review ─ */
+.gr-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.gr-icon{font-size:28px;}
+.gr-body{display:flex;flex-direction:column;gap:14px;}
+.gr-item{background:var(--cream);border-radius:10px;padding:16px 18px;border-left:3px solid var(--gold-light);}
+.gr-label{font-size:12.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.gr-examples{display:flex;flex-direction:column;gap:6px;}
+.gr-ex{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--navy);background:white;padding:8px 14px;border-radius:7px;border:1px solid var(--cream-dark);}
+.gr-note{font-size:12.5px;color:var(--text-mid);margin-top:10px;padding:8px 12px;background:rgba(224,155,0,0.07);border-radius:7px;border-left:2px solid var(--gold-light);}
+/* ─ Assessment result ─ */
+.assess-result{border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.assess-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.assess-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.assess-score{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;line-height:1;}
+.assess-label{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:6px;}
+.assess-detail{font-size:13.5px;opacity:0.88;}
+
+/* ─── Writing section ──────────────────────────────── */
+.w-task-header{margin-bottom:4px;}
+.w-task-pill{display:inline-block;background:rgba(224,155,0,0.15);color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 13px;border-radius:20px;border:1px solid rgba(224,155,0,0.3);margin-bottom:8px;}
+.w-prompt-box{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:13px;padding:22px 26px;margin:18px 0;border-left:4px solid var(--gold-light);}
+.w-prompt-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-bright);margin-bottom:10px;}
+.w-prompt-text{font-size:13.5px;color:var(--text-light);line-height:1.82;}
+.w-target{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;color:var(--gold-light);}
+.w-meta-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:8px 0 16px;}
+.w-counter{font-size:12.5px;color:var(--text-mid);font-family:'DM Mono',monospace;}
+
+/* ─── AI Feedback result box ────────────────────────── */
+.fb-result-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-result-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-result-label{font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-result-score{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-align:right;}
+.fb-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-check{display:inline-block;font-size:12.5px;font-weight:600;color:var(--green-accent);background:rgba(0,166,81,0.1);padding:5px 12px;border-radius:20px;}
+.fb-check.fb-check-warn{color:#f39c12;background:rgba(243,156,18,0.1);}
+.fb-suggest-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.fb-suggest-list{margin:0 0 14px 18px;padding:0;}
+.fb-suggest-list li{font-size:13px;color:var(--text-light);line-height:1.68;margin-bottom:4px;}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;margin-bottom:14px;}
+.fb-corrected-label{font-style:normal;font-weight:700;color:var(--gold-bright);}
+.fb-footer-stats{font-size:11.5px;color:rgba(155,179,204,0.5);border-top:1px solid rgba(255,255,255,0.07);padding-top:10px;margin-top:8px;font-family:'DM Mono',monospace;}
+.fb-warn-box{background:#2d1010;border:1px solid rgba(214,48,49,0.3);border-radius:10px;padding:14px 18px;color:#f8a5a5;font-size:13.5px;margin-top:14px;}
+.fb-loading-box{background:#111e2f;border-radius:10px;padding:18px 22px;color:var(--text-light);font-size:13.5px;margin-top:14px;display:flex;align-items:center;gap:10px;}
+
+/* ─── Gap Fill — Image 1 design ───────────────────────────────── */
+.gf-card{padding:32px 36px;}
+.gf-instr{font-size:13.5px;color:var(--text-mid);margin-bottom:22px;line-height:1.6;}
+.gf-bank-box{background:var(--cream);border-radius:14px;padding:20px 22px;margin-bottom:28px;border:1px solid var(--cream-dark);}
+.gf-bank-pills{display:flex;flex-wrap:wrap;gap:10px;}
+.gf-pill{background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:50px;cursor:default;transition:opacity 0.25s,transform 0.2s;}
+.gf-pill.gf-pill-used{opacity:0.28;text-decoration:line-through;}
+.gf-sentences{display:flex;flex-direction:column;gap:26px;}
+.gf-row{}
+.gf-sentence-text{font-size:14.5px;color:var(--navy);line-height:1.9;}
+.gf-blank-wrap{display:inline-block;position:relative;vertical-align:bottom;}
+.gf-underline-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14.5px;color:var(--navy);padding:1px 8px 2px;width:170px;outline:none;text-align:center;transition:border-color 0.2s;}
+.gf-underline-input::placeholder{color:rgba(90,120,153,0.5);font-size:13px;}
+.gf-underline-input.gf-correct{border-color:var(--green-accent);color:var(--green-accent);font-weight:600;}
+.gf-underline-input.gf-incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.gf-underline-input:disabled{background:transparent;}
+.gf-row-fb{margin-top:4px;min-height:18px;padding-left:4px;}
+.gf-fb-ok{font-size:12px;font-weight:700;color:var(--green-accent);}
+.gf-fb-err{font-size:12px;font-weight:600;color:var(--red-accent);}
+
+/* ─── True/False — Image 2 design ─────────────────────────────── */
+.tf-card{padding:32px 36px;}
+.tf-instr{font-size:13.5px;color:var(--gold);margin-bottom:22px;font-weight:500;}
+.tf-list{display:flex;flex-direction:column;gap:12px;}
+.tf-item{background:var(--cream);border-radius:12px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;transition:box-shadow 0.2s;}
+.tf-item[data-done]{opacity:0.92;}
+.tf-item-stmt{font-size:14px;color:var(--navy);line-height:1.58;flex:1;min-width:200px;}
+.tf-item-btns{display:flex;gap:10px;flex-shrink:0;}
+.tf-item-btn{padding:10px 26px;border-radius:9px;border:2px solid var(--cream-dark);font-size:13.5px;font-weight:700;cursor:pointer;background:white;font-family:'DM Sans',sans-serif;color:var(--navy);transition:all 0.18s;-webkit-tap-highlight-color:transparent;}
+.tf-item-btn:hover:not(:disabled){border-color:var(--gold-light);background:#fef8e0;}
+.tf-item-btn.tf-btn-correct{background:var(--green-accent);border-color:var(--green-accent);color:white;}
+.tf-item-btn.tf-btn-wrong{background:var(--red-accent);border-color:var(--red-accent);color:white;}
+.tf-item-btn:disabled{cursor:default;}
+.tf-item-fb{width:100%;margin-top:2px;min-height:18px;font-size:12.5px;}
+.tf-fb-ok{color:var(--green-accent);font-weight:700;}
+.tf-fb-err{color:var(--red-accent);font-weight:600;}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{display:inline-block;animation:spin 1s linear infinite;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}#mob-btn{display:flex;align-items:center;justify-content:center;}
+  #main{margin-left:0;}.hero{padding:60px 22px 40px;}.content{padding:28px 18px;}
+  .prog-wrap{padding:12px 22px;}.outcomes-grid,.speaking-grid,.wb-grid{grid-template-columns:1fr;}.hero-stats{gap:22px;}
+}
+@media(max-width:600px){
+  .hero{padding:56px 16px 36px;}.content{padding:22px 14px;}.card{padding:22px 18px;}
+  .listen-card{padding:20px 16px;}.reading-box{padding:18px 16px;}.player-row{flex-wrap:wrap;gap:10px;}.time-disp{min-width:auto;}
+}
+
+
+
+
+
+/* ─── Auto-Correction Report UI (Module 6+) ─────────────────────── */
+.fb-report-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-report-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:12px;}
+.fb-report-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-report-icon{font-size:16px;}
+.fb-report-score{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
+.fb-quick-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-cats{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.fb-cat-row{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 16px;}
+.fb-cat-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.fb-cat-icon{font-size:15px;}
+.fb-cat-label{font-size:13px;color:var(--white);}
+.fb-cat-good{font-size:11px;font-weight:700;color:#00c46a;background:rgba(0,196,106,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(0,196,106,0.3);}
+.fb-cat-sat{font-size:11px;font-weight:700;color:#f5b800;background:rgba(245,184,0,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(245,184,0,0.3);}
+.fb-cat-att{font-size:11px;font-weight:700;color:#e05c5c;background:rgba(224,92,92,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(224,92,92,0.3);}
+.fb-cat-comment{font-size:13px;color:var(--text-light);line-height:1.7;}
+.fb-corrected-block{background:rgba(255,255,255,0.04);border-left:3px solid var(--gold-light);border-radius:0 8px 8px 0;padding:11px 16px;font-size:13px;color:var(--text-light);line-height:1.72;margin-bottom:12px;font-style:italic;}
+.fb-corrected-tag{font-style:normal;font-weight:700;color:var(--gold-bright);display:block;margin-bottom:4px;}
+.fb-overall{font-size:13px;color:#00c46a;margin-bottom:10px;font-weight:500;}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ─── Gap-Fill Redesign (auto-graded) ───────────────────────────────────── */
+.gf-bank-label{font-size:11px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.gf-num{color:var(--gold-bright);font-weight:700;min-width:22px;display:inline-block;}
+.gf-btn-bar{display:flex;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.gf-check-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;font-size:13px;padding:10px 22px;border:none;border-radius:8px;cursor:pointer;transition:opacity .15s;}
+.gf-check-btn:hover{opacity:.88;}
+.gf-check-btn:disabled{cursor:not-allowed;opacity:.5;}
+.gf-reset-btn{background:rgba(255,255,255,0.07);color:var(--text-light);font-size:13px;font-weight:600;padding:10px 18px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;cursor:pointer;transition:background .15s;}
+.gf-reset-btn:hover{background:rgba(255,255,255,0.12);}
+.gf-score-display{font-size:15px;margin-left:4px;}
+.gf-pill-highlight{outline:2px solid var(--gold-bright) !important;opacity:1 !important;}
+.gf-fb-err strong{color:var(--gold-bright);}
+
+
+
+
+</style>
+</head>
+<body>
+<button id="mob-btn" onclick="openSidebar()">&#9776;</button>
+<div id="overlay" onclick="closeSidebar()"></div>
+<nav id="sidebar">
+  <div class="sidebar-brand"><h1>IT &amp; Digital Professions English</h1><div class="sub">Professional Course Series</div><span class="level-badge">B1&#8211;B2 Level</span></div>
+  <div class="sidebar-section-label">Module 8</div>
+  <div class="nav-item active" onclick="goTo('sec-overview')"><div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-speaking')"><div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-wordbank')"><div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-reading')"><div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-vocab')"><div class="nav-left"><span class="nav-icon">🔤</span><span class="nav-label">Vocabulary</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-grammar')"><div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Grammar</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-gramreview')"><div class="nav-left"><span class="nav-icon">📋</span><span class="nav-label">Grammar Review</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-writing')"><div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div><span class="nav-badge">AI</span></div>
+  <div class="nav-item" onclick="goTo('sec-listening')"><div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div><span class="nav-badge">4</span></div>
+  <div class="nav-item" onclick="goTo('sec-cases')"><div class="nav-left"><span class="nav-icon">💡</span><span class="nav-label">Case Studies</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-assessment')"><div class="nav-left"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></div><span class="nav-badge">20</span></div>
+</nav>
+<main id="main">
+<section id="sec-overview" class="section active">
+  <div class="hero"><div class="module-pill">🗣️ &nbsp; Module 8 &nbsp;·&nbsp; IT &amp; Digital Professions English</div><h2>Explaining Technology<br><span class="accent">to Non-Experts</span></h2><p class="hero-desc">Master the language and techniques of technical communication for non-expert audiences — from plain language and analogy to layered explanation, signposting, and honest hedging. Build the confidence to explain any technical concept clearly, accurately, and accessibly to stakeholders, clients, and colleagues at any level.</p><div class="hero-stats"><div class="stat"><span class="stat-n">21</span><span class="stat-l">Key Terms</span></div><div class="stat"><span class="stat-n">11</span><span class="stat-l">Sections</span></div><div class="stat"><span class="stat-n">4</span><span class="stat-l">Audio Activities</span></div><div class="stat"><span class="stat-n">B1–B2</span><span class="stat-l">CEFR Level</span></div></div></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" id="progFill"></div></div><span class="prog-pct" id="progPct">0%</span></div>
+  <div class="content" id="overviewContent"></div>
+</section>
+<section id="sec-speaking" class="section">
+  <div class="hero"><div class="module-pill">🎙️ &nbsp; Speaking Practice</div><h2>Discussion <span class="accent">Questions</span></h2><p class="hero-desc">Practise speaking about technical communication, plain language, and the art of explaining complex ideas clearly.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:9%"></div></div><span class="prog-pct">9%</span></div>
+  <div class="content" id="speakingContent"></div>
+</section>
+<section id="sec-wordbank" class="section">
+  <div class="hero"><div class="module-pill">📚 &nbsp; Word Bank</div><h2>Technical Communication <span class="accent">Vocabulary</span></h2><p class="hero-desc">Study these 21 essential terms for explaining technology to non-expert audiences — covering principles, techniques, and communication strategies.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:18%"></div></div><span class="prog-pct">18%</span></div>
+  <div class="content" id="wordBankContent"></div>
+</section>
+<section id="sec-reading" class="section">
+  <div class="hero"><div class="module-pill">📖 &nbsp; Reading</div><h2>Texts &amp; <span class="accent">Comprehension</span></h2><p class="hero-desc">Read two professional texts on the curse of knowledge and the art of analogy in technical communication.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:27%"></div></div><span class="prog-pct">27%</span></div>
+  <div class="content" id="readingContent"></div>
+</section>
+<section id="sec-vocab" class="section">
+  <div class="hero"><div class="module-pill">🔤 &nbsp; Vocabulary Exercises</div><h2>Practice <span class="accent">Exercises</span></h2><p class="hero-desc">Three exercise types to master technical communication vocabulary: multiple choice, gap-fill, and true/false.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:36%"></div></div><span class="prog-pct">36%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocab(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocab(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocab(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vex-0"></div>
+    <div id="vex-1" style="display:none"></div>
+    <div id="vex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-grammar" class="section">
+  <div class="hero"><div class="module-pill">✏️ &nbsp; Grammar</div><h2>Grammar <span class="accent">Exercises</span></h2><p class="hero-desc">Practise defining relative clauses for plain-language definitions, hedging and qualification when simplifying, and signposting and sequencing in technical explanations.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:45%"></div></div><span class="prog-pct">45%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGram(0,this)">Defining Clauses</div>
+      <div class="ex-tab" onclick="showGram(1,this)">Hedging &amp; Qualification</div>
+      <div class="ex-tab" onclick="showGram(2,this)">Signposting &amp; Sequencing</div>
+    </div>
+    <div id="gex-0"></div>
+    <div id="gex-1" style="display:none"></div>
+    <div id="gex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-gramreview" class="section">
+  <div class="hero"><div class="module-pill">📋 &nbsp; Grammar Review</div><h2>Reference <span class="accent">Guide</span></h2><p class="hero-desc">Three reference boxes: defining relative clauses for plain-language definitions, hedging in technical simplification, and signposting and sequencing in technical explanations.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:54%"></div></div><span class="prog-pct">54%</span></div>
+  <div class="content" id="gramRevContent"></div>
+</section>
+<section id="sec-writing" class="section">
+  <div class="hero"><div class="module-pill">✍️ &nbsp; Writing + AI Feedback</div><h2>Writing <span class="accent">Activities</span></h2><p class="hero-desc">Write a plain-language explainer about machine learning and the opening of a board presentation on cloud migration. Receive AI feedback across Grammar, Vocabulary, Tone, Structure, and Fluency.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:63%"></div></div><span class="prog-pct">63%</span></div>
+  <div class="content" id="writingContent"></div>
+</section>
+<section id="sec-listening" class="section">
+  <div class="hero"><div class="module-pill">🎧 &nbsp; Listening</div><h2>Audio <span class="accent">Activities</span></h2><p class="hero-desc">Listen to a cloud migration client meeting, a board security briefing, a client call about a project delay, and an internal AI explanation workshop.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:72%"></div></div><span class="prog-pct">72%</span></div>
+  <div class="content" id="listeningContent"></div>
+</section>
+<section id="sec-cases" class="section">
+  <div class="hero"><div class="module-pill">💡 &nbsp; Case Studies</div><h2>Real-World <span class="accent">Cases</span></h2><p class="hero-desc">Explore Richard Feynman's art of explanation and the Feynman Technique, and Steve Jobs's iPhone launch — the product presentation that changed how the technology industry communicates.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:81%"></div></div><span class="prog-pct">81%</span></div>
+  <div class="content" id="casesContent"></div>
+</section>
+<section id="sec-assessment" class="section">
+  <div class="hero"><div class="module-pill">🏆 &nbsp; Final Assessment</div><h2>Module <span class="accent">Test</span></h2><p class="hero-desc">20 questions covering all module content. Pass mark: 70% (14/20). Two attempts allowed.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div><span class="prog-pct">90%</span></div>
+  <div class="content">
+    <div class="card">
+      <div class="card-title">🏆 Final Assessment</div><div class="card-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:22px;">Answer all 20 questions. You need 70% (14 correct) to pass. Attempts used: <strong id="att-disp">0 / 2</strong></p>
+      <div id="assessContainer"></div>
+      <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <button class="ass-btn" id="ass-sub" onclick="submitAss()">Submit Assessment</button>
+        <button class="retry-btn" id="ass-retry" onclick="resetAss()">&#8635; Try Again</button>
+      </div>
+      <div class="final-result" id="final-res"></div>
+    </div>
+  </div>
+</section>
+</main>
+<script>
+/* ══ Module 8: Explaining Technology to Non-Experts ══ */
+const outcomes=["Identify and accurately use 21 essential terms for communicating technical concepts to non-expert audiences", "Read and analyse professional texts on plain language principles and the art of technical analogy", "Use analogy, hedging, defining relative clauses, and layered explanation structures precisely when explaining technology", "Draft an explainer document and a stakeholder presentation introduction that communicate technology clearly to non-technical audiences", "Listen to technical explanations given to non-experts in meetings, presentations, and client briefings", "Explain complex technical concepts using appropriate language, analogies, and structure with professional confidence and clarity"];
+const speakingQs=["Why is communicating technology to non-experts considered one of the most important skills for IT professionals?", "What is the difference between explaining something and simplifying it? Where is the line?", "What is an analogy, and why are analogies particularly useful when explaining technical concepts?", "How would you explain what a database is to someone who has never worked in IT?", "How would you explain cloud computing to a senior manager who is deciding whether to migrate the organisation's systems?", "What is the 'curse of knowledge', and how does it affect technical professionals when communicating with non-experts?", "What is jargon, and when does technical vocabulary help versus when does it create a barrier?", "What does 'plain language' mean, and what are its core principles?", "How would you explain the difference between AI and machine learning to a non-technical audience?", "What is a layered explanation, and why is it more effective than a single-level explanation?", "What is a stakeholder, and how does knowing your audience change how you explain a technical concept?", "How would you explain what an API does to a business manager who needs to understand why it matters?", "What is a 'use case', and why is leading with a use case often more effective than leading with a definition?", "What is the difference between features and benefits when communicating technology to decision-makers?", "How do you check whether a non-technical person has understood a technical explanation without being condescending?", "What is a knowledge gap, and how do you assess it before explaining a technical concept?", "How would you explain cybersecurity risks to a board of directors who are not technically trained?", "What role do visuals — diagrams, charts, infographics — play in explaining technology to non-experts?", "How do you handle a situation where a non-technical stakeholder asks a question you cannot answer in simple terms?", "What is the 'five-year-old test', and is it a useful heuristic for technical communicators?", "If a client misunderstood a technical explanation and made a bad decision as a result, whose responsibility is it?"];
+const wordBank=[{emoji:"🎯",term:"Plain Language",def:"A communication style that prioritises clarity, brevity, and reader comprehension over technical precision or formal register. Plain language avoids jargon, uses short sentences, employs active voice, and structures information so the most important point comes first. In technical communication, plain language is not about dumbing down — it is about respecting the reader's time and cognitive load."},
+  {emoji:"🔗",term:"Analogy",def:"A comparison between two different things that share a structural or functional similarity — used to explain an unfamiliar concept by mapping it onto something the audience already understands. Analogies are the most powerful tool in technical communication: explaining a firewall as a 'security guard at the entrance of a building' works because it captures the function without requiring technical knowledge."},
+  {emoji:"🎭",term:"Jargon",def:"Technical or specialised vocabulary that is meaningful within a professional community but opaque to outsiders. Jargon is not inherently bad — within a team of engineers, 'latency', 'throughput', and 'idempotent' communicate precisely and efficiently. The problem arises when jargon is used with audiences who do not share the professional context, creating confusion and excluding people from the conversation."},
+  {emoji:"🏗️",term:"Abstraction",def:"The process of removing specific, complex details to expose a simpler, more general concept. In computing, abstraction allows programmers to work with high-level concepts without needing to understand the underlying hardware. In technical communication, abstraction means explaining what a system does rather than how it does it — appropriate when the audience needs to make a decision, not to implement a solution."},
+  {emoji:"👥",term:"Audience",def:"The people who will receive a technical communication — with their own level of knowledge, priorities, concerns, and vocabulary. Effective technical communication begins with audience analysis: who are they? What do they already know? What do they need to know? What decisions will they make based on this information? The same technical concept requires fundamentally different explanations for a board of directors, a product manager, a developer, and an end user."},
+  {emoji:"🗺️",term:"Knowledge Gap",def:"The difference between what the communicator knows and what the audience knows about a subject. Bridging the knowledge gap is the central challenge of technical communication. Misjudging the knowledge gap — either overestimating the audience's knowledge (using unexplained jargon) or underestimating it (over-explaining basics) — undermines the effectiveness and credibility of the communication."},
+  {emoji:"🔄",term:"Use Case",def:"A concrete description of how a technology is used to solve a specific real-world problem — told from the user's perspective. Leading with a use case is more persuasive than leading with a definition or technical description because it answers the audience's primary question: 'What does this mean for me?' A use case grounds abstract technology in recognisable human activity."},
+  {emoji:"📊",term:"Layered Explanation",def:"A structured approach to explanation that begins with a high-level summary, then adds successive layers of detail — allowing the audience to stop at the level of understanding they need. The 'inverted pyramid' of journalism applies here: the most important information comes first, with increasingly specific detail following. A layered explanation respects that different members of an audience need different depths."},
+  {emoji:"✨",term:"Benefit",def:"The value that a technology delivers to a user, organisation, or stakeholder — expressed in terms they care about (time saved, cost reduced, risk mitigated, revenue increased). Features describe what a technology does; benefits describe why it matters. Technical communicators often make the mistake of explaining features to decision-makers who need to understand benefits. 'This system has 99.9% uptime' is a feature; 'your customers can always access the service' is the benefit."},
+  {emoji:"🧩",term:"Feature",def:"A specific characteristic or capability of a system or product — typically described in technical terms. 'The database supports up to 10,000 concurrent connections' is a feature. Features are meaningful to technical audiences who need to evaluate suitability; they are less meaningful to business audiences who need to understand value. Translating features into benefits is one of the core skills of technical communication."},
+  {emoji:"🪟",term:"Metaphor",def:"A figure of speech that describes something as being something else — implying a structural similarity without explicitly stating it. Metaphors are more immersive than analogies: rather than saying 'a computer's RAM is like a desk' (analogy), a metaphor says 'RAM is your working space'. In technical communication, well-chosen metaphors help audiences build accurate mental models; poorly chosen ones can create misleading expectations."},
+  {emoji:"📝",term:"Executive Summary",def:"A concise overview of a longer document or presentation, written for decision-makers who need the key conclusions and recommendations without reading the full content. An executive summary should be self-contained, lead with conclusions rather than methodology, use plain language, and be no longer than one page. Technical documents without executive summaries force executives to read for context they do not need."},
+  {emoji:"🗣️",term:"Stakeholder",def:"Any person or group with an interest in or affected by a technology, project, or decision. Stakeholders include technical teams, business owners, end users, regulators, and senior leadership — each with different knowledge, priorities, and concerns. Understanding stakeholder needs is the foundation of effective technical communication: the same information must be framed differently for each audience."},
+  {emoji:"🎓",term:"Technical Literacy",def:"The ability to understand, evaluate, and communicate about technology at a sufficient level for one's role — without necessarily being a practitioner. A CEO with high technical literacy can make informed decisions about technology investment; a project manager with technical literacy can mediate effectively between business and engineering teams. Technical communicators build technical literacy in their audiences incrementally."},
+  {emoji:"🔍",term:"Definition",def:"A precise statement of what a term means — used in technical communication to establish a shared vocabulary with the audience. The most effective definitions in plain language follow the pattern: '[Term] is [category] that [defining characteristic].' For example: 'An API is a set of rules that allows different software systems to communicate with each other.' This structure is more accessible than a technical specification."},
+  {emoji:"🏔️",term:"Progressive Disclosure",def:"A design and communication principle that presents information in stages — revealing complexity gradually rather than all at once. In technical communication, progressive disclosure means starting with the simplest version of an explanation and offering 'tell me more' pathways for those who want deeper understanding. This reduces cognitive overload and respects that different audience members need different levels of detail."},
+  {emoji:"🎪",term:"Demonstration",def:"Showing how a technology works by letting the audience see or experience it directly — rather than describing it abstractly. Demonstrations are more persuasive and memorable than descriptions for non-technical audiences because they make abstract concepts concrete. A live demo of a product feature communicates more than a slide full of bullet points about its capabilities."},
+  {emoji:"❓",term:"Assumption",def:"Something the communicator takes for granted about what the audience knows, needs, or values — without explicitly checking. Unchecked assumptions are a primary cause of communication failure in technical contexts. Assuming a finance director understands what an API is, or that a developer understands what 'shareholder value' means, leads to explanations that miss their audience entirely."},
+  {emoji:"📐",term:"Structure",def:"The organisation of information in a communication — the order in which points are made, how ideas are grouped, and how transitions between topics are managed. Structure is not neutral: leading with context before conclusions, or conclusions before context, fundamentally changes how an audience receives information. For technical communication to non-experts, a problem-solution structure (here is the challenge; here is how technology addresses it) is typically more effective than a technical-first structure."},
+  {emoji:"🖼️",term:"Visual Aid",def:"Any graphical element — diagram, chart, infographic, screenshot, or animation — used to support or replace a verbal or written explanation. Visuals are particularly valuable in technical communication because they can represent relationships, flows, and architectures that are difficult to describe in words. A well-designed diagram of a network architecture communicates in seconds what paragraphs of prose cannot."},
+  {emoji:"🔁",term:"Feedback Loop",def:"A mechanism for checking understanding and adjusting communication based on the audience's response. In technical communication, feedback loops include asking comprehension questions, inviting questions, observing body language, and conducting post-communication surveys. Without feedback loops, communicators cannot know whether their explanation has landed — and the confidence that comes from a technical explanation does not guarantee that it was understood."}];
+const readingTexts=[{title:"Text 1: The Curse of Knowledge — Why Experts Are Often Poor Communicators",subtitle:"Understanding the cognitive bias that makes technical professionals hard to understand — and how to overcome it",paragraphs:["In 1990, a Stanford psychology PhD student named Elizabeth Newton conducted an experiment that produced one of the most cited findings in communication research. She divided participants into two groups: tappers and listeners. Tappers were given a list of well-known songs and asked to tap out the rhythm on a table; listeners had to guess the song. Before tapping, tappers were asked to estimate how often listeners would correctly identify the song. The tappers predicted a 50% success rate. The actual success rate was 2.5%. The tappers could hear the song in their heads as they tapped — and they could not imagine that the listener heard only a series of meaningless taps. This is the curse of knowledge: once we know something, we cannot imagine not knowing it. We lose the ability to accurately model what it is like to encounter a concept for the first time.", "The curse of knowledge is particularly acute for technical professionals — software engineers, data scientists, network architects, and security specialists — who have spent years developing expertise in domains that are genuinely complex and counterintuitive. When a senior developer explains a microservices architecture to a product manager, they draw on mental models built over a decade of practice. The product manager has none of those mental models, and the developer cannot easily remember what it felt like not to have them. The result is explanations that assume knowledge the audience does not have — explanations filled with unexplained acronyms, absent scaffolding, and logical leaps that feel obvious to the expert but are invisible gaps to the listener.", "Overcoming the curse of knowledge requires deliberate effort. Effective technical communicators use several strategies. First, audience modelling: before communicating, explicitly ask 'what does this person already know, and what do they need to know?' — and answer honestly. Second, analogies: find something the audience already understands and map the unfamiliar concept onto it. Third, the protégé effect: explaining a concept as if teaching it to someone helps experts identify the points where their explanation assumes too much. Fourth, feedback loops: build in moments to check understanding — not 'does that make sense?' (which almost always gets a yes) but 'could you explain back to me what you understand about X?' Finally, avoiding jargon without explanation: every technical term used with a non-technical audience should be defined the first time it is used, using plain language."],questions:[{q:"What was the main finding of Elizabeth Newton's tapping experiment?",opts:["Listeners could identify songs from rhythmic tapping with 50% accuracy", "Tappers significantly overestimated how often listeners would identify the song — predicting 50% when the actual rate was 2.5%", "Music is processed differently in the brain than language", "Experts at rhythm are better at guessing songs than non-musicians"],ans:1},{q:"What is the 'curse of knowledge'?",opts:["The tendency for knowledgeable people to become arrogant about their expertise", "Once we know something, we cannot imagine not knowing it — we lose the ability to model a first-time encounter with a concept", "The psychological burden of holding large amounts of technical knowledge", "The tendency for experts to learn new things more slowly than beginners"],ans:1},{q:"Why is the curse of knowledge particularly acute for technical professionals?",opts:["They communicate primarily in writing rather than verbally", "They work in isolation and rarely need to communicate with non-experts", "They have developed complex mental models over years that non-experts do not have — and cannot easily remember not having them", "They are trained to be precise rather than accessible in their communication"],ans:2},{q:"What is the result of explanations built on the curse of knowledge?",opts:["Explanations that are too long and detailed for non-technical audiences", "Explanations that are technically inaccurate but easy to understand", "Explanations filled with unexplained acronyms, absent scaffolding, and logical leaps invisible to the audience", "Explanations that are correct but delivered too quickly"],ans:2},{q:"What is 'audience modelling' as described in the text?",opts:["Creating fictional personas to represent different user types", "Explicitly asking what the audience already knows and needs to know before communicating", "Observing how audiences react to technical content and adjusting accordingly", "Researching the audience's professional background before a presentation"],ans:1},{q:"What is the 'protégé effect' used for in technical communication?",opts:["Teaching junior staff by pairing them with senior experts", "Helping experts identify points where their explanation assumes too much by explaining as if teaching someone", "A feedback mechanism where trainees evaluate the clarity of technical documentation", "A training approach where experts teach the same concept to multiple audiences"],ans:1},{q:"Why does the text say 'does that make sense?' is an ineffective comprehension check?",opts:["It is too informal for a professional communication context", "Non-native speakers may not understand the phrase", "It almost always gets a yes — regardless of whether the person understood", "It interrupts the flow of a technical explanation"],ans:2},{q:"What does the text recommend instead of 'does that make sense?' as a comprehension check?",opts:["'Are you following?' to check engagement", "'Let me summarise the key points' to reinforce understanding", "'Could you explain back to me what you understand about X?'", "'Do you have any questions?' to invite follow-up"],ans:2},{q:"What should happen to every technical term used with a non-technical audience?",opts:["It should be avoided entirely and replaced with plain language", "It should be defined the first time it is used, using plain language", "It should be highlighted in bold so the audience knows it is important", "It should be explained in a glossary at the end of the document"],ans:1},{q:"What is the underlying message of the tapping experiment for technical communicators?",opts:["Non-technical people need more time to understand complex concepts", "The confidence that comes from expertise can create overconfidence about communication", "Music and rhythm are good tools for building technical intuition", "Experts should avoid assuming any prior knowledge in their audience"],ans:1}]},
+  {title:"Text 2: The Art of the Analogy — How Technical Communicators Bridge the Knowledge Gap",subtitle:"Why analogies are the most powerful tool in technical explanation — and how to use them well",paragraphs:["In 2006, Amazon Web Services launched its Simple Storage Service (S3) with a product description that contained no technical jargon: 'Amazon S3 provides a simple web services interface that can be used to store and retrieve any amount of data, at any time, from anywhere on the web. It gives any developer access to the same highly scalable, reliable, fast, inexpensive data storage infrastructure that Amazon uses to run its own global network of web sites.' This description works not because it is technically precise — S3 is considerably more complex than it implies — but because it maps an unfamiliar technology onto concepts the audience already understands: storage, retrieval, scale, reliability, and cost. Amazon made a deliberate choice to lead with what the technology does and why it matters, not how it works.", "Analogies succeed because human cognition is fundamentally analogical — we understand new things by relating them to things we already understand. A well-chosen analogy does three things: it activates existing knowledge structures in the audience's mind, it provides a framework for understanding new information, and it creates a memorable mental model that persists after the explanation ends. The firewall-as-security-guard analogy works because everyone has encountered a security checkpoint — they understand the concept of verifying identity before granting access, and they can reason about edge cases (what happens if a sophisticated attacker dresses as a delivery driver?) in ways that build genuine intuition about cybersecurity.", "Analogies have limits, however, and skilled communicators know where their analogies break down. Explaining computer memory as a desk (RAM) and a filing cabinet (hard drive) helps audiences understand the difference between working memory and storage — but it breaks down when they try to understand why closing an application 'frees up' memory. A communicator who uses an analogy without acknowledging its limits risks creating misconceptions that are harder to correct than ignorance. The principle of extended analogy — explicitly noting where the comparison holds and where it does not — prevents this. 'Think of RAM like a desk — but unlike a real desk, when you turn the computer off, everything on the desk disappears instantly' extends the analogy while flagging its limit."],questions:[{q:"What made Amazon S3's original product description effective?",opts:["It provided a complete technical specification of how S3 works internally", "It used precise industry terminology to signal credibility to technical buyers", "It mapped the technology onto familiar concepts like storage, retrieval, reliability, and cost — leading with what it does, not how it works", "It was the shortest product description of any cloud service at the time"],ans:2},{q:"Why do analogies work in human cognition according to the text?",opts:["The brain processes visual analogies faster than verbal descriptions", "Human cognition is fundamentally analogical — we understand new things by relating them to existing knowledge", "Analogies reduce the amount of new information the brain needs to process", "Technical concepts are inherently abstract and require concrete imagery to be understood"],ans:1},{q:"What three things does a well-chosen analogy do?",opts:["It simplifies, clarifies, and entertains", "It activates existing knowledge structures, provides a framework for new information, and creates a memorable mental model", "It replaces jargon, defines terms, and structures the explanation logically", "It engages the audience, reduces anxiety about technology, and builds credibility"],ans:1},{q:"Why does the firewall-as-security-guard analogy work?",opts:["Because security guards are familiar to all audiences regardless of their background", "Because it is a very old analogy that has become standard in the industry", "Because everyone has encountered a security checkpoint and can reason about edge cases using that familiar framework", "Because it uses concrete imagery that is more memorable than abstract descriptions"],ans:2},{q:"What is the risk of using an analogy without acknowledging its limits?",opts:["The analogy may inadvertently reveal confidential technical information", "The audience may use the analogy to ask questions the communicator cannot answer", "Creating misconceptions that are harder to correct than ignorance", "The explanation may appear condescending to more technical members of the audience"],ans:2},{q:"What is the principle of 'extended analogy'?",opts:["Using a single analogy throughout an entire presentation for consistency", "Extending an analogy to cover as many aspects of the technology as possible", "Explicitly noting where the comparison holds and where it does not", "Building on a simple analogy with increasingly technical detail"],ans:2},{q:"How does the desk/filing cabinet analogy for RAM/hard drive break down?",opts:["It implies that RAM is more important than storage, which is not always true", "It suggests that both memory and storage have the same capacity limits", "It does not explain why closing an application frees up memory — on a real desk, things stay when you leave", "It implies that files are physically present in the computer rather than stored as digital data"],ans:2},{q:"What does the extended analogy about RAM and turning off a computer add?",opts:["It explains why RAM is faster than hard drive storage", "'But unlike a real desk, when you turn the computer off, everything on the desk disappears instantly' — flagging where the analogy's limit lies", "It explains the difference between RAM and cache memory", "It introduces a more precise technical model after the analogy has been established"],ans:1},{q:"What is the implicit lesson of the Amazon S3 example for technical communicators?",opts:["Technical products should always be described without any technical detail", "Leading with what technology does and why it matters is more effective than explaining how it works", "Product descriptions should be as short as possible to hold the audience's attention", "Non-technical audiences respond best to descriptions that emphasise cost and reliability"],ans:1},{q:"What does the text say distinguishes skilled communicators when using analogies?",opts:["They only use analogies that are scientifically validated for accuracy", "They choose analogies that can be extended indefinitely without breaking down", "They know where their analogies break down and acknowledge the limits explicitly", "They avoid using more than one analogy per explanation to prevent confusion"],ans:2}]}];
+const vocabMCQ=[{q:"What is plain language in technical communication?",opts:["Using the simplest possible words, even if accuracy is sacrificed", "A communication style prioritising clarity, brevity, and reader comprehension — not dumbing down but respecting the reader's time", "A regulatory requirement for all government communications", "A style guide used by technical writers to standardise documentation"],ans:1},{q:"What is an analogy in technical explanation?",opts:["A precise technical definition expressed in simple terms", "A visual diagram that illustrates how a system works", "A comparison between an unfamiliar concept and something the audience already understands", "A summary of the key points made in a technical document"],ans:2},{q:"What is the 'curse of knowledge'?",opts:["The tendency to underestimate how much technical knowledge is needed to do a job", "The psychological difficulty of keeping large amounts of technical knowledge current", "The cognitive bias where knowing something makes it impossible to imagine not knowing it", "A communication error where experts use language that is too formal"],ans:2},{q:"What is a layered explanation?",opts:["An explanation that covers all technical details from the ground up", "A structured approach starting with a high-level summary and adding successive layers of detail", "An explanation that uses three or more analogies to reinforce a concept", "A document structured with a table of contents and numbered sections"],ans:1},{q:"What is the difference between a feature and a benefit?",opts:["Features are for technical audiences; benefits are for non-technical audiences only", "A feature describes what technology does; a benefit describes why it matters to the user or organisation", "Features are always positive; benefits can be positive or negative", "They are the same thing described at different levels of detail"],ans:1},{q:"What is progressive disclosure?",opts:["Revealing sensitive technical information gradually as trust is established", "A compliance process for disclosing security vulnerabilities responsibly", "Presenting information in stages — starting simple and offering deeper detail for those who need it", "A technique for disclosing project risks progressively during a project lifecycle"],ans:2},{q:"What is a use case in technical communication?",opts:["A formal software requirements document describing system behaviour", "A concrete description of how a technology solves a specific real-world problem from the user's perspective", "A legal scenario exploring how a technology might be misused", "A test case used by QA engineers to validate system functionality"],ans:1},{q:"What is a knowledge gap?",opts:["A gap in an organisation's documented technical processes", "The difference in knowledge between a communicator and their audience about a subject", "A missing section in a technical document that needs to be completed", "The time lag between a new technology being developed and being widely understood"],ans:1},{q:"What is an executive summary?",opts:["A summary written by the CEO of a company explaining strategic direction", "A concise overview for decision-makers containing key conclusions without the full detail", "A technical document that summarises the capabilities of a system for executives to approve", "A presentation format used for board-level technology investment proposals"],ans:1},{q:"What is a feedback loop in technical communication?",opts:["An audio feedback problem in video conferencing systems", "A mechanism for checking understanding and adjusting communication based on audience response", "A review cycle where technical documents are sent back for revision", "A reporting process that feeds incident data back into risk assessments"],ans:1}];
+const vocabGapFill=[{before:"The IT director asked the cloud architect to explain the migration proposal using",blank:"plain language",after:"— avoiding acronyms and technical specifications, and focusing instead on what the change would mean for employees' day-to-day work."},{before:"The consultant used a helpful",blank:"analogy",after:"to explain database indexing: 'Think of it like the index at the back of a book — instead of reading every page to find information, you jump straight to the right page.'"},{before:"The product manager's explanation failed because she assumed the board already knew what an API was — a classic example of unchecked",blank:"assumption",after:"s about the audience's technical background."},{before:"The technical writer used a",blank:"layered explanation",after:"structure: a two-sentence summary for the executive team, a one-page overview for managers, and the full 30-page specification for the engineering team."},{before:"Rather than describing every capability of the new platform, the sales engineer focused on the key",blank:"benefit",after:"for each stakeholder: faster reporting for the finance team, reduced manual work for operations, and real-time visibility for the board."},{before:"The developer's presentation to the board was confusing because he led with system architecture diagrams rather than using a",blank:"use case",after:"that showed how the technology would solve the specific problem the board had identified as a priority."},{before:"The technical account manager conducted a careful assessment of the client's",blank:"knowledge gap",after:"before the briefing — confirming that the CTO had a strong technical background but the CFO had none, and preparing two different explanations of the cost model accordingly."},{before:"The engineering team added a",blank:"visual aid",after:"to the documentation — a sequence diagram showing the data flow between the three microservices — which made the architecture immediately understandable to product managers who had struggled with the prose description."},{before:"The training presenter used",blank:"progressive disclosure",after:"effectively: she explained what encryption does in one sentence, offered a brief analogy for those who wanted more, and provided a technical appendix for the IT staff who needed the full implementation detail."},{before:"Without a clear",blank:"executive summary",after:"at the start of the 45-page security audit report, senior leaders were unable to identify the three critical findings that required immediate board-level attention and budget sign-off."}];
+const vocabTF=[{stmt:"Plain language means using the simplest possible words, even if this requires sacrificing technical accuracy.",ans:false},{stmt:"The curse of knowledge describes the inability of experts to accurately imagine what it is like not to know something they know well.",ans:true},{stmt:"Analogies are most effective when they are extended indefinitely without any acknowledgement of where the comparison breaks down.",ans:false},{stmt:"A benefit explains what a technology does; a feature explains why it matters to the user or organisation.",ans:false},{stmt:"Progressive disclosure presents information in stages, starting with a high-level summary and offering deeper detail for those who need it.",ans:true},{stmt:"A well-chosen analogy activates existing knowledge structures, provides a framework for new information, and creates a memorable mental model.",ans:true},{stmt:"An executive summary should be self-contained, lead with conclusions, and be accessible to a decision-maker who has not read the full document.",ans:true},{stmt:"Jargon is always harmful in technical communication and should be eliminated entirely from all professional contexts.",ans:false},{stmt:"Asking 'does that make sense?' is an effective way to check whether a non-technical audience has understood a technical explanation.",ans:false},{stmt:"A feedback loop in technical communication is a mechanism for checking understanding and adjusting the explanation based on audience response.",ans:true}];
+const grammarEx=[{title:"Exercise 1: Defining Relative Clauses for Technical Definitions",instr:"Select the correct relative clause structure. When explaining technology to non-experts, precise defining relative clauses turn abstract technical terms into clear, accessible definitions. The pattern '[Term] is [category] that/which [defining characteristic]' is the foundation of plain-language technical explanation.",qs:[{q:"'An API is a set of rules _____ allows different software applications to communicate with each other.'",opts:["who", "whose", "that", "what"],ans:2},{q:"'A firewall is a security tool _____ monitors and filters network traffic based on predefined rules.'",opts:["who", "that", "what", "whose"],ans:1},{q:"'Cloud computing is a model _____ computing resources — storage, processing, and software — are delivered over the internet rather than on local hardware.'",opts:["which", "where", "that", "who"],ans:1},{q:"'Encryption is a process _____ converts readable data into an unreadable format that only authorised users can decode.'",opts:["who", "what", "whose", "that"],ans:3},{q:"'A database is a structured collection of information _____ can be accessed, managed, and updated electronically.'",opts:["which", "who", "whose", "what"],ans:0},{q:"'A developer is someone _____ writes the code that makes applications and websites function.'",opts:["that", "which", "whose", "what"],ans:0},{q:"'Agile is a project management approach _____ work is organised into short cycles called sprints, each delivering a usable piece of the product.'",opts:["that", "who", "where", "whose"],ans:2},{q:"'A VPN is a technology _____ creates an encrypted connection between your device and the internet, protecting your data from interception.'",opts:["who", "whose", "what", "that"],ans:3},{q:"'Machine learning is a type of artificial intelligence _____ systems improve their performance by learning from data rather than following explicit instructions.'",opts:["where", "who", "which", "what"],ans:0},{q:"'A server is a computer _____ stores data and provides services — such as hosting websites or managing email — to other computers on a network.'",opts:["what", "whose", "who", "that"],ans:3}]},
+  {title:"Exercise 2: Hedging and Qualification When Simplifying Technical Concepts",instr:"Select the most appropriate hedging or qualifying expression. When simplifying technical concepts, communicators must signal that an explanation is a simplified model — not the complete technical truth. The right hedging acknowledges complexity while still making the explanation accessible.",qs:[{q:"'Think of RAM like a desk — it is where your computer keeps things it is currently working on, _____ it is a simplified way of putting it.'",opts:["although", "because", "despite", "since"],ans:0},{q:"'In very simple terms, a blockchain is _____ a shared spreadsheet that no single person controls.'",opts:["almost", "roughly", "sort of", "kind of"],ans:1},{q:"'This is a simplification, but _____ purposes, you can think of the CPU as the brain of the computer.'",opts:["most", "all", "for our", "general"],ans:2},{q:"'_____ precisely, machine learning is more complex than this — but at the level we need today, this explanation captures the essential idea.'",opts:["To be", "More", "Being", "Speaking"],ans:0},{q:"'A VPN is _____ a private tunnel through the internet — it is not a perfect analogy, but it gives you the right intuition about what it protects.'",opts:["essentially", "sort of like", "quite", "a bit like"],ans:1},{q:"'The full picture is more nuanced, but _____ our purposes, the key point is that encryption makes your data unreadable to anyone without the correct key.'",opts:["all", "most", "for", "within"],ans:2},{q:"'_____ a very high level, the system works by matching your request to the nearest available server.'",opts:["At", "On", "In", "From"],ans:0},{q:"'This _____ oversimplifies what happens technically, but the analogy gives you a useful mental model for the decision you need to make.'",opts:["admittedly", "completely", "deliberately", "unfortunately"],ans:0},{q:"'Put _____, the difference between RAM and storage is the difference between your desk and your filing cabinet.'",opts:["basically", "simply", "plainly", "easily"],ans:1},{q:"'I am _____ a little here, but the core idea is that the server checks who you are before deciding what you are allowed to see.'",opts:["simplifying", "guessing", "estimating", "approximating"],ans:0}]},
+  {title:"Exercise 3: Structuring Explanations — Signposting and Sequencing",instr:"Select the best signposting or sequencing expression. When explaining technology to non-experts, clear signposting helps the audience follow the explanation's structure — knowing where they are, what is coming next, and how ideas connect.",qs:[{q:"'_____ walking you through the technical detail, let me start with why this matters for your team.'",opts:["Before", "Instead of", "Rather than", "Without"],ans:2},{q:"'The system works in three stages. _____, your request is received by the web server.'",opts:["To begin", "In the beginning", "First of all", "Starting"],ans:2},{q:"'_____ you have that context, the technical choice we are recommending will make more sense.'",opts:["If", "When", "Once", "After"],ans:2},{q:"'_____ briefly, encryption works by scrambling your data so that only someone with the correct key can read it.'",opts:["Putting it", "To put it", "Put it", "Putting"],ans:1},{q:"'That is the what. _____ let me explain the why — why we are recommending this approach over the alternatives.'",opts:["Now", "Next", "Then", "So"],ans:0},{q:"'_____ contrast, the old system required staff to manually reconcile records every month — the new system does this automatically.'",opts:["In", "By", "For", "On"],ans:0},{q:"'I will come back to the security implications _____ — first, let me explain how the data flows through the system.'",opts:["shortly", "later", "in a moment", "soon"],ans:2},{q:"'_____ summarise: the new platform reduces reporting time from three days to thirty minutes, costs the same as the current system, and requires no changes to how your team works.'",opts:["In order to", "To", "So as to", "For"],ans:1},{q:"'Think of it _____ way: every time you use the app, it is checking in with the server to make sure your session is still valid.'",opts:["like this", "in this", "this", "of this"],ans:1},{q:"'_____ that covers the basics. Are there any questions before I go into more detail on the migration timeline?'",opts:["So", "Well", "Right", "That"],ans:0}]}];
+const grammarReview=[{title:"Grammar Point 1: Defining Relative Clauses in Plain-Language Definitions",pts:[{h:"The Definition Pattern for Technical Explanation",b:"The most accessible technical definitions follow the pattern: '[Term] + is/are + [general category] + that/which + [defining characteristic]'. This structure works because it gives the audience two anchors: the general category (which they may already know) and the defining characteristic (which distinguishes this specific thing). It avoids circular definitions and does not assume prior knowledge of the term being defined.",ex:["'An API is a set of rules that allows different applications to communicate with each other.'", "'A server is a computer that stores data and provides services to other devices on a network.'", "'Machine learning is a technique that allows systems to improve by learning from data.'", "'A firewall is a security system that monitors and controls incoming and outgoing network traffic.'"]},{h:"'Where' and 'When' in Technical Definitions",b:"When defining a process or environment rather than a thing, 'where' and 'when' are more precise than 'that/which'. 'Where' introduces a defining clause that describes a location or context; 'when' introduces a defining clause that describes a condition or moment.",ex:["'Cloud computing is a model where computing resources are delivered over the internet.'", "'Agile is an approach where work is organised into short cycles that each deliver a usable result.'", "'Encryption is most important when data is transmitted across public networks.'", "'A deployment pipeline is the automated process where code moves from development to production.'"]},{h:"Relative Clauses with 'Who' and 'Whose' for Roles and People",b:"When defining roles and people in a technical context, 'who' (for the person) and 'whose' (for possession) are grammatically correct and signal that the definition refers to a human actor rather than a system.",ex:["'A developer is someone who writes the code that makes applications function.'", "'A scrum master is a team facilitator who ensures the team follows the agile process.'", "'A penetration tester is a security professional whose job is to find vulnerabilities before attackers do.'", "'A product owner is the person who prioritises the work the development team delivers.'"]}]},
+  {title:"Grammar Point 2: Hedging and Qualification in Technical Simplification",pts:[{h:"Signalling Simplification Explicitly",b:"When simplifying a technical concept, the communicator should signal to the audience that the explanation is a model, not the complete technical truth. This protects the communicator's credibility and sets accurate expectations — the audience knows the explanation is designed for understanding, not implementation.",ex:["'In simple terms, ...' / 'To put it simply, ...' / 'At a high level, ...'", "'This is a simplification, but for our purposes...' / 'I am leaving out some technical detail here, but...'", "'Think of it as...' / 'It is roughly like...' / 'The analogy is not perfect, but...'", "'To be more precise, the technical reality is more nuanced — but the key point is...'"]},{h:"Softening Absolute Statements",b:"Technical explanations to non-experts often involve generalisations that are not always true. Hedges prevent these generalisations from creating false impressions while still communicating the essential idea.",ex:["'This generally means that...' (not always, but in most cases)", "'In most situations, the system will...' (acknowledging exceptions exist)", "'The main reason for this is typically...' (not the only reason, but the most important)", "'For practical purposes, you can treat these as...' (not technically identical, but close enough for this context)'"]},{h:"Approximate Comparison — 'Like', 'Similar to', 'Roughly'",b:"Approximate comparison language introduces analogies and simplified descriptions without claiming exact equivalence. This is honest signalling that an analogy is being used — important because an audience that takes an analogy too literally can develop misconceptions.",ex:["'RAM is like a desk — it is where the computer keeps things it is currently working on.'", "'A VPN is roughly like a private tunnel through the internet.'", "'Think of the server as similar to a librarian who retrieves information on request.'", "'This is not quite the same as a physical filing cabinet, but it is the closest everyday equivalent.'"]}]},
+  {title:"Grammar Point 3: Signposting and Sequencing in Technical Explanations",pts:[{h:"Opening Signposts — Setting the Frame",b:"Non-technical audiences need to know why they are receiving a technical explanation before they can absorb it. Opening signposts frame the explanation in terms of the audience's interests and establish what is coming.",ex:["'Rather than starting with the technical detail, let me begin with why this matters for your team.'", "'I want to give you a clear picture of what this technology does, without going into how it works under the hood.'", "'There are three things I want to cover today: what the problem is, what we are proposing, and what it will mean for you.'", "'Let me start with the end in mind — by the end of this briefing, you will be able to make an informed decision about whether to proceed.'"]},{h:"Sequencing — Guiding the Audience Through the Explanation",b:"Clear sequencing language prevents audiences from getting lost and makes the structure of an explanation transparent. The audience should always know where they are in the explanation and what is coming next.",ex:["'First... Second... Finally...' (explicit numbered sequence)", "'Now that you understand X, let us look at Y.' (building on what was established)", "'This is the what — now let me explain the why.' (signalling a shift in perspective)", "'Before I go into the detail, let me give you the headline.' (promising structure)'"]},{h:"Closing and Summarising",b:"A clear closing reinforces the key points and connects the technical content back to the audience's decision or action. A good summary is not a repetition of everything said — it is a distillation of the most important points.",ex:["'To summarise: this approach saves your team approximately six hours per week and reduces the risk of manual errors.'", "'The bottom line is that this decision will affect how your customers experience the service from day one.'", "'So the key takeaway is: the technology is ready, the plan is in place, and we need your approval to proceed.'", "'That covers the essentials. Are there any questions before I go into more detail?'"]}]}];
+const writingTasks=[{id:"w1",activity:"Activity 1",type:"Explainer Document",title:"Write a Plain-Language Explainer: What is Machine Learning?",prompt:"You are a data scientist at Brightfield Analytics. The Head of Marketing has asked you to write a short explainer document about machine learning for the company's non-technical senior leadership team. The leadership team will use this document to decide whether to approve a proposed machine learning project.\n\nYour explainer must:\n• Be written entirely in plain language — no unexplained technical terms\n• Begin with a use case that is directly relevant to the business (e.g. predicting which customers are likely to churn, or personalising product recommendations)\n• Include a clear definition of machine learning using a defining relative clause\n• Use at least one analogy to explain how machine learning works\n• Explain the difference between machine learning and traditional software in terms a non-technical reader can understand\n• Include a brief section on what machine learning cannot do — to manage expectations honestly\n• End with a clear statement of what decision or action you are asking the leadership team to take\n\nThe document should be structured with clear headings. It should feel like something a senior professional would be glad to read — not a textbook, not a sales pitch. Use at least 6 vocabulary terms from this module.",tags:["Explainer Document", "Plain Language", "Non-Technical Audience", "Machine Learning", "Business Communication"],targetMin:200,targetMax:300},{id:"w2",activity:"Activity 2",type:"Presentation Introduction",title:"Write the Opening of a Technical Presentation for a Non-Technical Board",prompt:"You are the Head of Engineering at Nexford Digital. You have been asked to present a proposed platform migration — moving the company's infrastructure from on-premise servers to a cloud platform — to the board of directors. The board is not technically trained.\n\nWrite the opening section of your presentation (approximately the first 3–4 minutes of speech). Your opening must:\n• Begin by acknowledging the audience's perspective — not the technical details\n• Clearly state the business problem that the migration solves (in terms the board cares about: cost, reliability, risk, agility)\n• Use at least one analogy to explain what 'moving to the cloud' means\n• Briefly preview what you will cover (layered structure — headline first, detail later)\n• Set a tone that is confident, clear, and non-condescending\n• Avoid all unexplained technical jargon\n\nWrite this as spoken language — the words you would actually say, not bullet points. It should sound like a professional who respects their audience's intelligence and time. Use at least 6 vocabulary terms from this module.",tags:["Presentation", "Board Communication", "Cloud Migration", "Non-Technical Audience", "Spoken Language"],targetMin:180,targetMax:270}];
+const listeningActs=[{id:0,title:"Explaining Cloud Computing to a Sceptical Finance Director",sub:"Client Meeting · B1–B2 Level · approx. 109 sec",icon:"☁️",transcript:"We are sitting in on a meeting between Priya, a cloud solutions architect, and Richard, the Finance Director of a mid-sized manufacturing company. Richard is sceptical about the proposed cloud migration. Richard: I have to be honest — I find all this cloud talk baffling. What does it actually mean to 'move to the cloud'? We have perfectly good servers in our building. Priya: That is a completely fair question, and I promise I will not use any jargon. Let me try an analogy. Right now, your company owns and manages its own power station — you generate your own electricity, you maintain the generators, and if something breaks down, it is your problem to fix. Moving to the cloud is like switching to the national grid. You still get all the electricity you need, but you are not responsible for generating it or maintaining the infrastructure. You just use it and pay for what you consume. Richard: I see. But what happens if the grid goes down? Priya: That is exactly the right question. The major cloud providers — AWS, Microsoft Azure, Google Cloud — have multiple data centres around the world. If one location has a problem, your systems automatically switch to another. In practice, the cloud providers' infrastructure is significantly more reliable than most companies' in-house server rooms. They have entire teams whose only job is keeping things running. Richard: And what about cost? Because I can see what our servers cost right now. Cloud feels like it could spiral. Priya: That is the most common concern I hear, and it is a fair one. The key benefit of cloud for your situation is not lower cost on day one — it may actually cost a similar amount initially. The benefit is that the cost scales with your actual usage. Right now you are paying for server capacity whether you use it or not. With cloud, quiet months cost less. And you avoid the large capital expense every few years when your servers need replacing. Richard: That does actually make sense. I had not thought about the replacement cycle. Priya: Most people don't — it is one of those costs that feels invisible until it arrives.",qs:[{q:"How does Richard describe his attitude toward cloud computing at the start?",opts:["He is enthusiastic but wants more technical detail", "He finds it baffling and has not been given a clear explanation", "He has already decided against it and wants to understand the costs", "He understands the concept but is worried about security"],ans:1},{q:"What analogy does Priya use to explain cloud computing?",opts:["Moving from a private car to using public transport", "Switching from owning a power station to using the national grid", "Moving from a physical library to a digital streaming service", "Switching from building your own tools to buying them from a supplier"],ans:1},{q:"What does the analogy illustrate about cloud computing?",opts:["That cloud is cheaper than on-premise infrastructure in all situations", "That cloud services are less reliable than in-house servers", "That you still get what you need but are no longer responsible for generating or maintaining it — you pay for what you use", "That moving to the cloud requires giving up control of your data entirely"],ans:2},{q:"What does Richard ask about after hearing the analogy?",opts:["How much the migration will cost", "Which cloud provider Priya recommends", "What happens if the cloud provider's infrastructure goes down", "Whether the company's data will be stored in the UK"],ans:2},{q:"How does Priya respond to Richard's reliability concern?",opts:["She admits that cloud outages are a genuine risk that should be factored into the decision", "She explains that major providers have multiple global data centres so systems switch automatically if one location fails", "She suggests purchasing business continuity insurance to cover potential cloud outages", "She says that the company's current servers are equally reliable"],ans:1},{q:"What does Priya say about cloud cost on day one?",opts:["Cloud is always significantly cheaper than on-premise infrastructure", "Cloud costs are unpredictable and difficult to budget for", "The cost may actually be similar initially — the key benefit is scalability and avoiding large capital expenditure cycles", "Cloud eliminates all server-related costs from day one"],ans:2},{q:"What benefit of cloud does Priya specifically highlight for quiet months?",opts:["The cloud provider offers discount pricing during low-usage periods", "The company can pause cloud services entirely during quiet periods", "Cloud cost scales with actual usage — quiet months cost less than peak months", "The company can negotiate reduced pricing for consistent monthly volumes"],ans:2},{q:"What 'invisible cost' does Priya mention that Richard had not considered?",opts:["The ongoing staff time spent managing on-premise servers", "The cost of downtime when on-premise servers fail", "The large capital expense of replacing on-premise servers every few years", "The cost of electricity required to run on-premise server rooms"],ans:2}]},
+  {id:1,title:"Technical Briefing: Explaining the Data Breach to the Board",sub:"Board Meeting · B2 Level · approx. 107 sec",icon:"🛡️",transcript:"The CISO, Amara, is briefing the board of directors following a security incident. She needs to explain what happened and what the company is doing about it — without technical jargon. Amara: Thank you for making time for this. I want to give you a clear picture of what happened, what we have done, and what you need to know to make decisions. I will avoid technical language as much as possible. Let me start with the headline: we detected an attempt to access customer data on our platform. We detected it quickly, contained it before any data was taken, and have fixed the underlying issue. No customer data was compromised. Now let me give you a little more context. Think of our system as a building with many rooms. Each room has a lock. Last week, an attacker found that one of the locks — on a door we did not visit very often — was weaker than it should have been. They tried to use this weakness to open the door. Our security monitoring system noticed the attempt and alerted our team, who secured the room before anyone got in. The weakness — in technical terms, a vulnerability in an older part of our API — has been fixed. We have also conducted a review of all the other locks in the building to make sure none of them have the same issue. What this means for you as a board. First — we are not required to notify regulators or customers, because no data was accessed. However, I recommend we notify our cyber insurer as a precaution. Second — the incident has highlighted a gap in our security testing programme. We are proposing to bring forward our annual penetration test to next month. Third — I will be bringing a proposal to the next board meeting to increase our security monitoring budget by £120,000 per year. The monitoring tool that detected this incident needs upgrading to cover our cloud environment. I am happy to answer any questions, in plain language.",qs:[{q:"What is the headline message Amara leads with?",opts:["A major data breach has occurred affecting all customer records", "The security incident was detected, contained before data was taken, and the issue has been fixed — no data was compromised", "The company faces regulatory fines for a failure in its security programme", "The incident is still ongoing and the board should prepare for disclosure"],ans:1},{q:"What analogy does Amara use to explain the security incident?",opts:["A burglar breaking into a house while the occupants are away", "A virus spreading through a building's air conditioning system", "A building with many rooms — each with a lock — where one weaker lock was almost exploited", "A fire in one part of a warehouse being contained before it spread"],ans:2},{q:"What triggered the security team's response?",opts:["A user reported suspicious activity in their account", "The security monitoring system noticed the intrusion attempt and alerted the team", "A routine security audit identified the vulnerability", "The attacker contacted the company demanding payment"],ans:1},{q:"What does 'the weakness has been fixed' refer to in plain language?",opts:["The company has replaced all its servers with newer, more secure hardware", "A weaker-than-expected lock on a rarely visited door — a vulnerability in an older part of the API", "The security team has been retrained to respond faster to incidents", "The company's firewall rules have been updated to block the attacker's IP address"],ans:1},{q:"Why is regulatory notification NOT required?",opts:["The attack originated from outside the UK, so UK regulations do not apply", "The company's cyber insurance policy covers the notification obligation", "No customer data was actually accessed or compromised during the incident", "The vulnerability was in the API rather than the customer database directly"],ans:2},{q:"What is Amara's first recommendation?",opts:["Immediately notifying all customers as a precautionary measure", "Notifying the cyber insurer as a precaution, even though regulatory notification is not required", "Commissioning an independent forensic investigation of the incident", "Replacing the affected system immediately with a more secure alternative"],ans:1},{q:"What gap did the incident reveal?",opts:["The company's incident response plan was insufficient", "The security team was understaffed to handle incidents of this type", "A gap in the security testing programme — the annual penetration test needs to be brought forward", "The board had not approved a sufficient cyber insurance policy"],ans:2},{q:"What budget proposal will Amara bring to the next board meeting?",opts:["A £500,000 investment in a complete security infrastructure overhaul", "An increase of £120,000 per year to upgrade the monitoring tool to cover the cloud environment", "A request for two additional security engineers to join the team", "A £250,000 budget for an external security audit of all systems"],ans:1}]},
+  {id:2,title:"Client Call: Explaining Why the Project Took Longer Than Expected",sub:"Client Communication · B2 Level · approx. 105 sec",icon:"⏰",transcript:"Marcus, a senior project manager, is on a call with Sarah, the operations director of a client organisation. The development project has run two weeks over schedule. Marcus needs to explain why — to a client who is not technical — without making excuses and without losing trust. Sarah: Marcus, I need to understand why we are two weeks behind. I told my team the system would be ready last Monday and now I have to go back to them and explain the delay. Marcus: You are right to want an explanation, and I am sorry for the impact this has had on your team's planning. Let me explain what happened as clearly as I can. When we began integrating our platform with your existing payment system, we discovered that the payment system behaves differently in certain situations than its documentation suggested. Think of it like this: we were given a map that said the road was straight. When we arrived, we found there were several sharp bends we hadn't been warned about. We had to slow down and navigate carefully to make sure we connected the systems correctly — because getting this wrong would have meant incorrect transactions reaching your customers. Sarah: Could you not have spotted this earlier? Marcus: In hindsight, yes — we could have done more testing against your live payment system earlier in the project rather than relying on the documentation. That is a legitimate criticism and I accept it. Going forward, our approach to integrations will include an earlier compatibility check against the live environment rather than the documentation alone. Sarah: So what is the new date? Marcus: We will have the system ready for your final testing on Friday of next week. I want to be specific rather than giving you another window — Friday. If anything changes between now and then, I will contact you by Wednesday with an update, not at the last minute. Sarah: I appreciate the honesty. Let us keep to that timeline.",qs:[{q:"Why is Sarah frustrated at the start of the call?",opts:["She was not told about the delay until the morning the system was due to launch", "She had told her team the system would be ready the previous Monday and now must explain the delay", "The delay has caused financial penalties under the contract", "The development team has not communicated with her for two weeks"],ans:1},{q:"What analogy does Marcus use to explain the integration problem?",opts:["Building a bridge that turned out to need different materials than the original specification", "Fitting together two puzzle pieces that look like they should connect but do not", "Being given a map that showed a straight road but finding sharp bends when they arrived", "Following a recipe that turned out to use ingredients not available in the local market"],ans:2},{q:"What does the analogy communicate about the cause of the delay?",opts:["The client's payment system was fundamentally broken and incompatible with the platform", "The development team made a serious technical error that caused the delay", "Undocumented behaviour in the client's payment system created unexpected complexity that required careful navigation", "The payment system provider gave the development team incorrect credentials"],ans:2},{q:"What does Marcus accept as a legitimate criticism?",opts:["That the development team should have flagged the risk earlier in the project planning stage", "That the client should have been updated more frequently during the development phase", "That more testing against the live payment system should have been done earlier, rather than relying on documentation", "That the project was scoped incorrectly from the start and should have included integration testing time"],ans:2},{q:"What process improvement does Marcus commit to?",opts:["Providing weekly written updates to all clients during integration phases", "Including an earlier compatibility check against the live environment in future integration projects", "Assigning a dedicated integration specialist to all client projects from the start", "Requiring clients to provide more detailed technical documentation before integration begins"],ans:1},{q:"How specific is Marcus about the new deadline?",opts:["He gives a two-week window to allow for further complications", "He says it will be ready 'soon' and will confirm a specific date by Monday", "He gives a specific day — Friday of next week — and commits to contacting Sarah by Wednesday if anything changes", "He says he will confirm a new date after consulting with the development team"],ans:2},{q:"What does Marcus commit to do if the Friday deadline is at risk?",opts:["Escalate the issue to his senior management team", "Contact Sarah by Wednesday with an update — not at the last minute", "Arrange an emergency meeting with the full project team", "Provide a daily update until the system is delivered"],ans:1},{q:"How does Sarah respond to Marcus's explanation and commitment?",opts:["She says she will need to involve legal if the new deadline is missed", "She remains sceptical and asks for a written guarantee", "She appreciates the honesty and agrees to keep to the new timeline", "She asks to speak directly with the development team"],ans:2}]},
+  {id:3,title:"Team Workshop: Teaching the Team to Explain AI to Clients",sub:"Internal Workshop · B2 Level · approx. 106 sec",icon:"🤖",transcript:"Yuki, the Head of Customer Success, is running an internal workshop to help her team explain AI features to non-technical clients. Yuki: Okay team, we have a problem. We have been getting feedback from clients that when they ask us to explain how the AI recommendation engine works, they either come away confused or they come away with completely wrong expectations — thinking it is magic, or thinking it is spying on them. Both are bad. Today I want to give you the tools to explain it clearly. Let me start with the explanation itself. When a client asks 'how does your AI work?', resist the urge to explain the algorithm. Instead, answer the question they are actually asking, which is usually: will this work for my business? What does it actually do? Should I trust it? Here is a plain-language explanation you can use as a starting point. Our recommendation engine works by noticing patterns. Every time a user interacts with the platform — clicking, searching, completing a course — the system records that behaviour. Over time, it builds a picture of what each user finds useful. When a new user arrives who behaves similarly to previous users, the system recommends what those similar users found valuable. It is a bit like a very observant librarian who has been watching what thousands of readers enjoyed and can make a good suggestion when a new reader walks in. Now, the key thing to add — because clients always worry about this — is what the AI does not do. It does not access personal information beyond what users have shared on the platform. It does not make decisions about people — it makes suggestions that users can ignore. And its suggestions improve over time, but they are not always right. Setting this expectation honestly is more important than making the AI sound impressive. The second tool I want to give you is the 'what if' test. Before any client explanation, ask yourself: what misconception might a reasonable person form from this explanation? If the answer is 'they might think it reads their emails', you need to add a clarification.",qs:[{q:"What two problems has Yuki's team been experiencing when explaining AI to clients?",opts:["Clients think it is too expensive and too complicated to implement", "Clients come away either confused or with completely wrong expectations — thinking it is magic or that it is spying on them", "Clients ask too many technical questions that the team cannot answer", "Clients do not see the business value and are cancelling their subscriptions"],ans:1},{q:"What question does Yuki say clients are actually asking when they ask 'how does your AI work'?",opts:["How is the algorithm trained and what data does it use?", "'Will this work for my business? What does it actually do? Should I trust it?'", "'Is the AI better than our current manual process and by how much?'", "'Who is responsible if the AI makes a wrong recommendation?'"],ans:1},{q:"What analogy does Yuki use to explain the recommendation engine?",opts:["A search engine that indexes content based on keywords", "A weather forecasting system that predicts future behaviour from past patterns", "A very observant librarian who has watched thousands of readers and can suggest what a new reader will enjoy", "A personal shopper who builds a profile of each customer over time"],ans:2},{q:"What does the system record according to the plain-language explanation?",opts:["The personal details users provide during registration", "User behaviour — clicking, searching, completing courses — to build a picture of what each user finds useful", "The devices and locations users access the platform from", "The time users spend on each page to measure engagement"],ans:1},{q:"What does Yuki say is more important than making the AI sound impressive?",opts:["Providing clients with a technical white paper they can review independently", "Demonstrating the AI's accuracy using real performance metrics from the platform", "Honestly setting the expectation that suggestions improve over time but are not always right", "Ensuring the client signs an acceptable use agreement before accessing AI features"],ans:2},{q:"What three things does Yuki say the AI does NOT do?",opts:["It does not personalise, does not learn, and does not improve over time", "It does not access personal data beyond what users share, does not make decisions about people, and is not always right", "It does not work without a large volume of user data, does not function offline, and does not integrate with all platforms", "It does not replace human judgment, does not work in all languages, and does not process payment data"],ans:1},{q:"What is the 'what if' test that Yuki introduces?",opts:["Testing the AI's recommendations against a baseline of manual recommendations to measure accuracy", "Before any explanation, asking: what misconception might a reasonable person form — and adding a clarification if the answer is concerning", "A client-facing quiz to assess their technical understanding before the AI features are enabled", "A post-explanation survey sent to clients to check whether the explanation was clear"],ans:1},{q:"What example does Yuki give of a misconception the 'what if' test might reveal?",opts:["The client might think the AI replaces their need for a customer success team", "The client might think the AI is more accurate than it actually is", "The client might think the AI reads their emails — requiring a clarification about data access", "The client might think the AI is available in all languages — requiring a clarification about current limitations"],ans:2}]}];
+const casesStudies=[{tag:"Industry · Science Communication · 1988–Present · Public Understanding",title:"Case Study 1: Richard Feynman and the Art of Explanation — What Science Communication Teaches Technical Professionals",sub:"How a Nobel Prize-winning physicist became the benchmark for clear technical explanation — and the principles he used",sections:[{h:"Background",t:"Richard Feynman (1918–1988) was an American theoretical physicist who won the Nobel Prize in Physics in 1965 for his work on quantum electrodynamics. He is remembered as one of the greatest physicists of the twentieth century — but he is equally celebrated for his ability to explain extraordinarily complex scientific ideas to non-expert audiences. Feynman gave legendary lectures at Caltech that students from all disciplines attended simply for the pleasure of watching someone explain things clearly. His three-volume Feynman Lectures on Physics, originally delivered to undergraduate students, are still in print and still considered among the best physics textbooks ever written. When the Space Shuttle Challenger disaster investigation commission asked for a plain-language demonstration of why the O-rings had failed, it was Feynman who dropped a piece of O-ring material into a glass of ice water in front of the television cameras — a thirty-second demonstration that communicated in concrete terms what pages of technical reports had failed to make clear."},{h:"The Feynman Technique",t:"Feynman developed a learning and explanation method that has since become widely known as the Feynman Technique. The method has four steps. First, identify the concept you want to explain. Second, explain it in simple language as if teaching it to someone who knows nothing about it — writing out the explanation in plain words, without jargon. Third, identify the gaps: where does the explanation break down? Where did you resort to jargon or technical shorthand? Those are the points where your own understanding is incomplete or where your explanation will fail a non-expert audience. Fourth, go back to the source material to address the gaps, and simplify further. The iterative process of explaining, identifying gaps, and refining is — Feynman argued — how genuine understanding is built. An expert who cannot explain something in simple terms does not fully understand it themselves."},{h:"Lessons for IT Professionals",t:"The Feynman Technique is directly applicable to the challenges that IT professionals face when communicating with non-technical colleagues, clients, and stakeholders. First, the discipline of writing out a plain-language explanation reveals the points where the communicator's own understanding is shaky or assumed — an invaluable diagnostic. Second, identifying jargon in an explanation is the first step to replacing it with accessible language. Third, the principle that genuine understanding enables simple explanation is a useful professional standard: if you cannot explain what a microservices architecture does in two sentences, you may not understand it as well as you think. Finally, Feynman's demonstration at the Challenger inquiry is a masterclass in the use of demonstration over description — showing a concrete, visible action rather than describing an abstract mechanism."}],qs:[{q:"What field did Richard Feynman win the Nobel Prize in?",opts:["Mathematics", "Computer Science", "Physics", "Chemistry"],ans:2},{q:"What is Feynman remembered for in addition to his scientific work?",opts:["His work as a science policy adviser to the US government", "His ability to explain complex scientific ideas clearly to non-expert audiences", "His development of the first computer programming language", "His popular books on the philosophy of science"],ans:1},{q:"What did Feynman do at the Challenger disaster investigation to explain the O-ring failure?",opts:["He presented a 200-page technical report to the commission", "He dropped a piece of O-ring material into ice water in front of the television cameras — a 30-second demonstration that made the failure immediately clear", "He used a computer simulation to show how the O-rings behave at low temperatures", "He interviewed the engineers who had warned about the O-ring risk before the launch"],ans:1},{q:"What is the first step of the Feynman Technique?",opts:["Write out a plain-language explanation without jargon", "Identify the gaps in the explanation where it breaks down", "Identify the concept you want to explain", "Return to source material to address gaps and simplify further"],ans:2},{q:"What do the 'gaps' in a Feynman Technique explanation reveal?",opts:["Areas where the concept is genuinely too complex to explain simply", "Points where the communicator's own understanding is incomplete or where jargon has replaced clarity", "Sections of the explanation that require visual aids to be understood", "Topics that require specialist knowledge and should not be explained to non-experts"],ans:1},{q:"What does Feynman argue about an expert who cannot explain something in simple terms?",opts:["They need to study more advanced material before attempting to explain it", "They should delegate the explanation to a specialist science communicator", "They do not fully understand it themselves — genuine understanding enables simple explanation", "They should use technical documentation rather than verbal explanation"],ans:2},{q:"How is the Feynman Technique directly applicable to IT professionals?",opts:["It provides a framework for writing technical documentation for other engineers", "The discipline of explaining plainly reveals gaps in one's own understanding and identifies jargon — applicable to explaining to clients, colleagues, and stakeholders", "It is most applicable to IT trainers who run technical courses for non-technical audiences", "It is a useful method for IT professionals studying for professional certifications"],ans:1},{q:"What principle does Feynman's Challenger demonstration illustrate?",opts:["Technical investigations should always include a live demonstration for the media", "Showing a concrete, visible action communicates more clearly than describing an abstract mechanism", "Complex technical failures can only be understood by qualified engineers", "Television is the most effective medium for communicating technical findings"],ans:1},{q:"What is the iterative nature of the Feynman Technique?",opts:["Explaining a concept repeatedly to different audiences until the explanation is perfect", "Explain simply, identify where the explanation breaks down, go back to source material to fill gaps, simplify further — and repeat", "Teaching the concept to a junior colleague and incorporating their feedback", "Writing multiple drafts of a technical document and testing each with a non-expert reader"],ans:1},{q:"What does the case study say about Feynman's lectures at Caltech?",opts:["Only physics students attended them as they required specialist knowledge", "They were broadcast on television and made freely available to the public", "Students from all disciplines attended simply for the pleasure of watching someone explain things clearly", "They were eventually banned because they were considered too simplistic for university-level education"],ans:2}]},
+  {tag:"Industry · Technology Communication · 2007–Present · Product Communication",title:"Case Study 2: Steve Jobs and the iPhone Launch — How to Communicate Technology as Human Benefit",sub:"The product presentation that changed how the technology industry communicates — and the principles behind its clarity",sections:[{h:"Background",t:"On 9 January 2007, Steve Jobs took the stage at the Macworld Conference and Expo in San Francisco and introduced the iPhone with a presentation that is widely studied in business schools and communication programmes around the world. Jobs opened not with a list of specifications — not with screen resolution, processor speed, or battery life — but with a problem statement: 'The most advanced phones out there are called smartphones, but the problem is they are not so smart.' He then framed the iPhone as the solution: 'An iPod, a phone, and an internet communicator.' He repeated this three times before revealing that all three were the same device. The crowd's reaction — immediate, spontaneous applause — demonstrated that the audience had understood exactly what was being offered before they saw a single specification."},{h:"The Communication Principles at Work",t:"Jobs's presentation employed several principles that are directly applicable to technical communication in any professional context. First, lead with the problem, not the solution: the audience needs to understand why they should care before they can evaluate what is being offered. Second, use concrete, human language: 'An iPod, a phone, and an internet communicator' is concrete and human; '3.5-inch multi-touch display with 160ppi resolution' is abstract and technical. Third, build anticipation through structure: repeating 'an iPod, a phone, and an internet communicator' three times before the reveal creates the experience of understanding rather than simply being told. Fourth, features last: Jobs introduced the iPhone's capabilities — the multi-touch screen, the internet browser, the visual voicemail — only after the audience understood the problem being solved and the concept of the solution. The specifications served the story, not the other way around."},{h:"Relevance for IT Professionals",t:"The iPhone launch teaches IT professionals a counter-intuitive lesson: technical audiences expect features; non-technical audiences need to understand benefits and problems first. When a developer presents a new system to the board, leading with the architecture diagram is the equivalent of Jobs opening with the processor specification — it answers questions no one is yet asking. The effective sequence for non-technical audiences is: here is the problem you recognise; here is what we are proposing to solve it; here is what it means for you specifically; here are the details for those who want them. This structure — problem, solution, benefit, detail — respects the audience's intelligence while meeting them where they are, rather than where the communicator is."}],qs:[{q:"When and where did Steve Jobs introduce the iPhone?",opts:["January 2006, at the Consumer Electronics Show in Las Vegas", "January 2007, at the Macworld Conference and Expo in San Francisco", "June 2007, at the Apple Worldwide Developers Conference in San Jose", "September 2007, at the Apple Special Event in London"],ans:1},{q:"What did Jobs lead with in his iPhone presentation?",opts:["A list of the iPhone's technical specifications and performance benchmarks", "A comparison between the iPhone and competing smartphones", "A problem statement: that smartphones at the time were not actually very smart", "A demonstration of the iPhone's multi-touch screen capabilities"],ans:2},{q:"How did Jobs describe the iPhone initially?",opts:["As the most advanced smartphone ever created by any company", "'An iPod, a phone, and an internet communicator' — repeated three times before revealing they were the same device", "As a revolutionary device with a 3.5-inch multi-touch display", "As the answer to the problem that smartphones had become too complicated for most users"],ans:1},{q:"What does the audience's immediate applause demonstrate?",opts:["That Apple fans will respond positively to any new product announcement", "That the audience had understood exactly what was being offered before seeing a single specification", "That the San Francisco technology audience was predisposed to like Apple products", "That Jobs was a skilled entertainer who could generate excitement regardless of the product"],ans:1},{q:"What is the first communication principle Jobs used?",opts:["Build anticipation through repetition and structural surprise", "Use concrete human language rather than technical specifications", "Lead with the problem, not the solution — audiences need to understand why they should care first", "Keep the presentation short — under one hour for maximum impact"],ans:2},{q:"Why is 'an iPod, a phone, and an internet communicator' more effective than '3.5-inch multi-touch display with 160ppi resolution'?",opts:["It is shorter and easier to remember", "It uses language that is concrete and human — describing what the device does in terms the audience understands, not how it works technically", "It is more accurate because it describes the device's primary functions", "It avoids revealing technical specifications to competitors before launch"],ans:1},{q:"When did Jobs introduce the iPhone's technical capabilities in the presentation?",opts:["At the very beginning — before the problem statement", "At the same time as the problem statement to establish credibility", "After the audience had already understood the problem being solved and the concept of the solution", "At the end of the presentation, as an appendix for technical audience members"],ans:2},{q:"What counter-intuitive lesson does the iPhone launch teach IT professionals?",opts:["Non-technical audiences do not care about technical detail at all", "Technical audiences prefer product demonstrations to specification lists", "Technical audiences expect features; non-technical audiences need to understand the problem and benefit first", "Presentations to boards should always be shorter than presentations to technical teams"],ans:2},{q:"What is the effective communication sequence for non-technical audiences described in the case study?",opts:["Feature, benefit, demo, specification", "Specification, demo, benefit, problem", "Solution, problem, detail, benefit", "Problem, solution, benefit, detail — for those who want it"],ans:3},{q:"What does the case study say about the architecture diagram at the start of a board presentation?",opts:["It is helpful for boards who want to evaluate technical complexity", "It is acceptable if it is followed immediately by a plain-language explanation", "Leading with an architecture diagram is like Jobs opening with the processor specification — it answers questions no one is yet asking", "Architecture diagrams should be provided in written form rather than shown as slides"],ans:2}]}];
+const assessQs=[{q:"What is plain language?",opts:["Using the simplest possible words even if accuracy is sacrificed", "A communication style prioritising clarity, brevity, and reader comprehension — not dumbing down but respecting the reader", "A regulatory requirement for government communications", "A style guide for technical writers"],ans:1},{q:"What is the 'curse of knowledge'?",opts:["The psychological burden of holding large amounts of technical knowledge", "The tendency for experts to overvalue their own knowledge", "The cognitive bias where knowing something makes it impossible to imagine not knowing it", "The challenge of keeping technical knowledge current in a fast-moving industry"],ans:2},{q:"What does a well-chosen analogy do for a non-expert audience?",opts:["It replaces the need for a technical definition entirely", "It activates existing knowledge, provides a framework for new information, and creates a memorable mental model", "It signals to the audience that the communicator is not a genuine expert", "It makes technical content entertaining but sacrifices accuracy"],ans:1},{q:"What is the difference between a feature and a benefit?",opts:["Features are always technical; benefits are always financial", "A feature is what technology does; a benefit is why it matters to the user or organisation", "Features are factual; benefits are opinions", "They are the same thing described at different levels of detail"],ans:1},{q:"What is progressive disclosure?",opts:["A compliance process for revealing security vulnerabilities", "Presenting information in stages — starting simple and adding detail for those who need it", "A project management technique for releasing features incrementally", "A communication technique where you reveal information only when asked"],ans:1},{q:"What is the Feynman Technique?",opts:["A method for memorising technical information using spaced repetition", "A process for writing technical documentation following four steps: identify, explain simply, find gaps, refine", "A Nobel Prize-winning approach to quantum electrodynamics", "A technique for giving technical presentations at conferences"],ans:1},{q:"What structure does the Steve Jobs iPhone launch suggest for non-technical audiences?",opts:["Feature, specification, demo, benefit", "Specification first, then benefit, then problem", "Problem, solution, benefit, detail — for those who want it", "Context, methodology, findings, recommendations"],ans:2},{q:"What is an executive summary?",opts:["A summary written by the CEO explaining strategic direction", "A concise overview for decision-makers with key conclusions — accessible without reading the full document", "A technical document approved by executives before release", "A presentation format for board-level technology proposals"],ans:1},{q:"What does 'audience analysis' involve before a technical communication?",opts:["Researching the audience's professional history and educational background", "Explicitly asking who the audience is, what they know, what they need to know, and what decisions they will make", "Sending a pre-reading list to prepare the audience", "Conducting a survey of audience satisfaction after previous communications"],ans:1},{q:"What is the risk of using an analogy without acknowledging its limits?",opts:["The audience may find the comparison condescending", "Creating misconceptions that are harder to correct than ignorance", "The analogy may inadvertently reveal confidential information", "The audience may use the analogy to ask questions the communicator cannot answer"],ans:1},{q:"What does the defining relative clause pattern for technical definitions look like?",opts:["'[Term] means [definition].'", "'[Term] can be defined as follows: [definition].'", "'[Term] is [category] that/which [defining characteristic].'", "'[Term]: [definition in brackets].'"],ans:2},{q:"In the cloud computing client meeting, what analogy does Priya use to explain the migration?",opts:["Moving from a private car to public transport", "Switching from owning a power station to using the national grid", "Moving from a physical shop to an online store", "Switching from printed books to digital downloads"],ans:1},{q:"What does the text say about 'does that make sense?' as a comprehension check?",opts:["It is the most effective check because it is direct and unambiguous", "It is appropriate for written communication but not verbal", "It almost always gets a yes — regardless of whether the person understood", "It should only be used at the end of an explanation, not during it"],ans:2},{q:"What is the 'what if' test described in the AI workshop listening activity?",opts:["Testing AI recommendations against a manual baseline", "Before any explanation, asking what misconception a reasonable person might form — and adding clarification if needed", "A post-explanation client survey", "A technical test of an AI system before deployment to clients"],ans:1},{q:"What does leading with a use case achieve that leading with a definition does not?",opts:["It is more technically accurate and precise", "It answers the audience's primary question: what does this mean for me? — grounding abstract technology in recognisable human activity", "It is faster to deliver in a time-limited presentation", "It avoids the need to define technical terms altogether"],ans:1},{q:"What is a knowledge gap?",opts:["A gap in an organisation's documented technical processes", "The difference in knowledge between the communicator and the audience about a subject", "A missing section in a technical document", "The time lag between technology development and public understanding"],ans:1},{q:"What is the signposting expression used to shift from 'what' to 'why' in an explanation?",opts:["'In summary...'", "'To conclude...'", "'That is the what — now let me explain the why.'", "'In other words...'"],ans:2},{q:"What is a visual aid in technical communication?",opts:["Any graphical element used to support or replace a verbal or written explanation", "A physical demonstration device used in presentations", "A slide deck template approved for company use", "An accessibility feature for users with visual impairments"],ans:0},{q:"What does Feynman's Challenger demonstration illustrate?",opts:["That complex technical failures require expert witnesses to explain them", "That showing a concrete visible action communicates more clearly than describing an abstract mechanism", "That television is the most effective medium for technical communication", "That engineers should be held publicly accountable for safety failures"],ans:1},{q:"What hedging expression signals that a simplified explanation is being used?",opts:["'The technical reality is...'", "'In simple terms...' / 'This is a simplification, but for our purposes...'", "'To be precise...'", "'The definition is...'"],ans:1}];
+
+// ── Navigation ──────────────────────────────────────────────
+function openSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='translateX(0)';sb.classList.add('open');document.getElementById('overlay').style.display='block';}
+function closeSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='';sb.classList.remove('open');document.getElementById('overlay').style.display='none';}
+function goTo(rawId){
+  // strip 'sec-' prefix if present for logic key
+  const id=rawId.replace(/^sec-/,'');
+  const secId='sec-'+id;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(secId);
+  if(sec){sec.classList.add('active');}
+  // mark active nav: match onclick containing this id
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    const oc=n.getAttribute('onclick')||'';
+    if(oc.includes("'"+secId+"'")||oc.includes('"'+secId+'"')){n.classList.add('active');}
+  });
+  window.scrollTo(0,0);
+  closeSidebar();
+  if(id==='overview') initOverview();
+  else if(id==='speaking') initSpeaking();
+  else if(id==='wordbank') initWordBank();
+  else if(id==='reading') initReading();
+  else if(id==='vocab') initVocab();
+  else if(id==='grammar') initGrammar();
+  else if(id==='gramreview') initGramReview();
+  else if(id==='writing') initWriting();
+  else if(id==='listening') initListening();
+  else if(id==='cases') initCases();
+  else if(id==='assessment') initAssessment();
+}
+
+// ── MCQ Engine ───────────────────────────────────────────────
+function renderMCQ2(containerId, questions, prefix, darkMode){
+  const c=document.getElementById(containerId);
+  if(!c)return;
+  let h='';
+  questions.forEach((item,i)=>{
+    const letters=['A','B','C','D'];
+    const dk=darkMode?'lmcq-opt':'';
+    h+=`<div class="mcq-block" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-opts">`;
+    item.opts.forEach((opt,j)=>{
+      h+=`<div class="mcq-opt ${dk}" onclick="pickOpt('${prefix}',${i},${j},${item.ans})" id="${prefix}-${i}-${j}">
+        <span class="opt-letter">${letters[j]}</span>${opt}</div>`;
+    });
+    h+=`</div></div>`;
+  });
+  c.innerHTML=h;
+}
+function pickOpt(prefix,qi,oi,ans){
+  const block=document.getElementById(prefix+'-q'+qi);
+  if(!block||block.dataset.done)return;
+  block.dataset.done='1';
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    if(j===ans)el.classList.add('correct');
+    else if(j===oi)el.classList.add('incorrect');
+    el.style.pointerEvents='none';
+  });
+}
+
+// ── Overview ─────────────────────────────────────────────────
+function initOverview(){
+  const c=document.getElementById('overviewContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card">
+    <div class="card-title">📘 What You Will Learn</div><div class="card-bar"></div>
+    <div class="outcomes-grid">${outcomes.map((o,i)=>`<div class="outcome"><span class="out-num">${String(i+1).padStart(2,'0')}</span><span class="out-text">${o}</span></div>`).join('')}</div>
+  </div>`;
+  setTimeout(()=>{
+    const pf=document.getElementById('progFill');
+    const pp=document.getElementById('progPct');
+    if(pf)pf.style.width='9%';
+    if(pp)pp.textContent='9%';
+  },300);
+}
+
+// ── Speaking ─────────────────────────────────────────────────
+function initSpeaking(){
+  const c=document.getElementById('speakingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">🎙️ Discussion Questions</div><div class="card-bar"></div>
+    <div class="speaking-grid">${speakingQs.map((q,i)=>`<div class="speaking-card"><div class="q-num">Q${String(i+1).padStart(2,'0')}</div><div class="q-text">${q}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Word Bank ─────────────────────────────────────────────────
+function initWordBank(){
+  const c=document.getElementById('wordBankContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">📚 Key Legal Terms</div><div class="card-bar"></div>
+    <div class="wb-grid">${wordBank.map(w=>`<div class="wb-card"><span class="wb-emoji">${w.emoji}</span><div class="wb-term">${w.term}</div><div class="wb-def">${w.def}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Reading ───────────────────────────────────────────────────
+function initReading(){
+  const c=document.getElementById('readingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  readingTexts.forEach((rt,ti)=>{
+    h+=`<div class="card">
+      <div class="reading-box"><h4>${rt.title}</h4>${rt.paragraphs.map(p=>`<p>${p}</p>`).join('')}</div>
+      <div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>
+      <div id="rmcq-${ti}"></div>
+    </div>`;
+  });
+  c.innerHTML=h;
+  readingTexts.forEach((_,ti)=>{
+    renderMCQ2('rmcq-'+ti, readingTexts[ti].questions, 'r'+ti, false);
+  });
+}
+
+// ── Vocabulary ────────────────────────────────────────────────
+let curVocab=0;
+function initVocab(){showVocab(0);}
+function showVocab(idx){
+  curVocab=idx;
+  document.querySelectorAll('#sec-vocab .ex-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  [0,1,2].forEach(i=>{
+    const p=document.getElementById('vex-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+  if(idx===0){renderMCQ2('vex-0',vocabMCQ,'vm0',false);}
+  else if(idx===1){renderGapFill('vex-1',vocabGapFill,'vg1');}
+  else if(idx===2){renderTF('vex-2',vocabTF,'vt2');}
+}
+function renderGapFill(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const blanks=items.map(function(it){return it.blank;});
+  let bankHtml='<div class="gf-bank-box"><div class="gf-bank-label">Word bank:</div><div class="gf-bank-pills">';
+  blanks.forEach(function(w){
+    bankHtml+='<span class="gf-pill" id="'+prefix+'-pill-'+w.replace(/\s+/g,'-')+'">'+w+'</span>';
+  });
+  bankHtml+='</div></div>';
+  let sentHtml='<div class="gf-sentences">';
+  items.forEach(function(item,i){
+    sentHtml+='<div class="gf-row" id="'+prefix+'-row'+i+'">'
+      +'<div class="gf-sentence-text"><span class="gf-num">'+(i+1)+'.</span> '+item.before
+      +' <span class="gf-blank-wrap"><input class="gf-underline-input" id="'+prefix+'-i'+i
+      +'" placeholder="\u2026" autocomplete="off" spellcheck="false"/>'
+      +'<span class="gf-underline"></span></span> '
+      +item.after+'</div>'
+      +'<div class="gf-row-fb" id="'+prefix+'-f'+i+'"></div>'
+      +'</div>';
+  });
+  sentHtml+='</div>';
+  const btnBar='<div class="gf-btn-bar">'
+    +'<button class="gf-check-btn" onclick="gradeGapFill(\''+prefix+'\',vocabGapFill)">Check Answers</button>'
+    +'<button class="gf-reset-btn" onclick="resetGapFill(\''+prefix+'\',vocabGapFill)">&#8635; Reset</button>'
+    +'<span class="gf-score-display" id="'+prefix+'-score"></span>'
+    +'</div>';
+  c.innerHTML='<div class="card gf-card">'
+    +'<div class="card-title">Exercise 2: Gap Fill</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="gf-instr">Type the correct word or phrase in each gap. Use the word bank for help. Click <strong>Check Answers</strong> when ready.</p>'
+    +bankHtml+sentHtml+btnBar
+    +'</div>';
+}
+function checkGF2(prefix,i,ans){}
+
+function gradeGapFill(prefix,items){
+  let correct=0;
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(!inp||!fb)return;
+    const val=inp.value.trim().toLowerCase().replace(/['']/g,"'");
+    const ans=item.blank.toLowerCase();
+    inp.disabled=true;
+    if(val===ans){
+      correct++;
+      inp.classList.add('gf-correct'); inp.classList.remove('gf-incorrect');
+      fb.innerHTML='<span class="gf-fb-ok">\u2713 Correct</span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-used');
+    } else {
+      inp.classList.add('gf-incorrect'); inp.classList.remove('gf-correct');
+      fb.innerHTML='<span class="gf-fb-err">\u2717 The answer is: <strong>'+item.blank+'</strong></span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-highlight');
+    }
+  });
+  const pct=Math.round(correct/items.length*100);
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl){
+    const col=pct>=80?'var(--green-accent)':pct>=50?'var(--gold-light)':'var(--red-accent)';
+    scoreEl.innerHTML='<span style="color:'+col+';font-weight:700;">'+correct+'/'+items.length+' \u2014 '+pct+'%</span>';
+  }
+}
+
+function resetGapFill(prefix,items){
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(inp){inp.value='';inp.disabled=false;inp.classList.remove('gf-correct','gf-incorrect');}
+    if(fb)fb.innerHTML='';
+    const ans=item.blank.toLowerCase();
+    const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+    if(pill){pill.classList.remove('gf-pill-used','gf-pill-highlight');}
+  });
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl)scoreEl.innerHTML='';
+}
+function renderTF(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='<div class="card tf-card">'
+    +'<div class="card-title">Exercise 3: True / False</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="tf-instr">Decide if each statement is TRUE or FALSE.</p>'
+    +'<div class="tf-list">';
+  items.forEach(function(item,i){
+    const stmt=item.statement||item.stmt||'';
+    const ans=item.ans;
+    h+='<div class="tf-item" id="'+prefix+'-row'+i+'">'
+      +'<div class="tf-item-stmt">'+(i+1)+'. '+stmt+'</div>'
+      +'<div class="tf-item-btns">'
+      +'<button class="tf-item-btn" id="'+prefix+'-T'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',true,'+ans+')">True</button>'
+      +'<button class="tf-item-btn" id="'+prefix+'-F'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',false,'+ans+')">False</button>'
+      +'</div>'
+      +'<div class="tf-item-fb" id="'+prefix+'-fb'+i+'"></div>'
+      +'</div>';
+  });
+  h+='</div></div>';
+  c.innerHTML=h;
+}
+
+function pickTF2(prefix,i,chosen,ans){
+  const row=document.getElementById(prefix+'-row'+i);
+  if(!row||row.dataset.done)return;
+  row.dataset.done='1';
+  const fb=document.getElementById(prefix+'-fb'+i);
+  const btnT=document.getElementById(prefix+'-T'+i);
+  const btnF=document.getElementById(prefix+'-F'+i);
+  const correct=chosen===ans;
+  if(btnT){
+    if(ans===true) btnT.classList.add('tf-btn-correct');
+    else if(chosen===true) btnT.classList.add('tf-btn-wrong');
+    btnT.disabled=true;
+  }
+  if(btnF){
+    if(ans===false) btnF.classList.add('tf-btn-correct');
+    else if(chosen===false) btnF.classList.add('tf-btn-wrong');
+    btnF.disabled=true;
+  }
+  if(fb){
+    fb.innerHTML=correct
+      ?'<span class="tf-fb-ok">✓ Correct!</span>'
+      :'<span class="tf-fb-err">✗ The correct answer is <strong>'+(ans?'True':'False')+'</strong>.</span>';
+  }
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+let curGram=0;
+function initGrammar(){showGram(0);}
+function showGram(idx){
+  curGram=idx;
+  document.querySelectorAll('#sec-grammar .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  [0,1,2].forEach(function(i){var p=document.getElementById('gex-'+i);if(p)p.style.display=i===idx?'block':'none';});
+  var ex=grammarEx[idx];
+  if(!document.getElementById('gex-'+idx).dataset.built){
+    document.getElementById('gex-'+idx).dataset.built='1';
+    var instr='<div class="card"><div class="card-title">'+ex.title+'</div><div class="card-bar"></div><p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">'+ex.instr+'</p><div id="gmcq-'+idx+'"></div></div>';
+    document.getElementById('gex-'+idx).innerHTML=instr;
+  }
+  renderMCQ2('gmcq-'+idx,ex.qs,'gm'+idx,false);
+}
+
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ──────────────────────────────────────────────────
+let curTask=0;
+function initWriting(){
+  const c=document.getElementById('writingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let html='<div class="ex-tabs">';
+  writingTasks.forEach(function(t,i){
+    html+='<div class="ex-tab'+(i===0?' active':'')+'" onclick="showTask('+i+')">'+t.type+'</div>';
+  });
+  html+='</div>';
+  writingTasks.forEach(function(t,i){
+    const minW=t.targetMin||120;
+    const promptFormatted=t.prompt.replace(/\n/g,'<br>');
+    html+='<div id="wpanel-'+i+'" style="display:'+(i===0?'block':'none')+'">'
+      +'<div class="card">'
+      +'<div class="w-task-header">'
+      +'<div class="w-task-pill">'+t.activity+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+t.title+'</div>'
+      +'</div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="w-prompt-box"><div class="w-prompt-label">📋 '+t.type+' — '+t.title+'</div>'
+      +'<div class="w-prompt-text">'+promptFormatted+'</div>'
+      +'<div class="w-target">Target: '+minW+'–'+(t.targetMax||200)+' words</div>'
+      +'</div>'
+      +'<textarea class="w-textarea" id="w-area-'+i+'" placeholder="Write your response here…" oninput="wCount('+i+')"></textarea>'
+      +'<div class="w-meta-row"><span class="w-counter" id="w-count-'+i+'">0 words</span>'
+      +'<div style="display:flex;gap:10px;">'
+      +'<button class="clear-btn" onclick="clearWriting('+i+')">Clear</button>'
+      +'<button class="ac-btn" id="w-btn-'+i+'" onclick="runAIFeedback('+i+')">✨ Auto-Correct &amp; Get Feedback</button>'
+      +'</div></div>'
+      +'<div id="w-fb-'+i+'"></div>'
+      +'</div></div>';
+  });
+  c.innerHTML=html;
+}
+function showTask(idx){
+  curTask=idx;
+  document.querySelectorAll('#sec-writing .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  writingTasks.forEach(function(_,i){
+    var p=document.getElementById('wpanel-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+}
+function wCount(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const wc=document.getElementById('w-count-'+idx);
+  if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  const min=writingTasks[idx].targetMin||120;
+  wc.textContent=words+' words';
+  wc.style.color=words>=min?'var(--green-accent)':'var(--text-mid)';
+}
+function clearWriting(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  if(ta)ta.value='';
+  if(fb)fb.innerHTML='';
+  wCount(idx);
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ───────────────────────────────────────────────────
+async function runAIFeedback(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  const btn=document.getElementById('w-btn-'+idx);
+  if(!ta||!fb)return;
+  const text=ta.value.trim();
+  const task=writingTasks[idx];
+  const minW=task.targetMin||120;
+  const words=text===''?0:text.trim().split(/\s+/).length;
+  if(words<30){
+    fb.innerHTML='<div class="fb-warn-box">⚠️ Please write at least 30 words before requesting feedback.</div>';
+    return;
+  }
+  btn.disabled=true;
+  btn.textContent='Analysing…';
+  fb.innerHTML='<div class="fb-loading-box"><span class="spin">⏳</span> AI is reviewing your writing…</div>';
+
+  // Rule-based context data
+  const sentences=text.split(/[.!?]+/).filter(s=>s.trim().length>3);
+  const avgSentLen=sentences.length?Math.round(words/sentences.length):0;
+  const goodLength=words>=minW&&words<=(task.targetMax||250);
+  const vocabTerms=["plain language","analogy","jargon","abstraction","audience","knowledge gap","use case","layered explanation","benefit","feature","metaphor","executive summary","stakeholder","technical literacy","definition","progressive disclosure","demonstration","assumption","structure","visual aid","feedback loop"];
+  const vocabHits=vocabTerms.filter(t=>text.toLowerCase().includes(t));
+
+  const systemPrompt=`You are an expert Business English writing coach specialising in IT and Digital Professions English at B1-B2 level. You give SPECIFIC, TEXT-ANCHORED feedback — always quoting or referencing the student's actual words. Never give generic advice.
+
+Return ONLY a JSON object with these exact keys — no markdown, no extra text:
+{
+  "score": <integer 0-100>,
+  "level": <"Needs Work"|"Developing"|"Proficient"|"Advanced"|"Excellent">,
+  "overall": <1 sentence overall impression referencing the student's actual writing>,
+  "grammar": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about grammar in THIS text — quote or reference actual sentences>
+  },
+  "vocabulary": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about word choices in THIS text — suggest a precise improvement>
+  },
+  "tone": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about register and formality in THIS text>
+  },
+  "structure": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about paragraph organisation and logical flow in THIS text>
+  },
+  "fluency": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about sentence variety and connectives in THIS text — give a concrete example>
+  },
+  "corrected": <one improved version of the weakest sentence from the text — copy the original then rewrite it>
+}`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1200,
+        system:systemPrompt,
+        messages:[{role:'user',content:'Task: '+task.type+' — '+task.title+'\nPrompt: '+task.prompt+'\n\nStudent writing ('+words+' words):\n'+text}]
+      })
+    });
+    const data=await res.json();
+    let p;
+    try{
+      const raw=data.content[0].text.replace(/```json|```/g,'').trim();
+      p=JSON.parse(raw);
+    }catch(e){throw new Error('parse');}
+
+    const score=Math.min(100,Math.max(0,p.score||70));
+    const level=p.level||'Proficient';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':score>=50?'#e09b00':'#d63031';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const cats=[
+      {label:'Grammar',key:'grammar',icon:'📐'},
+      {label:'Vocabulary',key:'vocabulary',icon:'📖'},
+      {label:'Tone',key:'tone',icon:'🎙️'},
+      {label:'Structure',key:'structure',icon:'🏗️'},
+      {label:'Fluency',key:'fluency',icon:'✨'}
+    ];
+
+    let catsHtml='';
+    cats.forEach(function(cat){
+      const d=p[cat.key]||{};
+      catsHtml+='<div class="fb-cat-row">'
+        +'<div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span>'
+        +'<strong class="fb-cat-label">'+cat.label+':</strong>'
+        +ratingIcon(d.rating||'Satisfactory')+'</div>'
+        +'<div class="fb-cat-comment">'+(d.comment||'')+'</div>'
+        +'</div>';
+    });
+
+    const lengthOk=goodLength
+      ?'<span class="fb-check">✓ '+words+' words — within target</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3
+      ?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header">'
+      +'<div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div>'
+      +'</div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +(p.corrected?'<div class="fb-corrected-block"><span class="fb-corrected-tag">✏️ Suggested rewrite:</span> '+p.corrected+'</div>':'')
+      +(p.overall?'<div class="fb-overall">✓ Overall: '+p.overall+'</div>':'')
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSentLen+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }catch(err){
+    // Rule-based fallback — still structured with 5 categories
+    const formalConnectives=['therefore','furthermore','consequently','moreover','however','nevertheless','in addition','as a result','thus','hence'];
+    const connUsed=formalConnectives.filter(w=>text.toLowerCase().includes(w)).length;
+    const avgSL=sentences.length?Math.round(words/sentences.length):0;
+    const score=Math.min(100,Math.max(20,(goodLength?20:0)+(vocabHits.length>=3?20:vocabHits.length*5)+(avgSL>=8&&avgSL<=22?15:0)+(/^[A-Z]/.test(text)?10:0)+(connUsed>=1?15:0)+20));
+    const level=score>=85?'Advanced':score>=70?'Proficient':score>=50?'Developing':'Needs Work';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':'#e09b00';
+
+    const gramOk=text.match(/[A-Z][^.!?]*[.!?]/g);
+    const gramComment=gramOk&&gramOk.length>0?'Check subject-verb agreement and ensure consistent verb tense throughout your response.':'Ensure each sentence begins with a capital letter and ends with a full stop.';
+    const vocComment=vocabHits.length>=3?'Good use of module vocabulary. Consider replacing generic verbs with more precise professional alternatives.':'Consider incorporating more module vocabulary terms — aim for at least 3 in a formal legal or compliance response.';
+    const toneComment=/dear|hi |hey |thanks/i.test(text)?'Some phrasing appears too informal for a professional compliance context. Avoid casual openers and closers.':'The register appears appropriate for the task.';
+    const structComment=sentences.length<3?'Your response would benefit from clearer paragraph structure — aim for an opening, body, and conclusion.':connUsed===0?'Consider organising your response with a clear introduction, supporting points, and a conclusion.':'Good paragraph structure detected.';
+    const fluComment=connUsed===0?'Your response would benefit from one or more connecting phrases between paragraphs (e.g., "Furthermore," "As a result,") to improve logical flow.':'Good use of connectives to link ideas.';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const catsHtml=[
+      {icon:'📐',label:'Grammar',rating:gramOk?'Satisfactory':'Needs Attention',comment:gramComment},
+      {icon:'📖',label:'Vocabulary',rating:vocabHits.length>=3?'Good':'Needs Attention',comment:vocComment},
+      {icon:'🎙️',label:'Tone',rating:/dear|hi |hey |thanks/i.test(text)?'Needs Attention':'Satisfactory',comment:toneComment},
+      {icon:'🏗️',label:'Structure',rating:connUsed>0&&sentences.length>=3?'Good':'Satisfactory',comment:structComment},
+      {icon:'✨',label:'Fluency',rating:connUsed>=1?'Good':'Needs Attention',comment:fluComment}
+    ].map(function(cat){
+      return '<div class="fb-cat-row"><div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span><strong class="fb-cat-label">'+cat.label+':</strong>'+ratingIcon(cat.rating)+'</div><div class="fb-cat-comment">'+cat.comment+'</div></div>';
+    }).join('');
+
+    const lengthOk=goodLength?'<span class="fb-check">✓ '+words+' words — within target</span>':'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>':'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header"><div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div></div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSL+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }
+  btn.disabled=false;
+  btn.textContent='✨ Auto-Correct & Get Feedback';
+}
+
+// ── Listening TTS Engine ──────────────────────────────────────
+let ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+const voicePref=['Samantha','Karen','Victoria','Moira','Daniel','Google UK English Female','Google US English','en-GB','en-US'];
+function getBestVoice(){
+  const voices=window.speechSynthesis.getVoices();
+  for(var j=0;j<voicePref.length;j++){
+    var v=voices.find(function(vv){return vv.name===voicePref[j]||vv.name.includes(voicePref[j]);});
+    if(v)return v;
+  }
+  return voices.find(function(v){return v.lang&&v.lang.startsWith('en');})||voices[0]||null;
+}
+function initListening(){
+  const c=document.getElementById('listeningContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  listeningActs.forEach(function(act,i){
+    h+='<div class="card" id="l-card-'+i+'">'
+      +'<div class="l-header"><span class="l-icon">'+act.icon+'</span><div><div class="card-title">'+act.title+'</div><div class="l-sub">'+act.sub+'</div></div></div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="l-player">'
+      +'<div class="l-controls">'
+      +'<button class="l-play-btn" id="l-play-'+i+'" onclick="togglePlay('+i+')">&#9654; Play</button>'
+      +'<select class="l-speed" id="l-speed-'+i+'" onchange="changeSpeed('+i+')">'
+      +'<option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option>'
+      +'</select>'
+      +'<button class="l-trans-btn" id="l-tbtn-'+i+'" onclick="toggleTranscript('+i+')">&#128196; Transcript</button>'
+      +'</div>'
+      +'<div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-'+i+'"></div></div><span class="l-time" id="l-time-'+i+'">0:00</span></div>'
+      +'</div>'
+      +'<div class="l-transcript-box" id="l-trans-'+i+'" style="display:none"><p class="l-transcript-text">'+act.transcript+'</p></div>'
+      +'<div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>'
+      +'<div id="lmcq-'+i+'"></div>'
+      +'</div>';
+  });
+  c.innerHTML=h;
+  listeningActs.forEach(function(act,i){renderMCQ2('lmcq-'+i,act.qs,'la'+i,false);});
+  window.speechSynthesis.getVoices();
+}
+function togglePlay(idx){
+  if(ttsState.actIdx===idx&&ttsState.playing){pauseAudio(idx);}
+  else if(ttsState.actIdx===idx&&ttsState.paused){resumeAudio(idx);}
+  else{playAudio(idx);}
+}
+function playAudio(idx){
+  const act=listeningActs[idx];
+  if(!act)return;
+  if(ttsState.actIdx===idx&&ttsState.paused){
+    resumeAudio(idx); return;
+  }
+  stopAudio();
+  ttsState.actIdx=idx;
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.voice=getBestVoice();
+  utt.rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  utt.pitch=1.0;
+  utt.volume=1.0;
+  utt.onstart=()=>{ttsState.playing=true;ttsState.paused=false;ttsState.startTime=Date.now();updatePlayBtn(idx,true);startProg(idx,act.transcript.length);};
+  utt.onend=()=>{ttsState.playing=false;ttsState.paused=false;updatePlayBtn(idx,false);stopProg(idx,true);};
+  utt.onerror=()=>{ttsState.playing=false;updatePlayBtn(idx,false);stopProg(idx,false);};
+  ttsState.utterance=utt;
+  window.speechSynthesis.speak(utt);
+}
+function pauseAudio(idx){
+  if(window.speechSynthesis.speaking&&!window.speechSynthesis.paused){
+    window.speechSynthesis.pause();
+    ttsState.paused=true;ttsState.playing=false;
+    ttsState.elapsed+=Date.now()-ttsState.startTime;
+    updatePlayBtn(idx,false,true);
+    clearInterval(ttsState.progTimer);
+  }
+}
+function resumeAudio(idx){
+  window.speechSynthesis.resume();
+  ttsState.paused=false;ttsState.playing=true;
+  ttsState.startTime=Date.now();
+  updatePlayBtn(idx,true);
+  startProg(idx,listeningActs[idx].transcript.length,true);
+}
+function stopAudio(){
+  window.speechSynthesis.cancel();
+  if(ttsState.actIdx!==null){updatePlayBtn(ttsState.actIdx,false);stopProg(ttsState.actIdx,false);}
+  ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+}
+function updatePlayBtn(idx,playing,paused){
+  const btn=document.getElementById('l-play-'+idx);
+  if(!btn)return;
+  btn.textContent=playing?'⏸ Pause':paused?'▶ Resume':'▶ Play';
+}
+function startProg(idx,charLen,resume){
+  clearInterval(ttsState.progTimer);
+  const rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  const totalMs=(charLen/18)*1000/rate;
+  const elapsed=resume?ttsState.elapsed:0;
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  ttsState.progTimer=setInterval(()=>{
+    const spent=elapsed+(Date.now()-ttsState.startTime);
+    const pct=Math.min(100,(spent/totalMs)*100);
+    if(bar)bar.style.width=pct+'%';
+    const rem=Math.max(0,Math.round((totalMs-spent)/1000));
+    if(time)time.textContent=`${Math.floor(rem/60)}:${String(rem%60).padStart(2,'0')}`;
+    if(pct>=100)clearInterval(ttsState.progTimer);
+  },200);
+}
+function stopProg(idx,finished){
+  clearInterval(ttsState.progTimer);
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  if(bar)bar.style.width=finished?'100%':'0%';
+  if(time)time.textContent='0:00';
+}
+function changeSpeed(idx){
+  const sel=document.getElementById('l-speed-'+idx);
+  if(!sel)return;
+  if(ttsState.actIdx===idx&&(ttsState.playing||ttsState.paused)){
+    stopAudio(); playAudio(idx);
+  }
+}
+function toggleTranscript(idx){
+  const box=document.getElementById('l-trans-'+idx);
+  const btn=document.getElementById('l-tbtn-'+idx);
+  if(!box)return;
+  const open=box.style.display==='block';
+  box.style.display=open?'none':'block';
+  if(btn)btn.textContent=open?'📄 Show Transcript':'📄 Hide Transcript';
+}
+
+// ── Case Studies ──────────────────────────────────────────────
+function initCases(){
+  const c=document.getElementById('casesContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  casesStudies.forEach(function(cs,ci){
+    h+='<div class="card">'
+      +'<div class="cs-tag">'+cs.tag+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+cs.title+'</div>'
+      +'<div class="cs-sub">'+cs.sub+'</div>'
+      +'<div class="card-bar"></div>';
+    cs.sections.forEach(function(s){
+      h+='<div class="cs-section"><h4 class="cs-sh">'+s.h+'</h4><p class="cs-p">'+s.t+'</p></div>';
+    });
+    h+='<div class="card-title" style="margin-top:22px;">Case Study Questions</div><div class="card-bar"></div>'
+      +'<div id="csmcq-'+ci+'"></div></div>';
+  });
+  c.innerHTML=h;
+  casesStudies.forEach(function(cs,ci){renderMCQ2('csmcq-'+ci,cs.qs,'cs'+ci,false);});
+}
+
+// ── Final Assessment ──────────────────────────────────────────
+let assAnswers={};
+function initAssessment(){
+  const c=document.getElementById('assessContainer');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const letters=['A','B','C','D'];
+  let h='';
+  assessQs.forEach(function(item,i){
+    h+='<div class="mcq-block" id="aq-'+i+'">'
+      +'<div class="mcq-q">'+(i+1)+'. '+item.q+'</div>'
+      +'<div class="mcq-opts">';
+    item.opts.forEach(function(opt,j){
+      h+='<div class="mcq-opt" onclick="pickAss('+i+','+j+')" id="ass-'+i+'-'+j+'">'
+        +'<span class="opt-letter">'+letters[j]+'</span>'+opt+'</div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+  assAnswers={};
+  document.getElementById('final-res').style.display='none';
+  document.getElementById('ass-sub').style.display='inline-flex';
+}
+function pickAss(qi,oi){
+  const block=document.getElementById('aq-'+qi);
+  if(!block||block.dataset.done)return;
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    el.classList.toggle('selected',j===oi);
+  });
+  assAnswers[qi]=oi;
+}
+function submitAss(){
+  let attempts=parseInt(document.getElementById('att-disp')?.textContent||'0');
+  const maxAttempts=2;
+  if(attempts>=maxAttempts){
+    alert('You have used both attempts.');return;
+  }
+  const unanswered=assessQs.map((_,i)=>i).filter(i=>assAnswers[i]===undefined);
+  if(unanswered.length>0){
+    alert('Please answer all questions before submitting. Unanswered: '+unanswered.map(i=>i+1).join(', '));return;
+  }
+  // Mark answers
+  assessQs.forEach((item,i)=>{
+    const block=document.getElementById('aq-'+i);
+    if(!block)return;
+    block.dataset.done='1';
+    block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+      el.classList.remove('selected');
+      if(j===item.ans)el.classList.add('correct');
+      else if(j===assAnswers[i])el.classList.add('incorrect');
+      el.style.pointerEvents='none';
+    });
+  });
+  const correct=assessQs.filter((_,i)=>assAnswers[i]===assessQs[i].ans).length;
+  const pct=Math.round((correct/assessQs.length)*100);
+  const pass=pct>=70;
+  attempts++;
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent=attempts+' / 2';
+  const res=document.getElementById('final-res');
+  res.style.display='block';
+  const scoreColor=pass?'#00a651':'#d63031';
+  res.className='final-result '+(pass?'pass':'fail');
+  res.style.display='block';
+  res.innerHTML='<div class="final-score">'+pct+'<span style="font-size:22px">%</span></div>'
+    +'<div class="final-verdict">'+(pass?'🎉 Congratulations — You Passed!':'📚 Not Passed Yet')+'</div>'
+    +'<div class="final-msg">'+correct+' / '+assessQs.length+' correct · Pass mark: 70%</div>'
+    +(attempts<maxAttempts&&!pass?'<button class="btn-primary" onclick="resetAss()" style="margin-top:18px">Try Again (Attempt '+(attempts+1)+' of '+maxAttempts+')</button>':'')
+    +(attempts>=maxAttempts&&!pass?'<div style="margin-top:12px;font-size:13px;opacity:0.8;">Maximum attempts reached.</div>':'');
+  if(pass||attempts>=maxAttempts){
+    document.getElementById('ass-sub').style.display='none';
+  }
+}
+function resetAss(){
+  const c=document.getElementById('assessContainer');
+  if(c){c.dataset.built='';c.innerHTML='';}
+  assAnswers={};
+  const res=document.getElementById('final-res');
+  if(res){res.style.display='none';res.innerHTML='';}
+  const sub=document.getElementById('ass-sub');
+  if(sub)sub.style.display='inline-flex';
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent='0 / 2';
+  initAssessment();
+}
+
+// ── Bootstrap ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('mob-btn').addEventListener('click',openSidebar);
+  document.getElementById('overlay').addEventListener('click',closeSidebar);
+  goTo('overview');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

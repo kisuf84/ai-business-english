@@ -28,6 +28,7 @@ export type LessonGenerationOutput = {
   title: string;
   summary: string;
   objectives: string[];
+  speaking_questions?: string[];
   word_bank: VocabularyItem[];
   reading_text: string;
   reading_comprehension: MCQ[];

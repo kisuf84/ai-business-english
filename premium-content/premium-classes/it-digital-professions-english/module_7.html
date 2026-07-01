@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Module 7: Cybersecurity Terms and Scenarios — IT &amp; Digital Professions English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root{--navy:#0d1b2e;--navy-mid:#112240;--navy-light:#1a3357;--gold:#00bcd4;--gold-light:#26c6da;--gold-bright:#4dd0e1;--cream:#f0f4f8;--cream-dark:#dce8f0;--white:#ffffff;--text-light:#90b8cc;--text-mid:#4a7a96;--red-accent:#e53935;--green-accent:#00b86b;--teal:#0097a7;--sidebar-w:260px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);display:flex;min-height:100vh;overflow-x:hidden;}
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent;transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);}
+.sidebar-brand{padding:24px 22px 18px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-brand h1{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:700;color:var(--gold-bright);line-height:1.38;margin-bottom:3px;}
+.sidebar-brand .sub{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-mid);font-weight:500;}
+.level-badge{display:inline-block;margin-top:11px;background:var(--gold);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:1px;padding:3px 11px;border-radius:20px;text-transform:uppercase;}
+.sidebar-section-label{padding:20px 22px 7px;font-size:8.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--text-mid);font-weight:700;}
+.nav-item{display:flex;align-items:center;justify-content:space-between;padding:11px 22px;cursor:pointer;transition:all 0.18s;border-left:3px solid transparent;}
+.nav-item:hover{background:rgba(255,255,255,0.055);}
+.nav-item.active{background:rgba(245,184,0,0.12);border-left-color:var(--gold-light);}
+.nav-left{display:flex;align-items:center;gap:11px;}
+.nav-icon{font-size:15px;opacity:0.9;}
+.nav-label{font-size:13px;color:var(--text-light);font-weight:400;}
+.nav-item.active .nav-label{color:var(--white);font-weight:500;}
+.nav-badge{font-size:9.5px;font-weight:700;color:var(--navy);background:var(--gold-bright);padding:1px 7px;border-radius:12px;}
+#mob-btn{display:none;position:fixed;top:14px;left:14px;z-index:300;background:var(--navy);border:none;border-radius:10px;padding:10px 13px;cursor:pointer;color:var(--gold-bright);font-size:19px;box-shadow:0 3px 14px rgba(0,0,0,0.35);line-height:1;}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150;}
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;}
+.section{display:none;}.section.active{display:block;}
+.hero{background:linear-gradient(145deg,#06111f 0%,#0d1e35 50%,#081929 100%);padding:64px 64px 54px;position:relative;overflow:hidden;}
+.hero::before{content:'L1';position:absolute;right:-15px;bottom:-55px;font-family:'Playfair Display',serif;font-size:310px;font-weight:900;color:rgba(255,255,255,0.022);line-height:1;pointer-events:none;}
+.hero::after{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(245,184,0,0.05) 0%,transparent 70%);pointer-events:none;}
+.module-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);padding:7px 18px;border-radius:50px;font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-light);font-weight:600;margin-bottom:30px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4.6vw,58px);font-weight:900;color:var(--white);line-height:1.08;}
+.hero h2 .accent{color:var(--gold-bright);}
+.hero-desc{font-size:15px;color:var(--text-light);max-width:620px;line-height:1.78;margin-top:20px;font-weight:300;}
+.hero-stats{display:flex;gap:36px;margin-top:44px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;gap:3px;}
+.stat-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--gold-bright);line-height:1;}
+.stat-l{font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(160,180,210,0.7);font-weight:600;}
+.prog-wrap{background:var(--navy-mid);padding:16px 64px;display:flex;align-items:center;gap:20px;}
+.prog-label{font-size:11.5px;font-weight:600;color:var(--text-light);white-space:nowrap;}
+.prog-track{flex:1;height:6px;background:rgba(255,255,255,0.09);border-radius:6px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:6px;width:0%;transition:width 1s ease;}
+.prog-pct{font-size:12.5px;font-weight:700;color:var(--gold-bright);min-width:36px;text-align:right;}
+.content{padding:48px 60px;}
+.card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.card-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.card-bar{width:40px;height:3px;background:var(--gold-light);border-radius:3px;margin-bottom:20px;}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.outcome{display:flex;align-items:flex-start;gap:13px;background:var(--cream);border-radius:11px;padding:14px 16px;border-left:3px solid var(--gold-light);}
+.out-num{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--gold);line-height:1;min-width:24px;}
+.out-text{font-size:13.5px;color:var(--navy);line-height:1.52;}
+.speaking-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.speaking-card{background:var(--cream);border-radius:11px;padding:18px 20px;border-top:3px solid var(--gold-light);transition:transform 0.2s,box-shadow 0.2s;cursor:default;}
+.speaking-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(11,27,48,0.1);}
+.q-num{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;margin-bottom:8px;letter-spacing:1px;}
+.q-text{font-size:13.5px;color:var(--navy);line-height:1.55;}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.wb-card{background:var(--navy);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:transform 0.2s;cursor:default;}
+.wb-card:hover{transform:translateY(-2px);}
+.wb-emoji{font-size:28px;line-height:1;display:block;margin-bottom:2px;}
+.wb-term{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;color:var(--gold-bright);}
+.wb-def{font-size:12px;color:var(--text-light);line-height:1.52;}
+.reading-box{background:var(--cream);border-radius:12px;padding:26px 30px;margin-bottom:26px;border-left:4px solid var(--gold-light);}
+.reading-box h4{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.reading-box p{font-size:14px;color:#1a2e45;line-height:1.84;margin-bottom:13px;}
+.reading-box p:last-child{margin-bottom:0;}
+.mcq-block{margin-bottom:22px;}
+.mcq-q{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:11px;line-height:1.5;}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;}
+.mcq-opt{display:flex;align-items:center;gap:10px;background:var(--cream);border:2px solid var(--cream-dark);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.18s;font-size:13.5px;color:var(--navy);user-select:none;-webkit-tap-highlight-color:transparent;}
+.mcq-opt:hover{border-color:var(--gold-light);background:#fef8e0;}
+.mcq-opt.selected{border-color:var(--gold);background:#fff3c0;}
+.mcq-opt.correct{border-color:var(--green-accent);background:#e6f8ee;color:#0a6b35;}
+.mcq-opt.incorrect{border-color:var(--red-accent);background:#fdecea;color:#881a18;}
+.opt-letter{font-family:'DM Mono',monospace;font-size:10.5px;font-weight:700;width:23px;height:23px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy);}
+.mcq-opt.correct .opt-letter{background:var(--green-accent);color:white;}
+.mcq-opt.incorrect .opt-letter{background:var(--red-accent);color:white;}
+.lmcq-opt{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.12)!important;color:var(--text-light)!important;}
+.lmcq-opt:hover{border-color:var(--gold-light)!important;background:rgba(245,184,0,0.1)!important;}
+.lmcq-opt.selected{border-color:var(--gold)!important;background:rgba(245,184,0,0.18)!important;color:var(--gold-bright)!important;}
+.lmcq-opt.correct{border-color:var(--green-accent)!important;background:rgba(0,166,81,0.18)!important;color:#4dde9a!important;}
+.lmcq-opt.incorrect{border-color:var(--red-accent)!important;background:rgba(214,48,49,0.18)!important;color:#ff8b8b!important;}
+.check-btn{margin-top:15px;background:var(--navy);color:var(--gold-bright);border:none;padding:11px 26px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.check-btn:hover{background:var(--navy-light);}
+.l-check{background:rgba(255,255,255,0.1)!important;color:var(--gold-bright)!important;}
+.l-check:hover{background:rgba(255,255,255,0.18)!important;}
+.score-disp{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;margin-top:14px;}
+.ex-tabs{display:flex;gap:4px;margin-bottom:26px;background:var(--cream-dark);border-radius:12px;padding:4px;flex-wrap:wrap;}
+.ex-tab{flex:1;min-width:130px;text-align:center;padding:10px;border-radius:9px;font-size:12.5px;font-weight:500;cursor:pointer;color:var(--text-mid);transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.ex-tab.active{background:var(--navy);color:var(--gold-bright);}
+.gram-ref{background:var(--navy);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.gram-ref h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:14px;}
+.gram-rule{background:rgba(255,255,255,0.065);border-radius:9px;padding:14px 18px;margin-bottom:11px;border-left:3px solid var(--gold-light);}
+.gram-rule p,.gram-rule li{font-size:13px;color:var(--text-light);line-height:1.66;}
+.gram-rule code{font-family:'DM Mono',monospace;background:rgba(245,184,0,0.18);color:var(--gold-bright);padding:1px 6px;border-radius:4px;font-size:12px;}
+.gram-rule ul{padding-left:18px;}
+.gf-item{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:14px;color:var(--navy);line-height:2.2;margin-bottom:12px;}
+.gf-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);padding:2px 7px;width:160px;outline:none;text-align:center;}
+.gf-input.correct{border-color:var(--green-accent);color:var(--green-accent);}
+.gf-input.incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.tf-row{background:var(--cream);border-radius:10px;padding:13px 17px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.tf-stmt{font-size:13.5px;color:var(--navy);flex:1;line-height:1.52;}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;}
+.tf-btn{padding:7px 16px;border-radius:8px;border:2px solid var(--cream-dark);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:white;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.tf-btn:hover{border-color:var(--gold-light);}
+.tf-btn.sel-t,.tf-btn.sel-f{background:var(--navy);color:white;border-color:var(--navy);}
+.tf-btn.cor{background:var(--green-accent);color:white;border-color:var(--green-accent);}
+.tf-btn.wrg{background:var(--red-accent);color:white;border-color:var(--red-accent);}
+.writing-prompt{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.writing-prompt h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:10px;}
+.writing-prompt p{font-size:13.5px;color:var(--text-light);line-height:1.76;}
+.writing-tags{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
+.wtag{background:rgba(245,184,0,0.18);color:var(--gold-bright);font-size:11px;font-weight:600;letter-spacing:0.8px;padding:4px 12px;border-radius:20px;text-transform:uppercase;border:1px solid rgba(245,184,0,0.3);}
+.w-textarea{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;}
+.w-textarea:focus{border-color:var(--gold-light);background:white;}
+.w-counter{font-size:12px;color:var(--text-mid);text-align:right;margin-bottom:14px;}
+.w-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:6px;}
+.ac-btn{background:var(--gold);color:var(--navy);border:none;padding:13px 28px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(224,155,0,0.35);}
+.ac-btn:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.clear-btn{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:12px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.clear-btn:hover{border-color:var(--red-accent);color:var(--red-accent);}
+.fb-panel{display:none;background:#131e2e;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-panel.show{display:block;}
+.fb-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-title-row{display:flex;align-items:center;gap:10px;}
+.fb-emoji{font-size:20px;}
+.fb-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold-bright);}
+.fb-score-badge{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--gold-bright);}
+.fb-level{font-size:14px;font-weight:600;color:var(--gold-bright);}
+.fb-section{margin-bottom:14px;}
+.fb-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);margin-bottom:7px;}
+.fb-item{font-size:13px;color:var(--text-light);line-height:1.62;padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid var(--gold-light);}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);line-height:1.7;font-style:italic;}
+.listen-card{background:var(--navy);border-radius:16px;padding:28px 32px;margin-bottom:20px;}
+.listen-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.listen-icon{width:52px;height:52px;border-radius:14px;background:rgba(245,184,0,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.listen-meta{flex:1;}
+.listen-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-bright);margin-bottom:3px;}
+.listen-sub{font-size:12px;color:var(--text-mid);}
+.player-row{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px 18px;margin-bottom:14px;}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--navy);flex-shrink:0;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.play-btn:hover{background:var(--gold-bright);transform:scale(1.06);}
+.prog-audio{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.prog-audio-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.5s linear;}
+.time-disp{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:70px;text-align:right;}
+.speed-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.speed-label{font-size:11px;color:var(--text-mid);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.spd-btn{padding:5px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.spd-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.replay-btn{padding:5px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:auto;}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.trans-toggle{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);border-radius:9px;padding:10px 16px;cursor:pointer;margin-bottom:0;transition:background 0.18s;-webkit-tap-highlight-color:transparent;}
+.trans-toggle:hover{background:rgba(255,255,255,0.09);}
+.trans-label{font-size:12px;font-weight:600;color:var(--text-mid);letter-spacing:0.5px;}
+.trans-arrow{font-size:11px;color:var(--text-mid);transition:transform 0.22s;}
+.trans-toggle.open .trans-arrow{transform:rotate(180deg);}
+.trans-body{max-height:0;overflow:hidden;transition:max-height 0.36s ease;}
+.trans-body.open{max-height:800px;}
+.trans-text{font-size:13px;color:var(--text-light);line-height:1.78;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:0 0 9px 9px;border-top:1px solid rgba(255,255,255,0.06);}
+.listen-mcq-wrap{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+.listen-mcq-title{font-size:13px;font-weight:700;color:var(--gold-bright);letter-spacing:0.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.case-card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.case-header{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:12px;padding:22px 26px;margin-bottom:22px;}
+.case-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);font-weight:700;margin-bottom:8px;}
+.case-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.case-sub{font-size:12px;color:var(--text-mid);}
+.case-section{margin-bottom:18px;}
+.case-section h5{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.case-section p{font-size:14px;color:var(--navy);line-height:1.78;}
+.final-result{display:none;border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.final-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.final-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.final-score{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;line-height:1;}
+.final-verdict{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:8px;}
+.final-msg{font-size:14px;opacity:0.88;max-width:420px;margin:0 auto;line-height:1.68;}
+.ass-btn{margin-top:18px;background:var(--gold);color:var(--navy);border:none;padding:13px 32px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.ass-btn:hover{background:var(--gold-bright);}
+.retry-btn{display:none;margin-top:8px;margin-left:10px;background:rgba(255,255,255,0.15);color:var(--navy);border:1.5px solid var(--cream-dark);padding:11px 28px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.retry-btn:hover{background:rgba(255,255,255,0.25);}
+/* ─ Gap Fill & True/False ─ */
+.gf-block{background:var(--cream);border-radius:10px;padding:16px 18px;margin-bottom:12px;border-left:3px solid var(--gold-light);}
+.gf-sentence{font-size:14px;color:var(--navy);line-height:2.1;}
+.gf-fb{font-size:12.5px;margin-top:6px;min-height:18px;}
+.tf-block{background:var(--cream);border-radius:10px;padding:15px 18px;margin-bottom:10px;border-left:3px solid var(--gold-light);}
+.tf-q{font-size:14px;color:var(--navy);line-height:1.55;margin-bottom:10px;}
+.tf-fb{font-size:12.5px;margin-top:8px;min-height:18px;}
+/* ─ Listening player ─ */
+.l-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.l-icon{font-size:30px;line-height:1;}
+.l-sub{font-size:12px;color:var(--text-mid);margin-top:3px;}
+.l-player{background:var(--navy);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+.l-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.l-play-btn{background:var(--gold);color:var(--navy);border:none;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.l-play-btn:hover{background:var(--gold-bright);}
+.l-speed{background:rgba(255,255,255,0.1);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.18);padding:8px 12px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;outline:none;}
+.l-trans-btn{background:rgba(255,255,255,0.08);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.15);padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;transition:all 0.2s;}
+.l-trans-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.l-progress{display:flex;align-items:center;gap:12px;}
+.l-bar-track{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.l-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.3s linear;}
+.l-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:36px;text-align:right;}
+.l-transcript-box{background:rgba(11,27,48,0.04);border:1px solid var(--cream-dark);border-radius:10px;padding:18px 22px;margin-bottom:18px;}
+.l-transcript-text{font-size:13px;color:var(--navy);line-height:1.8;}
+/* ─ Case Studies ─ */
+.cs-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+.cs-sub{font-size:12.5px;color:var(--text-mid);margin-bottom:16px;}
+.cs-section{margin-bottom:20px;padding:18px 20px;background:var(--cream);border-radius:10px;border-left:3px solid var(--gold-light);}
+.cs-sh{font-size:13.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.cs-p{font-size:14px;color:var(--navy);line-height:1.78;}
+/* ─ Writing ─ */
+.writing-area{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;margin-top:14px;}
+.writing-area:focus{border-color:var(--gold-light);background:white;}
+.writing-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.w-count{font-size:12px;color:var(--text-mid);}
+.btn-primary{background:var(--gold);color:var(--navy);border:none;padding:12px 26px;border-radius:50px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-primary:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--red-accent);color:var(--red-accent);}
+/* ─ AI Feedback ─ */
+.fb-box{background:#0e1d2f;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-box.fb-warn{background:#2d1010;border-color:rgba(214,48,49,0.3);color:#f8a5a5;font-size:13.5px;line-height:1.7;}
+.fb-box.fb-loading{color:var(--text-light);font-size:13.5px;}
+.fb-score-row{display:flex;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap;}
+.fb-score{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;line-height:1;}
+.fb-summary{font-size:13.5px;color:var(--text-light);line-height:1.72;flex:1;}
+.fb-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.fb-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;}
+.fb-good .fb-col-title{color:var(--green-accent);}
+.fb-improve .fb-col-title{color:var(--gold-bright);}
+.fb-item{font-size:13px;color:var(--text-light);padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid rgba(255,255,255,0.15);line-height:1.6;}
+.fb-example{background:rgba(255,255,255,0.05);border-radius:9px;padding:12px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;}
+.fb-ex-label{font-weight:600;color:var(--gold-bright);font-style:normal;}
+/* ─ Grammar Review ─ */
+.gr-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.gr-icon{font-size:28px;}
+.gr-body{display:flex;flex-direction:column;gap:14px;}
+.gr-item{background:var(--cream);border-radius:10px;padding:16px 18px;border-left:3px solid var(--gold-light);}
+.gr-label{font-size:12.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.gr-examples{display:flex;flex-direction:column;gap:6px;}
+.gr-ex{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--navy);background:white;padding:8px 14px;border-radius:7px;border:1px solid var(--cream-dark);}
+.gr-note{font-size:12.5px;color:var(--text-mid);margin-top:10px;padding:8px 12px;background:rgba(224,155,0,0.07);border-radius:7px;border-left:2px solid var(--gold-light);}
+/* ─ Assessment result ─ */
+.assess-result{border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.assess-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.assess-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.assess-score{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;line-height:1;}
+.assess-label{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:6px;}
+.assess-detail{font-size:13.5px;opacity:0.88;}
+
+/* ─── Writing section ──────────────────────────────── */
+.w-task-header{margin-bottom:4px;}
+.w-task-pill{display:inline-block;background:rgba(224,155,0,0.15);color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 13px;border-radius:20px;border:1px solid rgba(224,155,0,0.3);margin-bottom:8px;}
+.w-prompt-box{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:13px;padding:22px 26px;margin:18px 0;border-left:4px solid var(--gold-light);}
+.w-prompt-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-bright);margin-bottom:10px;}
+.w-prompt-text{font-size:13.5px;color:var(--text-light);line-height:1.82;}
+.w-target{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;color:var(--gold-light);}
+.w-meta-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:8px 0 16px;}
+.w-counter{font-size:12.5px;color:var(--text-mid);font-family:'DM Mono',monospace;}
+
+/* ─── AI Feedback result box ────────────────────────── */
+.fb-result-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-result-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-result-label{font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-result-score{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-align:right;}
+.fb-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-check{display:inline-block;font-size:12.5px;font-weight:600;color:var(--green-accent);background:rgba(0,166,81,0.1);padding:5px 12px;border-radius:20px;}
+.fb-check.fb-check-warn{color:#f39c12;background:rgba(243,156,18,0.1);}
+.fb-suggest-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.fb-suggest-list{margin:0 0 14px 18px;padding:0;}
+.fb-suggest-list li{font-size:13px;color:var(--text-light);line-height:1.68;margin-bottom:4px;}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;margin-bottom:14px;}
+.fb-corrected-label{font-style:normal;font-weight:700;color:var(--gold-bright);}
+.fb-footer-stats{font-size:11.5px;color:rgba(155,179,204,0.5);border-top:1px solid rgba(255,255,255,0.07);padding-top:10px;margin-top:8px;font-family:'DM Mono',monospace;}
+.fb-warn-box{background:#2d1010;border:1px solid rgba(214,48,49,0.3);border-radius:10px;padding:14px 18px;color:#f8a5a5;font-size:13.5px;margin-top:14px;}
+.fb-loading-box{background:#111e2f;border-radius:10px;padding:18px 22px;color:var(--text-light);font-size:13.5px;margin-top:14px;display:flex;align-items:center;gap:10px;}
+
+/* ─── Gap Fill — Image 1 design ───────────────────────────────── */
+.gf-card{padding:32px 36px;}
+.gf-instr{font-size:13.5px;color:var(--text-mid);margin-bottom:22px;line-height:1.6;}
+.gf-bank-box{background:var(--cream);border-radius:14px;padding:20px 22px;margin-bottom:28px;border:1px solid var(--cream-dark);}
+.gf-bank-pills{display:flex;flex-wrap:wrap;gap:10px;}
+.gf-pill{background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:50px;cursor:default;transition:opacity 0.25s,transform 0.2s;}
+.gf-pill.gf-pill-used{opacity:0.28;text-decoration:line-through;}
+.gf-sentences{display:flex;flex-direction:column;gap:26px;}
+.gf-row{}
+.gf-sentence-text{font-size:14.5px;color:var(--navy);line-height:1.9;}
+.gf-blank-wrap{display:inline-block;position:relative;vertical-align:bottom;}
+.gf-underline-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14.5px;color:var(--navy);padding:1px 8px 2px;width:170px;outline:none;text-align:center;transition:border-color 0.2s;}
+.gf-underline-input::placeholder{color:rgba(90,120,153,0.5);font-size:13px;}
+.gf-underline-input.gf-correct{border-color:var(--green-accent);color:var(--green-accent);font-weight:600;}
+.gf-underline-input.gf-incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.gf-underline-input:disabled{background:transparent;}
+.gf-row-fb{margin-top:4px;min-height:18px;padding-left:4px;}
+.gf-fb-ok{font-size:12px;font-weight:700;color:var(--green-accent);}
+.gf-fb-err{font-size:12px;font-weight:600;color:var(--red-accent);}
+
+/* ─── True/False — Image 2 design ─────────────────────────────── */
+.tf-card{padding:32px 36px;}
+.tf-instr{font-size:13.5px;color:var(--gold);margin-bottom:22px;font-weight:500;}
+.tf-list{display:flex;flex-direction:column;gap:12px;}
+.tf-item{background:var(--cream);border-radius:12px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;transition:box-shadow 0.2s;}
+.tf-item[data-done]{opacity:0.92;}
+.tf-item-stmt{font-size:14px;color:var(--navy);line-height:1.58;flex:1;min-width:200px;}
+.tf-item-btns{display:flex;gap:10px;flex-shrink:0;}
+.tf-item-btn{padding:10px 26px;border-radius:9px;border:2px solid var(--cream-dark);font-size:13.5px;font-weight:700;cursor:pointer;background:white;font-family:'DM Sans',sans-serif;color:var(--navy);transition:all 0.18s;-webkit-tap-highlight-color:transparent;}
+.tf-item-btn:hover:not(:disabled){border-color:var(--gold-light);background:#fef8e0;}
+.tf-item-btn.tf-btn-correct{background:var(--green-accent);border-color:var(--green-accent);color:white;}
+.tf-item-btn.tf-btn-wrong{background:var(--red-accent);border-color:var(--red-accent);color:white;}
+.tf-item-btn:disabled{cursor:default;}
+.tf-item-fb{width:100%;margin-top:2px;min-height:18px;font-size:12.5px;}
+.tf-fb-ok{color:var(--green-accent);font-weight:700;}
+.tf-fb-err{color:var(--red-accent);font-weight:600;}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{display:inline-block;animation:spin 1s linear infinite;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}#mob-btn{display:flex;align-items:center;justify-content:center;}
+  #main{margin-left:0;}.hero{padding:60px 22px 40px;}.content{padding:28px 18px;}
+  .prog-wrap{padding:12px 22px;}.outcomes-grid,.speaking-grid,.wb-grid{grid-template-columns:1fr;}.hero-stats{gap:22px;}
+}
+@media(max-width:600px){
+  .hero{padding:56px 16px 36px;}.content{padding:22px 14px;}.card{padding:22px 18px;}
+  .listen-card{padding:20px 16px;}.reading-box{padding:18px 16px;}.player-row{flex-wrap:wrap;gap:10px;}.time-disp{min-width:auto;}
+}
+
+
+
+
+
+/* ─── Auto-Correction Report UI (Module 6+) ─────────────────────── */
+.fb-report-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-report-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:12px;}
+.fb-report-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-report-icon{font-size:16px;}
+.fb-report-score{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
+.fb-quick-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-cats{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.fb-cat-row{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 16px;}
+.fb-cat-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.fb-cat-icon{font-size:15px;}
+.fb-cat-label{font-size:13px;color:var(--white);}
+.fb-cat-good{font-size:11px;font-weight:700;color:#00c46a;background:rgba(0,196,106,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(0,196,106,0.3);}
+.fb-cat-sat{font-size:11px;font-weight:700;color:#f5b800;background:rgba(245,184,0,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(245,184,0,0.3);}
+.fb-cat-att{font-size:11px;font-weight:700;color:#e05c5c;background:rgba(224,92,92,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(224,92,92,0.3);}
+.fb-cat-comment{font-size:13px;color:var(--text-light);line-height:1.7;}
+.fb-corrected-block{background:rgba(255,255,255,0.04);border-left:3px solid var(--gold-light);border-radius:0 8px 8px 0;padding:11px 16px;font-size:13px;color:var(--text-light);line-height:1.72;margin-bottom:12px;font-style:italic;}
+.fb-corrected-tag{font-style:normal;font-weight:700;color:var(--gold-bright);display:block;margin-bottom:4px;}
+.fb-overall{font-size:13px;color:#00c46a;margin-bottom:10px;font-weight:500;}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ─── Gap-Fill Redesign (auto-graded) ───────────────────────────────────── */
+.gf-bank-label{font-size:11px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.gf-num{color:var(--gold-bright);font-weight:700;min-width:22px;display:inline-block;}
+.gf-btn-bar{display:flex;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.gf-check-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;font-size:13px;padding:10px 22px;border:none;border-radius:8px;cursor:pointer;transition:opacity .15s;}
+.gf-check-btn:hover{opacity:.88;}
+.gf-check-btn:disabled{cursor:not-allowed;opacity:.5;}
+.gf-reset-btn{background:rgba(255,255,255,0.07);color:var(--text-light);font-size:13px;font-weight:600;padding:10px 18px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;cursor:pointer;transition:background .15s;}
+.gf-reset-btn:hover{background:rgba(255,255,255,0.12);}
+.gf-score-display{font-size:15px;margin-left:4px;}
+.gf-pill-highlight{outline:2px solid var(--gold-bright) !important;opacity:1 !important;}
+.gf-fb-err strong{color:var(--gold-bright);}
+
+
+
+</style>
+</head>
+<body>
+<button id="mob-btn" onclick="openSidebar()">&#9776;</button>
+<div id="overlay" onclick="closeSidebar()"></div>
+<nav id="sidebar">
+  <div class="sidebar-brand"><h1>IT &amp; Digital Professions English</h1><div class="sub">Professional Course Series</div><span class="level-badge">B1&#8211;B2 Level</span></div>
+  <div class="sidebar-section-label">Module 7</div>
+  <div class="nav-item active" onclick="goTo('sec-overview')"><div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-speaking')"><div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-wordbank')"><div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-reading')"><div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-vocab')"><div class="nav-left"><span class="nav-icon">🔤</span><span class="nav-label">Vocabulary</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-grammar')"><div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Grammar</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-gramreview')"><div class="nav-left"><span class="nav-icon">📋</span><span class="nav-label">Grammar Review</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-writing')"><div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div><span class="nav-badge">AI</span></div>
+  <div class="nav-item" onclick="goTo('sec-listening')"><div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div><span class="nav-badge">4</span></div>
+  <div class="nav-item" onclick="goTo('sec-cases')"><div class="nav-left"><span class="nav-icon">💡</span><span class="nav-label">Case Studies</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-assessment')"><div class="nav-left"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></div><span class="nav-badge">20</span></div>
+</nav>
+<main id="main">
+<section id="sec-overview" class="section active">
+  <div class="hero"><div class="module-pill">🔐 &nbsp; Module 7 &nbsp;·&nbsp; IT &amp; Digital Professions English</div><h2>Cybersecurity Terms<br><span class="accent">and Scenarios</span></h2><p class="hero-desc">Master the essential vocabulary of cybersecurity — from phishing, ransomware, and zero-days to defence in depth, GDPR obligations, and blameless incident response. Build the language skills to communicate about threats, defences, and incidents with precision and professional confidence.</p><div class="hero-stats"><div class="stat"><span class="stat-n">21</span><span class="stat-l">Key Terms</span></div><div class="stat"><span class="stat-n">11</span><span class="stat-l">Sections</span></div><div class="stat"><span class="stat-n">4</span><span class="stat-l">Audio Activities</span></div><div class="stat"><span class="stat-n">B1–B2</span><span class="stat-l">CEFR Level</span></div></div></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" id="progFill"></div></div><span class="prog-pct" id="progPct">0%</span></div>
+  <div class="content" id="overviewContent"></div>
+</section>
+<section id="sec-speaking" class="section">
+  <div class="hero"><div class="module-pill">🎙️ &nbsp; Speaking Practice</div><h2>Discussion <span class="accent">Questions</span></h2><p class="hero-desc">Practise speaking about cybersecurity threats, organisational defences, and the human factors in security.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:9%"></div></div><span class="prog-pct">9%</span></div>
+  <div class="content" id="speakingContent"></div>
+</section>
+<section id="sec-wordbank" class="section">
+  <div class="hero"><div class="module-pill">📚 &nbsp; Word Bank</div><h2>Cybersecurity <span class="accent">Vocabulary</span></h2><p class="hero-desc">Study these 21 essential cybersecurity terms covering threats, defences, authentication, and compliance.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:18%"></div></div><span class="prog-pct">18%</span></div>
+  <div class="content" id="wordBankContent"></div>
+</section>
+<section id="sec-reading" class="section">
+  <div class="hero"><div class="module-pill">📖 &nbsp; Reading</div><h2>Texts &amp; <span class="accent">Comprehension</span></h2><p class="hero-desc">Read two professional texts on the cybersecurity threat landscape and defence-in-depth strategy.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:27%"></div></div><span class="prog-pct">27%</span></div>
+  <div class="content" id="readingContent"></div>
+</section>
+<section id="sec-vocab" class="section">
+  <div class="hero"><div class="module-pill">🔤 &nbsp; Vocabulary Exercises</div><h2>Practice <span class="accent">Exercises</span></h2><p class="hero-desc">Three exercise types to master cybersecurity vocabulary: multiple choice, gap-fill, and true/false.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:36%"></div></div><span class="prog-pct">36%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocab(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocab(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocab(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vex-0"></div>
+    <div id="vex-1" style="display:none"></div>
+    <div id="vex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-grammar" class="section">
+  <div class="hero"><div class="module-pill">✏️ &nbsp; Grammar</div><h2>Grammar <span class="accent">Exercises</span></h2><p class="hero-desc">Practise modal verbs for security obligations and risk, passive voice in security policy and incident reporting, and hedging language in threat assessments.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:45%"></div></div><span class="prog-pct">45%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGram(0,this)">Modal Verbs</div>
+      <div class="ex-tab" onclick="showGram(1,this)">Passive Voice</div>
+      <div class="ex-tab" onclick="showGram(2,this)">Hedging Language</div>
+    </div>
+    <div id="gex-0"></div>
+    <div id="gex-1" style="display:none"></div>
+    <div id="gex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-gramreview" class="section">
+  <div class="hero"><div class="module-pill">📋 &nbsp; Grammar Review</div><h2>Reference <span class="accent">Guide</span></h2><p class="hero-desc">Three reference boxes: modal verbs for obligation and risk, passive voice in security documentation, and hedging in threat assessment and breach communication.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:54%"></div></div><span class="prog-pct">54%</span></div>
+  <div class="content" id="gramRevContent"></div>
+</section>
+<section id="sec-writing" class="section">
+  <div class="hero"><div class="module-pill">✍️ &nbsp; Writing + AI Feedback</div><h2>Writing <span class="accent">Activities</span></h2><p class="hero-desc">Write a security incident report and a GDPR data breach notification letter. Receive AI feedback across Grammar, Vocabulary, Tone, Structure, and Fluency.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:63%"></div></div><span class="prog-pct">63%</span></div>
+  <div class="content" id="writingContent"></div>
+</section>
+<section id="sec-listening" class="section">
+  <div class="hero"><div class="module-pill">🎧 &nbsp; Listening</div><h2>Audio <span class="accent">Activities</span></h2><p class="hero-desc">Listen to an executive security briefing, a ransomware incident response, a phishing awareness training session, and a GDPR compliance review.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:72%"></div></div><span class="prog-pct">72%</span></div>
+  <div class="content" id="listeningContent"></div>
+</section>
+<section id="sec-cases" class="section">
+  <div class="hero"><div class="module-pill">💡 &nbsp; Case Studies</div><h2>Real-World <span class="accent">Cases</span></h2><p class="hero-desc">Explore the British Airways GDPR fine — the ICO's first major GDPR enforcement action — and the WannaCry ransomware attack that paralysed the NHS and changed cybersecurity policy.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:81%"></div></div><span class="prog-pct">81%</span></div>
+  <div class="content" id="casesContent"></div>
+</section>
+<section id="sec-assessment" class="section">
+  <div class="hero"><div class="module-pill">🏆 &nbsp; Final Assessment</div><h2>Module <span class="accent">Test</span></h2><p class="hero-desc">20 questions covering all module content. Pass mark: 70% (14/20). Two attempts allowed.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div><span class="prog-pct">90%</span></div>
+  <div class="content">
+    <div class="card">
+      <div class="card-title">🏆 Final Assessment</div><div class="card-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:22px;">Answer all 20 questions. You need 70% (14 correct) to pass. Attempts used: <strong id="att-disp">0 / 2</strong></p>
+      <div id="assessContainer"></div>
+      <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <button class="ass-btn" id="ass-sub" onclick="submitAss()">Submit Assessment</button>
+        <button class="retry-btn" id="ass-retry" onclick="resetAss()">&#8635; Try Again</button>
+      </div>
+      <div class="final-result" id="final-res"></div>
+    </div>
+  </div>
+</section>
+</main>
+<script>
+/* ══ Module 7: Cybersecurity Terms and Scenarios ══ */
+const outcomes=["Identify and accurately use 21 essential cybersecurity terms spanning threats, defences, authentication, and compliance", "Read and analyse professional texts on the threat landscape and the principle of defence in depth", "Use modal verbs for obligation and risk, hedging language for threat assessment, and passive constructions for security policy precisely", "Draft a security incident report and a data breach notification letter with professional precision", "Listen to security briefings, incident response calls, phishing awareness training, and compliance reviews", "Discuss cybersecurity threats, organisational defences, and security culture with professional confidence and accuracy"];
+const speakingQs=["What is the difference between a vulnerability, a threat, and a risk in cybersecurity?", "What is phishing, and why does it remain one of the most effective attack vectors despite widespread awareness?", "What is social engineering, and how does it differ from a technical cyberattack?", "What is the principle of least privilege, and why is it important for reducing attack surface?", "What is multi-factor authentication (MFA), and why is a password alone no longer considered sufficient?", "What is ransomware, and what steps should an organisation take immediately after a ransomware attack?", "What is a firewall, and what is the difference between a network firewall and a web application firewall?", "What is encryption, and what is the difference between encryption at rest and encryption in transit?", "What is a VPN, and when should employees use one?", "What is the difference between authentication and authorisation?", "What is a zero-day vulnerability, and why are they particularly dangerous?", "What is penetration testing, and how does it differ from a vulnerability scan?", "What is the CIA triad in cybersecurity, and why does it matter?", "What is GDPR, and what obligations does it place on organisations that experience a data breach?", "What is a security operations centre (SOC), and what does it monitor?", "What is an insider threat, and why is it often harder to detect than an external attack?", "What is two-factor authentication versus multi-factor authentication? Is there a meaningful difference?", "What is a DDoS attack, and what mitigation strategies exist?", "What is security by design, and how does it differ from retrofitting security?", "Why is human behaviour considered the weakest link in cybersecurity? Do you agree?", "If you discovered that your organisation had suffered a data breach, what would you do in the first hour?"];
+const wordBank=[{emoji:"🎣",term:"Phishing",def:"A social engineering attack in which the attacker impersonates a trusted entity — a bank, an employer, a government body — via email, SMS (smishing), or phone (vishing) to trick the recipient into revealing credentials, clicking a malicious link, or transferring funds. Phishing remains the most common initial attack vector because it exploits human psychology rather than technical vulnerabilities."},
+  {emoji:"🔐",term:"Authentication",def:"The process of verifying the identity of a user, device, or system before granting access. Authentication methods range from single-factor (password only) to multi-factor (MFA — combining something you know, something you have, and something you are). Weak authentication is one of the most commonly exploited security weaknesses."},
+  {emoji:"🛡️",term:"Firewall",def:"A network security device or software that monitors and filters incoming and outgoing network traffic based on predefined security rules. Firewalls create a barrier between trusted internal networks and untrusted external networks. Next-generation firewalls (NGFWs) add capabilities including deep packet inspection, intrusion prevention, and application awareness."},
+  {emoji:"🔒",term:"Encryption",def:"The process of converting readable data (plaintext) into an unreadable format (ciphertext) using a cryptographic algorithm and key, so that only authorised parties with the decryption key can read it. Encryption at rest protects stored data; encryption in transit protects data as it moves across networks. TLS (Transport Layer Security) is the standard for encrypting web traffic."},
+  {emoji:"🦠",term:"Malware",def:"Malicious software designed to disrupt, damage, or gain unauthorised access to a computer system. Types include viruses (self-replicating code that attaches to legitimate files), trojans (disguised as legitimate software), spyware (secretly monitoring activity), ransomware (encrypting data and demanding payment), and worms (self-propagating across networks without user action)."},
+  {emoji:"💰",term:"Ransomware",def:"A category of malware that encrypts the victim's files and demands a ransom payment — typically in cryptocurrency — in exchange for the decryption key. Ransomware attacks can render entire organisations inoperable within minutes. Response priorities are: isolate affected systems, do not pay without specialist advice, restore from backups, and report to relevant authorities."},
+  {emoji:"🕳️",term:"Vulnerability",def:"A weakness in a system, application, network, or process that could be exploited by an attacker to gain unauthorised access or cause harm. Vulnerabilities are identified through security assessments, penetration testing, and vulnerability scanning. Unpatched software is a primary source of exploitable vulnerabilities."},
+  {emoji:"🔑",term:"Multi-Factor Authentication",def:"An authentication method requiring two or more verification factors from different categories: something you know (password or PIN), something you have (hardware token, smartphone app, SMS code), and something you are (biometric — fingerprint, face recognition). MFA significantly reduces the risk of account compromise even when passwords are stolen."},
+  {emoji:"🕵️",term:"Penetration Testing",def:"An authorised, simulated cyberattack conducted by security professionals (ethical hackers) to identify exploitable vulnerabilities before malicious attackers do. Penetration tests may target networks, applications, physical security, or human factors (social engineering). Findings are documented in a report with risk ratings and remediation recommendations."},
+  {emoji:"🎭",term:"Social Engineering",def:"Manipulating people into revealing confidential information or taking actions that compromise security — by exploiting trust, authority, urgency, or fear rather than technical exploits. Examples include phishing emails, pretexting (creating a false scenario), baiting (offering something desirable), and tailgating (following an authorised person through a secure door)."},
+  {emoji:"🔄",term:"Zero-Day",def:"A software vulnerability that is unknown to the vendor and therefore has no available patch. Zero-day vulnerabilities are particularly dangerous because defenders cannot protect against a known flaw — only detect unusual behaviour. They are highly valuable on black markets and are used in sophisticated state-sponsored and criminal attacks."},
+  {emoji:"📜",term:"Patch Management",def:"The process of regularly applying software updates (patches) that fix security vulnerabilities, bugs, and performance issues. Effective patch management requires maintaining an inventory of all software assets, prioritising patches by severity, testing before deployment, and tracking compliance. Unpatched systems are among the most commonly exploited attack surfaces."},
+  {emoji:"🏰",term:"Defence in Depth",def:"A security strategy that layers multiple defensive controls across an organisation — so that if one control fails, others remain in place. Layers typically include perimeter controls (firewalls), network controls (segmentation), endpoint controls (antivirus, EDR), application controls (WAF, input validation), identity controls (MFA), and data controls (encryption, DLP)."},
+  {emoji:"👁️",term:"Security Operations Centre",def:"A centralised team and facility responsible for continuously monitoring an organisation's security posture — detecting, analysing, and responding to cybersecurity threats and incidents in real time. The SOC uses tools including SIEM (Security Information and Event Management) systems, threat intelligence feeds, and EDR (Endpoint Detection and Response) platforms."},
+  {emoji:"📊",term:"Risk Assessment",def:"A structured process of identifying, analysing, and evaluating security risks — determining the likelihood of a threat materialising and the impact it would have. Risk assessments inform security investment decisions: which controls to implement, which risks to accept, and which to mitigate or transfer (through insurance). A risk register documents the findings."},
+  {emoji:"🚦",term:"Access Control",def:"The security practice of restricting who can access which systems, data, and resources — and what actions they can perform. The principle of least privilege requires that users and systems are granted only the minimum access necessary for their function. Role-based access control (RBAC) assigns permissions based on job role rather than individual identity."},
+  {emoji:"📡",term:"VPN",def:"Virtual Private Network — a technology that creates an encrypted tunnel between a device and a remote network, protecting data in transit and masking the user's IP address. VPNs are commonly used to secure remote access to corporate networks, particularly when using public or untrusted Wi-Fi. Enterprise VPNs authenticate users before granting network access."},
+  {emoji:"⚠️",term:"Data Breach",def:"An incident in which sensitive, confidential, or personal data is accessed, disclosed, copied, or stolen without authorisation. Under GDPR, organisations must notify the relevant supervisory authority (the ICO in the UK) within 72 hours of becoming aware of a breach that poses a risk to individuals' rights and freedoms, and must notify affected individuals without undue delay."},
+  {emoji:"🧱",term:"Network Segmentation",def:"The practice of dividing a network into smaller, isolated segments — so that a compromise in one segment cannot automatically spread across the entire network. Segmentation limits the blast radius of an attack. Techniques include VLANs (Virtual Local Area Networks), firewalls between segments, and zero-trust network access (ZTNA)."},
+  {emoji:"🎯",term:"Threat Actor",def:"Any individual, group, or entity that poses a cybersecurity threat to an organisation. Threat actors are categorised by motivation and capability: nation-state actors (sophisticated, well-resourced, politically motivated), organised criminal groups (financially motivated), hacktivists (ideologically motivated), and insiders (employees or contractors who misuse legitimate access)."},
+  {emoji:"✅",term:"Security Awareness Training",def:"Structured education programmes designed to help employees recognise cybersecurity threats — particularly phishing — and respond appropriately. Regular security awareness training is a requirement under many compliance frameworks (including ISO 27001 and Cyber Essentials) and is one of the most cost-effective security controls, directly addressing the human factor."}];
+const readingTexts=[{title:"Text 1: The Cybersecurity Threat Landscape — Understanding the Risks Organisations Face",subtitle:"Why threats are evolving faster than defences — and what every professional needs to understand",paragraphs:["The cybersecurity threat landscape has changed fundamentally over the past decade. What was once the domain of individual hackers motivated by curiosity or notoriety has become a vast, professionalised criminal ecosystem — with organised criminal groups offering ransomware-as-a-service, nation-state actors conducting espionage and sabotage at scale, and a thriving black market for stolen credentials, zero-day vulnerabilities, and access to compromised networks. Understanding this landscape is no longer the exclusive responsibility of security professionals — every person who accesses an organisational system is part of the attack surface, and every professional needs a working understanding of the threats they face.", "The most prevalent threat vector remains phishing — deceptive emails, messages, and phone calls that manipulate recipients into revealing credentials, clicking malicious links, or transferring funds. Despite decades of awareness campaigns, phishing continues to succeed because it exploits psychological weaknesses that are deeply human: urgency, authority, fear, and the desire to be helpful. Modern phishing attacks are increasingly sophisticated — spear phishing targets specific individuals using personal information harvested from social media and corporate websites; business email compromise (BEC) impersonates senior executives to authorise fraudulent payments. In 2023, the UK's National Cyber Security Centre (NCSC) reported that phishing remained the most commonly reported cyber incident across all sectors.", "Alongside phishing, ransomware has become the most financially damaging threat category for organisations. Ransomware groups operate with the professionalism of a business — with customer service teams, refund policies for ransoms that fail to decrypt data, and affiliate models that allow less technically capable criminals to use their infrastructure in exchange for a share of the proceeds. The average cost of a ransomware incident (including downtime, recovery, reputational damage, and regulatory fines) far exceeds the ransom demanded. Organisations that maintain tested, offline backups and have practiced their incident response plan are significantly better positioned to recover than those that do not."],questions:[{q:"How has the cybersecurity threat landscape changed over the past decade?",opts:["It has become less serious as security technology has improved", "It has become a professionalised criminal ecosystem with organised groups, nation-state actors, and black markets", "It now primarily affects only large enterprises and governments", "The threats have remained broadly similar but response times have improved"],ans:1},{q:"What does the text say about who needs to understand cybersecurity threats?",opts:["Only dedicated security professionals", "Only IT staff and system administrators", "Every person who accesses an organisational system — all professionals need a working understanding", "Only senior management and executives"],ans:2},{q:"Why does phishing continue to succeed despite widespread awareness?",opts:["Because technical defences against phishing are ineffective", "Because most employees never receive phishing awareness training", "Because it exploits deeply human psychological weaknesses — urgency, authority, fear, and helpfulness", "Because phishing attacks are now completely indistinguishable from legitimate emails"],ans:2},{q:"What is spear phishing?",opts:["A phishing attack sent to thousands of recipients simultaneously", "A phishing attack that targets specific individuals using personal information harvested from social media and websites", "A type of phishing that uses phone calls rather than email", "A phishing technique that spoofs the sender's email address"],ans:1},{q:"What is business email compromise (BEC)?",opts:["A malware attack that compromises corporate email servers", "A phishing attack that impersonates senior executives to authorise fraudulent payments", "An email scam targeting business customers rather than employees", "A ransomware variant that encrypts email archives"],ans:1},{q:"Which organisation reported that phishing was the most common cyber incident across all UK sectors in 2023?",opts:["GCHQ", "The Metropolitan Police Cyber Crime Unit", "The UK's National Cyber Security Centre (NCSC)", "The Information Commissioner's Office (ICO)"],ans:2},{q:"How do ransomware groups operate according to the text?",opts:["As unsophisticated, opportunistic criminals with limited organisation", "With the professionalism of a business — including customer service, affiliate models, and refund policies", "Primarily as lone actors with significant technical skills", "As state-sponsored operations with unlimited resources"],ans:1},{q:"What does the text say the average cost of a ransomware incident includes?",opts:["Only the ransom payment demanded by attackers", "Only the cost of technical recovery and system restoration", "Downtime, recovery, reputational damage, and regulatory fines — far exceeding the ransom demanded", "The cost of notifying affected customers and regulatory authorities"],ans:2},{q:"What gives organisations a significantly better position for recovering from ransomware?",opts:["Paying the ransom promptly to minimise downtime", "Having cyber insurance that covers the ransom payment", "Maintaining tested offline backups and having practised their incident response plan", "Having a dedicated security operations centre monitoring 24/7"],ans:2},{q:"What is the 'affiliate model' mentioned in the context of ransomware?",opts:["A programme where ransomware victims can report attacks to a central database", "A model where less technical criminals use ransomware infrastructure in exchange for a share of proceeds", "A partnership between ransomware groups and legitimate cybersecurity firms", "A scheme where organisations share threat intelligence with industry peers"],ans:1}]},
+  {title:"Text 2: Defence in Depth — Why Layered Security Is the Only Realistic Strategy",subtitle:"No single control is enough — how organisations build resilience through multiple overlapping defences",paragraphs:["Defence in depth is the principle that security should be built through multiple, overlapping layers of control — so that when any single control fails (and all controls will eventually fail), the others remain in place to detect, delay, or mitigate the attack. The concept originated in military strategy, where it describes a defensive approach that trades space for time — slowing an attacker's advance at each layer to allow defenders to respond. In cybersecurity, it has become the foundational strategic principle of enterprise security architecture. The alternative — relying on a single perimeter control such as a firewall — creates a binary security model: if the perimeter holds, everything is safe; if it fails, nothing is. Modern threat actors have demonstrated repeatedly that every perimeter can be breached.", "A mature defence-in-depth architecture typically includes controls across multiple layers. At the perimeter, firewalls, intrusion detection and prevention systems (IDS/IPS), and DDoS mitigation filter incoming traffic. At the network layer, segmentation limits lateral movement — ensuring that a compromised device in one part of the network cannot automatically access all others. At the endpoint layer, antivirus, endpoint detection and response (EDR) tools, and device management policies protect individual devices. At the identity layer, multi-factor authentication, privileged access management (PAM), and regular access reviews ensure that only authorised users can access sensitive resources. At the data layer, encryption, data loss prevention (DLP) tools, and classification policies protect the organisation's most valuable asset. And above all of these technical controls sits the human layer — security awareness training, clear policies, and a security culture that makes employees active participants in defence rather than passive vulnerabilities.", "Defence in depth also has an important implication for incident response: because no perimeter is impenetrable, organisations must assume that breaches will occur and plan accordingly. This 'assume breach' mindset — championed by Microsoft and embedded in zero-trust architectures — shifts the question from 'how do we prevent all attacks?' to 'how do we detect attacks quickly, limit their damage, and recover rapidly?' Detection capability (SIEM, EDR, threat hunting), response planning (incident response playbooks, tabletop exercises), and recovery capability (tested backups, business continuity plans) become as important as preventive controls."],questions:[{q:"What is the principle of defence in depth?",opts:["Using a single, highly effective perimeter control to block all attacks", "Building security through multiple overlapping layers of control so that when one fails, others remain", "Preventing attacks rather than planning for their occurrence", "Investing in the most advanced technical security tools available"],ans:1},{q:"Where did the concept of defence in depth originate?",opts:["The US Department of Defense's cybersecurity framework", "The ISO 27001 security standard", "Military strategy — where it describes a defensive approach that trades space for time", "The financial services sector following major banking fraud incidents"],ans:2},{q:"What is the problem with relying on a single perimeter control such as a firewall?",opts:["Firewalls are too expensive for most organisations to maintain", "It creates a binary model — if the perimeter holds everything is safe; if it fails, nothing is", "Single controls are prohibited under most regulatory frameworks", "Firewalls do not protect against insider threats"],ans:1},{q:"What does network segmentation achieve in a defence-in-depth architecture?",opts:["It speeds up network traffic by reducing congestion", "It allows all devices on the network to communicate more efficiently", "It limits lateral movement — preventing a compromised device from accessing all other network areas", "It encrypts all traffic between network segments"],ans:2},{q:"What tools are mentioned at the endpoint layer of defence in depth?",opts:["Firewalls, IDS/IPS, and DDoS mitigation", "Antivirus, EDR tools, and device management policies", "MFA, PAM, and access reviews", "Encryption, DLP tools, and data classification"],ans:1},{q:"What does the text identify as the human layer of defence in depth?",opts:["The physical security controls protecting server rooms and offices", "Security awareness training, clear policies, and a culture making employees active participants in defence", "The security operations centre team monitoring threats", "Senior management's role in approving security budgets"],ans:1},{q:"What does the 'assume breach' mindset shift the focus to?",opts:["Preventing every possible attack through comprehensive controls", "Blaming attackers rather than improving internal defences", "Detecting attacks quickly, limiting damage, and recovering rapidly rather than preventing all attacks", "Reporting incidents to regulators before investigating internally"],ans:2},{q:"Which company is mentioned as championing the 'assume breach' mindset?",opts:["Google", "Amazon Web Services", "Microsoft", "IBM"],ans:2},{q:"What is a zero-trust architecture?",opts:["A security model that trusts all users inside the corporate network", "An approach that verifies every user and device before granting access, regardless of location", "A model that uses no perimeter controls — relying entirely on endpoint security", "A framework that eliminates the need for firewalls and VPNs"],ans:1},{q:"What three capabilities does the text say become as important as preventive controls?",opts:["Firewalls, encryption, and MFA", "Penetration testing, vulnerability scanning, and patch management", "Detection capability, response planning, and recovery capability", "Security awareness training, policies, and culture"],ans:2}]}];
+const vocabMCQ=[{q:"What is phishing?",opts:["A network attack that overwhelms servers with traffic", "A social engineering attack that impersonates trusted entities to steal credentials or trigger harmful actions", "A type of malware that replicates itself across networks", "A technique for scanning networks to discover open ports"],ans:1},{q:"What is the principle of defence in depth?",opts:["Relying on a single, highly effective perimeter firewall", "Building security through multiple overlapping layers of control", "Defending the organisation's most sensitive data with the strongest possible encryption", "Focusing all security investment on endpoint protection"],ans:1},{q:"What is a zero-day vulnerability?",opts:["A vulnerability that was patched on the day it was discovered", "Any critical vulnerability rated 10.0 on the CVSS scale", "A vulnerability unknown to the vendor with no available patch", "A vulnerability that only affects systems that have never been updated"],ans:2},{q:"What is multi-factor authentication?",opts:["Requiring a password that meets multiple complexity requirements", "An authentication method requiring two or more verification factors from different categories", "A system that requires multiple administrators to approve access requests", "A policy requiring passwords to be changed multiple times per year"],ans:1},{q:"What is ransomware?",opts:["Software that monitors and filters network traffic for malicious content", "Malware that encrypts the victim's files and demands payment for the decryption key", "A phishing attack that targets specific high-value individuals", "A type of social engineering that manipulates employees over the phone"],ans:1},{q:"What is a penetration test?",opts:["An automated scan of a network for known vulnerabilities", "An authorised simulated cyberattack conducted by security professionals to identify exploitable vulnerabilities", "A compliance audit of an organisation's security policies and procedures", "A test of an organisation's disaster recovery and backup systems"],ans:1},{q:"What does network segmentation achieve?",opts:["It encrypts all traffic within the internal network", "It speeds up network performance by reducing broadcast traffic", "It limits lateral movement by preventing a compromise in one area from spreading to all others", "It replaces the need for perimeter firewalls in modern architecture"],ans:2},{q:"What is a data breach under GDPR?",opts:["Any attempted but unsuccessful cyberattack against an organisation", "An incident where personal data is accessed, disclosed, copied, or stolen without authorisation", "A failure to update privacy notices within the required timeframe", "A security assessment that identifies vulnerabilities in personal data handling"],ans:1},{q:"What is a threat actor?",opts:["Any software vulnerability that could be exploited by an attacker", "A risk identified in an organisation's security risk assessment", "Any individual, group, or entity that poses a cybersecurity threat to an organisation", "A type of malware that actively monitors and exfiltrates data"],ans:2},{q:"What is the purpose of security awareness training?",opts:["To train IT staff in the technical aspects of cybersecurity defence", "To ensure all employees can perform basic network security monitoring", "To help employees recognise cybersecurity threats — particularly phishing — and respond appropriately", "To qualify employees for cybersecurity certifications"],ans:2}];
+const vocabGapFill=[{before:"The security team confirmed that the attacker had gained initial access through a targeted",blank:"phishing",after:"email sent to three members of the finance team, each of which contained a link to a convincing but fraudulent login page designed to harvest their credentials."},{before:"Following the discovery of the",blank:"ransomware",after:"infection, the incident response team immediately isolated the affected servers from the network, contacted specialist advisers, and began assessing the integrity of the most recent offline backup."},{before:"The organisation's security architecture followed a strict",blank:"defence in depth",after:"model — with firewalls at the perimeter, network segmentation between departments, MFA for all remote access, and encrypted backups stored offline and tested monthly."},{before:"The penetration testers exploited a critical",blank:"vulnerability",after:"in the web application's session management — one that had existed in the codebase for over two years without being detected, because no regular security testing had been conducted."},{before:"The company's GDPR compliance team notified the ICO within 72 hours of confirming the",blank:"data breach",after:", attaching a preliminary incident report that described the nature of the compromised data, the estimated number of affected individuals, and the immediate containment measures taken."},{before:"All staff with access to sensitive financial systems were required to enrol in",blank:"multi-factor authentication",after:"before the end of the quarter — with the choice of an authenticator app, a hardware token, or biometric verification depending on their device."},{before:"The IT security manager recommended implementing",blank:"network segmentation",after:"between the production environment and the corporate offices — so that a future compromise of an employee's laptop could not provide a direct path to the payment processing servers."},{before:"The quarterly",blank:"risk assessment",after:"identified three new high-priority risks: an unpatched critical vulnerability in the VPN client, insufficient logging coverage on the cloud storage buckets, and a lack of security awareness training for newly onboarded staff."},{before:"The SOC analyst reviewing the",blank:"logs",after:"from the identity provider noticed that a privileged account had authenticated successfully from two different countries within a 20-minute window — a clear indicator of a compromised credential."},{before:"The organisation's",blank:"patch management",after:"policy required all critical security patches to be applied to production systems within 48 hours of release — a standard that reduced the window of exposure for known vulnerabilities significantly."}];
+const vocabTF=[{stmt:"Phishing attacks succeed primarily because of technical weaknesses in email systems rather than human psychological vulnerabilities.",ans:false},{stmt:"A zero-day vulnerability has no available patch because the vendor is not yet aware of it.",ans:true},{stmt:"Under GDPR, organisations have 72 hours to notify the relevant supervisory authority after becoming aware of a qualifying data breach.",ans:true},{stmt:"Defence in depth relies on a single, highly effective perimeter control to protect all organisational assets.",ans:false},{stmt:"Multi-factor authentication requires verification factors from at least two different categories — such as something you know and something you have.",ans:true},{stmt:"Ransomware attacks can typically be reversed without paying the ransom, provided the organisation has maintained tested offline backups.",ans:true},{stmt:"A penetration test is an automated vulnerability scan that runs continuously in the background.",ans:false},{stmt:"Network segmentation limits lateral movement by preventing a compromise in one network area from automatically spreading to all others.",ans:true},{stmt:"The principle of least privilege means users should be granted maximum access to ensure they can always complete their work.",ans:false},{stmt:"Security awareness training is considered one of the most cost-effective security controls because it directly addresses the human factor.",ans:true}];
+const grammarEx=[{title:"Exercise 1: Modal Verbs for Security Obligations and Risk",instr:"Select the correct modal verb. Cybersecurity policies, risk communications, and compliance documents use a precise hierarchy of modal verbs — from absolute obligation to recommendation to possibility — to communicate the urgency and enforceability of security requirements.",qs:[{q:"'All employees _____ complete the annual phishing awareness training before accessing company systems.'",opts:["should", "might", "must", "could"],ans:2},{q:"'Sensitive personal data _____ be encrypted both at rest and in transit under the organisation's data protection policy.'",opts:["could", "must", "might", "should"],ans:1},{q:"'This unpatched vulnerability _____ allow an attacker to escalate privileges if exploited — we are still assessing the risk.'",opts:["must", "will", "could", "shall"],ans:2},{q:"'Privileged accounts _____ only be used for tasks that specifically require elevated permissions — not for general day-to-day work.'",opts:["might", "should", "could", "must"],ans:3},{q:"'Employees _____ not share their login credentials with colleagues under any circumstances.'",opts:["might", "could", "should", "must"],ans:3},{q:"'The security team recommends that all remote workers _____ use a VPN when connecting from public networks.'",opts:["must", "should", "shall", "will"],ans:1},{q:"'Any suspected security incident _____ be reported to the security team within one hour of discovery.'",opts:["might", "could", "must", "should"],ans:2},{q:"'This configuration _____ be causing the authentication failures — but we need to investigate further before drawing conclusions.'",opts:["must", "could", "shall", "will"],ans:1},{q:"'Vendors with access to personal data _____ sign a data processing agreement before integration work begins.'",opts:["should", "might", "must", "could"],ans:2},{q:"'Outdated software without security updates _____ contain unpatched vulnerabilities that attackers actively target.'",opts:["shall", "must", "will", "may"],ans:3}]},
+  {title:"Exercise 2: Passive Constructions in Security Policy and Incident Reporting",instr:"Select the correct passive form. Security policies describe what must be done to systems, data, and processes — the passive voice focuses on the requirement rather than who carries it out. Incident reports use passive voice to describe what happened without assigning premature blame.",qs:[{q:"'All laptops _____ encrypted using full-disk encryption before _____ issued to employees.'",opts:["must encrypt / being", "must be encrypted / being", "should encrypt / be", "are to encrypt / being"],ans:1},{q:"'The malicious email _____ to the finance team at 09:47 and _____ by three recipients before the phishing filter flagged it.'",opts:["was sent / was opened", "sent / opened", "had been sent / had been opened", "was sent / had been opened"],ans:0},{q:"'Access to production databases _____ only to engineers whose role specifically requires it, and _____ reviewed quarterly.'",opts:["is granted / is", "grants / reviews", "should grant / reviews", "must be granted / must be"],ans:3},{q:"'The attacker _____ to have moved laterally across four systems before _____ detected by the EDR tool.'",opts:["believed / being", "is believed / being", "appears / being", "was believed / being"],ans:1},{q:"'Security patches _____ to all endpoints within 48 hours of release for Critical and High severity vulnerabilities.'",opts:["must apply", "must be applied", "should apply", "are applying"],ans:1},{q:"'The incident _____ by the security operations centre at 03:14 UTC and the on-call team _____ immediately.'",opts:["is detected / is notified", "was detected / was notified", "detected / notified", "had been detected / had notified"],ans:1},{q:"'User accounts that _____ inactive for more than 90 days _____ automatically disabled by the identity management system.'",opts:["have been / are", "are / should be", "had been / were", "were / must be"],ans:0},{q:"'All data _____ before _____ to third-party cloud storage services in accordance with the data classification policy.'",opts:["must encrypt / transmitting", "must be encrypted / being transmitted", "is encrypted / transmitting", "should encrypt / transmission"],ans:1},{q:"'The vulnerability _____ by the penetration testing team during the annual assessment and _____ to the development team the same day.'",opts:["was identified / was reported", "identified / reported", "has been identified / was reported", "was identified / has been reported"],ans:0},{q:"'Employees _____ that their passwords _____ in a third-party data breach and that immediate password resets _____ recommended.'",opts:["are notified / were found / are", "notified / found / are", "were notified / had been found / were", "had been notified / were found / had been"],ans:0}]},
+  {title:"Exercise 3: Hedging Language in Threat Assessment and Security Briefings",instr:"Select the most appropriate hedging expression. Security briefings, threat assessments, and incident updates require careful hedging — communicating the level of confidence in a finding without overstating or understating the risk.",qs:[{q:"'Based on the indicators of compromise, it _____ that the attacker used a phishing email to obtain the initial credentials.'",opts:["is confirmed", "appears", "is certain", "is obvious"],ans:1},{q:"'We _____ rule out the possibility of data exfiltration at this stage — the investigation is ongoing.'",opts:["can", "cannot", "will", "must"],ans:1},{q:"'The threat intelligence report _____ that this threat actor has previously targeted organisations in the financial services sector.'",opts:["confirms certainly", "concludes definitely", "suggests", "proves"],ans:2},{q:"'This _____ be a false positive — the behaviour is unusual but not necessarily malicious.'",opts:["will", "is", "could", "must"],ans:2},{q:"'Our _____ assessment is that the attacker has not yet achieved persistence on the network, but we are continuing to investigate.'",opts:["definitive", "confirmed", "current", "certain"],ans:2},{q:"'The exact number of affected records has not yet _____ determined, but preliminary analysis suggests it is between 500 and 2,000.'",opts:["being", "been", "be", "to be"],ans:1},{q:"'It is too early to say _____ this incident is related to the attack on a sector peer reported last week.'",opts:["if", "whether", "that", "when"],ans:1},{q:"'The patch _____ resolve the vulnerability in most cases, but we are monitoring for any signs of continued exploitation.'",opts:["will", "must", "should", "shall"],ans:2},{q:"'The attacker _____ have been present on the network for up to three weeks before the activity was detected.'",opts:["might", "should", "will", "must"],ans:0},{q:"'We have no _____ evidence that customer payment data was accessed, but we cannot confirm this with certainty until the forensic investigation is complete.'",opts:["current", "confirmed", "certain", "definitive"],ans:3}]}];
+const grammarReview=[{title:"Grammar Point 1: Modal Verbs for Obligation and Risk in Cybersecurity",pts:[{h:"The Obligation Hierarchy in Security Policy",b:"Security policies use a precise hierarchy of modal verbs. 'Must' and 'shall' express absolute mandatory obligations — non-compliance has consequences. 'Should' expresses a strong recommendation — best practice that is expected unless there is a documented reason. 'May' expresses permission or discretion. 'Could' and 'might' express possibility — used in risk assessments and threat analysis, not policy.",ex:["'All users must enable MFA before accessing systems containing personal data.' (mandatory — non-negotiable)", "'Employees should use a VPN when connecting from public Wi-Fi.' (strong recommendation)", "'Users may request exceptions to the password complexity policy with manager approval.' (discretionary permission)", "'This configuration could allow an attacker to bypass authentication.' (possibility in risk context — not policy language)"]},{h:"Passive Modals for System Requirements",b:"Security specifications and policies use passive modals to describe what must happen to systems, data, and processes without specifying who is responsible — keeping focus on the requirement.",ex:["'All sensitive data must be encrypted at rest and in transit.' (mandatory system requirement)", "'Patches should be applied within 48 hours of release for Critical severity vulnerabilities.' (recommended timescale)", "'Access logs must be retained for a minimum of 12 months.' (mandatory retention — GDPR/compliance)", "'Accounts must be disabled within 24 hours of an employee leaving the organisation.' (mandatory process)"]},{h:"Risk Language — 'Could', 'May', 'Might' for Threat Assessment",b:"When describing potential threats and vulnerabilities, modals of possibility signal uncertainty appropriately. Overstating certainty in a threat assessment ('this will cause a breach') damages credibility if the assessment proves wrong; understating it ('this might not be an issue') fails to communicate risk clearly.",ex:["'This unpatched vulnerability could allow an attacker to execute arbitrary code.' (realistic possibility)", "'A successful phishing attack may result in the compromise of privileged credentials.' (probable consequence)", "'The misconfiguration might allow unauthorised access to the backup environment.' (assessed possibility)", "'Exploitation of this vulnerability would result in full administrative access.' (high confidence — 'would' for near-certain consequence)"]}]},
+  {title:"Grammar Point 2: Passive Voice in Security Documentation",pts:[{h:"Policies — What Must Be Done to Systems and Data",b:"Security policies use passive voice to make requirements impersonal and role-independent — the requirement applies regardless of who holds the role. This is appropriate because security requirements are technical and organisational, not personal.",ex:["'All devices must be encrypted before being issued to employees.'", "'Passwords must not be stored in plaintext — they must be hashed using an approved algorithm.'", "'Access to production systems must be granted through a formal access request process.'", "'Security incidents must be reported to the CISO within one hour of discovery.'"]},{h:"Incident Reports — What Happened Without Assigning Blame",b:"Incident reports use passive voice to describe events chronologically without implying individual culpability — consistent with blameless post-mortem practice. The actor may be unknown (the attacker) or deliberately unspecified (the team member who made an error).",ex:["'A phishing email was sent to 47 employees at 09:47 UTC.'", "'Credentials were harvested from three accounts before the attack was detected.'", "'The affected systems were isolated from the network at 10:23 UTC.'", "'The root cause was identified as a misconfigured authentication bypass in the legacy SSO system.'"]},{h:"Combining Active and Passive in Security Briefings",b:"Security briefings combine active voice (for clear attribution of actions or responsibilities) with passive voice (for system behaviour and unattributed events). The combination signals professionalism and prevents the monotony of all-passive reporting.",ex:["'The attacker sent a spear phishing email targeting the CFO. (active — attacker as subject)'", "'The email was opened at 14:32, and the malicious attachment was downloaded. (passive — victim not named)'", "'The security team detected the anomaly at 14:47 and immediately isolated the endpoint. (active — clear attribution)'", "'The investigation is ongoing, and further details will be shared as they become available. (passive — impersonal commitment)'"]}]},
+  {title:"Grammar Point 3: Hedging in Threat Assessment and Breach Communication",pts:[{h:"Signalling Confidence Levels in Threat Analysis",b:"Security analysts must communicate findings with appropriate confidence levels. High confidence ('confirms', 'establishes') is used only when evidence is conclusive. Moderate confidence ('suggests', 'indicates', 'appears') covers probable interpretations of evidence. Low confidence ('cannot rule out', 'is investigating whether', 'has not been confirmed') covers unknowns.",ex:["High confidence: 'Forensic analysis confirms that the attacker accessed the HR database.'", "Moderate confidence: 'Indicators of compromise suggest the initial vector was a phishing email.'", "Low confidence: 'We cannot rule out the possibility that data was exfiltrated.'", "Unknown: 'The full scope of the breach has not yet been determined.'"]},{h:"Hedging in Breach Notifications",b:"When notifying individuals or regulators about a breach, organisations must communicate what is known and what is still being investigated — without speculating beyond the evidence or admitting liability prematurely. The language must be honest, clear, and appropriately hedged.",ex:["'We are writing to inform you that we have identified a security incident that may have affected your personal data.'", "'Our investigation is ongoing. At this stage, we believe that [specific data] may have been accessed.'", "'We have no evidence at this time that any of your personal data has been misused.'", "'We will provide a further update within [timeframe] as our investigation progresses.'"]},{h:"'Although', 'While', and 'Despite' for Balanced Risk Communication",b:"Balanced security communication acknowledges both risks and the controls in place to mitigate them — neither understating the severity nor causing disproportionate alarm. Contrast structures achieve this balance.",ex:["'Although the vulnerability is serious, it has been patched and we have no evidence of exploitation.'", "'While we cannot confirm that no data was accessed, the affected systems contained no payment card information.'", "'Despite the attacker gaining initial access, our network segmentation prevented lateral movement to production systems.'", "'Although the investigation is ongoing, all containment measures have been implemented and the immediate risk has been mitigated.'"]}]}];
+const writingTasks=[{id:"w1",activity:"Activity 1",type:"Security Incident Report",title:"Security Incident Report: Phishing Attack and Credential Compromise",prompt:"You are the Information Security Manager at Meridian Financial Services. You need to write a formal security incident report following a phishing attack.\n\nWhat happened:\n• Monday 22 April, 08:47: A targeted phishing email was sent to 12 members of the Payments team, impersonating the Head of Finance and requesting urgent password verification\n• 09:03: Three employees clicked the link and entered their credentials on a spoofed login page\n• 09:15: The attacker used one of the compromised accounts to access the payments processing system and attempt to create three fraudulent payment instructions totalling £340,000\n• 09:22: The payments system flagged the unusual activity and held the instructions pending review\n• 09:31: The security team was alerted by the payments system and immediately disabled all three compromised accounts\n• 09:45: Forensic review confirmed no payments were processed; the attacker's access was terminated\n• 10:15: All affected employees received mandatory password resets and MFA enrolment\n• The attack was a spear phishing attempt using a domain registered two days prior (meridian-finance-verify.com)\n\nWrite a formal security incident report including: incident summary, timeline of events, impact assessment (what was and was not compromised), root cause, immediate containment actions taken, and at least 4 recommended remediation actions to prevent recurrence. Use formal, precise security language. Use at least 6 vocabulary terms from this module.",tags:["Incident Report", "Phishing", "Security Documentation", "Professional Register", "Cybersecurity"],targetMin:200,targetMax:300},{id:"w2",activity:"Activity 2",type:"Breach Notification",title:"Data Breach Notification Letter to Affected Individuals",prompt:"You are the Data Protection Officer at Nexford Digital, an online learning platform with 85,000 registered users. Your platform has suffered a data breach.\n\nWhat happened:\n• A vulnerability in the platform's API allowed an unauthorised third party to access user account data between 14 March and 2 April (19 days)\n• The compromised data includes: full name, email address, hashed password, subscription tier, and learning progress data\n• Payment card data was NOT affected — it is processed by a separate PCI-DSS compliant third party\n• Approximately 12,400 accounts were accessed (out of 85,000 total)\n• The vulnerability was discovered on 2 April during a routine security audit\n• The vulnerability has been patched; the ICO has been notified within the 72-hour GDPR deadline\n• You do not yet have evidence that any data has been misused\n\nWrite a formal data breach notification letter to affected users. The letter must: explain clearly what happened, specify exactly what data was affected and what was NOT affected, explain what you have done to address the issue, advise users on steps they can take to protect themselves, and provide contact details for further queries. Use clear, plain language appropriate for a non-technical audience. Use at least 6 vocabulary terms from this module.",tags:["Data Breach Notification", "GDPR", "Breach Communication", "Plain Language", "Data Protection"],targetMin:180,targetMax:270}];
+const listeningActs=[{id:0,title:"Security Briefing: The Current Threat Landscape",sub:"Executive Briefing · B2 Level · approx. 108 sec",icon:"🛡️",transcript:"Good morning. I am Amara, the Chief Information Security Officer, and I want to use this session to bring the leadership team up to date on our current threat picture and what we are doing about it. Let me start with the macro context. The threat landscape has changed significantly in the past 18 months. We are seeing a 40% increase in phishing attempts targeting our sector, a significant rise in business email compromise attacks — where attackers impersonate senior executives to authorise fraudulent payments — and two confirmed ransomware incidents affecting direct competitors in the past quarter. Our own posture: last month we ran a simulated phishing exercise. 23% of employees who received the test email clicked the link. That is lower than the industry average of 31%, but it is still too high. The good news is that 67% of those who clicked reported it immediately using the phish reporting button — that is genuinely impressive. What we are doing. First — we are rolling out mandatory security awareness training for all staff by end of this quarter. The training is 90 minutes, online, and specifically focused on phishing recognition and response. Second — we are accelerating our MFA rollout. Currently 78% of staff accounts have MFA enabled. We need to reach 100% before the end of June. Every day that 22% of accounts are protected only by a password is a day of unnecessary risk. Third — we are implementing network segmentation between our customer-facing systems and our internal corporate network. At present, a compromised laptop on the corporate network has a direct path to our payment processing environment. That is unacceptable from a defence-in-depth perspective. I want to be clear: no organisation is immune to a cyberattack. Our goal is not to prevent every attack — it is to detect attacks quickly and limit their damage. Any questions?",qs:[{q:"What percentage increase in phishing attempts targeting their sector does Amara report?",opts:["20%", "30%", "40%", "50%"],ans:2},{q:"What type of attack impersonates senior executives to authorise fraudulent payments?",opts:["Spear phishing", "Business email compromise (BEC)", "Ransomware", "Vishing"],ans:1},{q:"What percentage of employees clicked the link in the simulated phishing exercise?",opts:["13%", "23%", "31%", "67%"],ans:1},{q:"What is notable about the employees who clicked the phishing link?",opts:["They all reported it to their line managers immediately", "67% of those who clicked immediately reported it using the phish reporting button", "They all had completed security awareness training within the previous month", "None of them had MFA enabled on their accounts"],ans:1},{q:"What is the current MFA adoption rate and the target?",opts:["56% current — target 90%", "78% current — target 100% by end of June", "90% current — target 100% by end of year", "65% current — target 80% by end of quarter"],ans:1},{q:"What network security concern does Amara highlight?",opts:["The corporate VPN has insufficient capacity for all remote workers", "The company's firewall rules have not been reviewed for 18 months", "A compromised laptop on the corporate network has a direct path to the payment processing environment", "Customer data is stored on unencrypted servers in the data centre"],ans:2},{q:"What security improvement addresses the network concern?",opts:["Deploying a next-generation firewall at the perimeter", "Implementing network segmentation between customer-facing systems and the internal corporate network", "Moving all payment processing to a third-party cloud provider", "Requiring VPN use for all employees, including those working from the office"],ans:1},{q:"What does Amara say the goal of security is?",opts:["To prevent every possible cyberattack", "To eliminate all vulnerabilities before attackers can exploit them", "To detect attacks quickly and limit their damage — not to prevent every attack", "To ensure regulatory compliance across all security frameworks"],ans:2}]},
+  {id:1,title:"Incident Response: Ransomware Attack",sub:"Engineering Call · B2 Level · approx. 111 sec",icon:"💰",transcript:"It is 03:47 UTC. The on-call security engineer, Marcus, has been paged for a P1 security incident. He is on a call with the CISO, Amara, and the head of infrastructure, Tom. Marcus: Okay, here is what we know. At 03:31 UTC, our EDR tool flagged a ransomware binary executing on the EMEA file server. Within four minutes, it had encrypted 847 files in the shared finance directory. The process was killed by the EDR at 03:35, but the encrypted files remain. Amara: How did it get in? Marcus: Too early to say definitively. The server's event logs show a remote desktop session was established from an internal IP at 02:58 UTC. That IP belongs to a laptop assigned to a finance team member. My working hypothesis is that the laptop was compromised first — possibly through a phishing attack — and the attacker used it as a jumping-off point to reach the file server. Tom: Is the ransomware still active on the network? Marcus: The EDR has contained the process on the file server. I am running a sweep across all systems now. My initial assessment is that this may be an isolated incident, but I cannot confirm that yet. Amara: What are our options on the encrypted files? Marcus: We have three options. One — pay the ransom. I would not recommend this without specialist advice. Two — restore from backup. Our last verified backup of the finance directory was taken at 22:00 yesterday — so we would lose approximately six hours of data. Three — attempt decryption using known decryptors for this ransomware family. I am checking the No More Ransom database now. Amara: Restore from backup is the preferred option provided the backup is clean. Tom — can you begin the restore process while we contain the rest of the network? And Marcus — I need you to preserve all forensic evidence before we do anything else. Do not wipe or overwrite any affected systems. Marcus: Understood. I am also logging everything in the incident management system. We will need this for the post-mortem and potentially for regulatory notification if personal data was in those files.",qs:[{q:"What system detected the ransomware and when?",opts:["The SIEM detected it at 03:31 UTC", "The EDR tool flagged it at 03:31 UTC", "The firewall blocked it at 03:35 UTC", "A security analyst noticed it at 03:47 UTC"],ans:1},{q:"How many files were encrypted before the ransomware process was killed?",opts:["47 files", "847 files in the shared finance directory", "4,700 files across all connected systems", "All files on the EMEA file server"],ans:1},{q:"What is Marcus's working hypothesis about how the attacker gained access?",opts:["The attacker exploited an unpatched vulnerability in the file server's RDP service directly", "The attacker used a stolen VPN credential to access the network remotely", "A finance team member's laptop was compromised first, then used as a jumping-off point to the file server", "The attack was conducted by a malicious insider with legitimate access to the file server"],ans:2},{q:"What three options does Marcus give for the encrypted files?",opts:["Restore from backup, pay the ransom, or rebuild from scratch", "Pay the ransom, restore from backup, or attempt decryption using known decryptors from the No More Ransom database", "Accept the data loss, pay the ransom, or engage law enforcement", "Rebuild the server, restore from backup, or negotiate with the attackers"],ans:1},{q:"What is the limitation of restoring from backup?",opts:["The backup is also encrypted by the ransomware", "The backup system requires 24 hours to complete a full restore", "Approximately six hours of data would be lost as the last verified backup was taken at 22:00", "The backup is stored on the same network segment as the affected server"],ans:2},{q:"What does Amara tell Marcus to do before anything else?",opts:["Pay the ransom to recover the files immediately", "Wipe the affected systems to prevent further encryption", "Preserve all forensic evidence — not wipe or overwrite any affected systems", "Notify all affected employees that their data may have been compromised"],ans:2},{q:"Why might regulatory notification be required according to Marcus?",opts:["Because any ransomware attack must be reported to the National Cyber Security Centre", "Because the file server contained government contract data", "If personal data was in the encrypted files, GDPR notification requirements may apply", "Because the attack originated from an external IP address"],ans:2},{q:"What is Marcus using to track the incident?",opts:["A shared spreadsheet sent to all team members", "Verbal updates communicated to the CISO only", "The incident management system — to support the post-mortem and potential regulatory notification", "A secure chat channel that will be deleted after the incident is resolved"],ans:2}]},
+  {id:2,title:"Security Awareness Training: Recognising Phishing",sub:"Training Session · B1–B2 Level · approx. 105 sec",icon:"🎣",transcript:"Welcome to this month's security awareness session. My name is Yuki, and I am from the information security team. Today we are focusing on phishing — because despite everything we do technically, phishing remains the number one way attackers get into our organisation. Let me start with a question. How many of you have received an email in the last month that felt slightly off — maybe the language was a bit formal, or it asked you to do something urgently? Probably most of you. Phishing works because it triggers specific emotional responses. The most common triggers are: urgency — 'Your account will be suspended in 24 hours'; authority — an email that appears to come from your CEO or IT department; fear — 'Unusual sign-in activity detected on your account'; and helpfulness — 'A colleague has shared a document with you.' So how do you spot a phishing email? Four things to check. First — the sender's email address. Not just the display name — anyone can fake a display name — but the actual email domain. meridian-finance-verify.com is not meridian.com. Second — hover before you click. Hover your mouse over any link to see the actual URL before clicking it. If the URL looks wrong, do not click. Third — does the request make sense? Would your CEO really email you personally asking you to buy gift cards? Would IT really ask for your password? When in doubt, verify through a different channel — pick up the phone. Fourth — unexpected attachments. Never open an attachment you were not expecting, even if the sender appears legitimate. And here is the most important thing I can tell you today: if you think you have clicked on a phishing link — report it immediately. Do not be embarrassed. The sooner we know, the sooner we can contain the damage. Use the phish report button in Outlook. If in doubt, call the security team directly. Remember: clicking a phishing link does not make you stupid. It makes you human. But not reporting it could make the difference between a contained incident and a major breach.",qs:[{q:"What does Yuki say remains the number one way attackers get into their organisation?",opts:["Exploiting unpatched software vulnerabilities", "Compromising remote access systems", "Phishing", "Insider threats from disgruntled employees"],ans:2},{q:"What four emotional triggers does Yuki say phishing attacks exploit?",opts:["Curiosity, greed, sympathy, and loyalty", "Urgency, authority, fear, and helpfulness", "Trust, confusion, excitement, and boredom", "Anger, guilt, pride, and jealousy"],ans:1},{q:"What does Yuki say about checking the sender's email address?",opts:["Check the display name — it is the most reliable indicator of authenticity", "Ignore the email address if the content looks legitimate", "Check the actual email domain, not just the display name — the domain can reveal spoofing", "Only check the email address if the email asks you to click a link"],ans:2},{q:"What does 'hover before you click' mean?",opts:["Move the email to a different folder before deciding whether to click", "Wait 24 hours before clicking any link in an email", "Hover the mouse over a link to see the actual URL before clicking", "Ask a colleague to check the link before you open it"],ans:2},{q:"What should you do if a request seems unusual — like a CEO asking you to buy gift cards?",opts:["Comply if the email appears to come from a legitimate address", "Forward the email to your line manager for approval", "Verify through a different channel — call the person directly rather than replying to the email", "Reply to the email asking for more information"],ans:2},{q:"What does Yuki say about unexpected attachments?",opts:["Open them in a sandboxed environment to check for malware", "Only open attachments from people you know personally", "Never open an attachment you were not expecting, even if the sender appears legitimate", "Forward them to the security team before opening"],ans:2},{q:"What is the most important action Yuki says employees should take if they click a phishing link?",opts:["Change their password immediately without telling anyone", "Report it immediately using the phish report button or by calling the security team", "Restart their computer to prevent malware from running", "Log out of all accounts and wait for the security team to contact them"],ans:1},{q:"What does Yuki say about clicking a phishing link?",opts:["It indicates insufficient security awareness training", "It means the employee should be disciplined", "It does not make you stupid — it makes you human. Not reporting it could be the difference between a contained incident and a major breach", "It will result in the employee's account being suspended for investigation"],ans:2}]},
+  {id:3,title:"Compliance Review: GDPR and Cybersecurity Obligations",sub:"Internal Review · B2 Level · approx. 106 sec",icon:"📜",transcript:"We are in a compliance review meeting between Kenji, the Data Protection Officer, and Leila, the Head of Legal, discussing the organisation's cybersecurity obligations under GDPR. Kenji: Leila, I want to make sure we are aligned on what GDPR actually requires from a cybersecurity perspective — not just the data breach notification rules, which everyone knows, but the broader obligations. Leila: Sure. The core obligation is Article 32 — security of processing. Organisations must implement appropriate technical and organisational measures to ensure a level of security appropriate to the risk. The key word is 'appropriate' — it is a risk-based approach, not a prescriptive checklist. Kenji: And what does 'appropriate' look like in practice? Leila: The regulation gives examples: pseudonymisation and encryption of personal data; the ability to ensure ongoing confidentiality, integrity, availability, and resilience of processing systems; the ability to restore data in the event of a physical or technical incident; and a process for regularly testing, assessing, and evaluating the effectiveness of security measures. Kenji: So penetration testing and vulnerability assessments are not just good practice — they are arguably a GDPR requirement. Leila: Exactly. And the ICO has been clear that organisations that have not implemented basic security measures — like MFA for systems containing personal data, or regular patching — will face regulatory action following a breach, even if the breach was caused by an external attacker. The question regulators ask is not just 'were you attacked?' but 'did you take appropriate measures to protect the data?' Kenji: And the notification obligations — remind me of the timelines. Leila: 72 hours to notify the ICO when there is a breach that poses a risk to individuals. Without undue delay to notify the affected individuals when the breach is likely to result in a high risk to their rights and freedoms. Crucially — the clock starts from when you become aware of the breach, not when it occurred. Kenji: Which means we need to be confident in our detection capability — because a breach we do not detect for three weeks is still a 72-hour clock from detection. Leila: Precisely. And the ICO will look at your detection capability as part of any investigation.",qs:[{q:"What is Article 32 of GDPR?",opts:["The article requiring a Data Protection Officer to be appointed", "The article requiring organisations to implement appropriate technical and organisational security measures", "The article specifying the 72-hour data breach notification deadline", "The article defining what constitutes personal data under GDPR"],ans:1},{q:"What does 'appropriate' mean in Article 32's requirement for security measures?",opts:["Meeting a specific prescribed checklist of required controls", "Implementing the most advanced security technology available", "A risk-based approach — the measures should be appropriate to the level of risk involved", "Complying with the ISO 27001 standard as a minimum"],ans:2},{q:"Which of the following is NOT mentioned as an example of appropriate security in GDPR Article 32?",opts:["Pseudonymisation and encryption of personal data", "The ability to restore data following a technical incident", "Regular testing and evaluation of security measures", "Requiring all employees to hold a cybersecurity qualification"],ans:3},{q:"What does Leila say about penetration testing and vulnerability assessments?",opts:["They are optional for organisations with fewer than 250 employees", "They are not specifically required by GDPR but are recommended best practice", "They are arguably a GDPR requirement because GDPR requires regular testing of security measures", "They are only required for organisations processing health or financial data"],ans:2},{q:"What question does Leila say regulators ask following a breach?",opts:["'Who in the organisation was responsible for the failure?'", "'How much personal data was compromised?'", "'Were you attacked, and did you report it within 72 hours?'", "'Did you take appropriate measures to protect the data?'"],ans:3},{q:"What is the GDPR notification timeline for informing the ICO of a breach?",opts:["24 hours from discovery of the breach", "72 hours from when the breach occurred", "72 hours from when the organisation becomes aware of the breach", "7 days from the date the breach was fully investigated"],ans:2},{q:"When does the 72-hour clock start according to Leila?",opts:["When the breach first occurred in the system", "When the forensic investigation is completed", "When the organisation becomes aware of the breach — not when it occurred", "When the affected individuals are notified"],ans:2},{q:"Why does Kenji say detection capability is critical for GDPR compliance?",opts:["Regulators require evidence of 24/7 monitoring to approve data processing activities", "A breach that is not detected for three weeks still triggers a 72-hour notification clock from the point of detection — making detection speed a compliance factor", "Only detected breaches are subject to the GDPR notification requirements", "Early detection reduces the regulatory fine by 50% under ICO guidance"],ans:1}]}];
+const casesStudies=[{tag:"United Kingdom · Data Breach · 2018 · Regulatory Action",title:"Case Study 1: British Airways Data Breach — The ICO's First Major GDPR Fine",sub:"How a card-skimming attack on a major airline's website became the test case for GDPR enforcement in the UK",sections:[{h:"Background",t:"In September 2018, British Airways announced that it had suffered a data breach affecting approximately 500,000 customers. The breach, which occurred between August and September 2018, involved a sophisticated attack in which malicious code was injected into the British Airways website — redirecting users making bookings to a fraudulent site that harvested their payment card details and personal information. The type of attack is known as a 'formjacking' or 'Magecart' attack — named after the criminal group that pioneered it. The compromised data included names, billing addresses, email addresses, and full payment card details including CVV codes. For BA, the timing was particularly significant: the breach occurred under the new GDPR regime, making it subject to the enhanced regulatory powers that GDPR gave the Information Commissioner's Office."},{h:"The Regulatory Response",t:"In July 2019, the ICO announced its intention to fine British Airways £183.39 million — at the time the largest fine ever proposed under GDPR, representing approximately 1.5% of BA's global annual turnover in 2017. The ICO's investigation found that BA had poor security arrangements, including inadequate access controls, lack of multi-factor authentication for remote access, and insufficient monitoring of their systems. The investigation concluded that a variety of basic security measures that were available at the time could have prevented the attack. In October 2020, following BA's representations and the economic impact of COVID-19 on the airline industry, the ICO reduced the final fine to £20 million — still a substantial penalty and one that sent a clear message to organisations about their GDPR security obligations. BA did not admit to any breach of data protection law in settling the fine."},{h:"Lessons for Cybersecurity Practice",t:"The British Airways case established several important precedents for GDPR enforcement. First, it confirmed that the ICO would take action not just against organisations that failed to report breaches, but against those that failed to have adequate security in place to prevent them. Second, it demonstrated that 'basic security measures' — MFA, access controls, monitoring — are expected, not optional, and their absence is itself a regulatory failure. Third, it illustrated the financial exposure that data breaches create under GDPR — even after reduction, £20 million is a significant penalty. Fourth, it showed that third-party supply chain risks are the organisation's responsibility: the attack exploited a vulnerability in BA's web infrastructure, including third-party scripts. Finally, the case highlighted the reputational damage that a high-profile breach causes — damage that, for BA, coincided with and compounded other business challenges."}],qs:[{q:"How many customers were affected by the British Airways data breach?",opts:["50,000", "150,000", "500,000", "5 million"],ans:2},{q:"What type of attack was used against British Airways?",opts:["A ransomware attack that encrypted BA's reservation database", "A formjacking attack where malicious code injected into the BA website harvested payment card details", "A phishing attack targeting BA employees' email accounts", "A DDoS attack that took the BA website offline"],ans:1},{q:"What data was compromised in the breach?",opts:["Only email addresses and frequent flyer numbers", "Names, billing addresses, email addresses, and full payment card details including CVV codes", "Passport details and travel itineraries of business class passengers", "Employee payroll data and HR records"],ans:1},{q:"What was the ICO's initial proposed fine?",opts:["£1.25 million", "£20 million", "£183.39 million", "£500 million"],ans:2},{q:"What security failures did the ICO's investigation identify?",opts:["BA had failed to conduct any penetration testing in the five years before the breach", "BA lacked any form of intrusion detection or prevention capability", "Poor access controls, lack of MFA for remote access, and insufficient system monitoring", "BA had ignored specific warnings from the NCSC about the Magecart attack group"],ans:2},{q:"What was the final fine amount and why was it reduced?",opts:["£20 million — reduced following BA's representations and the economic impact of COVID-19", "£50 million — reduced because BA had cooperated fully with the investigation", "£183 million — the full amount was maintained despite BA's appeal", "£100 million — reduced because the breach was caused by an external attacker, not internal negligence"],ans:0},{q:"What did the case establish about basic security measures under GDPR?",opts:["Basic security measures are optional for organisations that lack the resources to implement them", "MFA, access controls, and monitoring are expected as minimum standards — their absence is itself a regulatory failure", "GDPR security requirements only apply to organisations processing health or financial data", "Regulatory action only follows when an organisation fails to report a breach within 72 hours"],ans:1},{q:"What does the case illustrate about supply chain security?",opts:["Third-party suppliers are solely responsible for security vulnerabilities in their own components", "Organisations can exclude supply chain risks from their GDPR obligations", "Third-party supply chain risks are the organisation's responsibility — the attack exploited BA's web infrastructure including third-party scripts", "Supply chain attacks are too sophisticated for most organisations to defend against"],ans:2},{q:"What general principle does the case establish about GDPR enforcement?",opts:["The ICO will only take action against organisations that fail to report breaches on time", "The ICO takes action against organisations that lack adequate security, not just those that fail to report", "GDPR fines are limited to a maximum of £20 million for any single incident", "Organisations that cooperate with ICO investigations are exempt from financial penalties"],ans:1},{q:"What was significant about the timing of the breach for British Airways?",opts:["It occurred during BA's annual general meeting", "It occurred during the EU's peak summer travel season", "It occurred under the new GDPR regime, making BA subject to enhanced regulatory powers", "It was the first ever cyberattack against a UK airline"],ans:2}]},
+  {tag:"Global · Ransomware · 2017 · Critical Infrastructure Attack",title:"Case Study 2: WannaCry — The Ransomware Attack That Paralysed the NHS and Changed Cybersecurity Policy",sub:"What the 2017 global ransomware attack revealed about patch management, legacy systems, and critical infrastructure vulnerability",sections:[{h:"Background",t:"On 12 May 2017, a ransomware worm known as WannaCry began spreading across the globe, exploiting a vulnerability in Microsoft Windows systems called EternalBlue — a zero-day exploit originally developed by the US National Security Agency (NSA) that had been stolen and leaked by a hacking group called the Shadow Brokers. Microsoft had released a patch for the vulnerability (MS17-010) in March 2017 — two months before the WannaCry attack — but millions of systems had not been updated. Within hours, WannaCry had infected over 200,000 systems in 150 countries, encrypting files and demanding payment in Bitcoin. The total economic damage has been estimated at between $4 billion and $8 billion."},{h:"The Impact on the NHS",t:"WannaCry's impact on the UK National Health Service was particularly severe and widely reported. Approximately one-third of NHS England's trusts were affected. An estimated 80 NHS trusts and 595 GP practices were disrupted. Hospitals turned away non-emergency patients, cancelled approximately 19,000 appointments, and ambulances were diverted. The NHS Digital post-incident review found that no NHS organisation was using WannaCry as a deliberate target — the attack was indiscriminate. However, the NHS was disproportionately affected because many trusts were running outdated, unpatched versions of Windows XP (for which Microsoft had ceased support in 2014) and had not applied the MS17-010 patch to supported systems. The attack was eventually halted when a security researcher, Marcus Hutchins, discovered and activated a kill switch domain registered by the attackers."},{h:"Lessons and Policy Changes",t:"WannaCry had a transformative effect on cybersecurity policy and practice. First, it demonstrated with brutal clarity the real-world consequences of poor patch management — millions of people were denied healthcare because of unpatched software. Second, it established the operational importance of cybersecurity for critical national infrastructure — organisations providing essential services were required to take security more seriously. Third, it led directly to policy changes: in the UK, the Network and Information Systems (NIS) Regulations 2018 were introduced, requiring operators of essential services to implement appropriate security measures and report significant incidents. Fourth, it drove significant investment in NHS cybersecurity — the subsequent Cyber Security Programme for Health and Care funded substantial improvements in patch management, network segmentation, and security operations across the NHS."}],qs:[{q:"When did the WannaCry attack begin?",opts:["12 March 2017", "12 May 2017", "12 July 2017", "12 November 2017"],ans:1},{q:"What vulnerability did WannaCry exploit?",opts:["A zero-day in Adobe Flash that had never been patched", "A vulnerability in Windows called EternalBlue, originally developed by the NSA and leaked by the Shadow Brokers", "A weakness in email server software used by most large organisations", "A flaw in the TLS encryption standard used for secure web connections"],ans:1},{q:"When had Microsoft released a patch for the exploited vulnerability?",opts:["The day before the WannaCry attack", "One week before the attack", "Two months before the attack — in March 2017", "After the attack — it was a zero-day with no available patch"],ans:2},{q:"How many systems were infected in how many countries?",opts:["20,000 systems in 50 countries", "Over 200,000 systems in 150 countries", "1 million systems in 30 countries", "50,000 systems in 180 countries"],ans:1},{q:"Why was the NHS disproportionately affected?",opts:["The NHS was specifically targeted by the attackers as a high-profile victim", "Many NHS trusts were running outdated unpatched Windows XP and had not applied the MS17-010 patch", "NHS IT systems were connected directly to the internet without firewall protection", "The NHS had recently migrated to a new system that introduced the vulnerability"],ans:1},{q:"How was the WannaCry attack eventually halted?",opts:["Microsoft released an emergency patch that automatically removed the malware", "Law enforcement in the UK and US arrested the attackers", "A security researcher discovered and activated a kill switch domain registered by the attackers", "Affected organisations paid the ransom, which triggered the attackers to release a decryption tool"],ans:2},{q:"What was the first major lesson of WannaCry?",opts:["Ransomware can only be stopped by paying the ransom demanded", "Cybersecurity is a specialist concern that should be left entirely to IT departments", "Poor patch management has real-world consequences — millions were denied healthcare because of unpatched software", "Critical infrastructure organisations should disconnect entirely from the internet"],ans:2},{q:"What UK regulation was introduced following WannaCry?",opts:["The Cybersecurity and Infrastructure Protection Act 2017", "The Network and Information Systems (NIS) Regulations 2018", "The Emergency Powers (Cybersecurity) Act 2018", "The Critical Infrastructure Security Regulations 2019"],ans:1},{q:"What does WannaCry illustrate about the risk of legacy software?",opts:["Legacy software is immune to modern cyberattacks because attackers do not target old systems", "Unpatched legacy systems create exploitable vulnerabilities that can have severe operational consequences", "Legacy software should be retained because modern systems introduce new vulnerabilities", "The risk of legacy software is manageable through insurance rather than patching"],ans:1},{q:"What does the case study say about WannaCry's targeting of the NHS?",opts:["The NHS was specifically chosen as a high-profile symbolic target", "The attackers had insider knowledge of NHS systems from a previous breach", "No NHS organisation was using WannaCry as a deliberate target — the attack was indiscriminate, but the NHS was disproportionately affected due to unpatched systems", "WannaCry only targeted the NHS and a small number of other health services globally"],ans:2}]}];
+const assessQs=[{q:"What is phishing?",opts:["A network attack overwhelming servers with traffic", "A social engineering attack impersonating trusted entities to steal credentials or trigger harmful actions", "Malware that replicates across networks without user action", "A technique for scanning networks to discover open ports"],ans:1},{q:"What is defence in depth?",opts:["Relying on a single highly effective perimeter firewall", "Building security through multiple overlapping layers of control", "Defending the most sensitive data with the strongest encryption", "Focusing security investment on endpoint protection only"],ans:1},{q:"What is a zero-day vulnerability?",opts:["A vulnerability patched on the day it was discovered", "Any critical vulnerability rated 10.0 on the CVSS scale", "A vulnerability unknown to the vendor with no available patch", "A vulnerability only affecting unupdated systems"],ans:2},{q:"Under GDPR, how long does an organisation have to notify the ICO after becoming aware of a qualifying data breach?",opts:["24 hours", "48 hours", "72 hours", "7 days"],ans:2},{q:"What is the principle of least privilege?",opts:["Granting users the maximum access possible to maximise productivity", "Restricting access so users have only the minimum permissions necessary for their role", "Requiring all access requests to be approved by two managers", "Automatically revoking all access after 90 days of inactivity"],ans:1},{q:"What did the WannaCry attack exploit?",opts:["An unpatched vulnerability in Windows called EternalBlue, originally developed by the NSA", "A zero-day in email server software used by critical infrastructure organisations", "A weakness in VPN clients used by remote workers", "A vulnerability in web browsers that allowed credential harvesting"],ans:0},{q:"What is ransomware?",opts:["Software that monitors and controls network access based on security rules", "Malware that encrypts the victim's files and demands payment for the decryption key", "A phishing attack targeting specific high-value individuals", "Social engineering that manipulates employees over the phone"],ans:1},{q:"What did the British Airways ICO investigation find about basic security measures?",opts:["They are optional for organisations that lack resources to implement them", "They are expected as a minimum standard — their absence is itself a regulatory failure", "They only apply to organisations processing health or financial data", "Regulatory action only follows when an organisation fails to report a breach on time"],ans:1},{q:"What is a Security Operations Centre (SOC)?",opts:["A room where servers and network equipment are housed", "A centralised team continuously monitoring an organisation's security posture and responding to threats", "A compliance function that audits security policies annually", "A team of developers who build security features into products"],ans:1},{q:"What does the 'assume breach' mindset mean?",opts:["Assuming all employees are potential insider threats", "Planning for breaches to occur rather than assuming all attacks can be prevented — focusing on detection, containment, and recovery", "Assuming that paying a ransom is always the fastest way to recover from ransomware", "Building the strongest possible perimeter to prevent any breach from occurring"],ans:1},{q:"What is multi-factor authentication?",opts:["Requiring a password that meets multiple complexity requirements", "An authentication method requiring two or more verification factors from different categories", "A system requiring multiple administrators to approve access", "A policy requiring passwords to be changed multiple times per year"],ans:1},{q:"In the WannaCry attack, why was the NHS disproportionately affected?",opts:["The NHS was specifically targeted by the attackers", "NHS systems lacked any firewall protection", "Many NHS trusts were running unpatched legacy Windows XP systems and had not applied the available patch", "The NHS had been warned but chose not to patch because of the cost"],ans:2},{q:"What modal verb expresses an absolute mandatory security obligation in policy language?",opts:["Should", "Could", "Might", "Must"],ans:3},{q:"What passive modal structure is used for mandatory system requirements in security specifications?",opts:["'Systems should perform...'", "'Systems must be configured to...'", "'Systems can provide...'", "'Systems will do...'"],ans:1},{q:"What is a threat actor?",opts:["Any software vulnerability that could be exploited", "A risk identified in a security risk assessment", "Any individual, group, or entity posing a cybersecurity threat to an organisation", "A type of malware that actively monitors and exfiltrates data"],ans:2},{q:"What hedging phrase is appropriate when a finding is probable but not confirmed?",opts:["'This confirms that...'", "'This proves that...'", "'It appears that...' or 'This suggests that...'", "'It is certain that...'"],ans:2},{q:"What is network segmentation used to prevent?",opts:["Slower network performance due to excessive traffic", "Lateral movement — a compromise in one area spreading automatically to all others", "Unauthorised physical access to server rooms", "Data exfiltration through encrypted channels"],ans:1},{q:"What does the 72-hour GDPR notification clock start from?",opts:["When the breach first occurred in the systems", "When the forensic investigation is complete", "When the organisation becomes aware of the breach", "When the affected individuals are notified"],ans:2},{q:"What does security awareness training primarily address?",opts:["Technical vulnerabilities in software and infrastructure", "Compliance with regulatory certification requirements", "The human factor — helping employees recognise threats like phishing and respond appropriately", "Physical security of premises and server rooms"],ans:2},{q:"What was the key lesson of the WannaCry attack regarding patch management?",opts:["Patches should only be applied after extensive testing in a production environment", "Poor patch management has severe real-world consequences — millions were denied healthcare because of unpatched software", "Zero-day attacks cannot be prevented through patching alone", "Patch management is only critical for systems directly connected to the internet"],ans:1}];
+
+// ── Navigation ──────────────────────────────────────────────
+function openSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='translateX(0)';sb.classList.add('open');document.getElementById('overlay').style.display='block';}
+function closeSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='';sb.classList.remove('open');document.getElementById('overlay').style.display='none';}
+function goTo(rawId){
+  // strip 'sec-' prefix if present for logic key
+  const id=rawId.replace(/^sec-/,'');
+  const secId='sec-'+id;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(secId);
+  if(sec){sec.classList.add('active');}
+  // mark active nav: match onclick containing this id
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    const oc=n.getAttribute('onclick')||'';
+    if(oc.includes("'"+secId+"'")||oc.includes('"'+secId+'"')){n.classList.add('active');}
+  });
+  window.scrollTo(0,0);
+  closeSidebar();
+  if(id==='overview') initOverview();
+  else if(id==='speaking') initSpeaking();
+  else if(id==='wordbank') initWordBank();
+  else if(id==='reading') initReading();
+  else if(id==='vocab') initVocab();
+  else if(id==='grammar') initGrammar();
+  else if(id==='gramreview') initGramReview();
+  else if(id==='writing') initWriting();
+  else if(id==='listening') initListening();
+  else if(id==='cases') initCases();
+  else if(id==='assessment') initAssessment();
+}
+
+// ── MCQ Engine ───────────────────────────────────────────────
+function renderMCQ2(containerId, questions, prefix, darkMode){
+  const c=document.getElementById(containerId);
+  if(!c)return;
+  let h='';
+  questions.forEach((item,i)=>{
+    const letters=['A','B','C','D'];
+    const dk=darkMode?'lmcq-opt':'';
+    h+=`<div class="mcq-block" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-opts">`;
+    item.opts.forEach((opt,j)=>{
+      h+=`<div class="mcq-opt ${dk}" onclick="pickOpt('${prefix}',${i},${j},${item.ans})" id="${prefix}-${i}-${j}">
+        <span class="opt-letter">${letters[j]}</span>${opt}</div>`;
+    });
+    h+=`</div></div>`;
+  });
+  c.innerHTML=h;
+}
+function pickOpt(prefix,qi,oi,ans){
+  const block=document.getElementById(prefix+'-q'+qi);
+  if(!block||block.dataset.done)return;
+  block.dataset.done='1';
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    if(j===ans)el.classList.add('correct');
+    else if(j===oi)el.classList.add('incorrect');
+    el.style.pointerEvents='none';
+  });
+}
+
+// ── Overview ─────────────────────────────────────────────────
+function initOverview(){
+  const c=document.getElementById('overviewContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card">
+    <div class="card-title">📘 What You Will Learn</div><div class="card-bar"></div>
+    <div class="outcomes-grid">${outcomes.map((o,i)=>`<div class="outcome"><span class="out-num">${String(i+1).padStart(2,'0')}</span><span class="out-text">${o}</span></div>`).join('')}</div>
+  </div>`;
+  setTimeout(()=>{
+    const pf=document.getElementById('progFill');
+    const pp=document.getElementById('progPct');
+    if(pf)pf.style.width='9%';
+    if(pp)pp.textContent='9%';
+  },300);
+}
+
+// ── Speaking ─────────────────────────────────────────────────
+function initSpeaking(){
+  const c=document.getElementById('speakingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">🎙️ Discussion Questions</div><div class="card-bar"></div>
+    <div class="speaking-grid">${speakingQs.map((q,i)=>`<div class="speaking-card"><div class="q-num">Q${String(i+1).padStart(2,'0')}</div><div class="q-text">${q}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Word Bank ─────────────────────────────────────────────────
+function initWordBank(){
+  const c=document.getElementById('wordBankContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">📚 Key Legal Terms</div><div class="card-bar"></div>
+    <div class="wb-grid">${wordBank.map(w=>`<div class="wb-card"><span class="wb-emoji">${w.emoji}</span><div class="wb-term">${w.term}</div><div class="wb-def">${w.def}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Reading ───────────────────────────────────────────────────
+function initReading(){
+  const c=document.getElementById('readingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  readingTexts.forEach((rt,ti)=>{
+    h+=`<div class="card">
+      <div class="reading-box"><h4>${rt.title}</h4>${rt.paragraphs.map(p=>`<p>${p}</p>`).join('')}</div>
+      <div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>
+      <div id="rmcq-${ti}"></div>
+    </div>`;
+  });
+  c.innerHTML=h;
+  readingTexts.forEach((_,ti)=>{
+    renderMCQ2('rmcq-'+ti, readingTexts[ti].questions, 'r'+ti, false);
+  });
+}
+
+// ── Vocabulary ────────────────────────────────────────────────
+let curVocab=0;
+function initVocab(){showVocab(0);}
+function showVocab(idx){
+  curVocab=idx;
+  document.querySelectorAll('#sec-vocab .ex-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  [0,1,2].forEach(i=>{
+    const p=document.getElementById('vex-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+  if(idx===0){renderMCQ2('vex-0',vocabMCQ,'vm0',false);}
+  else if(idx===1){renderGapFill('vex-1',vocabGapFill,'vg1');}
+  else if(idx===2){renderTF('vex-2',vocabTF,'vt2');}
+}
+function renderGapFill(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const blanks=items.map(function(it){return it.blank;});
+  let bankHtml='<div class="gf-bank-box"><div class="gf-bank-label">Word bank:</div><div class="gf-bank-pills">';
+  blanks.forEach(function(w){
+    bankHtml+='<span class="gf-pill" id="'+prefix+'-pill-'+w.replace(/\s+/g,'-')+'">'+w+'</span>';
+  });
+  bankHtml+='</div></div>';
+  let sentHtml='<div class="gf-sentences">';
+  items.forEach(function(item,i){
+    sentHtml+='<div class="gf-row" id="'+prefix+'-row'+i+'">'
+      +'<div class="gf-sentence-text"><span class="gf-num">'+(i+1)+'.</span> '+item.before
+      +' <span class="gf-blank-wrap"><input class="gf-underline-input" id="'+prefix+'-i'+i
+      +'" placeholder="\u2026" autocomplete="off" spellcheck="false"/>'
+      +'<span class="gf-underline"></span></span> '
+      +item.after+'</div>'
+      +'<div class="gf-row-fb" id="'+prefix+'-f'+i+'"></div>'
+      +'</div>';
+  });
+  sentHtml+='</div>';
+  const btnBar='<div class="gf-btn-bar">'
+    +'<button class="gf-check-btn" onclick="gradeGapFill(\''+prefix+'\',vocabGapFill)">Check Answers</button>'
+    +'<button class="gf-reset-btn" onclick="resetGapFill(\''+prefix+'\',vocabGapFill)">&#8635; Reset</button>'
+    +'<span class="gf-score-display" id="'+prefix+'-score"></span>'
+    +'</div>';
+  c.innerHTML='<div class="card gf-card">'
+    +'<div class="card-title">Exercise 2: Gap Fill</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="gf-instr">Type the correct word or phrase in each gap. Use the word bank for help. Click <strong>Check Answers</strong> when ready.</p>'
+    +bankHtml+sentHtml+btnBar
+    +'</div>';
+}
+function checkGF2(prefix,i,ans){}
+
+function gradeGapFill(prefix,items){
+  let correct=0;
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(!inp||!fb)return;
+    const val=inp.value.trim().toLowerCase().replace(/['']/g,"'");
+    const ans=item.blank.toLowerCase();
+    inp.disabled=true;
+    if(val===ans){
+      correct++;
+      inp.classList.add('gf-correct'); inp.classList.remove('gf-incorrect');
+      fb.innerHTML='<span class="gf-fb-ok">\u2713 Correct</span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-used');
+    } else {
+      inp.classList.add('gf-incorrect'); inp.classList.remove('gf-correct');
+      fb.innerHTML='<span class="gf-fb-err">\u2717 The answer is: <strong>'+item.blank+'</strong></span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-highlight');
+    }
+  });
+  const pct=Math.round(correct/items.length*100);
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl){
+    const col=pct>=80?'var(--green-accent)':pct>=50?'var(--gold-light)':'var(--red-accent)';
+    scoreEl.innerHTML='<span style="color:'+col+';font-weight:700;">'+correct+'/'+items.length+' \u2014 '+pct+'%</span>';
+  }
+}
+
+function resetGapFill(prefix,items){
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(inp){inp.value='';inp.disabled=false;inp.classList.remove('gf-correct','gf-incorrect');}
+    if(fb)fb.innerHTML='';
+    const ans=item.blank.toLowerCase();
+    const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+    if(pill){pill.classList.remove('gf-pill-used','gf-pill-highlight');}
+  });
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl)scoreEl.innerHTML='';
+}
+function renderTF(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='<div class="card tf-card">'
+    +'<div class="card-title">Exercise 3: True / False</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="tf-instr">Decide if each statement is TRUE or FALSE.</p>'
+    +'<div class="tf-list">';
+  items.forEach(function(item,i){
+    const stmt=item.statement||item.stmt||'';
+    const ans=item.ans;
+    h+='<div class="tf-item" id="'+prefix+'-row'+i+'">'
+      +'<div class="tf-item-stmt">'+(i+1)+'. '+stmt+'</div>'
+      +'<div class="tf-item-btns">'
+      +'<button class="tf-item-btn" id="'+prefix+'-T'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',true,'+ans+')">True</button>'
+      +'<button class="tf-item-btn" id="'+prefix+'-F'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',false,'+ans+')">False</button>'
+      +'</div>'
+      +'<div class="tf-item-fb" id="'+prefix+'-fb'+i+'"></div>'
+      +'</div>';
+  });
+  h+='</div></div>';
+  c.innerHTML=h;
+}
+
+function pickTF2(prefix,i,chosen,ans){
+  const row=document.getElementById(prefix+'-row'+i);
+  if(!row||row.dataset.done)return;
+  row.dataset.done='1';
+  const fb=document.getElementById(prefix+'-fb'+i);
+  const btnT=document.getElementById(prefix+'-T'+i);
+  const btnF=document.getElementById(prefix+'-F'+i);
+  const correct=chosen===ans;
+  if(btnT){
+    if(ans===true) btnT.classList.add('tf-btn-correct');
+    else if(chosen===true) btnT.classList.add('tf-btn-wrong');
+    btnT.disabled=true;
+  }
+  if(btnF){
+    if(ans===false) btnF.classList.add('tf-btn-correct');
+    else if(chosen===false) btnF.classList.add('tf-btn-wrong');
+    btnF.disabled=true;
+  }
+  if(fb){
+    fb.innerHTML=correct
+      ?'<span class="tf-fb-ok">✓ Correct!</span>'
+      :'<span class="tf-fb-err">✗ The correct answer is <strong>'+(ans?'True':'False')+'</strong>.</span>';
+  }
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+let curGram=0;
+function initGrammar(){showGram(0);}
+function showGram(idx){
+  curGram=idx;
+  document.querySelectorAll('#sec-grammar .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  [0,1,2].forEach(function(i){var p=document.getElementById('gex-'+i);if(p)p.style.display=i===idx?'block':'none';});
+  var ex=grammarEx[idx];
+  if(!document.getElementById('gex-'+idx).dataset.built){
+    document.getElementById('gex-'+idx).dataset.built='1';
+    var instr='<div class="card"><div class="card-title">'+ex.title+'</div><div class="card-bar"></div><p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">'+ex.instr+'</p><div id="gmcq-'+idx+'"></div></div>';
+    document.getElementById('gex-'+idx).innerHTML=instr;
+  }
+  renderMCQ2('gmcq-'+idx,ex.qs,'gm'+idx,false);
+}
+
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ──────────────────────────────────────────────────
+let curTask=0;
+function initWriting(){
+  const c=document.getElementById('writingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let html='<div class="ex-tabs">';
+  writingTasks.forEach(function(t,i){
+    html+='<div class="ex-tab'+(i===0?' active':'')+'" onclick="showTask('+i+')">'+t.type+'</div>';
+  });
+  html+='</div>';
+  writingTasks.forEach(function(t,i){
+    const minW=t.targetMin||120;
+    const promptFormatted=t.prompt.replace(/\n/g,'<br>');
+    html+='<div id="wpanel-'+i+'" style="display:'+(i===0?'block':'none')+'">'
+      +'<div class="card">'
+      +'<div class="w-task-header">'
+      +'<div class="w-task-pill">'+t.activity+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+t.title+'</div>'
+      +'</div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="w-prompt-box"><div class="w-prompt-label">📋 '+t.type+' — '+t.title+'</div>'
+      +'<div class="w-prompt-text">'+promptFormatted+'</div>'
+      +'<div class="w-target">Target: '+minW+'–'+(t.targetMax||200)+' words</div>'
+      +'</div>'
+      +'<textarea class="w-textarea" id="w-area-'+i+'" placeholder="Write your response here…" oninput="wCount('+i+')"></textarea>'
+      +'<div class="w-meta-row"><span class="w-counter" id="w-count-'+i+'">0 words</span>'
+      +'<div style="display:flex;gap:10px;">'
+      +'<button class="clear-btn" onclick="clearWriting('+i+')">Clear</button>'
+      +'<button class="ac-btn" id="w-btn-'+i+'" onclick="runAIFeedback('+i+')">✨ Auto-Correct &amp; Get Feedback</button>'
+      +'</div></div>'
+      +'<div id="w-fb-'+i+'"></div>'
+      +'</div></div>';
+  });
+  c.innerHTML=html;
+}
+function showTask(idx){
+  curTask=idx;
+  document.querySelectorAll('#sec-writing .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  writingTasks.forEach(function(_,i){
+    var p=document.getElementById('wpanel-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+}
+function wCount(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const wc=document.getElementById('w-count-'+idx);
+  if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  const min=writingTasks[idx].targetMin||120;
+  wc.textContent=words+' words';
+  wc.style.color=words>=min?'var(--green-accent)':'var(--text-mid)';
+}
+function clearWriting(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  if(ta)ta.value='';
+  if(fb)fb.innerHTML='';
+  wCount(idx);
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ───────────────────────────────────────────────────
+async function runAIFeedback(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  const btn=document.getElementById('w-btn-'+idx);
+  if(!ta||!fb)return;
+  const text=ta.value.trim();
+  const task=writingTasks[idx];
+  const minW=task.targetMin||120;
+  const words=text===''?0:text.trim().split(/\s+/).length;
+  if(words<30){
+    fb.innerHTML='<div class="fb-warn-box">⚠️ Please write at least 30 words before requesting feedback.</div>';
+    return;
+  }
+  btn.disabled=true;
+  btn.textContent='Analysing…';
+  fb.innerHTML='<div class="fb-loading-box"><span class="spin">⏳</span> AI is reviewing your writing…</div>';
+
+  // Rule-based context data
+  const sentences=text.split(/[.!?]+/).filter(s=>s.trim().length>3);
+  const avgSentLen=sentences.length?Math.round(words/sentences.length):0;
+  const goodLength=words>=minW&&words<=(task.targetMax||250);
+  const vocabTerms=["phishing","authentication","firewall","encryption","malware","ransomware","vulnerability","multi-factor authentication","penetration testing","social engineering","zero-day","patch management","defence in depth","security operations centre","risk assessment","access control","VPN","data breach","network segmentation","threat actor","security awareness training"];
+  const vocabHits=vocabTerms.filter(t=>text.toLowerCase().includes(t));
+
+  const systemPrompt=`You are an expert Business English writing coach specialising in IT and Digital Professions English at B1-B2 level. You give SPECIFIC, TEXT-ANCHORED feedback — always quoting or referencing the student's actual words. Never give generic advice.
+
+Return ONLY a JSON object with these exact keys — no markdown, no extra text:
+{
+  "score": <integer 0-100>,
+  "level": <"Needs Work"|"Developing"|"Proficient"|"Advanced"|"Excellent">,
+  "overall": <1 sentence overall impression referencing the student's actual writing>,
+  "grammar": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about grammar in THIS text — quote or reference actual sentences>
+  },
+  "vocabulary": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about word choices in THIS text — suggest a precise improvement>
+  },
+  "tone": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about register and formality in THIS text>
+  },
+  "structure": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about paragraph organisation and logical flow in THIS text>
+  },
+  "fluency": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about sentence variety and connectives in THIS text — give a concrete example>
+  },
+  "corrected": <one improved version of the weakest sentence from the text — copy the original then rewrite it>
+}`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1200,
+        system:systemPrompt,
+        messages:[{role:'user',content:'Task: '+task.type+' — '+task.title+'\nPrompt: '+task.prompt+'\n\nStudent writing ('+words+' words):\n'+text}]
+      })
+    });
+    const data=await res.json();
+    let p;
+    try{
+      const raw=data.content[0].text.replace(/```json|```/g,'').trim();
+      p=JSON.parse(raw);
+    }catch(e){throw new Error('parse');}
+
+    const score=Math.min(100,Math.max(0,p.score||70));
+    const level=p.level||'Proficient';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':score>=50?'#e09b00':'#d63031';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const cats=[
+      {label:'Grammar',key:'grammar',icon:'📐'},
+      {label:'Vocabulary',key:'vocabulary',icon:'📖'},
+      {label:'Tone',key:'tone',icon:'🎙️'},
+      {label:'Structure',key:'structure',icon:'🏗️'},
+      {label:'Fluency',key:'fluency',icon:'✨'}
+    ];
+
+    let catsHtml='';
+    cats.forEach(function(cat){
+      const d=p[cat.key]||{};
+      catsHtml+='<div class="fb-cat-row">'
+        +'<div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span>'
+        +'<strong class="fb-cat-label">'+cat.label+':</strong>'
+        +ratingIcon(d.rating||'Satisfactory')+'</div>'
+        +'<div class="fb-cat-comment">'+(d.comment||'')+'</div>'
+        +'</div>';
+    });
+
+    const lengthOk=goodLength
+      ?'<span class="fb-check">✓ '+words+' words — within target</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3
+      ?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header">'
+      +'<div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div>'
+      +'</div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +(p.corrected?'<div class="fb-corrected-block"><span class="fb-corrected-tag">✏️ Suggested rewrite:</span> '+p.corrected+'</div>':'')
+      +(p.overall?'<div class="fb-overall">✓ Overall: '+p.overall+'</div>':'')
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSentLen+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }catch(err){
+    // Rule-based fallback — still structured with 5 categories
+    const formalConnectives=['therefore','furthermore','consequently','moreover','however','nevertheless','in addition','as a result','thus','hence'];
+    const connUsed=formalConnectives.filter(w=>text.toLowerCase().includes(w)).length;
+    const avgSL=sentences.length?Math.round(words/sentences.length):0;
+    const score=Math.min(100,Math.max(20,(goodLength?20:0)+(vocabHits.length>=3?20:vocabHits.length*5)+(avgSL>=8&&avgSL<=22?15:0)+(/^[A-Z]/.test(text)?10:0)+(connUsed>=1?15:0)+20));
+    const level=score>=85?'Advanced':score>=70?'Proficient':score>=50?'Developing':'Needs Work';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':'#e09b00';
+
+    const gramOk=text.match(/[A-Z][^.!?]*[.!?]/g);
+    const gramComment=gramOk&&gramOk.length>0?'Check subject-verb agreement and ensure consistent verb tense throughout your response.':'Ensure each sentence begins with a capital letter and ends with a full stop.';
+    const vocComment=vocabHits.length>=3?'Good use of module vocabulary. Consider replacing generic verbs with more precise professional alternatives.':'Consider incorporating more module vocabulary terms — aim for at least 3 in a formal legal or compliance response.';
+    const toneComment=/dear|hi |hey |thanks/i.test(text)?'Some phrasing appears too informal for a professional compliance context. Avoid casual openers and closers.':'The register appears appropriate for the task.';
+    const structComment=sentences.length<3?'Your response would benefit from clearer paragraph structure — aim for an opening, body, and conclusion.':connUsed===0?'Consider organising your response with a clear introduction, supporting points, and a conclusion.':'Good paragraph structure detected.';
+    const fluComment=connUsed===0?'Your response would benefit from one or more connecting phrases between paragraphs (e.g., "Furthermore," "As a result,") to improve logical flow.':'Good use of connectives to link ideas.';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const catsHtml=[
+      {icon:'📐',label:'Grammar',rating:gramOk?'Satisfactory':'Needs Attention',comment:gramComment},
+      {icon:'📖',label:'Vocabulary',rating:vocabHits.length>=3?'Good':'Needs Attention',comment:vocComment},
+      {icon:'🎙️',label:'Tone',rating:/dear|hi |hey |thanks/i.test(text)?'Needs Attention':'Satisfactory',comment:toneComment},
+      {icon:'🏗️',label:'Structure',rating:connUsed>0&&sentences.length>=3?'Good':'Satisfactory',comment:structComment},
+      {icon:'✨',label:'Fluency',rating:connUsed>=1?'Good':'Needs Attention',comment:fluComment}
+    ].map(function(cat){
+      return '<div class="fb-cat-row"><div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span><strong class="fb-cat-label">'+cat.label+':</strong>'+ratingIcon(cat.rating)+'</div><div class="fb-cat-comment">'+cat.comment+'</div></div>';
+    }).join('');
+
+    const lengthOk=goodLength?'<span class="fb-check">✓ '+words+' words — within target</span>':'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>':'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header"><div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div></div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSL+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }
+  btn.disabled=false;
+  btn.textContent='✨ Auto-Correct & Get Feedback';
+}
+
+// ── Listening TTS Engine ──────────────────────────────────────
+let ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+const voicePref=['Samantha','Karen','Victoria','Moira','Daniel','Google UK English Female','Google US English','en-GB','en-US'];
+function getBestVoice(){
+  const voices=window.speechSynthesis.getVoices();
+  for(var j=0;j<voicePref.length;j++){
+    var v=voices.find(function(vv){return vv.name===voicePref[j]||vv.name.includes(voicePref[j]);});
+    if(v)return v;
+  }
+  return voices.find(function(v){return v.lang&&v.lang.startsWith('en');})||voices[0]||null;
+}
+function initListening(){
+  const c=document.getElementById('listeningContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  listeningActs.forEach(function(act,i){
+    h+='<div class="card" id="l-card-'+i+'">'
+      +'<div class="l-header"><span class="l-icon">'+act.icon+'</span><div><div class="card-title">'+act.title+'</div><div class="l-sub">'+act.sub+'</div></div></div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="l-player">'
+      +'<div class="l-controls">'
+      +'<button class="l-play-btn" id="l-play-'+i+'" onclick="togglePlay('+i+')">&#9654; Play</button>'
+      +'<select class="l-speed" id="l-speed-'+i+'" onchange="changeSpeed('+i+')">'
+      +'<option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option>'
+      +'</select>'
+      +'<button class="l-trans-btn" id="l-tbtn-'+i+'" onclick="toggleTranscript('+i+')">&#128196; Transcript</button>'
+      +'</div>'
+      +'<div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-'+i+'"></div></div><span class="l-time" id="l-time-'+i+'">0:00</span></div>'
+      +'</div>'
+      +'<div class="l-transcript-box" id="l-trans-'+i+'" style="display:none"><p class="l-transcript-text">'+act.transcript+'</p></div>'
+      +'<div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>'
+      +'<div id="lmcq-'+i+'"></div>'
+      +'</div>';
+  });
+  c.innerHTML=h;
+  listeningActs.forEach(function(act,i){renderMCQ2('lmcq-'+i,act.qs,'la'+i,false);});
+  window.speechSynthesis.getVoices();
+}
+function togglePlay(idx){
+  if(ttsState.actIdx===idx&&ttsState.playing){pauseAudio(idx);}
+  else if(ttsState.actIdx===idx&&ttsState.paused){resumeAudio(idx);}
+  else{playAudio(idx);}
+}
+function playAudio(idx){
+  const act=listeningActs[idx];
+  if(!act)return;
+  if(ttsState.actIdx===idx&&ttsState.paused){
+    resumeAudio(idx); return;
+  }
+  stopAudio();
+  ttsState.actIdx=idx;
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.voice=getBestVoice();
+  utt.rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  utt.pitch=1.0;
+  utt.volume=1.0;
+  utt.onstart=()=>{ttsState.playing=true;ttsState.paused=false;ttsState.startTime=Date.now();updatePlayBtn(idx,true);startProg(idx,act.transcript.length);};
+  utt.onend=()=>{ttsState.playing=false;ttsState.paused=false;updatePlayBtn(idx,false);stopProg(idx,true);};
+  utt.onerror=()=>{ttsState.playing=false;updatePlayBtn(idx,false);stopProg(idx,false);};
+  ttsState.utterance=utt;
+  window.speechSynthesis.speak(utt);
+}
+function pauseAudio(idx){
+  if(window.speechSynthesis.speaking&&!window.speechSynthesis.paused){
+    window.speechSynthesis.pause();
+    ttsState.paused=true;ttsState.playing=false;
+    ttsState.elapsed+=Date.now()-ttsState.startTime;
+    updatePlayBtn(idx,false,true);
+    clearInterval(ttsState.progTimer);
+  }
+}
+function resumeAudio(idx){
+  window.speechSynthesis.resume();
+  ttsState.paused=false;ttsState.playing=true;
+  ttsState.startTime=Date.now();
+  updatePlayBtn(idx,true);
+  startProg(idx,listeningActs[idx].transcript.length,true);
+}
+function stopAudio(){
+  window.speechSynthesis.cancel();
+  if(ttsState.actIdx!==null){updatePlayBtn(ttsState.actIdx,false);stopProg(ttsState.actIdx,false);}
+  ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+}
+function updatePlayBtn(idx,playing,paused){
+  const btn=document.getElementById('l-play-'+idx);
+  if(!btn)return;
+  btn.textContent=playing?'⏸ Pause':paused?'▶ Resume':'▶ Play';
+}
+function startProg(idx,charLen,resume){
+  clearInterval(ttsState.progTimer);
+  const rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  const totalMs=(charLen/18)*1000/rate;
+  const elapsed=resume?ttsState.elapsed:0;
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  ttsState.progTimer=setInterval(()=>{
+    const spent=elapsed+(Date.now()-ttsState.startTime);
+    const pct=Math.min(100,(spent/totalMs)*100);
+    if(bar)bar.style.width=pct+'%';
+    const rem=Math.max(0,Math.round((totalMs-spent)/1000));
+    if(time)time.textContent=`${Math.floor(rem/60)}:${String(rem%60).padStart(2,'0')}`;
+    if(pct>=100)clearInterval(ttsState.progTimer);
+  },200);
+}
+function stopProg(idx,finished){
+  clearInterval(ttsState.progTimer);
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  if(bar)bar.style.width=finished?'100%':'0%';
+  if(time)time.textContent='0:00';
+}
+function changeSpeed(idx){
+  const sel=document.getElementById('l-speed-'+idx);
+  if(!sel)return;
+  if(ttsState.actIdx===idx&&(ttsState.playing||ttsState.paused)){
+    stopAudio(); playAudio(idx);
+  }
+}
+function toggleTranscript(idx){
+  const box=document.getElementById('l-trans-'+idx);
+  const btn=document.getElementById('l-tbtn-'+idx);
+  if(!box)return;
+  const open=box.style.display==='block';
+  box.style.display=open?'none':'block';
+  if(btn)btn.textContent=open?'📄 Show Transcript':'📄 Hide Transcript';
+}
+
+// ── Case Studies ──────────────────────────────────────────────
+function initCases(){
+  const c=document.getElementById('casesContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  casesStudies.forEach(function(cs,ci){
+    h+='<div class="card">'
+      +'<div class="cs-tag">'+cs.tag+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+cs.title+'</div>'
+      +'<div class="cs-sub">'+cs.sub+'</div>'
+      +'<div class="card-bar"></div>';
+    cs.sections.forEach(function(s){
+      h+='<div class="cs-section"><h4 class="cs-sh">'+s.h+'</h4><p class="cs-p">'+s.t+'</p></div>';
+    });
+    h+='<div class="card-title" style="margin-top:22px;">Case Study Questions</div><div class="card-bar"></div>'
+      +'<div id="csmcq-'+ci+'"></div></div>';
+  });
+  c.innerHTML=h;
+  casesStudies.forEach(function(cs,ci){renderMCQ2('csmcq-'+ci,cs.qs,'cs'+ci,false);});
+}
+
+// ── Final Assessment ──────────────────────────────────────────
+let assAnswers={};
+function initAssessment(){
+  const c=document.getElementById('assessContainer');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const letters=['A','B','C','D'];
+  let h='';
+  assessQs.forEach(function(item,i){
+    h+='<div class="mcq-block" id="aq-'+i+'">'
+      +'<div class="mcq-q">'+(i+1)+'. '+item.q+'</div>'
+      +'<div class="mcq-opts">';
+    item.opts.forEach(function(opt,j){
+      h+='<div class="mcq-opt" onclick="pickAss('+i+','+j+')" id="ass-'+i+'-'+j+'">'
+        +'<span class="opt-letter">'+letters[j]+'</span>'+opt+'</div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+  assAnswers={};
+  document.getElementById('final-res').style.display='none';
+  document.getElementById('ass-sub').style.display='inline-flex';
+}
+function pickAss(qi,oi){
+  const block=document.getElementById('aq-'+qi);
+  if(!block||block.dataset.done)return;
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    el.classList.toggle('selected',j===oi);
+  });
+  assAnswers[qi]=oi;
+}
+function submitAss(){
+  let attempts=parseInt(document.getElementById('att-disp')?.textContent||'0');
+  const maxAttempts=2;
+  if(attempts>=maxAttempts){
+    alert('You have used both attempts.');return;
+  }
+  const unanswered=assessQs.map((_,i)=>i).filter(i=>assAnswers[i]===undefined);
+  if(unanswered.length>0){
+    alert('Please answer all questions before submitting. Unanswered: '+unanswered.map(i=>i+1).join(', '));return;
+  }
+  // Mark answers
+  assessQs.forEach((item,i)=>{
+    const block=document.getElementById('aq-'+i);
+    if(!block)return;
+    block.dataset.done='1';
+    block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+      el.classList.remove('selected');
+      if(j===item.ans)el.classList.add('correct');
+      else if(j===assAnswers[i])el.classList.add('incorrect');
+      el.style.pointerEvents='none';
+    });
+  });
+  const correct=assessQs.filter((_,i)=>assAnswers[i]===assessQs[i].ans).length;
+  const pct=Math.round((correct/assessQs.length)*100);
+  const pass=pct>=70;
+  attempts++;
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent=attempts+' / 2';
+  const res=document.getElementById('final-res');
+  res.style.display='block';
+  const scoreColor=pass?'#00a651':'#d63031';
+  res.className='final-result '+(pass?'pass':'fail');
+  res.style.display='block';
+  res.innerHTML='<div class="final-score">'+pct+'<span style="font-size:22px">%</span></div>'
+    +'<div class="final-verdict">'+(pass?'🎉 Congratulations — You Passed!':'📚 Not Passed Yet')+'</div>'
+    +'<div class="final-msg">'+correct+' / '+assessQs.length+' correct · Pass mark: 70%</div>'
+    +(attempts<maxAttempts&&!pass?'<button class="btn-primary" onclick="resetAss()" style="margin-top:18px">Try Again (Attempt '+(attempts+1)+' of '+maxAttempts+')</button>':'')
+    +(attempts>=maxAttempts&&!pass?'<div style="margin-top:12px;font-size:13px;opacity:0.8;">Maximum attempts reached.</div>':'');
+  if(pass||attempts>=maxAttempts){
+    document.getElementById('ass-sub').style.display='none';
+  }
+}
+function resetAss(){
+  const c=document.getElementById('assessContainer');
+  if(c){c.dataset.built='';c.innerHTML='';}
+  assAnswers={};
+  const res=document.getElementById('final-res');
+  if(res){res.style.display='none';res.innerHTML='';}
+  const sub=document.getElementById('ass-sub');
+  if(sub)sub.style.display='inline-flex';
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent='0 / 2';
+  initAssessment();
+}
+
+// ── Bootstrap ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('mob-btn').addEventListener('click',openSidebar);
+  document.getElementById('overlay').addEventListener('click',closeSidebar);
+  goTo('overview');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

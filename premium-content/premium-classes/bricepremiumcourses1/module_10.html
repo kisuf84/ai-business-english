@@ -2115,11 +2115,22 @@
 <script>
 // ── NAVIGATION ──
 function showSection(id, el) {
-  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('section-' + id).classList.add('active');
-  el.classList.add('active');
-  window.scrollTo(0,0);
+  var M={
+    'vocabulary':'sec-vocab',
+    'grammar-review':'sec-gramreview',
+    'writing':'section-writing',
+    'casestudies':'section-casestudies',
+    'assessment':'section-assessment'
+  };
+  var eid = M[id] || ('sec-' + id);
+  document.querySelectorAll('.section-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
+  var elem = document.getElementById(eid);
+  if (!elem) elem = document.getElementById('section-' + id);
+  if (!elem) elem = document.getElementById(id);
+  if (elem) elem.classList.add('active');
+  if (el) el.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 
 // ── MCQ SELECTION ──

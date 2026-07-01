@@ -206,6 +206,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 }
 </style>
 <style>.selected-opt{border-color:var(--gold)!important;background:rgba(201,149,42,.12)!important;}</style></head>
+<style>.mcq-option.selected { border-color: var(--gold) !important; background: rgba(201,149,42,.12) !important; cursor: pointer; }</style></head>
 <body>
 
 <!-- SIDEBAR -->
@@ -1019,6 +1020,21 @@ document.addEventListener('DOMContentLoaded', function(){
       _showSec(item.dataset.section);
     });
   });
+  // Wire up ass_* assessment options for selection
+  var ac=document.getElementById('assessmentContent');
+  if(ac){
+    ac.querySelectorAll('.mcq-block').forEach(function(block,qi){
+      block.querySelectorAll('.mcq-option').forEach(function(opt,oi){
+        opt.style.cursor='pointer';
+        opt.addEventListener('click',function(){
+          if(block.dataset.done)return;
+          block.querySelectorAll('.mcq-option').forEach(function(o){o.classList.remove('selected');});
+          opt.classList.add('selected');
+          _asmq[qi]={chosen:oi,correct:-1};
+        });
+      });
+    });
+  }
 });
 
 function _showSec(name){
@@ -1247,9 +1263,15 @@ window.submitAssessment=function(){
   var total=0;
   while(document.getElementById('asmq-q'+total+'-o0'))total++;
   if(!total){
-    // Group-B: assessment options have no onclick — just acknowledge
-    var rEl=document.getElementById('final-result')||document.querySelector('.final-result');
-    if(rEl){rEl.className='final-result';rEl.style.display='block';rEl.innerHTML='<div class="final-score">—</div><div class="final-verdict">Assessment submitted</div><div class="final-msg">Thank you for completing the assessment.</div>';}
+    /* ass_* pattern — no encoded answers; show completion */
+    var ac=document.getElementById('assessmentContent');
+    var blocks=ac?ac.querySelectorAll('.mcq-block'):[];
+    total=blocks.length;
+    var answered=Object.keys(_asmq).length;
+    if(answered<total){alert('Please answer all '+total+' questions before submitting. You have answered '+answered+'.');return;}
+    var rEl=document.getElementById('assessmentResult')||document.getElementById('final-result')||document.querySelector('.result-box,.final-result');
+    if(rEl){rEl.style.display='block';rEl.innerHTML='<div style="text-align:center;padding:24px 0"><div style="font-family:\'Playfair Display\',serif;font-size:2.2rem;font-weight:700;color:var(--gold)">'+answered+' / '+total+'</div><div style="font-size:1.05rem;font-weight:600;color:var(--white);margin:8px 0">Assessment Submitted</div><div style="color:rgba(255,255,255,.65);font-size:.9rem">All '+total+' questions answered. Well done!</div></div>';rEl.scrollIntoView({behavior:'smooth'});}
+    var sBtn=document.getElementById('submit-assessment-btn');if(sBtn)sBtn.style.display='none';
     return;
   }
   var score=0;

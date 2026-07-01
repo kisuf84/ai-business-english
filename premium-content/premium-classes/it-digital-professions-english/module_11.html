@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Module 11: Data Analytics and Business Intelligence — IT &amp; Digital Professions English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root{--navy:#0d1b2e;--navy-mid:#112240;--navy-light:#1a3357;--gold:#00bcd4;--gold-light:#26c6da;--gold-bright:#4dd0e1;--cream:#f0f4f8;--cream-dark:#dce8f0;--white:#ffffff;--text-light:#90b8cc;--text-mid:#4a7a96;--red-accent:#e53935;--green-accent:#00b86b;--teal:#0097a7;--sidebar-w:260px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);display:flex;min-height:100vh;overflow-x:hidden;}
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent;transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);}
+.sidebar-brand{padding:24px 22px 18px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-brand h1{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:700;color:var(--gold-bright);line-height:1.38;margin-bottom:3px;}
+.sidebar-brand .sub{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-mid);font-weight:500;}
+.level-badge{display:inline-block;margin-top:11px;background:var(--gold);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:1px;padding:3px 11px;border-radius:20px;text-transform:uppercase;}
+.sidebar-section-label{padding:20px 22px 7px;font-size:8.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--text-mid);font-weight:700;}
+.nav-item{display:flex;align-items:center;justify-content:space-between;padding:11px 22px;cursor:pointer;transition:all 0.18s;border-left:3px solid transparent;}
+.nav-item:hover{background:rgba(255,255,255,0.055);}
+.nav-item.active{background:rgba(245,184,0,0.12);border-left-color:var(--gold-light);}
+.nav-left{display:flex;align-items:center;gap:11px;}
+.nav-icon{font-size:15px;opacity:0.9;}
+.nav-label{font-size:13px;color:var(--text-light);font-weight:400;}
+.nav-item.active .nav-label{color:var(--white);font-weight:500;}
+.nav-badge{font-size:9.5px;font-weight:700;color:var(--navy);background:var(--gold-bright);padding:1px 7px;border-radius:12px;}
+#mob-btn{display:none;position:fixed;top:14px;left:14px;z-index:300;background:var(--navy);border:none;border-radius:10px;padding:10px 13px;cursor:pointer;color:var(--gold-bright);font-size:19px;box-shadow:0 3px 14px rgba(0,0,0,0.35);line-height:1;}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150;}
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;}
+.section{display:none;}.section.active{display:block;}
+.hero{background:linear-gradient(145deg,#06111f 0%,#0d1e35 50%,#081929 100%);padding:64px 64px 54px;position:relative;overflow:hidden;}
+.hero::before{content:'L1';position:absolute;right:-15px;bottom:-55px;font-family:'Playfair Display',serif;font-size:310px;font-weight:900;color:rgba(255,255,255,0.022);line-height:1;pointer-events:none;}
+.hero::after{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(245,184,0,0.05) 0%,transparent 70%);pointer-events:none;}
+.module-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);padding:7px 18px;border-radius:50px;font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-light);font-weight:600;margin-bottom:30px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4.6vw,58px);font-weight:900;color:var(--white);line-height:1.08;}
+.hero h2 .accent{color:var(--gold-bright);}
+.hero-desc{font-size:15px;color:var(--text-light);max-width:620px;line-height:1.78;margin-top:20px;font-weight:300;}
+.hero-stats{display:flex;gap:36px;margin-top:44px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;gap:3px;}
+.stat-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--gold-bright);line-height:1;}
+.stat-l{font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(160,180,210,0.7);font-weight:600;}
+.prog-wrap{background:var(--navy-mid);padding:16px 64px;display:flex;align-items:center;gap:20px;}
+.prog-label{font-size:11.5px;font-weight:600;color:var(--text-light);white-space:nowrap;}
+.prog-track{flex:1;height:6px;background:rgba(255,255,255,0.09);border-radius:6px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:6px;width:0%;transition:width 1s ease;}
+.prog-pct{font-size:12.5px;font-weight:700;color:var(--gold-bright);min-width:36px;text-align:right;}
+.content{padding:48px 60px;}
+.card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.card-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.card-bar{width:40px;height:3px;background:var(--gold-light);border-radius:3px;margin-bottom:20px;}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.outcome{display:flex;align-items:flex-start;gap:13px;background:var(--cream);border-radius:11px;padding:14px 16px;border-left:3px solid var(--gold-light);}
+.out-num{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--gold);line-height:1;min-width:24px;}
+.out-text{font-size:13.5px;color:var(--navy);line-height:1.52;}
+.speaking-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.speaking-card{background:var(--cream);border-radius:11px;padding:18px 20px;border-top:3px solid var(--gold-light);transition:transform 0.2s,box-shadow 0.2s;cursor:default;}
+.speaking-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(11,27,48,0.1);}
+.q-num{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;margin-bottom:8px;letter-spacing:1px;}
+.q-text{font-size:13.5px;color:var(--navy);line-height:1.55;}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.wb-card{background:var(--navy);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:transform 0.2s;cursor:default;}
+.wb-card:hover{transform:translateY(-2px);}
+.wb-emoji{font-size:28px;line-height:1;display:block;margin-bottom:2px;}
+.wb-term{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;color:var(--gold-bright);}
+.wb-def{font-size:12px;color:var(--text-light);line-height:1.52;}
+.reading-box{background:var(--cream);border-radius:12px;padding:26px 30px;margin-bottom:26px;border-left:4px solid var(--gold-light);}
+.reading-box h4{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.reading-box p{font-size:14px;color:#1a2e45;line-height:1.84;margin-bottom:13px;}
+.reading-box p:last-child{margin-bottom:0;}
+.mcq-block{margin-bottom:22px;}
+.mcq-q{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:11px;line-height:1.5;}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;}
+.mcq-opt{display:flex;align-items:center;gap:10px;background:var(--cream);border:2px solid var(--cream-dark);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.18s;font-size:13.5px;color:var(--navy);user-select:none;-webkit-tap-highlight-color:transparent;}
+.mcq-opt:hover{border-color:var(--gold-light);background:#fef8e0;}
+.mcq-opt.selected{border-color:var(--gold);background:#fff3c0;}
+.mcq-opt.correct{border-color:var(--green-accent);background:#e6f8ee;color:#0a6b35;}
+.mcq-opt.incorrect{border-color:var(--red-accent);background:#fdecea;color:#881a18;}
+.opt-letter{font-family:'DM Mono',monospace;font-size:10.5px;font-weight:700;width:23px;height:23px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy);}
+.mcq-opt.correct .opt-letter{background:var(--green-accent);color:white;}
+.mcq-opt.incorrect .opt-letter{background:var(--red-accent);color:white;}
+.lmcq-opt{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.12)!important;color:var(--text-light)!important;}
+.lmcq-opt:hover{border-color:var(--gold-light)!important;background:rgba(245,184,0,0.1)!important;}
+.lmcq-opt.selected{border-color:var(--gold)!important;background:rgba(245,184,0,0.18)!important;color:var(--gold-bright)!important;}
+.lmcq-opt.correct{border-color:var(--green-accent)!important;background:rgba(0,166,81,0.18)!important;color:#4dde9a!important;}
+.lmcq-opt.incorrect{border-color:var(--red-accent)!important;background:rgba(214,48,49,0.18)!important;color:#ff8b8b!important;}
+.check-btn{margin-top:15px;background:var(--navy);color:var(--gold-bright);border:none;padding:11px 26px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.check-btn:hover{background:var(--navy-light);}
+.l-check{background:rgba(255,255,255,0.1)!important;color:var(--gold-bright)!important;}
+.l-check:hover{background:rgba(255,255,255,0.18)!important;}
+.score-disp{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;margin-top:14px;}
+.ex-tabs{display:flex;gap:4px;margin-bottom:26px;background:var(--cream-dark);border-radius:12px;padding:4px;flex-wrap:wrap;}
+.ex-tab{flex:1;min-width:130px;text-align:center;padding:10px;border-radius:9px;font-size:12.5px;font-weight:500;cursor:pointer;color:var(--text-mid);transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.ex-tab.active{background:var(--navy);color:var(--gold-bright);}
+.gram-ref{background:var(--navy);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.gram-ref h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:14px;}
+.gram-rule{background:rgba(255,255,255,0.065);border-radius:9px;padding:14px 18px;margin-bottom:11px;border-left:3px solid var(--gold-light);}
+.gram-rule p,.gram-rule li{font-size:13px;color:var(--text-light);line-height:1.66;}
+.gram-rule code{font-family:'DM Mono',monospace;background:rgba(245,184,0,0.18);color:var(--gold-bright);padding:1px 6px;border-radius:4px;font-size:12px;}
+.gram-rule ul{padding-left:18px;}
+.gf-item{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:14px;color:var(--navy);line-height:2.2;margin-bottom:12px;}
+.gf-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);padding:2px 7px;width:160px;outline:none;text-align:center;}
+.gf-input.correct{border-color:var(--green-accent);color:var(--green-accent);}
+.gf-input.incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.tf-row{background:var(--cream);border-radius:10px;padding:13px 17px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.tf-stmt{font-size:13.5px;color:var(--navy);flex:1;line-height:1.52;}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;}
+.tf-btn{padding:7px 16px;border-radius:8px;border:2px solid var(--cream-dark);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:white;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.tf-btn:hover{border-color:var(--gold-light);}
+.tf-btn.sel-t,.tf-btn.sel-f{background:var(--navy);color:white;border-color:var(--navy);}
+.tf-btn.cor{background:var(--green-accent);color:white;border-color:var(--green-accent);}
+.tf-btn.wrg{background:var(--red-accent);color:white;border-color:var(--red-accent);}
+.writing-prompt{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.writing-prompt h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:10px;}
+.writing-prompt p{font-size:13.5px;color:var(--text-light);line-height:1.76;}
+.writing-tags{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
+.wtag{background:rgba(245,184,0,0.18);color:var(--gold-bright);font-size:11px;font-weight:600;letter-spacing:0.8px;padding:4px 12px;border-radius:20px;text-transform:uppercase;border:1px solid rgba(245,184,0,0.3);}
+.w-textarea{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;}
+.w-textarea:focus{border-color:var(--gold-light);background:white;}
+.w-counter{font-size:12px;color:var(--text-mid);text-align:right;margin-bottom:14px;}
+.w-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:6px;}
+.ac-btn{background:var(--gold);color:var(--navy);border:none;padding:13px 28px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(224,155,0,0.35);}
+.ac-btn:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.clear-btn{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:12px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.clear-btn:hover{border-color:var(--red-accent);color:var(--red-accent);}
+.fb-panel{display:none;background:#131e2e;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-panel.show{display:block;}
+.fb-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-title-row{display:flex;align-items:center;gap:10px;}
+.fb-emoji{font-size:20px;}
+.fb-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold-bright);}
+.fb-score-badge{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--gold-bright);}
+.fb-level{font-size:14px;font-weight:600;color:var(--gold-bright);}
+.fb-section{margin-bottom:14px;}
+.fb-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);margin-bottom:7px;}
+.fb-item{font-size:13px;color:var(--text-light);line-height:1.62;padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid var(--gold-light);}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);line-height:1.7;font-style:italic;}
+.listen-card{background:var(--navy);border-radius:16px;padding:28px 32px;margin-bottom:20px;}
+.listen-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.listen-icon{width:52px;height:52px;border-radius:14px;background:rgba(245,184,0,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.listen-meta{flex:1;}
+.listen-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-bright);margin-bottom:3px;}
+.listen-sub{font-size:12px;color:var(--text-mid);}
+.player-row{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px 18px;margin-bottom:14px;}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--navy);flex-shrink:0;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.play-btn:hover{background:var(--gold-bright);transform:scale(1.06);}
+.prog-audio{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.prog-audio-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.5s linear;}
+.time-disp{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:70px;text-align:right;}
+.speed-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.speed-label{font-size:11px;color:var(--text-mid);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.spd-btn{padding:5px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.spd-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.replay-btn{padding:5px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:auto;}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.trans-toggle{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);border-radius:9px;padding:10px 16px;cursor:pointer;margin-bottom:0;transition:background 0.18s;-webkit-tap-highlight-color:transparent;}
+.trans-toggle:hover{background:rgba(255,255,255,0.09);}
+.trans-label{font-size:12px;font-weight:600;color:var(--text-mid);letter-spacing:0.5px;}
+.trans-arrow{font-size:11px;color:var(--text-mid);transition:transform 0.22s;}
+.trans-toggle.open .trans-arrow{transform:rotate(180deg);}
+.trans-body{max-height:0;overflow:hidden;transition:max-height 0.36s ease;}
+.trans-body.open{max-height:800px;}
+.trans-text{font-size:13px;color:var(--text-light);line-height:1.78;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:0 0 9px 9px;border-top:1px solid rgba(255,255,255,0.06);}
+.listen-mcq-wrap{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+.listen-mcq-title{font-size:13px;font-weight:700;color:var(--gold-bright);letter-spacing:0.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.case-card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.case-header{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:12px;padding:22px 26px;margin-bottom:22px;}
+.case-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);font-weight:700;margin-bottom:8px;}
+.case-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.case-sub{font-size:12px;color:var(--text-mid);}
+.case-section{margin-bottom:18px;}
+.case-section h5{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.case-section p{font-size:14px;color:var(--navy);line-height:1.78;}
+.final-result{display:none;border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.final-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.final-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.final-score{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;line-height:1;}
+.final-verdict{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:8px;}
+.final-msg{font-size:14px;opacity:0.88;max-width:420px;margin:0 auto;line-height:1.68;}
+.ass-btn{margin-top:18px;background:var(--gold);color:var(--navy);border:none;padding:13px 32px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.ass-btn:hover{background:var(--gold-bright);}
+.retry-btn{display:none;margin-top:8px;margin-left:10px;background:rgba(255,255,255,0.15);color:var(--navy);border:1.5px solid var(--cream-dark);padding:11px 28px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.retry-btn:hover{background:rgba(255,255,255,0.25);}
+/* ─ Gap Fill & True/False ─ */
+.gf-block{background:var(--cream);border-radius:10px;padding:16px 18px;margin-bottom:12px;border-left:3px solid var(--gold-light);}
+.gf-sentence{font-size:14px;color:var(--navy);line-height:2.1;}
+.gf-fb{font-size:12.5px;margin-top:6px;min-height:18px;}
+.tf-block{background:var(--cream);border-radius:10px;padding:15px 18px;margin-bottom:10px;border-left:3px solid var(--gold-light);}
+.tf-q{font-size:14px;color:var(--navy);line-height:1.55;margin-bottom:10px;}
+.tf-fb{font-size:12.5px;margin-top:8px;min-height:18px;}
+/* ─ Listening player ─ */
+.l-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.l-icon{font-size:30px;line-height:1;}
+.l-sub{font-size:12px;color:var(--text-mid);margin-top:3px;}
+.l-player{background:var(--navy);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+.l-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.l-play-btn{background:var(--gold);color:var(--navy);border:none;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.l-play-btn:hover{background:var(--gold-bright);}
+.l-speed{background:rgba(255,255,255,0.1);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.18);padding:8px 12px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;outline:none;}
+.l-trans-btn{background:rgba(255,255,255,0.08);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.15);padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;transition:all 0.2s;}
+.l-trans-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.l-progress{display:flex;align-items:center;gap:12px;}
+.l-bar-track{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.l-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.3s linear;}
+.l-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:36px;text-align:right;}
+.l-transcript-box{background:rgba(11,27,48,0.04);border:1px solid var(--cream-dark);border-radius:10px;padding:18px 22px;margin-bottom:18px;}
+.l-transcript-text{font-size:13px;color:var(--navy);line-height:1.8;}
+/* ─ Case Studies ─ */
+.cs-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+.cs-sub{font-size:12.5px;color:var(--text-mid);margin-bottom:16px;}
+.cs-section{margin-bottom:20px;padding:18px 20px;background:var(--cream);border-radius:10px;border-left:3px solid var(--gold-light);}
+.cs-sh{font-size:13.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.cs-p{font-size:14px;color:var(--navy);line-height:1.78;}
+/* ─ Writing ─ */
+.writing-area{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;margin-top:14px;}
+.writing-area:focus{border-color:var(--gold-light);background:white;}
+.writing-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.w-count{font-size:12px;color:var(--text-mid);}
+.btn-primary{background:var(--gold);color:var(--navy);border:none;padding:12px 26px;border-radius:50px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-primary:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--red-accent);color:var(--red-accent);}
+/* ─ AI Feedback ─ */
+.fb-box{background:#0e1d2f;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-box.fb-warn{background:#2d1010;border-color:rgba(214,48,49,0.3);color:#f8a5a5;font-size:13.5px;line-height:1.7;}
+.fb-box.fb-loading{color:var(--text-light);font-size:13.5px;}
+.fb-score-row{display:flex;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap;}
+.fb-score{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;line-height:1;}
+.fb-summary{font-size:13.5px;color:var(--text-light);line-height:1.72;flex:1;}
+.fb-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.fb-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;}
+.fb-good .fb-col-title{color:var(--green-accent);}
+.fb-improve .fb-col-title{color:var(--gold-bright);}
+.fb-item{font-size:13px;color:var(--text-light);padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid rgba(255,255,255,0.15);line-height:1.6;}
+.fb-example{background:rgba(255,255,255,0.05);border-radius:9px;padding:12px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;}
+.fb-ex-label{font-weight:600;color:var(--gold-bright);font-style:normal;}
+/* ─ Grammar Review ─ */
+.gr-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.gr-icon{font-size:28px;}
+.gr-body{display:flex;flex-direction:column;gap:14px;}
+.gr-item{background:var(--cream);border-radius:10px;padding:16px 18px;border-left:3px solid var(--gold-light);}
+.gr-label{font-size:12.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.gr-examples{display:flex;flex-direction:column;gap:6px;}
+.gr-ex{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--navy);background:white;padding:8px 14px;border-radius:7px;border:1px solid var(--cream-dark);}
+.gr-note{font-size:12.5px;color:var(--text-mid);margin-top:10px;padding:8px 12px;background:rgba(224,155,0,0.07);border-radius:7px;border-left:2px solid var(--gold-light);}
+/* ─ Assessment result ─ */
+.assess-result{border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.assess-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.assess-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.assess-score{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;line-height:1;}
+.assess-label{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:6px;}
+.assess-detail{font-size:13.5px;opacity:0.88;}
+
+/* ─── Writing section ──────────────────────────────── */
+.w-task-header{margin-bottom:4px;}
+.w-task-pill{display:inline-block;background:rgba(224,155,0,0.15);color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 13px;border-radius:20px;border:1px solid rgba(224,155,0,0.3);margin-bottom:8px;}
+.w-prompt-box{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:13px;padding:22px 26px;margin:18px 0;border-left:4px solid var(--gold-light);}
+.w-prompt-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-bright);margin-bottom:10px;}
+.w-prompt-text{font-size:13.5px;color:var(--text-light);line-height:1.82;}
+.w-target{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;color:var(--gold-light);}
+.w-meta-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:8px 0 16px;}
+.w-counter{font-size:12.5px;color:var(--text-mid);font-family:'DM Mono',monospace;}
+
+/* ─── AI Feedback result box ────────────────────────── */
+.fb-result-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-result-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-result-label{font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-result-score{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-align:right;}
+.fb-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-check{display:inline-block;font-size:12.5px;font-weight:600;color:var(--green-accent);background:rgba(0,166,81,0.1);padding:5px 12px;border-radius:20px;}
+.fb-check.fb-check-warn{color:#f39c12;background:rgba(243,156,18,0.1);}
+.fb-suggest-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.fb-suggest-list{margin:0 0 14px 18px;padding:0;}
+.fb-suggest-list li{font-size:13px;color:var(--text-light);line-height:1.68;margin-bottom:4px;}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;margin-bottom:14px;}
+.fb-corrected-label{font-style:normal;font-weight:700;color:var(--gold-bright);}
+.fb-footer-stats{font-size:11.5px;color:rgba(155,179,204,0.5);border-top:1px solid rgba(255,255,255,0.07);padding-top:10px;margin-top:8px;font-family:'DM Mono',monospace;}
+.fb-warn-box{background:#2d1010;border:1px solid rgba(214,48,49,0.3);border-radius:10px;padding:14px 18px;color:#f8a5a5;font-size:13.5px;margin-top:14px;}
+.fb-loading-box{background:#111e2f;border-radius:10px;padding:18px 22px;color:var(--text-light);font-size:13.5px;margin-top:14px;display:flex;align-items:center;gap:10px;}
+
+/* ─── Gap Fill — Image 1 design ───────────────────────────────── */
+.gf-card{padding:32px 36px;}
+.gf-instr{font-size:13.5px;color:var(--text-mid);margin-bottom:22px;line-height:1.6;}
+.gf-bank-box{background:var(--cream);border-radius:14px;padding:20px 22px;margin-bottom:28px;border:1px solid var(--cream-dark);}
+.gf-bank-pills{display:flex;flex-wrap:wrap;gap:10px;}
+.gf-pill{background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:50px;cursor:default;transition:opacity 0.25s,transform 0.2s;}
+.gf-pill.gf-pill-used{opacity:0.28;text-decoration:line-through;}
+.gf-sentences{display:flex;flex-direction:column;gap:26px;}
+.gf-row{}
+.gf-sentence-text{font-size:14.5px;color:var(--navy);line-height:1.9;}
+.gf-blank-wrap{display:inline-block;position:relative;vertical-align:bottom;}
+.gf-underline-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14.5px;color:var(--navy);padding:1px 8px 2px;width:170px;outline:none;text-align:center;transition:border-color 0.2s;}
+.gf-underline-input::placeholder{color:rgba(90,120,153,0.5);font-size:13px;}
+.gf-underline-input.gf-correct{border-color:var(--green-accent);color:var(--green-accent);font-weight:600;}
+.gf-underline-input.gf-incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.gf-underline-input:disabled{background:transparent;}
+.gf-row-fb{margin-top:4px;min-height:18px;padding-left:4px;}
+.gf-fb-ok{font-size:12px;font-weight:700;color:var(--green-accent);}
+.gf-fb-err{font-size:12px;font-weight:600;color:var(--red-accent);}
+
+/* ─── True/False — Image 2 design ─────────────────────────────── */
+.tf-card{padding:32px 36px;}
+.tf-instr{font-size:13.5px;color:var(--gold);margin-bottom:22px;font-weight:500;}
+.tf-list{display:flex;flex-direction:column;gap:12px;}
+.tf-item{background:var(--cream);border-radius:12px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;transition:box-shadow 0.2s;}
+.tf-item[data-done]{opacity:0.92;}
+.tf-item-stmt{font-size:14px;color:var(--navy);line-height:1.58;flex:1;min-width:200px;}
+.tf-item-btns{display:flex;gap:10px;flex-shrink:0;}
+.tf-item-btn{padding:10px 26px;border-radius:9px;border:2px solid var(--cream-dark);font-size:13.5px;font-weight:700;cursor:pointer;background:white;font-family:'DM Sans',sans-serif;color:var(--navy);transition:all 0.18s;-webkit-tap-highlight-color:transparent;}
+.tf-item-btn:hover:not(:disabled){border-color:var(--gold-light);background:#fef8e0;}
+.tf-item-btn.tf-btn-correct{background:var(--green-accent);border-color:var(--green-accent);color:white;}
+.tf-item-btn.tf-btn-wrong{background:var(--red-accent);border-color:var(--red-accent);color:white;}
+.tf-item-btn:disabled{cursor:default;}
+.tf-item-fb{width:100%;margin-top:2px;min-height:18px;font-size:12.5px;}
+.tf-fb-ok{color:var(--green-accent);font-weight:700;}
+.tf-fb-err{color:var(--red-accent);font-weight:600;}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{display:inline-block;animation:spin 1s linear infinite;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}#mob-btn{display:flex;align-items:center;justify-content:center;}
+  #main{margin-left:0;}.hero{padding:60px 22px 40px;}.content{padding:28px 18px;}
+  .prog-wrap{padding:12px 22px;}.outcomes-grid,.speaking-grid,.wb-grid{grid-template-columns:1fr;}.hero-stats{gap:22px;}
+}
+@media(max-width:600px){
+  .hero{padding:56px 16px 36px;}.content{padding:22px 14px;}.card{padding:22px 18px;}
+  .listen-card{padding:20px 16px;}.reading-box{padding:18px 16px;}.player-row{flex-wrap:wrap;gap:10px;}.time-disp{min-width:auto;}
+}
+
+
+
+
+
+/* ─── Auto-Correction Report UI (Module 6+) ─────────────────────── */
+.fb-report-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-report-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:12px;}
+.fb-report-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-report-icon{font-size:16px;}
+.fb-report-score{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
+.fb-quick-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-cats{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.fb-cat-row{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 16px;}
+.fb-cat-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.fb-cat-icon{font-size:15px;}
+.fb-cat-label{font-size:13px;color:var(--white);}
+.fb-cat-good{font-size:11px;font-weight:700;color:#00c46a;background:rgba(0,196,106,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(0,196,106,0.3);}
+.fb-cat-sat{font-size:11px;font-weight:700;color:#f5b800;background:rgba(245,184,0,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(245,184,0,0.3);}
+.fb-cat-att{font-size:11px;font-weight:700;color:#e05c5c;background:rgba(224,92,92,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(224,92,92,0.3);}
+.fb-cat-comment{font-size:13px;color:var(--text-light);line-height:1.7;}
+.fb-corrected-block{background:rgba(255,255,255,0.04);border-left:3px solid var(--gold-light);border-radius:0 8px 8px 0;padding:11px 16px;font-size:13px;color:var(--text-light);line-height:1.72;margin-bottom:12px;font-style:italic;}
+.fb-corrected-tag{font-style:normal;font-weight:700;color:var(--gold-bright);display:block;margin-bottom:4px;}
+.fb-overall{font-size:13px;color:#00c46a;margin-bottom:10px;font-weight:500;}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ─── Gap-Fill Redesign (auto-graded) ───────────────────────────────────── */
+.gf-bank-label{font-size:11px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.gf-num{color:var(--gold-bright);font-weight:700;min-width:22px;display:inline-block;}
+.gf-btn-bar{display:flex;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.gf-check-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;font-size:13px;padding:10px 22px;border:none;border-radius:8px;cursor:pointer;transition:opacity .15s;}
+.gf-check-btn:hover{opacity:.88;}
+.gf-check-btn:disabled{cursor:not-allowed;opacity:.5;}
+.gf-reset-btn{background:rgba(255,255,255,0.07);color:var(--text-light);font-size:13px;font-weight:600;padding:10px 18px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;cursor:pointer;transition:background .15s;}
+.gf-reset-btn:hover{background:rgba(255,255,255,0.12);}
+.gf-score-display{font-size:15px;margin-left:4px;}
+.gf-pill-highlight{outline:2px solid var(--gold-bright) !important;opacity:1 !important;}
+.gf-fb-err strong{color:var(--gold-bright);}
+
+
+
+
+
+
+
+</style>
+</head>
+<body>
+<button id="mob-btn" onclick="openSidebar()">&#9776;</button>
+<div id="overlay" onclick="closeSidebar()"></div>
+<nav id="sidebar">
+  <div class="sidebar-brand"><h1>IT &amp; Digital Professions English</h1><div class="sub">Professional Course Series</div><span class="level-badge">B1&#8211;B2 Level</span></div>
+  <div class="sidebar-section-label">Module 11</div>
+  <div class="nav-item active" onclick="goTo('sec-overview')"><div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-speaking')"><div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-wordbank')"><div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-reading')"><div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-vocab')"><div class="nav-left"><span class="nav-icon">🔤</span><span class="nav-label">Vocabulary</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-grammar')"><div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Grammar</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-gramreview')"><div class="nav-left"><span class="nav-icon">📋</span><span class="nav-label">Grammar Review</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-writing')"><div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div><span class="nav-badge">AI</span></div>
+  <div class="nav-item" onclick="goTo('sec-listening')"><div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div><span class="nav-badge">4</span></div>
+  <div class="nav-item" onclick="goTo('sec-cases')"><div class="nav-left"><span class="nav-icon">💡</span><span class="nav-label">Case Studies</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-assessment')"><div class="nav-left"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></div><span class="nav-badge">20</span></div>
+</nav>
+<main id="main">
+<section id="sec-overview" class="section active">
+  <div class="hero"><div class="module-pill">📊 &nbsp; Module 11 &nbsp;·&nbsp; IT &amp; Digital Professions English</div><h2>Data Analytics and<br><span class="accent">Business Intelligence</span></h2><p class="hero-desc">Master the essential vocabulary of data analytics and BI — from data warehouses, ETL, and KPIs to cohort analysis, statistical significance, and the critical distinction between correlation and causation. Build the language skills to communicate analytical findings precisely, interpret dashboards critically, and participate in data strategy discussions with confidence.</p><div class="hero-stats"><div class="stat"><span class="stat-n">21</span><span class="stat-l">Key Terms</span></div><div class="stat"><span class="stat-n">11</span><span class="stat-l">Sections</span></div><div class="stat"><span class="stat-n">4</span><span class="stat-l">Audio Activities</span></div><div class="stat"><span class="stat-n">B1–B2</span><span class="stat-l">CEFR Level</span></div></div></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" id="progFill"></div></div><span class="prog-pct" id="progPct">0%</span></div>
+  <div class="content" id="overviewContent"></div>
+</section>
+<section id="sec-speaking" class="section">
+  <div class="hero"><div class="module-pill">🎙️ &nbsp; Speaking Practice</div><h2>Discussion <span class="accent">Questions</span></h2><p class="hero-desc">Practise speaking about data analytics, BI strategy, data quality, and communicating insights to non-technical stakeholders.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:9%"></div></div><span class="prog-pct">9%</span></div>
+  <div class="content" id="speakingContent"></div>
+</section>
+<section id="sec-wordbank" class="section">
+  <div class="hero"><div class="module-pill">📚 &nbsp; Word Bank</div><h2>Data Analytics <span class="accent">Vocabulary</span></h2><p class="hero-desc">Study these 21 essential data analytics and BI terms covering data architecture, analytical methods, quality, and visualisation.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:18%"></div></div><span class="prog-pct">18%</span></div>
+  <div class="content" id="wordBankContent"></div>
+</section>
+<section id="sec-reading" class="section">
+  <div class="hero"><div class="module-pill">📖 &nbsp; Reading</div><h2>Texts &amp; <span class="accent">Comprehension</span></h2><p class="hero-desc">Read two professional texts on analytics maturity and the data warehouse versus data lake architecture debate.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:27%"></div></div><span class="prog-pct">27%</span></div>
+  <div class="content" id="readingContent"></div>
+</section>
+<section id="sec-vocab" class="section">
+  <div class="hero"><div class="module-pill">🔤 &nbsp; Vocabulary Exercises</div><h2>Practice <span class="accent">Exercises</span></h2><p class="hero-desc">Three exercise types to master data analytics vocabulary: multiple choice, gap-fill, and true/false.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:36%"></div></div><span class="prog-pct">36%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocab(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocab(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocab(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vex-0"></div>
+    <div id="vex-1" style="display:none"></div>
+    <div id="vex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-grammar" class="section">
+  <div class="hero"><div class="module-pill">✏️ &nbsp; Grammar</div><h2>Grammar <span class="accent">Exercises</span></h2><p class="hero-desc">Practise noun clauses for reporting findings, hedging language for statistical claims, and precise causal and correlational language in data communication.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:45%"></div></div><span class="prog-pct">45%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGram(0,this)">Noun Clauses</div>
+      <div class="ex-tab" onclick="showGram(1,this)">Hedging Language</div>
+      <div class="ex-tab" onclick="showGram(2,this)">Causal vs Correlational</div>
+    </div>
+    <div id="gex-0"></div>
+    <div id="gex-1" style="display:none"></div>
+    <div id="gex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-gramreview" class="section">
+  <div class="hero"><div class="module-pill">📋 &nbsp; Grammar Review</div><h2>Reference <span class="accent">Guide</span></h2><p class="hero-desc">Three reference boxes: noun clauses for reporting findings, hedging language in data analysis, and causal versus correlational language in data reports.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:54%"></div></div><span class="prog-pct">54%</span></div>
+  <div class="content" id="gramRevContent"></div>
+</section>
+<section id="sec-writing" class="section">
+  <div class="hero"><div class="module-pill">✍️ &nbsp; Writing + AI Feedback</div><h2>Writing <span class="accent">Activities</span></h2><p class="hero-desc">Write a board-level data analysis briefing and a data quality incident report. Receive AI feedback across Grammar, Vocabulary, Tone, Structure, and Fluency.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:63%"></div></div><span class="prog-pct">63%</span></div>
+  <div class="content" id="writingContent"></div>
+</section>
+<section id="sec-listening" class="section">
+  <div class="hero"><div class="module-pill">🎧 &nbsp; Listening</div><h2>Audio <span class="accent">Activities</span></h2><p class="hero-desc">Listen to an analytics team churn investigation, a BI dashboard review, a data governance committee meeting, and a customer segmentation board briefing.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:72%"></div></div><span class="prog-pct">72%</span></div>
+  <div class="content" id="listeningContent"></div>
+</section>
+<section id="sec-cases" class="section">
+  <div class="hero"><div class="module-pill">💡 &nbsp; Case Studies</div><h2>Real-World <span class="accent">Cases</span></h2><p class="hero-desc">Explore the Moneyball analytics revolution and how the Oakland Athletics used data to compete with far richer teams, and the Tesco Clubcard — one of the world's most sophisticated customer analytics platforms.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:81%"></div></div><span class="prog-pct">81%</span></div>
+  <div class="content" id="casesContent"></div>
+</section>
+<section id="sec-assessment" class="section">
+  <div class="hero"><div class="module-pill">🏆 &nbsp; Final Assessment</div><h2>Module <span class="accent">Test</span></h2><p class="hero-desc">20 questions covering all module content. Pass mark: 70% (14/20). Two attempts allowed.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div><span class="prog-pct">90%</span></div>
+  <div class="content">
+    <div class="card">
+      <div class="card-title">🏆 Final Assessment</div><div class="card-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:22px;">Answer all 20 questions. You need 70% (14 correct) to pass. Attempts used: <strong id="att-disp">0 / 2</strong></p>
+      <div id="assessContainer"></div>
+      <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <button class="ass-btn" id="ass-sub" onclick="submitAss()">Submit Assessment</button>
+        <button class="retry-btn" id="ass-retry" onclick="resetAss()">&#8635; Try Again</button>
+      </div>
+      <div class="final-result" id="final-res"></div>
+    </div>
+  </div>
+</section>
+</main>
+<script>
+/* ══ Module 11: Data Analytics and Business Intelligence ══ */
+const outcomes=["Identify and accurately use 21 essential data analytics and BI terms spanning data types, analysis methods, visualisation, and governance", "Read and analyse professional texts on data-driven decision-making and the data warehouse versus data lake debate", "Use noun clauses for reporting findings, hedging language for statistical claims, and precise causal and correlational language accurately", "Draft a data analysis briefing for senior stakeholders and a data quality incident report with professional precision", "Listen to analytics team meetings, BI dashboard reviews, data governance discussions, and stakeholder briefings", "Discuss data strategy, analytical methods, visualisation choices, and data quality challenges with professional fluency and confidence"];
+const speakingQs=["What is the difference between data analytics and business intelligence? Are they the same thing?", "What is the difference between descriptive, diagnostic, predictive, and prescriptive analytics?", "What is a KPI dashboard, and what makes a good dashboard versus a poor one?", "What is the difference between a data warehouse and a data lake? When would you use each?", "What is ETL, and why is it a critical process in data engineering?", "What is data quality, and what are the key dimensions of data quality that organisations should measure?", "What is the difference between correlation and causation, and why does it matter in data analysis?", "What is a cohort analysis, and what business questions is it typically used to answer?", "What is A/B testing in a data analytics context, and what makes a test statistically valid?", "What is machine learning, and how does it differ from traditional statistical analysis?", "What is a data governance framework, and why has it become more important with GDPR?", "What is a data catalogue, and why do large organisations need one?", "What is the difference between structured and unstructured data? Can you give examples of each?", "What is a pivot table, and what types of analysis are pivot tables used for?", "What is data normalisation, and why is it important for database performance?", "What is a funnel analysis, and how would you use it to diagnose a drop in e-commerce conversions?", "What is real-time analytics, and in what business contexts is real-time data essential versus nice-to-have?", "What is data literacy, and why do organisations need to build it across non-technical staff?", "What is the difference between mean, median, and mode, and when is each the most appropriate measure?", "What ethical considerations arise when using personal data for analytics purposes?", "If your company's analytics showed that a product was selling well but customers were churning at a high rate, what further analysis would you run?"];
+const wordBank=[{emoji:"📊",term:"Dashboard",def:"A visual display that consolidates key metrics, KPIs, and data visualisations into a single interface — enabling users to monitor performance at a glance. Effective dashboards are designed around specific decisions and audiences: they show the right data, at the right level of detail, to the right people. Poor dashboards display too much data without context, creating noise rather than insight."},
+  {emoji:"🏗️",term:"Data Warehouse",def:"A centralised repository for structured, processed data from multiple sources — optimised for querying and analysis rather than transaction processing. Data warehouses apply a schema (structure) before data is stored ('schema on write'), ensuring data is clean, consistent, and ready for analysis. Major platforms include Snowflake, Amazon Redshift, Google BigQuery, and Microsoft Azure Synapse Analytics."},
+  {emoji:"🌊",term:"Data Lake",def:"A large-scale storage repository that holds raw data in its native format — structured, semi-structured, and unstructured — until it is needed for analysis. Unlike a data warehouse, a data lake applies schema when data is read ('schema on read'), preserving maximum flexibility. Data lakes are suited to exploratory analysis, machine learning, and scenarios where the value of the data is not yet fully defined."},
+  {emoji:"🔄",term:"ETL",def:"Extract, Transform, Load — the process of extracting data from source systems, transforming it (cleaning, normalising, deduplicating, enriching) to meet the target schema and quality standards, and loading it into a data warehouse or analytics platform. ETL is the foundational data engineering process: the quality and timeliness of analytics depends directly on the quality of the ETL pipeline."},
+  {emoji:"📈",term:"KPI",def:"Key Performance Indicator — a quantifiable measure used to evaluate how effectively an organisation, team, or process is achieving a defined objective. KPIs should be specific, measurable, and tied to outcomes that matter. The distinction between leading indicators (which predict future performance, such as pipeline value) and lagging indicators (which measure past outcomes, such as revenue realised) is important for building a balanced performance measurement system."},
+  {emoji:"🔗",term:"Correlation",def:"A statistical relationship between two variables — when one changes, the other tends to change in a consistent direction. Positive correlation means both variables move in the same direction; negative correlation means they move in opposite directions. Correlation does not imply causation: ice cream sales and drowning rates are positively correlated (both rise in summer) but ice cream does not cause drowning. Misinterpreting correlation as causation is one of the most common and consequential errors in data analysis."},
+  {emoji:"🎯",term:"Cohort Analysis",def:"An analytical method that groups users or customers by a shared characteristic or behaviour at a specific time — typically the date they first engaged with a product or service — and then tracks how that group behaves over time. Cohort analysis is particularly useful for understanding retention, churn, and lifetime value: it reveals whether product changes are improving outcomes for new customers while controlling for the changing composition of the user base."},
+  {emoji:"🧪",term:"A/B Test",def:"A controlled experiment in which two versions of a product, feature, or communication — A (the control) and B (the variant) — are shown to randomly assigned groups, and statistical analysis determines which performs better against a defined metric. A valid A/B test requires sufficient sample size (statistical power), random assignment, a single variable changed between conditions, and a pre-specified significance threshold (typically p < 0.05)."},
+  {emoji:"🔀",term:"ETL Pipeline",def:"The automated, orchestrated sequence of extract, transform, and load processes that move data from source systems to analytical destinations on a defined schedule or trigger. Modern ETL pipelines are built using tools such as Apache Airflow, dbt (data build tool), Fivetran, or AWS Glue. Pipeline reliability, latency, and error handling are critical concerns for organisations that depend on timely, accurate data for decisions."},
+  {emoji:"📉",term:"Churn Rate",def:"The percentage of customers or users who stop using a product or service during a given period. Churn rate = customers lost in period / customers at start of period. High churn is a critical business health indicator: if churn exceeds new customer acquisition, the business is shrinking. Cohort analysis is the primary tool for understanding churn patterns — distinguishing between structural churn (inherent to the market) and churn driven by product or service failures."},
+  {emoji:"🗃️",term:"Data Governance",def:"The framework of policies, standards, roles, and processes that ensure an organisation's data is accurate, consistent, secure, accessible, and used in compliance with legal and ethical obligations. Data governance defines who owns data, who can access it, how quality is measured and maintained, and how long data is retained. Without governance, data quality degrades, compliance risk grows, and analytical outputs cannot be trusted."},
+  {emoji:"🔍",term:"Data Quality",def:"A measure of how fit data is for its intended use, assessed across multiple dimensions: accuracy (does the data correctly represent reality?), completeness (is all required data present?), consistency (is the same data represented identically across systems?), timeliness (is the data current?), and validity (does the data conform to defined formats and business rules?). Poor data quality is the leading cause of analytical failure and AI model underperformance."},
+  {emoji:"🏷️",term:"Structured Data",def:"Data organised in a predefined format — typically rows and columns — that can be stored in relational databases and queried with SQL. Examples: transaction records, customer master data, HR records, financial journal entries. Structured data is the foundation of traditional business intelligence and data warehousing. Approximately 20% of enterprise data is structured; the remaining 80% is semi-structured or unstructured."},
+  {emoji:"📄",term:"Unstructured Data",def:"Data that does not follow a predefined format or schema — including text documents, emails, images, audio, video, social media posts, and customer support transcripts. Unstructured data cannot be stored in traditional relational databases without transformation. Extracting value from unstructured data requires techniques such as natural language processing (NLP), computer vision, and speech recognition. It represents approximately 80% of enterprise data volume."},
+  {emoji:"📦",term:"Data Catalogue",def:"A metadata management tool that provides an inventory of an organisation's data assets — documenting what data exists, where it lives, what it means, who owns it, and who can access it. A data catalogue enables analysts to discover available data quickly, understand its provenance and quality, and avoid duplicating data collection efforts. It is a foundational component of data governance for organisations with large, distributed data estates."},
+  {emoji:"⚡",term:"Real-Time Analytics",def:"The analysis of data as it is generated or received — with latency measured in seconds or milliseconds rather than hours or days — enabling immediate operational decisions. Real-time analytics is used in fraud detection (flagging suspicious transactions as they occur), logistics (tracking vehicle locations and adjusting routes), and e-commerce personalisation (serving recommendations based on current browsing behaviour). It requires streaming infrastructure such as Apache Kafka or AWS Kinesis."},
+  {emoji:"🧹",term:"Data Cleaning",def:"The process of identifying and correcting errors, inconsistencies, duplicates, and missing values in a dataset before it is used for analysis. Data cleaning is one of the most time-consuming activities in data work — practitioners estimate it consumes 60-80% of the total time in a data project. Common cleaning tasks include standardising formats, resolving duplicates, handling null values, and validating data against business rules."},
+  {emoji:"📐",term:"Statistical Significance",def:"A threshold used in hypothesis testing (including A/B tests) to determine whether an observed difference between groups is likely to reflect a genuine effect rather than random chance. A result is typically considered statistically significant when the p-value is below 0.05 — meaning there is less than a 5% probability that the observed difference occurred by chance. Statistical significance does not imply practical significance: a tiny effect can be statistically significant with a large enough sample."},
+  {emoji:"🔢",term:"Data Normalisation",def:"In database design, the process of organising data to reduce redundancy and improve integrity by dividing tables into smaller, related tables linked by keys. A normalised database avoids storing the same data in multiple places, reducing the risk of inconsistency when data is updated. In machine learning, normalisation refers to scaling numerical features to a common range (typically 0-1) so that no single feature dominates the model due to its scale."},
+  {emoji:"🌊",term:"Data Lakehouse",def:"A modern data architecture that combines the flexibility of a data lake (raw data storage at scale) with the structure and performance of a data warehouse (schema enforcement, ACID transactions, query optimisation). The data lakehouse — pioneered by platforms such as Databricks Delta Lake and Apache Iceberg — aims to eliminate the need for separate lake and warehouse systems, reducing data duplication, pipeline complexity, and cost."},
+  {emoji:"📊",term:"Funnel Analysis",def:"An analytical method that tracks users or customers through a defined sequence of steps — a conversion funnel — and measures the percentage who complete each step versus those who drop off. Funnel analysis is used to identify where in a process (sign-up, onboarding, purchase) the greatest attrition occurs, enabling targeted optimisation. E-commerce funnels (browse → add to cart → checkout → payment) and SaaS onboarding funnels are classic applications."}];
+const readingTexts=[{title:"Text 1: From Data to Decisions — How Organisations Build Analytical Capability",subtitle:"The four types of analytics, the maturity journey, and why most organisations are stuck at the first stage",paragraphs:["Analytics capability exists on a maturity spectrum. At the lowest level of maturity — descriptive analytics — organisations use data to understand what has happened. Standard reports, dashboards, and historical summaries fall into this category. Most organisations are primarily descriptive: they can tell you what last quarter's sales figures were, how many support tickets were resolved in November, or which product had the highest return rate. Descriptive analytics is valuable, but it answers only backward-looking questions. It explains the past without illuminating the future.", "The second level — diagnostic analytics — asks why something happened. When sales fell in Q3, diagnostic analysis examines the data to identify contributing factors: was it a specific geography, a product category, a channel, or an external market event? Diagnostic analytics moves from reporting to investigation, using techniques such as drill-down analysis, cohort comparison, and correlation analysis to identify patterns in historical data. The third level — predictive analytics — uses statistical models and machine learning to forecast what is likely to happen. Predictive models trained on historical data can forecast demand, identify customers at risk of churn before they leave, or flag invoices likely to be paid late. The fourth and highest level — prescriptive analytics — goes beyond prediction to recommendation: given what is likely to happen, what should we do? Prescriptive analytics outputs are actions, not forecasts — 'offer this customer a retention discount' rather than 'this customer is likely to churn'.", "Most organisations remain stuck at the descriptive level not because of a lack of data — most have more data than they know what to do with — but because of a lack of analytical capability, data quality, and organisational culture. Building analytical maturity requires investment in three areas simultaneously: data infrastructure (clean, accessible, timely data), analytical skills (people who can ask the right questions and interpret the answers), and decision culture (leaders who use data to challenge assumptions rather than to confirm them). Organisations that achieve all three gain a durable competitive advantage: the ability to learn faster from experience than competitors who navigate by intuition alone."],questions:[{q:"What does descriptive analytics tell an organisation?",opts:["What is likely to happen in the next quarter based on historical trends", "What has happened — historical summaries, reports, and dashboards", "Why a specific event occurred — the contributing factors behind an outcome", "What action should be taken based on predicted future states"],ans:1},{q:"What question does diagnostic analytics answer?",opts:["What will happen next?", "What should we do about it?", "Why did something happen?", "What happened?"],ans:2},{q:"What techniques are mentioned for diagnostic analytics?",opts:["Machine learning models and neural networks", "Drill-down analysis, cohort comparison, and correlation analysis", "Statistical significance testing and A/B experimentation", "Real-time streaming and event-driven processing"],ans:1},{q:"What does predictive analytics use to forecast future outcomes?",opts:["Expert judgment from senior analysts and industry specialists", "Statistical models and machine learning trained on historical data", "Real-time data feeds from operational systems", "Benchmarking against industry peers and competitors"],ans:1},{q:"What is the key difference between predictive and prescriptive analytics?",opts:["Predictive is faster; prescriptive is more accurate", "Predictive uses statistics; prescriptive uses machine learning", "Predictive forecasts what is likely to happen; prescriptive recommends what to do about it", "Predictive is for consumer analytics; prescriptive is for operational analytics"],ans:2},{q:"What example of prescriptive analytics output is given in the text?",opts:["'This customer has a 73% probability of churning in the next 30 days'", "'Offer this customer a retention discount' rather than 'this customer is likely to churn'", "'Customer churn increased by 12% in Q3 compared to Q2'", "'Churn is correlated with low engagement in the first 14 days after sign-up'"],ans:1},{q:"Why does the text say most organisations remain at the descriptive level?",opts:["Because descriptive analytics is sufficient for most business decisions", "Because the cost of predictive and prescriptive tools is prohibitive for most organisations", "Because of a lack of data — most organisations do not collect enough", "Because of a lack of analytical capability, data quality, and decision culture — not a lack of data"],ans:3},{q:"What are the three areas requiring simultaneous investment to build analytical maturity?",opts:["Technology, budget, and executive sponsorship", "Data infrastructure, analytical skills, and decision culture", "Machine learning platforms, data scientists, and automated reporting", "Data warehouses, ETL pipelines, and BI dashboards"],ans:1},{q:"What does the text say about organisations with more data than they know what to do with?",opts:["They are further ahead in analytical maturity than organisations with less data", "Having large amounts of data does not itself create analytical capability — infrastructure, skills, and culture are all required", "They should invest immediately in machine learning to extract value from the data", "They should hire a Chief Data Officer to manage the data estate"],ans:1},{q:"What competitive advantage does the text say analytically mature organisations gain?",opts:["Lower operational costs through automated decision-making", "Higher revenue through better-targeted marketing campaigns", "The ability to learn faster from experience than competitors who navigate by intuition", "Stronger regulatory compliance and reduced audit risk"],ans:2}]},
+  {title:"Text 2: Data Warehouse vs Data Lake — Choosing the Right Architecture for Analytical Needs",subtitle:"Why two competing architectures emerged, what they are optimised for, and why the data lakehouse is changing the calculus",paragraphs:["For three decades, the data warehouse was the dominant architecture for enterprise analytics. A data warehouse ingests data from operational systems, applies strict transformations to enforce a consistent schema, and stores the result in a highly optimised, queryable format. The key discipline of data warehousing is 'schema on write': before data enters the warehouse, it must conform to a defined structure — data types, relationships, and business rules are all enforced at ingestion time. This discipline delivers clean, reliable, query-ready data — but at the cost of flexibility. Adding a new data source to a warehouse requires schema design, transformation logic, and testing. In fast-moving analytical environments, this rigidity can become a bottleneck.", "The data lake emerged in the early 2010s — enabled by the falling cost of cloud storage and the rise of distributed computing frameworks like Apache Hadoop and Spark — as a response to the limitations of the data warehouse. A data lake stores data in its raw, native format: structured tables, JSON documents, CSV files, images, PDFs, and video alike can all reside in the same storage layer. The schema is applied when the data is read ('schema on read') rather than when it is written. This flexibility makes data lakes ideal for exploratory analysis, data science, and machine learning — where analysts need to experiment with data before they know exactly what structure will be most useful. The trade-off is that without the discipline of schema enforcement, data lakes can become 'data swamps': repositories of raw data in inconsistent formats, with no clear ownership, documentation, or quality standards.", "The data lakehouse — a term coined by Databricks in 2020 — attempts to resolve this tension by combining the storage economics of a data lake with the reliability and performance of a data warehouse. Using open table formats such as Delta Lake, Apache Iceberg, and Apache Hudi, data lakehouses enforce ACID transactions, schema evolution, and data versioning on top of object storage. The result is a single platform that can serve both the exploratory needs of data scientists and the reliable reporting needs of business intelligence teams — eliminating the data duplication, synchronisation overhead, and organisational friction that arise when both systems must be maintained in parallel."],questions:[{q:"What is the defining discipline of a data warehouse?",opts:["Schema on read — the schema is applied when data is queried", "Schema on write — data must conform to a defined structure before entering the warehouse", "Schema on demand — the schema is generated automatically from the data's content", "Schema on load — the schema is applied when the ETL pipeline runs"],ans:1},{q:"What benefit does schema on write deliver?",opts:["Maximum flexibility for exploratory analysis and data science", "Clean, reliable, query-ready data — at the cost of flexibility when adding new sources", "Lower storage costs by compressing data at ingestion time", "Faster query performance by distributing data across multiple nodes"],ans:1},{q:"What enabled the emergence of the data lake in the early 2010s?",opts:["The development of SQL as a standardised querying language for unstructured data", "Falling cloud storage costs and the rise of distributed computing frameworks like Hadoop and Spark", "The standardisation of JSON as the universal data interchange format", "The introduction of GDPR, which required organisations to store all data in raw format"],ans:1},{q:"What types of data can coexist in a data lake?",opts:["Only structured relational data from transactional systems", "Only semi-structured data such as JSON and XML documents", "Structured tables, JSON, CSV files, images, PDFs, video — all formats can reside in the same layer", "Only data that has been approved by the data governance committee"],ans:2},{q:"For what types of work are data lakes described as ideal?",opts:["Reliable reporting for finance and compliance teams", "Exploratory analysis, data science, and machine learning — where analysts experiment before knowing what structure will be useful", "Real-time operational decision-making where latency must be minimised", "Batch processing of large structured datasets for quarterly reporting"],ans:1},{q:"What is a 'data swamp'?",opts:["A data lake that has grown too large for available storage infrastructure", "A data warehouse with excessive technical debt from years of schema changes", "A data lake that has become a repository of inconsistent, undocumented, poor-quality data without clear ownership", "A data pipeline that processes data too slowly for the organisation's analytical needs"],ans:2},{q:"What does the term 'data lakehouse' combine?",opts:["The simplicity of flat file storage with the scalability of cloud computing", "The storage economics of a data lake with the reliability and performance of a data warehouse", "The governance framework of a data warehouse with the analytical tools of a data lake", "The streaming capabilities of real-time systems with the batch capabilities of data warehouses"],ans:1},{q:"What problem does the data lakehouse eliminate that arises when both warehouse and lake are maintained?",opts:["The need to hire separate teams for warehouse engineering and lake management", "Data duplication, synchronisation overhead, and organisational friction from maintaining two parallel systems", "The risk of regulatory non-compliance when data is stored in multiple formats", "The performance degradation that occurs when large datasets are queried from a data lake"],ans:1},{q:"What open table formats does the text mention?",opts:["Apache Kafka, Apache Spark, and Apache Flink", "Delta Lake, Apache Iceberg, and Apache Hudi", "Parquet, Avro, and ORC", "dbt, Fivetran, and Airflow"],ans:1},{q:"What does the text say the data lakehouse serves that the warehouse and lake separately could not?",opts:["The needs of regulatory compliance teams who require both raw and processed data", "Both the exploratory needs of data scientists and the reliable reporting needs of BI teams — from a single platform", "The real-time streaming needs of operational teams alongside the batch reporting needs of finance", "The data science training requirements of both cloud-native and on-premise workloads"],ans:1}]}];
+const vocabMCQ=[{q:"What is a data warehouse?",opts:["A physical server room for storing enterprise backup data", "A centralised repository for structured, processed data optimised for querying and analysis with schema on write", "A cloud storage system for raw, unstructured data in its native format", "A real-time streaming platform for processing data as it is generated"],ans:1},{q:"What is the difference between correlation and causation?",opts:["Correlation means two things always occur together; causation means they occasionally do", "Correlation is a statistical relationship between variables; causation means one variable directly causes the other — correlation does not imply causation", "Correlation applies to quantitative data; causation applies to qualitative data", "They are the same statistical concept described at different confidence levels"],ans:1},{q:"What is ETL?",opts:["A database query language for extracting data from warehouses", "The Extract, Transform, Load process that moves data from source systems to analytical destinations", "A machine learning framework for automated data classification", "A reporting standard for financial data published by the IASB"],ans:1},{q:"What is cohort analysis?",opts:["An analysis of data across all users simultaneously to find aggregate trends", "Grouping users by a shared characteristic at a specific time and tracking their behaviour over time", "A statistical technique for testing whether two groups are significantly different", "A method for comparing performance across different geographic regions"],ans:1},{q:"What is statistical significance?",opts:["A measure of how important a finding is to the organisation's strategy", "A threshold indicating whether an observed difference is likely to reflect a real effect rather than random chance", "The minimum sample size required to draw conclusions from data", "A measure of how accurately a model predicts outcomes on unseen data"],ans:1},{q:"What is a data lake?",opts:["A data warehouse optimised for unstructured data", "A storage repository holding raw data in its native format with schema applied on read", "A real-time analytics platform for streaming data", "A centralised database for master data management"],ans:1},{q:"What is churn rate?",opts:["The rate at which new customers are acquired in a given period", "The percentage of customers who stop using a product or service in a given period", "The rate of data growth in an organisation's data estate", "The frequency at which customer data is refreshed in the analytics system"],ans:1},{q:"What is a data catalogue?",opts:["A list of approved data sources that analysts are permitted to access", "A metadata management tool providing an inventory of data assets — what exists, where it lives, what it means, and who owns it", "A report published by the data governance team summarising data quality metrics", "A database of customer product preferences used for personalisation"],ans:1},{q:"What is funnel analysis?",opts:["An analysis of how data flows through ETL pipelines from source to destination", "Tracking users through a defined sequence of steps to measure completion and identify where attrition occurs", "A method for comparing revenue funnels across different sales channels", "An analysis of the organisational hierarchy through which data requests are processed"],ans:1},{q:"What is a data lakehouse?",opts:["A data lake optimised exclusively for machine learning workloads", "An architecture combining data lake storage economics with data warehouse reliability and performance", "A hybrid cloud storage solution combining on-premise and cloud data", "A governance framework for managing data across data lake and data warehouse systems"],ans:1}];
+const vocabGapFill=[{before:"The analytics team built a",blank:"dashboard",after:"for the commercial director that displayed five key metrics — monthly active users, conversion rate, average order value, churn rate, and NPS — refreshed every four hours from the data warehouse."},{before:"The data team implemented a",blank:"data quality",after:"monitoring framework that ran automated checks after every ETL load — flagging records where postcode formats were invalid, customer IDs were duplicated, or transaction dates fell outside the expected range."},{before:"The marketing analyst ran a",blank:"cohort analysis",after:"grouping customers by the month they first purchased, then tracking their retention over the following 12 months — revealing that customers who used the loyalty programme in their first week had a 40% higher 12-month retention rate."},{before:"The product team launched an",blank:"A/B test",after:"to evaluate whether a simplified checkout flow reduced cart abandonment — randomly assigning 50% of users to the new flow and measuring conversion rate over four weeks with a pre-specified significance threshold of p < 0.05."},{before:"The head of analytics reminded the board that the positive",blank:"correlation",after:"between average session length and conversion rate did not prove that longer sessions caused higher conversions — both might be driven by a third variable, such as user intent at the point of arrival."},{before:"The data engineering team redesigned the",blank:"ETL",after:"pipeline to run incrementally rather than reprocessing the entire dataset daily — reducing the nightly processing window from six hours to forty minutes and cutting compute costs by 65%."},{before:"The product team used a",blank:"funnel analysis",after:"to investigate the 34% drop in trial-to-paid conversion and discovered that 61% of users who did not convert had never completed the onboarding checklist — pointing to the onboarding experience as the primary lever for improvement."},{before:"The organisation adopted a",blank:"data governance",after:"framework that assigned a named data owner to each of the 14 data domains, established a data quality scorecard published monthly to the leadership team, and defined retention schedules compliant with GDPR Article 5."},{before:"The analysts flagged that the 'high-value customer' segment contained 23% of records with missing postcode data — a",blank:"data cleaning",after:"task estimated at 40 person-hours that would need to be completed before the segment could be used for the regional marketing campaign."},{before:"The startup chose a",blank:"data lake",after:"architecture for their initial data platform — reasoning that in an early-stage environment, preserving raw data in its native format would give future analysts maximum flexibility to ask questions not yet anticipated."}];
+const vocabTF=[{stmt:"Descriptive analytics tells an organisation what is likely to happen in the future based on historical trends.",ans:false},{stmt:"Schema on write means data must conform to a defined structure before entering a data warehouse.",ans:true},{stmt:"Correlation between two variables always implies that one causes the other.",ans:false},{stmt:"Data cleaning is estimated to consume 60-80% of the total time in a typical data project.",ans:true},{stmt:"A data lake applies schema on read — the structure is defined when data is queried, not when it is stored.",ans:true},{stmt:"Statistical significance at p < 0.05 means there is less than a 5% probability the observed difference occurred by chance.",ans:true},{stmt:"Unstructured data represents a very small percentage of total enterprise data — approximately 20%.",ans:false},{stmt:"Churn rate measures the percentage of customers who stop using a service during a given period.",ans:true},{stmt:"A data catalogue documents what data assets exist, where they live, what they mean, and who owns them.",ans:true},{stmt:"Prescriptive analytics outputs are forecasts of what is likely to happen — not recommendations for action.",ans:false}];
+const grammarEx=[{title:"Exercise 1: Noun Clauses for Reporting Analytical Findings",instr:"Select the correct noun clause structure. Data analysts, BI professionals, and data scientists regularly present findings to non-technical stakeholders. Precise noun clause structures — 'the analysis shows that', 'the data suggests that', 'it appears that' — communicate findings with appropriate confidence and authority.",qs:[{q:"'The analysis _____ that customer churn is highest in the third month after sign-up.'",opts:["shows", "shows to", "is showing", "showed for"],ans:0},{q:"'The dashboard reveals _____ conversion rates have fallen by 12% since the checkout redesign.'",opts:["how", "that", "which", "what"],ans:1},{q:"'It is clear from the data _____ the promotion had a statistically significant effect on purchase frequency.'",opts:["how", "that", "which", "whether"],ans:1},{q:"'The cohort analysis demonstrates _____ customers acquired through referral have a 40% higher lifetime value.'",opts:["that", "how", "what", "which"],ans:0},{q:"'The funnel data indicates _____ 61% of users who did not convert had never completed the onboarding checklist.'",opts:["how", "which", "that", "what"],ans:2},{q:"'What the data cannot tell us is _____ caused the spike in support tickets in the third week of March.'",opts:["what", "that", "which", "how"],ans:0},{q:"'The model predicts _____ approximately 18% of the current customer base is at high risk of churning in the next 90 days.'",opts:["how", "what", "that", "which"],ans:2},{q:"'The A/B test confirmed _____ the new subject line increased email open rates by 8 percentage points.'",opts:["how", "that", "whether", "what"],ans:1},{q:"'The question is _____ the seasonal adjustment accounts for the full difference or whether another factor is also at play.'",opts:["whether", "that", "what", "how"],ans:0},{q:"'The data does not establish _____ the intervention caused the improvement — only that both occurred at the same time.'",opts:["that", "how", "whether", "what"],ans:0}]},
+  {title:"Exercise 2: Hedging Language for Statistical Claims and Data Interpretation",instr:"Select the most appropriate hedging expression. Data findings are rarely certain: they reflect the data available, the models used, and the time period studied. Hedging language signals the appropriate level of confidence — critical for maintaining analytical credibility.",qs:[{q:"'The model _____ that demand will increase by approximately 15% in Q4, though the confidence interval is wide.'",opts:["proves", "suggests", "confirms", "establishes"],ans:1},{q:"'These findings are _____ to the customer segment studied — they may not generalise to the broader market.'",opts:["limited", "specific", "applicable", "confined"],ans:0},{q:"'The correlation is strong, but we _____ rule out the possibility that a third variable is driving both trends.'",opts:["can", "should", "cannot", "must"],ans:2},{q:"'The data _____ a relationship between early onboarding completion and long-term retention, though further analysis is needed to confirm the direction of causality.'",opts:["proves", "confirms", "suggests", "establishes"],ans:2},{q:"'This is a _____ finding — the sample size in this segment is small and the result should be interpreted with caution.'",opts:["significant", "preliminary", "confirmed", "robust"],ans:1},{q:"'The trend is _____ consistent across regions, though the magnitude varies considerably between markets.'",opts:["broadly", "entirely", "completely", "absolutely"],ans:0},{q:"'We _____ that the intervention had a causal effect — the A/B test was not designed to isolate this variable.'",opts:["confirm", "cannot confirm", "suggest", "establish"],ans:1},{q:"'The results are statistically significant, _____ they may not be practically significant given the small absolute difference.'",opts:["because", "but", "so", "since"],ans:1},{q:"'Our _____ interpretation is that the drop in conversion is seasonal — but we will monitor the next four weeks before drawing firm conclusions.'",opts:["definitive", "final", "initial", "certain"],ans:2},{q:"'The model performs well on historical data, _____ it is important to note that past performance does not guarantee future accuracy.'",opts:["and", "but", "so", "therefore"],ans:1}]},
+  {title:"Exercise 3: Causal and Correlational Language in Data Communication",instr:"Select the most precise causal or correlational expression. Data analysts must communicate clearly whether a relationship is causal (one thing makes another happen) or merely correlational (two things are related but neither necessarily causes the other). Using the wrong language misleads decision-makers.",qs:[{q:"'Sending the onboarding email _____ a 23% increase in first-week logins.'",opts:["correlates with", "was associated with", "resulted in", "coincided with"],ans:2},{q:"'Higher engagement scores _____ longer customer retention — but we have not yet established whether engagement drives retention or retention drives engagement.'",opts:["cause", "are correlated with", "result in", "produce"],ans:1},{q:"'The data shows a strong _____ between average session length and conversion rate.'",opts:["causation", "effect", "correlation", "impact"],ans:2},{q:"'Increasing the discount _____ higher conversion — though at a cost to margin that must be evaluated separately.'",opts:["correlates with", "led to", "is associated with", "coincided with"],ans:1},{q:"'We cannot conclude that the training programme _____ the improvement in customer satisfaction scores — other factors changed simultaneously.'",opts:["correlates with", "is associated with", "caused", "coincided with"],ans:2},{q:"'There is a _____ relationship between product usage frequency and net promoter score, but the mechanism is not yet understood.'",opts:["causal", "direct", "correlational", "proven"],ans:2},{q:"'The price increase _____ a 7% decline in trial sign-ups in the following month.'",opts:["correlates with", "is associated with", "coincided with", "led to"],ans:3},{q:"'These two trends _____ — both peaked in Q3 — but the business team should be cautious about inferring a causal link.'",opts:["caused each other", "are correlated", "resulted in each other", "produced each other"],ans:1},{q:"'The A/B test demonstrates that the new landing page _____ a statistically significant improvement in sign-up rates.'",opts:["correlates with", "is associated with", "produced", "coincided with"],ans:2},{q:"'The fact that ice cream sales and drowning rates both rise in summer shows _____, not causation.'",opts:["a result", "an effect", "correlation", "an impact"],ans:2}]}];
+const grammarReview=[{title:"Grammar Point 1: Noun Clauses for Reporting Analytical Findings",pts:[{h:"'That' Clauses After Reporting Verbs",b:"Data reports and stakeholder presentations use 'that' clauses after reporting verbs to introduce findings. Common reporting verbs: show, reveal, indicate, demonstrate, suggest, confirm, predict, establish, find. The 'that' can be omitted in informal communication but should be retained in formal written reports for clarity.",ex:["'The analysis shows that customer churn peaks in month three.'", "'The dashboard reveals that conversion rates have declined by 12% since the redesign.'", "'The cohort data demonstrates that referral customers have a 40% higher lifetime value.'", "'The model predicts that approximately 18% of customers are at high risk of churning.'"]},{h:"'Whether' Clauses for Expressing Uncertainty",b:"When the data does not definitively answer a question, 'whether' clauses express appropriate uncertainty. 'Whether' introduces an indirect yes/no question — signalling that the outcome is unknown or contested.",ex:["'The data does not establish whether the intervention caused the improvement.'", "'The question is whether the seasonal adjustment accounts for the full difference.'", "'We cannot confirm whether the relationship is causal or merely correlational.'", "'Further analysis is needed to determine whether the effect persists across all segments.'"]},{h:"'What' and 'How' Clauses for Identifying Unknowns",b:"'What' clauses identify specific unknowns that the data cannot answer; 'how' clauses describe processes or mechanisms. Both are useful for communicating the limits of an analysis honestly.",ex:["'What the data cannot tell us is what caused the spike in March.'", "'The model identifies who is likely to churn — not what will prevent them from doing so.'", "'How the algorithm weights each feature is not transparent to end users.'", "'What we need to understand next is how the change affected different customer segments.'"]}]},
+  {title:"Grammar Point 2: Hedging Language in Data Analysis Communication",pts:[{h:"Signalling Confidence Level with Reporting Verbs and Adverbs",b:"The choice of reporting verb signals how confident the analyst is in a finding. 'Confirms' and 'establishes' signal high confidence; 'indicates' and 'suggests' signal moderate confidence; 'hints at' and 'is consistent with' signal low confidence. Adverbs (broadly, largely, tentatively, consistently) further calibrate the confidence level.",ex:["High confidence: 'The A/B test confirms that the new design outperformed the original.'", "Moderate confidence: 'The data suggests a relationship between onboarding completion and retention.'", "Low confidence: 'The early data hints at a seasonal effect, though the sample is too small to be conclusive.'", "Qualified: 'The trend is broadly consistent across regions, though the magnitude varies.'"]},{h:"Scope Limitations — Restricting Generalisations",b:"Analytical findings apply to the data studied — not necessarily to the broader population. Scope limitation language prevents overgeneralisation and protects analytical credibility.",ex:["'These findings are limited to the customer segment studied.'", "'The model was trained on 2023 data — its accuracy for 2025 conditions is untested.'", "'This analysis covers UK customers only — results may not generalise to other markets.'", "'The sample size in this segment is small and the result should be interpreted with caution.'"]},{h:"Distinguishing Certainty Levels in Written Reports",b:"Formal data reports use a consistent vocabulary to distinguish between what is known, probable, possible, and unknown — enabling readers to calibrate their confidence appropriately.",ex:["Known: 'The data confirms that conversion fell by 12% following the redesign.'", "Probable: 'The data strongly suggests that the decline is attributable to the new checkout flow.'", "Possible: 'It is possible that seasonal factors also contributed to the decline.'", "Unknown: 'The mechanism driving the retention improvement has not yet been established.'"]}]},
+  {title:"Grammar Point 3: Causal and Correlational Language in Data Reports",pts:[{h:"Causal Language — Expressing That One Thing Caused Another",b:"Causal language should only be used when there is experimental evidence (typically an A/B test or controlled intervention) that one variable directly caused a change in another. Using causal language based only on correlational data is a significant analytical error.",ex:["Causal (appropriate after A/B test): 'The price increase led to a 7% decline in sign-ups.'", "Causal: 'The onboarding email resulted in a 23% increase in first-week logins.'", "Causal: 'The intervention produced a statistically significant improvement in retention.'", "Causal: 'Removing the mandatory credit card field caused conversion to increase by 18%.'"]},{h:"Correlational Language — Expressing That Two Things Are Related",b:"Correlational language is appropriate when two variables move together but there is no experimental evidence of causation. This is the appropriate language for most observational analytics findings.",ex:["'Higher engagement scores are correlated with longer customer retention.'", "'There is a strong association between onboarding completion and 90-day retention.'", "'Customers who use the mobile app tend to have higher NPS scores.'", "'Session length and conversion rate are positively correlated — but the causal direction is unknown.'"]},{h:"Signalling the Distinction Explicitly",b:"Good analytical communication explicitly signals whether a finding is causal or correlational — preventing decision-makers from drawing stronger conclusions than the data supports. This distinction is one of the most important habits of a trustworthy data analyst.",ex:["'This is a correlational finding — we cannot infer causation without a controlled experiment.'", "'The A/B test establishes causation: the new design caused the improvement, not merely coincided with it.'", "'These trends are correlated, but both may be driven by a third variable we have not yet measured.'", "'We can say that X is associated with Y — we cannot yet say that X causes Y.'"]}]}];
+const writingTasks=[{id:"w1",activity:"Activity 1",type:"Analytics Briefing",title:"Write a Data Analysis Briefing for Senior Stakeholders",prompt:"You are the Head of Analytics at Nexford Digital, a SaaS learning platform with 85,000 registered users. The CEO has asked you to prepare a briefing on user engagement and churn for the quarterly board meeting.\n\nYour analysis has produced the following findings:\n\n1. Overall churn rate: 4.2% monthly (up from 3.1% six months ago)\n2. Cohort analysis: Users who complete the onboarding checklist within their first 7 days have a 12-month retention rate of 68%; users who do not complete it have a retention rate of 31%\n3. Funnel analysis: Of users who start the onboarding checklist, 61% complete it. The biggest drop-off point is Step 3 (connecting a learning goal) — 34% of users who reach Step 3 do not complete it\n4. A/B test result: A simplified onboarding flow tested on 4,200 users showed a 23% improvement in checklist completion. The result is statistically significant (p = 0.012)\n5. Predictive model: Users who have not logged in within 14 days of their last session are 73% more likely to churn in the next 30 days\n6. Correlation (not causal): Users with high engagement in weeks 1-4 are strongly correlated with lower churn — but you have not yet established whether engagement causes retention or both are driven by user intent at sign-up\n\nWrite a board-level briefing that:\n• Opens with the key finding (churn is rising and you have identified why)\n• Presents findings with appropriate confidence language — distinguishing what is causal from what is correlational\n• Recommends at least 3 specific actions\n• Identifies what further analysis is needed\n• Is written in plain language accessible to a non-technical board\n\nUse at least 6 vocabulary terms from this module.",tags:["Analytics Briefing", "Board Communication", "Data Analysis", "SaaS Metrics", "Stakeholder Communication"],targetMin:220,targetMax:320},{id:"w2",activity:"Activity 2",type:"Data Quality Report",title:"Write a Data Quality Incident Report",prompt:"You are the Data Governance Lead at Brightfield Financial Services. A critical data quality failure has been discovered in the customer analytics system.\n\nWhat happened:\n• The ETL pipeline that processes customer transaction data has been applying an incorrect currency conversion rate since 14 March — 46 days ago\n• The error was introduced during a routine pipeline update and not caught by the automated quality checks\n• As a result, all transaction values in the analytics database for non-GBP currencies are incorrect — understated by an average of 7.3%\n• Affected records: approximately 340,000 transaction records across 12,400 customer accounts\n• Business impact: The monthly revenue dashboard, the executive KPI report, and the customer lifetime value model have all been drawing on incorrect data since 14 March\n• Three business decisions were made during this period that may have been influenced by the incorrect data: pricing strategy for the EU market, a customer segment reclassification, and a risk model update\n• The error was discovered on 30 April by an analyst who noticed an anomaly in the EUR transaction totals\n• The pipeline has been corrected and the affected records are being reprocessed\n\nWrite a formal data quality incident report including: incident summary, timeline, root cause, impact assessment (data and business), immediate remediation actions, and at least 4 recommendations to prevent recurrence. Use formal, precise language. Use at least 6 vocabulary terms from this module.",tags:["Data Quality", "Incident Report", "Data Governance", "ETL", "Formal Writing"],targetMin:200,targetMax:300}];
+const listeningActs=[{id:0,title:"Analytics Team Meeting: Understanding Churn",sub:"Team Meeting · B2 Level · approx. 109 sec",icon:"📊",transcript:"The analytics team at a SaaS company is meeting to discuss a spike in churn. Lead analyst Priya is presenting her findings to the team. Head of Product Tom and Head of Customer Success Amara are also present. Priya: I want to walk you through what the data is telling us about the churn spike. I will be precise about what we know for certain and what we are inferring. The headline: monthly churn has risen from 3.1% to 4.2% over the past six months. That is a 35% increase. At current customer numbers, this represents approximately 180 additional customers lost per month versus our baseline. Tom: Do we know why? Priya: We have strong signals but not yet a confirmed cause. The cohort analysis shows that the cohorts acquired since the pricing change in November have significantly higher early churn — 28% churn in the first 90 days versus 14% for pre-November cohorts. That is a strong association, but I want to be careful: the pricing change coincided with a change in our paid acquisition channels, so we may have a different customer profile, not a pricing effect. Amara: What does the customer feedback data say? Priya: I ran a text analysis on the 340 exit survey responses we received. The most common themes were: value for money — mentioned in 47% of responses — and onboarding difficulty, mentioned in 31%. Neither of those is a correlation. They are direct customer statements, which gives them more evidential weight. Tom: So we have two potential drivers — pricing and onboarding. Are we able to test either? Priya: Yes. I have designed an A/B test on the onboarding flow that we can run immediately. If the new flow increases onboarding completion, we can attribute improvement to the change with reasonable confidence. Amara: And pricing? Priya: Harder to test cleanly. My recommendation is to run the onboarding test first — if that does not move churn significantly, we revisit pricing. We should not change two things at once or we will not know which worked.",qs:[{q:"By how much has monthly churn increased?",opts:["From 2.1% to 3.2% — a 52% increase", "From 3.1% to 4.2% — a 35% increase", "From 4.1% to 5.2% — a 27% increase", "From 3.5% to 4.5% — a 29% increase"],ans:1},{q:"What does the cohort analysis show about post-November customers?",opts:["Post-November cohorts have lower churn than pre-November cohorts due to a better-targeted acquisition strategy", "Post-November cohorts have 28% churn in the first 90 days versus 14% for pre-November cohorts", "Post-November cohorts are larger but have the same churn rate as earlier cohorts", "The cohort analysis shows no significant difference between pre- and post-November cohorts"],ans:1},{q:"Why does Priya say the pricing change may not be the cause?",opts:["The pricing change was too small to have a significant effect on churn", "The pricing change coincided with a channel change — so the customer profile may have changed, not just the price", "Customer exit surveys do not mention pricing as a reason for leaving", "The cohort analysis cannot distinguish between pre- and post-pricing-change customers"],ans:1},{q:"What were the two most common themes in the exit survey text analysis?",opts:["Poor customer service and lack of new features", "Value for money (47%) and onboarding difficulty (31%)", "Platform reliability and pricing competitiveness", "Integration limitations and lack of mobile support"],ans:1},{q:"Why does Priya say the exit survey themes have more evidential weight than correlational findings?",opts:["Exit surveys are statistically validated using a larger sample size", "They are direct customer statements — not inferences drawn from behavioural data", "Exit surveys are collected by a neutral third party free from analyst bias", "They represent customers who churned, which is the most important segment to understand"],ans:1},{q:"What does Priya propose to test first?",opts:["A pricing experiment offering a 20% discount to customers who have been inactive for 14 days", "An A/B test on the onboarding flow — if it increases onboarding completion, improvement can be attributed to the change", "A customer segmentation update to identify which cohorts are at highest risk of churn", "A survey of currently active customers to understand what they value most about the platform"],ans:1},{q:"Why does Priya recommend not changing pricing and onboarding simultaneously?",opts:["Changing both simultaneously would require board approval for each change independently", "Two simultaneous changes would exceed the statistical power of the A/B testing framework", "If both change at once, the team would not know which change caused any observed improvement", "The engineering team cannot implement two changes in the same sprint"],ans:2},{q:"How does Priya characterise her findings about the cause of the churn spike?",opts:["Confirmed causes — both pricing and onboarding have been definitively identified as drivers", "Strong signals but not yet a confirmed cause — she distinguishes carefully between association and causation", "Inconclusive — the data does not provide enough evidence to draw any conclusions yet", "Preliminary findings that require six more months of data before any conclusions can be drawn"],ans:1}]},
+  {id:1,title:"BI Dashboard Review: Reading the Numbers Correctly",sub:"Review Meeting · B2 Level · approx. 106 sec",icon:"📈",transcript:"A BI team is presenting a new executive dashboard to the Head of Commercial, Marcus. Lead BI developer Yuki and analyst Leila are presenting. Marcus: I have had a chance to look at the dashboard. I have some questions about what I am seeing. The revenue chart shows a big spike in Q3 — is that real or a data issue? Yuki: It is real. Q3 includes our annual conference, which drives a significant one-time uplift in new contract signings. We have added an annotation to the chart to explain this — if you hover over the Q3 bar, you will see a note that 23% of Q3 revenue was conference-driven. Marcus: Good. The churn rate chart is confusing me. It shows churn falling but the customer count is also falling. How is that possible? Leila: Great question. Churn rate is a percentage — it measures the proportion of customers who left, not the absolute number. If both your total customer base and the number of churning customers fall proportionally, the churn rate stays flat or even falls. The absolute number of customers lost could still be rising. We are actually showing both metrics on the next page — the rate and the absolute count — precisely to avoid this confusion. Marcus: That is a really important distinction. Can we put both on the same page? Yuki: Absolutely. We will add the absolute churn count as a secondary metric alongside the rate. Marcus: One more — the NPS chart. It shows a 12-point improvement, but there is a note that says 'n = 47'. That seems like a very small sample. Leila: You are right to flag that. The 12-point improvement looks significant, but with only 47 responses, the confidence interval is very wide — plus or minus 14 points. We should not read too much into the direction until the sample grows. We recommend treating this as directional only until we reach at least 200 responses. Marcus: So the NPS improvement might not be real. Leila: It might be real — we simply do not have enough data yet to say with statistical confidence. Directional signal, not a confirmed trend.",qs:[{q:"What caused the Q3 revenue spike?",opts:["A significant price increase applied from the start of Q3", "The annual conference, which drives a one-time uplift in new contract signings", "A large new enterprise customer signing in Q3", "A retrospective revenue recognition adjustment applied to Q3 results"],ans:1},{q:"How did Yuki's team address the Q3 spike to prevent misinterpretation?",opts:["They removed Q3 from the standard dashboard view", "They added an annotation explaining that 23% of Q3 revenue was conference-driven", "They created a separate chart showing Q3 results with and without conference revenue", "They added a footnote at the bottom of the dashboard explaining seasonal patterns"],ans:1},{q:"Why can churn rate fall while the total customer count also falls?",opts:["Churn rate and customer count are measured using different methodologies", "Churn rate is a percentage measuring the proportion who left — if both the base and churning customers fall proportionally, the rate can fall even if absolute numbers remain significant", "The dashboard is showing churn rate on a 12-month rolling basis, which smooths out monthly fluctuations", "There must be a data quality error causing the two metrics to show contradictory trends"],ans:1},{q:"What solution does the team propose for the churn rate versus customer count confusion?",opts:["Removing the churn rate metric and showing only absolute churn counts", "Adding both the churn rate and the absolute churn count on the same page", "Adding a written explanation to the dashboard describing how churn rate is calculated", "Replacing the churn rate with a different metric that is easier to interpret"],ans:1},{q:"What concern does Marcus raise about the NPS improvement?",opts:["The 12-point improvement is too large to be credible without validation", "The NPS question wording was changed, making the comparison invalid", "The sample size of 47 is very small, making the confidence interval very wide", "The NPS survey was only sent to customers who had recently upgraded their plan"],ans:2},{q:"What is the confidence interval described for the NPS result?",opts:["Plus or minus 3 points — narrow enough to be directionally reliable", "Plus or minus 7 points — moderate confidence in the direction of improvement", "Plus or minus 14 points — wide enough to make the direction uncertain", "Plus or minus 20 points — the result is effectively meaningless"],ans:2},{q:"How does Leila characterise the NPS finding?",opts:["A confirmed trend that should be reported to the board as evidence of improvement", "A preliminary finding that requires retesting before any conclusions can be drawn", "A directional signal — not a confirmed trend — until the sample reaches at least 200 responses", "An unreliable result that should be excluded from the dashboard entirely"],ans:2},{q:"What is the key distinction Leila makes about the NPS improvement?",opts:["The difference between a 12-point and a statistically significant improvement", "The difference between a directional signal and a statistically confirmed trend", "The difference between customer satisfaction and net promoter score as metrics", "The difference between a sample of 47 and the minimum required sample of 200"],ans:1}]},
+  {id:2,title:"Data Governance Discussion: Who Owns the Data?",sub:"Strategy Meeting · B2 Level · approx. 107 sec",icon:"🗃️",transcript:"The data governance committee is meeting for the first time. The newly appointed Chief Data Officer, Kenji, is running the session. Also present are the Head of Finance Amara, the Head of Marketing Tom, and the Head of IT Priya. Kenji: Thank you for joining. The reason I have called this group together is simple: we have a data quality problem, and it is getting worse. Three times in the last year, a business decision has been made on the basis of data that was later found to be wrong. In two of those cases, the error was not caught until after the decision was implemented. We need a governance framework. Tom: What does that actually mean in practice? Kenji: It means three things. First — data ownership. Every dataset in our business needs a named owner — someone who is accountable for its accuracy and fit for purpose. Right now, nobody owns the customer master data. It is maintained by IT, used by Marketing and Finance, and nobody is accountable when it contains errors. Amara: The finance data — revenue, costs, the P&L — I am happy to own that. But I do not have the technical capability to manage it. Who does the actual maintenance? Kenji: Ownership is about accountability, not about doing the technical work. You own the finance data — you set the standards, you are the escalation point when there are quality issues, and you sign off on it for reporting purposes. IT does the technical maintenance. The ownership model separates accountability from execution. Tom: What about our customer data? That is used by Marketing, Sales, Customer Success, and Finance. Multiple teams. Kenji: Shared data domains are the hardest case. My recommendation is that we establish a data steward in each team who is responsible for their team's use of the data — and that the CDO function arbitrates when there are conflicts. Priya: What about data quality monitoring? We need automated checks, not just manual discovery. Kenji: Agreed. The second pillar is a data quality framework — automated checks on every dataset, a scorecard published monthly, and a defined remediation process when quality falls below threshold. Amara: And the third? Kenji: A data catalogue. If analysts cannot find data, they either waste time searching or — worse — build their own copy of something that already exists. We need one place where all data assets are documented.",qs:[{q:"What problem does Kenji say motivated the governance committee?",opts:["Regulatory pressure from the ICO following a data breach", "Three business decisions made on incorrect data in the past year — in two cases the error was not caught until after implementation", "A data science project that failed due to poor data quality", "A board request for a data strategy following a competitor's successful analytics initiative"],ans:1},{q:"What is the first pillar of the governance framework?",opts:["A data quality scorecard published monthly to the leadership team", "Automated quality checks running after every ETL pipeline load", "Data ownership — every dataset having a named owner accountable for its accuracy", "A data catalogue documenting all data assets in the organisation"],ans:2},{q:"What does Amara say about owning the finance data?",opts:["She declines — ownership should sit with IT who maintain the data technically", "She is happy to own it but does not have the technical capability to do the maintenance", "She already owns it informally and just needs formal recognition of that responsibility", "She would prefer to share ownership with the CEO given the data's strategic importance"],ans:1},{q:"How does Kenji distinguish data ownership from data maintenance?",opts:["Owners are senior leaders; maintainers are junior staff", "Ownership is about accountability — setting standards, escalation, sign-off — while IT does the technical maintenance", "Owners are from the business; maintainers are always from IT", "Ownership applies to strategic data; maintenance applies to operational data"],ans:1},{q:"What challenge does Tom raise about customer data?",opts:["The customer data is too large for a single owner to manage effectively", "Customer data is currently stored in four different systems with no single source of truth", "Multiple teams use it — Marketing, Sales, Customer Success, Finance — making single ownership difficult", "The customer data quality is so poor that no team wants to take ownership responsibility"],ans:2},{q:"What solution does Kenji propose for shared data domains?",opts:["A rotating ownership model where different teams take responsibility quarterly", "A data steward in each team responsible for their team's use, with the CDO function arbitrating conflicts", "A joint ownership committee meeting monthly to review and approve data quality standards", "A single centralised data team that manages all customer data on behalf of all business functions"],ans:1},{q:"What is the second pillar of the governance framework?",opts:["A data ownership policy and accountability matrix", "A data quality framework with automated checks, a monthly scorecard, and a defined remediation process", "A data catalogue documenting all data assets with ownership and quality information", "A training programme to build data literacy across the organisation"],ans:1},{q:"What problem does Kenji say occurs when analysts cannot find data?",opts:["They are forced to use lower-quality public data sources as a substitute", "They waste time searching or build their own copy of something that already exists", "They escalate to the CDO, creating unnecessary overhead on the governance function", "They cancel their analysis projects, reducing the organisation's analytical output"],ans:1}]},
+  {id:3,title:"Stakeholder Briefing: Presenting Analytical Findings",sub:"Board Briefing · B2 Level · approx. 104 sec",icon:"🎯",transcript:"The Head of Analytics, Marcus, is briefing the commercial board on a customer segmentation study. He is presenting to non-technical stakeholders — the CEO, CFO, and Head of Sales. Marcus: Good morning. I want to share the findings from our customer segmentation study and be clear about what these findings can and cannot tell us. We have identified four distinct customer segments based on product usage behaviour. I will describe each segment and what the data suggests about their needs and value. Segment 1 — Power Users — represent 8% of our customer base but generate 34% of our revenue. Their usage data shows they are deeply embedded in our platform: they use an average of 7 features per session versus the company average of 2.3. The data suggests — though does not confirm — that they would be receptive to an enterprise tier with additional administrative features. We have not tested this assumption. Segment 2 — At-Risk Valuable Customers — represent 11% of the base and generate 22% of revenue. They are valuable customers whose engagement has declined significantly in the last 60 days. The model predicts — with 71% accuracy — that without intervention, 40% of these customers will churn in the next 90 days. This is a predictive finding, not a confirmed outcome. Segment 3 — Engaged but Low-Value — represent 27% of the base but only 12% of revenue. The analysis shows a strong correlation between this segment's usage pattern and an eventual upgrade to the mid-tier. They are worth nurturing even though they are low-value today. Segment 4 — Dormant — represent 54% of the base and generate 32% of revenue. Average last login: 47 days. Without intervention, we predict continued revenue erosion from this segment. My recommendation: prioritise Segment 2 for immediate customer success intervention, and design an upsell programme for Segment 1. I can provide the full methodology on request.",qs:[{q:"What percentage of customers are Power Users, and what percentage of revenue do they generate?",opts:["15% of customers generating 42% of revenue", "8% of customers generating 34% of revenue", "12% of customers generating 28% of revenue", "5% of customers generating 45% of revenue"],ans:1},{q:"What does Marcus say about the recommendation that Power Users would be receptive to an enterprise tier?",opts:["The data confirms this — Power Users have already requested additional admin features", "The data suggests this but does not confirm it — the assumption has not been tested", "This is a finding from direct customer interviews conducted alongside the usage analysis", "The model predicts this with 80% accuracy based on behaviour in similar markets"],ans:1},{q:"What percentage of At-Risk Valuable Customers does the model predict will churn without intervention?",opts:["20%", "30%", "40%", "50%"],ans:2},{q:"How does Marcus characterise the churn prediction for At-Risk Valuable Customers?",opts:["A confirmed outcome based on historical behaviour from similar customers", "A predictive finding — not a confirmed outcome — with 71% model accuracy", "A correlational finding suggesting high risk but without quantified probability", "A diagnostic finding explaining why these customers have become at-risk"],ans:1},{q:"What does the analysis show about the Engaged but Low-Value segment?",opts:["They are too low-value to be worth targeting with marketing investment", "A strong correlation between their usage pattern and eventual upgrade to the mid-tier", "Their engagement is declining and they are likely to churn within 12 months", "A causal relationship between nurturing communications and revenue upgrade"],ans:1},{q:"What percentage of the customer base is Dormant?",opts:["27%", "34%", "46%", "54%"],ans:3},{q:"What are Marcus's two top recommendations?",opts:["Acquire more Power Users through referral programmes; convert Dormant users with re-engagement campaigns", "Prioritise Segment 2 for immediate customer success intervention; design an upsell programme for Segment 1", "Improve the product for Engaged but Low-Value customers; reduce cost to serve the Dormant segment", "Launch an enterprise tier immediately for Power Users; offer discounts to At-Risk Valuable Customers"],ans:1},{q:"How does Marcus manage expectations about the precision of his findings throughout the briefing?",opts:["He presents all findings as confirmed facts to give the board confidence in the recommendations", "He explicitly flags the level of certainty for each finding — distinguishing what is suggested, predicted, and correlated from what is confirmed", "He avoids making any concrete recommendations until further research is completed", "He presents the findings as directional only and asks the board not to make decisions based on them"],ans:1}]}];
+const casesStudies=[{tag:"Industry · Data Analytics · 2012–Present · Sports Analytics",title:"Case Study 1: Moneyball and the Analytics Revolution — How Data Changed Professional Sport and Business Decision-Making",sub:"How the Oakland Athletics used statistical analysis to compete with teams ten times their budget — and what it taught every industry about evidence-based decision-making",sections:[{h:"Background",t:"The story of the Oakland Athletics baseball team in the early 2000s — popularised by Michael Lewis's 2003 book Moneyball and the 2011 film of the same name — is one of the most influential case studies in the application of data analytics to competitive decision-making. The Athletics, with one of the lowest payrolls in Major League Baseball, faced an apparently impossible challenge: competing against teams like the New York Yankees, whose payroll was ten times larger. General Manager Billy Beane and his analytical team, led by Harvard economics graduate Paul DePodesta, responded by developing a systematic, data-driven approach to player evaluation — identifying statistical measures of player value that the rest of the industry had overlooked or dismissed, particularly on-base percentage (OBP), which measures how often a player reaches base, rather than the traditionally favoured batting average."},{h:"The Analytical Insight",t:"The core analytical insight of Moneyball was that the baseball market was systematically mispricing player value. Certain statistics — particularly on-base percentage — were strongly predictive of run scoring (and therefore game winning), yet were undervalued by teams that relied on traditional scouting intuition. By identifying these undervalued metrics and using them to sign players who were overlooked by the rest of the market, the Athletics could build a competitive team at a fraction of the cost. In 2002, the Athletics won 20 consecutive games — a record at the time — and reached the playoffs with the third-lowest payroll in the league. The approach has since been adopted, refined, and accelerated across all major professional sports, creating the field of sports analytics and inspiring adjacent developments in business performance measurement."},{h:"Lessons for Business Analytics",t:"The Moneyball story carries enduring lessons for business analytics professionals. First, the most valuable analytical insight is often counterintuitive: the key is finding metrics that are strongly predictive of outcomes but currently undervalued by the market. Second, analytics succeeds when it changes decisions, not just when it produces reports: Beane's innovation was not the statistics themselves but persuading decision-makers to act on them, overcoming institutional resistance to data-driven approaches. Third, the value of analytics is proportional to the quality of the decisions it replaces: in a market where decisions were made by intuition and tradition, statistical analysis had enormous impact; as analytics adoption spread, the marginal advantage declined. Fourth, data literacy in leadership is essential: Beane himself developed the analytical fluency to challenge conventional wisdom — the analytics came from DePodesta but the decisions were Beane's."}],qs:[{q:"What challenge did the Oakland Athletics face in the early 2000s?",opts:["They had talented players but poor coaching staff", "They faced a payroll roughly ten times smaller than elite competitors like the Yankees", "They were operating in a small market with insufficient fan support to generate revenue", "Their best players were being recruited away by larger teams at every off-season"],ans:1},{q:"Who was Paul DePodesta?",opts:["The Athletics' most statistically accomplished player at the time", "A Harvard economics graduate who led the Analytics team working with Billy Beane", "The commissioner of Major League Baseball who introduced the statistical reform", "A sports journalist who published the original research that inspired Beane's approach"],ans:1},{q:"What statistical measure did the Athletics identify as undervalued?",opts:["Batting average — the traditional measure of offensive performance", "Home run count — the most visually dramatic measure of offensive power", "On-base percentage (OBP) — how often a player reaches base, which is strongly predictive of run scoring", "Fielding percentage — the measure of defensive reliability"],ans:2},{q:"What was the core analytical insight described in the case study?",opts:["Most baseball statistics are too unreliable to base decisions on", "The baseball market was systematically mispricing player value — OBP was predictive of winning but undervalued", "Statistical analysis is always superior to human scouting judgement", "Small-market teams should focus on developing young players rather than competing with large-market teams"],ans:1},{q:"What was the Athletics' achievement in 2002?",opts:["They won the World Series with the lowest payroll in MLB history", "They won 20 consecutive games — a record — and reached the playoffs with the third-lowest payroll", "They signed the season's best player for less than half his market value", "They developed the statistical model that all other MLB teams now use"],ans:1},{q:"What is the first business analytics lesson the case study identifies?",opts:["Analytics teams should always be led by professional statisticians", "The most valuable analytical insight is often counterintuitive — finding metrics that are predictive but undervalued", "Every organisation should hire a professional sports analytics consultant", "Analytics is most effective when applied to talent management decisions"],ans:1},{q:"What does the case study say about the value of analytics as adoption spreads?",opts:["The value increases as more organisations adopt analytics because the data quality improves", "The marginal advantage declines as analytics adoption spreads — the edge comes from being ahead of the market", "The value remains constant because the quality of analytical insight does not depend on what competitors do", "The value increases because more data becomes available as more organisations collect and share it"],ans:1},{q:"What does the case study say about Beane's own analytical development?",opts:["Beane delegated all analytical decisions to DePodesta and focused on player relationships", "Beane had a statistics degree and designed the core analytical models himself", "Beane developed the analytical fluency to challenge conventional wisdom — the analytics came from DePodesta but decisions were Beane's", "Beane resisted the analytical approach initially but was eventually persuaded by the results"],ans:2},{q:"What does the case study identify as key to analytics actually changing outcomes?",opts:["Producing comprehensive reports with all available statistical evidence", "Analytics succeeds when it changes decisions — persuading decision-makers to act, overcoming institutional resistance", "Having the most advanced statistical models and machine learning capabilities", "Publishing findings in a format that is transparent and auditable"],ans:1},{q:"What field did the Moneyball approach inspire beyond baseball?",opts:["Academic sports science and exercise physiology research", "Sports analytics across all major professional sports and adjacent business performance measurement", "Statistical methodology in medical clinical trials", "Financial market trading algorithms and quantitative investment management"],ans:1}]},
+  {tag:"Industry · Business Intelligence · 2005–Present · Retail Analytics",title:"Case Study 2: Tesco Clubcard — How a Loyalty Programme Became the World's Most Sophisticated Customer Analytics Platform",sub:"How Tesco used customer data to outcompete rivals, personalise at scale, and build a data capability that changed retail analytics globally",sections:[{h:"Background",t:"Tesco's Clubcard loyalty programme, launched in 1995, is widely regarded as one of the most successful applications of customer data analytics in retail history. The programme was developed with Dunnhumby, a data analytics company that Tesco eventually acquired in 2011. The Clubcard's fundamental premise was that in exchange for a small financial reward (points redeemable for vouchers), customers would share their purchasing behaviour with Tesco — enabling the retailer to build detailed, longitudinal customer profiles at a scale and depth that was previously impossible without digital infrastructure. Lord MacLaurin, Tesco's chairman at the time of the programme's launch, reportedly said upon reviewing the Clubcard data for the first time: 'What scares me about this is that you know more about my customers after three months than I know after 30 years.'"},{h:"How Tesco Used the Data",t:"The Clubcard data enabled Tesco to do several things its competitors could not. First, it enabled truly personalised marketing at scale: rather than sending all customers the same promotional offers, Tesco used purchase history to send each customer offers specifically relevant to their buying patterns — resulting in redemption rates five to ten times higher than industry-average mass marketing. Second, it enabled demand forecasting of unprecedented accuracy: knowing what individual customers typically buy, and how those patterns shift with weather, seasons, promotions, and life events, enabled Tesco to stock shelves with far greater precision than competitors relying on aggregate sales data. Third, it revealed customer lifetime value: Tesco could identify which customers were unprofitable (buying only discounted items), which were valuable but at risk (high-spending customers who had been shopping less frequently), and which were growing (new customers with increasing basket sizes). This knowledge informed targeted retention and acquisition investment."},{h:"Lessons and Legacy",t:"The Tesco Clubcard case offers several enduring lessons for data analytics practice. First, data quality and longitudinal depth create competitive advantage that cannot be quickly replicated: Tesco's decade-long accumulation of granular purchase data gave it an analytical edge that rivals could not close without an equivalent investment of time. Second, data has commercial value beyond its operational context: Tesco's Dunnhumby subsidiary eventually sold consumer insights to brands and manufacturers — creating a data business alongside the retail business. Third, the ethical dimensions of customer data must be managed proactively: Tesco faced growing regulatory and public scrutiny about how Clubcard data was used, stored, and shared — scrutiny that only intensified after GDPR's introduction in 2018. Fourth, analytical capability must be embedded in operational decisions to deliver value: Tesco's advantage came not from having data but from integrating analytical outputs into pricing, ranging, merchandising, and marketing decisions at every level of the business."}],qs:[{q:"When was Tesco's Clubcard loyalty programme launched?",opts:["1990", "1995", "2000", "2005"],ans:1},{q:"With which company did Tesco develop the Clubcard programme?",opts:["Accenture", "McKinsey", "Dunnhumby", "Kantar Worldpanel"],ans:2},{q:"What did Lord MacLaurin say upon reviewing the Clubcard data?",opts:["This data confirms what we already knew about customer behaviour.", "What scares me is that you know more about my customers after three months than I know after 30 years.", "The data quality is insufficient to draw meaningful conclusions.", "We must be careful not to use this data in a way customers would find intrusive."],ans:1},{q:"What was the redemption rate advantage of Tesco's personalised offers compared to industry-average mass marketing?",opts:["Two to three times higher", "Three to five times higher", "Five to ten times higher", "Ten to twenty times higher"],ans:2},{q:"How did Clubcard data improve Tesco's demand forecasting?",opts:["By predicting which new products would be successful before they were launched", "By knowing individual customer purchasing patterns and how they shift with weather, seasons, and promotions — enabling more precise stock management", "By identifying which suppliers were most reliable and optimising the supply chain accordingly", "By predicting competitor pricing and adjusting Tesco's own prices proactively"],ans:1},{q:"What three customer categories did Clubcard data allow Tesco to identify?",opts:["New customers, loyal customers, and lapsed customers", "Unprofitable customers buying only discounted items, valuable but at-risk customers, and growing customers with increasing basket sizes", "Low-frequency, medium-frequency, and high-frequency shoppers", "Own-label buyers, branded goods buyers, and mixed shoppers"],ans:1},{q:"What commercial activity did Dunnhumby pursue beyond the retail operation?",opts:["Opening independent data analytics offices in markets where Tesco had no retail presence", "Selling consumer insights to brands and manufacturers — creating a data business alongside the retail business", "Licensing the Clubcard loyalty programme technology to competing retailers", "Developing a standalone consumer analytics platform for small and medium-sized retailers"],ans:1},{q:"What ethical challenge does the case study mention Tesco faced?",opts:["Allegations that Clubcard data was used to charge different prices to different customers", "Growing regulatory and public scrutiny about how Clubcard data was used, stored, and shared — intensifying after GDPR", "A data breach affecting millions of Clubcard customer records", "Criticism that the loyalty points system was designed to trap low-income customers in Tesco stores"],ans:1},{q:"What is the first lesson the case study identifies about data quality and depth?",opts:["Data can be monetised most effectively when it is shared with industry partners", "Data quality and longitudinal depth create competitive advantage that cannot be quickly replicated without an equivalent investment of time", "Data quality only matters for compliance purposes — business intelligence can tolerate some inaccuracy", "The most important data is the most recent data — historical data quickly becomes irrelevant"],ans:1},{q:"What does the case study say delivers analytical value?",opts:["Having the largest dataset in the industry", "Embedding analytical outputs into operational pricing, ranging, merchandising, and marketing decisions at every level", "Having the most advanced machine learning models applied to the data", "Publishing analytical insights in annual reports to build stakeholder confidence"],ans:1}]}];
+const assessQs=[{q:"What does descriptive analytics tell an organisation?",opts:["What is likely to happen in the future", "What has happened — historical reports, summaries, and dashboards", "Why a specific event occurred", "What action should be taken based on predicted states"],ans:1},{q:"What is the fundamental error of confusing correlation with causation?",opts:["Applying quantitative methods to qualitative data", "Assuming that because two variables are statistically related, one must cause the other", "Using a sample size that is too small to generalise", "Applying historical patterns to future predictions without testing"],ans:1},{q:"What is schema on write?",opts:["A data lake characteristic where schema is applied when data is queried", "A data warehouse discipline where data must conform to a defined structure before being stored", "A machine learning technique for inferring schema from raw data", "A governance standard requiring schema documentation before data is collected"],ans:1},{q:"What is ETL?",opts:["A real-time data streaming framework for processing events as they occur", "Extract, Transform, Load — the process of moving data from source systems to analytical destinations", "A database query language for extracting insights from data warehouses", "An acronym for the three-tier data governance framework"],ans:1},{q:"What is the Moneyball insight about analytics creating competitive advantage?",opts:["Analytics requires enormous investment to deliver any measurable advantage", "The most valuable analytical insight is counterintuitive — finding metrics that are predictive but currently undervalued by the market", "Analytics only delivers advantage in industries with large amounts of historical data", "Statistical models are always superior to human judgement in competitive decision-making"],ans:1},{q:"What is data quality assessed across?",opts:["Only accuracy and completeness — the two most important dimensions", "Accuracy, completeness, consistency, timeliness, and validity", "Accuracy, latency, and schema conformance", "Volume, variety, velocity, and veracity — the four Vs of big data"],ans:1},{q:"What is cohort analysis?",opts:["An analysis of all users simultaneously to find aggregate trends", "Grouping users by a shared characteristic or time of first engagement and tracking their behaviour over time", "A statistical technique for testing whether two groups differ significantly", "A method comparing performance across different geographic regions"],ans:1},{q:"What did the Tesco Clubcard case study demonstrate about data?",opts:["Data must be collected in real-time to be valuable for retail analytics", "Data quality and longitudinal depth create competitive advantage that cannot be quickly replicated", "Loyalty programmes are the only effective way to collect customer data", "Data analytics only delivers value when applied to marketing decisions"],ans:1},{q:"What noun clause structure is used to express uncertainty about whether something happened?",opts:["'The data shows that...' with a confident reporting verb", "'The data confirms that...' followed by a qualified conclusion", "'Whether' clauses — 'the data does not establish whether the cause is X or Y'", "'What' clauses — 'what we know is that the trend is real'"],ans:2},{q:"What is a data lakehouse?",opts:["A data lake with improved security and access controls", "An architecture combining data lake storage economics with data warehouse reliability and performance", "A cloud storage solution for structured and unstructured data", "A governance framework managing data across lake and warehouse systems"],ans:1},{q:"What is statistical significance at p < 0.05?",opts:["There is a 95% probability the finding is correct", "There is less than a 5% probability the observed difference occurred by chance", "The result is practically significant and should influence business decisions", "The sample size is sufficient to generalise to the broader population"],ans:1},{q:"When is causal language appropriate in data reports?",opts:["Whenever two variables are strongly correlated in the dataset", "Only when there is experimental evidence — typically an A/B test — that one variable directly caused the change in another", "Whenever the regression model has an R-squared above 0.8", "When the business stakeholder needs clear, confident language for decision-making"],ans:1},{q:"What is a data catalogue?",opts:["A list of approved data sources that analysts may access", "A metadata management tool providing an inventory of data assets — what exists, where it lives, what it means, and who owns it", "A report summarising monthly data quality metrics published to the leadership team", "A database of customer product preferences used for personalisation"],ans:1},{q:"What is real-time analytics used for?",opts:["Analysing historical data to understand trends over multiple years", "Processing data as it is generated to enable immediate operational decisions — such as fraud detection and logistics routing", "Building machine learning models that require large historical training datasets", "Quarterly reporting and board-level performance dashboards"],ans:1},{q:"What does the analytics team briefing listening activity identify as the reason for not changing pricing and onboarding simultaneously?",opts:["Regulatory approval is required for each change separately", "The engineering team cannot implement two changes in the same sprint", "If two things change at once, the team will not know which change caused any observed improvement", "The board has not approved changes to either dimension in the current quarter"],ans:2},{q:"What is funnel analysis?",opts:["An analysis of how data flows through ETL pipelines", "Tracking users through a defined sequence of steps to measure completion rates and identify where attrition occurs", "A method for comparing revenue across different sales channels", "An analysis of the organisational hierarchy through which data requests are processed"],ans:1},{q:"What hedging language signals a preliminary or uncertain finding?",opts:["'The analysis confirms that...' with specific numbers attached", "'The A/B test establishes that...' with a stated p-value", "'The data suggests...' / 'This is a preliminary finding...' / 'The sample is too small to be conclusive'", "'The model predicts with 95% accuracy that...'"],ans:2},{q:"What is the difference between leading and lagging KPIs?",opts:["Leading KPIs are more important; lagging KPIs are secondary measures", "Leading indicators predict future performance; lagging indicators measure past outcomes", "Leading KPIs are financial; lagging KPIs are operational", "Leading KPIs are set by leadership; lagging KPIs are set by the analytics team"],ans:1},{q:"What is data cleaning?",opts:["The process of securely deleting data that has passed its retention period", "The process of identifying and correcting errors, inconsistencies, duplicates, and missing values before analysis", "The process of anonymising personal data to comply with GDPR", "The process of compressing data to reduce storage costs in the data warehouse"],ans:1},{q:"What lesson does the Tesco Clubcard case study illustrate about analytical value delivery?",opts:["Having the largest dataset always translates into the greatest competitive advantage", "Analytical capability must be embedded in operational decisions — not just reported — to deliver value", "Loyalty programmes are the most cost-effective way to build analytical capability", "Selling data to third parties is always a legitimate and ethical revenue stream"],ans:1}];
+
+// ── Navigation ──────────────────────────────────────────────
+function openSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='translateX(0)';sb.classList.add('open');document.getElementById('overlay').style.display='block';}
+function closeSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='';sb.classList.remove('open');document.getElementById('overlay').style.display='none';}
+function goTo(rawId){
+  // strip 'sec-' prefix if present for logic key
+  const id=rawId.replace(/^sec-/,'');
+  const secId='sec-'+id;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(secId);
+  if(sec){sec.classList.add('active');}
+  // mark active nav: match onclick containing this id
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    const oc=n.getAttribute('onclick')||'';
+    if(oc.includes("'"+secId+"'")||oc.includes('"'+secId+'"')){n.classList.add('active');}
+  });
+  window.scrollTo(0,0);
+  closeSidebar();
+  if(id==='overview') initOverview();
+  else if(id==='speaking') initSpeaking();
+  else if(id==='wordbank') initWordBank();
+  else if(id==='reading') initReading();
+  else if(id==='vocab') initVocab();
+  else if(id==='grammar') initGrammar();
+  else if(id==='gramreview') initGramReview();
+  else if(id==='writing') initWriting();
+  else if(id==='listening') initListening();
+  else if(id==='cases') initCases();
+  else if(id==='assessment') initAssessment();
+}
+
+// ── MCQ Engine ───────────────────────────────────────────────
+function renderMCQ2(containerId, questions, prefix, darkMode){
+  const c=document.getElementById(containerId);
+  if(!c)return;
+  let h='';
+  questions.forEach((item,i)=>{
+    const letters=['A','B','C','D'];
+    const dk=darkMode?'lmcq-opt':'';
+    h+=`<div class="mcq-block" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-opts">`;
+    item.opts.forEach((opt,j)=>{
+      h+=`<div class="mcq-opt ${dk}" onclick="pickOpt('${prefix}',${i},${j},${item.ans})" id="${prefix}-${i}-${j}">
+        <span class="opt-letter">${letters[j]}</span>${opt}</div>`;
+    });
+    h+=`</div></div>`;
+  });
+  c.innerHTML=h;
+}
+function pickOpt(prefix,qi,oi,ans){
+  const block=document.getElementById(prefix+'-q'+qi);
+  if(!block||block.dataset.done)return;
+  block.dataset.done='1';
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    if(j===ans)el.classList.add('correct');
+    else if(j===oi)el.classList.add('incorrect');
+    el.style.pointerEvents='none';
+  });
+}
+
+// ── Overview ─────────────────────────────────────────────────
+function initOverview(){
+  const c=document.getElementById('overviewContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card">
+    <div class="card-title">📘 What You Will Learn</div><div class="card-bar"></div>
+    <div class="outcomes-grid">${outcomes.map((o,i)=>`<div class="outcome"><span class="out-num">${String(i+1).padStart(2,'0')}</span><span class="out-text">${o}</span></div>`).join('')}</div>
+  </div>`;
+  setTimeout(()=>{
+    const pf=document.getElementById('progFill');
+    const pp=document.getElementById('progPct');
+    if(pf)pf.style.width='9%';
+    if(pp)pp.textContent='9%';
+  },300);
+}
+
+// ── Speaking ─────────────────────────────────────────────────
+function initSpeaking(){
+  const c=document.getElementById('speakingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">🎙️ Discussion Questions</div><div class="card-bar"></div>
+    <div class="speaking-grid">${speakingQs.map((q,i)=>`<div class="speaking-card"><div class="q-num">Q${String(i+1).padStart(2,'0')}</div><div class="q-text">${q}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Word Bank ─────────────────────────────────────────────────
+function initWordBank(){
+  const c=document.getElementById('wordBankContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">📚 Key Legal Terms</div><div class="card-bar"></div>
+    <div class="wb-grid">${wordBank.map(w=>`<div class="wb-card"><span class="wb-emoji">${w.emoji}</span><div class="wb-term">${w.term}</div><div class="wb-def">${w.def}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Reading ───────────────────────────────────────────────────
+function initReading(){
+  const c=document.getElementById('readingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  readingTexts.forEach((rt,ti)=>{
+    h+=`<div class="card">
+      <div class="reading-box"><h4>${rt.title}</h4>${rt.paragraphs.map(p=>`<p>${p}</p>`).join('')}</div>
+      <div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>
+      <div id="rmcq-${ti}"></div>
+    </div>`;
+  });
+  c.innerHTML=h;
+  readingTexts.forEach((_,ti)=>{
+    renderMCQ2('rmcq-'+ti, readingTexts[ti].questions, 'r'+ti, false);
+  });
+}
+
+// ── Vocabulary ────────────────────────────────────────────────
+let curVocab=0;
+function initVocab(){showVocab(0);}
+function showVocab(idx){
+  curVocab=idx;
+  document.querySelectorAll('#sec-vocab .ex-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  [0,1,2].forEach(i=>{
+    const p=document.getElementById('vex-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+  if(idx===0){renderMCQ2('vex-0',vocabMCQ,'vm0',false);}
+  else if(idx===1){renderGapFill('vex-1',vocabGapFill,'vg1');}
+  else if(idx===2){renderTF('vex-2',vocabTF,'vt2');}
+}
+function renderGapFill(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const blanks=items.map(function(it){return it.blank;});
+  let bankHtml='<div class="gf-bank-box"><div class="gf-bank-label">Word bank:</div><div class="gf-bank-pills">';
+  blanks.forEach(function(w){
+    bankHtml+='<span class="gf-pill" id="'+prefix+'-pill-'+w.replace(/\s+/g,'-')+'">'+w+'</span>';
+  });
+  bankHtml+='</div></div>';
+  let sentHtml='<div class="gf-sentences">';
+  items.forEach(function(item,i){
+    sentHtml+='<div class="gf-row" id="'+prefix+'-row'+i+'">'
+      +'<div class="gf-sentence-text"><span class="gf-num">'+(i+1)+'.</span> '+item.before
+      +' <span class="gf-blank-wrap"><input class="gf-underline-input" id="'+prefix+'-i'+i
+      +'" placeholder="\u2026" autocomplete="off" spellcheck="false"/>'
+      +'<span class="gf-underline"></span></span> '
+      +item.after+'</div>'
+      +'<div class="gf-row-fb" id="'+prefix+'-f'+i+'"></div>'
+      +'</div>';
+  });
+  sentHtml+='</div>';
+  const btnBar='<div class="gf-btn-bar">'
+    +'<button class="gf-check-btn" onclick="gradeGapFill(\''+prefix+'\',vocabGapFill)">Check Answers</button>'
+    +'<button class="gf-reset-btn" onclick="resetGapFill(\''+prefix+'\',vocabGapFill)">&#8635; Reset</button>'
+    +'<span class="gf-score-display" id="'+prefix+'-score"></span>'
+    +'</div>';
+  c.innerHTML='<div class="card gf-card">'
+    +'<div class="card-title">Exercise 2: Gap Fill</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="gf-instr">Type the correct word or phrase in each gap. Use the word bank for help. Click <strong>Check Answers</strong> when ready.</p>'
+    +bankHtml+sentHtml+btnBar
+    +'</div>';
+}
+function checkGF2(prefix,i,ans){}
+
+function gradeGapFill(prefix,items){
+  let correct=0;
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(!inp||!fb)return;
+    const val=inp.value.trim().toLowerCase().replace(/['']/g,"'");
+    const ans=item.blank.toLowerCase();
+    inp.disabled=true;
+    if(val===ans){
+      correct++;
+      inp.classList.add('gf-correct'); inp.classList.remove('gf-incorrect');
+      fb.innerHTML='<span class="gf-fb-ok">\u2713 Correct</span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-used');
+    } else {
+      inp.classList.add('gf-incorrect'); inp.classList.remove('gf-correct');
+      fb.innerHTML='<span class="gf-fb-err">\u2717 The answer is: <strong>'+item.blank+'</strong></span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-highlight');
+    }
+  });
+  const pct=Math.round(correct/items.length*100);
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl){
+    const col=pct>=80?'var(--green-accent)':pct>=50?'var(--gold-light)':'var(--red-accent)';
+    scoreEl.innerHTML='<span style="color:'+col+';font-weight:700;">'+correct+'/'+items.length+' \u2014 '+pct+'%</span>';
+  }
+}
+
+function resetGapFill(prefix,items){
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(inp){inp.value='';inp.disabled=false;inp.classList.remove('gf-correct','gf-incorrect');}
+    if(fb)fb.innerHTML='';
+    const ans=item.blank.toLowerCase();
+    const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+    if(pill){pill.classList.remove('gf-pill-used','gf-pill-highlight');}
+  });
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl)scoreEl.innerHTML='';
+}
+function renderTF(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='<div class="card tf-card">'
+    +'<div class="card-title">Exercise 3: True / False</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="tf-instr">Decide if each statement is TRUE or FALSE.</p>'
+    +'<div class="tf-list">';
+  items.forEach(function(item,i){
+    const stmt=item.statement||item.stmt||'';
+    const ans=item.ans;
+    h+='<div class="tf-item" id="'+prefix+'-row'+i+'">'
+      +'<div class="tf-item-stmt">'+(i+1)+'. '+stmt+'</div>'
+      +'<div class="tf-item-btns">'
+      +'<button class="tf-item-btn" id="'+prefix+'-T'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',true,'+ans+')">True</button>'
+      +'<button class="tf-item-btn" id="'+prefix+'-F'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',false,'+ans+')">False</button>'
+      +'</div>'
+      +'<div class="tf-item-fb" id="'+prefix+'-fb'+i+'"></div>'
+      +'</div>';
+  });
+  h+='</div></div>';
+  c.innerHTML=h;
+}
+
+function pickTF2(prefix,i,chosen,ans){
+  const row=document.getElementById(prefix+'-row'+i);
+  if(!row||row.dataset.done)return;
+  row.dataset.done='1';
+  const fb=document.getElementById(prefix+'-fb'+i);
+  const btnT=document.getElementById(prefix+'-T'+i);
+  const btnF=document.getElementById(prefix+'-F'+i);
+  const correct=chosen===ans;
+  if(btnT){
+    if(ans===true) btnT.classList.add('tf-btn-correct');
+    else if(chosen===true) btnT.classList.add('tf-btn-wrong');
+    btnT.disabled=true;
+  }
+  if(btnF){
+    if(ans===false) btnF.classList.add('tf-btn-correct');
+    else if(chosen===false) btnF.classList.add('tf-btn-wrong');
+    btnF.disabled=true;
+  }
+  if(fb){
+    fb.innerHTML=correct
+      ?'<span class="tf-fb-ok">✓ Correct!</span>'
+      :'<span class="tf-fb-err">✗ The correct answer is <strong>'+(ans?'True':'False')+'</strong>.</span>';
+  }
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+let curGram=0;
+function initGrammar(){showGram(0);}
+function showGram(idx){
+  curGram=idx;
+  document.querySelectorAll('#sec-grammar .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  [0,1,2].forEach(function(i){var p=document.getElementById('gex-'+i);if(p)p.style.display=i===idx?'block':'none';});
+  var ex=grammarEx[idx];
+  if(!document.getElementById('gex-'+idx).dataset.built){
+    document.getElementById('gex-'+idx).dataset.built='1';
+    var instr='<div class="card"><div class="card-title">'+ex.title+'</div><div class="card-bar"></div><p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">'+ex.instr+'</p><div id="gmcq-'+idx+'"></div></div>';
+    document.getElementById('gex-'+idx).innerHTML=instr;
+  }
+  renderMCQ2('gmcq-'+idx,ex.qs,'gm'+idx,false);
+}
+
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ──────────────────────────────────────────────────
+let curTask=0;
+function initWriting(){
+  const c=document.getElementById('writingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let html='<div class="ex-tabs">';
+  writingTasks.forEach(function(t,i){
+    html+='<div class="ex-tab'+(i===0?' active':'')+'" onclick="showTask('+i+')">'+t.type+'</div>';
+  });
+  html+='</div>';
+  writingTasks.forEach(function(t,i){
+    const minW=t.targetMin||120;
+    const promptFormatted=t.prompt.replace(/\n/g,'<br>');
+    html+='<div id="wpanel-'+i+'" style="display:'+(i===0?'block':'none')+'">'
+      +'<div class="card">'
+      +'<div class="w-task-header">'
+      +'<div class="w-task-pill">'+t.activity+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+t.title+'</div>'
+      +'</div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="w-prompt-box"><div class="w-prompt-label">📋 '+t.type+' — '+t.title+'</div>'
+      +'<div class="w-prompt-text">'+promptFormatted+'</div>'
+      +'<div class="w-target">Target: '+minW+'–'+(t.targetMax||200)+' words</div>'
+      +'</div>'
+      +'<textarea class="w-textarea" id="w-area-'+i+'" placeholder="Write your response here…" oninput="wCount('+i+')"></textarea>'
+      +'<div class="w-meta-row"><span class="w-counter" id="w-count-'+i+'">0 words</span>'
+      +'<div style="display:flex;gap:10px;">'
+      +'<button class="clear-btn" onclick="clearWriting('+i+')">Clear</button>'
+      +'<button class="ac-btn" id="w-btn-'+i+'" onclick="runAIFeedback('+i+')">✨ Auto-Correct &amp; Get Feedback</button>'
+      +'</div></div>'
+      +'<div id="w-fb-'+i+'"></div>'
+      +'</div></div>';
+  });
+  c.innerHTML=html;
+}
+function showTask(idx){
+  curTask=idx;
+  document.querySelectorAll('#sec-writing .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  writingTasks.forEach(function(_,i){
+    var p=document.getElementById('wpanel-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+}
+function wCount(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const wc=document.getElementById('w-count-'+idx);
+  if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  const min=writingTasks[idx].targetMin||120;
+  wc.textContent=words+' words';
+  wc.style.color=words>=min?'var(--green-accent)':'var(--text-mid)';
+}
+function clearWriting(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  if(ta)ta.value='';
+  if(fb)fb.innerHTML='';
+  wCount(idx);
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ───────────────────────────────────────────────────
+async function runAIFeedback(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  const btn=document.getElementById('w-btn-'+idx);
+  if(!ta||!fb)return;
+  const text=ta.value.trim();
+  const task=writingTasks[idx];
+  const minW=task.targetMin||120;
+  const words=text===''?0:text.trim().split(/\s+/).length;
+  if(words<30){
+    fb.innerHTML='<div class="fb-warn-box">⚠️ Please write at least 30 words before requesting feedback.</div>';
+    return;
+  }
+  btn.disabled=true;
+  btn.textContent='Analysing…';
+  fb.innerHTML='<div class="fb-loading-box"><span class="spin">⏳</span> AI is reviewing your writing…</div>';
+
+  // Rule-based context data
+  const sentences=text.split(/[.!?]+/).filter(s=>s.trim().length>3);
+  const avgSentLen=sentences.length?Math.round(words/sentences.length):0;
+  const goodLength=words>=minW&&words<=(task.targetMax||250);
+  const vocabTerms=["dashboard","data warehouse","data lake","ETL","KPI","correlation","cohort analysis","A/B test","ETL pipeline","churn rate","data governance","data quality","structured data","unstructured data","data catalogue","real-time analytics","data cleaning","statistical significance","data normalisation","data lakehouse","funnel analysis"];
+  const vocabHits=vocabTerms.filter(t=>text.toLowerCase().includes(t));
+
+  const systemPrompt=`You are an expert Business English writing coach specialising in IT and Digital Professions English at B1-B2 level. You give SPECIFIC, TEXT-ANCHORED feedback — always quoting or referencing the student's actual words. Never give generic advice.
+
+Return ONLY a JSON object with these exact keys — no markdown, no extra text:
+{
+  "score": <integer 0-100>,
+  "level": <"Needs Work"|"Developing"|"Proficient"|"Advanced"|"Excellent">,
+  "overall": <1 sentence overall impression referencing the student's actual writing>,
+  "grammar": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about grammar in THIS text — quote or reference actual sentences>
+  },
+  "vocabulary": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about word choices in THIS text — suggest a precise improvement>
+  },
+  "tone": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about register and formality in THIS text>
+  },
+  "structure": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about paragraph organisation and logical flow in THIS text>
+  },
+  "fluency": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about sentence variety and connectives in THIS text — give a concrete example>
+  },
+  "corrected": <one improved version of the weakest sentence from the text — copy the original then rewrite it>
+}`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1200,
+        system:systemPrompt,
+        messages:[{role:'user',content:'Task: '+task.type+' — '+task.title+'\nPrompt: '+task.prompt+'\n\nStudent writing ('+words+' words):\n'+text}]
+      })
+    });
+    const data=await res.json();
+    let p;
+    try{
+      const raw=data.content[0].text.replace(/```json|```/g,'').trim();
+      p=JSON.parse(raw);
+    }catch(e){throw new Error('parse');}
+
+    const score=Math.min(100,Math.max(0,p.score||70));
+    const level=p.level||'Proficient';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':score>=50?'#e09b00':'#d63031';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const cats=[
+      {label:'Grammar',key:'grammar',icon:'📐'},
+      {label:'Vocabulary',key:'vocabulary',icon:'📖'},
+      {label:'Tone',key:'tone',icon:'🎙️'},
+      {label:'Structure',key:'structure',icon:'🏗️'},
+      {label:'Fluency',key:'fluency',icon:'✨'}
+    ];
+
+    let catsHtml='';
+    cats.forEach(function(cat){
+      const d=p[cat.key]||{};
+      catsHtml+='<div class="fb-cat-row">'
+        +'<div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span>'
+        +'<strong class="fb-cat-label">'+cat.label+':</strong>'
+        +ratingIcon(d.rating||'Satisfactory')+'</div>'
+        +'<div class="fb-cat-comment">'+(d.comment||'')+'</div>'
+        +'</div>';
+    });
+
+    const lengthOk=goodLength
+      ?'<span class="fb-check">✓ '+words+' words — within target</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3
+      ?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header">'
+      +'<div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div>'
+      +'</div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +(p.corrected?'<div class="fb-corrected-block"><span class="fb-corrected-tag">✏️ Suggested rewrite:</span> '+p.corrected+'</div>':'')
+      +(p.overall?'<div class="fb-overall">✓ Overall: '+p.overall+'</div>':'')
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSentLen+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }catch(err){
+    // Rule-based fallback — still structured with 5 categories
+    const formalConnectives=['therefore','furthermore','consequently','moreover','however','nevertheless','in addition','as a result','thus','hence'];
+    const connUsed=formalConnectives.filter(w=>text.toLowerCase().includes(w)).length;
+    const avgSL=sentences.length?Math.round(words/sentences.length):0;
+    const score=Math.min(100,Math.max(20,(goodLength?20:0)+(vocabHits.length>=3?20:vocabHits.length*5)+(avgSL>=8&&avgSL<=22?15:0)+(/^[A-Z]/.test(text)?10:0)+(connUsed>=1?15:0)+20));
+    const level=score>=85?'Advanced':score>=70?'Proficient':score>=50?'Developing':'Needs Work';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':'#e09b00';
+
+    const gramOk=text.match(/[A-Z][^.!?]*[.!?]/g);
+    const gramComment=gramOk&&gramOk.length>0?'Check subject-verb agreement and ensure consistent verb tense throughout your response.':'Ensure each sentence begins with a capital letter and ends with a full stop.';
+    const vocComment=vocabHits.length>=3?'Good use of module vocabulary. Consider replacing generic verbs with more precise professional alternatives.':'Consider incorporating more module vocabulary terms — aim for at least 3 in a formal legal or compliance response.';
+    const toneComment=/dear|hi |hey |thanks/i.test(text)?'Some phrasing appears too informal for a professional compliance context. Avoid casual openers and closers.':'The register appears appropriate for the task.';
+    const structComment=sentences.length<3?'Your response would benefit from clearer paragraph structure — aim for an opening, body, and conclusion.':connUsed===0?'Consider organising your response with a clear introduction, supporting points, and a conclusion.':'Good paragraph structure detected.';
+    const fluComment=connUsed===0?'Your response would benefit from one or more connecting phrases between paragraphs (e.g., "Furthermore," "As a result,") to improve logical flow.':'Good use of connectives to link ideas.';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const catsHtml=[
+      {icon:'📐',label:'Grammar',rating:gramOk?'Satisfactory':'Needs Attention',comment:gramComment},
+      {icon:'📖',label:'Vocabulary',rating:vocabHits.length>=3?'Good':'Needs Attention',comment:vocComment},
+      {icon:'🎙️',label:'Tone',rating:/dear|hi |hey |thanks/i.test(text)?'Needs Attention':'Satisfactory',comment:toneComment},
+      {icon:'🏗️',label:'Structure',rating:connUsed>0&&sentences.length>=3?'Good':'Satisfactory',comment:structComment},
+      {icon:'✨',label:'Fluency',rating:connUsed>=1?'Good':'Needs Attention',comment:fluComment}
+    ].map(function(cat){
+      return '<div class="fb-cat-row"><div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span><strong class="fb-cat-label">'+cat.label+':</strong>'+ratingIcon(cat.rating)+'</div><div class="fb-cat-comment">'+cat.comment+'</div></div>';
+    }).join('');
+
+    const lengthOk=goodLength?'<span class="fb-check">✓ '+words+' words — within target</span>':'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>':'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header"><div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div></div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSL+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }
+  btn.disabled=false;
+  btn.textContent='✨ Auto-Correct & Get Feedback';
+}
+
+// ── Listening TTS Engine ──────────────────────────────────────
+let ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+const voicePref=['Samantha','Karen','Victoria','Moira','Daniel','Google UK English Female','Google US English','en-GB','en-US'];
+function getBestVoice(){
+  const voices=window.speechSynthesis.getVoices();
+  for(var j=0;j<voicePref.length;j++){
+    var v=voices.find(function(vv){return vv.name===voicePref[j]||vv.name.includes(voicePref[j]);});
+    if(v)return v;
+  }
+  return voices.find(function(v){return v.lang&&v.lang.startsWith('en');})||voices[0]||null;
+}
+function initListening(){
+  const c=document.getElementById('listeningContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  listeningActs.forEach(function(act,i){
+    h+='<div class="card" id="l-card-'+i+'">'
+      +'<div class="l-header"><span class="l-icon">'+act.icon+'</span><div><div class="card-title">'+act.title+'</div><div class="l-sub">'+act.sub+'</div></div></div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="l-player">'
+      +'<div class="l-controls">'
+      +'<button class="l-play-btn" id="l-play-'+i+'" onclick="togglePlay('+i+')">&#9654; Play</button>'
+      +'<select class="l-speed" id="l-speed-'+i+'" onchange="changeSpeed('+i+')">'
+      +'<option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option>'
+      +'</select>'
+      +'<button class="l-trans-btn" id="l-tbtn-'+i+'" onclick="toggleTranscript('+i+')">&#128196; Transcript</button>'
+      +'</div>'
+      +'<div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-'+i+'"></div></div><span class="l-time" id="l-time-'+i+'">0:00</span></div>'
+      +'</div>'
+      +'<div class="l-transcript-box" id="l-trans-'+i+'" style="display:none"><p class="l-transcript-text">'+act.transcript+'</p></div>'
+      +'<div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>'
+      +'<div id="lmcq-'+i+'"></div>'
+      +'</div>';
+  });
+  c.innerHTML=h;
+  listeningActs.forEach(function(act,i){renderMCQ2('lmcq-'+i,act.qs,'la'+i,false);});
+  window.speechSynthesis.getVoices();
+}
+function togglePlay(idx){
+  if(ttsState.actIdx===idx&&ttsState.playing){pauseAudio(idx);}
+  else if(ttsState.actIdx===idx&&ttsState.paused){resumeAudio(idx);}
+  else{playAudio(idx);}
+}
+function playAudio(idx){
+  const act=listeningActs[idx];
+  if(!act)return;
+  if(ttsState.actIdx===idx&&ttsState.paused){
+    resumeAudio(idx); return;
+  }
+  stopAudio();
+  ttsState.actIdx=idx;
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.voice=getBestVoice();
+  utt.rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  utt.pitch=1.0;
+  utt.volume=1.0;
+  utt.onstart=()=>{ttsState.playing=true;ttsState.paused=false;ttsState.startTime=Date.now();updatePlayBtn(idx,true);startProg(idx,act.transcript.length);};
+  utt.onend=()=>{ttsState.playing=false;ttsState.paused=false;updatePlayBtn(idx,false);stopProg(idx,true);};
+  utt.onerror=()=>{ttsState.playing=false;updatePlayBtn(idx,false);stopProg(idx,false);};
+  ttsState.utterance=utt;
+  window.speechSynthesis.speak(utt);
+}
+function pauseAudio(idx){
+  if(window.speechSynthesis.speaking&&!window.speechSynthesis.paused){
+    window.speechSynthesis.pause();
+    ttsState.paused=true;ttsState.playing=false;
+    ttsState.elapsed+=Date.now()-ttsState.startTime;
+    updatePlayBtn(idx,false,true);
+    clearInterval(ttsState.progTimer);
+  }
+}
+function resumeAudio(idx){
+  window.speechSynthesis.resume();
+  ttsState.paused=false;ttsState.playing=true;
+  ttsState.startTime=Date.now();
+  updatePlayBtn(idx,true);
+  startProg(idx,listeningActs[idx].transcript.length,true);
+}
+function stopAudio(){
+  window.speechSynthesis.cancel();
+  if(ttsState.actIdx!==null){updatePlayBtn(ttsState.actIdx,false);stopProg(ttsState.actIdx,false);}
+  ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+}
+function updatePlayBtn(idx,playing,paused){
+  const btn=document.getElementById('l-play-'+idx);
+  if(!btn)return;
+  btn.textContent=playing?'⏸ Pause':paused?'▶ Resume':'▶ Play';
+}
+function startProg(idx,charLen,resume){
+  clearInterval(ttsState.progTimer);
+  const rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  const totalMs=(charLen/18)*1000/rate;
+  const elapsed=resume?ttsState.elapsed:0;
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  ttsState.progTimer=setInterval(()=>{
+    const spent=elapsed+(Date.now()-ttsState.startTime);
+    const pct=Math.min(100,(spent/totalMs)*100);
+    if(bar)bar.style.width=pct+'%';
+    const rem=Math.max(0,Math.round((totalMs-spent)/1000));
+    if(time)time.textContent=`${Math.floor(rem/60)}:${String(rem%60).padStart(2,'0')}`;
+    if(pct>=100)clearInterval(ttsState.progTimer);
+  },200);
+}
+function stopProg(idx,finished){
+  clearInterval(ttsState.progTimer);
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  if(bar)bar.style.width=finished?'100%':'0%';
+  if(time)time.textContent='0:00';
+}
+function changeSpeed(idx){
+  const sel=document.getElementById('l-speed-'+idx);
+  if(!sel)return;
+  if(ttsState.actIdx===idx&&(ttsState.playing||ttsState.paused)){
+    stopAudio(); playAudio(idx);
+  }
+}
+function toggleTranscript(idx){
+  const box=document.getElementById('l-trans-'+idx);
+  const btn=document.getElementById('l-tbtn-'+idx);
+  if(!box)return;
+  const open=box.style.display==='block';
+  box.style.display=open?'none':'block';
+  if(btn)btn.textContent=open?'📄 Show Transcript':'📄 Hide Transcript';
+}
+
+// ── Case Studies ──────────────────────────────────────────────
+function initCases(){
+  const c=document.getElementById('casesContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  casesStudies.forEach(function(cs,ci){
+    h+='<div class="card">'
+      +'<div class="cs-tag">'+cs.tag+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+cs.title+'</div>'
+      +'<div class="cs-sub">'+cs.sub+'</div>'
+      +'<div class="card-bar"></div>';
+    cs.sections.forEach(function(s){
+      h+='<div class="cs-section"><h4 class="cs-sh">'+s.h+'</h4><p class="cs-p">'+s.t+'</p></div>';
+    });
+    h+='<div class="card-title" style="margin-top:22px;">Case Study Questions</div><div class="card-bar"></div>'
+      +'<div id="csmcq-'+ci+'"></div></div>';
+  });
+  c.innerHTML=h;
+  casesStudies.forEach(function(cs,ci){renderMCQ2('csmcq-'+ci,cs.qs,'cs'+ci,false);});
+}
+
+// ── Final Assessment ──────────────────────────────────────────
+let assAnswers={};
+function initAssessment(){
+  const c=document.getElementById('assessContainer');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const letters=['A','B','C','D'];
+  let h='';
+  assessQs.forEach(function(item,i){
+    h+='<div class="mcq-block" id="aq-'+i+'">'
+      +'<div class="mcq-q">'+(i+1)+'. '+item.q+'</div>'
+      +'<div class="mcq-opts">';
+    item.opts.forEach(function(opt,j){
+      h+='<div class="mcq-opt" onclick="pickAss('+i+','+j+')" id="ass-'+i+'-'+j+'">'
+        +'<span class="opt-letter">'+letters[j]+'</span>'+opt+'</div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+  assAnswers={};
+  document.getElementById('final-res').style.display='none';
+  document.getElementById('ass-sub').style.display='inline-flex';
+}
+function pickAss(qi,oi){
+  const block=document.getElementById('aq-'+qi);
+  if(!block||block.dataset.done)return;
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    el.classList.toggle('selected',j===oi);
+  });
+  assAnswers[qi]=oi;
+}
+function submitAss(){
+  let attempts=parseInt(document.getElementById('att-disp')?.textContent||'0');
+  const maxAttempts=2;
+  if(attempts>=maxAttempts){
+    alert('You have used both attempts.');return;
+  }
+  const unanswered=assessQs.map((_,i)=>i).filter(i=>assAnswers[i]===undefined);
+  if(unanswered.length>0){
+    alert('Please answer all questions before submitting. Unanswered: '+unanswered.map(i=>i+1).join(', '));return;
+  }
+  // Mark answers
+  assessQs.forEach((item,i)=>{
+    const block=document.getElementById('aq-'+i);
+    if(!block)return;
+    block.dataset.done='1';
+    block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+      el.classList.remove('selected');
+      if(j===item.ans)el.classList.add('correct');
+      else if(j===assAnswers[i])el.classList.add('incorrect');
+      el.style.pointerEvents='none';
+    });
+  });
+  const correct=assessQs.filter((_,i)=>assAnswers[i]===assessQs[i].ans).length;
+  const pct=Math.round((correct/assessQs.length)*100);
+  const pass=pct>=70;
+  attempts++;
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent=attempts+' / 2';
+  const res=document.getElementById('final-res');
+  res.style.display='block';
+  const scoreColor=pass?'#00a651':'#d63031';
+  res.className='final-result '+(pass?'pass':'fail');
+  res.style.display='block';
+  res.innerHTML='<div class="final-score">'+pct+'<span style="font-size:22px">%</span></div>'
+    +'<div class="final-verdict">'+(pass?'🎉 Congratulations — You Passed!':'📚 Not Passed Yet')+'</div>'
+    +'<div class="final-msg">'+correct+' / '+assessQs.length+' correct · Pass mark: 70%</div>'
+    +(attempts<maxAttempts&&!pass?'<button class="btn-primary" onclick="resetAss()" style="margin-top:18px">Try Again (Attempt '+(attempts+1)+' of '+maxAttempts+')</button>':'')
+    +(attempts>=maxAttempts&&!pass?'<div style="margin-top:12px;font-size:13px;opacity:0.8;">Maximum attempts reached.</div>':'');
+  if(pass||attempts>=maxAttempts){
+    document.getElementById('ass-sub').style.display='none';
+  }
+}
+function resetAss(){
+  const c=document.getElementById('assessContainer');
+  if(c){c.dataset.built='';c.innerHTML='';}
+  assAnswers={};
+  const res=document.getElementById('final-res');
+  if(res){res.style.display='none';res.innerHTML='';}
+  const sub=document.getElementById('ass-sub');
+  if(sub)sub.style.display='inline-flex';
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent='0 / 2';
+  initAssessment();
+}
+
+// ── Bootstrap ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('mob-btn').addEventListener('click',openSidebar);
+  document.getElementById('overlay').addEventListener('click',closeSidebar);
+  goTo('overview');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -5114,5 +5114,56 @@ function showSection(id) {
   window.scrollTo({top:0,behavior:'smooth'});
   if(typeof trackProgress==='function')trackProgress(id);
 }
+var finalAnswers={};
+var assessmentAttempts=0;
+function selectFinalOption(qi,oi,correct){
+  if(finalAnswers[qi]&&finalAnswers[qi].checked)return;
+  finalAnswers[qi]={selected:oi,correct:correct};
+  document.querySelectorAll('#asmq-q'+qi+' .mcq-option').forEach(function(o,i){
+    o.classList.remove('selected');
+    if(i===oi)o.classList.add('selected');
+  });
+}
+function submitAssessment(){
+  if(assessmentAttempts>=2)return;
+  assessmentAttempts++;
+  document.getElementById('att-'+(assessmentAttempts-1)).classList.add('used');
+  var score=0,total=20;
+  for(var qi=0;qi<total;qi++){
+    var data=finalAnswers[qi];
+    var opts=document.querySelectorAll('#asmq-q'+qi+' .mcq-option');
+    opts.forEach(function(o){o.style.pointerEvents='none';});
+    if(!data)continue;
+    data.checked=true;
+    opts.forEach(function(o,i){
+      o.classList.remove('selected');
+      if(i===data.correct)o.classList.add('correct');
+      if(i===data.selected&&data.selected!==data.correct)o.classList.add('incorrect');
+    });
+    if(data.selected===data.correct)score++;
+  }
+  var pct=Math.round((score/total)*100),passed=pct>=70;
+  var resultEl=document.getElementById('final-result');
+  resultEl.className='final-result '+(passed?'pass':'fail');
+  resultEl.style.display='block';
+  resultEl.innerHTML='<div class="final-score">'+pct+'%</div>'
+    +'<div class="final-verdict">'+(passed?'🎉 Congratulations! You passed!':'❌ Not quite — keep studying!')+'</div>'
+    +'<div class="final-msg">'+(passed
+      ?'You scored '+score+' out of '+total+'. Excellent work on Module 12: Ethics & Corporate Governance.'
+      :'You scored '+score+' out of '+total+'. You need 70% to pass. '+(assessmentAttempts<2?'You have 1 attempt remaining.':'You have used both attempts.')
+    )+'</div>';
+  document.getElementById('submit-assessment-btn').style.display='none';
+  if(assessmentAttempts<2&&!passed)document.getElementById('retry-assessment-btn').style.display='inline-block';
+}
+function resetAssessment(){
+  finalAnswers={};
+  document.querySelectorAll('#assessment-questions .mcq-option').forEach(function(o){
+    o.classList.remove('selected','correct','incorrect');
+    o.style.pointerEvents='';
+  });
+  document.getElementById('final-result').style.display='none';
+  document.getElementById('submit-assessment-btn').style.display='inline-block';
+  document.getElementById('retry-assessment-btn').style.display='none';
+}
 </script>
 </body></html>

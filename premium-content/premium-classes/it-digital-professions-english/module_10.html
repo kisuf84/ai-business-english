@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Module 10: Cloud Computing and SaaS Language — IT &amp; Digital Professions English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root{--navy:#0d1b2e;--navy-mid:#112240;--navy-light:#1a3357;--gold:#00bcd4;--gold-light:#26c6da;--gold-bright:#4dd0e1;--cream:#f0f4f8;--cream-dark:#dce8f0;--white:#ffffff;--text-light:#90b8cc;--text-mid:#4a7a96;--red-accent:#e53935;--green-accent:#00b86b;--teal:#0097a7;--sidebar-w:260px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);display:flex;min-height:100vh;overflow-x:hidden;}
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent;transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);}
+.sidebar-brand{padding:24px 22px 18px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-brand h1{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:700;color:var(--gold-bright);line-height:1.38;margin-bottom:3px;}
+.sidebar-brand .sub{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-mid);font-weight:500;}
+.level-badge{display:inline-block;margin-top:11px;background:var(--gold);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:1px;padding:3px 11px;border-radius:20px;text-transform:uppercase;}
+.sidebar-section-label{padding:20px 22px 7px;font-size:8.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--text-mid);font-weight:700;}
+.nav-item{display:flex;align-items:center;justify-content:space-between;padding:11px 22px;cursor:pointer;transition:all 0.18s;border-left:3px solid transparent;}
+.nav-item:hover{background:rgba(255,255,255,0.055);}
+.nav-item.active{background:rgba(245,184,0,0.12);border-left-color:var(--gold-light);}
+.nav-left{display:flex;align-items:center;gap:11px;}
+.nav-icon{font-size:15px;opacity:0.9;}
+.nav-label{font-size:13px;color:var(--text-light);font-weight:400;}
+.nav-item.active .nav-label{color:var(--white);font-weight:500;}
+.nav-badge{font-size:9.5px;font-weight:700;color:var(--navy);background:var(--gold-bright);padding:1px 7px;border-radius:12px;}
+#mob-btn{display:none;position:fixed;top:14px;left:14px;z-index:300;background:var(--navy);border:none;border-radius:10px;padding:10px 13px;cursor:pointer;color:var(--gold-bright);font-size:19px;box-shadow:0 3px 14px rgba(0,0,0,0.35);line-height:1;}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150;}
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;}
+.section{display:none;}.section.active{display:block;}
+.hero{background:linear-gradient(145deg,#06111f 0%,#0d1e35 50%,#081929 100%);padding:64px 64px 54px;position:relative;overflow:hidden;}
+.hero::before{content:'L1';position:absolute;right:-15px;bottom:-55px;font-family:'Playfair Display',serif;font-size:310px;font-weight:900;color:rgba(255,255,255,0.022);line-height:1;pointer-events:none;}
+.hero::after{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(245,184,0,0.05) 0%,transparent 70%);pointer-events:none;}
+.module-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);padding:7px 18px;border-radius:50px;font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-light);font-weight:600;margin-bottom:30px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4.6vw,58px);font-weight:900;color:var(--white);line-height:1.08;}
+.hero h2 .accent{color:var(--gold-bright);}
+.hero-desc{font-size:15px;color:var(--text-light);max-width:620px;line-height:1.78;margin-top:20px;font-weight:300;}
+.hero-stats{display:flex;gap:36px;margin-top:44px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;gap:3px;}
+.stat-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--gold-bright);line-height:1;}
+.stat-l{font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(160,180,210,0.7);font-weight:600;}
+.prog-wrap{background:var(--navy-mid);padding:16px 64px;display:flex;align-items:center;gap:20px;}
+.prog-label{font-size:11.5px;font-weight:600;color:var(--text-light);white-space:nowrap;}
+.prog-track{flex:1;height:6px;background:rgba(255,255,255,0.09);border-radius:6px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:6px;width:0%;transition:width 1s ease;}
+.prog-pct{font-size:12.5px;font-weight:700;color:var(--gold-bright);min-width:36px;text-align:right;}
+.content{padding:48px 60px;}
+.card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.card-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.card-bar{width:40px;height:3px;background:var(--gold-light);border-radius:3px;margin-bottom:20px;}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.outcome{display:flex;align-items:flex-start;gap:13px;background:var(--cream);border-radius:11px;padding:14px 16px;border-left:3px solid var(--gold-light);}
+.out-num{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--gold);line-height:1;min-width:24px;}
+.out-text{font-size:13.5px;color:var(--navy);line-height:1.52;}
+.speaking-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.speaking-card{background:var(--cream);border-radius:11px;padding:18px 20px;border-top:3px solid var(--gold-light);transition:transform 0.2s,box-shadow 0.2s;cursor:default;}
+.speaking-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(11,27,48,0.1);}
+.q-num{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;margin-bottom:8px;letter-spacing:1px;}
+.q-text{font-size:13.5px;color:var(--navy);line-height:1.55;}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.wb-card{background:var(--navy);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:transform 0.2s;cursor:default;}
+.wb-card:hover{transform:translateY(-2px);}
+.wb-emoji{font-size:28px;line-height:1;display:block;margin-bottom:2px;}
+.wb-term{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;color:var(--gold-bright);}
+.wb-def{font-size:12px;color:var(--text-light);line-height:1.52;}
+.reading-box{background:var(--cream);border-radius:12px;padding:26px 30px;margin-bottom:26px;border-left:4px solid var(--gold-light);}
+.reading-box h4{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.reading-box p{font-size:14px;color:#1a2e45;line-height:1.84;margin-bottom:13px;}
+.reading-box p:last-child{margin-bottom:0;}
+.mcq-block{margin-bottom:22px;}
+.mcq-q{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:11px;line-height:1.5;}
+.mcq-opts{display:flex;flex-direction:column;gap:8px;}
+.mcq-opt{display:flex;align-items:center;gap:10px;background:var(--cream);border:2px solid var(--cream-dark);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.18s;font-size:13.5px;color:var(--navy);user-select:none;-webkit-tap-highlight-color:transparent;}
+.mcq-opt:hover{border-color:var(--gold-light);background:#fef8e0;}
+.mcq-opt.selected{border-color:var(--gold);background:#fff3c0;}
+.mcq-opt.correct{border-color:var(--green-accent);background:#e6f8ee;color:#0a6b35;}
+.mcq-opt.incorrect{border-color:var(--red-accent);background:#fdecea;color:#881a18;}
+.opt-letter{font-family:'DM Mono',monospace;font-size:10.5px;font-weight:700;width:23px;height:23px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy);}
+.mcq-opt.correct .opt-letter{background:var(--green-accent);color:white;}
+.mcq-opt.incorrect .opt-letter{background:var(--red-accent);color:white;}
+.lmcq-opt{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.12)!important;color:var(--text-light)!important;}
+.lmcq-opt:hover{border-color:var(--gold-light)!important;background:rgba(245,184,0,0.1)!important;}
+.lmcq-opt.selected{border-color:var(--gold)!important;background:rgba(245,184,0,0.18)!important;color:var(--gold-bright)!important;}
+.lmcq-opt.correct{border-color:var(--green-accent)!important;background:rgba(0,166,81,0.18)!important;color:#4dde9a!important;}
+.lmcq-opt.incorrect{border-color:var(--red-accent)!important;background:rgba(214,48,49,0.18)!important;color:#ff8b8b!important;}
+.check-btn{margin-top:15px;background:var(--navy);color:var(--gold-bright);border:none;padding:11px 26px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.check-btn:hover{background:var(--navy-light);}
+.l-check{background:rgba(255,255,255,0.1)!important;color:var(--gold-bright)!important;}
+.l-check:hover{background:rgba(255,255,255,0.18)!important;}
+.score-disp{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;margin-top:14px;}
+.ex-tabs{display:flex;gap:4px;margin-bottom:26px;background:var(--cream-dark);border-radius:12px;padding:4px;flex-wrap:wrap;}
+.ex-tab{flex:1;min-width:130px;text-align:center;padding:10px;border-radius:9px;font-size:12.5px;font-weight:500;cursor:pointer;color:var(--text-mid);transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.ex-tab.active{background:var(--navy);color:var(--gold-bright);}
+.gram-ref{background:var(--navy);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.gram-ref h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:14px;}
+.gram-rule{background:rgba(255,255,255,0.065);border-radius:9px;padding:14px 18px;margin-bottom:11px;border-left:3px solid var(--gold-light);}
+.gram-rule p,.gram-rule li{font-size:13px;color:var(--text-light);line-height:1.66;}
+.gram-rule code{font-family:'DM Mono',monospace;background:rgba(245,184,0,0.18);color:var(--gold-bright);padding:1px 6px;border-radius:4px;font-size:12px;}
+.gram-rule ul{padding-left:18px;}
+.gf-item{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:14px;color:var(--navy);line-height:2.2;margin-bottom:12px;}
+.gf-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);padding:2px 7px;width:160px;outline:none;text-align:center;}
+.gf-input.correct{border-color:var(--green-accent);color:var(--green-accent);}
+.gf-input.incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.tf-row{background:var(--cream);border-radius:10px;padding:13px 17px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.tf-stmt{font-size:13.5px;color:var(--navy);flex:1;line-height:1.52;}
+.tf-btns{display:flex;gap:8px;flex-shrink:0;}
+.tf-btn{padding:7px 16px;border-radius:8px;border:2px solid var(--cream-dark);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:white;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.tf-btn:hover{border-color:var(--gold-light);}
+.tf-btn.sel-t,.tf-btn.sel-f{background:var(--navy);color:white;border-color:var(--navy);}
+.tf-btn.cor{background:var(--green-accent);color:white;border-color:var(--green-accent);}
+.tf-btn.wrg{background:var(--red-accent);color:white;border-color:var(--red-accent);}
+.writing-prompt{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:14px;padding:26px 30px;margin-bottom:18px;}
+.writing-prompt h4{font-family:'Playfair Display',serif;font-size:17.5px;color:var(--gold-bright);margin-bottom:10px;}
+.writing-prompt p{font-size:13.5px;color:var(--text-light);line-height:1.76;}
+.writing-tags{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
+.wtag{background:rgba(245,184,0,0.18);color:var(--gold-bright);font-size:11px;font-weight:600;letter-spacing:0.8px;padding:4px 12px;border-radius:20px;text-transform:uppercase;border:1px solid rgba(245,184,0,0.3);}
+.w-textarea{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;}
+.w-textarea:focus{border-color:var(--gold-light);background:white;}
+.w-counter{font-size:12px;color:var(--text-mid);text-align:right;margin-bottom:14px;}
+.w-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:6px;}
+.ac-btn{background:var(--gold);color:var(--navy);border:none;padding:13px 28px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(224,155,0,0.35);}
+.ac-btn:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.clear-btn{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:12px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.clear-btn:hover{border-color:var(--red-accent);color:var(--red-accent);}
+.fb-panel{display:none;background:#131e2e;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-panel.show{display:block;}
+.fb-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-title-row{display:flex;align-items:center;gap:10px;}
+.fb-emoji{font-size:20px;}
+.fb-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold-bright);}
+.fb-score-badge{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--gold-bright);}
+.fb-level{font-size:14px;font-weight:600;color:var(--gold-bright);}
+.fb-section{margin-bottom:14px;}
+.fb-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);margin-bottom:7px;}
+.fb-item{font-size:13px;color:var(--text-light);line-height:1.62;padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid var(--gold-light);}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);line-height:1.7;font-style:italic;}
+.listen-card{background:var(--navy);border-radius:16px;padding:28px 32px;margin-bottom:20px;}
+.listen-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.listen-icon{width:52px;height:52px;border-radius:14px;background:rgba(245,184,0,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.listen-meta{flex:1;}
+.listen-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-bright);margin-bottom:3px;}
+.listen-sub{font-size:12px;color:var(--text-mid);}
+.player-row{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px 18px;margin-bottom:14px;}
+.play-btn{width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--navy);flex-shrink:0;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.play-btn:hover{background:var(--gold-bright);transform:scale(1.06);}
+.prog-audio{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.prog-audio-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.5s linear;}
+.time-disp{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:70px;text-align:right;}
+.speed-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.speed-label{font-size:11px;color:var(--text-mid);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.spd-btn{padding:5px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.spd-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.replay-btn{padding:5px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-mid);font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:auto;}
+.replay-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.trans-toggle{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);border-radius:9px;padding:10px 16px;cursor:pointer;margin-bottom:0;transition:background 0.18s;-webkit-tap-highlight-color:transparent;}
+.trans-toggle:hover{background:rgba(255,255,255,0.09);}
+.trans-label{font-size:12px;font-weight:600;color:var(--text-mid);letter-spacing:0.5px;}
+.trans-arrow{font-size:11px;color:var(--text-mid);transition:transform 0.22s;}
+.trans-toggle.open .trans-arrow{transform:rotate(180deg);}
+.trans-body{max-height:0;overflow:hidden;transition:max-height 0.36s ease;}
+.trans-body.open{max-height:800px;}
+.trans-text{font-size:13px;color:var(--text-light);line-height:1.78;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:0 0 9px 9px;border-top:1px solid rgba(255,255,255,0.06);}
+.listen-mcq-wrap{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+.listen-mcq-title{font-size:13px;font-weight:700;color:var(--gold-bright);letter-spacing:0.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.case-card{background:var(--white);border-radius:16px;padding:30px 34px;margin-bottom:24px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 2px 18px rgba(11,27,48,0.07);}
+.case-header{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:12px;padding:22px 26px;margin-bottom:22px;}
+.case-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);font-weight:700;margin-bottom:8px;}
+.case-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.case-sub{font-size:12px;color:var(--text-mid);}
+.case-section{margin-bottom:18px;}
+.case-section h5{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.case-section p{font-size:14px;color:var(--navy);line-height:1.78;}
+.final-result{display:none;border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.final-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.final-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.final-score{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;line-height:1;}
+.final-verdict{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:8px;}
+.final-msg{font-size:14px;opacity:0.88;max-width:420px;margin:0 auto;line-height:1.68;}
+.ass-btn{margin-top:18px;background:var(--gold);color:var(--navy);border:none;padding:13px 32px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.ass-btn:hover{background:var(--gold-bright);}
+.retry-btn{display:none;margin-top:8px;margin-left:10px;background:rgba(255,255,255,0.15);color:var(--navy);border:1.5px solid var(--cream-dark);padding:11px 28px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.retry-btn:hover{background:rgba(255,255,255,0.25);}
+/* ─ Gap Fill & True/False ─ */
+.gf-block{background:var(--cream);border-radius:10px;padding:16px 18px;margin-bottom:12px;border-left:3px solid var(--gold-light);}
+.gf-sentence{font-size:14px;color:var(--navy);line-height:2.1;}
+.gf-fb{font-size:12.5px;margin-top:6px;min-height:18px;}
+.tf-block{background:var(--cream);border-radius:10px;padding:15px 18px;margin-bottom:10px;border-left:3px solid var(--gold-light);}
+.tf-q{font-size:14px;color:var(--navy);line-height:1.55;margin-bottom:10px;}
+.tf-fb{font-size:12.5px;margin-top:8px;min-height:18px;}
+/* ─ Listening player ─ */
+.l-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.l-icon{font-size:30px;line-height:1;}
+.l-sub{font-size:12px;color:var(--text-mid);margin-top:3px;}
+.l-player{background:var(--navy);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+.l-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.l-play-btn{background:var(--gold);color:var(--navy);border:none;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.l-play-btn:hover{background:var(--gold-bright);}
+.l-speed{background:rgba(255,255,255,0.1);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.18);padding:8px 12px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;outline:none;}
+.l-trans-btn{background:rgba(255,255,255,0.08);color:var(--text-light);border:1.5px solid rgba(255,255,255,0.15);padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;transition:all 0.2s;}
+.l-trans-btn:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.l-progress{display:flex;align-items:center;gap:12px;}
+.l-bar-track{flex:1;height:5px;background:rgba(255,255,255,0.12);border-radius:5px;overflow:hidden;}
+.l-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:5px;width:0%;transition:width 0.3s linear;}
+.l-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-mid);min-width:36px;text-align:right;}
+.l-transcript-box{background:rgba(11,27,48,0.04);border:1px solid var(--cream-dark);border-radius:10px;padding:18px 22px;margin-bottom:18px;}
+.l-transcript-text{font-size:13px;color:var(--navy);line-height:1.8;}
+/* ─ Case Studies ─ */
+.cs-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+.cs-sub{font-size:12.5px;color:var(--text-mid);margin-bottom:16px;}
+.cs-section{margin-bottom:20px;padding:18px 20px;background:var(--cream);border-radius:10px;border-left:3px solid var(--gold-light);}
+.cs-sh{font-size:13.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.cs-p{font-size:14px;color:var(--navy);line-height:1.78;}
+/* ─ Writing ─ */
+.writing-area{width:100%;min-height:200px;border:2px solid var(--cream-dark);border-radius:10px;padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);background:var(--cream);outline:none;resize:vertical;transition:border-color 0.2s;line-height:1.76;margin-bottom:10px;margin-top:14px;}
+.writing-area:focus{border-color:var(--gold-light);background:white;}
+.writing-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.w-count{font-size:12px;color:var(--text-mid);}
+.btn-primary{background:var(--gold);color:var(--navy);border:none;padding:12px 26px;border-radius:50px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-primary:hover{background:var(--gold-bright);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text-mid);border:2px solid var(--cream-dark);padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--red-accent);color:var(--red-accent);}
+/* ─ AI Feedback ─ */
+.fb-box{background:#0e1d2f;border-radius:14px;padding:22px 26px;margin-top:16px;border:1px solid rgba(255,255,255,0.08);}
+.fb-box.fb-warn{background:#2d1010;border-color:rgba(214,48,49,0.3);color:#f8a5a5;font-size:13.5px;line-height:1.7;}
+.fb-box.fb-loading{color:var(--text-light);font-size:13.5px;}
+.fb-score-row{display:flex;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap;}
+.fb-score{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;line-height:1;}
+.fb-summary{font-size:13.5px;color:var(--text-light);line-height:1.72;flex:1;}
+.fb-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.fb-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;}
+.fb-good .fb-col-title{color:var(--green-accent);}
+.fb-improve .fb-col-title{color:var(--gold-bright);}
+.fb-item{font-size:13px;color:var(--text-light);padding:8px 12px;border-radius:7px;margin-bottom:6px;border-left:2px solid rgba(255,255,255,0.15);line-height:1.6;}
+.fb-example{background:rgba(255,255,255,0.05);border-radius:9px;padding:12px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;}
+.fb-ex-label{font-weight:600;color:var(--gold-bright);font-style:normal;}
+/* ─ Grammar Review ─ */
+.gr-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.gr-icon{font-size:28px;}
+.gr-body{display:flex;flex-direction:column;gap:14px;}
+.gr-item{background:var(--cream);border-radius:10px;padding:16px 18px;border-left:3px solid var(--gold-light);}
+.gr-label{font-size:12.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.gr-examples{display:flex;flex-direction:column;gap:6px;}
+.gr-ex{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--navy);background:white;padding:8px 14px;border-radius:7px;border:1px solid var(--cream-dark);}
+.gr-note{font-size:12.5px;color:var(--text-mid);margin-top:10px;padding:8px 12px;background:rgba(224,155,0,0.07);border-radius:7px;border-left:2px solid var(--gold-light);}
+/* ─ Assessment result ─ */
+.assess-result{border-radius:16px;padding:34px;text-align:center;margin-top:26px;}
+.assess-result.pass{background:linear-gradient(135deg,#00a651,#007a3d);color:white;}
+.assess-result.fail{background:linear-gradient(135deg,#d63031,#a00f10);color:white;}
+.assess-score{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;line-height:1;}
+.assess-label{font-size:20px;font-weight:700;margin-top:10px;margin-bottom:6px;}
+.assess-detail{font-size:13.5px;opacity:0.88;}
+
+/* ─── Writing section ──────────────────────────────── */
+.w-task-header{margin-bottom:4px;}
+.w-task-pill{display:inline-block;background:rgba(224,155,0,0.15);color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 13px;border-radius:20px;border:1px solid rgba(224,155,0,0.3);margin-bottom:8px;}
+.w-prompt-box{background:linear-gradient(135deg,var(--navy) 0%,#0d2440 100%);border-radius:13px;padding:22px 26px;margin:18px 0;border-left:4px solid var(--gold-light);}
+.w-prompt-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-bright);margin-bottom:10px;}
+.w-prompt-text{font-size:13.5px;color:var(--text-light);line-height:1.82;}
+.w-target{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;color:var(--gold-light);}
+.w-meta-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:8px 0 16px;}
+.w-counter{font-size:12.5px;color:var(--text-mid);font-family:'DM Mono',monospace;}
+
+/* ─── AI Feedback result box ────────────────────────── */
+.fb-result-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-result-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.fb-result-label{font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-result-score{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-align:right;}
+.fb-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-check{display:inline-block;font-size:12.5px;font-weight:600;color:var(--green-accent);background:rgba(0,166,81,0.1);padding:5px 12px;border-radius:20px;}
+.fb-check.fb-check-warn{color:#f39c12;background:rgba(243,156,18,0.1);}
+.fb-suggest-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.fb-suggest-list{margin:0 0 14px 18px;padding:0;}
+.fb-suggest-list li{font-size:13px;color:var(--text-light);line-height:1.68;margin-bottom:4px;}
+.fb-corrected{background:rgba(255,255,255,0.04);border-radius:9px;padding:13px 16px;font-size:13px;color:var(--text-light);font-style:italic;line-height:1.7;margin-bottom:14px;}
+.fb-corrected-label{font-style:normal;font-weight:700;color:var(--gold-bright);}
+.fb-footer-stats{font-size:11.5px;color:rgba(155,179,204,0.5);border-top:1px solid rgba(255,255,255,0.07);padding-top:10px;margin-top:8px;font-family:'DM Mono',monospace;}
+.fb-warn-box{background:#2d1010;border:1px solid rgba(214,48,49,0.3);border-radius:10px;padding:14px 18px;color:#f8a5a5;font-size:13.5px;margin-top:14px;}
+.fb-loading-box{background:#111e2f;border-radius:10px;padding:18px 22px;color:var(--text-light);font-size:13.5px;margin-top:14px;display:flex;align-items:center;gap:10px;}
+
+/* ─── Gap Fill — Image 1 design ───────────────────────────────── */
+.gf-card{padding:32px 36px;}
+.gf-instr{font-size:13.5px;color:var(--text-mid);margin-bottom:22px;line-height:1.6;}
+.gf-bank-box{background:var(--cream);border-radius:14px;padding:20px 22px;margin-bottom:28px;border:1px solid var(--cream-dark);}
+.gf-bank-pills{display:flex;flex-wrap:wrap;gap:10px;}
+.gf-pill{background:var(--navy);color:var(--gold-bright);font-size:13px;font-weight:600;padding:8px 18px;border-radius:50px;cursor:default;transition:opacity 0.25s,transform 0.2s;}
+.gf-pill.gf-pill-used{opacity:0.28;text-decoration:line-through;}
+.gf-sentences{display:flex;flex-direction:column;gap:26px;}
+.gf-row{}
+.gf-sentence-text{font-size:14.5px;color:var(--navy);line-height:1.9;}
+.gf-blank-wrap{display:inline-block;position:relative;vertical-align:bottom;}
+.gf-underline-input{border:none;border-bottom:2px solid var(--gold-light);background:transparent;font-family:'DM Sans',sans-serif;font-size:14.5px;color:var(--navy);padding:1px 8px 2px;width:170px;outline:none;text-align:center;transition:border-color 0.2s;}
+.gf-underline-input::placeholder{color:rgba(90,120,153,0.5);font-size:13px;}
+.gf-underline-input.gf-correct{border-color:var(--green-accent);color:var(--green-accent);font-weight:600;}
+.gf-underline-input.gf-incorrect{border-color:var(--red-accent);color:var(--red-accent);}
+.gf-underline-input:disabled{background:transparent;}
+.gf-row-fb{margin-top:4px;min-height:18px;padding-left:4px;}
+.gf-fb-ok{font-size:12px;font-weight:700;color:var(--green-accent);}
+.gf-fb-err{font-size:12px;font-weight:600;color:var(--red-accent);}
+
+/* ─── True/False — Image 2 design ─────────────────────────────── */
+.tf-card{padding:32px 36px;}
+.tf-instr{font-size:13.5px;color:var(--gold);margin-bottom:22px;font-weight:500;}
+.tf-list{display:flex;flex-direction:column;gap:12px;}
+.tf-item{background:var(--cream);border-radius:12px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;transition:box-shadow 0.2s;}
+.tf-item[data-done]{opacity:0.92;}
+.tf-item-stmt{font-size:14px;color:var(--navy);line-height:1.58;flex:1;min-width:200px;}
+.tf-item-btns{display:flex;gap:10px;flex-shrink:0;}
+.tf-item-btn{padding:10px 26px;border-radius:9px;border:2px solid var(--cream-dark);font-size:13.5px;font-weight:700;cursor:pointer;background:white;font-family:'DM Sans',sans-serif;color:var(--navy);transition:all 0.18s;-webkit-tap-highlight-color:transparent;}
+.tf-item-btn:hover:not(:disabled){border-color:var(--gold-light);background:#fef8e0;}
+.tf-item-btn.tf-btn-correct{background:var(--green-accent);border-color:var(--green-accent);color:white;}
+.tf-item-btn.tf-btn-wrong{background:var(--red-accent);border-color:var(--red-accent);color:white;}
+.tf-item-btn:disabled{cursor:default;}
+.tf-item-fb{width:100%;margin-top:2px;min-height:18px;font-size:12.5px;}
+.tf-fb-ok{color:var(--green-accent);font-weight:700;}
+.tf-fb-err{color:var(--red-accent);font-weight:600;}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{display:inline-block;animation:spin 1s linear infinite;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}#mob-btn{display:flex;align-items:center;justify-content:center;}
+  #main{margin-left:0;}.hero{padding:60px 22px 40px;}.content{padding:28px 18px;}
+  .prog-wrap{padding:12px 22px;}.outcomes-grid,.speaking-grid,.wb-grid{grid-template-columns:1fr;}.hero-stats{gap:22px;}
+}
+@media(max-width:600px){
+  .hero{padding:56px 16px 36px;}.content{padding:22px 14px;}.card{padding:22px 18px;}
+  .listen-card{padding:20px 16px;}.reading-box{padding:18px 16px;}.player-row{flex-wrap:wrap;gap:10px;}.time-disp{min-width:auto;}
+}
+
+
+
+
+
+/* ─── Auto-Correction Report UI (Module 6+) ─────────────────────── */
+.fb-report-box{background:#111e2f;border-radius:14px;padding:22px 26px;margin-top:18px;border:1px solid rgba(255,255,255,0.08);}
+.fb-report-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:12px;}
+.fb-report-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--gold-bright);}
+.fb-report-icon{font-size:16px;}
+.fb-report-score{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
+.fb-quick-checks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.fb-cats{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.fb-cat-row{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 16px;}
+.fb-cat-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.fb-cat-icon{font-size:15px;}
+.fb-cat-label{font-size:13px;color:var(--white);}
+.fb-cat-good{font-size:11px;font-weight:700;color:#00c46a;background:rgba(0,196,106,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(0,196,106,0.3);}
+.fb-cat-sat{font-size:11px;font-weight:700;color:#f5b800;background:rgba(245,184,0,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(245,184,0,0.3);}
+.fb-cat-att{font-size:11px;font-weight:700;color:#e05c5c;background:rgba(224,92,92,0.12);padding:2px 9px;border-radius:20px;border:1px solid rgba(224,92,92,0.3);}
+.fb-cat-comment{font-size:13px;color:var(--text-light);line-height:1.7;}
+.fb-corrected-block{background:rgba(255,255,255,0.04);border-left:3px solid var(--gold-light);border-radius:0 8px 8px 0;padding:11px 16px;font-size:13px;color:var(--text-light);line-height:1.72;margin-bottom:12px;font-style:italic;}
+.fb-corrected-tag{font-style:normal;font-weight:700;color:var(--gold-bright);display:block;margin-bottom:4px;}
+.fb-overall{font-size:13px;color:#00c46a;margin-bottom:10px;font-weight:500;}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ─── Gap-Fill Redesign (auto-graded) ───────────────────────────────────── */
+.gf-bank-label{font-size:11px;font-weight:700;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.gf-num{color:var(--gold-bright);font-weight:700;min-width:22px;display:inline-block;}
+.gf-btn-bar{display:flex;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.gf-check-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;font-size:13px;padding:10px 22px;border:none;border-radius:8px;cursor:pointer;transition:opacity .15s;}
+.gf-check-btn:hover{opacity:.88;}
+.gf-check-btn:disabled{cursor:not-allowed;opacity:.5;}
+.gf-reset-btn{background:rgba(255,255,255,0.07);color:var(--text-light);font-size:13px;font-weight:600;padding:10px 18px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;cursor:pointer;transition:background .15s;}
+.gf-reset-btn:hover{background:rgba(255,255,255,0.12);}
+.gf-score-display{font-size:15px;margin-left:4px;}
+.gf-pill-highlight{outline:2px solid var(--gold-bright) !important;opacity:1 !important;}
+.gf-fb-err strong{color:var(--gold-bright);}
+
+
+
+
+
+
+</style>
+</head>
+<body>
+<button id="mob-btn" onclick="openSidebar()">&#9776;</button>
+<div id="overlay" onclick="closeSidebar()"></div>
+<nav id="sidebar">
+  <div class="sidebar-brand"><h1>IT &amp; Digital Professions English</h1><div class="sub">Professional Course Series</div><span class="level-badge">B1&#8211;B2 Level</span></div>
+  <div class="sidebar-section-label">Module 10</div>
+  <div class="nav-item active" onclick="goTo('sec-overview')"><div class="nav-left"><span class="nav-icon">🏛️</span><span class="nav-label">Overview</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-speaking')"><div class="nav-left"><span class="nav-icon">🎙️</span><span class="nav-label">Speaking</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-wordbank')"><div class="nav-left"><span class="nav-icon">📚</span><span class="nav-label">Word Bank</span></div><span class="nav-badge">21</span></div>
+  <div class="nav-item" onclick="goTo('sec-reading')"><div class="nav-left"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-vocab')"><div class="nav-left"><span class="nav-icon">🔤</span><span class="nav-label">Vocabulary</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-grammar')"><div class="nav-left"><span class="nav-icon">✏️</span><span class="nav-label">Grammar</span></div><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('sec-gramreview')"><div class="nav-left"><span class="nav-icon">📋</span><span class="nav-label">Grammar Review</span></div></div>
+  <div class="nav-item" onclick="goTo('sec-writing')"><div class="nav-left"><span class="nav-icon">✍️</span><span class="nav-label">Writing</span></div><span class="nav-badge">AI</span></div>
+  <div class="nav-item" onclick="goTo('sec-listening')"><div class="nav-left"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></div><span class="nav-badge">4</span></div>
+  <div class="nav-item" onclick="goTo('sec-cases')"><div class="nav-left"><span class="nav-icon">💡</span><span class="nav-label">Case Studies</span></div><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="goTo('sec-assessment')"><div class="nav-left"><span class="nav-icon">🏆</span><span class="nav-label">Final Assessment</span></div><span class="nav-badge">20</span></div>
+</nav>
+<main id="main">
+<section id="sec-overview" class="section active">
+  <div class="hero"><div class="module-pill">☁️ &nbsp; Module 10 &nbsp;·&nbsp; IT &amp; Digital Professions English</div><h2>Cloud Computing and<br><span class="accent">SaaS Language</span></h2><p class="hero-desc">Master the essential vocabulary of cloud computing and SaaS — from IaaS, PaaS, and SaaS service models to multi-cloud strategy, SLA evaluation, FinOps, and shared responsibility. Build the language confidence to participate in cloud architecture decisions, vendor evaluations, and incident communications with professional precision.</p><div class="hero-stats"><div class="stat"><span class="stat-n">21</span><span class="stat-l">Key Terms</span></div><div class="stat"><span class="stat-n">11</span><span class="stat-l">Sections</span></div><div class="stat"><span class="stat-n">4</span><span class="stat-l">Audio Activities</span></div><div class="stat"><span class="stat-n">B1–B2</span><span class="stat-l">CEFR Level</span></div></div></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" id="progFill"></div></div><span class="prog-pct" id="progPct">0%</span></div>
+  <div class="content" id="overviewContent"></div>
+</section>
+<section id="sec-speaking" class="section">
+  <div class="hero"><div class="module-pill">🎙️ &nbsp; Speaking Practice</div><h2>Discussion <span class="accent">Questions</span></h2><p class="hero-desc">Practise speaking about cloud computing, SaaS evaluation, pricing models, and cloud architecture decisions.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:9%"></div></div><span class="prog-pct">9%</span></div>
+  <div class="content" id="speakingContent"></div>
+</section>
+<section id="sec-wordbank" class="section">
+  <div class="hero"><div class="module-pill">📚 &nbsp; Word Bank</div><h2>Cloud Computing <span class="accent">Vocabulary</span></h2><p class="hero-desc">Study these 21 essential cloud and SaaS terms covering service models, deployment, pricing, reliability, and security.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:18%"></div></div><span class="prog-pct">18%</span></div>
+  <div class="content" id="wordBankContent"></div>
+</section>
+<section id="sec-reading" class="section">
+  <div class="hero"><div class="module-pill">📖 &nbsp; Reading</div><h2>Texts &amp; <span class="accent">Comprehension</span></h2><p class="hero-desc">Read two professional texts on cloud service models and multi-cloud strategy.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:27%"></div></div><span class="prog-pct">27%</span></div>
+  <div class="content" id="readingContent"></div>
+</section>
+<section id="sec-vocab" class="section">
+  <div class="hero"><div class="module-pill">🔤 &nbsp; Vocabulary Exercises</div><h2>Practice <span class="accent">Exercises</span></h2><p class="hero-desc">Three exercise types to master cloud and SaaS vocabulary: multiple choice, gap-fill, and true/false.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:36%"></div></div><span class="prog-pct">36%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showVocab(0,this)">Exercise 1 · Multiple Choice</div>
+      <div class="ex-tab" onclick="showVocab(1,this)">Exercise 2 · Gap Fill</div>
+      <div class="ex-tab" onclick="showVocab(2,this)">Exercise 3 · True / False</div>
+    </div>
+    <div id="vex-0"></div>
+    <div id="vex-1" style="display:none"></div>
+    <div id="vex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-grammar" class="section">
+  <div class="hero"><div class="module-pill">✏️ &nbsp; Grammar</div><h2>Grammar <span class="accent">Exercises</span></h2><p class="hero-desc">Practise conditional structures for cloud architecture decisions, comparison language for cloud evaluation, and formal SLA and contract language.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:45%"></div></div><span class="prog-pct">45%</span></div>
+  <div class="content">
+    <div class="ex-tabs">
+      <div class="ex-tab active" onclick="showGram(0,this)">Conditionals</div>
+      <div class="ex-tab" onclick="showGram(1,this)">Comparison Language</div>
+      <div class="ex-tab" onclick="showGram(2,this)">Contract &amp; SLA Language</div>
+    </div>
+    <div id="gex-0"></div>
+    <div id="gex-1" style="display:none"></div>
+    <div id="gex-2" style="display:none"></div>
+  </div>
+</section>
+<section id="sec-gramreview" class="section">
+  <div class="hero"><div class="module-pill">📋 &nbsp; Grammar Review</div><h2>Reference <span class="accent">Guide</span></h2><p class="hero-desc">Three reference boxes: conditional structures for cloud decisions, comparison language in cloud evaluation, and formal language in cloud contracts and SLAs.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:54%"></div></div><span class="prog-pct">54%</span></div>
+  <div class="content" id="gramRevContent"></div>
+</section>
+<section id="sec-writing" class="section">
+  <div class="hero"><div class="module-pill">✍️ &nbsp; Writing + AI Feedback</div><h2>Writing <span class="accent">Activities</span></h2><p class="hero-desc">Write a cloud vendor evaluation summary and a cloud incident communication. Receive AI feedback across Grammar, Vocabulary, Tone, Structure, and Fluency.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:63%"></div></div><span class="prog-pct">63%</span></div>
+  <div class="content" id="writingContent"></div>
+</section>
+<section id="sec-listening" class="section">
+  <div class="hero"><div class="module-pill">🎧 &nbsp; Listening</div><h2>Audio <span class="accent">Activities</span></h2><p class="hero-desc">Listen to a cloud architecture review, a SaaS vendor evaluation, a cloud cost review, and an availability zone incident briefing.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:72%"></div></div><span class="prog-pct">72%</span></div>
+  <div class="content" id="listeningContent"></div>
+</section>
+<section id="sec-cases" class="section">
+  <div class="hero"><div class="module-pill">💡 &nbsp; Case Studies</div><h2>Real-World <span class="accent">Cases</span></h2><p class="hero-desc">Explore how Amazon Web Services invented the commercial cloud market, and how Salesforce and the SaaS revolution transformed enterprise software economics and vocabulary.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:81%"></div></div><span class="prog-pct">81%</span></div>
+  <div class="content" id="casesContent"></div>
+</section>
+<section id="sec-assessment" class="section">
+  <div class="hero"><div class="module-pill">🏆 &nbsp; Final Assessment</div><h2>Module <span class="accent">Test</span></h2><p class="hero-desc">20 questions covering all module content. Pass mark: 70% (14/20). Two attempts allowed.</p></div>
+  <div class="prog-wrap"><span class="prog-label">Module Progress</span><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div><span class="prog-pct">90%</span></div>
+  <div class="content">
+    <div class="card">
+      <div class="card-title">🏆 Final Assessment</div><div class="card-bar"></div>
+      <p style="font-size:13.5px;color:var(--text-mid);margin-bottom:22px;">Answer all 20 questions. You need 70% (14 correct) to pass. Attempts used: <strong id="att-disp">0 / 2</strong></p>
+      <div id="assessContainer"></div>
+      <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <button class="ass-btn" id="ass-sub" onclick="submitAss()">Submit Assessment</button>
+        <button class="retry-btn" id="ass-retry" onclick="resetAss()">&#8635; Try Again</button>
+      </div>
+      <div class="final-result" id="final-res"></div>
+    </div>
+  </div>
+</section>
+</main>
+<script>
+/* ══ Module 10: Cloud Computing and SaaS Language ══ */
+const outcomes=["Identify and accurately use 21 essential cloud computing and SaaS terms spanning service models, deployment, pricing, and reliability", "Read and analyse professional texts on cloud service models and multi-cloud strategy", "Use conditional structures for cloud architecture decisions, precise comparison language, and formal contract language accurately", "Draft a cloud vendor evaluation summary and a cloud incident communication with professional precision", "Listen to cloud architecture reviews, SaaS procurement discussions, cloud cost reviews, and incident briefings", "Discuss cloud strategy, SaaS evaluation, pricing models, and reliability requirements with professional fluency and confidence"];
+const speakingQs=["What is cloud computing, and what are its three main service delivery models?", "What is the difference between IaaS, PaaS, and SaaS? Can you give a real-world example of each?", "What is the difference between a public cloud, a private cloud, and a hybrid cloud?", "What is multi-cloud, and why do organisations adopt a multi-cloud strategy?", "What is an SLA in the context of cloud computing, and what does '99.9% uptime' actually mean in practice?", "What is cloud elasticity, and why is it considered one of the primary advantages of cloud computing?", "What is a subscription model in SaaS, and how does it differ from a traditional software licence?", "What is a tenant in a multi-tenant SaaS architecture, and what are the security implications?", "What is cloud-native development, and why does it differ from simply running existing software on cloud servers?", "What is a container, and how does containerisation relate to cloud deployment?", "What is serverless computing, and what does 'serverless' actually mean for developers?", "What is vendor lock-in in the context of cloud computing, and how can organisations mitigate it?", "What is a cloud SLA and what metrics — such as RTO and RPO — are typically defined in one?", "What is FinOps, and why has cloud cost management become a distinct discipline?", "What is the shared responsibility model in cloud security, and what does it mean for organisations?", "What is a CDN (Content Delivery Network), and why does it improve performance for global users?", "What is auto-scaling, and what triggers it in a cloud environment?", "What is a region and an availability zone in cloud infrastructure, and why do they matter for reliability?", "What is the difference between disaster recovery and high availability in cloud architecture?", "How would you evaluate two competing SaaS vendors for a business-critical application?", "What questions would you ask a cloud provider before migrating a regulated workload to their platform?"];
+const wordBank=[{emoji:"☁️",term:"Cloud Computing",def:"The delivery of computing services — including servers, storage, databases, networking, software, analytics, and intelligence — over the internet, enabling faster innovation, flexible resources, and economies of scale. Cloud computing eliminates the need to own and maintain physical data centres and servers. The three primary service models are IaaS, PaaS, and SaaS; the three primary deployment models are public, private, and hybrid cloud."},
+  {emoji:"🏗️",term:"IaaS",def:"Infrastructure as a Service — a cloud service model in which the provider delivers virtualised computing infrastructure (servers, storage, networking) over the internet, and the customer is responsible for everything above the hardware layer: operating systems, middleware, runtime, data, and applications. Examples: AWS EC2, Microsoft Azure Virtual Machines, Google Compute Engine. IaaS offers maximum flexibility but requires the most management from the customer."},
+  {emoji:"🔧",term:"PaaS",def:"Platform as a Service — a cloud service model in which the provider delivers a managed platform for developing, running, and managing applications, without the complexity of building and maintaining the underlying infrastructure. The customer manages only applications and data. Examples: AWS Elastic Beanstalk, Google App Engine, Heroku. PaaS accelerates development by abstracting infrastructure management."},
+  {emoji:"📦",term:"SaaS",def:"Software as a Service — a cloud service model in which the provider delivers a complete, ready-to-use software application over the internet on a subscription basis. The customer manages only their data and user configuration; the provider manages everything else including the application, runtime, infrastructure, security, and updates. Examples: Salesforce, Microsoft 365, Slack, Zoom, Workday."},
+  {emoji:"🌐",term:"Multi-Cloud",def:"A strategy in which an organisation uses cloud services from two or more different providers — for example, running workloads on both AWS and Microsoft Azure. Multi-cloud reduces dependency on a single vendor, enables organisations to use best-of-breed services, and mitigates the risk of vendor-specific outages. It also introduces management complexity: different APIs, billing models, and security frameworks must be coordinated."},
+  {emoji:"📊",term:"SLA",def:"Service Level Agreement — a contractual commitment from a cloud or SaaS provider specifying the minimum level of service the customer will receive, including uptime guarantees, response times, and remedies if commitments are not met. A '99.9% uptime' SLA permits approximately 8.7 hours of downtime per year; '99.99%' permits approximately 52 minutes. SLAs must be read carefully: they often define 'uptime' narrowly and exclude planned maintenance."},
+  {emoji:"⚡",term:"Elasticity",def:"The ability of a cloud system to automatically increase or decrease its resource capacity in response to demand — scaling up when load increases and scaling down when it decreases. Elasticity means organisations pay only for what they use and can handle unexpected traffic spikes without over-provisioning. It is one of the most commercially significant differences between cloud and traditional on-premise infrastructure."},
+  {emoji:"🔄",term:"Auto-Scaling",def:"A cloud capability that automatically adjusts the number of compute instances (servers, containers) running in response to real-time demand — adding instances when load increases and removing them when it decreases. Auto-scaling policies are defined by metrics (CPU utilisation, request rate, queue depth) and thresholds. It enables elasticity without manual intervention."},
+  {emoji:"🏢",term:"Multi-Tenancy",def:"An architecture in which a single instance of a software application serves multiple customers (tenants) simultaneously — each tenant's data is logically separated but the infrastructure is shared. Multi-tenancy is the dominant model for SaaS: it enables providers to serve millions of customers efficiently and pass cost savings on through subscription pricing. Security controls must ensure tenant data isolation."},
+  {emoji:"📋",term:"Subscription Model",def:"A pricing and licensing model in which customers pay a recurring fee — typically monthly or annually — for access to a cloud service or software application, rather than purchasing a perpetual licence. Subscription pricing shifts cost from capital expenditure (CapEx) to operational expenditure (OpEx), and typically includes automatic updates, support, and storage within the subscription fee."},
+  {emoji:"🔒",term:"Shared Responsibility Model",def:"A cloud security framework defining which security obligations belong to the cloud provider and which belong to the customer. The provider is always responsible for the security of the cloud (physical infrastructure, hypervisor, networking). The customer is responsible for security in the cloud (data, identity, access management, application configuration). The boundary shifts by service model: IaaS customers have more responsibility than SaaS customers."},
+  {emoji:"💰",term:"FinOps",def:"Financial Operations for cloud — a practice combining financial management and cloud engineering to help organisations understand, optimise, and control their cloud spend. As cloud costs become a major and variable budget line, FinOps brings together finance, engineering, and business teams to set budgets, identify waste, allocate costs, and build a culture of cloud cost accountability. Tools include AWS Cost Explorer, Azure Cost Management, and GCP Billing."},
+  {emoji:"🌍",term:"Region",def:"A geographic area in which a cloud provider operates one or more data centres. Each major cloud provider (AWS, Azure, GCP) operates dozens of regions globally. Choosing the right region affects latency, data residency compliance (e.g., GDPR requiring data to remain in the EU), and disaster recovery. Deploying across multiple regions provides geographic redundancy."},
+  {emoji:"🏦",term:"Availability Zone",def:"An isolated location within a cloud region — a separate data centre or cluster of data centres with independent power, cooling, and networking. Major cloud providers offer multiple availability zones per region (typically 2-4). Deploying resources across multiple availability zones provides high availability: if one zone fails, resources in other zones continue to operate. Abbreviated AZ."},
+  {emoji:"🔁",term:"Disaster Recovery",def:"The capability to restore IT systems and data after a catastrophic failure — a data centre outage, natural disaster, ransomware attack, or major hardware failure. Cloud disaster recovery (DR) typically defines two metrics: RPO (Recovery Point Objective — the maximum acceptable data loss, measured in time) and RTO (Recovery Time Objective — the maximum acceptable time to restore service). Cloud enables faster, cheaper DR than traditional tape-based approaches."},
+  {emoji:"📡",term:"CDN",def:"Content Delivery Network — a globally distributed network of servers that caches and delivers web content (images, videos, scripts, pages) from locations geographically close to the end user, reducing latency and improving performance. CDNs are particularly important for global applications where users in different countries would otherwise experience slow load times from a single origin server. Major CDN providers include Cloudflare, AWS CloudFront, and Akamai."},
+  {emoji:"🐳",term:"Container",def:"A lightweight, portable unit of software that packages an application and all its dependencies (libraries, configuration, runtime) into a single, self-contained unit that runs consistently across different computing environments. Containers share the host operating system kernel, making them more efficient than virtual machines. Docker is the dominant containerisation platform; Kubernetes is the dominant container orchestration system."},
+  {emoji:"⚙️",term:"Serverless",def:"A cloud execution model in which the provider dynamically allocates compute resources to run individual functions or tasks — abstracting away all server management from the developer. Developers write code (functions) that are triggered by events; the cloud provider handles provisioning, scaling, and maintenance. Examples: AWS Lambda, Azure Functions, Google Cloud Functions. Serverless eliminates idle compute cost: you pay only when code executes."},
+  {emoji:"🔐",term:"Vendor Lock-In",def:"The dependency that arises when an organisation's systems, data, or processes become so tightly coupled to a specific cloud provider's proprietary services that switching to an alternative becomes prohibitively expensive or technically complex. Strategies to mitigate lock-in include using open standards and open-source tools, containerisation (enabling portability), and multi-cloud architecture. Some degree of lock-in is often unavoidable when using advanced managed services."},
+  {emoji:"🔄",term:"Cloud-Native",def:"An approach to building and running applications that fully exploits the advantages of cloud computing — using microservices, containers, APIs, serverless functions, and managed cloud services rather than traditional monolithic architectures. Cloud-native applications are designed for resilience, scalability, and rapid deployment from the ground up, as opposed to legacy applications that have been 'lifted and shifted' onto cloud infrastructure."},
+  {emoji:"📈",term:"Reserved Instance",def:"A pricing model offered by cloud providers (particularly AWS, Azure, and GCP) in which a customer commits to using a specific resource configuration for a defined period (typically 1 or 3 years) in exchange for a significant discount — typically 30-60% compared to on-demand pricing. Reserved instances suit predictable, stable workloads. Organisations that purchase reserved instances without accurate usage forecasting risk paying for capacity they do not use."}];
+const readingTexts=[{title:"Text 1: IaaS, PaaS, and SaaS — Understanding the Cloud Service Pyramid",subtitle:"How the three cloud service models differ, what they manage, and which is right for each use case",paragraphs:["Cloud computing is not a single thing — it is a spectrum of service models that differ in how much of the technology stack is managed by the provider and how much remains the customer's responsibility. The three primary models — IaaS (Infrastructure as a Service), PaaS (Platform as a Service), and SaaS (Software as a Service) — represent different points on this spectrum, and choosing the right model for a given use case is one of the most consequential decisions in cloud architecture.", "At the foundation is IaaS, which provides virtualised computing infrastructure — servers, storage, and networking — over the internet. With IaaS, the customer rents the hardware equivalent: they receive raw compute and storage capacity and are responsible for everything above it, including the operating system, middleware, runtime environment, application code, and data. IaaS offers maximum control and flexibility: the customer can configure their environment exactly as they need. The cost of this flexibility is management burden — operating systems must be patched, security must be configured, and the customer bears responsibility for the configuration decisions that affect their security posture. AWS EC2, Microsoft Azure Virtual Machines, and Google Compute Engine are the dominant IaaS offerings.", "PaaS removes the operating system and middleware management burden, leaving the customer responsible only for their application code and data. The provider manages the platform — the runtime environment, middleware, databases, and development tools — freeing development teams to focus on building applications rather than maintaining infrastructure. PaaS is particularly well-suited to development and testing environments, application modernisation projects, and organisations that want to move quickly without deep infrastructure expertise. SaaS takes this abstraction to its logical conclusion: the provider delivers a complete, ready-to-use application over the internet. The customer configures and uses the software; the provider manages everything else. SaaS has become the dominant model for business applications: productivity suites, CRM platforms, HR systems, accounting software, and collaboration tools are overwhelmingly delivered as SaaS."],questions:[{q:"What is the key variable that distinguishes the three cloud service models?",opts:["The geographic location of the data centres used", "How much of the technology stack is managed by the provider versus the customer", "The pricing model used — pay-as-you-go versus subscription", "The type of workload — compute-intensive versus data-intensive"],ans:1},{q:"With IaaS, what is the customer responsible for?",opts:["Only their application data — the provider manages everything else", "Everything from the operating system upward — OS, middleware, runtime, applications, and data", "Only application code and data — the provider manages the runtime and middleware", "Nothing — IaaS is fully managed by the provider"],ans:1},{q:"What is described as the cost of IaaS's maximum flexibility?",opts:["Higher monthly fees compared to PaaS and SaaS", "Management burden — the customer must patch, secure, and configure their environment", "Slower deployment times due to manual provisioning", "Reduced access to advanced cloud provider services"],ans:1},{q:"What does PaaS remove from the customer's management responsibility compared to IaaS?",opts:["Application code and data management", "The need to manage operating systems and middleware", "Security and access management", "All management responsibilities — PaaS is fully managed"],ans:1},{q:"For what types of projects is PaaS described as particularly well-suited?",opts:["Large-scale data centre migrations and infrastructure modernisation", "Organisations needing maximum control over their security configuration", "Development and testing environments, application modernisation, and organisations that want to move quickly", "Enterprise-scale ERP and CRM deployments with complex customisation requirements"],ans:2},{q:"What does SaaS remove compared to PaaS?",opts:["The need to manage networking and storage", "Application code management", "The provider manages everything including the application — the customer only configures and uses it", "The need to manage identity and access for their users"],ans:2},{q:"What types of applications are predominantly delivered as SaaS according to the text?",opts:["Custom-built enterprise applications and proprietary software", "Gaming, entertainment, and consumer applications", "Productivity suites, CRM platforms, HR systems, accounting software, and collaboration tools", "Scientific computing, AI training, and high-performance computing workloads"],ans:2},{q:"Which examples are given for IaaS offerings?",opts:["Salesforce, Microsoft 365, and Slack", "AWS Elastic Beanstalk, Google App Engine, and Heroku", "AWS EC2, Microsoft Azure Virtual Machines, and Google Compute Engine", "Zoom, Workday, and ServiceNow"],ans:2},{q:"What is the logical conclusion of the abstraction progression from IaaS to PaaS to SaaS?",opts:["Customers lose all control over their data and configuration", "The provider delivers a complete ready-to-use application — the customer manages only configuration and use", "Customers can build applications without any programming knowledge", "All computing becomes free as providers compete on price"],ans:1},{q:"What does the text describe as the most consequential cloud architecture decision?",opts:["Choosing between AWS, Azure, and Google Cloud", "Choosing the correct geographic region for data residency", "Choosing the right cloud service model — IaaS, PaaS, or SaaS — for a given use case", "Choosing between reserved instances and on-demand pricing"],ans:2}]},
+  {title:"Text 2: Multi-Cloud Strategy — The Benefits, the Complexity, and the Hidden Costs",subtitle:"Why organisations spread workloads across multiple cloud providers — and what it costs them to do so",paragraphs:["Multi-cloud — the practice of using cloud services from two or more providers simultaneously — has become the default strategy for large enterprises. A 2023 survey by Flexera found that 87% of enterprises had adopted a multi-cloud approach. The stated rationale is compelling: no single provider offers the best service in every category; spreading workloads reduces dependency on any one provider; and using multiple providers gives the organisation negotiating leverage and reduces the risk of service disruption from a single-provider outage. These benefits are real, but they come with costs and complexities that are frequently underestimated when multi-cloud strategies are adopted.", "The operational complexity of multi-cloud is significant. Each major cloud provider — AWS, Microsoft Azure, and Google Cloud Platform — has its own APIs, its own management console, its own networking model, its own identity and access management system, its own monitoring tools, and its own pricing model. A team that is expert in AWS must acquire a largely separate set of skills to operate effectively on Azure. Managing security policies, compliance requirements, and cost optimisation consistently across two or more providers requires dedicated tooling and expertise — a FinOps practice, a cloud management platform, and engineers who understand the idiosyncrasies of each provider. The cost of this management overhead can erode the savings that motivated the multi-cloud strategy in the first place.", "The risk of vendor lock-in is one of the most frequently cited justifications for multi-cloud, but it deserves careful examination. True portability — the ability to move workloads freely between providers — requires avoiding provider-specific managed services and instead using open-source or containerised workloads that can run on any infrastructure. But provider-specific managed services (AWS RDS, Azure Cognitive Services, Google BigQuery) are often the most powerful and cost-effective tools available. Organisations that commit to avoiding lock-in by using only portable technologies may find that they have traded lock-in risk for capability limitation. The pragmatic approach for most organisations is not to avoid provider-specific services entirely but to identify strategically critical workloads and ensure they are portable, while accepting some lock-in for non-critical functions where the managed service provides genuine value."],questions:[{q:"What percentage of enterprises had adopted a multi-cloud approach according to the 2023 Flexera survey?",opts:["57%", "67%", "77%", "87%"],ans:3},{q:"What are the three stated rationales for multi-cloud given in the text?",opts:["Cost savings, performance improvement, and regulatory compliance", "No single provider is best in every category, reduced vendor dependency, and negotiating leverage", "Disaster recovery, geographic distribution, and service diversity", "Security, compliance, and cost optimisation"],ans:1},{q:"What does the text say about the costs of multi-cloud?",opts:["Multi-cloud is always more cost-effective than single-cloud once initial setup costs are absorbed", "The costs and complexities of multi-cloud are frequently underestimated when the strategy is adopted", "Multi-cloud costs are primarily driven by data transfer fees between providers", "The costs of multi-cloud are negligible for organisations with mature cloud capabilities"],ans:1},{q:"Why is expertise in one cloud provider insufficient for multi-cloud?",opts:["Each provider uses different programming languages for their managed services", "Each provider has its own APIs, management tools, networking model, identity system, and pricing — requiring a largely separate set of skills", "Certifications from one provider are not recognised by competing providers", "Each provider's data centres have different security accreditations requiring different compliance approaches"],ans:1},{q:"What does managing multi-cloud effectively require?",opts:["A dedicated team of 50 or more cloud engineers", "A dedicated FinOps practice, cloud management platform, and engineers who understand each provider's idiosyncrasies", "Negotiating a single master services agreement that covers all cloud providers", "Choosing one cloud provider as the primary and using others only for backup and disaster recovery"],ans:1},{q:"What is the risk with managing security consistently across multiple cloud providers?",opts:["Cloud providers actively resist attempts to manage cross-cloud security policies", "Regulators require separate security audits for each cloud provider used", "The management overhead can erode the savings that motivated the multi-cloud strategy", "Multi-cloud security is technically impossible without proprietary middleware"],ans:2},{q:"What is required to achieve true portability between cloud providers?",opts:["Signing portability agreements with each provider before migrating workloads", "Using only open-source or containerised workloads that avoid provider-specific managed services", "Deploying identical hardware configurations on each provider to ensure compatibility", "Choosing providers that use the same underlying virtualisation technology"],ans:1},{q:"What trade-off does avoiding lock-in through portable technologies create?",opts:["Higher infrastructure costs due to open-source licensing fees", "Reduced security posture compared to using provider-managed security services", "Potential capability limitation — provider-specific managed services are often more powerful and cost-effective", "Slower application performance due to the overhead of open-source tooling"],ans:2},{q:"What is the pragmatic approach to lock-in described in the text?",opts:["Avoid all provider-specific services and use only containerised portable workloads", "Accept lock-in on all workloads because the benefits of managed services always outweigh portability", "Ensure strategically critical workloads are portable while accepting some lock-in where managed services provide genuine value", "Negotiate contractual portability guarantees with all cloud providers before beginning migration"],ans:2},{q:"What does the text implicitly suggest about organisations that adopt multi-cloud without examining the costs?",opts:["They will inevitably save money compared to single-cloud approaches", "They may find the management overhead erodes the benefits they expected", "They are making a sound strategic decision that the majority of enterprises have already validated", "They will need to hire significantly more engineers to manage the additional complexity"],ans:1}]}];
+const vocabMCQ=[{q:"What is IaaS?",opts:["A software application delivered over the internet on a subscription basis", "A cloud model delivering virtualised infrastructure — the customer manages everything from the OS upward", "A platform for developing and running applications without managing infrastructure", "A pricing model in which customers pay per transaction rather than per server"],ans:1},{q:"What is the shared responsibility model?",opts:["A cost-sharing arrangement between an organisation and its cloud provider", "A framework defining which security obligations belong to the cloud provider and which to the customer", "A multi-cloud strategy in which security tools are shared across providers", "A compliance framework used in regulated industries to allocate audit responsibilities"],ans:1},{q:"What is cloud elasticity?",opts:["The ability of cloud systems to automatically increase or decrease resource capacity in response to demand", "The flexibility to choose between different cloud providers without switching costs", "The ability to stretch payment terms across multiple financial periods", "The capability to run the same workload on different types of cloud infrastructure"],ans:0},{q:"What is a CDN?",opts:["A type of cloud database that replicates data across multiple regions", "A container deployment network for managing microservices at scale", "A globally distributed network of servers that caches and delivers content from locations close to the end user", "A cloud native development framework for building distributed applications"],ans:2},{q:"What is serverless computing?",opts:["Computing that runs on servers but removes the cost of server maintenance from the customer", "A cloud execution model in which developers write functions triggered by events — the provider manages all provisioning, scaling, and maintenance", "A type of IaaS in which virtual servers are provisioned automatically on demand", "A programming model in which applications run without any backend server component"],ans:1},{q:"What is vendor lock-in in a cloud context?",opts:["A contractual obligation preventing an organisation from switching providers during a commitment period", "The dependency that arises when systems become so tightly coupled to a provider that switching becomes prohibitively expensive", "A security control preventing unauthorised access to cloud resources", "The technical difficulty of migrating large datasets between cloud providers"],ans:1},{q:"What is the difference between RPO and RTO in cloud disaster recovery?",opts:["RPO is the cost of recovery; RTO is the time taken to recover", "RPO is the maximum acceptable data loss (in time); RTO is the maximum acceptable time to restore service", "RPO applies to databases; RTO applies to applications", "They are the same metric described from different perspectives"],ans:1},{q:"What is FinOps?",opts:["A financial services cloud platform for banking and insurance workloads", "A practice combining financial management and cloud engineering to understand, optimise, and control cloud spend", "A framework for financial compliance in regulated cloud environments", "A cloud billing aggregation tool that consolidates invoices from multiple providers"],ans:1},{q:"What is a reserved instance?",opts:["A cloud instance reserved exclusively for a single customer's use with no shared tenancy", "A pricing model where the customer commits to a resource for 1-3 years in exchange for a 30-60% discount versus on-demand pricing", "A backup instance that activates automatically when the primary instance fails", "A virtual machine with guaranteed performance levels that cannot be impacted by other customers"],ans:1},{q:"What is multi-tenancy in SaaS?",opts:["A requirement for SaaS providers to serve customers in multiple geographic regions", "A licensing model allowing one organisation to use a SaaS application across multiple business units", "An architecture in which a single application instance serves multiple customers with logically separated data", "A security model requiring multiple administrators to approve access requests"],ans:2}];
+const vocabGapFill=[{before:"The organisation chose an",blank:"IaaS",after:"approach for its machine learning workloads — retaining full control over the operating system, GPU drivers, and CUDA libraries, while leveraging the cloud provider's physical compute capacity without owning the hardware."},{before:"The SaaS platform's",blank:"SLA",after:"committed to 99.95% monthly uptime — equivalent to approximately 22 minutes of permitted downtime per month — with service credits of 10% of monthly fees for each hour of additional downtime beyond that threshold."},{before:"The engineering team implemented",blank:"auto-scaling",after:"policies on the API gateway: below 40% CPU utilisation, instances were terminated; above 70%, new instances were provisioned automatically — ensuring the platform could handle the 10x traffic spike during the annual product launch without manual intervention."},{before:"To reduce the risk of",blank:"vendor lock-in",after:", the architecture team specified that all data must be stored in open, portable formats and that all application services must be containerised — enabling the organisation to migrate to an alternative provider within 90 days if required."},{before:"The finance team worked with the cloud engineering team to implement a",blank:"FinOps",after:"practice — tagging all cloud resources by department and project, setting budget alerts at 80% of each team's monthly allocation, and publishing a weekly cost dashboard to the leadership team."},{before:"The decision to adopt a",blank:"multi-cloud",after:"strategy was driven by three factors: avoiding dependency on a single provider, using AWS for compute and storage where it led the market, and using Azure for Microsoft 365 integration and Active Directory federation."},{before:"The development team adopted a",blank:"serverless",after:"architecture for the image processing pipeline — each uploaded image triggered an AWS Lambda function that resized, compressed, and stored the output, with no persistent servers to provision or maintain between uploads."},{before:"The application was designed to deploy across three",blank:"availability zone",after:"s within the EU-West-1 region — ensuring that a failure in any single zone would not affect the overall service, as the load balancer would route traffic to the remaining healthy zones automatically."},{before:"The CFO approved the purchase of",blank:"reserved instance",after:"s for the production database fleet — committing to a three-year term in exchange for a 58% discount versus on-demand pricing, reducing the annual database infrastructure cost from £180,000 to £76,000."},{before:"The platform's",blank:"multi-tenancy",after:"architecture served 4,200 corporate customers from a single application deployment — each tenant's data isolated at the database level through row-level security policies, with shared application code, infrastructure, and operational overhead."}];
+const vocabTF=[{stmt:"With SaaS, the customer is responsible for managing the operating system, middleware, and runtime environment.",ans:false},{stmt:"A '99.9% uptime' SLA permits approximately 8.7 hours of downtime per year.",ans:true},{stmt:"Cloud elasticity means an organisation must provision for peak load at all times to avoid performance degradation.",ans:false},{stmt:"The shared responsibility model means the cloud provider is responsible for all security in every cloud service model.",ans:false},{stmt:"Serverless computing eliminates idle compute cost — you pay only when code is executing.",ans:true},{stmt:"Multi-cloud strategies eliminate all risks of vendor dependency and service disruption.",ans:false},{stmt:"Reserved instances offer significant discounts compared to on-demand pricing in exchange for a commitment period of typically 1 or 3 years.",ans:true},{stmt:"Deploying resources across multiple availability zones protects against the failure of a single data centre or zone.",ans:true},{stmt:"FinOps is primarily a technology tool for reducing cloud costs rather than a practice involving finance, engineering, and business teams.",ans:false},{stmt:"Containers package an application and all its dependencies into a portable unit that runs consistently across different computing environments.",ans:true}];
+const grammarEx=[{title:"Exercise 1: Conditional Structures in Cloud Architecture Decisions",instr:"Select the correct conditional structure. Cloud architecture decisions, capacity planning, and incident response all require precise conditional language to describe trade-offs, policy responses, and technical behaviours under different conditions.",qs:[{q:"'_____ the application exceeds 80% CPU utilisation for more than two minutes, a new instance will be provisioned automatically.'",opts:["Should", "If", "When", "Unless"],ans:1},{q:"'_____ we had adopted a multi-cloud strategy earlier, we would not have been dependent on a single provider during last month's outage.'",opts:["If", "Should", "Had", "Were"],ans:2},{q:"'The CDN will serve content from the nearest edge node _____ the user's location.'",opts:["based on", "depending", "subject to", "regardless of"],ans:0},{q:"'_____ the primary availability zone fail, traffic will be automatically routed to the secondary zone.'",opts:["If", "Should", "When", "Were"],ans:1},{q:"'We would recommend serverless _____ the workload consists of event-driven, short-duration tasks with unpredictable load patterns.'",opts:["if", "should", "provided", "when"],ans:0},{q:"'_____ the vendor cannot meet the 99.99% uptime requirement, we should retain the right to terminate the contract without penalty.'",opts:["Should", "If", "Were", "Had"],ans:0},{q:"'The reserved instances will save approximately £80,000 per year _____ we maintain the forecast usage levels.'",opts:["should", "if", "provided that", "when"],ans:2},{q:"'_____ the organisation had implemented a FinOps practice earlier, the Q3 cloud bill overrun would likely have been avoided.'",opts:["If", "Had", "Should", "Were"],ans:1},{q:"'_____ you choose IaaS, you must accept responsibility for operating system patching and security configuration.'",opts:["If", "When", "Should", "Unless"],ans:0},{q:"'_____ the RTO is 4 hours, the disaster recovery environment must be capable of becoming fully operational within that window.'",opts:["Because", "Given that", "Since", "If"],ans:1}]},
+  {title:"Exercise 2: Comparison and Contrast Language in Cloud Evaluation",instr:"Select the most precise comparison or contrast expression. Cloud vendor evaluations, service model comparisons, and architecture trade-off discussions require exact comparative language to distinguish options accurately.",qs:[{q:"'AWS offers _____ global regions than any other provider, giving it the widest geographic coverage.'",opts:["more", "a greater number of", "the most", "a higher count of"],ans:2},{q:"'SaaS delivers software _____ as a managed service, _____ IaaS which provides raw infrastructure.'",opts:["whereas / while", "as opposed to / unlike", "contrary to / as", "rather than / compared to"],ans:1},{q:"'The on-demand instance costs £0.48 per hour, _____ to £0.19 per hour for the equivalent reserved instance.'",opts:["contrasted", "compared", "as against", "versus"],ans:1},{q:"'Multi-cloud offers greater resilience _____ single-cloud, but introduces significantly more operational complexity.'",opts:["against", "than", "over", "versus"],ans:1},{q:"'Serverless functions are _____ cost-effective for spiky, unpredictable workloads than reserved instances, which suit stable, predictable demand.'",opts:["much", "more", "increasingly", "significantly more"],ans:1},{q:"'Azure's compliance certifications are _____ AWS's in the EU financial services context, making it the preferred choice for regulated workloads in this region.'",opts:["stronger than", "superior to", "better", "higher than"],ans:1},{q:"'The 99.99% SLA permits _____ downtime per year than the 99.9% SLA — 52 minutes versus 8.7 hours.'",opts:["far less", "much fewer", "significantly fewer", "considerably less"],ans:3},{q:"'PaaS removes the infrastructure management burden, _____ freeing the development team to focus on application logic.'",opts:["thereby", "thus", "therefore", "consequently"],ans:0},{q:"'Containers are _____ virtual machines in that they share the host operating system kernel, making them faster to start and more resource-efficient.'",opts:["similar to", "different from", "comparable with", "unlike"],ans:1},{q:"'Both AWS and Azure offer managed Kubernetes services, but they differ _____ their default networking models, pricing structures, and integration with each provider's ecosystem.'",opts:["on", "in", "regarding", "concerning"],ans:1}]},
+  {title:"Exercise 3: Formal Contract and SLA Language",instr:"Select the correct formal term or expression. SaaS contracts, cloud SLAs, and vendor agreements use precise legal and commercial language. Understanding and using this language accurately is essential for evaluating, negotiating, and managing cloud relationships.",qs:[{q:"'The provider _____ maintain a minimum uptime of 99.9% in any given calendar month, measured from the customer's perspective.'",opts:["will", "shall", "must", "should"],ans:1},{q:"'In the event of a service disruption, the provider shall issue a _____ to the customer within 24 hours of the incident being resolved.'",opts:["report", "notice", "root cause analysis", "post-incident review"],ans:2},{q:"'Service credits shall be _____ to the customer's account within 30 days of the incident month.'",opts:["given", "applied", "credited", "returned"],ans:2},{q:"'This agreement is _____ upon 30 days' written notice by either party, without cause.'",opts:["cancellable", "terminable", "ending", "voidable"],ans:1},{q:"'The provider shall maintain all customer data in the _____ region specified at contract commencement, unless otherwise agreed in writing.'",opts:["geographic", "designated", "agreed", "contracted"],ans:1},{q:"'_____ the event of a security breach affecting customer data, the provider shall notify the customer within 72 hours of becoming aware of the incident.'",opts:["In", "Upon", "Following", "During"],ans:0},{q:"'The customer shall retain all _____ in data uploaded to the platform. The provider shall not use customer data for any purpose other than providing the contracted services.'",opts:["rights", "ownership", "intellectual property rights", "control"],ans:2},{q:"'Downtime shall be calculated as the total number of minutes in the measurement period during which the service is _____ to the customer.'",opts:["down", "offline", "unavailable", "inaccessible"],ans:2},{q:"'The provider's liability _____ circumstances exceed the total fees paid by the customer in the three months preceding the incident giving rise to the claim.'",opts:["shall not in any", "will not under any", "cannot under any", "must not in any"],ans:0},{q:"'Any changes to this agreement must be made in _____ and signed by authorised representatives of both parties.'",opts:["paper", "writing", "document form", "formal correspondence"],ans:1}]}];
+const grammarReview=[{title:"Grammar Point 1: Conditional Structures in Cloud and Technical Decision-Making",pts:[{h:"Type 1 Conditionals — Real Technical Conditions and System Behaviour",b:"Type 1 conditionals (If + present simple, will/shall + infinitive) describe how cloud systems behave under specified conditions — standard for documenting auto-scaling policies, SLA triggers, and disaster recovery rules. 'When' can replace 'if' for conditions that are certain rather than hypothetical.",ex:["'If CPU utilisation exceeds 80% for two minutes, the auto-scaling group will provision a new instance.'", "'When the primary zone becomes unavailable, traffic will be automatically routed to the secondary zone.'", "'If the monthly uptime falls below 99.9%, the provider shall issue a service credit within 30 days.'", "'Should the vendor fail to meet the SLA, the customer may terminate the agreement without penalty.'"]},{h:"Type 2 Conditionals — Hypothetical Architecture Decisions",b:"Type 2 conditionals (If + past simple, would + infinitive) describe hypothetical architectural choices and their consequences — commonly used in architecture reviews and vendor evaluations when discussing alternative approaches.",ex:["'If we adopted serverless for this workload, we would eliminate idle compute cost entirely.'", "'If the application were containerised, we could move it between cloud providers in under a week.'", "'If we chose IaaS instead of PaaS, we would need to hire two additional infrastructure engineers.'", "'Were we to commit to a three-year reserved instance, we would save approximately 58% versus on-demand.'"]},{h:"Type 3 Conditionals — Post-Mortem and Retrospective Analysis",b:"Type 3 conditionals (If + past perfect, would have + past participle) are used in incident post-mortems and cloud cost reviews to analyse what would have happened under different past conditions.",ex:["'If we had deployed across multiple availability zones, the outage would have been contained to a single zone.'", "'Had the FinOps alerts been configured correctly, the budget overrun would have been detected two weeks earlier.'", "'If the disaster recovery plan had been tested, the RTO of 4 hours would have been achievable.'", "'Had we adopted a multi-cloud strategy, we would not have been entirely dependent on the single provider during the outage.'"]}]},
+  {title:"Grammar Point 2: Comparison Language in Cloud Evaluation and Analysis",pts:[{h:"Comparative Structures for Cloud Services",b:"Cloud evaluations require precise comparative language to distinguish between service models, pricing tiers, and vendor capabilities. The structure 'X is [comparative adjective] than Y' is the foundation; formal comparisons often use 'as opposed to', 'compared to', 'in contrast to', and 'unlike'.",ex:["'Reserved instances are significantly cheaper than on-demand instances for stable, predictable workloads.'", "'SaaS requires far less internal management overhead than IaaS.'", "'Azure's compliance coverage is broader in the EU financial services sector, compared to AWS.'", "'Containers are more portable than virtual machines, in that they package all dependencies and run consistently across environments.'"]},{h:"Describing Differences Precisely",b:"Cloud vendor evaluations often need to describe differences precisely — not just 'better' but exactly how and in what respects. 'Differ in', 'vary by', 'unlike', and 'whereas' introduce precise distinctions.",ex:["'AWS and Azure differ in their default networking models and their approach to identity management.'", "'On-demand and reserved pricing vary significantly by instance type, region, and commitment length.'", "'Unlike IaaS, PaaS abstracts operating system management — developers interact only with the platform layer.'", "'Serverless suits event-driven workloads with variable load, whereas reserved instances suit stable, predictable demand.'"]},{h:"Superlatives and Degree in Cloud Analysis",b:"Cloud analysis reports use superlatives and degree adverbs to express rankings and magnitudes precisely — avoiding vague adjectives like 'good' or 'better' in favour of specific, measurable language.",ex:["'AWS operates the largest global cloud network, with the most regions and availability zones of any provider.'", "'The 99.99% SLA represents a significantly higher commitment than the industry-standard 99.9%.'", "'Serverless is the most cost-efficient option for this workload — approximately 40% less expensive than an equivalent reserved instance deployment.'", "'Of the three vendors evaluated, Vendor B achieved the highest score on security compliance and data governance criteria.'"]}]},
+  {title:"Grammar Point 3: Formal Language in Cloud Contracts and SLAs",pts:[{h:"'Shall' for Binding Obligations in Contracts",b:"Cloud contracts and SLAs use 'shall' (not 'will' or 'must') for binding obligations — signalling that non-performance has contractual consequences. 'Shall not' is used for prohibitions.",ex:["'The provider shall maintain a minimum uptime of 99.95% in any calendar month.'", "'The provider shall notify the customer within 72 hours of becoming aware of a security incident.'", "'Service credits shall be applied to the customer's account within 30 days of the incident month.'", "'The provider shall not use customer data for any purpose other than delivering the contracted services.'"]},{h:"Key Contract Vocabulary for Cloud and SaaS Agreements",b:"Cloud contracts use a specific set of formal terms that have precise legal meanings. Understanding these terms enables professionals to evaluate and negotiate contracts accurately.",ex:["'Termination for convenience' — the right to end the agreement without cause, typically on 30-90 days' notice.", "'Data residency' — a contractual obligation specifying the geographic region(s) in which customer data will be stored.", "'Intellectual property rights' — the customer typically retains all rights in their data; the provider may not use it for other purposes.", "'Liability cap' — a contractual limit on the total amount the provider must pay the customer in damages, typically capped at fees paid in a preceding period."]},{h:"Passive Voice in SLA and Contract Language",b:"SLA documents use the passive voice extensively to describe what will be done without specifying individual actors — maintaining impersonal authority and focusing on obligations rather than people.",ex:["'Downtime shall be calculated as the total number of minutes the service is unavailable.'", "'Service credits shall be issued automatically within 30 days of the relevant incident.'", "'The customer shall be notified within 24 hours of any security incident affecting their data.'", "'All data shall be encrypted at rest using AES-256 and in transit using TLS 1.2 or above.'"]}]}];
+const writingTasks=[{id:"w1",activity:"Activity 1",type:"Vendor Evaluation",title:"Write a Cloud Vendor Evaluation Summary",prompt:"You are the Cloud Architect at Brightfield Financial Services. You have evaluated three cloud providers for a new data analytics platform that will process sensitive financial data. You need to write a vendor evaluation summary for the CTO and CFO.\n\nEvaluation criteria and findings:\n\nVendor A (AWS):\n• Broadest range of managed analytics services (Redshift, Athena, SageMaker)\n• 27 global regions — widest geographic coverage\n• GDPR and FCA compliance certifications in place\n• Pricing: £0.23/hour on-demand compute; 3-year reserved: £0.09/hour\n• SLA: 99.99% for most services\n• Weakness: Steepest learning curve; highest support plan costs\n\nVendor B (Microsoft Azure):\n• Strong Microsoft 365 and Active Directory integration — matches existing IT environment\n• 60+ compliance certifications including FCA, PRA, and ISO 27001\n• Pricing: £0.21/hour on-demand; 3-year reserved: £0.10/hour\n• SLA: 99.95% for most services\n• Strong UK data residency options\n• Weakness: Slightly fewer analytics-specific managed services than AWS\n\nVendor C (Google Cloud Platform):\n• Industry-leading BigQuery analytics service\n• Competitive pricing with sustained use discounts (no upfront commitment required)\n• Fewer UK/EU compliance certifications than AWS or Azure\n• SLA: 99.9% for most services\n• Weakness: Smaller UK data centre footprint; fewer financial services reference customers\n\nYour recommendation: Azure — due to existing Microsoft integration, FCA/PRA compliance, and UK data residency.\n\nWrite the evaluation summary including: executive summary (your recommendation and top 3 reasons), comparison table summary (in prose — not an actual table), key risks for each vendor, and financial summary (on-demand vs reserved instance cost comparison). Use formal business language. Use at least 6 vocabulary terms from this module.",tags:["Vendor Evaluation", "Cloud Strategy", "Formal Business Writing", "SaaS Procurement", "Financial Services"],targetMin:220,targetMax:320},{id:"w2",activity:"Activity 2",type:"Incident Communication",title:"Write a Cloud Incident Communication",prompt:"You are the Head of Platform Engineering at Nexford Digital. Your SaaS platform experienced a significant outage this morning.\n\nWhat happened:\n• 08:47 UTC: The primary availability zone (EU-West-1a) experienced a hardware failure at the cloud provider\n• 08:47–09:15: The auto-scaling group failed to failover correctly because a configuration error had disabled the multi-AZ deployment setting 3 weeks ago during a routine update\n• 09:15: The engineering team was paged and identified the root cause\n• 09:23: The multi-AZ configuration was re-enabled and the service began recovering\n• 09:41: Full service restored. Total downtime: 54 minutes\n• Impact: All 12,400 active users were unable to access the platform during the outage\n• SLA: Your SLA commits to 99.9% monthly uptime. 54 minutes of downtime in a 30-day month represents 99.875% — a breach of the 99.9% SLA\n• GDPR: No personal data was affected — this was a service availability issue only\n\nWrite a formal incident communication to affected customers. Include: what happened (in plain language), the timeline of events, the root cause, what you have done to resolve it, what you are doing to prevent recurrence, and the SLA impact and any credits due. The tone should be transparent and professional — not defensive. Use at least 6 vocabulary terms from this module.",tags:["Incident Communication", "SLA", "Cloud Outage", "Customer Communication", "Platform Engineering"],targetMin:180,targetMax:270}];
+const listeningActs=[{id:0,title:"Cloud Architecture Review: Choosing the Right Service Model",sub:"Technical Review · B2 Level · approx. 109 sec",icon:"🏗️",transcript:"We are sitting in on a cloud architecture review at a financial services firm. The Enterprise Architect, Priya, is presenting her recommendation to the CTO, Tom, and the Head of Engineering, Kenji. Priya: I want to walk you through my recommendation for the new payments processing platform — specifically the choice of service model. I have evaluated IaaS, PaaS, and SaaS options. For the core payment processing engine, I am recommending IaaS. The reasons are: first, we have highly specific performance requirements — sub-100 millisecond transaction processing — that require custom kernel tuning and GPU scheduling that managed platforms do not expose. Second, our PCI-DSS compliance requires us to control the full stack from the operating system up, which PaaS does not permit. We need to own the configuration. Tom: That makes sense for the payment engine. What about the reporting layer? Priya: The reporting layer is a different story. The reporting requirements are well-understood, the data volumes are predictable, and there is no custom low-level configuration needed. For reporting, I am recommending PaaS — specifically AWS Elastic Beanstalk running our existing reporting application. The development team can deploy updates without touching any infrastructure. Kenji: And the back-office tools — the finance team's expense management and HR? Priya: Those are SaaS. No question. Workday for HR, Concur for expenses. We are not in the business of building HR or expense management software. SaaS gives us best-in-class tools without the maintenance burden. Tom: What about the vendor lock-in risk with multiple services from AWS? Priya: I have considered this carefully. The payment engine uses open standards and containerised workloads — we could migrate it in under six weeks if needed. The reporting layer does have some AWS-specific dependencies, but given that it is not business-critical and the managed service saves us approximately £120,000 per year in engineering costs, I consider that lock-in risk acceptable. Tom: I am comfortable with that trade-off. Let us proceed.",qs:[{q:"Why does Priya recommend IaaS for the payment processing engine?",opts:["It is the most cost-effective option for high-volume transaction processing", "Specific performance requirements needing custom kernel tuning and PCI-DSS compliance requiring full stack control", "IaaS is always the safest choice for financial services workloads", "The development team has more expertise in IaaS than PaaS or SaaS"],ans:1},{q:"Why does Priya recommend PaaS for the reporting layer?",opts:["PaaS is cheaper than IaaS for reporting workloads", "Well-understood requirements, predictable data volumes, and no custom low-level configuration needed — development team can deploy without touching infrastructure", "The reporting application was originally built on a PaaS platform", "PaaS provides better compliance coverage for financial reporting"],ans:1},{q:"What SaaS tools does Priya recommend for back-office functions?",opts:["Salesforce for CRM and ServiceNow for HR", "Workday for HR and Concur for expenses", "Microsoft 365 for both HR and finance", "SAP for finance and Workday for HR"],ans:1},{q:"Why does Priya say back-office tools should be SaaS without question?",opts:["SaaS is always cheaper than building and maintaining equivalent software internally", "The organisation is not in the business of building HR or expense management software — SaaS provides best-in-class tools without the maintenance burden", "Regulatory requirements mandate SaaS for back-office functions in financial services", "The existing team lacks the skills to develop or maintain these applications"],ans:1},{q:"What does Tom ask about regarding the multi-service AWS approach?",opts:["The cost of running multiple AWS services simultaneously", "The complexity of managing different AWS service models in one environment", "The vendor lock-in risk of having multiple services from the same provider", "The data residency implications of using AWS across different service models"],ans:2},{q:"Why does Priya consider the reporting layer's AWS lock-in acceptable?",opts:["AWS is unlikely to make breaking changes to Elastic Beanstalk in the near future", "The reporting layer uses fully portable, open-source tools with no AWS dependencies", "The workload is not business-critical and the managed service saves approximately £120,000 per year in engineering costs", "The development team can rebuild the reporting layer in under three months if needed"],ans:2},{q:"How has Priya mitigated lock-in risk for the payment engine?",opts:["By signing a portability agreement with AWS guaranteeing migration support", "By using open standards and containerised workloads that could be migrated in under six weeks", "By deploying the payment engine across AWS and Azure simultaneously", "By negotiating a clause allowing immediate contract termination without penalty"],ans:1},{q:"What is Tom's final response to Priya's recommendation?",opts:["He asks for a second opinion from an external cloud consultant", "He approves the IaaS recommendation but asks for more analysis on PaaS and SaaS choices", "He is comfortable with the trade-off and agrees to proceed", "He raises a concern about the PCI-DSS compliance implications of using PaaS"],ans:2}]},
+  {id:1,title:"SaaS Procurement: Evaluating Competing Vendors",sub:"Procurement Meeting · B2 Level · approx. 107 sec",icon:"📦",transcript:"The IT procurement team at a mid-sized law firm is evaluating two SaaS document management platforms. Marcus from IT and Leila from the legal operations team are presenting to the Head of IT, Sarah. Marcus: We have narrowed the field to two vendors — LegalDocs Pro and DocuVault. I want to walk you through the key differences. On SLA: LegalDocs Pro offers 99.95% uptime with a 4-hour response time SLA for critical incidents. DocuVault offers 99.9% uptime with a 2-hour response SLA. On pure uptime numbers, LegalDocs Pro is ahead, but DocuVault's faster incident response might be more valuable in practice for a firm like ours where document access is time-critical. Sarah: What does the difference between 99.95% and 99.9% actually mean in practice? Marcus: Over a year, 99.95% permits about 4.4 hours of downtime; 99.9% permits about 8.7 hours. Both are above our minimum acceptable threshold. The more important question is probably what happens when either of those SLAs is breached. LegalDocs Pro offers 10% monthly fee credit per hour over the SLA limit; DocuVault offers 5%. Leila: We also need to consider the data residency question. We have clients in the EU who are subject to GDPR. Marcus: LegalDocs Pro's primary data centres are in Dublin and Amsterdam — fully EU resident. DocuVault's European option puts data in Frankfurt, but their enterprise agreement allows the US parent company to access European customer data for support purposes, which is a significant GDPR risk. Sarah: That changes my thinking considerably. Leila: There is also the integration question. Our case management system uses a proprietary API. LegalDocs Pro has a pre-built connector; DocuVault would require custom integration work — estimated at £35,000 and six weeks. Sarah: Given the GDPR risk with DocuVault and the integration advantage, I think LegalDocs Pro is the clear recommendation. Can we proceed to contract negotiation?",qs:[{q:"What is the uptime difference between the two vendors?",opts:["LegalDocs Pro at 99.99% vs DocuVault at 99.9%", "LegalDocs Pro at 99.95% vs DocuVault at 99.9%", "LegalDocs Pro at 99.9% vs DocuVault at 99.95%", "Both vendors offer 99.9% uptime"],ans:1},{q:"What does Marcus say about DocuVault's faster incident response SLA?",opts:["It is irrelevant because DocuVault's uptime SLA is lower", "A 2-hour response SLA might be more valuable in practice for a firm where document access is time-critical", "The 2-hour response SLA is a standard industry offering and not a competitive advantage", "The response SLA only applies to critical incidents affecting all users simultaneously"],ans:1},{q:"What is the practical difference between 99.95% and 99.9% annual uptime?",opts:["99.95% permits 2 hours of downtime per year; 99.9% permits 4 hours", "99.95% permits approximately 4.4 hours per year; 99.9% permits approximately 8.7 hours", "99.95% permits 8.7 hours; 99.9% permits 17.5 hours", "The difference is negligible — both represent less than 1% annual downtime"],ans:1},{q:"What is the service credit difference between the two vendors?",opts:["Both offer the same 10% monthly credit per hour over the SLA limit", "LegalDocs Pro offers 5% per hour; DocuVault offers 10%", "LegalDocs Pro offers 10% per hour; DocuVault offers 5%", "Neither vendor offers service credits — they offer only incident reports"],ans:2},{q:"What GDPR concern does Marcus raise about DocuVault?",opts:["DocuVault stores European customer data in the United States by default", "DocuVault's European option does not encrypt data at rest", "DocuVault's enterprise agreement allows the US parent company to access European customer data for support purposes", "DocuVault does not hold GDPR compliance certifications for its European data centres"],ans:2},{q:"What is the integration advantage of LegalDocs Pro?",opts:["LegalDocs Pro has built-in case management functionality that replaces the existing system", "LegalDocs Pro has a pre-built connector for the firm's case management system; DocuVault would require £35,000 of custom integration work", "LegalDocs Pro's API is the industry standard used by all major case management systems", "LegalDocs Pro offers free integration professional services as part of the enterprise tier"],ans:1},{q:"What two factors lead Sarah to conclude that LegalDocs Pro is the clear recommendation?",opts:["Uptime SLA and service credit terms", "Cost savings and implementation timeline", "GDPR risk with DocuVault and the integration advantage of LegalDocs Pro", "Geographic coverage and incident response SLA"],ans:2},{q:"What is Sarah's final decision?",opts:["She asks for a third vendor to be added to the evaluation", "She approves DocuVault subject to a GDPR data processing agreement", "She approves LegalDocs Pro and asks the team to proceed to contract negotiation", "She defers the decision pending legal review of both vendors' data processing agreements"],ans:2}]},
+  {id:2,title:"Cloud Cost Review: Understanding the Bill",sub:"Internal Review · B2 Level · approx. 105 sec",icon:"💰",transcript:"The engineering and finance teams are reviewing the company's cloud spend following a significant cost overrun. Amara from finance and Tom from engineering are presenting to the CFO, Yuki. Yuki: I received the cloud bill for last quarter. It was 43% over budget. I need to understand why, and I need a plan. Amara: I have analysed the bill in detail. The overrun breaks down into three areas. First — compute over-provisioning. We have 47 instances running continuously that were provisioned for a load testing project in June and never terminated. These are on-demand instances costing £2,800 per month. They have been running for three months unused. Tom: That is completely unacceptable — I had no idea. Amara: Second — data transfer costs. We have a multi-cloud architecture, and we have been transferring large datasets between our AWS and Azure environments for the analytics pipeline. Inter-cloud data transfer is charged at £0.09 per gigabyte by both providers. We transferred 4.2 terabytes last quarter — £378 in transfer fees alone. Yuki: Can that data transfer be eliminated? Tom: We can redesign the analytics pipeline to run entirely on one cloud. That would eliminate the transfer cost and simplify the architecture. I would recommend centralising on AWS for analytics given our existing investment there. Amara: Third — we have no reserved instances on our production database fleet. We have been running on on-demand pricing for three years. If we had purchased reserved instances, we would have saved approximately £60,000 over that period. Yuki: What is the plan? Tom: Three actions. One — terminate the unused instances today. Saving: £2,800 per month immediately. Two — redesign the analytics pipeline to eliminate inter-cloud transfer by end of quarter. Three — purchase 3-year reserved instances for the production database fleet. Estimated annual saving: £48,000. Yuki: Approved. And I want a FinOps dashboard in place by next month so this does not happen again.",qs:[{q:"By how much was the cloud bill over budget last quarter?",opts:["23%", "33%", "43%", "53%"],ans:2},{q:"What is the first cause of the cost overrun?",opts:["Unplanned use of on-demand instances for a new product launch", "47 instances provisioned for a load testing project in June and never terminated — running unused at £2,800/month for three months", "An unexpected increase in storage costs due to data retention policy changes", "Inter-cloud data transfer costs from the multi-cloud analytics pipeline"],ans:1},{q:"What causes the data transfer costs?",opts:["Moving user data between the production database and the analytics warehouse", "Transferring large datasets between AWS and Azure environments for the analytics pipeline — charged at £0.09 per gigabyte", "Backing up data from the cloud to the company's on-premise storage", "Synchronising user files between the web application and the mobile application"],ans:1},{q:"What is Tom's proposed solution to eliminate data transfer costs?",opts:["Compress all datasets before transfer to reduce the volume charged", "Negotiate a data transfer discount with both AWS and Azure", "Redesign the analytics pipeline to run entirely on one cloud — centralising on AWS for analytics", "Use a third-party cloud interconnect service to reduce per-gigabyte transfer costs"],ans:2},{q:"What is the financial implication of not having reserved instances on the production database fleet?",opts:["The organisation will face penalties from the cloud provider for inconsistent usage", "The organisation has overpaid approximately £60,000 over three years compared to reserved instance pricing", "The databases are at risk of being shut down due to insufficient committed spend", "The organisation cannot negotiate better on-demand pricing without a commitment history"],ans:1},{q:"What are the three actions in Tom's plan?",opts:["Terminate unused instances, renegotiate pricing with AWS, and purchase reserved instances for all workloads", "Terminate unused instances, redesign the analytics pipeline to eliminate inter-cloud transfer, and purchase 3-year reserved instances for the database fleet", "Freeze all new cloud spending, audit all existing instances, and switch to a single cloud provider", "Terminate unused instances, implement auto-scaling on all workloads, and reduce database instance sizes"],ans:1},{q:"What is the estimated annual saving from purchasing reserved instances for the database fleet?",opts:["£28,000", "£38,000", "£48,000", "£60,000"],ans:2},{q:"What does Yuki ask for to prevent this happening again?",opts:["A monthly cloud spend report sent to all engineering team leads", "A mandatory approval process for any new cloud instance provisioning", "A FinOps dashboard in place by next month", "A contract review with all cloud providers to negotiate better pricing"],ans:2}]},
+  {id:3,title:"Incident Briefing: Availability Zone Failure",sub:"Incident Call · B2 Level · approx. 106 sec",icon:"🔴",transcript:"It is 09:15 UTC. The engineering team at Nexford Digital is on an incident call following an availability zone failure. Incident commander Kenji is running the call. Kenji: Okay, we have a confirmed AZ failure in EU-West-1a. Status: 28 minutes of downtime so far. All users in the affected region are experiencing a complete service outage. Who can give me a status update? Priya: The AZ failure is on the cloud provider's side — it is a hardware failure in the physical data centre. We cannot control or accelerate their recovery. Kenji: What is our failover status? Priya: This is the problem. Our multi-AZ configuration was supposed to automatically route traffic to EU-West-1b and EU-West-1c. It has not done so. I have identified the cause — three weeks ago, during a routine infrastructure update, the multi-AZ setting on our load balancer was accidentally disabled. The configuration has been sitting in a broken state since then. Kenji: Can we fix it now? Priya: Yes — I need three minutes to re-enable the multi-AZ routing and verify the health checks on EU-West-1b and EU-West-1c. Kenji: Do it. Marcus — while Priya is fixing the configuration, I need you to draft a customer status page update. Plain language, no jargon. We are experiencing a service disruption in the EU region. We have identified the cause and are actively restoring service. Estimated restoration: 15 minutes. Marcus: On it. Kenji: Yuki — I need you to check whether this breaches our SLA. We are already at 28 minutes. Our monthly SLA permits approximately 44 minutes of downtime at 99.9%. Yuki: We are at risk. If this goes beyond 16 more minutes, we breach. I will prepare the service credit calculation. Priya: Configuration re-enabled. EU-West-1b is healthy. Traffic routing is recovering. Kenji: Good. Marcus — update the status page: service is recovering. Yuki — we have approximately 54 minutes total. That is a breach. Prepare the customer communication. This will need a full post-mortem.",qs:[{q:"What is the root cause of the service outage?",opts:["A DDoS attack targeting the EU-West-1a availability zone", "A software bug in the application that caused it to crash under normal load", "A hardware failure in the EU-West-1a data centre combined with a disabled multi-AZ configuration", "A database corruption issue that caused data loss affecting EU-West-1a users"],ans:2},{q:"What should have happened automatically when EU-West-1a failed?",opts:["The cloud provider should have immediately restored the failed hardware", "Traffic should have automatically routed to EU-West-1b and EU-West-1c via the multi-AZ load balancer configuration", "The disaster recovery environment should have activated and restored service within the RTO", "Auto-scaling should have provisioned additional instances in the remaining availability zones"],ans:1},{q:"Why did the automatic failover not work?",opts:["The multi-AZ configuration requires manual activation during an actual outage", "The multi-AZ setting on the load balancer was accidentally disabled three weeks ago during a routine infrastructure update", "EU-West-1b and EU-West-1c were also experiencing the same hardware failure", "The multi-AZ configuration was never implemented — it was on the roadmap but not yet deployed"],ans:1},{q:"What is Priya's estimated time to fix the configuration?",opts:["Thirty seconds", "One minute", "Three minutes", "Ten minutes"],ans:2},{q:"What does Kenji ask Marcus to do while the fix is being applied?",opts:["Contact the cloud provider's support team to escalate the AZ failure", "Draft a customer status page update in plain language with an estimated restoration time", "Prepare the post-mortem template for the incident review meeting", "Notify all affected customers directly by email"],ans:1},{q:"What is the relevant SLA threshold for the monthly permitted downtime?",opts:["99.9% SLA permitting approximately 44 minutes of downtime per month", "99.95% SLA permitting approximately 22 minutes of downtime per month", "99.99% SLA permitting approximately 4 minutes of downtime per month", "99.9% SLA permitting approximately 87 minutes of downtime per month"],ans:0},{q:"What is the total downtime by the time service is restored?",opts:["28 minutes", "41 minutes", "54 minutes", "67 minutes"],ans:2},{q:"What does Kenji say must happen following the incident?",opts:["The infrastructure update that caused the configuration error must be rolled back immediately", "The cloud provider must be contacted to claim an SLA credit for the AZ failure", "A full post-mortem must be conducted and a customer communication with service credits prepared", "The team must implement 99.99% SLA architecture before the next sprint"],ans:2}]}];
+const casesStudies=[{tag:"Global · Cloud Computing · 2006–Present · Cloud Adoption",title:"Case Study 1: Amazon Web Services — How a Bookshop Built the World's Largest Cloud and Changed the Economics of Technology",sub:"The origin story of cloud computing and the business model that made it the dominant infrastructure paradigm",sections:[{h:"Background",t:"Amazon Web Services (AWS) was not originally designed as a product. It emerged from Amazon's internal effort in the early 2000s to build reusable, standardised infrastructure components for its own rapidly growing e-commerce platform. Engineers noticed that they were repeatedly building the same infrastructure components — compute, storage, databases, queuing systems — and that these components were valuable not just internally but to any organisation that needed to build software. In 2002, Amazon began offering web services to developers; in 2006, it launched its first major commercial services — S3 (Simple Storage Service) and EC2 (Elastic Compute Cloud). These two services established the core of the cloud computing model: pay-as-you-go access to scalable infrastructure over the internet. AWS effectively invented the commercial cloud computing market."},{h:"The Business Model Innovation",t:"AWS's commercial success rested on two innovations that were genuinely novel in enterprise technology. First, the pay-as-you-go model: organisations had always purchased technology through upfront capital expenditure — buying servers, installing them, and maintaining them for five years whether or not they were fully used. AWS converted infrastructure from a capital expense to a variable operational expense. A startup could access the same infrastructure as a Fortune 500 company for £0.05 per hour, with no minimum commitment. Second, the global infrastructure model: AWS built data centres in multiple geographic regions, giving any customer instant access to infrastructure anywhere in the world. For a UK startup to deploy an application accessible in the US, Japan, and Europe simultaneously, the pre-AWS requirement was a capital investment of millions of pounds in co-location agreements. With AWS, it required a few API calls. These two innovations combined to lower the barriers to building technology companies by an order of magnitude — and are widely credited with enabling the startup explosion of the 2010s."},{h:"Lessons and Legacy",t:"AWS's trajectory from internal tool to £80 billion annual revenue business offers enduring lessons. First, internal infrastructure problems often represent external business opportunities — AWS is the most prominent example, but the pattern has been repeated by Stripe (internal payment tooling), Twilio (internal communication tooling), and others. Second, pricing model innovation can be as disruptive as technology innovation: the shift from CapEx to OpEx fundamentally changed who could access enterprise infrastructure. Third, cloud computing's long-term competitive dynamics have proven more durable than many expected: despite the entry of Microsoft Azure, Google Cloud, and others, AWS has maintained its market leadership through its depth of services and the network effects of its developer ecosystem. Fourth, the advent of cloud computing fundamentally changed the language of IT: terms like 'instance', 'bucket', 'region', 'availability zone', and 'serverless' — all originally AWS terminology — are now standard vocabulary in the technology industry."}],qs:[{q:"What was the origin of Amazon Web Services?",opts:["Amazon acquired a cloud computing startup in 2004 and rebranded it as AWS", "AWS emerged from Amazon's internal effort to build reusable, standardised infrastructure for its own e-commerce platform", "Jeff Bezos saw an opportunity in enterprise IT outsourcing and founded AWS as a separate business", "AWS began as a third-party developer tools programme before expanding to infrastructure services"],ans:1},{q:"When did AWS launch its first major commercial services?",opts:["2002", "2004", "2006", "2008"],ans:2},{q:"What were AWS's two first major commercial services?",opts:["CloudFront and Elastic Load Balancing", "S3 (Simple Storage Service) and EC2 (Elastic Compute Cloud)", "RDS (Relational Database Service) and Lambda", "IAM (Identity and Access Management) and VPC"],ans:1},{q:"What is the first business model innovation that drove AWS's commercial success?",opts:["Bundling compute, storage, and databases into a single integrated platform", "Pay-as-you-go pricing — converting infrastructure from capital expenditure to variable operational expense with no minimum commitment", "Offering free tiers to attract developers who would later upgrade to paid plans", "Providing 24/7 customer support included in all pricing tiers"],ans:1},{q:"What did the global infrastructure model enable for small organisations?",opts:["Access to enterprise-grade security without building their own security operations centre", "Instant access to infrastructure anywhere in the world without capital investment in co-location agreements", "Compliance with international data residency regulations at no additional cost", "Automatic disaster recovery across geographic regions without additional configuration"],ans:1},{q:"What pre-AWS requirement does the text describe for a UK startup to deploy globally?",opts:["Hiring engineers with experience in multiple geographic markets", "A capital investment of millions of pounds in co-location agreements across multiple regions", "Negotiating bandwidth agreements with international internet service providers", "Obtaining data processing licenses in each country where users were located"],ans:1},{q:"What does the text credit AWS's innovations with enabling?",opts:["The dominance of three major cloud providers over the technology market", "The startup explosion of the 2010s — by lowering barriers to building technology companies by an order of magnitude", "The decline of on-premise server infrastructure in enterprise technology", "The shift from software licences to subscription-based pricing models"],ans:1},{q:"What pattern does the text identify beyond AWS — internal infrastructure problems representing external opportunities?",opts:["Amazon's logistics network becoming Amazon Logistics", "Stripe for payments and Twilio for communications — both built from internal tooling", "Microsoft's enterprise software expertise becoming Azure", "Google's search infrastructure becoming Google Cloud Platform"],ans:1},{q:"What does the text say about AWS's market position despite competition from Azure and Google Cloud?",opts:["AWS has lost significant market share to Azure and now holds second place", "AWS has maintained market leadership through depth of services and developer ecosystem network effects", "AWS, Azure, and Google Cloud have converged to equal market shares", "AWS has focused only on startups, ceding the enterprise market to Azure"],ans:1},{q:"What does the text say AWS terminology contributed to the industry?",opts:["AWS terminology replaced existing vendor-specific terms with neutral open standards", "Terms like instance, bucket, region, availability zone, and serverless — originally AWS terminology — are now standard vocabulary in the technology industry", "AWS's technical vocabulary is now formalised in IEEE standards", "AWS's API design patterns became the foundation for the OpenAPI Specification"],ans:1}]},
+  {tag:"Industry · SaaS · 1999–Present · Software Business Models",title:"Case Study 2: Salesforce and the SaaS Revolution — How Subscription Software Changed the Business of Enterprise IT",sub:"How one company's model transformed how enterprise software is sold, delivered, and evaluated — and the language it introduced",sections:[{h:"Background",t:"When Marc Benioff founded Salesforce in 1999, the dominant model for enterprise software was the perpetual licence: organisations paid a large upfront fee for the right to use software indefinitely, installed it on their own servers, paid annual maintenance fees of around 20% of the licence value, and managed all upgrades themselves. Implementation projects for major enterprise applications (SAP, Oracle, Siebel) routinely cost three to five times the licence value and took years to complete. Benioff's radical proposition was simple: deliver CRM software over the internet, on a subscription basis, with no installation required, and update it automatically. The tagline 'No Software' — which appeared on t-shirts and the Salesforce website — was a direct attack on the incumbent model. Salesforce launched a viral campaign mocking the complexity of traditional CRM, and within years had built the world's largest CRM platform."},{h:"The Impact on Enterprise Software",t:"Salesforce's success transformed the economics and language of enterprise software. The subscription model — monthly or annual recurring fees rather than upfront licence payments — changed how buyers and sellers evaluated software value. Sellers began measuring Annual Recurring Revenue (ARR), Monthly Recurring Revenue (MRR), and Customer Lifetime Value (CLV); buyers began focusing on Total Cost of Ownership (TCO) over five years rather than upfront purchase cost. The concept of 'time to value' — how quickly an organisation could begin benefiting from a software investment — became a primary evaluation criterion: Salesforce's cloud delivery model meant customers could be live in weeks rather than years. The metrics of SaaS business health — churn rate, net revenue retention, expansion revenue — became a new language for evaluating software companies, used by investors, buyers, and boards alike."},{h:"Lessons for IT Professionals",t:"The Salesforce story has specific lessons for IT professionals evaluating SaaS today. First, the subscription model shifts risk from buyer to vendor: if the software does not deliver value, the customer does not renew — creating a structural incentive for vendors to ensure adoption and ongoing value delivery. Second, SaaS procurement is ongoing, not a one-time event: the vendor relationship continues throughout the subscription, and the key metrics are renewal rate, support quality, and feature roadmap delivery. Third, multi-tenancy and automatic updates mean SaaS customers do not control the upgrade schedule: a vendor can release a breaking change that affects all customers simultaneously. Fourth, data portability must be evaluated at procurement: when leaving a SaaS vendor, can you extract your data in a usable format? Many SaaS contracts are weak on data portability obligations. Fifth, the SaaS model has democratised access to enterprise-grade software — but it has also created new dependencies that must be actively managed."}],qs:[{q:"What was the dominant enterprise software model before Salesforce?",opts:["Annual subscription fees with cloud delivery and automatic updates", "Perpetual licences — a large upfront fee for indefinite use, installed on the customer's own servers", "Open-source software with commercial support contracts", "Managed service agreements where vendors operated software on behalf of customers"],ans:1},{q:"What was Salesforce's core proposition at launch?",opts:["The most comprehensive CRM functionality available in the enterprise market", "CRM software delivered over the internet, on a subscription basis, with no installation and automatic updates", "A cheaper alternative to Siebel CRM using open-source technology", "A CRM platform built specifically for small and medium-sized businesses"],ans:1},{q:"What does the tagline 'No Software' represent?",opts:["Salesforce's claim that their product contained no software bugs", "A direct attack on the complexity and cost of the incumbent perpetual licence model", "A reference to Salesforce's use of cloud infrastructure rather than software", "The Salesforce founding team's background outside the software industry"],ans:1},{q:"What new metrics did the subscription model introduce for sellers?",opts:["Licence revenue, maintenance revenue, and professional services revenue", "Annual Recurring Revenue (ARR), Monthly Recurring Revenue (MRR), and Customer Lifetime Value (CLV)", "Deal size, close rate, and average selling price", "Market share, customer count, and geographic coverage"],ans:1},{q:"What became a primary evaluation criterion due to SaaS cloud delivery?",opts:["Total infrastructure cost including data centre space and energy", "Time to value — how quickly an organisation could begin benefiting from the software investment", "Number of features included in the base subscription tier", "Security certifications held by the vendor's data centres"],ans:1},{q:"What risk does the subscription model shift from buyer to vendor?",opts:["Financial risk — the vendor absorbs the cost of implementation", "Technology risk — the vendor is responsible for all security incidents", "Value delivery risk — if the software does not deliver value, the customer does not renew, creating an incentive for ongoing value delivery", "Compliance risk — the vendor assumes regulatory liability for data processing"],ans:2},{q:"What is the implication of multi-tenancy for SaaS customers regarding upgrades?",opts:["Customers must manually approve all platform updates before they are applied", "Customers can choose their own upgrade schedule from options provided by the vendor", "Customers do not control the upgrade schedule — the vendor can release changes affecting all customers simultaneously", "Customers receive upgrades one month after they are released to the general customer base"],ans:2},{q:"What must be evaluated at SaaS procurement regarding data?",opts:["The vendor's data retention policy and backup frequency", "Data portability — whether the organisation can extract its data in a usable format when leaving the vendor", "The data classification scheme used by the vendor for their own compliance purposes", "The vendor's data processing agreement and GDPR compliance certification"],ans:1},{q:"What does the case study say the SaaS model has done for enterprise-grade software?",opts:["Made enterprise software affordable only for organisations with significant IT budgets", "Concentrated the market around three or four dominant vendors with limited competition", "Democratised access to enterprise-grade software — while creating new dependencies that must be actively managed", "Transferred all technology risk from organisations to their software vendors"],ans:2},{q:"What new language did Salesforce's success introduce for evaluating SaaS companies?",opts:["Bug count, deployment frequency, and mean time to recovery", "Churn rate, net revenue retention, and expansion revenue — used by investors, buyers, and boards", "Code quality scores, security vulnerability counts, and performance benchmarks", "Employee headcount, office locations, and years in business"],ans:1}]}];
+const assessQs=[{q:"What is the key difference between IaaS and SaaS?",opts:["IaaS is for large enterprises; SaaS is for small businesses", "With IaaS the customer manages from the OS upward; with SaaS the provider manages everything including the application", "IaaS is always cheaper than SaaS for equivalent functionality", "IaaS uses physical servers; SaaS uses virtualised servers"],ans:1},{q:"What does a '99.9% uptime' SLA actually permit?",opts:["9 hours of downtime per month", "Approximately 8.7 hours of downtime per year", "Less than 1 minute of downtime per day", "No downtime — 99.9% means essentially always available"],ans:1},{q:"What is cloud elasticity?",opts:["The ability to negotiate flexible payment terms with cloud providers", "The ability to automatically increase or decrease resource capacity in response to demand", "The ability to move workloads between cloud providers without redesign", "The ability to access cloud services from any device or location"],ans:1},{q:"What is the shared responsibility model?",opts:["A cost-sharing agreement between an organisation and its cloud provider", "A framework defining which security obligations belong to the provider and which to the customer", "A multi-cloud strategy where security tools are shared across providers", "A compliance framework for regulated industries allocating audit responsibilities"],ans:1},{q:"What is vendor lock-in?",opts:["A contractual obligation preventing switching during a commitment period", "The dependency arising when systems become so tightly coupled to a provider that switching is prohibitively expensive", "A security control preventing unauthorised access to cloud resources", "The technical difficulty of migrating large datasets between providers"],ans:1},{q:"What did AWS's pay-as-you-go model convert infrastructure from?",opts:["An operational expense to a capital expense", "A capital expense to a variable operational expense with no minimum commitment", "A monthly cost to an annual cost with predictable pricing", "A vendor-specific cost to a commodity cost available from multiple providers"],ans:1},{q:"What is FinOps?",opts:["A financial services cloud platform", "A practice combining financial management and cloud engineering to understand, optimise, and control cloud spend", "A cloud billing aggregation tool", "A framework for financial compliance in regulated cloud environments"],ans:1},{q:"What is a reserved instance?",opts:["A cloud instance reserved exclusively for one customer with no shared tenancy", "A pricing model offering 30-60% discount versus on-demand in exchange for a 1-3 year commitment", "A backup instance that activates when the primary fails", "A virtual machine with guaranteed performance unaffected by other customers"],ans:1},{q:"What is the Type 3 conditional used for in cloud contexts?",opts:["Describing how systems will behave under specific conditions", "Discussing hypothetical architectural alternatives", "Analysing what would have happened under different past conditions — used in post-mortems and cost reviews", "Expressing mandatory requirements in SLA documents"],ans:2},{q:"What does 'shall' signal in a cloud contract or SLA?",opts:["A recommended best practice that the provider will attempt to follow", "A binding obligation — non-performance has contractual consequences", "A provisional commitment subject to technical feasibility", "A aspirational target the provider will use reasonable endeavours to achieve"],ans:1},{q:"What new risk does the SaaS subscription model create regarding upgrades?",opts:["The customer must pay for all upgrades separately from the base subscription", "The vendor can release changes affecting all customers simultaneously — the customer does not control the upgrade schedule", "Upgrades are only available to customers on premium subscription tiers", "The customer must test all upgrades in a staging environment before they apply to production"],ans:1},{q:"What is serverless computing?",opts:["Computing that removes all server infrastructure from the architecture entirely", "A cloud execution model where developers write functions triggered by events — the provider manages all provisioning, scaling, and maintenance", "A type of PaaS where servers are provisioned automatically on demand", "A programming model where applications run without any backend server component"],ans:1},{q:"What is the practical implication of multi-tenancy for SaaS security?",opts:["Multi-tenancy means all customer data is accessible to other tenants by default", "Security controls must ensure logical separation of tenant data within the shared infrastructure", "Multi-tenant architectures cannot achieve the security standards required for regulated industries", "Multi-tenancy eliminates the need for encryption because the provider manages physical security"],ans:1},{q:"What is the difference between RPO and RTO?",opts:["RPO is the cost of recovery; RTO is the time taken", "RPO is the maximum acceptable data loss (in time); RTO is the maximum acceptable time to restore service", "RPO applies to databases; RTO applies to applications", "They are the same metric from different perspectives"],ans:1},{q:"What is the Salesforce case study's lesson about the subscription model shifting risk?",opts:["Financial risk is transferred to the vendor who absorbs implementation costs", "If the software does not deliver value, the customer does not renew — creating a structural incentive for ongoing value delivery", "Technology risk is fully transferred to the vendor who assumes all security liability", "Compliance risk is shared equally between vendor and customer"],ans:1},{q:"What does a CDN do?",opts:["A type of cloud database replicating data across multiple regions", "A globally distributed network caching and delivering content from locations close to the end user", "A container deployment network for managing microservices at scale", "A cloud-native development framework for distributed applications"],ans:1},{q:"In the cloud cost review listening activity, what caused the largest component of the cost overrun?",opts:["Unexpectedly high data transfer fees between cloud providers", "47 instances provisioned for load testing and never terminated — running unused at £2,800 per month", "Reserved instances expiring and reverting to on-demand pricing", "Unexpected storage cost increases due to data retention policy changes"],ans:1},{q:"What is the pragmatic approach to multi-cloud lock-in risk described in the reading?",opts:["Avoid all provider-specific services and use only containerised portable workloads", "Accept lock-in on all workloads because managed service benefits always outweigh portability", "Ensure strategically critical workloads are portable while accepting some lock-in where managed services provide genuine value", "Negotiate contractual portability guarantees before beginning any cloud migration"],ans:2},{q:"What data portability obligation should be evaluated at SaaS procurement?",opts:["Whether the vendor will provide a 90-day data extraction period after contract termination", "Whether the organisation can extract its data in a usable format when leaving the vendor", "Whether the vendor's data is covered by the same GDPR compliance certification as the application", "Whether the vendor provides real-time data export capabilities as part of the base subscription"],ans:1},{q:"What does 'cloud-native' mean?",opts:["An application that was originally built for on-premise and then migrated to the cloud", "An application built to fully exploit cloud advantages — using microservices, containers, APIs, and managed services by design", "Any application that runs on cloud infrastructure regardless of how it was designed", "An application certified by a cloud provider as optimised for their platform"],ans:1}];
+
+// ── Navigation ──────────────────────────────────────────────
+function openSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='translateX(0)';sb.classList.add('open');document.getElementById('overlay').style.display='block';}
+function closeSidebar(){var sb=document.getElementById('sidebar');sb.style.transform='';sb.classList.remove('open');document.getElementById('overlay').style.display='none';}
+function goTo(rawId){
+  // strip 'sec-' prefix if present for logic key
+  const id=rawId.replace(/^sec-/,'');
+  const secId='sec-'+id;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById(secId);
+  if(sec){sec.classList.add('active');}
+  // mark active nav: match onclick containing this id
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    const oc=n.getAttribute('onclick')||'';
+    if(oc.includes("'"+secId+"'")||oc.includes('"'+secId+'"')){n.classList.add('active');}
+  });
+  window.scrollTo(0,0);
+  closeSidebar();
+  if(id==='overview') initOverview();
+  else if(id==='speaking') initSpeaking();
+  else if(id==='wordbank') initWordBank();
+  else if(id==='reading') initReading();
+  else if(id==='vocab') initVocab();
+  else if(id==='grammar') initGrammar();
+  else if(id==='gramreview') initGramReview();
+  else if(id==='writing') initWriting();
+  else if(id==='listening') initListening();
+  else if(id==='cases') initCases();
+  else if(id==='assessment') initAssessment();
+}
+
+// ── MCQ Engine ───────────────────────────────────────────────
+function renderMCQ2(containerId, questions, prefix, darkMode){
+  const c=document.getElementById(containerId);
+  if(!c)return;
+  let h='';
+  questions.forEach((item,i)=>{
+    const letters=['A','B','C','D'];
+    const dk=darkMode?'lmcq-opt':'';
+    h+=`<div class="mcq-block" id="${prefix}-q${i}">
+      <div class="mcq-q">${i+1}. ${item.q}</div>
+      <div class="mcq-opts">`;
+    item.opts.forEach((opt,j)=>{
+      h+=`<div class="mcq-opt ${dk}" onclick="pickOpt('${prefix}',${i},${j},${item.ans})" id="${prefix}-${i}-${j}">
+        <span class="opt-letter">${letters[j]}</span>${opt}</div>`;
+    });
+    h+=`</div></div>`;
+  });
+  c.innerHTML=h;
+}
+function pickOpt(prefix,qi,oi,ans){
+  const block=document.getElementById(prefix+'-q'+qi);
+  if(!block||block.dataset.done)return;
+  block.dataset.done='1';
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    if(j===ans)el.classList.add('correct');
+    else if(j===oi)el.classList.add('incorrect');
+    el.style.pointerEvents='none';
+  });
+}
+
+// ── Overview ─────────────────────────────────────────────────
+function initOverview(){
+  const c=document.getElementById('overviewContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card">
+    <div class="card-title">📘 What You Will Learn</div><div class="card-bar"></div>
+    <div class="outcomes-grid">${outcomes.map((o,i)=>`<div class="outcome"><span class="out-num">${String(i+1).padStart(2,'0')}</span><span class="out-text">${o}</span></div>`).join('')}</div>
+  </div>`;
+  setTimeout(()=>{
+    const pf=document.getElementById('progFill');
+    const pp=document.getElementById('progPct');
+    if(pf)pf.style.width='9%';
+    if(pp)pp.textContent='9%';
+  },300);
+}
+
+// ── Speaking ─────────────────────────────────────────────────
+function initSpeaking(){
+  const c=document.getElementById('speakingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">🎙️ Discussion Questions</div><div class="card-bar"></div>
+    <div class="speaking-grid">${speakingQs.map((q,i)=>`<div class="speaking-card"><div class="q-num">Q${String(i+1).padStart(2,'0')}</div><div class="q-text">${q}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Word Bank ─────────────────────────────────────────────────
+function initWordBank(){
+  const c=document.getElementById('wordBankContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  c.innerHTML=`<div class="card"><div class="card-title">📚 Key Legal Terms</div><div class="card-bar"></div>
+    <div class="wb-grid">${wordBank.map(w=>`<div class="wb-card"><span class="wb-emoji">${w.emoji}</span><div class="wb-term">${w.term}</div><div class="wb-def">${w.def}</div></div>`).join('')}</div>
+  </div>`;
+}
+
+// ── Reading ───────────────────────────────────────────────────
+function initReading(){
+  const c=document.getElementById('readingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  readingTexts.forEach((rt,ti)=>{
+    h+=`<div class="card">
+      <div class="reading-box"><h4>${rt.title}</h4>${rt.paragraphs.map(p=>`<p>${p}</p>`).join('')}</div>
+      <div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>
+      <div id="rmcq-${ti}"></div>
+    </div>`;
+  });
+  c.innerHTML=h;
+  readingTexts.forEach((_,ti)=>{
+    renderMCQ2('rmcq-'+ti, readingTexts[ti].questions, 'r'+ti, false);
+  });
+}
+
+// ── Vocabulary ────────────────────────────────────────────────
+let curVocab=0;
+function initVocab(){showVocab(0);}
+function showVocab(idx){
+  curVocab=idx;
+  document.querySelectorAll('#sec-vocab .ex-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  [0,1,2].forEach(i=>{
+    const p=document.getElementById('vex-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+  if(idx===0){renderMCQ2('vex-0',vocabMCQ,'vm0',false);}
+  else if(idx===1){renderGapFill('vex-1',vocabGapFill,'vg1');}
+  else if(idx===2){renderTF('vex-2',vocabTF,'vt2');}
+}
+function renderGapFill(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const blanks=items.map(function(it){return it.blank;});
+  let bankHtml='<div class="gf-bank-box"><div class="gf-bank-label">Word bank:</div><div class="gf-bank-pills">';
+  blanks.forEach(function(w){
+    bankHtml+='<span class="gf-pill" id="'+prefix+'-pill-'+w.replace(/\s+/g,'-')+'">'+w+'</span>';
+  });
+  bankHtml+='</div></div>';
+  let sentHtml='<div class="gf-sentences">';
+  items.forEach(function(item,i){
+    sentHtml+='<div class="gf-row" id="'+prefix+'-row'+i+'">'
+      +'<div class="gf-sentence-text"><span class="gf-num">'+(i+1)+'.</span> '+item.before
+      +' <span class="gf-blank-wrap"><input class="gf-underline-input" id="'+prefix+'-i'+i
+      +'" placeholder="\u2026" autocomplete="off" spellcheck="false"/>'
+      +'<span class="gf-underline"></span></span> '
+      +item.after+'</div>'
+      +'<div class="gf-row-fb" id="'+prefix+'-f'+i+'"></div>'
+      +'</div>';
+  });
+  sentHtml+='</div>';
+  const btnBar='<div class="gf-btn-bar">'
+    +'<button class="gf-check-btn" onclick="gradeGapFill(\''+prefix+'\',vocabGapFill)">Check Answers</button>'
+    +'<button class="gf-reset-btn" onclick="resetGapFill(\''+prefix+'\',vocabGapFill)">&#8635; Reset</button>'
+    +'<span class="gf-score-display" id="'+prefix+'-score"></span>'
+    +'</div>';
+  c.innerHTML='<div class="card gf-card">'
+    +'<div class="card-title">Exercise 2: Gap Fill</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="gf-instr">Type the correct word or phrase in each gap. Use the word bank for help. Click <strong>Check Answers</strong> when ready.</p>'
+    +bankHtml+sentHtml+btnBar
+    +'</div>';
+}
+function checkGF2(prefix,i,ans){}
+
+function gradeGapFill(prefix,items){
+  let correct=0;
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(!inp||!fb)return;
+    const val=inp.value.trim().toLowerCase().replace(/['']/g,"'");
+    const ans=item.blank.toLowerCase();
+    inp.disabled=true;
+    if(val===ans){
+      correct++;
+      inp.classList.add('gf-correct'); inp.classList.remove('gf-incorrect');
+      fb.innerHTML='<span class="gf-fb-ok">\u2713 Correct</span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-used');
+    } else {
+      inp.classList.add('gf-incorrect'); inp.classList.remove('gf-correct');
+      fb.innerHTML='<span class="gf-fb-err">\u2717 The answer is: <strong>'+item.blank+'</strong></span>';
+      const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+      if(pill)pill.classList.add('gf-pill-highlight');
+    }
+  });
+  const pct=Math.round(correct/items.length*100);
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl){
+    const col=pct>=80?'var(--green-accent)':pct>=50?'var(--gold-light)':'var(--red-accent)';
+    scoreEl.innerHTML='<span style="color:'+col+';font-weight:700;">'+correct+'/'+items.length+' \u2014 '+pct+'%</span>';
+  }
+}
+
+function resetGapFill(prefix,items){
+  items.forEach(function(item,i){
+    const inp=document.getElementById(prefix+'-i'+i);
+    const fb =document.getElementById(prefix+'-f'+i);
+    if(inp){inp.value='';inp.disabled=false;inp.classList.remove('gf-correct','gf-incorrect');}
+    if(fb)fb.innerHTML='';
+    const ans=item.blank.toLowerCase();
+    const pill=document.getElementById(prefix+'-pill-'+ans.replace(/\s+/g,'-'));
+    if(pill){pill.classList.remove('gf-pill-used','gf-pill-highlight');}
+  });
+  const scoreEl=document.getElementById(prefix+'-score');
+  if(scoreEl)scoreEl.innerHTML='';
+}
+function renderTF(containerId,items,prefix){
+  const c=document.getElementById(containerId);
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='<div class="card tf-card">'
+    +'<div class="card-title">Exercise 3: True / False</div>'
+    +'<div class="card-bar"></div>'
+    +'<p class="tf-instr">Decide if each statement is TRUE or FALSE.</p>'
+    +'<div class="tf-list">';
+  items.forEach(function(item,i){
+    const stmt=item.statement||item.stmt||'';
+    const ans=item.ans;
+    h+='<div class="tf-item" id="'+prefix+'-row'+i+'">'
+      +'<div class="tf-item-stmt">'+(i+1)+'. '+stmt+'</div>'
+      +'<div class="tf-item-btns">'
+      +'<button class="tf-item-btn" id="'+prefix+'-T'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',true,'+ans+')">True</button>'
+      +'<button class="tf-item-btn" id="'+prefix+'-F'+i+'" onclick="pickTF2(\''+prefix+'\','+i+',false,'+ans+')">False</button>'
+      +'</div>'
+      +'<div class="tf-item-fb" id="'+prefix+'-fb'+i+'"></div>'
+      +'</div>';
+  });
+  h+='</div></div>';
+  c.innerHTML=h;
+}
+
+function pickTF2(prefix,i,chosen,ans){
+  const row=document.getElementById(prefix+'-row'+i);
+  if(!row||row.dataset.done)return;
+  row.dataset.done='1';
+  const fb=document.getElementById(prefix+'-fb'+i);
+  const btnT=document.getElementById(prefix+'-T'+i);
+  const btnF=document.getElementById(prefix+'-F'+i);
+  const correct=chosen===ans;
+  if(btnT){
+    if(ans===true) btnT.classList.add('tf-btn-correct');
+    else if(chosen===true) btnT.classList.add('tf-btn-wrong');
+    btnT.disabled=true;
+  }
+  if(btnF){
+    if(ans===false) btnF.classList.add('tf-btn-correct');
+    else if(chosen===false) btnF.classList.add('tf-btn-wrong');
+    btnF.disabled=true;
+  }
+  if(fb){
+    fb.innerHTML=correct
+      ?'<span class="tf-fb-ok">✓ Correct!</span>'
+      :'<span class="tf-fb-err">✗ The correct answer is <strong>'+(ans?'True':'False')+'</strong>.</span>';
+  }
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+let curGram=0;
+function initGrammar(){showGram(0);}
+function showGram(idx){
+  curGram=idx;
+  document.querySelectorAll('#sec-grammar .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  [0,1,2].forEach(function(i){var p=document.getElementById('gex-'+i);if(p)p.style.display=i===idx?'block':'none';});
+  var ex=grammarEx[idx];
+  if(!document.getElementById('gex-'+idx).dataset.built){
+    document.getElementById('gex-'+idx).dataset.built='1';
+    var instr='<div class="card"><div class="card-title">'+ex.title+'</div><div class="card-bar"></div><p style="font-size:13.5px;color:var(--text-mid);margin-bottom:18px;">'+ex.instr+'</p><div id="gmcq-'+idx+'"></div></div>';
+    document.getElementById('gex-'+idx).innerHTML=instr;
+  }
+  renderMCQ2('gmcq-'+idx,ex.qs,'gm'+idx,false);
+}
+
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ──────────────────────────────────────────────────
+let curTask=0;
+function initWriting(){
+  const c=document.getElementById('writingContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let html='<div class="ex-tabs">';
+  writingTasks.forEach(function(t,i){
+    html+='<div class="ex-tab'+(i===0?' active':'')+'" onclick="showTask('+i+')">'+t.type+'</div>';
+  });
+  html+='</div>';
+  writingTasks.forEach(function(t,i){
+    const minW=t.targetMin||120;
+    const promptFormatted=t.prompt.replace(/\n/g,'<br>');
+    html+='<div id="wpanel-'+i+'" style="display:'+(i===0?'block':'none')+'">'
+      +'<div class="card">'
+      +'<div class="w-task-header">'
+      +'<div class="w-task-pill">'+t.activity+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+t.title+'</div>'
+      +'</div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="w-prompt-box"><div class="w-prompt-label">📋 '+t.type+' — '+t.title+'</div>'
+      +'<div class="w-prompt-text">'+promptFormatted+'</div>'
+      +'<div class="w-target">Target: '+minW+'–'+(t.targetMax||200)+' words</div>'
+      +'</div>'
+      +'<textarea class="w-textarea" id="w-area-'+i+'" placeholder="Write your response here…" oninput="wCount('+i+')"></textarea>'
+      +'<div class="w-meta-row"><span class="w-counter" id="w-count-'+i+'">0 words</span>'
+      +'<div style="display:flex;gap:10px;">'
+      +'<button class="clear-btn" onclick="clearWriting('+i+')">Clear</button>'
+      +'<button class="ac-btn" id="w-btn-'+i+'" onclick="runAIFeedback('+i+')">✨ Auto-Correct &amp; Get Feedback</button>'
+      +'</div></div>'
+      +'<div id="w-fb-'+i+'"></div>'
+      +'</div></div>';
+  });
+  c.innerHTML=html;
+}
+function showTask(idx){
+  curTask=idx;
+  document.querySelectorAll('#sec-writing .ex-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  writingTasks.forEach(function(_,i){
+    var p=document.getElementById('wpanel-'+i);
+    if(p)p.style.display=i===idx?'block':'none';
+  });
+}
+function wCount(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const wc=document.getElementById('w-count-'+idx);
+  if(!ta||!wc)return;
+  const words=ta.value.trim()===''?0:ta.value.trim().split(/\s+/).length;
+  const min=writingTasks[idx].targetMin||120;
+  wc.textContent=words+' words';
+  wc.style.color=words>=min?'var(--green-accent)':'var(--text-mid)';
+}
+function clearWriting(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  if(ta)ta.value='';
+  if(fb)fb.innerHTML='';
+  wCount(idx);
+}
+
+// ── Grammar ───────────────────────────────────────────────────
+// ── Grammar Review ────────────────────────────────────────────
+function initGramReview(){
+  const c=document.getElementById('gramRevContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  grammarReview.forEach(function(gr){
+    h+='<div class="card" style="margin-bottom:24px;">'
+      +'<div class="gr-header"><div class="gr-icon">📋</div><div><div class="card-title">'+gr.title+'</div><div class="card-bar"></div></div></div>'
+      +'<div class="gr-body">';
+    gr.pts.forEach(function(pt){
+      h+='<div class="gr-item"><div class="gr-label">'+pt.h+'</div>'
+        +'<p style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:10px;">'+pt.b+'</p>'
+        +'<div class="gr-examples">';
+      pt.ex.forEach(function(e){h+='<div class="gr-ex">'+e+'</div>';});
+      h+='</div></div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+}
+
+// ── Writing ───────────────────────────────────────────────────
+async function runAIFeedback(idx){
+  const ta=document.getElementById('w-area-'+idx);
+  const fb=document.getElementById('w-fb-'+idx);
+  const btn=document.getElementById('w-btn-'+idx);
+  if(!ta||!fb)return;
+  const text=ta.value.trim();
+  const task=writingTasks[idx];
+  const minW=task.targetMin||120;
+  const words=text===''?0:text.trim().split(/\s+/).length;
+  if(words<30){
+    fb.innerHTML='<div class="fb-warn-box">⚠️ Please write at least 30 words before requesting feedback.</div>';
+    return;
+  }
+  btn.disabled=true;
+  btn.textContent='Analysing…';
+  fb.innerHTML='<div class="fb-loading-box"><span class="spin">⏳</span> AI is reviewing your writing…</div>';
+
+  // Rule-based context data
+  const sentences=text.split(/[.!?]+/).filter(s=>s.trim().length>3);
+  const avgSentLen=sentences.length?Math.round(words/sentences.length):0;
+  const goodLength=words>=minW&&words<=(task.targetMax||250);
+  const vocabTerms=["cloud computing","IaaS","PaaS","SaaS","multi-cloud","SLA","elasticity","auto-scaling","multi-tenancy","subscription model","shared responsibility model","FinOps","region","availability zone","disaster recovery","CDN","container","serverless","vendor lock-in","cloud-native","reserved instance"];
+  const vocabHits=vocabTerms.filter(t=>text.toLowerCase().includes(t));
+
+  const systemPrompt=`You are an expert Business English writing coach specialising in IT and Digital Professions English at B1-B2 level. You give SPECIFIC, TEXT-ANCHORED feedback — always quoting or referencing the student's actual words. Never give generic advice.
+
+Return ONLY a JSON object with these exact keys — no markdown, no extra text:
+{
+  "score": <integer 0-100>,
+  "level": <"Needs Work"|"Developing"|"Proficient"|"Advanced"|"Excellent">,
+  "overall": <1 sentence overall impression referencing the student's actual writing>,
+  "grammar": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about grammar in THIS text — quote or reference actual sentences>
+  },
+  "vocabulary": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about word choices in THIS text — suggest a precise improvement>
+  },
+  "tone": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about register and formality in THIS text>
+  },
+  "structure": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about paragraph organisation and logical flow in THIS text>
+  },
+  "fluency": {
+    "rating": <"Good"|"Satisfactory"|"Needs Attention">,
+    "comment": <specific observation about sentence variety and connectives in THIS text — give a concrete example>
+  },
+  "corrected": <one improved version of the weakest sentence from the text — copy the original then rewrite it>
+}`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1200,
+        system:systemPrompt,
+        messages:[{role:'user',content:'Task: '+task.type+' — '+task.title+'\nPrompt: '+task.prompt+'\n\nStudent writing ('+words+' words):\n'+text}]
+      })
+    });
+    const data=await res.json();
+    let p;
+    try{
+      const raw=data.content[0].text.replace(/```json|```/g,'').trim();
+      p=JSON.parse(raw);
+    }catch(e){throw new Error('parse');}
+
+    const score=Math.min(100,Math.max(0,p.score||70));
+    const level=p.level||'Proficient';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':score>=50?'#e09b00':'#d63031';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const cats=[
+      {label:'Grammar',key:'grammar',icon:'📐'},
+      {label:'Vocabulary',key:'vocabulary',icon:'📖'},
+      {label:'Tone',key:'tone',icon:'🎙️'},
+      {label:'Structure',key:'structure',icon:'🏗️'},
+      {label:'Fluency',key:'fluency',icon:'✨'}
+    ];
+
+    let catsHtml='';
+    cats.forEach(function(cat){
+      const d=p[cat.key]||{};
+      catsHtml+='<div class="fb-cat-row">'
+        +'<div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span>'
+        +'<strong class="fb-cat-label">'+cat.label+':</strong>'
+        +ratingIcon(d.rating||'Satisfactory')+'</div>'
+        +'<div class="fb-cat-comment">'+(d.comment||'')+'</div>'
+        +'</div>';
+    });
+
+    const lengthOk=goodLength
+      ?'<span class="fb-check">✓ '+words+' words — within target</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3
+      ?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>'
+      :'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header">'
+      +'<div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div>'
+      +'</div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +(p.corrected?'<div class="fb-corrected-block"><span class="fb-corrected-tag">✏️ Suggested rewrite:</span> '+p.corrected+'</div>':'')
+      +(p.overall?'<div class="fb-overall">✓ Overall: '+p.overall+'</div>':'')
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSentLen+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }catch(err){
+    // Rule-based fallback — still structured with 5 categories
+    const formalConnectives=['therefore','furthermore','consequently','moreover','however','nevertheless','in addition','as a result','thus','hence'];
+    const connUsed=formalConnectives.filter(w=>text.toLowerCase().includes(w)).length;
+    const avgSL=sentences.length?Math.round(words/sentences.length):0;
+    const score=Math.min(100,Math.max(20,(goodLength?20:0)+(vocabHits.length>=3?20:vocabHits.length*5)+(avgSL>=8&&avgSL<=22?15:0)+(/^[A-Z]/.test(text)?10:0)+(connUsed>=1?15:0)+20));
+    const level=score>=85?'Advanced':score>=70?'Proficient':score>=50?'Developing':'Needs Work';
+    const scoreColor=score>=85?'#ffd040':score>=70?'#f5b800':'#e09b00';
+
+    const gramOk=text.match(/[A-Z][^.!?]*[.!?]/g);
+    const gramComment=gramOk&&gramOk.length>0?'Check subject-verb agreement and ensure consistent verb tense throughout your response.':'Ensure each sentence begins with a capital letter and ends with a full stop.';
+    const vocComment=vocabHits.length>=3?'Good use of module vocabulary. Consider replacing generic verbs with more precise professional alternatives.':'Consider incorporating more module vocabulary terms — aim for at least 3 in a formal legal or compliance response.';
+    const toneComment=/dear|hi |hey |thanks/i.test(text)?'Some phrasing appears too informal for a professional compliance context. Avoid casual openers and closers.':'The register appears appropriate for the task.';
+    const structComment=sentences.length<3?'Your response would benefit from clearer paragraph structure — aim for an opening, body, and conclusion.':connUsed===0?'Consider organising your response with a clear introduction, supporting points, and a conclusion.':'Good paragraph structure detected.';
+    const fluComment=connUsed===0?'Your response would benefit from one or more connecting phrases between paragraphs (e.g., "Furthermore," "As a result,") to improve logical flow.':'Good use of connectives to link ideas.';
+
+    const ratingIcon=r=>(r==='Good'?'<span class="fb-cat-good">Good</span>':r==='Satisfactory'?'<span class="fb-cat-sat">Satisfactory</span>':'<span class="fb-cat-att">Needs Attention</span>');
+
+    const catsHtml=[
+      {icon:'📐',label:'Grammar',rating:gramOk?'Satisfactory':'Needs Attention',comment:gramComment},
+      {icon:'📖',label:'Vocabulary',rating:vocabHits.length>=3?'Good':'Needs Attention',comment:vocComment},
+      {icon:'🎙️',label:'Tone',rating:/dear|hi |hey |thanks/i.test(text)?'Needs Attention':'Satisfactory',comment:toneComment},
+      {icon:'🏗️',label:'Structure',rating:connUsed>0&&sentences.length>=3?'Good':'Satisfactory',comment:structComment},
+      {icon:'✨',label:'Fluency',rating:connUsed>=1?'Good':'Needs Attention',comment:fluComment}
+    ].map(function(cat){
+      return '<div class="fb-cat-row"><div class="fb-cat-head"><span class="fb-cat-icon">'+cat.icon+'</span><strong class="fb-cat-label">'+cat.label+':</strong>'+ratingIcon(cat.rating)+'</div><div class="fb-cat-comment">'+cat.comment+'</div></div>';
+    }).join('');
+
+    const lengthOk=goodLength?'<span class="fb-check">✓ '+words+' words — within target</span>':'<span class="fb-check fb-check-warn">⚠ '+words+' words (target '+minW+'–'+(task.targetMax||200)+')</span>';
+    const vocabOk=vocabHits.length>=3?'<span class="fb-check">✓ '+vocabHits.length+' module terms used</span>':'<span class="fb-check fb-check-warn">⚠ '+vocabHits.length+' module terms (aim for 3+)</span>';
+
+    fb.innerHTML='<div class="fb-report-box">'
+      +'<div class="fb-report-header"><div class="fb-report-title"><span class="fb-report-icon">✏️</span> Auto-Correction Report</div>'
+      +'<div class="fb-report-score" style="color:'+scoreColor+'">'+score+'/100 — '+level+'</div></div>'
+      +'<div class="fb-quick-checks">'+lengthOk+vocabOk+'</div>'
+      +'<div class="fb-cats">'+catsHtml+'</div>'
+      +'<div class="fb-footer-stats">Word count: '+words+' · Avg. sentence length: '+avgSL+' words · Module vocab hits: '+vocabHits.length+'</div>'
+      +'</div>';
+  }
+  btn.disabled=false;
+  btn.textContent='✨ Auto-Correct & Get Feedback';
+}
+
+// ── Listening TTS Engine ──────────────────────────────────────
+let ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+const voicePref=['Samantha','Karen','Victoria','Moira','Daniel','Google UK English Female','Google US English','en-GB','en-US'];
+function getBestVoice(){
+  const voices=window.speechSynthesis.getVoices();
+  for(var j=0;j<voicePref.length;j++){
+    var v=voices.find(function(vv){return vv.name===voicePref[j]||vv.name.includes(voicePref[j]);});
+    if(v)return v;
+  }
+  return voices.find(function(v){return v.lang&&v.lang.startsWith('en');})||voices[0]||null;
+}
+function initListening(){
+  const c=document.getElementById('listeningContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  listeningActs.forEach(function(act,i){
+    h+='<div class="card" id="l-card-'+i+'">'
+      +'<div class="l-header"><span class="l-icon">'+act.icon+'</span><div><div class="card-title">'+act.title+'</div><div class="l-sub">'+act.sub+'</div></div></div>'
+      +'<div class="card-bar"></div>'
+      +'<div class="l-player">'
+      +'<div class="l-controls">'
+      +'<button class="l-play-btn" id="l-play-'+i+'" onclick="togglePlay('+i+')">&#9654; Play</button>'
+      +'<select class="l-speed" id="l-speed-'+i+'" onchange="changeSpeed('+i+')">'
+      +'<option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option>'
+      +'</select>'
+      +'<button class="l-trans-btn" id="l-tbtn-'+i+'" onclick="toggleTranscript('+i+')">&#128196; Transcript</button>'
+      +'</div>'
+      +'<div class="l-progress"><div class="l-bar-track"><div class="l-bar-fill" id="l-bar-'+i+'"></div></div><span class="l-time" id="l-time-'+i+'">0:00</span></div>'
+      +'</div>'
+      +'<div class="l-transcript-box" id="l-trans-'+i+'" style="display:none"><p class="l-transcript-text">'+act.transcript+'</p></div>'
+      +'<div class="card-title" style="margin-top:22px;">Comprehension Questions</div><div class="card-bar"></div>'
+      +'<div id="lmcq-'+i+'"></div>'
+      +'</div>';
+  });
+  c.innerHTML=h;
+  listeningActs.forEach(function(act,i){renderMCQ2('lmcq-'+i,act.qs,'la'+i,false);});
+  window.speechSynthesis.getVoices();
+}
+function togglePlay(idx){
+  if(ttsState.actIdx===idx&&ttsState.playing){pauseAudio(idx);}
+  else if(ttsState.actIdx===idx&&ttsState.paused){resumeAudio(idx);}
+  else{playAudio(idx);}
+}
+function playAudio(idx){
+  const act=listeningActs[idx];
+  if(!act)return;
+  if(ttsState.actIdx===idx&&ttsState.paused){
+    resumeAudio(idx); return;
+  }
+  stopAudio();
+  ttsState.actIdx=idx;
+  const utt=new SpeechSynthesisUtterance(act.transcript);
+  utt.voice=getBestVoice();
+  utt.rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  utt.pitch=1.0;
+  utt.volume=1.0;
+  utt.onstart=()=>{ttsState.playing=true;ttsState.paused=false;ttsState.startTime=Date.now();updatePlayBtn(idx,true);startProg(idx,act.transcript.length);};
+  utt.onend=()=>{ttsState.playing=false;ttsState.paused=false;updatePlayBtn(idx,false);stopProg(idx,true);};
+  utt.onerror=()=>{ttsState.playing=false;updatePlayBtn(idx,false);stopProg(idx,false);};
+  ttsState.utterance=utt;
+  window.speechSynthesis.speak(utt);
+}
+function pauseAudio(idx){
+  if(window.speechSynthesis.speaking&&!window.speechSynthesis.paused){
+    window.speechSynthesis.pause();
+    ttsState.paused=true;ttsState.playing=false;
+    ttsState.elapsed+=Date.now()-ttsState.startTime;
+    updatePlayBtn(idx,false,true);
+    clearInterval(ttsState.progTimer);
+  }
+}
+function resumeAudio(idx){
+  window.speechSynthesis.resume();
+  ttsState.paused=false;ttsState.playing=true;
+  ttsState.startTime=Date.now();
+  updatePlayBtn(idx,true);
+  startProg(idx,listeningActs[idx].transcript.length,true);
+}
+function stopAudio(){
+  window.speechSynthesis.cancel();
+  if(ttsState.actIdx!==null){updatePlayBtn(ttsState.actIdx,false);stopProg(ttsState.actIdx,false);}
+  ttsState={utterance:null,playing:false,paused:false,actIdx:null,progTimer:null,startTime:null,elapsed:0};
+}
+function updatePlayBtn(idx,playing,paused){
+  const btn=document.getElementById('l-play-'+idx);
+  if(!btn)return;
+  btn.textContent=playing?'⏸ Pause':paused?'▶ Resume':'▶ Play';
+}
+function startProg(idx,charLen,resume){
+  clearInterval(ttsState.progTimer);
+  const rate=parseFloat(document.getElementById('l-speed-'+idx)?.value||1);
+  const totalMs=(charLen/18)*1000/rate;
+  const elapsed=resume?ttsState.elapsed:0;
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  ttsState.progTimer=setInterval(()=>{
+    const spent=elapsed+(Date.now()-ttsState.startTime);
+    const pct=Math.min(100,(spent/totalMs)*100);
+    if(bar)bar.style.width=pct+'%';
+    const rem=Math.max(0,Math.round((totalMs-spent)/1000));
+    if(time)time.textContent=`${Math.floor(rem/60)}:${String(rem%60).padStart(2,'0')}`;
+    if(pct>=100)clearInterval(ttsState.progTimer);
+  },200);
+}
+function stopProg(idx,finished){
+  clearInterval(ttsState.progTimer);
+  const bar=document.getElementById('l-bar-'+idx);
+  const time=document.getElementById('l-time-'+idx);
+  if(bar)bar.style.width=finished?'100%':'0%';
+  if(time)time.textContent='0:00';
+}
+function changeSpeed(idx){
+  const sel=document.getElementById('l-speed-'+idx);
+  if(!sel)return;
+  if(ttsState.actIdx===idx&&(ttsState.playing||ttsState.paused)){
+    stopAudio(); playAudio(idx);
+  }
+}
+function toggleTranscript(idx){
+  const box=document.getElementById('l-trans-'+idx);
+  const btn=document.getElementById('l-tbtn-'+idx);
+  if(!box)return;
+  const open=box.style.display==='block';
+  box.style.display=open?'none':'block';
+  if(btn)btn.textContent=open?'📄 Show Transcript':'📄 Hide Transcript';
+}
+
+// ── Case Studies ──────────────────────────────────────────────
+function initCases(){
+  const c=document.getElementById('casesContent');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  let h='';
+  casesStudies.forEach(function(cs,ci){
+    h+='<div class="card">'
+      +'<div class="cs-tag">'+cs.tag+'</div>'
+      +'<div class="card-title" style="margin-top:10px;">'+cs.title+'</div>'
+      +'<div class="cs-sub">'+cs.sub+'</div>'
+      +'<div class="card-bar"></div>';
+    cs.sections.forEach(function(s){
+      h+='<div class="cs-section"><h4 class="cs-sh">'+s.h+'</h4><p class="cs-p">'+s.t+'</p></div>';
+    });
+    h+='<div class="card-title" style="margin-top:22px;">Case Study Questions</div><div class="card-bar"></div>'
+      +'<div id="csmcq-'+ci+'"></div></div>';
+  });
+  c.innerHTML=h;
+  casesStudies.forEach(function(cs,ci){renderMCQ2('csmcq-'+ci,cs.qs,'cs'+ci,false);});
+}
+
+// ── Final Assessment ──────────────────────────────────────────
+let assAnswers={};
+function initAssessment(){
+  const c=document.getElementById('assessContainer');
+  if(!c||c.dataset.built)return; c.dataset.built='1';
+  const letters=['A','B','C','D'];
+  let h='';
+  assessQs.forEach(function(item,i){
+    h+='<div class="mcq-block" id="aq-'+i+'">'
+      +'<div class="mcq-q">'+(i+1)+'. '+item.q+'</div>'
+      +'<div class="mcq-opts">';
+    item.opts.forEach(function(opt,j){
+      h+='<div class="mcq-opt" onclick="pickAss('+i+','+j+')" id="ass-'+i+'-'+j+'">'
+        +'<span class="opt-letter">'+letters[j]+'</span>'+opt+'</div>';
+    });
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+  assAnswers={};
+  document.getElementById('final-res').style.display='none';
+  document.getElementById('ass-sub').style.display='inline-flex';
+}
+function pickAss(qi,oi){
+  const block=document.getElementById('aq-'+qi);
+  if(!block||block.dataset.done)return;
+  block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+    el.classList.toggle('selected',j===oi);
+  });
+  assAnswers[qi]=oi;
+}
+function submitAss(){
+  let attempts=parseInt(document.getElementById('att-disp')?.textContent||'0');
+  const maxAttempts=2;
+  if(attempts>=maxAttempts){
+    alert('You have used both attempts.');return;
+  }
+  const unanswered=assessQs.map((_,i)=>i).filter(i=>assAnswers[i]===undefined);
+  if(unanswered.length>0){
+    alert('Please answer all questions before submitting. Unanswered: '+unanswered.map(i=>i+1).join(', '));return;
+  }
+  // Mark answers
+  assessQs.forEach((item,i)=>{
+    const block=document.getElementById('aq-'+i);
+    if(!block)return;
+    block.dataset.done='1';
+    block.querySelectorAll('.mcq-opt').forEach((el,j)=>{
+      el.classList.remove('selected');
+      if(j===item.ans)el.classList.add('correct');
+      else if(j===assAnswers[i])el.classList.add('incorrect');
+      el.style.pointerEvents='none';
+    });
+  });
+  const correct=assessQs.filter((_,i)=>assAnswers[i]===assessQs[i].ans).length;
+  const pct=Math.round((correct/assessQs.length)*100);
+  const pass=pct>=70;
+  attempts++;
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent=attempts+' / 2';
+  const res=document.getElementById('final-res');
+  res.style.display='block';
+  const scoreColor=pass?'#00a651':'#d63031';
+  res.className='final-result '+(pass?'pass':'fail');
+  res.style.display='block';
+  res.innerHTML='<div class="final-score">'+pct+'<span style="font-size:22px">%</span></div>'
+    +'<div class="final-verdict">'+(pass?'🎉 Congratulations — You Passed!':'📚 Not Passed Yet')+'</div>'
+    +'<div class="final-msg">'+correct+' / '+assessQs.length+' correct · Pass mark: 70%</div>'
+    +(attempts<maxAttempts&&!pass?'<button class="btn-primary" onclick="resetAss()" style="margin-top:18px">Try Again (Attempt '+(attempts+1)+' of '+maxAttempts+')</button>':'')
+    +(attempts>=maxAttempts&&!pass?'<div style="margin-top:12px;font-size:13px;opacity:0.8;">Maximum attempts reached.</div>':'');
+  if(pass||attempts>=maxAttempts){
+    document.getElementById('ass-sub').style.display='none';
+  }
+}
+function resetAss(){
+  const c=document.getElementById('assessContainer');
+  if(c){c.dataset.built='';c.innerHTML='';}
+  assAnswers={};
+  const res=document.getElementById('final-res');
+  if(res){res.style.display='none';res.innerHTML='';}
+  const sub=document.getElementById('ass-sub');
+  if(sub)sub.style.display='inline-flex';
+  const attEl=document.getElementById('att-disp');
+  if(attEl)attEl.textContent='0 / 2';
+  initAssessment();
+}
+
+// ── Bootstrap ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('mob-btn').addEventListener('click',openSidebar);
+  document.getElementById('overlay').addEventListener('click',closeSidebar);
+  goTo('overview');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -26,7 +26,8 @@ export type PremiumCourseSlug =
   | "bricepremiumcourses16"
   | "bricepremiumcourses17"
   | "bricepremiumcourses18"
-  | "bricepremiumcourses19";
+  | "bricepremiumcourses19"
+  | "it-digital-professions-english";
 
 export type CourseStatus = "active" | "hidden" | "draft";
 
@@ -209,6 +210,14 @@ const COURSE_META: Record<
     subtitle: "Premium Course 19",
     description:
       "Professional English for sales and customer service: negotiation language, client communication, objection handling, product presentation, and CRM vocabulary across twelve modules.",
+    level: "Professional",
+    status: "active",
+  },
+  "it-digital-professions-english": {
+    title: "IT & Digital Professions English",
+    subtitle: "Premium Course",
+    description:
+      "Professional English for IT and digital professionals: technical communication, project management, cybersecurity, cloud computing, agile methodology, and digital workplace vocabulary across twelve modules.",
     level: "Professional",
     status: "active",
   },
