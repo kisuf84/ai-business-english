@@ -6,7 +6,6 @@ import type {
   LessonGenerationRequestInput,
 } from "../../../../types/lesson";
 import {
-  normalizeLessonOutput,
   validateLessonPayload,
 } from "../../../../lib/validators/lesson";
 import { fetchYouTubeTranscriptSource } from "../../../../lib/youtube/transcript";
@@ -471,11 +470,8 @@ export async function POST(request: Request) {
     }
     let normalized =
       parsed.ok
-        ? normalizeLessonOutput(parsed.data, { strict: true })
-        : {
-            ok: false as const,
-            errors: [parsed.error],
-          };
+        ? ({ ok: true as const, data: parsed.data, warnings: [] as string[] })
+        : ({ ok: false as const, errors: [parsed.error] });
 
     if (!normalized.ok) {
       const brokenLesson = parseLessonJson(rawOutput) ?? {};
@@ -538,7 +534,7 @@ export async function POST(request: Request) {
       });
       const repairedParsed = parseAndValidateLessonOutput(repairedRaw.text);
       normalized = repairedParsed.ok
-        ? normalizeLessonOutput(repairedParsed.data, { strict: true })
+        ? { ok: true as const, data: repairedParsed.data, warnings: [] as string[] }
         : {
             ok: false as const,
             errors: [

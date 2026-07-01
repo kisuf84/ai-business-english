@@ -38,6 +38,7 @@ export default function PremiumModuleReader({
     "bricepremiumcourses13", "bricepremiumcourses14", "bricepremiumcourses15",
     "bricepremiumcourses16", "bricepremiumcourses17", "bricepremiumcourses18",
     "bricepremiumcourses19",
+    "it-digital-professions-english",
   ]).has(courseSlug);
   const readerRef = useRef<HTMLDivElement | null>(null);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);

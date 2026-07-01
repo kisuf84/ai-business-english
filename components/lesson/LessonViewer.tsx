@@ -465,7 +465,7 @@ export default function LessonViewer({
                 options={q.options}
                 correctIndex={q.correct_index}
                 instruction={q.instruction ?? ""}
-                sentence={q.sentence ?? q.question}
+                sentence={q.sentence}
                 selectedAnswer={sectionAnswers[q.id] ?? null}
                 onSelect={(idx) => {
                   setAnswers((prev) => ({

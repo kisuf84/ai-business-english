@@ -3676,5 +3676,31 @@ function resetAssessment(){
   document.getElementById('submit-assessment-btn').style.display='inline-block';
   document.getElementById('retry-assessment-btn').style.display='none';
 }
+var mcqState={};
+function selectOption(group,qi,oi,correct){
+  if(!mcqState[group])mcqState[group]={};
+  if(mcqState[group]['checked_'+qi])return;
+  mcqState[group][qi]={selected:oi,correct:correct};
+  document.querySelectorAll('#'+group+'-q'+qi+' .mcq-option').forEach(function(o,i){
+    o.classList.toggle('selected',i===oi);
+  });
+}
+function checkAll(group,total){
+  if(!mcqState[group])mcqState[group]={};
+  var score=0;
+  for(var qi=0;qi<total;qi++){
+    var data=mcqState[group][qi];
+    mcqState[group]['checked_'+qi]=true;
+    if(data&&data.selected===data.correct)score++;
+    document.querySelectorAll('#'+group+'-q'+qi+' .mcq-option').forEach(function(o,i){
+      o.style.pointerEvents='none';
+      o.classList.remove('selected');
+      if(data&&i===data.correct)o.classList.add('correct');
+      if(data&&i===data.selected&&data.selected!==data.correct)o.classList.add('incorrect');
+    });
+  }
+  var scoreEl=document.getElementById(group+'-score');
+  if(scoreEl){scoreEl.style.display='inline-flex';scoreEl.textContent='Score: '+score+' / '+total;}
+}
 </script>
 </body></html>

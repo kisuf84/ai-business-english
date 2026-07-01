@@ -145,6 +145,7 @@ function normalizeLessonOutput(raw: unknown): LessonGenerationApiResponse | null
     title: data.title,
     summary: data.summary,
     objectives: data.objectives,
+    speaking_questions: isStringArray(data.speaking_questions) ? data.speaking_questions : undefined,
     word_bank: data.word_bank,
     reading_text: data.reading_text,
     reading_comprehension: data.reading_comprehension.map(
