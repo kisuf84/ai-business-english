@@ -406,7 +406,7 @@ export default function AppShell({ children }: AppShellProps) {
 
         <main className="min-w-0 flex-1 overflow-x-hidden">
           <header className="topbar z-30">
-            <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-3 lg:flex-nowrap">
+            <div className="flex w-full flex-wrap items-center justify-between gap-3 lg:flex-nowrap">
               <div className="flex min-w-0 items-center gap-3">
                 <button
                   type="button"
