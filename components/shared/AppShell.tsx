@@ -160,6 +160,7 @@ export default function AppShell({ children }: AppShellProps) {
   });
   const [isAuthReady, setIsAuthReady] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [avatarFailed, setAvatarFailed] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const isPremiumModuleReader =
@@ -248,6 +249,10 @@ export default function AppShell({ children }: AppShellProps) {
   }, [pathname]);
 
   useEffect(() => {
+    setAvatarFailed(false);
+  }, [user.avatarUrl]);
+
+  useEffect(() => {
     if (!isMobileNavOpen) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -283,10 +288,11 @@ export default function AppShell({ children }: AppShellProps) {
     .join("");
 
   const renderProfileAvatar = (sizeClassName: string) =>
-    user.avatarUrl ? (
+    user.avatarUrl && !avatarFailed ? (
       <img
         src={user.avatarUrl}
         alt={user.name}
+        onError={() => setAvatarFailed(true)}
         className={`${sizeClassName} rounded-full border border-[var(--border-strong)] object-cover`}
       />
     ) : (
@@ -400,7 +406,7 @@ export default function AppShell({ children }: AppShellProps) {
 
         <main className="min-w-0 flex-1 overflow-x-hidden">
           <header className="topbar z-30">
-            <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-3 lg:flex-nowrap">
+            <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-3 lg:flex-nowrap">
               <div className="flex min-w-0 items-center gap-3">
                 <button
                   type="button"
@@ -416,19 +422,25 @@ export default function AppShell({ children }: AppShellProps) {
                   </span>
                 </button>
 
-                <img
-                  src="/logo/langslate-ai-logo.png"
-                  alt="Langslate AI logo"
-                  className="h-[38px] w-[38px] shrink-0 rounded-[12px] object-contain shadow-glow"
-                />
-                <div className="min-w-0">
-                  <p className="display truncate text-xl leading-none text-[var(--ink-1)]">
-                    Langslate AI
-                  </p>
-                  <p className="mt-0.5 truncate text-xs text-[var(--ink-3)]">
-                    {pageTitle}
-                  </p>
-                </div>
+                <Link
+                  href="/dashboard"
+                  aria-label="Go to dashboard"
+                  className="lumen-focus flex min-w-0 items-center gap-3 rounded-[12px]"
+                >
+                  <img
+                    src="/logo/langslate-ai-logo.png"
+                    alt="Langslate AI logo"
+                    className="h-[38px] w-[38px] shrink-0 rounded-[12px] object-contain shadow-glow"
+                  />
+                  <div className="min-w-0">
+                    <p className="display truncate text-xl leading-none text-[var(--ink-1)]">
+                      Langslate AI
+                    </p>
+                    <p className="mt-0.5 truncate text-xs text-[var(--ink-3)]">
+                      {pageTitle}
+                    </p>
+                  </div>
+                </Link>
               </div>
 
               <div className="search order-3 w-full min-w-0 lg:order-2">
