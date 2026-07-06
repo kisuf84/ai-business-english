@@ -28,24 +28,24 @@ const navGroups: NavGroup[] = [
   {
     label: "Workspace",
     items: [
-      { href: "/dashboard", label: "Dashboard", icon: "DA" },
-      { href: "/simulation", label: "AI simulation", icon: "SI" },
-      { href: "/generator", label: "Generator", icon: "GE" },
+      { href: "/dashboard", label: "Dashboard", icon: "/icons/objects-column_10742815.png" },
+      { href: "/simulation", label: "AI simulation", icon: "/icons/chess-clock_7378982.png" },
+      { href: "/generator", label: "Generator", icon: "/icons/tour-virtual_13794442.png" },
     ],
   },
   {
     label: "Library",
     items: [
-      { href: "/lessons", label: "Lesson library", icon: "LE" },
-      { href: "/premium-classes", label: "Premium Courses", icon: "PC" },
-      { href: "/for-teachers", label: "For Teachers", icon: "FT" },
+      { href: "/lessons", label: "Lesson library", icon: "/icons/books-medical_9856367.png" },
+      { href: "/premium-classes", label: "Premium Courses", icon: "/icons/digital-certificate_19008425.png" },
+      { href: "/for-teachers", label: "For Teachers", icon: "/icons/chalkboard-user_10489812.png" },
     ],
   },
   {
     label: "Account",
     items: [
-      { href: "/pricing", label: "Pricing", icon: "PR" },
-      { href: "/settings", label: "Settings", icon: "SE" },
+      { href: "/pricing", label: "Pricing", icon: "/icons/comments-dollar_17919141.png" },
+      { href: "/settings", label: "Settings", icon: "/icons/settings-sliders_16861487.png" },
     ],
   },
 ];
@@ -75,13 +75,26 @@ function NavLink({
       }`}
     >
       <span
-        className={`grid h-[38px] w-[38px] shrink-0 place-items-center rounded-[12px] border font-mono text-[10px] font-bold tracking-[0.08em] ${
+        className={`grid h-[38px] w-[38px] shrink-0 place-items-center rounded-[12px] border ${
           isActive
             ? "border-transparent bg-[image:var(--grad-aurora)] text-[#0a0a14]"
             : "border-[var(--glass-border)] bg-[var(--glass)] text-[var(--ink-3)] group-hover:text-[var(--ink-1)]"
         }`}
       >
-        {item.icon}
+        <span
+          aria-hidden="true"
+          className="h-[18px] w-[18px] bg-current"
+          style={{
+            WebkitMaskImage: `url(${item.icon})`,
+            maskImage: `url(${item.icon})`,
+            WebkitMaskSize: "contain",
+            maskSize: "contain",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            WebkitMaskPosition: "center",
+            maskPosition: "center",
+          }}
+        />
       </span>
       <span className="min-w-0 truncate">{item.label}</span>
     </Link>
@@ -403,9 +416,11 @@ export default function AppShell({ children }: AppShellProps) {
                   </span>
                 </button>
 
-                <div className="grid h-[38px] w-[38px] shrink-0 place-items-center rounded-[12px] bg-[image:var(--grad-aurora)] font-mono text-xs font-extrabold text-[#0a0a14] shadow-glow">
-                  LA
-                </div>
+                <img
+                  src="/logo/langslate-ai-logo.png"
+                  alt="Langslate AI logo"
+                  className="h-[38px] w-[38px] shrink-0 rounded-[12px] object-contain shadow-glow"
+                />
                 <div className="min-w-0">
                   <p className="display truncate text-xl leading-none text-[var(--ink-1)]">
                     Langslate AI
