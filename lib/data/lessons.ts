@@ -170,23 +170,17 @@ export async function createLesson(params: {
   return saveLocalLesson(lessonPayload);
 }
 
-export async function listLessons(
-  userId?: string
-): Promise<LessonRecord[]> {
-  if (isSupabaseEnabled()) {
-    if (userId) {
-      const path = `lessons?select=*&user_id=eq.${userId}&order=created_at.desc`;
-      return supabaseServiceRoleRest<LessonRecord[]>(path);
-    }
-    return supabaseRest<LessonRecord[]>(
-      "lessons?select=*&order=created_at.desc"
-    );
+export async function listLessons(userId: string): Promise<LessonRecord[]> {
+  if (!userId) {
+    throw new Error("listLessons_requires_user_id");
   }
 
-  if (userId) {
-    return readAll().filter((lesson) => lesson.user_id === userId);
+  if (isSupabaseEnabled()) {
+    const path = `lessons?select=*&user_id=eq.${encodeURIComponent(userId)}&order=created_at.desc`;
+    return supabaseServiceRoleRest<LessonRecord[]>(path);
   }
-  return readAll();
+
+  return readAll().filter((lesson) => lesson.user_id === userId);
 }
 
 export async function getLessonById(

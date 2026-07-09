@@ -1,62 +1,28 @@
 export const dynamic = "force-dynamic";
 
 import Link from "next/link";
-import { cookies } from "next/headers";
 import Card from "../../../components/shared/Card";
 import PersonalizedGreeting from "../../../components/shared/PersonalizedGreeting";
-import { listLessons } from "../../../lib/data/lessons";
+import DashboardLessonsStatTile from "../../../components/dashboard/DashboardLessonsStatTile";
+import DashboardLessonActivity from "../../../components/dashboard/DashboardLessonActivity";
 import { listActivePremiumCourses } from "../../../lib/premiumClasses";
-import { getRequestAuthUser } from "../../../lib/supabase/auth";
 
 async function loadDashboardData() {
   try {
-    const cookieStore = cookies();
-    const cookieHeader = cookieStore
-      .getAll()
-      .map((cookie) => `${cookie.name}=${cookie.value}`)
-      .join("; ");
-    const authRequest = new Request("http://localhost/dashboard", {
-      headers: cookieHeader ? { cookie: cookieHeader } : {},
-    });
-    const authUser = await getRequestAuthUser(authRequest);
-    const [lessons, premiumCourses] = await Promise.all([
-      listLessons(authUser?.id),
-      listActivePremiumCourses(),
-    ]);
+    const premiumCourses = await listActivePremiumCourses();
     return {
-      lessons: Array.isArray(lessons) ? lessons : [],
       premiumCourses: Array.isArray(premiumCourses) ? premiumCourses : [],
     };
   } catch (error) {
     console.error("Dashboard data load failed:", error);
     return {
-      lessons: [],
       premiumCourses: [],
     };
   }
 }
 
 export default async function DashboardPage() {
-  const { lessons, premiumCourses } = await loadDashboardData();
-  const recentLessons = lessons.slice(0, 3);
-  const statCards = [
-    {
-      label: "Lessons",
-      icon: "LE",
-      tone: "bg-[image:var(--grad-aurora)] text-[#0a0a14]",
-      chip: "Generator",
-      value: lessons.length,
-      copy: "Lessons created",
-    },
-    {
-      label: "Premium courses",
-      icon: "PC",
-      tone: "bg-[image:var(--grad-aurora)] text-[#0a0a14]",
-      chip: "Premium",
-      value: premiumCourses.length,
-      copy: "Premium courses available",
-    },
-  ];
+  const { premiumCourses } = await loadDashboardData();
 
   return (
     <section
@@ -79,81 +45,19 @@ export default async function DashboardPage() {
           </div>
         </div>
         <div className="hero-side grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-          {statCards.map((card) => (
-            <div key={card.label} className="stat-tile">
-              <div className={`icon font-mono text-[10px] font-bold ${card.tone}`}>
-                {card.icon}
-              </div>
-              <div className="v">{card.value}</div>
-              <div className="l">{card.copy}</div>
-              <span className="delta">{card.chip}</span>
+          <DashboardLessonsStatTile />
+          <div className="stat-tile">
+            <div className="icon font-mono text-[10px] font-bold bg-[image:var(--grad-aurora)] text-[#0a0a14]">
+              PC
             </div>
-          ))}
+            <div className="v">{premiumCourses.length}</div>
+            <div className="l">Premium courses available</div>
+            <span className="delta">Premium</span>
+          </div>
         </div>
       </div>
 
-      <section className="mb-6 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-        <Card className="p-5 sm:p-7">
-          <h2 className="lumen-heading m-0 text-[26px]">
-            Recent lesson activity
-          </h2>
-          <p className="mb-4 mt-2 text-sm text-[var(--ink-muted)] sm:mb-[22px] sm:text-[15px]">
-            Saved lessons from your real lesson library.
-          </p>
-          <div className="space-y-3">
-            {recentLessons.length === 0 ? (
-              <p className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] p-4 text-sm text-[var(--ink-muted)]">
-                No lessons generated yet. Create a lesson to start populating this dashboard.
-              </p>
-            ) : (
-              recentLessons.map((lesson, index) => (
-                <Link
-                  key={lesson.id}
-                  href={`/lessons/${lesson.id}`}
-                  className="lesson-card flex items-center justify-between gap-3 px-3 py-3 sm:px-4"
-                >
-                  <div className="min-w-0">
-                    <p className="mobile-safe-wrap text-sm font-semibold text-[var(--ink)]">
-                      {lesson.title}
-                    </p>
-                    <p className="mt-1 text-xs text-[var(--ink-muted)]">
-                      Recent lesson {index + 1}
-                    </p>
-                  </div>
-                  <span className="shrink-0 text-xs uppercase tracking-[0.12em] text-[var(--ink-faint)]">
-                    Open
-                  </span>
-                </Link>
-              ))
-            )}
-          </div>
-        </Card>
-
-        <Card className="p-5 sm:p-7">
-          <h2 className="lumen-heading m-0 text-[26px]">Workspace status</h2>
-          <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">
-            Langslate is ready for lesson generation, simulation practice, and resource access.
-          </p>
-          <div className="mt-5 grid gap-3">
-            <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] p-4">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
-                CEFR level
-              </p>
-              <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
-                Set per lesson or simulation
-              </p>
-            </div>
-            <div className="rounded-[14px] border border-[var(--border)] bg-[var(--glass)] p-4">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--ink-faint)]">
-                Library
-              </p>
-              <p className="mt-2 text-sm font-semibold text-[var(--ink)]">
-                {lessons.length} saved lesson{lessons.length === 1 ? "" : "s"}
-              </p>
-            </div>
-          </div>
-        </Card>
-      </section>
+      <DashboardLessonActivity />
 
       <section className="mt-2">
         <div className="mb-[18px] flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-end sm:gap-3">

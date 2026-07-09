@@ -29,8 +29,8 @@ const navGroups: NavGroup[] = [
     label: "Workspace",
     items: [
       { href: "/dashboard", label: "Dashboard", icon: "/icons/objects-column_10742815.png" },
-      { href: "/simulation", label: "AI simulation", icon: "/icons/chess-clock_7378982.png" },
-      { href: "/generator", label: "Generator", icon: "/icons/tour-virtual_13794442.png" },
+      { href: "/simulation", label: "AI simulation", icon: "/icons/tour-virtual_13794442.png" },
+      { href: "/generator", label: "Generator", icon: "/icons/chess-clock_7378982.png" },
     ],
   },
   {
