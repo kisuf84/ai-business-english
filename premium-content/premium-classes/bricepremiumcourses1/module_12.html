@@ -1278,9 +1278,14 @@ body {
   .outcomes-grid { grid-template-columns: 1fr; }
 }
 
+.sidebar-toggle { display: none; position: fixed; top: 14px; left: 14px; z-index: 110; width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--navy); color: var(--gold-light); font-size: 20px; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.25); cursor: pointer; }
+.sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 99; }
 @media (max-width: 620px) {
-  #sidebar { display: none; }
+  #sidebar { transform: translateX(-100%); transition: transform 0.25s ease; box-shadow: 4px 0 24px rgba(0,0,0,0.3); }
+  body.sidebar-open #sidebar { transform: translateX(0); }
   #main { margin-left: 0; }
+  .sidebar-toggle { display: flex; }
+  body.sidebar-open .sidebar-backdrop { display: block; }
   .speaking-grid { grid-template-columns: 1fr; }
   .wordbank-grid { grid-template-columns: 1fr; }
 }
@@ -1289,6 +1294,8 @@ body {
 <body>
 
 <!-- ─── SIDEBAR ─── -->
+<button type="button" class="sidebar-toggle" id="sidebarToggle" onclick="toggleMobileNav()" aria-label="Open module menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeMobileNav()"></div>
 <nav id="sidebar">
   <div class="sidebar-brand">
     <h1>Business Management English</h1>
@@ -5113,7 +5120,10 @@ function showSection(id) {
   });
   window.scrollTo({top:0,behavior:'smooth'});
   if(typeof trackProgress==='function')trackProgress(id);
+  document.body.classList.remove('sidebar-open');
 }
+function toggleMobileNav(){ document.body.classList.toggle('sidebar-open'); }
+function closeMobileNav(){ document.body.classList.remove('sidebar-open'); }
 var finalAnswers={};
 var assessmentAttempts=0;
 function selectFinalOption(qi,oi,correct){
@@ -5190,6 +5200,169 @@ function checkAll(group,total){
   }
   var scoreEl=document.getElementById(group+'-score');
   if(scoreEl){scoreEl.style.display='inline-flex';scoreEl.textContent='Score: '+score+' / '+total;}
+}
+
+/* ── Vocabulary / Grammar exercise tabs ── */
+function showExercise(prefix,idx,tabEl){
+  document.querySelectorAll('.'+prefix+'-ex').forEach(function(el){el.style.display='none';});
+  var target=document.getElementById(prefix+'-ex-'+idx);
+  if(target)target.style.display='';
+  var tabs=tabEl&&tabEl.closest('.ex-tabs');
+  if(tabs)tabs.querySelectorAll('.ex-tab').forEach(function(t){t.classList.remove('active');});
+  if(tabEl)tabEl.classList.add('active');
+}
+function showVocabEx(idx,tabEl){showExercise('vocab',idx,tabEl);}
+function showGrammarEx(idx,tabEl){showExercise('grammar',idx,tabEl);}
+
+/* ── Vocabulary Exercise 2: Gap Fill ── */
+function checkGapFill(){
+  var inputs=document.querySelectorAll('.gap-input');
+  var score=0;
+  inputs.forEach(function(inp){
+    var val=inp.value.trim().toLowerCase();
+    var ans=(inp.dataset.ans||'').trim().toLowerCase();
+    inp.classList.remove('correct','incorrect');
+    if(val&&val===ans){inp.classList.add('correct');score++;}
+    else{inp.classList.add('incorrect');}
+    inp.disabled=true;
+  });
+  var scoreEl=document.getElementById('gf-score');
+  if(scoreEl){scoreEl.style.display='inline-flex';scoreEl.textContent='Score: '+score+' / '+inputs.length;}
+}
+
+/* ── Vocabulary Exercise 3: True / False ── */
+var tfChecked=false;
+function selectTF(qi,letter,correctIsTrue){
+  if(tfChecked)return;
+  var tBtn=document.getElementById('tf-'+qi+'-T');
+  var fBtn=document.getElementById('tf-'+qi+'-F');
+  if(tBtn)tBtn.classList.remove('selected-true');
+  if(fBtn)fBtn.classList.remove('selected-false');
+  if(letter==='T'&&tBtn)tBtn.classList.add('selected-true');
+  if(letter==='F'&&fBtn)fBtn.classList.add('selected-false');
+}
+function checkTF(){
+  if(tfChecked)return;
+  tfChecked=true;
+  var score=0,qi=0,tBtn;
+  while((tBtn=document.getElementById('tf-'+qi+'-T'))){
+    var fBtn=document.getElementById('tf-'+qi+'-F');
+    var m=/selectTF\(\s*\d+\s*,\s*'T'\s*,\s*(true|false)\s*\)/.exec(tBtn.getAttribute('onclick')||'');
+    var correct=m?(m[1]==='true'?'T':'F'):null;
+    var selected=tBtn.classList.contains('selected-true')?'T':(fBtn&&fBtn.classList.contains('selected-false')?'F':null);
+    if(selected&&selected===correct)score++;
+    var correctBtn=correct==='T'?tBtn:fBtn;
+    if(correctBtn)correctBtn.classList.add('correct-answer');
+    if(selected&&selected!==correct){
+      var wrongBtn=selected==='T'?tBtn:fBtn;
+      if(wrongBtn)wrongBtn.classList.add('wrong-answer');
+    }
+    tBtn.style.pointerEvents='none';
+    if(fBtn)fBtn.style.pointerEvents='none';
+    qi++;
+  }
+  var scoreEl=document.getElementById('tf-score');
+  if(scoreEl){scoreEl.style.display='inline-flex';scoreEl.textContent='Score: '+score+' / '+qi;}
+}
+
+/* ── Listening: browser speech-synthesis audio controls (no audio files — see .audio-note) ── */
+var listeningTTS={utter:null,idx:null,timer:null};
+function ttsStop(){
+  if(typeof window.speechSynthesis!=='undefined')window.speechSynthesis.cancel();
+  if(listeningTTS.timer)clearInterval(listeningTTS.timer);
+  if(listeningTTS.idx!==null){
+    var btn=document.getElementById('play-'+listeningTTS.idx);
+    if(btn)btn.textContent='▶';
+  }
+  listeningTTS={utter:null,idx:null,timer:null};
+}
+function ttsFormatTime(s){
+  var m=Math.floor(s/60),sec=Math.floor(s%60);
+  return m+':'+(sec<10?'0':'')+sec;
+}
+function ttsActiveSpeed(idx){
+  var btn=document.getElementById('play-'+idx);
+  var player=btn&&btn.closest('.audio-player');
+  var active=player&&player.querySelector('.speed-btn.active');
+  var val=active?parseFloat(active.textContent):NaN;
+  return isNaN(val)?0.85:val;
+}
+function ttsPlay(idx){
+  if(typeof window.speechSynthesis==='undefined')return;
+  ttsStop();
+  var transcript=document.getElementById('trans-'+idx);
+  var p=transcript&&transcript.querySelector('p');
+  var text=((p?p.textContent:(transcript?transcript.textContent:''))||'').trim();
+  if(!text)return;
+  var rate=ttsActiveSpeed(idx);
+  var utter=new SpeechSynthesisUtterance(text);
+  utter.rate=rate;
+  utter.lang='en-GB';
+  var words=text.split(/\s+/).length;
+  var estimated=(words/(rate*140))*60;
+  var btn=document.getElementById('play-'+idx);
+  var fill=document.getElementById('prog-'+idx);
+  var timeEl=document.getElementById('time-'+idx);
+  if(btn)btn.textContent='⏸';
+  if(fill)fill.style.width='0%';
+  if(timeEl)timeEl.textContent='0:00 / '+ttsFormatTime(estimated);
+  var elapsed=0;
+  var timer=setInterval(function(){
+    elapsed+=0.25;
+    var pct=Math.min((elapsed/estimated)*100,99);
+    if(fill)fill.style.width=pct+'%';
+    if(timeEl)timeEl.textContent=ttsFormatTime(elapsed)+' / '+ttsFormatTime(estimated);
+  },250);
+  utter.onend=function(){
+    clearInterval(timer);
+    if(fill)fill.style.width='100%';
+    if(timeEl)timeEl.textContent=ttsFormatTime(estimated)+' / '+ttsFormatTime(estimated);
+    if(btn)btn.textContent='▶';
+    listeningTTS={utter:null,idx:null,timer:null};
+  };
+  listeningTTS={utter:utter,idx:idx,timer:timer};
+  window.speechSynthesis.speak(utter);
+}
+function togglePlay(idx){
+  if(listeningTTS.idx===idx){ttsStop();return;}
+  ttsPlay(idx);
+}
+function replayAudio(idx){ttsPlay(idx);}
+function setSpeed(idx,speed,btnEl){
+  var player=btnEl.closest('.audio-player');
+  if(player)player.querySelectorAll('.speed-btn').forEach(function(b){b.classList.remove('active');});
+  btnEl.classList.add('active');
+  if(listeningTTS.idx===idx)ttsPlay(idx);
+}
+function toggleTranscript(idx){
+  var toggle=document.getElementById('trans-toggle-'+idx);
+  var content=document.getElementById('trans-'+idx);
+  if(!toggle||!content)return;
+  var open=content.classList.toggle('open');
+  toggle.classList.toggle('open',open);
+}
+
+/* ── Writing submission ── */
+function updateWordCount(id){
+  var ta=document.getElementById(id+'-textarea');
+  var counter=document.getElementById(id+'-counter');
+  if(!ta||!counter)return;
+  var text=ta.value.trim();
+  var count=text?text.split(/\s+/).length:0;
+  counter.textContent=count+' word'+(count!==1?'s':'');
+}
+var writingSubmitted={};
+function submitWriting(id){
+  if(writingSubmitted[id])return;
+  var ta=document.getElementById(id+'-textarea');
+  var successEl=document.getElementById(id+'-success');
+  if(!ta||!successEl)return;
+  if(!ta.value.trim()){ta.focus();return;}
+  var card=ta.closest('.card');
+  var btn=card&&card.querySelector('.submit-btn');
+  writingSubmitted[id]=true;
+  if(btn){btn.disabled=true;btn.textContent='Submitted ✓';}
+  successEl.style.display='flex';
 }
 </script>
 </body></html>
