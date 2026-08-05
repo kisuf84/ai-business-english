@@ -303,6 +303,32 @@ export default function AppShell({ children }: AppShellProps) {
       </div>
     );
 
+  const renderLogo = (compact = false) => (
+    <Link
+      href="/dashboard"
+      aria-label="Langslate AI home"
+      className="lumen-focus flex min-w-0 items-center gap-3 rounded-[12px]"
+    >
+      <span
+        className={`grid shrink-0 place-items-center rounded-[12px] bg-[image:var(--grad-aurora)] font-mono text-xs font-extrabold text-[#0a0a14] shadow-glow ${
+          compact ? "h-9 w-9" : "h-[38px] w-[38px]"
+        }`}
+      >
+        LA
+      </span>
+      <span className="min-w-0">
+        <span className="display block truncate text-lg leading-none text-[var(--ink-1)] lg:text-xl">
+          Langslate AI
+        </span>
+        {compact ? null : (
+          <span className="mt-0.5 block truncate text-xs text-[var(--ink-3)]">
+            {pageTitle}
+          </span>
+        )}
+      </span>
+    </Link>
+  );
+
   const renderNavigation = (onNavigate?: () => void) => (
     <div className="space-y-6">
       {navGroups.map((group) => (
@@ -406,74 +432,69 @@ export default function AppShell({ children }: AppShellProps) {
 
         <main className="min-w-0 flex-1 overflow-x-hidden">
           <header className="topbar z-30">
-            <div className="flex w-full flex-wrap items-center justify-between gap-3 lg:flex-nowrap">
-              <div className="flex min-w-0 items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setIsMobileNavOpen(true)}
-                  aria-label="Open navigation menu"
-                  aria-expanded={isMobileNavOpen}
-                  aria-controls="mobile-navigation-drawer"
-                  className="btn btn-ghost btn-icon lumen-focus shrink-0 lg:hidden"
-                >
-                  <span className="sr-only">Open navigation menu</span>
-                  <span aria-hidden="true" className="font-mono text-sm font-bold">
-                    =
-                  </span>
-                </button>
+            <div className="flex w-full items-center">
+              <div className="flex w-full items-center justify-between gap-2 lg:hidden">
+                <div className="flex min-w-0 items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsMobileNavOpen(true)}
+                    aria-label="Open navigation menu"
+                    aria-expanded={isMobileNavOpen}
+                    aria-controls="mobile-navigation-drawer"
+                    className="btn btn-ghost btn-icon lumen-focus shrink-0"
+                  >
+                    <span className="sr-only">Open navigation menu</span>
+                    <span aria-hidden="true" className="font-mono text-sm font-bold">
+                      =
+                    </span>
+                  </button>
 
-                <Link
-                  href="/dashboard"
-                  aria-label="Go to dashboard"
-                  className="lumen-focus flex min-w-0 items-center gap-3 rounded-[12px]"
-                >
-                  <img
-                    src="/logo/langslate-ai-logo.png"
-                    alt="Langslate AI logo"
-                    className="h-[38px] w-[38px] shrink-0 rounded-[12px] object-contain shadow-glow"
-                  />
-                  <div className="min-w-0">
-                    <p className="display truncate text-xl leading-none text-[var(--ink-1)]">
-                      Langslate AI
-                    </p>
-                    <p className="mt-0.5 truncate text-xs text-[var(--ink-3)]">
-                      {pageTitle}
-                    </p>
+                  {renderLogo(true)}
+                </div>
+
+                <div className="flex shrink-0 items-center gap-2">
+                  <ThemeToggle mode={mode} toggleTheme={toggleTheme} />
+                  {renderProfileAvatar("h-9 w-9")}
+                </div>
+              </div>
+
+              <div className="hidden w-full items-center justify-between gap-3 lg:flex">
+                <div className="flex min-w-0 items-center gap-3">
+                  {renderLogo()}
+                </div>
+
+                <div className="search w-full min-w-0">
+                  <label className="lumen-focus block">
+                    <span className="search-icon font-mono text-[11px] font-bold">
+                      /
+                    </span>
+                    <input
+                      type="search"
+                      placeholder="Search lessons, simulations, courses"
+                    />
+                  </label>
+                </div>
+
+                <div className="flex shrink-0 items-center gap-2">
+                  <ThemeToggle mode={mode} toggleTheme={toggleTheme} />
+                  <Link
+                    href="/simulation"
+                    className="btn btn-ghost lumen-focus"
+                  >
+                    Start simulation
+                  </Link>
+                  <Link
+                    href="/lesson/new"
+                    className="btn btn-aurora lumen-focus"
+                  >
+                    Create lesson
+                  </Link>
+                  <div className="flex items-center gap-2 rounded-full border border-[var(--glass-border)] bg-[var(--glass)] p-1.5 pr-3">
+                    {renderProfileAvatar("h-8 w-8")}
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--ink-3)]">
+                      {user.role}
+                    </span>
                   </div>
-                </Link>
-              </div>
-
-              <div className="search order-3 w-full min-w-0 lg:order-2">
-                <label className="lumen-focus block">
-                  <span className="search-icon font-mono text-[11px] font-bold">
-                    /
-                  </span>
-                  <input
-                    type="search"
-                    placeholder="Search lessons, simulations, courses"
-                  />
-                </label>
-              </div>
-
-              <div className="order-2 flex shrink-0 items-center gap-2 lg:order-3">
-                <ThemeToggle mode={mode} toggleTheme={toggleTheme} />
-                <Link
-                  href="/simulation"
-                  className="btn btn-ghost lumen-focus hidden sm:inline-flex"
-                >
-                  Start simulation
-                </Link>
-                <Link
-                  href="/lesson/new"
-                  className="btn btn-aurora lumen-focus"
-                >
-                  Create lesson
-                </Link>
-                <div className="hidden items-center gap-2 rounded-full border border-[var(--glass-border)] bg-[var(--glass)] p-1.5 pr-3 md:flex">
-                  {renderProfileAvatar("h-8 w-8")}
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--ink-3)]">
-                    {user.role}
-                  </span>
                 </div>
               </div>
             </div>
@@ -483,7 +504,7 @@ export default function AppShell({ children }: AppShellProps) {
             className={
               isPremiumModuleReader
                 ? "h-[calc(100dvh-var(--topbar-h))] overflow-hidden p-0"
-                : "px-[14px] py-[18px] sm:px-7 sm:py-7"
+                : "px-[14px] pt-[18px] pb-[calc(18px+env(safe-area-inset-bottom))] sm:px-7 sm:pt-7 sm:pb-[calc(28px+env(safe-area-inset-bottom))]"
             }
           >
             <div
@@ -515,7 +536,7 @@ export default function AppShell({ children }: AppShellProps) {
         />
         <aside
           id="mobile-navigation-drawer"
-          className={`absolute inset-y-0 left-0 flex w-[min(88vw,360px)] max-w-full flex-col border-r border-[var(--sidebar-border)] bg-[image:var(--sidebar-bg)] px-4 py-4 shadow-2xl transition-transform duration-200 ${
+          className={`absolute inset-y-0 left-0 flex w-[min(88vw,360px)] max-w-full flex-col border-r border-[var(--sidebar-border)] bg-[image:var(--sidebar-bg)] px-4 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))] shadow-2xl transition-transform duration-200 ${
             isMobileNavOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
