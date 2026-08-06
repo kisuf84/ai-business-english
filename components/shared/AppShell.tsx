@@ -309,13 +309,13 @@ export default function AppShell({ children }: AppShellProps) {
       aria-label="Langslate AI home"
       className="lumen-focus flex min-w-0 items-center gap-3 rounded-[12px]"
     >
-      <span
-        className={`grid shrink-0 place-items-center rounded-[12px] bg-[image:var(--grad-aurora)] font-mono text-xs font-extrabold text-[#0a0a14] shadow-glow ${
+      <img
+        src="/logo/langslate-ai-logo.png"
+        alt="Langslate AI logo"
+        className={`shrink-0 rounded-[12px] object-contain shadow-glow ${
           compact ? "h-9 w-9" : "h-[38px] w-[38px]"
         }`}
-      >
-        LA
-      </span>
+      />
       <span className="min-w-0">
         <span className="display block truncate text-lg leading-none text-[var(--ink-1)] lg:text-xl">
           Langslate AI
