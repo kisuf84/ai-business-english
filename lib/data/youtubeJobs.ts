@@ -128,12 +128,73 @@ export function getYouTubeLessonJobLogSnapshot(job: YouTubeLessonJob | null) {
   return sanitizeJobForLog(job);
 }
 
+const MAX_ATTEMPTS = 3;
+// A job whose worker invocation dies mid-flight (crash, redeploy,
+// platform execution-duration cutoff) is left in "processing" forever,
+// since that status was previously never re-queried by the cron. Root
+// cause confirmed in production: job 8335999e-383b-49bb-b660-b77fdcaa4d19
+// has been stuck in "processing" since 2026-06-02 with no recovery path.
+const STALE_PROCESSING_MINUTES = 15;
+
+// TEMP-LOG (Priority 3 diagnostics): reclaim + retry-count reporting for
+// jobs orphaned in "processing". Safe to remove once stuck-job reports stop.
+export async function reclaimStaleProcessingYouTubeLessonJobs(): Promise<{
+  requeued: number;
+  failed: number;
+}> {
+  const staleBefore = new Date(
+    Date.now() - STALE_PROCESSING_MINUTES * 60 * 1000
+  ).toISOString();
+
+  const requeued = await supabaseServiceRoleRest<YouTubeLessonJob[]>(
+    `youtube_lesson_jobs?status=eq.processing&updated_at=lt.${encodeURIComponent(
+      staleBefore
+    )}&attempts=lt.${MAX_ATTEMPTS}&select=id`,
+    {
+      method: "PATCH",
+      headers: { Prefer: "return=representation" },
+      body: JSON.stringify({
+        status: "queued" satisfies YouTubeLessonJobStatus,
+        last_error_code: "stale_processing_reclaimed",
+        last_error_message:
+          "Job was stuck in processing (worker likely terminated mid-run) and was automatically re-queued.",
+      }),
+    }
+  );
+
+  const failed = await supabaseServiceRoleRest<YouTubeLessonJob[]>(
+    `youtube_lesson_jobs?status=eq.processing&updated_at=lt.${encodeURIComponent(
+      staleBefore
+    )}&attempts=gte.${MAX_ATTEMPTS}&select=id`,
+    {
+      method: "PATCH",
+      headers: { Prefer: "return=representation" },
+      body: JSON.stringify({
+        status: "failed" satisfies YouTubeLessonJobStatus,
+        last_error_code: "stale_processing_exhausted",
+        last_error_message:
+          "Job was stuck in processing and had already exhausted its retry attempts.",
+      }),
+    }
+  );
+
+  if (requeued.length > 0 || failed.length > 0) {
+    logJobDebug("reclaim.stale_processing", {
+      staleBefore,
+      requeuedIds: requeued.map((job) => job.id),
+      failedIds: failed.map((job) => job.id),
+    });
+  }
+
+  return { requeued: requeued.length, failed: failed.length };
+}
+
 export async function listProcessableYouTubeLessonJobs(
   limit = 3
 ): Promise<YouTubeLessonJob[]> {
   const safeLimit = Math.max(1, Math.min(10, limit));
   return supabaseServiceRoleRest<YouTubeLessonJob[]>(
-    `youtube_lesson_jobs?select=*&status=in.(queued,failed)&attempts=lt.3&order=created_at.asc&limit=${safeLimit}`
+    `youtube_lesson_jobs?select=*&status=in.(queued,failed)&attempts=lt.${MAX_ATTEMPTS}&order=created_at.asc&limit=${safeLimit}`
   );
 }
 

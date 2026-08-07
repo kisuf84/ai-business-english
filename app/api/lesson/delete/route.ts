@@ -26,7 +26,14 @@ export async function POST(request: Request) {
   try {
     await deleteLesson(payload.id, authUser.id);
     return NextResponse.json({ status: "ok" });
-  } catch {
+  } catch (error) {
+    // TEMP-LOG (Priority 3 diagnostics): surface the real Supabase/PostgREST
+    // error instead of masking every failure as a generic 404.
+    console.error("[lesson-delete] delete_failed", {
+      lessonId: payload.id,
+      userId: authUser.id,
+      message: error instanceof Error ? error.message : String(error),
+    });
     return NextResponse.json({ error: "Lesson not found." }, { status: 404 });
   }
 }

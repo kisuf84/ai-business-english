@@ -6,6 +6,7 @@ import type {
   LessonGenerationRequestInput,
 } from "../../../../types/lesson";
 import {
+  normalizeLessonOutput,
   validateLessonPayload,
 } from "../../../../lib/validators/lesson";
 import { fetchYouTubeTranscriptSource } from "../../../../lib/youtube/transcript";
@@ -20,6 +21,10 @@ import {
   repairLesson,
 } from "../../../../lib/ai/lesson";
 import { parseYouTubeVideoIdDetailed } from "../../../../lib/youtube/url";
+
+// Measured real generate+repair round trip can take ~70s; give headroom so
+// the platform doesn't kill the function before our own OpenAI timeout fires.
+export const maxDuration = 180;
 
 type SourceExtractionResult =
   | {
@@ -77,6 +82,53 @@ function estimateLessonSize(value: unknown) {
   return {
     characters: serialized.length,
     estimatedTokens: Math.ceil(serialized.length / 4),
+  };
+}
+
+function getArrayLength(value: unknown, ...keys: string[]): number | null {
+  if (!value || typeof value !== "object") return null;
+  const data = value as Record<string, unknown>;
+  for (const key of keys) {
+    const candidate = data[key];
+    if (Array.isArray(candidate)) {
+      return candidate.length;
+    }
+  }
+  return null;
+}
+
+function summarizeLessonShape(value: unknown) {
+  const relaxed = normalizeLessonOutput(value, {
+    strict: false,
+    allowLegacyFields: true,
+  });
+
+  return {
+    rawGrammarCount: getArrayLength(value, "grammar", "grammar_exercises", "grammarExercises"),
+    rawReadingComprehensionCount: getArrayLength(
+      value,
+      "reading_comprehension",
+      "readingComprehension",
+      "comprehension_questions"
+    ),
+    rawVocabularyExerciseCount: getArrayLength(
+      value,
+      "vocabulary_exercise",
+      "vocabularyExercise",
+      "vocabulary_practice"
+    ),
+    rawFinalAssessmentCount: getArrayLength(value, "final_assessment", "finalAssessment", "quiz"),
+    normalizedGrammarCount: relaxed.ok ? relaxed.data.grammar.length : null,
+    normalizedReadingComprehensionCount: relaxed.ok
+      ? relaxed.data.reading_comprehension.length
+      : null,
+    normalizedVocabularyExerciseCount: relaxed.ok
+      ? relaxed.data.vocabulary_exercise.length
+      : null,
+    normalizedFinalAssessmentCount: relaxed.ok
+      ? relaxed.data.final_assessment.length
+      : null,
+    relaxedErrors: relaxed.ok ? [] : relaxed.errors,
   };
 }
 
@@ -459,6 +511,8 @@ export async function POST(request: Request) {
     }
 
     const parsed = parseAndValidateLessonOutput(rawOutput);
+    const rawParsedLesson = parseLessonJson(rawOutput);
+    console.info("[lesson-generate] output_shape", summarizeLessonShape(rawParsedLesson));
     if (!parsed.ok && isIncompleteJsonError(parsed.error)) {
       console.error("[lesson-generate] incomplete_json", {
         estimatedLessonSize: {
@@ -474,7 +528,7 @@ export async function POST(request: Request) {
         : ({ ok: false as const, errors: [parsed.error] });
 
     if (!normalized.ok) {
-      const brokenLesson = parseLessonJson(rawOutput) ?? {};
+      const brokenLesson = rawParsedLesson ?? {};
       const repairPrompt = buildLessonRepairPrompt({
         input: normalizedInput,
         sourceText: extracted.sourceText,
@@ -532,6 +586,8 @@ export async function POST(request: Request) {
         finishReasons: repairedRaw.finishReasons,
         usage: repairedRaw.usage,
       });
+      const repairedLesson = parseLessonJson(repairedRaw.text);
+      console.info("[lesson-generate] repair_shape", summarizeLessonShape(repairedLesson));
       const repairedParsed = parseAndValidateLessonOutput(repairedRaw.text);
       normalized = repairedParsed.ok
         ? { ok: true as const, data: repairedParsed.data, warnings: [] as string[] }

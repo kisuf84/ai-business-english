@@ -7,6 +7,7 @@ import Select from "../shared/Select";
 import LessonActions from "./LessonActions";
 import type { LessonGenerationOutput } from "../../types/lesson";
 import { lessonToText } from "../../lib/utils/lessonText";
+import { authenticatedFetch } from "../../lib/api/authenticatedFetch";
 
 type LessonToolbarProps = {
   lessonId: string;
@@ -32,7 +33,7 @@ export default function LessonToolbar({
     setError(null);
 
     try {
-      const response = await fetch("/api/lesson/visibility", {
+      const response = await authenticatedFetch("/api/lesson/visibility", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: lessonId, visibility: value }),

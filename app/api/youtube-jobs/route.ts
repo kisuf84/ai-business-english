@@ -4,12 +4,7 @@ import { createYouTubeLessonJob } from "../../../lib/data/youtubeJobs";
 import { parseYouTubeVideoIdDetailed } from "../../../lib/youtube/url";
 import { getRequestAuthUser } from "../../../lib/supabase/auth";
 
-function isValidEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-
 type YouTubeJobCreatePayload = LessonGenerationInput & {
-  email?: string;
   sourceUrl?: string;
   url?: string;
 };
@@ -42,7 +37,6 @@ export async function POST(request: Request) {
   }
 
   const sourceUrl = normalizeSourceUrl(payload);
-  const email = payload.email?.trim().toLowerCase() || "";
   const parsed = parseYouTubeVideoIdDetailed(sourceUrl);
   console.info("[youtube-job] source_received", {
     hasSourceUrl: Boolean(sourceUrl),
@@ -57,20 +51,12 @@ export async function POST(request: Request) {
     );
   }
 
-  if (email && !isValidEmail(email)) {
-    return NextResponse.json(
-      { error: "Please enter a valid email address." },
-      { status: 400 }
-    );
-  }
-
   try {
     const job = await createYouTubeLessonJob({
       user_id: authUser?.id ?? null,
       topic: payload.topic?.trim() || "YouTube lesson",
       source_url: sourceUrl,
       video_id: parsed.videoId,
-      email: email || null,
       level: payload.level?.trim() || "B1",
       industry: payload.industry?.trim() || undefined,
       profession: payload.profession?.trim() || undefined,
@@ -80,7 +66,6 @@ export async function POST(request: Request) {
     console.info("[youtube-job] created", {
       id: job.id,
       videoId: job.video_id,
-      hasEmail: Boolean(job.email),
     });
 
     return NextResponse.json(

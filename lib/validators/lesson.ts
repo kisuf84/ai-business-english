@@ -44,10 +44,6 @@ export function validateLessonPayload(
     errors.push("Level is required.");
   }
 
-  if (!payload.lesson_type?.trim()) {
-    errors.push("Lesson type is required.");
-  }
-
   if (hasSourceUrl) {
     try {
       const parsed = new URL(payload.source_url as string);
@@ -91,6 +87,48 @@ function toVocabularyArray(value: unknown): VocabularyItem[] {
   });
 }
 
+function parseCorrectIndex(row: Record<string, unknown>, options: string[]): number {
+  const raw =
+    row.correct_index ??
+    row.correctIndex ??
+    row.correct ??
+    row.correct_option_index ??
+    row.correctOptionIndex ??
+    row.answer_index ??
+    row.answerIndex;
+
+  if (typeof raw === "number") {
+    return raw;
+  }
+
+  if (typeof raw === "string") {
+    const trimmed = raw.trim();
+    if (/^\d+$/.test(trimmed)) {
+      return Number(trimmed);
+    }
+
+    const letterIndex = "abcdefghijklmnopqrstuvwxyz".indexOf(trimmed.toLowerCase());
+    if (letterIndex >= 0 && letterIndex < options.length) {
+      return letterIndex;
+    }
+  }
+
+  const rawAnswer =
+    row.correct_answer ??
+    row.correctAnswer ??
+    row.correct_option ??
+    row.correctOption ??
+    row.answer ??
+    row.correct;
+
+  if (typeof rawAnswer === "string") {
+    const normalizedAnswer = rawAnswer.trim().toLowerCase();
+    return options.findIndex((option) => option.trim().toLowerCase() === normalizedAnswer);
+  }
+
+  return -1;
+}
+
 function toQuestionArray(value: unknown, idPrefix: string): LessonQuestion[] {
   if (!Array.isArray(value)) return [];
 
@@ -109,12 +147,7 @@ function toQuestionArray(value: unknown, idPrefix: string): LessonQuestion[] {
           .filter((opt) => opt.length > 0)
       : [];
 
-    const rawCorrectIndex =
-      typeof row.correct_index === "number"
-        ? row.correct_index
-        : typeof row.correct === "number"
-          ? row.correct
-          : -1;
+    const rawCorrectIndex = parseCorrectIndex(row, options);
 
     const validCorrectIndex =
       Number.isInteger(rawCorrectIndex) &&
@@ -336,8 +369,8 @@ export function normalizeLessonOutput(
     if (normalized.vocabulary_exercise.length < MIN_VOCAB_EXERCISE_COUNT) {
       errors.push("Vocabulary Exercise must exist.");
     }
-    if (normalized.grammar.length !== REQUIRED_GRAMMAR_COUNT) {
-      errors.push(`Grammar must contain exactly ${REQUIRED_GRAMMAR_COUNT} questions.`);
+    if (normalized.grammar.length < REQUIRED_GRAMMAR_COUNT) {
+      errors.push(`Grammar must contain at least ${REQUIRED_GRAMMAR_COUNT} questions.`);
     }
     if (!isGrammarTopicGrounded(normalized.grammar, normalized.title, normalized.word_bank)) {
       errors.push("Grammar questions must stay tied to the lesson/source topic.");

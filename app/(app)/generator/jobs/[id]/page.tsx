@@ -22,7 +22,7 @@ function getStatusCopy(job: JobStatus) {
   if (job.status === "queued") {
     return {
       title: "✨ Your lesson is in the queue...",
-      body: "We’ll start processing it shortly and email you when it’s ready.",
+      body: "We’ll start processing it shortly. Keep this page open to see it update automatically.",
     };
   }
 

@@ -121,7 +121,9 @@ export async function createLesson(params: {
     level: params.input.level,
     industry: params.input.industry ?? null,
     profession: params.input.profession ?? null,
-    lesson_type: params.input.lesson_type,
+    // lessons.lesson_type is NOT NULL in the schema; lesson_type is now an
+    // optional user input, so fall back to a default rather than requiring it.
+    lesson_type: params.input.lesson_type?.trim() || "General",
     source_url: params.input.source_url ?? null,
     content_json: params.output,
     status: "saved",

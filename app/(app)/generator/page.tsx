@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getSupabaseBrowserClient } from "../../../lib/supabase/client";
 import { authenticatedFetch } from "../../../lib/api/authenticatedFetch";
 import Button from "../../../components/shared/Button";
 import Card from "../../../components/shared/Card";
@@ -271,11 +270,7 @@ export default function GeneratorPage() {
   const [jobId, setJobId] = useState<string | null>(null);
   const [showFallback, setShowFallback] = useState(false);
   const [loadingPhase, setLoadingPhase] = useState<LoadingPhase>("generating");
-  const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [notificationStatus, setNotificationStatus] = useState<
-    "idle" | "error" | "submitted"
-  >("idle");
   const [jobStatusUrl, setJobStatusUrl] = useState<string | null>(null);
   const [manualTranscript, setManualTranscript] = useState("");
   const [isRedirectingToLesson, setIsRedirectingToLesson] = useState(false);
@@ -285,25 +280,6 @@ export default function GeneratorPage() {
   const readyRedirectTimeoutRef = useRef<number | null>(null);
   const generationProgressTimeoutsRef = useRef<number[]>([]);
   const [generationProgressIndex, setGenerationProgressIndex] = useState(0);
-
-  useEffect(() => {
-    let active = true;
-    const supabase = getSupabaseBrowserClient();
-
-    if (!supabase) return;
-
-    const loadUserEmail = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (!active || !data.user?.email) return;
-      setEmail((current) => current || data.user?.email || "");
-    };
-
-    void loadUserEmail();
-
-    return () => {
-      active = false;
-    };
-  }, []);
 
   useEffect(() => {
     return () => {
@@ -516,44 +492,6 @@ export default function GeneratorPage() {
     }, YOUTUBE_FALLBACK_DELAY_MS);
   };
 
-  const handleEmailWhenReady = async () => {
-    if (!jobId) return;
-
-    const trimmedEmail = email.trim();
-    if (!trimmedEmail) {
-      setNotificationStatus("error");
-      setError("Enter an email address to get notified, or keep this page open.");
-      return;
-    }
-
-    setNotificationStatus("idle");
-    setError(null);
-
-    try {
-      const response = await fetch(`/api/youtube-jobs/${jobId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: trimmedEmail }),
-      });
-
-      if (!response.ok && response.status !== 404 && response.status !== 405) {
-        const payload = (await response.json().catch(() => null)) as
-          | { error?: string }
-          | null;
-        throw new Error(payload?.error || "We couldn’t save your email.");
-      }
-
-      setNotificationStatus("submitted");
-    } catch (submitError) {
-      const message =
-        submitError instanceof Error
-          ? submitError.message
-          : "We couldn’t save your email.";
-      setNotificationStatus("error");
-      setError(message);
-    }
-  };
-
   const runLessonGeneration = async () => {
     if (isGenerating || isLessonGenerating) return;
 
@@ -564,7 +502,6 @@ export default function GeneratorPage() {
     setLessonDiagnostics([]);
     setLessonResult(null);
     setLessonStage("generating_lesson");
-    setNotificationStatus("idle");
     setIsRedirectingToLesson(false);
     setShowFallback(false);
     setLoadingPhase("generating");
@@ -904,6 +841,7 @@ export default function GeneratorPage() {
         </div>
 
         <div className="min-h-[560px] sm:min-h-[760px]">
+          {!lessonResult ? (
           <Card className="p-0">
             <div className="border-b border-[var(--border)] px-5 py-5 sm:px-7 sm:py-6">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -1076,7 +1014,7 @@ export default function GeneratorPage() {
 
                   <div className="grid gap-2">
                     <label htmlFor="lesson_type" className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
-                      Lesson Type
+                      Lesson Type (optional)
                     </label>
                     <Textarea
                       id="lesson_type"
@@ -1085,7 +1023,6 @@ export default function GeneratorPage() {
                       onChange={(event) =>
                         handleLessonChange("lesson_type", event.target.value)
                       }
-                      required
                     />
                   </div>
                 </fieldset>
@@ -1114,55 +1051,19 @@ export default function GeneratorPage() {
                         We’re building your lesson. This might take a moment.
                       </p>
                       <p className="mt-1 text-xs text-[var(--ink-faint)]">
-                        You can leave this page open while we keep checking, or add
-                        an email address for the ready link.
+                        You can leave this page open while we keep checking.
                       </p>
                     </div>
-                    <div className="grid gap-2 sm:max-w-md">
-                      <label
-                        htmlFor="fallback_email"
-                        className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]"
+                    {jobStatusUrl ? (
+                      <a
+                        href={jobStatusUrl}
+                        className="text-xs text-[var(--accent)] underline"
                       >
-                        Email (optional)
-                      </label>
-                      <Input
-                        id="fallback_email"
-                        type="email"
-                        placeholder="you@example.com"
-                        value={email}
-                        onChange={(event) => {
-                          setEmail(event.target.value);
-                          setNotificationStatus("idle");
-                          setError(null);
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3">
-                      <Button
-                        type="button"
-                        onClick={handleEmailWhenReady}
-                        className="w-full border-transparent bg-[image:var(--aurora-line)] px-5 py-3 text-xs font-extrabold text-[var(--accent-ink)] shadow-glow hover:opacity-95 sm:w-auto"
-                      >
-                        Get notified when it’s ready
-                      </Button>
-                      {jobStatusUrl ? (
-                        <a
-                          href={jobStatusUrl}
-                          className="text-xs text-[var(--accent)] underline"
-                        >
-                          View lesson status
-                        </a>
-                      ) : null}
-                    </div>
-                    {notificationStatus === "submitted" ? (
-                      <p className="text-xs font-medium text-[var(--ink)]">
-                        Email saved. We will send the lesson link when it is ready.
-                      </p>
+                        View lesson status
+                      </a>
                     ) : null}
-                    {notificationStatus === "error" || error ? (
-                      <p className="text-xs text-[var(--accent-warm)]">
-                        {error || "Please enter a valid email address."}
-                      </p>
+                    {error ? (
+                      <p className="text-xs text-[var(--accent-warm)]">{error}</p>
                     ) : null}
                   </div>
                 ) : null}
@@ -1178,6 +1079,7 @@ export default function GeneratorPage() {
             </form>
             </div>
           </Card>
+          ) : null}
 
           {lessonResult ? (
             <div className="mt-8">

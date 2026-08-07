@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "../shared/Button";
+import { authenticatedFetch } from "../../lib/api/authenticatedFetch";
 
 type LessonActionsProps = {
   lessonId: string;
@@ -21,7 +22,7 @@ export default function LessonActions({ lessonId, status }: LessonActionsProps) 
     setMessage(null);
 
     try {
-      const response = await fetch(endpoint, {
+      const response = await authenticatedFetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: lessonId }),

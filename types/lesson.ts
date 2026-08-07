@@ -5,7 +5,7 @@ export type LessonGenerationInput = {
   level: string;
   industry?: string;
   profession?: string;
-  lesson_type: string;
+  lesson_type?: string;
 };
 
 export type MCQ = {

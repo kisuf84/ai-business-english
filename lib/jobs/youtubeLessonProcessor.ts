@@ -11,9 +11,9 @@ import { createLesson } from "../data/lessons";
 import {
   claimYouTubeLessonJob,
   listProcessableYouTubeLessonJobs,
+  reclaimStaleProcessingYouTubeLessonJobs,
   updateYouTubeLessonJob,
 } from "../data/youtubeJobs";
-import { getAppBaseUrl, sendEmail } from "../email/resend";
 import { fetchYouTubeTranscriptSource } from "../youtube/transcript";
 
 const MAX_ATTEMPTS = 3;
@@ -31,67 +31,6 @@ function jobInput(job: YouTubeLessonJob): LessonGenerationInput {
 
 function isRecoverableTranscriptError(code: string | null | undefined): boolean {
   return code === "transcript_fetch_failed" || code === "unknown_error";
-}
-
-async function sendReadyEmail(job: YouTubeLessonJob, lessonId: string) {
-  if (!job.email) return false;
-  const lessonUrl = `${getAppBaseUrl()}/lessons/${lessonId}`;
-  try {
-    await sendEmail({
-      to: job.email,
-      subject: "Your lesson is ready",
-      html: [
-        "<p>Your Business English lesson is ready.</p>",
-        `<p><a href="${lessonUrl}">Open your lesson</a></p>`,
-      ].join(""),
-    });
-    return true;
-  } catch (error) {
-    console.warn("[youtube-job] ready_email_failed", { id: job.id, error });
-    return false;
-  }
-}
-
-async function sendNeedsTranscriptEmail(job: YouTubeLessonJob) {
-  if (!job.email) return false;
-  const recoveryUrl = `${getAppBaseUrl()}/generator/jobs/${job.id}`;
-  try {
-    await sendEmail({
-      to: job.email,
-      subject: "We’re almost done with your lesson",
-      html: [
-        "<p>We’re almost done creating your lesson.</p>",
-        "<p>This video needs a transcript before we can finish it.</p>",
-        `<p><a href="${recoveryUrl}">Paste the transcript and continue</a></p>`,
-      ].join(""),
-    });
-    return true;
-  } catch (error) {
-    console.warn("[youtube-job] needs_transcript_email_failed", {
-      id: job.id,
-      error,
-    });
-    return false;
-  }
-}
-
-async function sendFailedEmail(job: YouTubeLessonJob) {
-  if (!job.email) return false;
-  const recoveryUrl = `${getAppBaseUrl()}/generator/jobs/${job.id}`;
-  try {
-    await sendEmail({
-      to: job.email,
-      subject: "We couldn’t finish your lesson",
-      html: [
-        "<p>We couldn’t finish this lesson automatically.</p>",
-        `<p>You can still continue here: <a href="${recoveryUrl}">open lesson job</a></p>`,
-      ].join(""),
-    });
-    return true;
-  } catch (error) {
-    console.warn("[youtube-job] failed_email_failed", { id: job.id, error });
-    return false;
-  }
 }
 
 export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
@@ -131,20 +70,11 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
           claimed.attempts < MAX_ATTEMPTS;
 
         const status = shouldRetry ? "queued" : "needs_transcript";
-        const updated = await updateYouTubeLessonJob(claimed.id, {
+        await updateYouTubeLessonJob(claimed.id, {
           status,
           last_error_code: transcript.reason,
           last_error_message: transcript.message,
         });
-
-        if (!shouldRetry) {
-          const sent = await sendNeedsTranscriptEmail(updated);
-          if (sent) {
-            console.info("[youtube-job] needs_transcript_email_sent", {
-              id: updated.id,
-            });
-          }
-        }
 
         return { id: claimed.id, status };
       }
@@ -217,10 +147,6 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
       lessonId: lesson.id,
     });
 
-    const readyEmailSent = await sendReadyEmail(ready, lesson.id);
-    if (readyEmailSent) {
-      console.info("[youtube-job] ready_email_sent", { id: ready.id });
-    }
     return { id: ready.id, status: "ready" };
   } catch (error) {
     const message = error instanceof Error ? error.message : "unknown_error";
@@ -242,18 +168,19 @@ export async function processYouTubeLessonJob(job: YouTubeLessonJob): Promise<{
       message,
     });
 
-    if (updated.status === "failed") {
-      const failedEmailSent = await sendFailedEmail(updated);
-      if (failedEmailSent) {
-        console.info("[youtube-job] failed_email_sent", { id: updated.id });
-      }
-    }
-
     return { id: updated.id, status: updated.status };
   }
 }
 
 export async function processQueuedYouTubeLessonJobs(limit = 3) {
+  // Root cause fix: jobs whose worker died mid-run were stuck in
+  // "processing" forever because this query previously only looked at
+  // queued/failed jobs. Reclaim stale ones before picking new work.
+  const reclaimed = await reclaimStaleProcessingYouTubeLessonJobs();
+  if (reclaimed.requeued > 0 || reclaimed.failed > 0) {
+    console.info("[youtube-job] stale_processing_reclaimed", reclaimed);
+  }
+
   const jobs = await listProcessableYouTubeLessonJobs(limit);
   const results = [];
   for (const job of jobs) {

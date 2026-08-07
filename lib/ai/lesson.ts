@@ -7,7 +7,10 @@ import type {
 import { normalizeLessonOutput } from "../validators/lesson";
 
 const LESSON_MODEL = "gpt-4o-mini";
-const LESSON_MAX_OUTPUT_TOKENS = 10000;
+// Raised from 10000: production jobs were hitting OPENAI_MAX_TOKENS_EXHAUSTED
+// (finish_reason "length") before the full lesson JSON could be emitted.
+// gpt-4o-mini's hard completion-token ceiling is 16384.
+const LESSON_MAX_OUTPUT_TOKENS = 16000;
 const LESSON_OPENAI_TIMEOUT_MS = 120_000;
 
 export type LessonGenerationModelResult = {
@@ -235,7 +238,7 @@ export function buildLessonPrompt(params: {
     `Level: ${input.level}`,
     `Industry: ${input.industry || "N/A"}`,
     `Profession: ${input.profession || "N/A"}`,
-    `Lesson type: ${input.lesson_type}`,
+    `Lesson type: ${input.lesson_type || "General"}`,
     `Source kind: ${sourceKind}`,
     `Video ID: ${videoId || "N/A"}`,
     "",
@@ -288,7 +291,7 @@ export function buildLessonRepairPrompt(params: {
     `Level: ${input.level}`,
     `Industry: ${input.industry || "N/A"}`,
     `Profession: ${input.profession || "N/A"}`,
-    `Lesson type: ${input.lesson_type}`,
+    `Lesson type: ${input.lesson_type || "General"}`,
     `Source kind: ${sourceKind}`,
     `Video ID: ${videoId || "N/A"}`,
     "",

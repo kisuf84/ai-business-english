@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { processQueuedYouTubeLessonJobs } from "../../../../lib/jobs/youtubeLessonProcessor";
 
+// Give a single job's transcript+OpenAI round trip room to finish. Batch
+// size is kept small (see call below) so one invocation doesn't need to
+// cover multiple jobs' worth of latency within this budget.
+export const maxDuration = 280;
+
 function isAuthorized(request: Request): boolean {
   const secret = process.env.CRON_SECRET;
   if (!secret) return true;
@@ -14,7 +19,10 @@ export async function POST(request: Request) {
   }
 
   try {
-    const results = await processQueuedYouTubeLessonJobs(3);
+    // Cron now runs every 10 minutes (was once/day) rather than a large
+    // per-run batch, so per-invocation duration stays well under the
+    // platform limit. Throughput is still far higher than the old daily run.
+    const results = await processQueuedYouTubeLessonJobs(1);
     return NextResponse.json({ ok: true, processed: results });
   } catch (error) {
     console.error("[youtube-job] cron_failed", error);
