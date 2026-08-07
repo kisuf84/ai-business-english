@@ -72,8 +72,13 @@ export default async function DashboardPage() {
         <div className="grid gap-3 sm:gap-[18px] md:grid-cols-2 xl:grid-cols-4">
           <Link href="/lesson/new" className="block">
             <Card className="lesson-card min-h-[170px] p-5 sm:min-h-[190px] sm:p-6">
-              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[image:var(--grad-aurora)] font-mono text-xs font-bold text-[#0a0a14] shadow-glow">
-                LE
+              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[image:var(--grad-aurora)] p-2.5 shadow-glow">
+                <img
+                  src="/icons/quick-launch-create-lesson.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="h-full w-full object-contain"
+                />
               </div>
               <div className="mt-4 text-[17px] font-bold text-[var(--ink)] sm:mt-[18px] sm:text-[18px]">
                 Create lesson
@@ -86,8 +91,13 @@ export default async function DashboardPage() {
 
           <Link href="/simulation" className="block">
             <Card className="lesson-card min-h-[170px] p-5 sm:min-h-[190px] sm:p-6">
-              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[image:var(--grad-aurora)] font-mono text-xs font-bold text-[#0a0a14] shadow-glow">
-                SI
+              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[image:var(--grad-aurora)] p-2.5 shadow-glow">
+                <img
+                  src="/icons/quick-launch-start-simulation.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="h-full w-full object-contain"
+                />
               </div>
               <div className="mt-4 text-[17px] font-bold text-[var(--ink)] sm:mt-[18px] sm:text-[18px]">
                 Start simulation
@@ -100,8 +110,13 @@ export default async function DashboardPage() {
 
           <Link href="/lessons" className="block">
             <Card className="lesson-card min-h-[170px] p-5 sm:min-h-[190px] sm:p-6">
-              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[image:var(--grad-aurora)] font-mono text-xs font-bold text-[#0a0a14] shadow-glow">
-                LI
+              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[image:var(--grad-aurora)] p-2.5 shadow-glow">
+                <img
+                  src="/icons/quick-launch-view-library.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="h-full w-full object-contain"
+                />
               </div>
               <div className="mt-4 text-[17px] font-bold text-[var(--ink)] sm:mt-[18px] sm:text-[18px]">
                 View library
@@ -114,8 +129,13 @@ export default async function DashboardPage() {
 
           <Link href="/for-teachers" className="block">
             <Card className="lesson-card min-h-[170px] p-5 sm:min-h-[190px] sm:p-6">
-              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[image:var(--grad-aurora)] font-mono text-xs font-bold text-[#0a0a14] shadow-glow">
-                FT
+              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[image:var(--grad-aurora)] p-2.5 shadow-glow">
+                <img
+                  src="/icons/quick-launch-teacher-resources.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="h-full w-full object-contain"
+                />
               </div>
               <div className="mt-4 text-[17px] font-bold text-[var(--ink)] sm:mt-[18px] sm:text-[18px]">
                 Teacher resources
