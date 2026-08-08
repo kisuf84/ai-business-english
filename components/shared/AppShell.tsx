@@ -17,11 +17,39 @@ type NavItem = {
   href: string;
   label: string;
   icon: string;
+  children?: NavItem[];
 };
 
 type NavGroup = {
   label: string;
   items: NavItem[];
+};
+
+// Client hasn't approved discovery yet — flip to true to relist it in the
+// sidebar (re-enable Sunday). Routes stay live at /english-training either way.
+const SHOW_ENGLISH_TRAINING_NAV = false;
+
+const englishTrainingNavItem: NavItem = {
+  href: "/english-training",
+  label: "English Training",
+  icon: "/icons/books-medical_9856367.png",
+  children: [
+    {
+      href: "/english-training/category/general-english-training",
+      label: "General English Training",
+      icon: "/icons/books-medical_9856367.png",
+    },
+    {
+      href: "/english-training/category/business-english-training",
+      label: "Business English Training",
+      icon: "/icons/books-medical_9856367.png",
+    },
+    {
+      href: "/english-training/category/business-english-scenarios",
+      label: "Business English Scenarios",
+      icon: "/icons/books-medical_9856367.png",
+    },
+  ],
 };
 
 const navGroups: NavGroup[] = [
@@ -39,7 +67,7 @@ const navGroups: NavGroup[] = [
       { href: "/lessons", label: "Lesson library", icon: "/icons/books-medical_9856367.png" },
       { href: "/premium-classes", label: "Premium Courses", icon: "/icons/digital-certificate_19008425.png" },
       { href: "/for-teachers", label: "For Teachers", icon: "/icons/chalkboard-user_10489812.png" },
-      { href: "/english-training", label: "English Training", icon: "/icons/books-medical_9856367.png" },
+      ...(SHOW_ENGLISH_TRAINING_NAV ? [englishTrainingNavItem] : []),
     ],
   },
   {
@@ -307,19 +335,19 @@ export default function AppShell({ children }: AppShellProps) {
   const renderLogo = (compact = false) => (
     <Link
       href="/dashboard"
-      aria-label="Langslate AI home"
+      aria-label="Langslate home"
       className="lumen-focus flex min-w-0 items-center gap-3 rounded-[12px]"
     >
       <img
         src="/logo/langslate-ai-logo.png"
-        alt="Langslate AI logo"
+        alt="Langslate logo"
         className={`shrink-0 rounded-[12px] object-contain shadow-glow ${
           compact ? "h-9 w-9" : "h-[38px] w-[38px]"
         }`}
       />
       <span className="min-w-0">
         <span className="display block truncate text-lg leading-none text-[var(--ink-1)] lg:text-xl">
-          Langslate AI
+          Langslate
         </span>
         {compact ? null : (
           <span className="mt-0.5 block truncate text-xs text-[var(--ink-3)]">
@@ -339,12 +367,25 @@ export default function AppShell({ children }: AppShellProps) {
           </p>
           <nav className="mt-2 space-y-1.5">
             {group.items.map((item) => (
-              <NavLink
-                key={item.href}
-                item={item}
-                isActive={pathname === item.href}
-                onNavigate={onNavigate}
-              />
+              <div key={item.href}>
+                <NavLink
+                  item={item}
+                  isActive={pathname === item.href}
+                  onNavigate={onNavigate}
+                />
+                {item.children && item.children.length > 0 ? (
+                  <div className="mt-1.5 ml-[18px] space-y-1.5 border-l border-[var(--glass-border)] pl-3">
+                    {item.children.map((child) => (
+                      <NavLink
+                        key={child.href}
+                        item={child}
+                        isActive={pathname === child.href}
+                        onNavigate={onNavigate}
+                      />
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             ))}
           </nav>
         </div>
@@ -372,7 +413,7 @@ export default function AppShell({ children }: AppShellProps) {
                       Workspace
                     </p>
                     <h2 className="display mt-2 text-xl leading-none">
-                      Langslate AI
+                      Langslate
                     </h2>
                   </div>
                   <button
@@ -544,7 +585,7 @@ export default function AppShell({ children }: AppShellProps) {
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--ink-faint)]">
-                Langslate AI
+                Langslate
               </p>
               <p className="mt-1 truncate text-lg font-extrabold text-[var(--ink)]">
                 Navigation

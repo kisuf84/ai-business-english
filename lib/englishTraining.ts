@@ -71,8 +71,27 @@ const LESSONS: EnglishTrainingLesson[] = [
   { id: "technology-digital-transformation-scenarios", slug: "technology-digital-transformation-scenarios", title: "Technology & Digital Transformation Mastery", category: "Business English Scenarios", sourceFile: "Technology_DigitalTransformation_Scenarios.html" },
 ];
 
+const CATEGORY_SLUGS: Record<EnglishTrainingCategory, string> = {
+  "General English Training": "general-english-training",
+  "Business English Training": "business-english-training",
+  "Business English Scenarios": "business-english-scenarios",
+};
+
 export function listEnglishTrainingLessons(): EnglishTrainingLesson[] {
   return LESSONS;
+}
+
+export function getEnglishTrainingCategorySlug(category: EnglishTrainingCategory): string {
+  return CATEGORY_SLUGS[category];
+}
+
+export function getEnglishTrainingCategoryFromSlug(
+  slug: string
+): EnglishTrainingCategory | null {
+  const entry = (Object.entries(CATEGORY_SLUGS) as [EnglishTrainingCategory, string][]).find(
+    ([, categorySlug]) => categorySlug === slug
+  );
+  return entry ? entry[0] : null;
 }
 
 export function getEnglishTrainingLesson(slug: string): EnglishTrainingLesson | null {
