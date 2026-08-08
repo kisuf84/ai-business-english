@@ -39,6 +39,7 @@ const navGroups: NavGroup[] = [
       { href: "/lessons", label: "Lesson library", icon: "/icons/books-medical_9856367.png" },
       { href: "/premium-classes", label: "Premium Courses", icon: "/icons/digital-certificate_19008425.png" },
       { href: "/for-teachers", label: "For Teachers", icon: "/icons/chalkboard-user_10489812.png" },
+      { href: "/english-training", label: "English Training", icon: "/icons/books-medical_9856367.png" },
     ],
   },
   {
