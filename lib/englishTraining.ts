@@ -69,6 +69,8 @@ const LESSONS: EnglishTrainingLesson[] = [
   { id: "strategy-innovation-scenarios", slug: "strategy-innovation-scenarios", title: "Advanced Strategy & Innovation Mastery", category: "Business English Scenarios", sourceFile: "Strategy_Innovation_Scenarios.html" },
   { id: "supply-chain-scenarios", slug: "supply-chain-scenarios", title: "Supply Chain & Logistics Mastery", category: "Business English Scenarios", sourceFile: "Supply_Chain_Scenarios.html" },
   { id: "technology-digital-transformation-scenarios", slug: "technology-digital-transformation-scenarios", title: "Technology & Digital Transformation Mastery", category: "Business English Scenarios", sourceFile: "Technology_DigitalTransformation_Scenarios.html" },
+  { id: "social-scenarios", slug: "social-scenarios", title: "Social Scenarios Mastery", category: "Business English Scenarios", sourceFile: "Social Scenarios.html" },
+  { id: "travel-scenarios", slug: "travel-scenarios", title: "Travel Scenarios Mastery", category: "Business English Scenarios", sourceFile: "Travel Scenarios.html" },
 ];
 
 const CATEGORY_SLUGS: Record<EnglishTrainingCategory, string> = {

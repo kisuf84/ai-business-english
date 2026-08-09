@@ -8,6 +8,8 @@ import {
   hasSupabaseBrowserConfig,
 } from "../../lib/supabase/client";
 import { useTheme } from "../../context/ThemeContext";
+import GlobalSearch from "./GlobalSearch";
+import { ENGLISH_TRAINING_RELEASED } from "../../lib/englishTrainingRelease";
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -24,10 +26,6 @@ type NavGroup = {
   label: string;
   items: NavItem[];
 };
-
-// Client hasn't approved discovery yet — flip to true to relist it in the
-// sidebar (re-enable Sunday). Routes stay live at /english-training either way.
-const SHOW_ENGLISH_TRAINING_NAV = false;
 
 const englishTrainingNavItem: NavItem = {
   href: "/english-training",
@@ -67,7 +65,7 @@ const navGroups: NavGroup[] = [
       { href: "/lessons", label: "Lesson library", icon: "/icons/books-medical_9856367.png" },
       { href: "/premium-classes", label: "Premium Courses", icon: "/icons/digital-certificate_19008425.png" },
       { href: "/for-teachers", label: "For Teachers", icon: "/icons/chalkboard-user_10489812.png" },
-      ...(SHOW_ENGLISH_TRAINING_NAV ? [englishTrainingNavItem] : []),
+      ...(ENGLISH_TRAINING_RELEASED ? [englishTrainingNavItem] : []),
     ],
   },
   {
@@ -394,10 +392,10 @@ export default function AppShell({ children }: AppShellProps) {
   );
 
   return (
-    <div className="font-ui min-h-screen overflow-x-hidden text-[var(--ink-1)]">
+    <div className="font-ui min-h-dvh overflow-x-hidden text-[var(--ink-1)]">
       <div className="aurora" />
       <div className="grain" />
-      <div className="flex min-h-screen w-full">
+      <div className="flex min-h-dvh w-full">
         <aside
           className={`hidden shrink-0 flex-col transition-[width,padding] duration-200 lg:flex ${
             isSidebarCollapsed ? "w-0 overflow-hidden border-r-0 px-0" : "sidebar w-[var(--sidebar-w)] px-4 py-[18px]"
@@ -505,17 +503,7 @@ export default function AppShell({ children }: AppShellProps) {
                   {renderLogo()}
                 </div>
 
-                <div className="search w-full min-w-0">
-                  <label className="lumen-focus block">
-                    <span className="search-icon font-mono text-[11px] font-bold">
-                      /
-                    </span>
-                    <input
-                      type="search"
-                      placeholder="Search lessons, simulations, courses"
-                    />
-                  </label>
-                </div>
+                <GlobalSearch />
 
                 <div className="flex shrink-0 items-center gap-2">
                   <ThemeToggle mode={mode} toggleTheme={toggleTheme} />
