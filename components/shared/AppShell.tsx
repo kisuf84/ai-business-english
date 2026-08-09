@@ -347,11 +347,6 @@ export default function AppShell({ children }: AppShellProps) {
         <span className="display block truncate text-lg leading-none text-[var(--ink-1)] lg:text-xl">
           Langslate
         </span>
-        {compact ? null : (
-          <span className="mt-0.5 block truncate text-xs text-[var(--ink-3)]">
-            {pageTitle}
-          </span>
-        )}
       </span>
     </Link>
   );
@@ -392,10 +387,10 @@ export default function AppShell({ children }: AppShellProps) {
   );
 
   return (
-    <div className="font-ui min-h-dvh overflow-x-hidden text-[var(--ink-1)]">
+    <div className="font-ui min-h-dvh overflow-x-hidden text-[var(--ink-1)] lg:h-dvh lg:overflow-hidden">
       <div className="aurora" />
       <div className="grain" />
-      <div className="flex min-h-dvh w-full">
+      <div className="flex min-h-dvh w-full lg:h-dvh lg:overflow-hidden">
         <aside
           className={`hidden shrink-0 flex-col transition-[width,padding] duration-200 lg:flex ${
             isSidebarCollapsed ? "w-0 overflow-hidden border-r-0 px-0" : "sidebar w-[var(--sidebar-w)] px-4 py-[18px]"
@@ -470,7 +465,7 @@ export default function AppShell({ children }: AppShellProps) {
           </button>
         ) : null}
 
-        <main className="min-w-0 flex-1 overflow-x-hidden">
+        <main className="min-w-0 flex-1 overflow-x-hidden lg:h-dvh lg:min-h-0 lg:overflow-y-auto">
           <header className="topbar z-30">
             <div className="flex w-full items-center">
               <div className="flex w-full items-center justify-between gap-2 lg:hidden">

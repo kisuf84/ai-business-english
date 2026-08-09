@@ -238,17 +238,34 @@ function escapeRegex(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function normalizeModuleTitle(value: string, courseTitle: string, number: number) {
+/**
+ * Some course modules' source <title> tags end in a shorter/abbreviated
+ * restatement of the course name (e.g. "— HR English") instead of the full
+ * course title, so the generic trailing-course-name strip below doesn't
+ * catch it. Scoped per course slug — only listed courses get extra aliases
+ * stripped; every other course's title derivation is unchanged.
+ */
+const COURSE_MODULE_TITLE_SUFFIX_ALIASES: Partial<Record<PremiumCourseSlug, string[]>> = {
+  bricepremiumcourses12: ["HR English"],
+};
+
+function normalizeModuleTitle(
+  value: string,
+  courseTitle: string,
+  number: number,
+  extraTrailingAliases: string[] = []
+) {
   const decoded = decodeHtmlEntities(value);
   const normalizedSpaces = decoded.replace(/\s+/g, " ").trim();
   const canonicalPrefix = `Module ${number}:`;
 
   const stripTrailingCourseName = (candidate: string) => {
-    const trailingCoursePattern = new RegExp(
-      `\\s*[—–-]\\s*${escapeRegex(courseTitle)}\\s*$`,
-      "i"
-    );
-    return candidate.replace(trailingCoursePattern, "").trim();
+    let result = candidate;
+    for (const suffix of [courseTitle, ...extraTrailingAliases]) {
+      const trailingPattern = new RegExp(`\\s*[—–-]\\s*${escapeRegex(suffix)}\\s*$`, "i");
+      result = result.replace(trailingPattern, "").trim();
+    }
+    return result;
   };
 
   const prefixedPattern = new RegExp(`^Module\\s+${number}\\s*[:\\-—–·]\\s*(.+)$`, "i");
@@ -290,12 +307,17 @@ function isModuleLocked(_courseSlug: PremiumCourseSlug, _number: number) {
   return false;
 }
 
-async function readModuleTitle(filePath: string, courseTitle: string, number: number) {
+async function readModuleTitle(
+  filePath: string,
+  courseTitle: string,
+  number: number,
+  extraTrailingAliases: string[] = []
+) {
   try {
     const html = await fs.readFile(filePath, "utf-8");
     const titleMatch = html.match(/<title>(.*?)<\/title>/i);
     const fromTitle = titleMatch
-      ? normalizeModuleTitle(titleMatch[1], courseTitle, number)
+      ? normalizeModuleTitle(titleMatch[1], courseTitle, number, extraTrailingAliases)
       : formatModuleFallback(courseTitle, number);
     if (fromTitle !== `Module ${number}`) {
       return fromTitle;
@@ -314,7 +336,7 @@ async function readModuleTitle(filePath: string, courseTitle: string, number: nu
 
     for (const heading of headingMatches) {
       if (!heading) continue;
-      const normalizedHeading = normalizeModuleTitle(heading, courseTitle, number);
+      const normalizedHeading = normalizeModuleTitle(heading, courseTitle, number, extraTrailingAliases);
       if (normalizedHeading !== `Module ${number}`) {
         return normalizedHeading;
       }
@@ -347,10 +369,16 @@ async function buildCourse(slug: PremiumCourseSlug): Promise<PremiumCourse> {
         const number = numberMatch ? Number(numberMatch[1]) : 0;
         const moduleSlug = entry.replace(/\.html$/i, "");
         const courseTitle = COURSE_META[slug].title;
+        const extraTrailingAliases = COURSE_MODULE_TITLE_SUFFIX_ALIASES[slug] ?? [];
 
         return {
           slug: moduleSlug,
-          title: await readModuleTitle(path.join(directory, entry), courseTitle, number),
+          title: await readModuleTitle(
+            path.join(directory, entry),
+            courseTitle,
+            number,
+            extraTrailingAliases
+          ),
           number,
           iframeSrc: `/premium-content/${slug}/${moduleSlug}`,
           isPreview: isPreviewModule(number),
