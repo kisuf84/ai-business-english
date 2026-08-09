@@ -82,6 +82,33 @@ const legacyPageTitles: Record<string, string> = {
   "/courses": "Generator",
 };
 
+function NavIcon({ icon, isActive }: { icon: string; isActive: boolean }) {
+  return (
+    <span
+      className={`grid h-[38px] w-[38px] shrink-0 place-items-center rounded-[12px] border ${
+        isActive
+          ? "border-transparent bg-[image:var(--grad-aurora)] text-[#0a0a14]"
+          : "border-[var(--glass-border)] bg-[var(--glass)] text-[var(--ink-3)] group-hover:text-[var(--ink-1)]"
+      }`}
+    >
+      <span
+        aria-hidden="true"
+        className="h-[18px] w-[18px] bg-current"
+        style={{
+          WebkitMaskImage: `url(${icon})`,
+          maskImage: `url(${icon})`,
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskPosition: "center",
+          maskPosition: "center",
+        }}
+      />
+    </span>
+  );
+}
+
 function NavLink({
   item,
   isActive,
@@ -101,30 +128,51 @@ function NavLink({
           : ""
       }`}
     >
-      <span
-        className={`grid h-[38px] w-[38px] shrink-0 place-items-center rounded-[12px] border ${
-          isActive
-            ? "border-transparent bg-[image:var(--grad-aurora)] text-[#0a0a14]"
-            : "border-[var(--glass-border)] bg-[var(--glass)] text-[var(--ink-3)] group-hover:text-[var(--ink-1)]"
-        }`}
-      >
-        <span
-          aria-hidden="true"
-          className="h-[18px] w-[18px] bg-current"
-          style={{
-            WebkitMaskImage: `url(${item.icon})`,
-            maskImage: `url(${item.icon})`,
-            WebkitMaskSize: "contain",
-            maskSize: "contain",
-            WebkitMaskRepeat: "no-repeat",
-            maskRepeat: "no-repeat",
-            WebkitMaskPosition: "center",
-            maskPosition: "center",
-          }}
-        />
-      </span>
+      <NavIcon icon={item.icon} isActive={isActive} />
       <span className="min-w-0 truncate">{item.label}</span>
     </Link>
+  );
+}
+
+function NavToggle({
+  item,
+  isActive,
+  isExpanded,
+  onToggle,
+}: {
+  item: NavItem;
+  isActive: boolean;
+  isExpanded: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-expanded={isExpanded}
+      className={`app-nav-item group w-full ${isActive ? "app-nav-item-active" : ""}`}
+    >
+      <NavIcon icon={item.icon} isActive={isActive} />
+      <span className="min-w-0 flex-1 truncate text-left">{item.label}</span>
+      <svg
+        aria-hidden="true"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        className={`shrink-0 text-[var(--ink-3)] transition-transform duration-200 ${
+          isExpanded ? "rotate-90" : ""
+        }`}
+      >
+        <path
+          d="M9 6l6 6-6 6"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
   );
 }
 
@@ -176,6 +224,7 @@ export default function AppShell({ children }: AppShellProps) {
   const { mode, toggleTheme } = useTheme();
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [expandedNavItem, setExpandedNavItem] = useState<string | null>(null);
   const [user, setUser] = useState<{
     name: string;
     role: string;
@@ -192,6 +241,15 @@ export default function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const isPremiumModuleReader =
     /^\/premium-classes\/[^/]+\/[^/]+$/.test(pathname || "");
+  const isEnglishTrainingLessonReader =
+    /^\/english-training\/[^/]+$/.test(pathname || "");
+  const isImmersiveReader = isPremiumModuleReader || isEnglishTrainingLessonReader;
+
+  useEffect(() => {
+    if (pathname?.startsWith("/english-training")) {
+      setExpandedNavItem("/english-training");
+    }
+  }, [pathname]);
 
   const derivedPageTitle = pathname?.startsWith("/premium-classes")
     ? "Premium Courses"
@@ -359,27 +417,42 @@ export default function AppShell({ children }: AppShellProps) {
             {group.label}
           </p>
           <nav className="mt-2 space-y-1.5">
-            {group.items.map((item) => (
-              <div key={item.href}>
-                <NavLink
-                  item={item}
-                  isActive={pathname === item.href}
-                  onNavigate={onNavigate}
-                />
-                {item.children && item.children.length > 0 ? (
-                  <div className="mt-1.5 ml-[18px] space-y-1.5 border-l border-[var(--glass-border)] pl-3">
-                    {item.children.map((child) => (
-                      <NavLink
-                        key={child.href}
-                        item={child}
-                        isActive={pathname === child.href}
-                        onNavigate={onNavigate}
-                      />
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            ))}
+            {group.items.map((item) => {
+              const hasChildren = Boolean(item.children && item.children.length > 0);
+              const isExpanded = expandedNavItem === item.href;
+              const isSectionActive = hasChildren
+                ? pathname === item.href || (pathname?.startsWith(`${item.href}/`) ?? false)
+                : pathname === item.href;
+
+              return (
+                <div key={item.href}>
+                  {hasChildren ? (
+                    <NavToggle
+                      item={item}
+                      isActive={isSectionActive}
+                      isExpanded={isExpanded}
+                      onToggle={() =>
+                        setExpandedNavItem((current) => (current === item.href ? null : item.href))
+                      }
+                    />
+                  ) : (
+                    <NavLink item={item} isActive={isSectionActive} onNavigate={onNavigate} />
+                  )}
+                  {hasChildren && isExpanded ? (
+                    <div className="mt-1.5 ml-[18px] space-y-1.5 border-l border-[var(--glass-border)] pl-3">
+                      {item.children!.map((child) => (
+                        <NavLink
+                          key={child.href}
+                          item={child}
+                          isActive={pathname === child.href}
+                          onNavigate={onNavigate}
+                        />
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })}
           </nav>
         </div>
       ))}
@@ -527,14 +600,14 @@ export default function AppShell({ children }: AppShellProps) {
 
           <div
             className={
-              isPremiumModuleReader
+              isImmersiveReader
                 ? "h-[calc(100dvh-var(--topbar-h))] overflow-hidden p-0"
                 : "px-[14px] pt-[18px] pb-[calc(18px+env(safe-area-inset-bottom))] sm:px-7 sm:pt-7 sm:pb-[calc(28px+env(safe-area-inset-bottom))]"
             }
           >
             <div
               className={
-                isPremiumModuleReader
+                isImmersiveReader
                   ? "h-full w-full max-w-none"
                   : "mx-auto max-w-[1400px]"
               }

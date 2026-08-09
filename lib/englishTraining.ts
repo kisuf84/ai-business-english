@@ -19,7 +19,18 @@ export type EnglishTrainingLesson = {
   category: EnglishTrainingCategory;
   /** Original filename from the supplied source content, kept for traceability. */
   sourceFile: string;
+  /**
+   * Static catalog thumbnail, extracted from each lesson's own embedded hero
+   * photo (see scripts/extractEnglishTrainingThumbnails.py) and derived here
+   * from the slug rather than listed per-entry, so every lesson always
+   * resolves to a predictable path.
+   */
+  thumbnailUrl: string;
 };
+
+type EnglishTrainingLessonSeed = Omit<EnglishTrainingLesson, "thumbnailUrl">;
+
+const THUMBNAIL_ROOT = "/english-training-thumbnails";
 
 /**
  * Manually curated catalog for the 35 supplied HTML lessons.
@@ -28,7 +39,7 @@ export type EnglishTrainingLesson = {
  * taken from each file's own <title> tag, with the file's internal LEXICON /
  * MR. GAD branding trimmed for a clean catalog display name.
  */
-const LESSONS: EnglishTrainingLesson[] = [
+const LESSON_SEEDS: EnglishTrainingLessonSeed[] = [
   // General English Training
   { id: "a1-english-foundations", slug: "a1-english-foundations", title: "A1 English Foundations", category: "General English Training", sourceFile: "a1_english_foundations.html" },
   { id: "a2-english-progress", slug: "a2-english-progress", title: "A2 English Progress", category: "General English Training", sourceFile: "a2_english_progress.html" },
@@ -72,6 +83,11 @@ const LESSONS: EnglishTrainingLesson[] = [
   { id: "social-scenarios", slug: "social-scenarios", title: "Social Scenarios Mastery", category: "Business English Scenarios", sourceFile: "Social Scenarios.html" },
   { id: "travel-scenarios", slug: "travel-scenarios", title: "Travel Scenarios Mastery", category: "Business English Scenarios", sourceFile: "Travel Scenarios.html" },
 ];
+
+const LESSONS: EnglishTrainingLesson[] = LESSON_SEEDS.map((lesson) => ({
+  ...lesson,
+  thumbnailUrl: `${THUMBNAIL_ROOT}/${lesson.slug}.jpg`,
+}));
 
 const CATEGORY_SLUGS: Record<EnglishTrainingCategory, string> = {
   "General English Training": "general-english-training",
