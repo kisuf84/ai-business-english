@@ -278,6 +278,14 @@ export default function AppShell({ children }: AppShellProps) {
         (typeof metadata.picture === "string" && metadata.picture) ||
         null;
 
+      if (process.env.NODE_ENV !== "production") {
+        console.info("[AppShell] avatar_resolution", {
+          hasAvatarUrl: typeof metadata.avatar_url === "string",
+          hasPicture: typeof metadata.picture === "string",
+          resolvedAvatar: avatar,
+        });
+      }
+
       return {
         name: fullName,
         role: "Member",
@@ -378,6 +386,7 @@ export default function AppShell({ children }: AppShellProps) {
         src={user.avatarUrl}
         alt={user.name}
         onError={() => setAvatarFailed(true)}
+        referrerPolicy="no-referrer"
         className={`${sizeClassName} rounded-full border border-[var(--border-strong)] object-cover`}
       />
     ) : (

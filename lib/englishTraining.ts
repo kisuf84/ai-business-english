@@ -48,7 +48,7 @@ const LESSON_SEEDS: EnglishTrainingLessonSeed[] = [
   { id: "c1-english-mastery", slug: "c1-english-mastery", title: "C1 English Mastery", category: "General English Training", sourceFile: "c1_english_mastery.html" },
 
   // Business English Training
-  { id: "business-english-training-1", slug: "business-english-training-1", title: "Premium Business English", category: "Business English Training", sourceFile: "business_english_training_1.html" },
+  { id: "business-english-training-1", slug: "business-english-training-1", title: "Business English A-B", category: "Business English Training", sourceFile: "business_english_training_1.html" },
   { id: "business-english-training-2", slug: "business-english-training-2", title: "Business English Vol. C–D", category: "Business English Training", sourceFile: "business_english_training_2.html" },
   { id: "business-english-training-3", slug: "business-english-training-3", title: "Business English Vol. E–F", category: "Business English Training", sourceFile: "business_english_training_3.html" },
   { id: "business-english-training-4", slug: "business-english-training-4", title: "Business English Vol. G–H", category: "Business English Training", sourceFile: "business_english_training_4.html" },

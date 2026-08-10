@@ -253,6 +253,23 @@
     backdrop-filter: blur(22px);
   }
 
+  /*
+   * Floating overlay panels (e.g. search results) need a solid backdrop —
+   * .lumen-panel's --glass/--glass-strong tokens are only ~4-7% opaque in
+   * dark mode (by design, for surfaces already sitting on an opaque
+   * background), which lets page content bleed through when the panel
+   * floats over arbitrary content. --surface-raised is fully opaque in both
+   * themes (#10101c dark / #FFFFFF light), so reusing it here fixes
+   * readability without touching the shared --glass tokens or .lumen-panel
+   * itself, both of which other surfaces still rely on.
+   */
+  .surface-panel-solid {
+    border: 1px solid var(--border);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(22px) saturate(140%);
+  }
+
   [data-theme="light"] .lumen-panel,
   [data-theme="light"] .lumen-glass,
   [data-theme="light"] .lumen-tile {
@@ -578,6 +595,24 @@
 
   .card-pad {
     padding: 22px;
+  }
+
+  .teacher-resource-card {
+    padding: 16px;
+    border-color: color-mix(in srgb, var(--border) 55%, transparent);
+    transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s, border-color .25s;
+  }
+
+  .teacher-resource-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--line-strong);
+    box-shadow: var(--shadow-1);
+  }
+
+  @media (min-width: 640px) {
+    .teacher-resource-card {
+      padding: 18px;
+    }
   }
 
   .chip,
@@ -925,8 +960,7 @@
     color: var(--ink-3);
   }
 
-  [data-theme="light"] .auth-card,
-  [data-theme="light"] .auth-preview {
+  [data-theme="light"] .auth-card {
     background: rgba(255,253,248,.94);
     border-color: rgba(20,16,10,.16);
     box-shadow: 0 28px 70px -38px rgba(20,16,10,.42), 0 12px 32px -18px rgba(20,16,10,.18);
@@ -974,10 +1008,61 @@
     border-color: rgba(255,255,255,.12);
   }
 
+  @media (max-width: 1023px) {
+    .auth-hero {
+      min-height: 600px !important;
+    }
+  }
+
   .auth-hero-ambient {
     background:
       radial-gradient(760px 460px at 12% 12%, rgba(255,184,107,.18), transparent 62%),
       radial-gradient(720px 520px at 90% 84%, rgba(124,92,255,.20), transparent 58%);
+  }
+
+  .auth-hero-portrait {
+    position: absolute;
+    left: 50%;
+    bottom: -35%;
+    transform: translateX(-50%);
+    width: min(100%, 430px);
+    aspect-ratio: 1 / 1;
+    background-image: url('/landing/auth-hero-portrait.jpg');
+    background-size: cover;
+    background-position: center 14%;
+    border-radius: 0;
+    opacity: .92;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0%, rgba(0,0,0,.42) 12%, rgba(0,0,0,1) 28%, rgba(0,0,0,1) 72%, rgba(0,0,0,.42) 88%, transparent 100%),
+      linear-gradient(to top, transparent 0%, rgba(0,0,0,.86) 16%, rgba(0,0,0,1) 42%, rgba(0,0,0,.78) 72%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent 0%, rgba(0,0,0,.42) 12%, rgba(0,0,0,1) 28%, rgba(0,0,0,1) 72%, rgba(0,0,0,.42) 88%, transparent 100%),
+      linear-gradient(to top, transparent 0%, rgba(0,0,0,.86) 16%, rgba(0,0,0,1) 42%, rgba(0,0,0,.78) 72%, transparent 100%);
+    mask-composite: intersect;
+  }
+
+  @media (min-width: 640px) {
+    .auth-hero {
+      min-height: 680px !important;
+    }
+
+    .auth-hero-portrait {
+      width: min(78%, 520px);
+      bottom: -35%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .auth-hero {
+      min-height: 0 !important;
+    }
+
+    .auth-hero-portrait {
+      width: min(112%, 720px);
+      bottom: -14%;
+      opacity: .95;
+    }
   }
 
   .auth-kicker {
@@ -1014,7 +1099,6 @@
     color: #f6f4ee;
   }
 
-  .auth-preview,
   .auth-card {
     background: rgba(16,16,28,.92);
     border: 1px solid rgba(255,255,255,.14);
@@ -1023,17 +1107,11 @@
     -webkit-backdrop-filter: blur(18px) saturate(130%);
   }
 
-  .auth-label,
   .auth-footer,
   .auth-divider span {
     color: #b9b2a5;
   }
 
-  .auth-preview-title {
-    color: #f6f4ee;
-  }
-
-  .auth-preview-item,
   .auth-info {
     border: 1px solid rgba(255,255,255,.14);
     border-radius: 14px;
@@ -1116,25 +1194,21 @@
 
   [data-theme="light"] .auth-title,
   [data-theme="light"] .auth-form-title,
-  [data-theme="light"] .auth-list,
-  [data-theme="light"] .auth-preview-title {
+  [data-theme="light"] .auth-list {
     color: #15110a !important;
   }
 
   [data-theme="light"] .auth-copy,
   [data-theme="light"] .auth-muted,
-  [data-theme="light"] .auth-preview-item,
   [data-theme="light"] .auth-info {
     color: #3a3327 !important;
   }
 
-  [data-theme="light"] .auth-label,
   [data-theme="light"] .auth-divider span,
   [data-theme="light"] .auth-footer {
     color: #6c6453 !important;
   }
 
-  [data-theme="light"] .auth-preview,
   [data-theme="light"] .auth-card {
     background: #fffdf8 !important;
     border-color: rgba(20,16,10,.20) !important;
@@ -1143,7 +1217,6 @@
     -webkit-backdrop-filter: none !important;
   }
 
-  [data-theme="light"] .auth-preview-item,
   [data-theme="light"] .auth-info {
     background: #ffffff !important;
     border: 1px solid rgba(20,16,10,.16) !important;

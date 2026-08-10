@@ -133,7 +133,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
         <div className="grain" />
         <div className="mx-auto max-w-[520px] rounded-[var(--r-lg)] border border-[var(--glass-border)] bg-[var(--glass-strong)] p-6 shadow-sm backdrop-blur">
           <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--ink-faint)]">
-            Langslate AI
+            Langslate
           </p>
           <p className="mt-3 text-sm text-[var(--ink-muted)]">Checking session...</p>
         </div>

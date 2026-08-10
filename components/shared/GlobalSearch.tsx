@@ -118,7 +118,7 @@ export default function GlobalSearch() {
       </label>
 
       {showPanel ? (
-        <div className="lumen-panel absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[70vh] overflow-y-auto rounded-[14px] p-2">
+        <div className="surface-panel-solid absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[70vh] overflow-y-auto rounded-[14px] p-2">
           {isLoading ? (
             <p className="px-3 py-4 text-xs text-[var(--ink-muted)]">Searching…</p>
           ) : results.length > 0 ? (

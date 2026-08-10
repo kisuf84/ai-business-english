@@ -159,7 +159,7 @@ export default function AuthCallbackPage() {
             Signing you in...
           </h1>
           <p className="mt-3 text-sm leading-6 text-[var(--ink-muted)]">
-            Please wait while we securely log you into Langslate AI.
+            Please wait while we securely log you into Langslate.
           </p>
           <p className="mt-1 text-sm text-[var(--ink-faint)]">
             You&rsquo;ll be redirected automatically.

@@ -163,12 +163,17 @@ export default function AuthPage() {
   return (
     <section className="auth-shell auth-page min-h-screen overflow-x-hidden">
       <div className="auth-layout grid min-h-screen grid-cols-1 lg:grid-cols-2">
-        <aside className="auth-hero relative overflow-hidden border-b border-[var(--border)] px-6 py-8 sm:px-10 sm:py-10 lg:border-b-0 lg:border-r lg:px-14 lg:py-14">
+        <aside className="auth-hero relative min-h-[480px] overflow-hidden border-b border-[var(--border)] px-6 py-8 sm:min-h-[560px] sm:px-10 sm:py-10 lg:min-h-0 lg:border-b-0 lg:border-r lg:px-14 lg:py-14">
           <div className="auth-hero-ambient pointer-events-none absolute inset-0" />
-          <div className="relative z-10 mx-auto flex h-full w-full max-w-[560px] flex-col justify-between">
+          <div
+            className="auth-hero-portrait pointer-events-none absolute"
+            role="img"
+            aria-label="Professional using Langslate in a modern office"
+          />
+          <div className="relative z-10 mx-auto flex h-full w-full max-w-[560px] flex-col">
             <div>
               <p className="auth-kicker">
-                Langslate AI
+                Langslate
               </p>
               <h1 className="auth-title lumen-heading mt-5 text-balance text-4xl leading-tight sm:text-6xl">
                 Learn professional English from real-world content.
@@ -191,26 +196,6 @@ export default function AuthPage() {
                 ))}
               </ul>
             </div>
-
-            <div className="auth-preview lumen-panel mt-10 rounded-[var(--radius-lg)] p-5">
-              <p className="auth-label font-mono text-xs font-bold uppercase tracking-[0.14em]">
-                Preview
-              </p>
-              <p className="auth-preview-title mt-3 text-sm font-bold">
-                Langslate MVP workspace
-              </p>
-              <div className="mt-4 space-y-2 text-xs">
-                <p className="auth-preview-item px-3 py-2">
-                  Generate lessons from topics, URLs, or transcripts
-                </p>
-                <p className="auth-preview-item px-3 py-2">
-                  Save structured lessons to your private library
-                </p>
-                <p className="auth-preview-item px-3 py-2">
-                  Practice workplace communication simulations
-                </p>
-              </div>
-            </div>
           </div>
         </aside>
 
@@ -220,7 +205,7 @@ export default function AuthPage() {
               <p className="auth-kicker">
                 Continue learning
               </p>
-              <h2 className="auth-form-title mt-4 text-3xl">Welcome to Langslate AI</h2>
+              <h2 className="auth-form-title mt-4 text-3xl">Welcome to Langslate</h2>
               <p className="auth-muted mt-2 text-sm leading-6">
                 Your professional English workspace is ready.
               </p>
