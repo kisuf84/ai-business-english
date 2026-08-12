@@ -246,8 +246,17 @@ export default function AppShell({ children }: AppShellProps) {
   const isImmersiveReader = isPremiumModuleReader || isEnglishTrainingLessonReader;
 
   useEffect(() => {
-    if (pathname?.startsWith("/english-training")) {
-      setExpandedNavItem("/english-training");
+    if (!pathname) return;
+    const activeParent = navGroups
+      .flatMap((group) => group.items)
+      .find(
+        (item) =>
+          item.children &&
+          item.children.length > 0 &&
+          (pathname === item.href || pathname.startsWith(`${item.href}/`))
+      );
+    if (activeParent) {
+      setExpandedNavItem(activeParent.href);
     }
   }, [pathname]);
 

@@ -1,6 +1,4 @@
-import Link from "next/link";
-import Card from "../shared/Card";
-import LessonThumbnail from "./LessonThumbnail";
+import ContentCatalogSections from "../shared/ContentCatalogSections";
 import type { EnglishTrainingCategory, EnglishTrainingLesson } from "../../lib/englishTraining";
 
 export default function EnglishTrainingCategorySections({
@@ -10,49 +8,20 @@ export default function EnglishTrainingCategorySections({
   lessons: EnglishTrainingLesson[];
   categories: EnglishTrainingCategory[];
 }) {
-  return (
-    <>
-      {categories.map((category) => {
-        const categoryLessons = lessons.filter((lesson) => lesson.category === category);
-        if (categoryLessons.length === 0) return null;
+  const groups = categories.map((category) => ({
+    key: category,
+    label: category,
+    items: lessons
+      .filter((lesson) => lesson.category === category)
+      .map((lesson) => ({
+        id: lesson.id,
+        title: lesson.title,
+        href: `/english-training/${lesson.slug}`,
+        thumbnailUrl: lesson.thumbnailUrl,
+        fallbackLabel: lesson.category,
+        ctaLabel: "Start Training",
+      })),
+  }));
 
-        return (
-          <div key={category} className="mb-8 last:mb-0 sm:mb-10">
-            <h2 className="mb-4 text-lg font-bold text-[var(--ink)] sm:mb-5">
-              {category}
-            </h2>
-
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {categoryLessons.map((lesson) => (
-                <Link
-                  key={lesson.id}
-                  href={`/english-training/${lesson.slug}`}
-                  className="group block"
-                  aria-label={`${lesson.title} — Start Training`}
-                >
-                  <Card className="lesson-card">
-                    <div className="flex h-full flex-col gap-4">
-                      <LessonThumbnail
-                        src={lesson.thumbnailUrl}
-                        title={lesson.title}
-                        category={lesson.category}
-                      />
-                      <div className="flex flex-1 flex-col justify-between gap-4">
-                        <h3 className="mobile-safe-wrap text-base font-semibold leading-snug text-[var(--ink)]">
-                          {lesson.title}
-                        </h3>
-                        <span className="inline-flex w-full justify-center rounded-lg border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-4 py-2 text-xs font-semibold text-[#0c0b0a] transition group-hover:bg-[#d4ad55] sm:w-auto">
-                          Start Training
-                        </span>
-                      </div>
-                    </div>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          </div>
-        );
-      })}
-    </>
-  );
+  return <ContentCatalogSections groups={groups} />;
 }

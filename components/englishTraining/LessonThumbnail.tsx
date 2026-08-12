@@ -5,20 +5,20 @@ import { useState } from "react";
 export default function LessonThumbnail({
   src,
   title,
-  category,
+  fallbackLabel,
 }: {
-  src: string;
+  src?: string;
   title: string;
-  category: string;
+  fallbackLabel: string;
 }) {
   const [failed, setFailed] = useState(false);
 
   return (
     <div className="aspect-[16/9] w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface-raised)]">
-      {failed ? (
+      {!src || failed ? (
         <div className="grid h-full w-full place-items-center bg-[image:var(--grad-aurora)]">
           <span className="px-3 text-center font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[#0a0a14]">
-            {category}
+            {fallbackLabel}
           </span>
         </div>
       ) : (
