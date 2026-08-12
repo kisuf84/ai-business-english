@@ -10,6 +10,7 @@ import {
 import { useTheme } from "../../context/ThemeContext";
 import GlobalSearch from "./GlobalSearch";
 import { ENGLISH_TRAINING_RELEASED } from "../../lib/englishTrainingRelease";
+import { AUGUST_CONTENT_RELEASED } from "../../lib/augustContentRelease";
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -54,11 +55,18 @@ const englishTrainingNavItem: NavItem = {
       label: "Business English Scenarios",
       icon: "/icons/books-medical_9856367.png",
     },
-    {
-      href: "/english-training/category/bootcamp",
-      label: "Bootcamp",
-      icon: AUGUST_CONTENT_ICON,
-    },
+    // Bootcamp is part of the August content expansion, not the pre-existing
+    // English Training catalog, so it follows AUGUST_CONTENT_RELEASED even
+    // though it's nested under this English Training nav item.
+    ...(AUGUST_CONTENT_RELEASED
+      ? [
+          {
+            href: "/english-training/category/bootcamp",
+            label: "Bootcamp",
+            icon: AUGUST_CONTENT_ICON,
+          },
+        ]
+      : []),
   ],
 };
 
@@ -135,9 +143,9 @@ const navGroups: NavGroup[] = [
       { href: "/lessons", label: "Lesson library", icon: "/icons/books-medical_9856367.png" },
       { href: "/premium-classes", label: "Premium Courses", icon: "/icons/digital-certificate_19008425.png" },
       { href: "/for-teachers", label: "For Teachers", icon: "/icons/chalkboard-user_10489812.png" },
-      ...(ENGLISH_TRAINING_RELEASED
+      ...(ENGLISH_TRAINING_RELEASED ? [englishTrainingNavItem] : []),
+      ...(AUGUST_CONTENT_RELEASED
         ? [
-            englishTrainingNavItem,
             situationalEnglishNavItem,
             listeningTrainingNavItem,
             readingTrainingNavItem,

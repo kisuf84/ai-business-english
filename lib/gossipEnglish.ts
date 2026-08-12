@@ -7,12 +7,11 @@ export type GossipEnglishLevel = "A1" | "A2" | "B1" | "B2" | "C1";
 
 export const GOSSIP_ENGLISH_LEVEL_ORDER: GossipEnglishLevel[] = ["A1", "A2", "B1", "B2", "C1"];
 
-/** Exact client-provided landing copy — do not rewrite. Written before the
- * 5 Aug 11 volumes were added; still accurate (level count unchanged, only
- * the per-level file count changed from 2 to 3, so the sentence needs your
- * explicit approval before it's touched, per the implementation brief). */
+/** Exact client-provided landing copy — do not rewrite beyond the approved
+ * per-level file count (now 3, updated 2026-08-12 to match the final 15-file
+ * Gossip English set). */
 export const GOSSIP_ENGLISH_DESCRIPTION =
-  "Learn English through stories, drama, Gossips & Real internet chaos. Each level has two (2) files.";
+  "Learn English through stories, drama, Gossips & Real internet chaos. Each level has three (3) files.";
 
 export type GossipEnglishItem = {
   id: string;

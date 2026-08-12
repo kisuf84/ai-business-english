@@ -5,6 +5,7 @@ import { listActivePremiumCourses } from "../../../lib/premiumClasses";
 import { listEnglishTrainingLessons } from "../../../lib/englishTraining";
 import { TEACHER_RESOURCES } from "../../../lib/forTeachersResources";
 import { ENGLISH_TRAINING_RELEASED } from "../../../lib/englishTrainingRelease";
+import { AUGUST_CONTENT_RELEASED } from "../../../lib/augustContentRelease";
 import { listSituationalEnglishItems } from "../../../lib/situationalEnglish";
 import { listListeningTrainingItems } from "../../../lib/listeningTraining";
 import { listReadingTrainingItems } from "../../../lib/readingTraining";
@@ -121,10 +122,14 @@ export async function GET(request: Request) {
 
   // 3. English Training — excluded from search entirely while the section is
   // unreleased (ENGLISH_TRAINING_RELEASED === false); routes stay live for
-  // direct-URL QA regardless.
+  // direct-URL QA regardless. Bootcamp is part of the August expansion, not
+  // the pre-existing catalog, so it's additionally filtered out here unless
+  // AUGUST_CONTENT_RELEASED is also true.
   if (ENGLISH_TRAINING_RELEASED) {
     try {
-      const lessons = listEnglishTrainingLessons();
+      const lessons = listEnglishTrainingLessons().filter(
+        (lesson) => AUGUST_CONTENT_RELEASED || lesson.category !== "Bootcamp"
+      );
       let englishTrainingCount = 0;
       for (const lesson of lessons) {
         if (englishTrainingCount >= RESULTS_PER_SOURCE) break;
@@ -146,10 +151,9 @@ export async function GET(request: Request) {
     }
   }
 
-  // 4. August content-expansion libraries — same release gate as English
-  // Training so nothing becomes searchable-but-unreachable if it's ever
-  // flipped off.
-  if (ENGLISH_TRAINING_RELEASED) {
+  // 4. August content-expansion libraries — independent release gate from
+  // English Training, since these are separate content areas.
+  if (AUGUST_CONTENT_RELEASED) {
     try {
       let situationalCount = 0;
       for (const item of listSituationalEnglishItems()) {

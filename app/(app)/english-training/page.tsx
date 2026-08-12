@@ -1,11 +1,14 @@
 import { listEnglishTrainingLessons, type EnglishTrainingCategory } from "../../../lib/englishTraining";
 import EnglishTrainingCategorySections from "../../../components/englishTraining/EnglishTrainingCategorySections";
+import { AUGUST_CONTENT_RELEASED } from "../../../lib/augustContentRelease";
 
+// Bootcamp is part of the August content expansion, not the pre-existing
+// English Training catalog, so it only appears here once that's released.
 const CATEGORY_ORDER: EnglishTrainingCategory[] = [
   "General English Training",
   "Business English Training",
   "Business English Scenarios",
-  "Bootcamp",
+  ...(AUGUST_CONTENT_RELEASED ? (["Bootcamp"] as EnglishTrainingCategory[]) : []),
 ];
 
 export default function EnglishTrainingPage() {
