@@ -1,6 +1,14 @@
 import { promises as fs } from "fs";
 import { NextResponse } from "next/server";
 import type { ContentLibraryId } from "../../../../lib/contentLibraries";
+import { getSituationalEnglishFilePath } from "../../../../lib/situationalEnglish";
+import { getListeningTrainingFilePath } from "../../../../lib/listeningTraining";
+import { getReadingTrainingFilePath } from "../../../../lib/readingTraining";
+import { getBilingualCompendiumFilePath } from "../../../../lib/bilingualCompendium";
+import { getLexiproFilePath } from "../../../../lib/lexipro";
+import { getLexicaFilePath } from "../../../../lib/lexica";
+import { getBizCompendiumFilePath } from "../../../../lib/bizCompendium";
+import { getGossipEnglishFilePath } from "../../../../lib/gossipEnglish";
 
 type ContentRouteProps = {
   params: {
@@ -27,7 +35,16 @@ type LibraryResolver = (slug: string) => Promise<string | null>;
  * Deliberately does NOT touch English Training's existing, already-working
  * app/english-training-content/[lesson]/route.ts.
  */
-const RESOLVERS: Partial<Record<ContentLibraryId, LibraryResolver>> = {};
+const RESOLVERS: Partial<Record<ContentLibraryId, LibraryResolver>> = {
+  "situational-english": getSituationalEnglishFilePath,
+  "listening-training": getListeningTrainingFilePath,
+  "reading-training": getReadingTrainingFilePath,
+  "bilingual-compendium": getBilingualCompendiumFilePath,
+  lexipro: getLexiproFilePath,
+  lexica: getLexicaFilePath,
+  "biz-compendium": getBizCompendiumFilePath,
+  "gossip-english": getGossipEnglishFilePath,
+};
 
 export async function GET(_: Request, { params }: ContentRouteProps) {
   const resolver = RESOLVERS[params.library as ContentLibraryId];

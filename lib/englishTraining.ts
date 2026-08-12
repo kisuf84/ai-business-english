@@ -10,7 +10,8 @@ const ENGLISH_TRAINING_CONTENT_ROOT = path.join(
 export type EnglishTrainingCategory =
   | "General English Training"
   | "Business English Training"
-  | "Business English Scenarios";
+  | "Business English Scenarios"
+  | "Bootcamp";
 
 export type EnglishTrainingLesson = {
   id: string;
@@ -82,6 +83,13 @@ const LESSON_SEEDS: EnglishTrainingLessonSeed[] = [
   { id: "technology-digital-transformation-scenarios", slug: "technology-digital-transformation-scenarios", title: "Technology & Digital Transformation Mastery", category: "Business English Scenarios", sourceFile: "Technology_DigitalTransformation_Scenarios.html" },
   { id: "social-scenarios", slug: "social-scenarios", title: "Social Scenarios Mastery", category: "Business English Scenarios", sourceFile: "Social Scenarios.html" },
   { id: "travel-scenarios", slug: "travel-scenarios", title: "Travel Scenarios Mastery", category: "Business English Scenarios", sourceFile: "Travel Scenarios.html" },
+
+  // Bootcamp
+  { id: "bootcamp-a1", slug: "bootcamp-a1", title: "Roots", category: "Bootcamp", sourceFile: "A1 Bootcamp.html" },
+  { id: "bootcamp-a2", slug: "bootcamp-a2", title: "Sprout", category: "Bootcamp", sourceFile: "A2 Bootcamp.html" },
+  { id: "bootcamp-b1", slug: "bootcamp-b1", title: "Bloom", category: "Bootcamp", sourceFile: "B1 Bootcamp.html" },
+  { id: "bootcamp-b2", slug: "bootcamp-b2", title: "Harvest", category: "Bootcamp", sourceFile: "B2 Bootcamp.html" },
+  { id: "bootcamp-c1", slug: "bootcamp-c1", title: "Canopy", category: "Bootcamp", sourceFile: "C1 Bootcamp.html" },
 ];
 
 const LESSONS: EnglishTrainingLesson[] = LESSON_SEEDS.map((lesson) => ({
@@ -93,6 +101,7 @@ const CATEGORY_SLUGS: Record<EnglishTrainingCategory, string> = {
   "General English Training": "general-english-training",
   "Business English Training": "business-english-training",
   "Business English Scenarios": "business-english-scenarios",
+  "Bootcamp": "bootcamp",
 };
 
 export function listEnglishTrainingLessons(): EnglishTrainingLesson[] {

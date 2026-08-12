@@ -5,6 +5,7 @@ const CATEGORY_ORDER: EnglishTrainingCategory[] = [
   "General English Training",
   "Business English Training",
   "Business English Scenarios",
+  "Bootcamp",
 ];
 
 export default function EnglishTrainingPage() {
