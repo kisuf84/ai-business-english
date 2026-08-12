@@ -27,6 +27,13 @@ type NavGroup = {
   items: NavItem[];
 };
 
+/**
+ * Placeholder icon for the August content-expansion nav entries. The client
+ * has not yet supplied dedicated category icons — swap this one constant
+ * once those assets arrive instead of editing each nav entry below.
+ */
+const AUGUST_CONTENT_ICON = "/icons/books-medical_9856367.png";
+
 const englishTrainingNavItem: NavItem = {
   href: "/english-training",
   label: "English Training",
@@ -47,7 +54,70 @@ const englishTrainingNavItem: NavItem = {
       label: "Business English Scenarios",
       icon: "/icons/books-medical_9856367.png",
     },
+    {
+      href: "/english-training/category/bootcamp",
+      label: "Bootcamp",
+      icon: AUGUST_CONTENT_ICON,
+    },
   ],
+};
+
+const situationalEnglishNavItem: NavItem = {
+  href: "/situational-english",
+  label: "Situational English",
+  icon: AUGUST_CONTENT_ICON,
+};
+
+const listeningTrainingNavItem: NavItem = {
+  href: "/listening-training",
+  label: "Listening Training",
+  icon: AUGUST_CONTENT_ICON,
+};
+
+const readingTrainingNavItem: NavItem = {
+  href: "/reading-training",
+  label: "Reading Training",
+  icon: AUGUST_CONTENT_ICON,
+};
+
+const bilingualCompendiumNavItem: NavItem = {
+  href: "/bilingual-compendium",
+  label: "Bilingual Compendium",
+  icon: AUGUST_CONTENT_ICON,
+  children: [
+    { href: "/bilingual-compendium/espanol", label: "Español", icon: AUGUST_CONTENT_ICON },
+    { href: "/bilingual-compendium/francais", label: "Français", icon: AUGUST_CONTENT_ICON },
+    { href: "/bilingual-compendium/portugues", label: "Português", icon: AUGUST_CONTENT_ICON },
+  ],
+};
+
+const lexiproNavItem: NavItem = {
+  href: "/lexipro",
+  label: "Lexipro",
+  icon: AUGUST_CONTENT_ICON,
+  children: [
+    { href: "/lexipro/espanol", label: "Español", icon: AUGUST_CONTENT_ICON },
+    { href: "/lexipro/francais", label: "Français", icon: AUGUST_CONTENT_ICON },
+    { href: "/lexipro/portugues", label: "Português", icon: AUGUST_CONTENT_ICON },
+  ],
+};
+
+const lexicaNavItem: NavItem = {
+  href: "/lexica",
+  label: "Lexica",
+  icon: AUGUST_CONTENT_ICON,
+};
+
+const bizCompendiumNavItem: NavItem = {
+  href: "/biz-compendium",
+  label: "Biz Compendium",
+  icon: AUGUST_CONTENT_ICON,
+};
+
+const gossipEnglishNavItem: NavItem = {
+  href: "/gossip-english",
+  label: "Gossip English",
+  icon: AUGUST_CONTENT_ICON,
 };
 
 const navGroups: NavGroup[] = [
@@ -65,7 +135,19 @@ const navGroups: NavGroup[] = [
       { href: "/lessons", label: "Lesson library", icon: "/icons/books-medical_9856367.png" },
       { href: "/premium-classes", label: "Premium Courses", icon: "/icons/digital-certificate_19008425.png" },
       { href: "/for-teachers", label: "For Teachers", icon: "/icons/chalkboard-user_10489812.png" },
-      ...(ENGLISH_TRAINING_RELEASED ? [englishTrainingNavItem] : []),
+      ...(ENGLISH_TRAINING_RELEASED
+        ? [
+            englishTrainingNavItem,
+            situationalEnglishNavItem,
+            listeningTrainingNavItem,
+            readingTrainingNavItem,
+            bilingualCompendiumNavItem,
+            lexiproNavItem,
+            lexicaNavItem,
+            bizCompendiumNavItem,
+            gossipEnglishNavItem,
+          ]
+        : []),
     ],
   },
   {
