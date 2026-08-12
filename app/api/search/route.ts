@@ -5,13 +5,29 @@ import { listActivePremiumCourses } from "../../../lib/premiumClasses";
 import { listEnglishTrainingLessons } from "../../../lib/englishTraining";
 import { TEACHER_RESOURCES } from "../../../lib/forTeachersResources";
 import { ENGLISH_TRAINING_RELEASED } from "../../../lib/englishTrainingRelease";
+import { listSituationalEnglishItems } from "../../../lib/situationalEnglish";
+import { listListeningTrainingItems } from "../../../lib/listeningTraining";
+import { listReadingTrainingItems } from "../../../lib/readingTraining";
+import { listBilingualCompendiumItems } from "../../../lib/bilingualCompendium";
+import { listLexiproItems } from "../../../lib/lexipro";
+import { getLexicaItem } from "../../../lib/lexica";
+import { getBizCompendiumItem } from "../../../lib/bizCompendium";
+import { listGossipEnglishItems } from "../../../lib/gossipEnglish";
 
 export type SearchResultType =
   | "lesson"
   | "premium-course"
   | "premium-module"
   | "english-training"
-  | "for-teachers";
+  | "for-teachers"
+  | "situational-english"
+  | "listening-training"
+  | "reading-training"
+  | "bilingual-compendium"
+  | "lexipro"
+  | "lexica"
+  | "biz-compendium"
+  | "gossip-english";
 
 export type SearchResult = {
   type: SearchResultType;
@@ -130,7 +146,169 @@ export async function GET(request: Request) {
     }
   }
 
-  // 4. For Teachers resources.
+  // 4. August content-expansion libraries — same release gate as English
+  // Training so nothing becomes searchable-but-unreachable if it's ever
+  // flipped off.
+  if (ENGLISH_TRAINING_RELEASED) {
+    try {
+      let situationalCount = 0;
+      for (const item of listSituationalEnglishItems()) {
+        if (situationalCount >= RESULTS_PER_SOURCE) break;
+        if (matches(query, item.title)) {
+          results.push({
+            type: "situational-english",
+            typeLabel: "Situational English",
+            title: item.title,
+            href: `/situational-english/${item.slug}`,
+          });
+          situationalCount += 1;
+        }
+      }
+    } catch (error) {
+      console.error("[search] situational_english_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+
+    try {
+      let listeningCount = 0;
+      for (const item of listListeningTrainingItems()) {
+        if (listeningCount >= RESULTS_PER_SOURCE) break;
+        if (matches(query, item.title, item.level)) {
+          results.push({
+            type: "listening-training",
+            typeLabel: "Listening Training",
+            title: item.title,
+            subtitle: item.level,
+            href: `/listening-training/${item.slug}`,
+          });
+          listeningCount += 1;
+        }
+      }
+    } catch (error) {
+      console.error("[search] listening_training_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+
+    try {
+      let readingCount = 0;
+      for (const item of listReadingTrainingItems()) {
+        if (readingCount >= RESULTS_PER_SOURCE) break;
+        if (matches(query, item.title, item.level)) {
+          results.push({
+            type: "reading-training",
+            typeLabel: "Reading Training",
+            title: item.title,
+            subtitle: item.level,
+            href: `/reading-training/${item.slug}`,
+          });
+          readingCount += 1;
+        }
+      }
+    } catch (error) {
+      console.error("[search] reading_training_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+
+    try {
+      let bilingualCount = 0;
+      for (const item of listBilingualCompendiumItems()) {
+        if (bilingualCount >= RESULTS_PER_SOURCE) break;
+        if (matches(query, item.title, item.language)) {
+          results.push({
+            type: "bilingual-compendium",
+            typeLabel: "Bilingual Compendium",
+            title: item.title,
+            subtitle: item.language,
+            href: `/bilingual-compendium/${item.slug}`,
+          });
+          bilingualCount += 1;
+        }
+      }
+    } catch (error) {
+      console.error("[search] bilingual_compendium_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+
+    try {
+      let lexiproCount = 0;
+      for (const item of listLexiproItems()) {
+        if (lexiproCount >= RESULTS_PER_SOURCE) break;
+        if (matches(query, item.title, item.language)) {
+          results.push({
+            type: "lexipro",
+            typeLabel: "Lexipro",
+            title: item.title,
+            subtitle: item.language,
+            href: `/lexipro/${item.slug}`,
+          });
+          lexiproCount += 1;
+        }
+      }
+    } catch (error) {
+      console.error("[search] lexipro_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+
+    try {
+      const lexica = getLexicaItem();
+      if (matches(query, lexica.title, "Lexica")) {
+        results.push({
+          type: "lexica",
+          typeLabel: "Lexica",
+          title: lexica.title,
+          href: "/lexica",
+        });
+      }
+    } catch (error) {
+      console.error("[search] lexica_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+
+    try {
+      const bizCompendium = getBizCompendiumItem();
+      if (matches(query, bizCompendium.title, "Biz Compendium")) {
+        results.push({
+          type: "biz-compendium",
+          typeLabel: "Biz Compendium",
+          title: bizCompendium.title,
+          href: "/biz-compendium",
+        });
+      }
+    } catch (error) {
+      console.error("[search] biz_compendium_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+
+    try {
+      let gossipCount = 0;
+      for (const item of listGossipEnglishItems()) {
+        if (gossipCount >= RESULTS_PER_SOURCE) break;
+        if (matches(query, item.title, item.level, `Volume ${item.volume}`)) {
+          results.push({
+            type: "gossip-english",
+            typeLabel: "Gossip English",
+            title: item.title,
+            subtitle: `${item.level} · Volume ${item.volume}`,
+            href: `/gossip-english/${item.slug}`,
+          });
+          gossipCount += 1;
+        }
+      }
+    } catch (error) {
+      console.error("[search] gossip_english_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+  }
+
+  // 5. For Teachers resources.
   let teacherCount = 0;
   for (const resource of TEACHER_RESOURCES) {
     if (teacherCount >= RESULTS_PER_SOURCE) break;
