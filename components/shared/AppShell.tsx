@@ -82,6 +82,24 @@ const legacyPageTitles: Record<string, string> = {
   "/courses": "Generator",
 };
 
+/**
+ * Route prefixes whose single child segment is always an immersive lesson
+ * reader (e.g. /reading-training/reading-folio), so the shell should switch
+ * to the full-bleed, no-padding workspace layout used by iframe readers.
+ */
+const SINGLE_SEGMENT_READER_PREFIXES = [
+  "/english-training",
+  "/situational-english",
+  "/listening-training",
+  "/reading-training",
+  "/gossip-english",
+  "/bilingual-compendium",
+  "/lexipro",
+];
+
+/** Top-level routes that are themselves a single immersive reader (no catalog). */
+const TOP_LEVEL_READER_PATHS = ["/lexica", "/biz-compendium"];
+
 function NavIcon({ icon, isActive }: { icon: string; isActive: boolean }) {
   return (
     <span
@@ -241,9 +259,12 @@ export default function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const isPremiumModuleReader =
     /^\/premium-classes\/[^/]+\/[^/]+$/.test(pathname || "");
-  const isEnglishTrainingLessonReader =
-    /^\/english-training\/[^/]+$/.test(pathname || "");
-  const isImmersiveReader = isPremiumModuleReader || isEnglishTrainingLessonReader;
+  const isSingleSegmentContentReader = SINGLE_SEGMENT_READER_PREFIXES.some((prefix) =>
+    new RegExp(`^${prefix}/[^/]+$`).test(pathname || "")
+  );
+  const isTopLevelContentReader = TOP_LEVEL_READER_PATHS.includes(pathname || "");
+  const isImmersiveReader =
+    isPremiumModuleReader || isSingleSegmentContentReader || isTopLevelContentReader;
 
   useEffect(() => {
     if (!pathname) return;
