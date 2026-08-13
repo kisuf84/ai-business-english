@@ -18,4 +18,4 @@
  *
  * Flip to `true` to release.
  */
-export const AUGUST_CONTENT_RELEASED = false;
+export const AUGUST_CONTENT_RELEASED = true;

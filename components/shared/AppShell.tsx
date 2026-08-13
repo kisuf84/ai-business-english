@@ -29,31 +29,45 @@ type NavGroup = {
 };
 
 /**
- * Placeholder icon for the August content-expansion nav entries. The client
- * has not yet supplied dedicated category icons — swap this one constant
- * once those assets arrive instead of editing each nav entry below.
+ * Client-supplied category icons (Aug 12 delivery), one per Langslate
+ * section. Centralized here so a future icon swap is a one-line change per
+ * section instead of hunting through nav entries.
  */
-const AUGUST_CONTENT_ICON = "/icons/books-medical_9856367.png";
+const SECTION_ICONS = {
+  englishTraining: "/icons/english-training.png",
+  generalEnglishTraining: "/icons/general-english-training.png",
+  businessEnglishTraining: "/icons/business-english-training.png",
+  businessEnglishScenarios: "/icons/business-english-scenarios.png",
+  bootcamp: "/icons/bootcamp.png",
+  situationalEnglish: "/icons/situational-english.png",
+  listeningTraining: "/icons/listening-training.png",
+  readingTraining: "/icons/reading-training.png",
+  bilingualCompendium: "/icons/bilingual-compendium.png",
+  lexipro: "/icons/lexipro.png",
+  lexica: "/icons/lexica.png",
+  bizCompendium: "/icons/biz-compendium.png",
+  gossipEnglish: "/icons/gossip-english.png",
+} as const;
 
 const englishTrainingNavItem: NavItem = {
   href: "/english-training",
   label: "English Training",
-  icon: "/icons/books-medical_9856367.png",
+  icon: SECTION_ICONS.englishTraining,
   children: [
     {
       href: "/english-training/category/general-english-training",
       label: "General English Training",
-      icon: "/icons/books-medical_9856367.png",
+      icon: SECTION_ICONS.generalEnglishTraining,
     },
     {
       href: "/english-training/category/business-english-training",
       label: "Business English Training",
-      icon: "/icons/books-medical_9856367.png",
+      icon: SECTION_ICONS.businessEnglishTraining,
     },
     {
       href: "/english-training/category/business-english-scenarios",
       label: "Business English Scenarios",
-      icon: "/icons/books-medical_9856367.png",
+      icon: SECTION_ICONS.businessEnglishScenarios,
     },
     // Bootcamp is part of the August content expansion, not the pre-existing
     // English Training catalog, so it follows AUGUST_CONTENT_RELEASED even
@@ -63,7 +77,7 @@ const englishTrainingNavItem: NavItem = {
           {
             href: "/english-training/category/bootcamp",
             label: "Bootcamp",
-            icon: AUGUST_CONTENT_ICON,
+            icon: SECTION_ICONS.bootcamp,
           },
         ]
       : []),
@@ -73,59 +87,59 @@ const englishTrainingNavItem: NavItem = {
 const situationalEnglishNavItem: NavItem = {
   href: "/situational-english",
   label: "Situational English",
-  icon: AUGUST_CONTENT_ICON,
+  icon: SECTION_ICONS.situationalEnglish,
 };
 
 const listeningTrainingNavItem: NavItem = {
   href: "/listening-training",
   label: "Listening Training",
-  icon: AUGUST_CONTENT_ICON,
+  icon: SECTION_ICONS.listeningTraining,
 };
 
 const readingTrainingNavItem: NavItem = {
   href: "/reading-training",
   label: "Reading Training",
-  icon: AUGUST_CONTENT_ICON,
+  icon: SECTION_ICONS.readingTraining,
 };
 
 const bilingualCompendiumNavItem: NavItem = {
   href: "/bilingual-compendium",
   label: "Bilingual Compendium",
-  icon: AUGUST_CONTENT_ICON,
+  icon: SECTION_ICONS.bilingualCompendium,
   children: [
-    { href: "/bilingual-compendium/espanol", label: "Español", icon: AUGUST_CONTENT_ICON },
-    { href: "/bilingual-compendium/francais", label: "Français", icon: AUGUST_CONTENT_ICON },
-    { href: "/bilingual-compendium/portugues", label: "Português", icon: AUGUST_CONTENT_ICON },
+    { href: "/bilingual-compendium/espanol", label: "Español", icon: SECTION_ICONS.bilingualCompendium },
+    { href: "/bilingual-compendium/francais", label: "Français", icon: SECTION_ICONS.bilingualCompendium },
+    { href: "/bilingual-compendium/portugues", label: "Português", icon: SECTION_ICONS.bilingualCompendium },
   ],
 };
 
 const lexiproNavItem: NavItem = {
   href: "/lexipro",
   label: "Lexipro",
-  icon: AUGUST_CONTENT_ICON,
+  icon: SECTION_ICONS.lexipro,
   children: [
-    { href: "/lexipro/espanol", label: "Español", icon: AUGUST_CONTENT_ICON },
-    { href: "/lexipro/francais", label: "Français", icon: AUGUST_CONTENT_ICON },
-    { href: "/lexipro/portugues", label: "Português", icon: AUGUST_CONTENT_ICON },
+    { href: "/lexipro/espanol", label: "Español", icon: SECTION_ICONS.lexipro },
+    { href: "/lexipro/francais", label: "Français", icon: SECTION_ICONS.lexipro },
+    { href: "/lexipro/portugues", label: "Português", icon: SECTION_ICONS.lexipro },
   ],
 };
 
 const lexicaNavItem: NavItem = {
   href: "/lexica",
   label: "Lexica",
-  icon: AUGUST_CONTENT_ICON,
+  icon: SECTION_ICONS.lexica,
 };
 
 const bizCompendiumNavItem: NavItem = {
   href: "/biz-compendium",
   label: "Biz Compendium",
-  icon: AUGUST_CONTENT_ICON,
+  icon: SECTION_ICONS.bizCompendium,
 };
 
 const gossipEnglishNavItem: NavItem = {
   href: "/gossip-english",
   label: "Gossip English",
-  icon: AUGUST_CONTENT_ICON,
+  icon: SECTION_ICONS.gossipEnglish,
 };
 
 const navGroups: NavGroup[] = [
