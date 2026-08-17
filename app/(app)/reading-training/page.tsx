@@ -12,7 +12,7 @@ export default function ReadingTrainingPage() {
     <CatalogPageShell
       eyebrow="Reading Training"
       title="Reading Training"
-      description="Reading comprehension practice by level, ready to open in one click."
+      description="Build stronger reading skills with 1,000 carefully designed reading exercises across five CEFR levels, from A1 to C1. Each level includes 200 engaging readings, with 8 comprehension questions per reading to help you develop vocabulary, understanding, and reading accuracy step by step."
     >
       <ContentCatalogSections
         groups={READING_TRAINING_LEVEL_ORDER.map((level) => ({

@@ -9,11 +9,13 @@ export type ContentReaderBackLink = {
 export default function ContentReaderPage({
   eyebrow,
   title,
+  description,
   iframeSrc,
   backLinks,
 }: {
   eyebrow: string;
   title: string;
+  description?: string;
   iframeSrc: string;
   backLinks: ContentReaderBackLink[];
 }) {
@@ -27,6 +29,11 @@ export default function ContentReaderPage({
           <h1 className="mobile-safe-wrap mt-2 text-base font-extrabold leading-snug text-[var(--ink)] sm:text-lg">
             {title}
           </h1>
+          {description ? (
+            <p className="mobile-safe-wrap mt-1.5 max-w-[70ch] text-xs text-[var(--ink-muted)] sm:text-sm">
+              {description}
+            </p>
+          ) : null}
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {backLinks.map((link) => (

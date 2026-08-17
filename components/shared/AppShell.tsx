@@ -107,9 +107,9 @@ const bilingualCompendiumNavItem: NavItem = {
   label: "Bilingual Compendium",
   icon: SECTION_ICONS.bilingualCompendium,
   children: [
-    { href: "/bilingual-compendium/espanol", label: "Español", icon: SECTION_ICONS.bilingualCompendium },
-    { href: "/bilingual-compendium/francais", label: "Français", icon: SECTION_ICONS.bilingualCompendium },
-    { href: "/bilingual-compendium/portugues", label: "Português", icon: SECTION_ICONS.bilingualCompendium },
+    { href: "/bilingual-compendium/espanol", label: "Español 🇪🇸", icon: SECTION_ICONS.bilingualCompendium },
+    { href: "/bilingual-compendium/francais", label: "Français 🇫🇷", icon: SECTION_ICONS.bilingualCompendium },
+    { href: "/bilingual-compendium/portugues", label: "Português 🇧🇷", icon: SECTION_ICONS.bilingualCompendium },
   ],
 };
 

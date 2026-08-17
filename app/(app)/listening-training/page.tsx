@@ -9,7 +9,7 @@ export default function ListeningTrainingPage() {
     <CatalogPageShell
       eyebrow="Listening Training"
       title="Listening Training"
-      description="Structured listening practice by level, ready to open in one click."
+      description="Strengthen your English listening skills with 100 carefully designed listening exercises per CEFR level (A1 to C1), each followed by 5 comprehension questions to help you understand spoken English with greater confidence."
     >
       <ContentCatalogSections
         groups={[

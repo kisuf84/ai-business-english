@@ -9,7 +9,7 @@ export default function CatalogPageShell({
 }: {
   eyebrow: string;
   title: string;
-  description?: string;
+  description?: React.ReactNode;
   backLink?: { href: string; label: string };
   children: React.ReactNode;
 }) {

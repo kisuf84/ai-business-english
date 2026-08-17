@@ -9,7 +9,7 @@ export default function SituationalEnglishPage() {
     <CatalogPageShell
       eyebrow="Situational English"
       title="Situational English"
-      description="Real-world conversation practice, ready to open in one click."
+      description="Build confidence for real-life communication with 5,000 practical English training exercises designed across five CEFR levels, from A1 to C1. Explore everyday and professional situations, develop useful communication skills, and learn the vocabulary you need to handle each situation naturally and effectively."
     >
       <ContentCatalogSections
         groups={[

@@ -3,7 +3,9 @@ import ContentCatalogSections from "../../../components/shared/ContentCatalogSec
 import {
   listGossipEnglishItems,
   GOSSIP_ENGLISH_LEVEL_ORDER,
+  GOSSIP_ENGLISH_HEADLINE,
   GOSSIP_ENGLISH_DESCRIPTION,
+  GOSSIP_ENGLISH_CLOSING,
 } from "../../../lib/gossipEnglish";
 
 export default function GossipEnglishPage() {
@@ -13,7 +15,17 @@ export default function GossipEnglishPage() {
     <CatalogPageShell
       eyebrow="Gossip English"
       title="Gossip English"
-      description={GOSSIP_ENGLISH_DESCRIPTION}
+      description={
+        <>
+          <strong className="text-[var(--ink)]">{GOSSIP_ENGLISH_HEADLINE}</strong>
+          <br />
+          <br />
+          {GOSSIP_ENGLISH_DESCRIPTION}
+          <br />
+          <br />
+          <strong className="text-[var(--ink)]">{GOSSIP_ENGLISH_CLOSING}</strong>
+        </>
+      }
     >
       <ContentCatalogSections
         groups={GOSSIP_ENGLISH_LEVEL_ORDER.map((level) => ({

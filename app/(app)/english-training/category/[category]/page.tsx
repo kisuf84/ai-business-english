@@ -34,6 +34,14 @@ export default function EnglishTrainingCategoryPage({
           <h1 className="mt-2 font-serif text-3xl font-normal text-[var(--ink)]">
             {category}
           </h1>
+          {category === "Bootcamp" ? (
+            <p className="mt-3 text-sm text-[var(--ink-muted)]">
+              Welcome to the English Bootcamp—a practical, structured training experience
+              designed to help you build stronger English skills through thousands of
+              targeted exercises from A1 to C1 CEFR with engaging practice across a wide
+              range of everyday, professional, and business-related topics.
+            </p>
+          ) : null}
         </div>
 
         <EnglishTrainingCategorySections lessons={lessons} categories={[category]} />
