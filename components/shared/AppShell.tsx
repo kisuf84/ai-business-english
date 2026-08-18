@@ -118,9 +118,9 @@ const lexiproNavItem: NavItem = {
   label: "Lexipro",
   icon: SECTION_ICONS.lexipro,
   children: [
-    { href: "/lexipro/espanol", label: "Español", icon: SECTION_ICONS.lexipro },
-    { href: "/lexipro/francais", label: "Français", icon: SECTION_ICONS.lexipro },
-    { href: "/lexipro/portugues", label: "Português", icon: SECTION_ICONS.lexipro },
+    { href: "/lexipro/espanol", label: "Español 🇪🇸", icon: SECTION_ICONS.lexipro },
+    { href: "/lexipro/francais", label: "Français 🇫🇷", icon: SECTION_ICONS.lexipro },
+    { href: "/lexipro/portugues", label: "Português 🇧🇷", icon: SECTION_ICONS.lexipro },
   ],
 };
 
