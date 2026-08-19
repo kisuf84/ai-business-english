@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Placement Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===== CSS VARIABLES ===== */
+  :root {
+    --bg-dark:       #0d1b2a;
+    --bg-card:       #152236;
+    --bg-card2:      #1a2d44;
+    --border:        #1e3451;
+    --gold:          #f5a623;
+    --gold-light:    #f7c46a;
+    --gold-dim:      rgba(245,166,35,0.15);
+    --text-primary:  #f0f4f8;
+    --text-secondary:#8fa3bc;
+    --text-muted:    #4d6480;
+    --correct:       #3ecf8e;
+    --incorrect:     #f05454;
+    --shadow:        0 8px 32px rgba(0,0,0,0.5);
+    --radius:        14px;
+    --transition:    0.25s ease;
+  }
+
+  /* ===== RESET ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ===== BACKGROUND TEXTURE ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(245,166,35,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 90%, rgba(62,207,142,0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== LAYOUT ===== */
+  .app {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+
+  /* ===== SCREENS ===== */
+  .screen { display: none; animation: fadeUp 0.4s ease; }
+  .screen.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== HEADER BADGE ===== */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(245,166,35,0.12);
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .badge::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+  }
+
+  /* ===== INTRO SCREEN ===== */
+  #screen-intro { text-align: center; padding-top: 60px; }
+  .intro-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+  }
+  .intro-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .intro-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 500px;
+    margin: 0 auto 40px;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin: 36px 0;
+    text-align: left;
+  }
+  .info-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 18px;
+  }
+  .info-card .icon { font-size: 1.6rem; margin-bottom: 10px; }
+  .info-card .label { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .info-card .value { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-top: 4px; }
+
+  .warning-box {
+    background: rgba(240,84,84,0.08);
+    border: 1px solid rgba(240,84,84,0.25);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    font-size: 0.88rem;
+    color: #f08080;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 36px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    border: none;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: #0d1b2a;
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(245,166,35,0.35);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  /* ===== TIMER ===== */
+  .test-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .timer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .timer .clock-icon { font-size: 1.1rem; }
+  .timer.warning { border-color: rgba(240,84,84,0.5); color: #f05454; }
+  .timer.warning { animation: timerPulse 1s infinite; }
+  @keyframes timerPulse {
+    0%,100% { background: var(--bg-card); }
+    50%      { background: rgba(240,84,84,0.1); }
+  }
+
+  .progress-wrap {
+    flex: 1;
+    min-width: 200px;
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .progress-bar-bg {
+    height: 6px;
+    background: var(--bg-card2);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 100px;
+    transition: width 0.4s ease;
+  }
+
+  /* ===== QUESTION CARD ===== */
+  .q-number {
+    font-size: 0.82rem;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .q-level-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+  .tag-a1 { background: rgba(62,207,142,0.12); color: #3ecf8e; }
+  .tag-a2 { background: rgba(62,207,142,0.12); color: #3ecf8e; }
+  .tag-b1 { background: rgba(245,166,35,0.12); color: var(--gold); }
+  .tag-b2 { background: rgba(100,160,255,0.12); color: #64a0ff; }
+  .tag-c1 { background: rgba(200,100,255,0.12); color: #c864ff; }
+
+  .q-text {
+    font-size: 1.18rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 28px;
+    line-height: 1.7;
+  }
+  .q-context {
+    background: var(--bg-card2);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    margin-bottom: 22px;
+    font-style: italic;
+    line-height: 1.65;
+  }
+
+  /* ===== OPTIONS ===== */
+  .options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .option {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all var(--transition);
+    font-size: 0.97rem;
+    color: var(--text-primary);
+    user-select: none;
+  }
+  .option:hover {
+    border-color: rgba(245,166,35,0.4);
+    background: var(--bg-card2);
+    transform: translateX(4px);
+  }
+  .option.selected {
+    border-color: var(--gold);
+    background: var(--gold-dim);
+    color: var(--text-primary);
+  }
+  .option-letter {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 1.5px solid var(--text-muted);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.82rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    transition: all var(--transition);
+    color: var(--text-muted);
+  }
+  .option.selected .option-letter {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #0d1b2a;
+  }
+
+  /* ===== NAV BUTTONS ===== */
+  .q-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* ===== RESULTS SCREEN ===== */
+  #screen-results { text-align: center; }
+  .results-hero {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px 36px 40px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .results-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .results-level {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 14vw, 7rem);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+    animation: levelPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes levelPop {
+    from { opacity: 0; transform: scale(0.5); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .results-score-text {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+  .results-score-big {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+  }
+  .results-score-big span { color: var(--gold); }
+  .results-message {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 420px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .level-bar {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 28px 0 0;
+  }
+  .level-step {
+    flex: 1;
+    max-width: 80px;
+    padding: 8px 6px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--bg-card2);
+    transition: all 0.4s ease;
+    text-align: center;
+  }
+  .level-step.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: var(--gold-dim);
+    transform: translateY(-4px);
+  }
+
+  .results-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    box-shadow: var(--shadow);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 999;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ===== ALREADY TAKEN ===== */
+  #screen-taken { text-align: center; padding-top: 80px; }
+  .taken-icon { font-size: 4rem; margin-bottom: 20px; }
+  .taken-title { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 14px; }
+  .taken-sub { color: var(--text-secondary); margin-bottom: 32px; }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 600px) {
+    .app { padding: 16px 14px 50px; }
+    .test-header { flex-direction: column; align-items: flex-start; }
+    .info-grid { grid-template-columns: 1fr 1fr; }
+    .results-actions { flex-direction: column; align-items: center; }
+    .toast { white-space: normal; text-align: center; width: 88%; }
+  }
+  @media (max-width: 480px) {
+    .level-bar { gap: 4px; }
+    .level-step { padding: 6px 4px; font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ==================== INTRO SCREEN ==================== -->
+  <div id="screen-intro" class="screen active">
+    <div style="text-align:center;">
+      <div class="badge">50 Questions &middot; A1 to C1</div>
+      <h1 class="intro-title">English <em>Placement</em> Test</h1>
+      <p class="intro-subtitle">Find your English level with our professional assessment covering General and Business English.</p>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="icon">&#x1F4DD;</div>
+        <div class="label">Questions</div>
+        <div class="value">50 Total</div>
+      </div>
+      <div class="info-card">
+        <div class="icon">&#x23F1;&#xFE0F;</div>
+        <div class="label">Time Limit</div>
+        <div class="value">30 Minutes</div>
+      </div>
+      <div class="info-card">
+        <div class="icon">&#x1F4CA;</div>
+        <div class="label">Levels</div>
+        <div class="value">A1 &rarr; C1</div>
+      </div>
+      <div class="info-card">
+        <div class="icon">&#x1F4BC;</div>
+        <div class="label">Type</div>
+        <div class="value">Gen + Business</div>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      &#x26A0;&#xFE0F; <span>You may only take this test <strong>once</strong>. Please ensure you have 30 uninterrupted minutes before starting.</span>
+    </div>
+
+    <div style="text-align:center;">
+      <button class="btn btn-primary" onclick="startTest()">Start Test &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ==================== TEST SCREEN ==================== -->
+  <div id="screen-test" class="screen">
+    <div class="test-header">
+      <div class="timer" id="timer">
+        <span class="clock-icon">&#x23F1;</span>
+        <span id="timer-display">30:00</span>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span id="q-counter">Question 1 of 50</span>
+          <span id="q-percent">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill" style="width:2%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="question-area"></div>
+
+    <div class="q-nav">
+      <button class="btn btn-outline" id="btn-prev" onclick="navigate(-1)">&larr; Previous</button>
+      <button class="btn btn-primary" id="btn-next" onclick="navigate(1)">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ==================== RESULTS SCREEN ==================== -->
+  <div id="screen-results" class="screen">
+    <div class="badge">Test Complete</div>
+    <div class="results-hero">
+      <div style="font-size:0.9rem;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;">Your English Level</div>
+      <div class="results-level" id="res-level">B1</div>
+      <div class="results-score-text">Your Score</div>
+      <div class="results-score-big"><span id="res-score">28</span> / 50</div>
+      <p class="results-message" id="res-message"></p>
+      <div class="level-bar">
+        <div class="level-step" data-lv="A1">A1</div>
+        <div class="level-step" data-lv="A2">A2</div>
+        <div class="level-step" data-lv="B1">B1</div>
+        <div class="level-step" data-lv="B2">B2</div>
+        <div class="level-step" data-lv="C1">C1</div>
+      </div>
+    </div>
+    <div class="results-actions">
+      <button class="btn btn-primary" onclick="shareResult()">&#x1F4E4; Share Result</button>
+      <button class="btn btn-outline" onclick="resetTest()">Reset Test</button>
+    </div>
+  </div>
+
+  <!-- ==================== ALREADY TAKEN SCREEN ==================== -->
+  <div id="screen-taken" class="screen">
+    <div class="taken-icon">&#x1F512;</div>
+    <h2 class="taken-title">Test Already Completed</h2>
+    <p class="taken-sub">You have already taken this placement test.<br>Your result has been saved.</p>
+    <div id="prev-result" style="margin-bottom:24px;"></div>
+    <button class="btn btn-outline" onclick="resetTest()">Reset &amp; Retake</button>
+  </div>
+
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   QUESTION BANK  (50 questions, A1 to C1, General + Business)
+   ============================================================ */
+var QUESTIONS = [
+  /* --- A1 GENERAL (1-6) --- */
+  {id:1, level:"A1", type:"General",
+   text:"What _____ your name?",
+   options:["is","are","am","be"], answer:0},
+
+  {id:2, level:"A1", type:"General",
+   text:"She _____ a doctor.",
+   options:["are","is","am","be"], answer:1},
+
+  {id:3, level:"A1", type:"General",
+   text:"There _____ three chairs in the room.",
+   options:["is","are","am","has"], answer:1},
+
+  {id:4, level:"A1", type:"General",
+   text:"I _____ to school every day.",
+   options:["goes","going","go","gone"], answer:2},
+
+  {id:5, level:"A1", type:"General",
+   text:"Which word means the opposite of 'big'?",
+   options:["large","tall","small","heavy"], answer:2},
+
+  {id:6, level:"A1", type:"General",
+   text:"_____ you speak English?",
+   options:["Do","Does","Are","Is"], answer:0},
+
+  /* --- A1 BUSINESS (7-9) --- */
+  {id:7, level:"A1", type:"Business",
+   text:"Which phrase is a correct greeting in a professional email?",
+   options:["Hey!","Yo, what's up?","Dear Mr. Smith,","Hiya!"], answer:2},
+
+  {id:8, level:"A1", type:"Business",
+   context:"You meet a new colleague for the first time.",
+   text:"What is the most appropriate thing to say?",
+   options:["Nice to meet you.","See ya later!","What do you want?","I'm bored."], answer:0},
+
+  {id:9, level:"A1", type:"Business",
+   text:"What does the word 'office' mean?",
+   options:["A bedroom","A place where people work","A type of food","A park"], answer:1},
+
+  /* --- A2 GENERAL (10-16) --- */
+  {id:10, level:"A2", type:"General",
+   text:"She _____ in London for five years before moving to Paris.",
+   options:["live","lives","lived","living"], answer:2},
+
+  {id:11, level:"A2", type:"General",
+   text:"We _____ going to the cinema tonight.",
+   options:["is","am","are","be"], answer:2},
+
+  {id:12, level:"A2", type:"General",
+   text:"Choose the correct sentence.",
+   options:[
+     "He don't like coffee.",
+     "He doesn't likes coffee.",
+     "He doesn't like coffee.",
+     "He not like coffee."
+   ], answer:2},
+
+  {id:13, level:"A2", type:"General",
+   text:"What is the past tense of 'go'?",
+   options:["goed","gone","went","going"], answer:2},
+
+  {id:14, level:"A2", type:"General",
+   text:"_____ she ever been to Japan?",
+   options:["Has","Have","Did","Was"], answer:0},
+
+  {id:15, level:"A2", type:"General",
+   text:"Choose the correct word: 'The movie was very _____. I loved it.'",
+   options:["bore","boring","bored","bores"], answer:1},
+
+  {id:16, level:"A2", type:"General",
+   text:"How _____ money do you have?",
+   options:["many","much","few","little"], answer:1},
+
+  /* --- A2 BUSINESS (17-20) --- */
+  {id:17, level:"A2", type:"Business",
+   context:"Email: 'I am writing to ask about the price of your products.'",
+   text:"What is the purpose of this email?",
+   options:["To make a complaint","To request information","To send a report","To cancel an order"], answer:1},
+
+  {id:18, level:"A2", type:"Business",
+   text:"In a meeting, if you want to share your opinion politely, you say:",
+   options:[
+     "You are wrong.",
+     "Actually, I think...",
+     "That is a stupid idea.",
+     "Shut up and listen."
+   ], answer:1},
+
+  {id:19, level:"A2", type:"Business",
+   text:"What does 'deadline' mean in a business context?",
+   options:[
+     "The end of a workday",
+     "A meeting summary",
+     "The latest date by which something must be done",
+     "An annual report"
+   ], answer:2},
+
+  {id:20, level:"A2", type:"Business",
+   text:"Which phrase is used to end a professional email?",
+   options:["Bye bye!","Yours sincerely,","Catch you later,","Ciao!"], answer:1},
+
+  /* --- B1 GENERAL (21-27) --- */
+  {id:21, level:"B1", type:"General",
+   text:"If I _____ more money, I would travel more.",
+   options:["have","had","has","having"], answer:1},
+
+  {id:22, level:"B1", type:"General",
+   text:"She asked me where _____ the day before.",
+   options:["I had been","had I been","I have been","have I been"], answer:0},
+
+  {id:23, level:"B1", type:"General",
+   text:"By the time we arrived, the film _____ already started.",
+   options:["had","has","have","was"], answer:0},
+
+  {id:24, level:"B1", type:"General",
+   text:"Choose the correct option: 'Despite _____ tired, she finished the report.'",
+   options:["be","been","being","to be"], answer:2},
+
+  {id:25, level:"B1", type:"General",
+   context:"Reading: 'The conference attracted over 2,000 delegates from 45 countries, making it the largest gathering in the organisation's history.'",
+   text:"What is the main point of this sentence?",
+   options:[
+     "The conference was cancelled.",
+     "The conference was unusually large.",
+     "Only 45 people attended.",
+     "The conference happens every year."
+   ], answer:1},
+
+  {id:26, level:"B1", type:"General",
+   text:"He suggested _____ the project deadline.",
+   options:["to extend","extending","extended","extend"], answer:1},
+
+  {id:27, level:"B1", type:"General",
+   text:"Which word best replaces 'get' in: 'We need to get a solution quickly.'",
+   options:["find","take","catch","bring"], answer:0},
+
+  /* --- B1 BUSINESS (28-33) --- */
+  {id:28, level:"B1", type:"Business",
+   context:"Email excerpt: 'Further to our conversation last Tuesday, I wanted to follow up on the proposal you mentioned.'",
+   text:"What does 'follow up' mean here?",
+   options:[
+     "To forget about something",
+     "To take additional action after a previous contact",
+     "To cancel a proposal",
+     "To introduce a new idea"
+   ], answer:1},
+
+  {id:29, level:"B1", type:"Business",
+   text:"In a business negotiation, 'to reach a compromise' means:",
+   options:[
+     "To win the argument",
+     "To give up entirely",
+     "To find a middle ground acceptable to both sides",
+     "To delay the decision"
+   ], answer:2},
+
+  {id:30, level:"B1", type:"Business",
+   text:"Which is the most professional response to a client complaint?",
+   options:[
+     "It wasn't our fault.",
+     "We apologise for the inconvenience and will resolve this promptly.",
+     "That happens to everyone.",
+     "We can't help you with that."
+   ], answer:1},
+
+  {id:31, level:"B1", type:"Business",
+   text:"The term 'ROI' in business stands for:",
+   options:[
+     "Risk of Inflation",
+     "Return on Investment",
+     "Rate of Interest",
+     "Report of Incident"
+   ], answer:1},
+
+  {id:32, level:"B1", type:"Business",
+   context:"Meeting agenda item: 'AOB - Any Other Business'",
+   text:"When does this item usually appear on an agenda?",
+   options:[
+     "At the beginning of a meeting",
+     "After the main agenda items, for miscellaneous topics",
+     "During a coffee break",
+     "Before the chairperson speaks"
+   ], answer:1},
+
+  {id:33, level:"B1", type:"Business",
+   text:"To 'cc' someone in an email means:",
+   options:[
+     "To send them the original message only",
+     "To send them a copy for their information",
+     "To block them from receiving emails",
+     "To delete their name from the thread"
+   ], answer:1},
+
+  /* --- B2 GENERAL (34-40) --- */
+  {id:34, level:"B2", type:"General",
+   text:"Had they informed us earlier, we _____ the situation.",
+   options:["would handle","would have handled","will handle","handled"], answer:1},
+
+  {id:35, level:"B2", type:"General",
+   text:"The CEO's decision was met with considerable _____ from shareholders.",
+   options:["skepticism","skeptic","skeptical","skeptically"], answer:0},
+
+  {id:36, level:"B2", type:"General",
+   text:"Choose the sentence with the correct use of a relative clause:",
+   options:[
+     "The report, which was submitted late, disappointed the board.",
+     "The report, that was submitted late, disappointed the board.",
+     "The report who was submitted late, disappointed the board.",
+     "The report, submitted lately, disappointing the board."
+   ], answer:0},
+
+  {id:37, level:"B2", type:"General",
+   context:"Text: 'While the initiative has merit, critics argue that without adequate funding and legislative support, it risks remaining little more than a symbolic gesture.'",
+   text:"What is the writer's main concern about the initiative?",
+   options:[
+     "It is too expensive.",
+     "It has no supporters.",
+     "It may not produce real results without proper backing.",
+     "It has already been cancelled."
+   ], answer:2},
+
+  {id:38, level:"B2", type:"General",
+   text:"The passive form of 'They will announce the results tomorrow' is:",
+   options:[
+     "The results will announce tomorrow.",
+     "The results will be announced tomorrow.",
+     "The results are announced tomorrow.",
+     "The results were being announced tomorrow."
+   ], answer:1},
+
+  {id:39, level:"B2", type:"General",
+   text:"She spoke so _____ that only those in the front row could hear.",
+   options:["quietly","quiet","quieter","quietness"], answer:0},
+
+  {id:40, level:"B2", type:"General",
+   text:"The word 'detrimental' is closest in meaning to:",
+   options:["beneficial","harmful","neutral","irrelevant"], answer:1},
+
+  /* --- B2 BUSINESS (41-46) --- */
+  {id:41, level:"B2", type:"Business",
+   context:"'The board has resolved to divest non-core assets in order to streamline operations and improve our EBITDA margin over the next fiscal year.'",
+   text:"What is the board planning to do?",
+   options:[
+     "Acquire new businesses",
+     "Sell off assets that are not central to the core business",
+     "Increase the workforce",
+     "Launch a new product line"
+   ], answer:1},
+
+  {id:42, level:"B2", type:"Business",
+   text:"In a formal business report, which phrase would you use to introduce a recommendation?",
+   options:[
+     "I think you should maybe...",
+     "It is recommended that the organisation consider...",
+     "You've got to do this...",
+     "Honestly, just try..."
+   ], answer:1},
+
+  {id:43, level:"B2", type:"Business",
+   text:"The phrase 'going forward' in business communication typically means:",
+   options:[
+     "Moving physically to the front",
+     "From this point in time onwards",
+     "Reversing a previous decision",
+     "Completing a task immediately"
+   ], answer:1},
+
+  {id:44, level:"B2", type:"Business",
+   context:"Email: 'We regret to inform you that due to unforeseen circumstances, we are unable to honour the terms of the original contract.'",
+   text:"What is the sender communicating?",
+   options:[
+     "They are happy with the contract.",
+     "They cannot fulfil the agreed contract terms.",
+     "They want to renegotiate prices.",
+     "They are requesting an extension."
+   ], answer:1},
+
+  {id:45, level:"B2", type:"Business",
+   text:"Which phrase is most suitable for diplomatically disagreeing in a board meeting?",
+   options:[
+     "That's completely wrong.",
+     "With respect, I would take a different view on this.",
+     "I don't care what you think.",
+     "You clearly haven't thought about this."
+   ], answer:1},
+
+  {id:46, level:"B2", type:"Business",
+   text:"The term 'due diligence' refers to:",
+   options:[
+     "Paying invoices on time",
+     "A thorough investigation or audit before a business decision",
+     "Conducting employee performance reviews",
+     "Setting quarterly financial targets"
+   ], answer:1},
+
+  /* --- C1 GENERAL & BUSINESS (47-50) --- */
+  {id:47, level:"C1", type:"General",
+   context:"'The legislation, though ostensibly designed to protect consumer rights, has been criticised for containing several loopholes that could inadvertently benefit large corporations at the expense of the very individuals it purports to protect.'",
+   text:"What is the main criticism of the legislation?",
+   options:[
+     "It protects consumers too aggressively.",
+     "It may unintentionally favour corporations over consumers.",
+     "It was written by large corporations.",
+     "It has not yet been passed into law."
+   ], answer:1},
+
+  {id:48, level:"C1", type:"General",
+   text:"Choose the sentence that correctly uses an inverted conditional:",
+   options:[
+     "Had the merger proceeded, shareholders would have seen significant gains.",
+     "If the merger had been proceeded, shareholders had seen significant gains.",
+     "Would the merger proceed, shareholders saw significant gains.",
+     "Should the merger been proceeded, shareholders would have seen gains."
+   ], answer:0},
+
+  {id:49, level:"C1", type:"Business",
+   context:"Executive memo: 'In light of macroeconomic headwinds and the concomitant pressure on our margins, it is imperative that we recalibrate our strategic priorities and redeploy capital toward higher-yield verticals.'",
+   text:"What is the executive asking the company to do?",
+   options:[
+     "Invest more in marketing campaigns",
+     "Lay off all staff immediately",
+     "Shift resources to more profitable areas given economic challenges",
+     "Acquire a competitor"
+   ], answer:2},
+
+  {id:50, level:"C1", type:"Business",
+   text:"Which sentence demonstrates the most sophisticated and appropriate register for an executive-level business proposal?",
+   options:[
+     "We should really look into doing something about the supply chain stuff.",
+     "This proposal outlines a phased approach to supply chain optimisation, with projected efficiency gains of 18% over 24 months.",
+     "Supply chains are broken so fix them fast.",
+     "Our supply chain has lots of problems and we want to make it better soon."
+   ], answer:1}
+];
+
+/* ============================================================
+   LEVEL MESSAGES
+   ============================================================ */
+var LEVEL_INFO = {
+  A1: { msg:"You have a basic foundation in English. With focused practice on everyday vocabulary and simple structures, you will progress quickly." },
+  A2: { msg:"You can communicate in simple, routine situations. Keep building your vocabulary and grammar to unlock more complex conversations." },
+  B1: { msg:"You have a solid working knowledge of English and can handle most everyday and some professional situations with confidence." },
+  B2: { msg:"You can communicate effectively in professional environments and engage with complex topics. You are ready for advanced courses." },
+  C1: { msg:"Excellent! You demonstrate a near-native command of English, with the ability to express nuanced ideas clearly in demanding professional contexts." }
+};
+
+function getLevel(score) {
+  if (score <= 10) return "A1";
+  if (score <= 20) return "A2";
+  if (score <= 30) return "B1";
+  if (score <= 48) return "B2";
+  return "C1";
+}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+var currentQ  = 0;
+var answers   = new Array(QUESTIONS.length).fill(null);
+var timerSecs = 30 * 60;
+var timerInt  = null;
+var testDone  = false;
+
+/* ============================================================
+   INIT
+   ============================================================ */
+window.addEventListener('DOMContentLoaded', function() {
+  if (localStorage.getItem('ept_done')) {
+    var prevScore = localStorage.getItem('ept_score');
+    var prevLevel = localStorage.getItem('ept_level');
+    if (prevScore && prevLevel) {
+      var el = document.getElementById('prev-result');
+      el.innerHTML = '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;display:inline-block;">' +
+        '<div style="font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Previous Result</div>' +
+        '<div style="font-family:\'Playfair Display\',serif;font-size:2.4rem;font-style:italic;color:var(--gold);">' + prevLevel + '</div>' +
+        '<div style="color:var(--text-secondary);">' + prevScore + ' / 50</div>' +
+        '</div>';
+    }
+    showScreen('screen-taken');
+  }
+});
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+}
+
+function startTest() {
+  showScreen('screen-test');
+  renderQuestion(0);
+  startTimer();
+}
+
+/* ============================================================
+   TIMER
+   ============================================================ */
+function startTimer() {
+  timerInt = setInterval(function() {
+    timerSecs--;
+    updateTimerDisplay();
+    if (timerSecs <= 0) {
+      clearInterval(timerInt);
+      submitTest();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  var m = Math.floor(timerSecs / 60).toString().padStart(2,'0');
+  var s = (timerSecs % 60).toString().padStart(2,'0');
+  document.getElementById('timer-display').textContent = m + ':' + s;
+  var wrap = document.getElementById('timer');
+  if (timerSecs <= 300) wrap.classList.add('warning');
+  else wrap.classList.remove('warning');
+}
+
+/* ============================================================
+   RENDER QUESTION
+   ============================================================ */
+function renderQuestion(idx) {
+  currentQ = idx;
+  var q = QUESTIONS[idx];
+  var total = QUESTIONS.length;
+
+  // progress
+  var pct = Math.round((idx / total) * 100);
+  document.getElementById('progress-fill').style.width = Math.max(2, pct) + '%';
+  document.getElementById('q-counter').textContent = 'Question ' + (idx+1) + ' of ' + total;
+  document.getElementById('q-percent').textContent = pct + '%';
+
+  // nav buttons
+  document.getElementById('btn-prev').disabled = idx === 0;
+  var isLast = idx === total - 1;
+  var btnNext = document.getElementById('btn-next');
+  if (isLast) {
+    btnNext.textContent = 'Submit Test';
+    btnNext.onclick = trySubmit;
+  } else {
+    btnNext.textContent = 'Next \u2192';
+    btnNext.onclick = function() { navigate(1); };
+  }
+
+  // question HTML
+  var letters = ['A','B','C','D'];
+  var contextHTML = q.context ? '<div class="q-context">' + escapeHtml(q.context) + '</div>' : '';
+  var optsHTML = q.options.map(function(opt, i) {
+    var sel = answers[idx] === i ? ' selected' : '';
+    return '<div class="option' + sel + '" onclick="selectAnswer(' + i + ')">' +
+      '<span class="option-letter">' + letters[i] + '</span>' +
+      '<span>' + escapeHtml(opt) + '</span>' +
+      '</div>';
+  }).join('');
+
+  var levelClass = 'tag-' + q.level.toLowerCase();
+
+  document.getElementById('question-area').innerHTML =
+    '<div class="q-number">Question ' + (idx+1) + ' / ' + total +
+    ' <span class="q-level-tag ' + levelClass + '">' + q.level + ' &middot; ' + q.type + '</span></div>' +
+    contextHTML +
+    '<div class="q-text">' + escapeHtml(q.text) + '</div>' +
+    '<div class="options" id="options-wrap">' + optsHTML + '</div>';
+}
+
+function escapeHtml(str) {
+  return str
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+/* ============================================================
+   SELECT ANSWER
+   ============================================================ */
+function selectAnswer(optIdx) {
+  answers[currentQ] = optIdx;
+  document.querySelectorAll('.option').forEach(function(el, i) {
+    el.classList.toggle('selected', i === optIdx);
+  });
+}
+
+/* ============================================================
+   NAVIGATE
+   ============================================================ */
+function navigate(dir) {
+  if (dir === 1 && answers[currentQ] === null) {
+    showToast('Please select an answer before continuing.');
+    return;
+  }
+  var next = currentQ + dir;
+  if (next >= 0 && next < QUESTIONS.length) {
+    renderQuestion(next);
+  }
+}
+
+/* ============================================================
+   SUBMIT
+   ============================================================ */
+function trySubmit() {
+  var unanswered = answers.filter(function(a) { return a === null; }).length;
+  if (unanswered > 0) {
+    showToast('You have ' + unanswered + ' unanswered question(s). Please review.');
+    var firstUn = answers.findIndex(function(a) { return a === null; });
+    if (firstUn !== -1) renderQuestion(firstUn);
+    return;
+  }
+  submitTest();
+}
+
+function submitTest() {
+  if (testDone) return;
+  testDone = true;
+  clearInterval(timerInt);
+
+  var score = 0;
+  QUESTIONS.forEach(function(q, i) {
+    if (answers[i] === q.answer) score++;
+  });
+  var level = getLevel(score);
+  var info  = LEVEL_INFO[level];
+
+  localStorage.setItem('ept_done', '1');
+  localStorage.setItem('ept_score', score);
+  localStorage.setItem('ept_level', level);
+
+  document.getElementById('res-level').textContent = level;
+  document.getElementById('res-score').textContent = score;
+  document.getElementById('res-message').textContent = info.msg;
+
+  document.querySelectorAll('.level-step').forEach(function(el) {
+    el.classList.toggle('active', el.dataset.lv === level);
+  });
+
+  showScreen('screen-results');
+}
+
+/* ============================================================
+   SHARE
+   ============================================================ */
+function shareResult() {
+  var score = localStorage.getItem('ept_score') || '?';
+  var level = localStorage.getItem('ept_level') || '?';
+  var text  = 'I just completed an English Placement Test and got ' + level + ' level with a score of ' + score + '/50!';
+
+  if (navigator.share) {
+    navigator.share({ title: 'My English Level', text: text })
+      .catch(function() { copyFallback(text); });
+  } else {
+    copyFallback(text);
+  }
+}
+
+function copyFallback(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(function() { showToast('Result copied to clipboard!'); })
+      .catch(function() { showToast('Could not copy automatically.'); });
+  } else {
+    // legacy fallback
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); showToast('Result copied to clipboard!'); }
+    catch(e) { showToast('Please copy manually: ' + text); }
+    document.body.removeChild(ta);
+  }
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+function resetTest() {
+  localStorage.removeItem('ept_done');
+  localStorage.removeItem('ept_score');
+  localStorage.removeItem('ept_level');
+  location.reload();
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 3000);
+}
+</script>
+</body>
+</html>
