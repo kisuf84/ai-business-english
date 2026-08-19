@@ -20,6 +20,8 @@ type NavItem = {
   href: string;
   label: string;
   icon: string;
+  /** Renders as the nav icon instead of `icon` when set (e.g. flag emoji for language rows). */
+  iconEmoji?: string;
   children?: NavItem[];
 };
 
@@ -107,9 +109,9 @@ const bilingualCompendiumNavItem: NavItem = {
   label: "Bilingual Compendium",
   icon: SECTION_ICONS.bilingualCompendium,
   children: [
-    { href: "/bilingual-compendium/espanol", label: "🇪🇸 Español", icon: SECTION_ICONS.bilingualCompendium },
-    { href: "/bilingual-compendium/francais", label: "🇫🇷 Français", icon: SECTION_ICONS.bilingualCompendium },
-    { href: "/bilingual-compendium/portugues", label: "🇧🇷 Português", icon: SECTION_ICONS.bilingualCompendium },
+    { href: "/bilingual-compendium/espanol", label: "Español", icon: SECTION_ICONS.bilingualCompendium, iconEmoji: "🇪🇸" },
+    { href: "/bilingual-compendium/francais", label: "Français", icon: SECTION_ICONS.bilingualCompendium, iconEmoji: "🇫🇷" },
+    { href: "/bilingual-compendium/portugues", label: "Português", icon: SECTION_ICONS.bilingualCompendium, iconEmoji: "🇧🇷" },
   ],
 };
 
@@ -118,9 +120,9 @@ const lexiproNavItem: NavItem = {
   label: "Lexipro",
   icon: SECTION_ICONS.lexipro,
   children: [
-    { href: "/lexipro/espanol", label: "🇪🇸 Español", icon: SECTION_ICONS.lexipro },
-    { href: "/lexipro/francais", label: "🇫🇷 Français", icon: SECTION_ICONS.lexipro },
-    { href: "/lexipro/portugues", label: "🇧🇷 Português", icon: SECTION_ICONS.lexipro },
+    { href: "/lexipro/espanol", label: "Español", icon: SECTION_ICONS.lexipro, iconEmoji: "🇪🇸" },
+    { href: "/lexipro/francais", label: "Français", icon: SECTION_ICONS.lexipro, iconEmoji: "🇫🇷" },
+    { href: "/lexipro/portugues", label: "Português", icon: SECTION_ICONS.lexipro, iconEmoji: "🇧🇷" },
   ],
 };
 
@@ -204,7 +206,15 @@ const SINGLE_SEGMENT_READER_PREFIXES = [
 /** Top-level routes that are themselves a single immersive reader (no catalog). */
 const TOP_LEVEL_READER_PATHS = ["/lexica", "/biz-compendium"];
 
-function NavIcon({ icon, isActive }: { icon: string; isActive: boolean }) {
+function NavIcon({
+  icon,
+  emoji,
+  isActive,
+}: {
+  icon: string;
+  emoji?: string;
+  isActive: boolean;
+}) {
   return (
     <span
       className={`grid h-[38px] w-[38px] shrink-0 place-items-center rounded-[12px] border ${
@@ -213,20 +223,26 @@ function NavIcon({ icon, isActive }: { icon: string; isActive: boolean }) {
           : "border-[var(--glass-border)] bg-[var(--glass)] text-[var(--ink-3)] group-hover:text-[var(--ink-1)]"
       }`}
     >
-      <span
-        aria-hidden="true"
-        className="h-[18px] w-[18px] bg-current"
-        style={{
-          WebkitMaskImage: `url(${icon})`,
-          maskImage: `url(${icon})`,
-          WebkitMaskSize: "contain",
-          maskSize: "contain",
-          WebkitMaskRepeat: "no-repeat",
-          maskRepeat: "no-repeat",
-          WebkitMaskPosition: "center",
-          maskPosition: "center",
-        }}
-      />
+      {emoji ? (
+        <span aria-hidden="true" className="text-[18px] leading-none">
+          {emoji}
+        </span>
+      ) : (
+        <span
+          aria-hidden="true"
+          className="h-[18px] w-[18px] bg-current"
+          style={{
+            WebkitMaskImage: `url(${icon})`,
+            maskImage: `url(${icon})`,
+            WebkitMaskSize: "contain",
+            maskSize: "contain",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            WebkitMaskPosition: "center",
+            maskPosition: "center",
+          }}
+        />
+      )}
     </span>
   );
 }
@@ -250,7 +266,7 @@ function NavLink({
           : ""
       }`}
     >
-      <NavIcon icon={item.icon} isActive={isActive} />
+      <NavIcon icon={item.icon} emoji={item.iconEmoji} isActive={isActive} />
       <span className="min-w-0 truncate">{item.label}</span>
     </Link>
   );
