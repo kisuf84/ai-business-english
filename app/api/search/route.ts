@@ -14,6 +14,10 @@ import { listLexiproItems } from "../../../lib/lexipro";
 import { getLexicaItem } from "../../../lib/lexica";
 import { getBizCompendiumItem } from "../../../lib/bizCompendium";
 import { listGossipEnglishItems } from "../../../lib/gossipEnglish";
+import { listBusinessIndustriesItems } from "../../../lib/businessIndustries";
+import { listSyntaxFlowItems, SYNTAX_FLOW_LANGUAGES } from "../../../lib/syntaxFlow";
+import { getLevelTestItem } from "../../../lib/levelTest";
+import { getListeningHubItem } from "../../../lib/listeningHub";
 
 export type SearchResultType =
   | "lesson"
@@ -28,7 +32,11 @@ export type SearchResultType =
   | "lexipro"
   | "lexica"
   | "biz-compendium"
-  | "gossip-english";
+  | "gossip-english"
+  | "business-industries"
+  | "syntax-flow"
+  | "level-test"
+  | "listening-hub";
 
 export type SearchResult = {
   type: SearchResultType;
@@ -312,7 +320,86 @@ export async function GET(request: Request) {
     }
   }
 
-  // 5. For Teachers resources.
+  // 5. Aug 19 content-expansion libraries (release-gated in a later commit,
+  // same as the Aug 12 batch above was).
+  {
+    try {
+      let businessCount = 0;
+      for (const item of listBusinessIndustriesItems()) {
+        if (businessCount >= RESULTS_PER_SOURCE) break;
+        if (matches(query, item.title)) {
+          results.push({
+            type: "business-industries",
+            typeLabel: "Business Industries",
+            title: item.title,
+            href: `/business-industries/${item.slug}`,
+          });
+          businessCount += 1;
+        }
+      }
+    } catch (error) {
+      console.error("[search] business_industries_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+
+    try {
+      let syntaxFlowCount = 0;
+      for (const language of SYNTAX_FLOW_LANGUAGES) {
+        for (const item of listSyntaxFlowItems(language.slug)) {
+          if (syntaxFlowCount >= RESULTS_PER_SOURCE) break;
+          if (matches(query, item.title, item.level, language.label, `Volume ${item.volume}`)) {
+            results.push({
+              type: "syntax-flow",
+              typeLabel: "Syntax Flow",
+              title: item.title,
+              subtitle: `${language.label} · ${item.level}`,
+              href: `/syntax-flow/${language.slug}/${item.slug}`,
+            });
+            syntaxFlowCount += 1;
+          }
+        }
+      }
+    } catch (error) {
+      console.error("[search] syntax_flow_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+
+    try {
+      const levelTest = getLevelTestItem();
+      if (matches(query, levelTest.title, "Level Test")) {
+        results.push({
+          type: "level-test",
+          typeLabel: "Level Test",
+          title: levelTest.title,
+          href: "/level-test",
+        });
+      }
+    } catch (error) {
+      console.error("[search] level_test_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+
+    try {
+      const listeningHub = getListeningHubItem();
+      if (matches(query, listeningHub.title, "Listening Hub")) {
+        results.push({
+          type: "listening-hub",
+          typeLabel: "Listening Hub",
+          title: listeningHub.title,
+          href: "/listening-hub",
+        });
+      }
+    } catch (error) {
+      console.error("[search] listening_hub_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+  }
+
+  // 6. For Teachers resources.
   let teacherCount = 0;
   for (const resource of TEACHER_RESOURCES) {
     if (teacherCount >= RESULTS_PER_SOURCE) break;
