@@ -49,6 +49,13 @@ const SECTION_ICONS = {
   lexica: "/icons/lexica.png",
   bizCompendium: "/icons/biz-compendium.png",
   gossipEnglish: "/icons/gossip-english.png",
+  // Aug 19 batch: no client icon package delivered yet for these 4 sections,
+  // so reuse existing neutral system icons as placeholders (per Brice's
+  // instruction not to generate new artwork) until real ones arrive.
+  businessIndustries: "/icons/objects-column_10742815.png",
+  syntaxFlow: "/icons/tour-virtual_13794442.png",
+  levelTest: "/icons/settings-sliders_16861487.png",
+  listeningHub: "/icons/chess-clock_7378982.png",
 } as const;
 
 const englishTrainingNavItem: NavItem = {
@@ -144,6 +151,35 @@ const gossipEnglishNavItem: NavItem = {
   icon: SECTION_ICONS.gossipEnglish,
 };
 
+const businessIndustriesNavItem: NavItem = {
+  href: "/business-industries",
+  label: "Business Industries",
+  icon: SECTION_ICONS.businessIndustries,
+};
+
+const syntaxFlowNavItem: NavItem = {
+  href: "/syntax-flow",
+  label: "Syntax Flow",
+  icon: SECTION_ICONS.syntaxFlow,
+  children: [
+    { href: "/syntax-flow/espanol", label: "Español", icon: SECTION_ICONS.syntaxFlow, iconEmoji: "🇪🇸" },
+    { href: "/syntax-flow/francais", label: "Français", icon: SECTION_ICONS.syntaxFlow, iconEmoji: "🇫🇷" },
+    { href: "/syntax-flow/portugues", label: "Português", icon: SECTION_ICONS.syntaxFlow, iconEmoji: "🇧🇷" },
+  ],
+};
+
+const levelTestNavItem: NavItem = {
+  href: "/level-test",
+  label: "Level Test",
+  icon: SECTION_ICONS.levelTest,
+};
+
+const listeningHubNavItem: NavItem = {
+  href: "/listening-hub",
+  label: "Listening Hub",
+  icon: SECTION_ICONS.listeningHub,
+};
+
 const navGroups: NavGroup[] = [
   {
     label: "Workspace",
@@ -172,6 +208,10 @@ const navGroups: NavGroup[] = [
             gossipEnglishNavItem,
           ]
         : []),
+      businessIndustriesNavItem,
+      syntaxFlowNavItem,
+      levelTestNavItem,
+      listeningHubNavItem,
     ],
   },
   {
