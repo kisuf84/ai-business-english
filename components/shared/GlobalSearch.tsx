@@ -141,6 +141,11 @@ export default function GlobalSearch() {
                         {result.subtitle}
                       </span>
                     ) : null}
+                    {result.excerpt ? (
+                      <span className="mobile-safe-wrap text-xs italic text-[var(--ink-faint)]">
+                        {result.excerpt}
+                      </span>
+                    ) : null}
                   </button>
                 </li>
               ))}

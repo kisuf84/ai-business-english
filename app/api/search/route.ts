@@ -16,10 +16,17 @@ import { getLexicaItem } from "../../../lib/lexica";
 import { getBizCompendiumItem } from "../../../lib/bizCompendium";
 import { listGossipEnglishItems } from "../../../lib/gossipEnglish";
 import { listBusinessIndustriesItems } from "../../../lib/businessIndustries";
-import { listSyntaxFlowItems, SYNTAX_FLOW_LANGUAGES } from "../../../lib/syntaxFlow";
+import {
+  listSyntaxFlowItems,
+  getSyntaxFlowItem,
+  isSyntaxFlowLanguage,
+  SYNTAX_FLOW_LANGUAGES,
+} from "../../../lib/syntaxFlow";
 import { getLevelTestItem } from "../../../lib/levelTest";
 import { getListeningHubItem } from "../../../lib/listeningHub";
 import { getSpeakingTopicsItem } from "../../../lib/speakingTopics";
+import { normalizeSearchText } from "../../../lib/textNormalize";
+import syntaxFlowSearchIndex from "../../../lib/generated/syntaxFlowSearchIndex.json";
 
 export type SearchResultType =
   | "lesson"
@@ -47,12 +54,37 @@ export type SearchResult = {
   title: string;
   subtitle?: string;
   href: string;
+  /** Short natural-text excerpt around a full-text content match (Syntaxflow
+   * V1 only for now) — absent for title/metadata-only matches. */
+  excerpt?: string;
 };
 
 const RESULTS_PER_SOURCE = 6;
+const EXCERPT_CONTEXT_CHARS = 40;
 
 function matches(query: string, ...fields: Array<string | null | undefined>) {
   return fields.some((field) => field && field.toLowerCase().includes(query));
+}
+
+/**
+ * Builds a short excerpt from the ORIGINAL (accented, natural-cased) chunk
+ * text, centered on where the normalized query matched in the normalized
+ * copy of that same chunk. normalizeSearchText is near length-preserving
+ * (diacritic stripping/punctuation substitution are ~1:1 per character), so
+ * the normalized match offset is a safe-enough proxy for the original
+ * text's offset — exact alignment isn't required since this is a display
+ * excerpt, not a deep link.
+ */
+function buildExcerpt(originalChunk: string, normalizedChunk: string, normalizedQuery: string): string {
+  const matchIndex = normalizedChunk.indexOf(normalizedQuery);
+  if (matchIndex === -1) return originalChunk.slice(0, 160);
+
+  const start = Math.max(0, matchIndex - EXCERPT_CONTEXT_CHARS);
+  const end = Math.min(originalChunk.length, matchIndex + normalizedQuery.length + EXCERPT_CONTEXT_CHARS);
+  let excerpt = originalChunk.slice(start, end).trim();
+  if (start > 0) excerpt = `…${excerpt}`;
+  if (end < originalChunk.length) excerpt = `${excerpt}…`;
+  return excerpt;
 }
 
 export async function GET(request: Request) {
@@ -68,6 +100,10 @@ export async function GET(request: Request) {
   if (!query) {
     return NextResponse.json({ results: [] });
   }
+
+  // Only used by the Syntaxflow full-text pass below — existing
+  // title/metadata matching above keeps using `query` unchanged.
+  const normalizedQuery = normalizeSearchText(rawQuery);
 
   const results: SearchResult[] = [];
 
@@ -348,6 +384,8 @@ export async function GET(request: Request) {
 
     try {
       let syntaxFlowCount = 0;
+      const syntaxFlowMatchedKeys = new Set<string>();
+
       for (const language of SYNTAX_FLOW_LANGUAGES) {
         for (const item of listSyntaxFlowItems(language.slug)) {
           if (syntaxFlowCount >= RESULTS_PER_SOURCE) break;
@@ -359,8 +397,48 @@ export async function GET(request: Request) {
               subtitle: `${language.label} · ${item.level}`,
               href: `/syntax-flow/${language.slug}/${item.slug}`,
             });
+            syntaxFlowMatchedKeys.add(`${language.slug}:${item.slug}`);
             syntaxFlowCount += 1;
           }
+        }
+      }
+
+      // V1 full-text pass — content search inside the lesson body (e.g.
+      // Spanish/French/Portuguese sentence text), not just curated
+      // metadata. Skips anything the metadata loop above already matched.
+      if (normalizedQuery) {
+        for (const record of syntaxFlowSearchIndex.records) {
+          if (syntaxFlowCount >= RESULTS_PER_SOURCE) break;
+
+          const languageSlug = record.library.replace("syntax-flow-", "");
+          if (!isSyntaxFlowLanguage(languageSlug)) continue;
+
+          const key = `${languageSlug}:${record.slug}`;
+          if (syntaxFlowMatchedKeys.has(key)) continue;
+
+          const chunkIndex = record.normalizedChunks.findIndex((chunk) =>
+            chunk.includes(normalizedQuery)
+          );
+          if (chunkIndex === -1) continue;
+
+          const language = SYNTAX_FLOW_LANGUAGES.find((entry) => entry.slug === languageSlug);
+          const item = getSyntaxFlowItem(languageSlug, record.slug);
+          if (!language || !item) continue;
+
+          results.push({
+            type: "syntax-flow",
+            typeLabel: "Syntaxflow",
+            title: item.title,
+            subtitle: `${language.label} · ${item.level}`,
+            href: `/syntax-flow/${language.slug}/${item.slug}`,
+            excerpt: buildExcerpt(
+              record.chunks[chunkIndex],
+              record.normalizedChunks[chunkIndex],
+              normalizedQuery
+            ),
+          });
+          syntaxFlowMatchedKeys.add(key);
+          syntaxFlowCount += 1;
         }
       }
     } catch (error) {
