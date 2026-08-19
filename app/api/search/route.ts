@@ -19,6 +19,7 @@ import { listBusinessIndustriesItems } from "../../../lib/businessIndustries";
 import { listSyntaxFlowItems, SYNTAX_FLOW_LANGUAGES } from "../../../lib/syntaxFlow";
 import { getLevelTestItem } from "../../../lib/levelTest";
 import { getListeningHubItem } from "../../../lib/listeningHub";
+import { getSpeakingTopicsItem } from "../../../lib/speakingTopics";
 
 export type SearchResultType =
   | "lesson"
@@ -37,7 +38,8 @@ export type SearchResultType =
   | "business-industries"
   | "syntax-flow"
   | "level-test"
-  | "listening-hub";
+  | "listening-hub"
+  | "speaking-topics";
 
 export type SearchResult = {
   type: SearchResultType;
@@ -395,6 +397,22 @@ export async function GET(request: Request) {
       }
     } catch (error) {
       console.error("[search] listening_hub_failed", {
+        message: error instanceof Error ? error.message : "unknown_error",
+      });
+    }
+
+    try {
+      const speakingTopics = getSpeakingTopicsItem();
+      if (matches(query, speakingTopics.title, "Speaking Topics")) {
+        results.push({
+          type: "speaking-topics",
+          typeLabel: "Speaking Topics",
+          title: speakingTopics.title,
+          href: "/speaking-topics",
+        });
+      }
+    } catch (error) {
+      console.error("[search] speaking_topics_failed", {
         message: error instanceof Error ? error.message : "unknown_error",
       });
     }

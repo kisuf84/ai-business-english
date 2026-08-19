@@ -5,12 +5,13 @@ import path from "path";
  * Shared plumbing for the August content expansion (Situational English,
  * Listening Training, Reading Training, Bilingual Compendium, Lexipro,
  * Lexica, Biz Compendium, Gossip English) plus the Aug 19 batch (Business
- * Industries, Syntax Flow, Level Test, Listening Hub). English Training's
- * own content route/lib module is untouched and does not use this file.
+ * Industries, Syntax Flow, Level Test, Listening Hub, Speaking Topics).
+ * English Training's own content route/lib module is untouched and does
+ * not use this file.
  *
- * Aug 19 IA (audited 108 files, no code-model type change needed beyond
- * this union — same curated-item/resolveCuratedFilePath shape as every
- * other library here):
+ * Aug 19 IA (audited 108 files + 1 late addition = 109, no code-model type
+ * change needed beyond this union — same curated-item/resolveCuratedFilePath
+ * shape as every other library here):
  * - "business-industries": one flat catalog, 61 items, no sub-grouping
  *   (source has no category metadata beyond the industry name itself).
  * - "syntax-flow-espanol" / "-francais" / "-portugues": three separate
@@ -20,8 +21,12 @@ import path from "path";
  *   per-language nav children, but each language is itself a small
  *   level-grouped catalog (same shape as Gossip English) rather than a
  *   single document.
- * - "level-test" / "listening-hub": two standalone single-item libraries,
- *   same shape as Lexica/Biz Compendium (direct reader, no catalog page).
+ * - "level-test" / "listening-hub" / "speaking-topics": three standalone
+ *   single-item libraries, same shape as Lexica/Biz Compendium (direct
+ *   reader, no catalog page). Speaking Topics was a late single-file
+ *   addition (not an industry, not leveled, not listening-focused) — given
+ *   its own top-level nav entry rather than folded into an existing Aug 19
+ *   bucket it didn't actually fit.
  */
 export type ContentLibraryId =
   | "situational-english"
@@ -37,7 +42,8 @@ export type ContentLibraryId =
   | "syntax-flow-francais"
   | "syntax-flow-portugues"
   | "level-test"
-  | "listening-hub";
+  | "listening-hub"
+  | "speaking-topics";
 
 const CONTENT_LIBRARY_ROOT = path.join(process.cwd(), "content-library");
 

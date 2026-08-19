@@ -13,6 +13,7 @@ import { getBusinessIndustriesFilePath } from "../../../../lib/businessIndustrie
 import { getSyntaxFlowFilePath } from "../../../../lib/syntaxFlow";
 import { getLevelTestFilePath } from "../../../../lib/levelTest";
 import { getListeningHubFilePath } from "../../../../lib/listeningHub";
+import { getSpeakingTopicsFilePath } from "../../../../lib/speakingTopics";
 
 type ContentRouteProps = {
   params: {
@@ -54,6 +55,7 @@ const RESOLVERS: Partial<Record<ContentLibraryId, LibraryResolver>> = {
   "syntax-flow-portugues": (slug) => getSyntaxFlowFilePath("portugues", slug),
   "level-test": getLevelTestFilePath,
   "listening-hub": getListeningHubFilePath,
+  "speaking-topics": getSpeakingTopicsFilePath,
 };
 
 export async function GET(_: Request, { params }: ContentRouteProps) {
