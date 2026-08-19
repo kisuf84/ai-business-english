@@ -9,6 +9,10 @@ import { getLexiproFilePath } from "../../../../lib/lexipro";
 import { getLexicaFilePath } from "../../../../lib/lexica";
 import { getBizCompendiumFilePath } from "../../../../lib/bizCompendium";
 import { getGossipEnglishFilePath } from "../../../../lib/gossipEnglish";
+import { getBusinessIndustriesFilePath } from "../../../../lib/businessIndustries";
+import { getSyntaxFlowFilePath } from "../../../../lib/syntaxFlow";
+import { getLevelTestFilePath } from "../../../../lib/levelTest";
+import { getListeningHubFilePath } from "../../../../lib/listeningHub";
 
 type ContentRouteProps = {
   params: {
@@ -44,6 +48,12 @@ const RESOLVERS: Partial<Record<ContentLibraryId, LibraryResolver>> = {
   lexica: getLexicaFilePath,
   "biz-compendium": getBizCompendiumFilePath,
   "gossip-english": getGossipEnglishFilePath,
+  "business-industries": getBusinessIndustriesFilePath,
+  "syntax-flow-espanol": (slug) => getSyntaxFlowFilePath("espanol", slug),
+  "syntax-flow-francais": (slug) => getSyntaxFlowFilePath("francais", slug),
+  "syntax-flow-portugues": (slug) => getSyntaxFlowFilePath("portugues", slug),
+  "level-test": getLevelTestFilePath,
+  "listening-hub": getListeningHubFilePath,
 };
 
 export async function GET(_: Request, { params }: ContentRouteProps) {

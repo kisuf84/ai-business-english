@@ -201,10 +201,19 @@ const SINGLE_SEGMENT_READER_PREFIXES = [
   "/gossip-english",
   "/bilingual-compendium",
   "/lexipro",
+  "/business-industries",
 ];
 
 /** Top-level routes that are themselves a single immersive reader (no catalog). */
-const TOP_LEVEL_READER_PATHS = ["/lexica", "/biz-compendium"];
+const TOP_LEVEL_READER_PATHS = ["/lexica", "/biz-compendium", "/level-test", "/listening-hub"];
+
+/**
+ * Route prefixes whose reader is two segments deep (a catalog page sits at
+ * the first segment, e.g. /syntax-flow/espanol, so it can't use the
+ * single-segment pattern above). Mirrors the /premium-classes/[course]/[module]
+ * check below.
+ */
+const TWO_SEGMENT_READER_PREFIXES = ["/syntax-flow"];
 
 function NavIcon({
   icon,
@@ -383,8 +392,14 @@ export default function AppShell({ children }: AppShellProps) {
     new RegExp(`^${prefix}/[^/]+$`).test(pathname || "")
   );
   const isTopLevelContentReader = TOP_LEVEL_READER_PATHS.includes(pathname || "");
+  const isTwoSegmentContentReader = TWO_SEGMENT_READER_PREFIXES.some((prefix) =>
+    new RegExp(`^${prefix}/[^/]+/[^/]+$`).test(pathname || "")
+  );
   const isImmersiveReader =
-    isPremiumModuleReader || isSingleSegmentContentReader || isTopLevelContentReader;
+    isPremiumModuleReader ||
+    isSingleSegmentContentReader ||
+    isTopLevelContentReader ||
+    isTwoSegmentContentReader;
 
   useEffect(() => {
     if (!pathname) return;
