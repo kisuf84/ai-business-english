@@ -11,6 +11,7 @@ import { useTheme } from "../../context/ThemeContext";
 import GlobalSearch from "./GlobalSearch";
 import { ENGLISH_TRAINING_RELEASED } from "../../lib/englishTrainingRelease";
 import { AUGUST_CONTENT_RELEASED } from "../../lib/augustContentRelease";
+import { AUG19_CONTENT_RELEASED } from "../../lib/aug19ContentRelease";
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -208,10 +209,14 @@ const navGroups: NavGroup[] = [
             gossipEnglishNavItem,
           ]
         : []),
-      businessIndustriesNavItem,
-      syntaxFlowNavItem,
-      levelTestNavItem,
-      listeningHubNavItem,
+      ...(AUG19_CONTENT_RELEASED
+        ? [
+            businessIndustriesNavItem,
+            syntaxFlowNavItem,
+            levelTestNavItem,
+            listeningHubNavItem,
+          ]
+        : []),
     ],
   },
   {

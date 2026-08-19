@@ -6,6 +6,7 @@ import { listEnglishTrainingLessons } from "../../../lib/englishTraining";
 import { TEACHER_RESOURCES } from "../../../lib/forTeachersResources";
 import { ENGLISH_TRAINING_RELEASED } from "../../../lib/englishTrainingRelease";
 import { AUGUST_CONTENT_RELEASED } from "../../../lib/augustContentRelease";
+import { AUG19_CONTENT_RELEASED } from "../../../lib/aug19ContentRelease";
 import { listSituationalEnglishItems } from "../../../lib/situationalEnglish";
 import { listListeningTrainingItems } from "../../../lib/listeningTraining";
 import { listReadingTrainingItems } from "../../../lib/readingTraining";
@@ -320,9 +321,9 @@ export async function GET(request: Request) {
     }
   }
 
-  // 5. Aug 19 content-expansion libraries (release-gated in a later commit,
-  // same as the Aug 12 batch above was).
-  {
+  // 5. Aug 19 content-expansion libraries — own release gate, independent
+  // from the Aug 12 batch above and from English Training.
+  if (AUG19_CONTENT_RELEASED) {
     try {
       let businessCount = 0;
       for (const item of listBusinessIndustriesItems()) {
