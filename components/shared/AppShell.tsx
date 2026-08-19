@@ -160,12 +160,12 @@ const businessIndustriesNavItem: NavItem = {
 
 const syntaxFlowNavItem: NavItem = {
   href: "/syntax-flow",
-  label: "Syntax Flow",
+  label: "Syntaxflow",
   icon: SECTION_ICONS.syntaxFlow,
   children: [
-    { href: "/syntax-flow/espanol", label: "Español", icon: SECTION_ICONS.syntaxFlow, iconEmoji: "🇪🇸" },
-    { href: "/syntax-flow/francais", label: "Français", icon: SECTION_ICONS.syntaxFlow, iconEmoji: "🇫🇷" },
-    { href: "/syntax-flow/portugues", label: "Português", icon: SECTION_ICONS.syntaxFlow, iconEmoji: "🇧🇷" },
+    { href: "/syntax-flow/espanol", label: "Spanish", icon: SECTION_ICONS.syntaxFlow, iconEmoji: "🇪🇸" },
+    { href: "/syntax-flow/francais", label: "French", icon: SECTION_ICONS.syntaxFlow, iconEmoji: "🇫🇷" },
+    { href: "/syntax-flow/portugues", label: "Portuguese", icon: SECTION_ICONS.syntaxFlow, iconEmoji: "🇧🇷" },
   ],
 };
 

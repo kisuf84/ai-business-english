@@ -22,8 +22,8 @@ export default function SyntaxFlowLanguagePage({
 
   return (
     <CatalogPageShell
-      eyebrow="Syntax Flow"
-      title={`Syntax Flow · ${language.flag} ${language.label}`}
+      eyebrow="Syntaxflow"
+      title={`Syntaxflow · ${language.flag} ${language.label}`}
       description="100 drag-and-drop Word Order sentences per CEFR level (A1 to C1), 3 volumes each, for building English sentence-structure fluency."
     >
       <ContentCatalogSections

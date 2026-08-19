@@ -2,10 +2,16 @@ import { resolveCuratedFilePath, type ContentLibraryId } from "./contentLibrarie
 
 export type SyntaxFlowLanguage = "espanol" | "francais" | "portugues";
 
+/**
+ * Display labels are the English language names ("Spanish"/"French"/
+ * "Portuguese") per Brice's Aug 19 IA clarification — the `slug` values
+ * (espanol/francais/portugues) are unchanged internal route/content-library
+ * identifiers, kept stable rather than renamed along with the display copy.
+ */
 export const SYNTAX_FLOW_LANGUAGES: { slug: SyntaxFlowLanguage; label: string; flag: string }[] = [
-  { slug: "espanol", label: "Español", flag: "🇪🇸" },
-  { slug: "francais", label: "Français", flag: "🇫🇷" },
-  { slug: "portugues", label: "Português", flag: "🇧🇷" },
+  { slug: "espanol", label: "Spanish", flag: "🇪🇸" },
+  { slug: "francais", label: "French", flag: "🇫🇷" },
+  { slug: "portugues", label: "Portuguese", flag: "🇧🇷" },
 ];
 
 export type SyntaxFlowLevel = "A1" | "A2" | "B1" | "B2" | "C1";
