@@ -4,8 +4,24 @@ import path from "path";
 /**
  * Shared plumbing for the August content expansion (Situational English,
  * Listening Training, Reading Training, Bilingual Compendium, Lexipro,
- * Lexica, Biz Compendium, Gossip English). English Training's own content
- * route/lib module is untouched and does not use this file.
+ * Lexica, Biz Compendium, Gossip English) plus the Aug 19 batch (Business
+ * Industries, Syntax Flow, Level Test, Listening Hub). English Training's
+ * own content route/lib module is untouched and does not use this file.
+ *
+ * Aug 19 IA (audited 108 files, no code-model type change needed beyond
+ * this union — same curated-item/resolveCuratedFilePath shape as every
+ * other library here):
+ * - "business-industries": one flat catalog, 61 items, no sub-grouping
+ *   (source has no category metadata beyond the industry name itself).
+ * - "syntax-flow-espanol" / "-francais" / "-portugues": three separate
+ *   libraries (not one shared "syntax-flow" id) so each language's 15
+ *   A1-C1 items (3 volumes/level) can have simple globally-unique slugs
+ *   scoped by language, exactly like Bilingual Compendium/Lexipro's
+ *   per-language nav children, but each language is itself a small
+ *   level-grouped catalog (same shape as Gossip English) rather than a
+ *   single document.
+ * - "level-test" / "listening-hub": two standalone single-item libraries,
+ *   same shape as Lexica/Biz Compendium (direct reader, no catalog page).
  */
 export type ContentLibraryId =
   | "situational-english"
@@ -15,7 +31,13 @@ export type ContentLibraryId =
   | "lexipro"
   | "lexica"
   | "biz-compendium"
-  | "gossip-english";
+  | "gossip-english"
+  | "business-industries"
+  | "syntax-flow-espanol"
+  | "syntax-flow-francais"
+  | "syntax-flow-portugues"
+  | "level-test"
+  | "listening-hub";
 
 const CONTENT_LIBRARY_ROOT = path.join(process.cwd(), "content-library");
 
