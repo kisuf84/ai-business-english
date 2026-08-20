@@ -1,5 +1,10 @@
 import CatalogPageShell from "../../../components/shared/CatalogPageShell";
-import { listBusinessIndustriesItems } from "../../../lib/businessIndustries";
+import {
+  listBusinessIndustriesItems,
+  BUSINESS_INDUSTRIES_HEADLINE,
+  BUSINESS_INDUSTRIES_DESCRIPTION,
+  BUSINESS_INDUSTRIES_CLOSING,
+} from "../../../lib/businessIndustries";
 import BusinessIndustriesCatalog from "./BusinessIndustriesCatalog";
 
 export default function BusinessIndustriesPage() {
@@ -9,7 +14,17 @@ export default function BusinessIndustriesPage() {
     <CatalogPageShell
       eyebrow="Business Industries"
       title="Business Industries"
-      description="61 industry-specific Business English tracks, each covering the vocabulary, expressions, and real-world scenarios of a distinct sector."
+      description={
+        <>
+          <strong className="text-[var(--ink)]">{BUSINESS_INDUSTRIES_HEADLINE}</strong>
+          <br />
+          <br />
+          {BUSINESS_INDUSTRIES_DESCRIPTION}
+          <br />
+          <br />
+          <strong className="text-[var(--ink)]">{BUSINESS_INDUSTRIES_CLOSING}</strong>
+        </>
+      }
     >
       <BusinessIndustriesCatalog
         items={items.map((item) => ({

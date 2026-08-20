@@ -50,17 +50,12 @@ const SECTION_ICONS = {
   lexica: "/icons/lexica.png",
   bizCompendium: "/icons/biz-compendium.png",
   gossipEnglish: "/icons/gossip-english.png",
-  // Aug 19 batch: no client icon package delivered yet for these sections,
-  // so reuse existing neutral system icons as placeholders (per Brice's
-  // instruction not to generate new artwork) until real ones arrive.
-  businessIndustries: "/icons/objects-column_10742815.png",
-  syntaxFlow: "/icons/tour-virtual_13794442.png",
-  levelTest: "/icons/settings-sliders_16861487.png",
-  listeningHub: "/icons/chess-clock_7378982.png",
-  // "comments" icon doubles as a literal speech-bubble motif for a spoken-
-  // discussion-topics tool — the one placeholder here that's a thematic fit
-  // rather than an arbitrary reuse.
-  speakingTopics: "/icons/comments-dollar_17919141.png",
+  // Aug 19 batch: client-supplied icon package delivered Aug 20.
+  businessIndustries: "/icons/business-industries.png",
+  syntaxFlow: "/icons/syntaxflow.png",
+  levelTest: "/icons/level-test.png",
+  listeningHub: "/icons/listening-hub.png",
+  speakingTopics: "/icons/speaking-topics.png",
 } as const;
 
 const englishTrainingNavItem: NavItem = {

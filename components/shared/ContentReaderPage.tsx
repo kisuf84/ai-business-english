@@ -15,7 +15,7 @@ export default function ContentReaderPage({
 }: {
   eyebrow: string;
   title: string;
-  description?: string;
+  description?: React.ReactNode;
   iframeSrc: string;
   backLinks: ContentReaderBackLink[];
 }) {

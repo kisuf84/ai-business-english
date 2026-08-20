@@ -14,6 +14,22 @@ export const SYNTAX_FLOW_LANGUAGES: { slug: SyntaxFlowLanguage; label: string; f
   { slug: "portugues", label: "Portuguese", flag: "🇧🇷" },
 ];
 
+/**
+ * Exact client-provided copy, verbatim from "TAGLINES.pdf" (delivered
+ * 2026-08-20 with the final Aug 19 icon package). Do not rewrite. Same
+ * generic copy across all three language catalog pages — the PDF text
+ * itself describes all three languages together, not per-language.
+ */
+export const SYNTAX_FLOW_HEADLINE = "Think in English. Build the Sentence. Master the Structure.";
+
+export const SYNTAX_FLOW_DESCRIPTION =
+  "Turn English grammar into a game with SyntaxFlow, an interactive word-order challenge designed for Spanish, French, and Portuguese speakers. Rebuild English sentences from their source-language equivalents, strengthen your understanding of English sentence structure, and learn with a Grammar Tip included in every exercise.";
+
+export const SYNTAX_FLOW_DESCRIPTION_2 =
+  "With 4,500 exercises—1,500 for Spanish speakers, 1,500 for French speakers, and 1,500 for Portuguese speakers—SyntaxFlow helps you move beyond translation and start thinking naturally in English.";
+
+export const SYNTAX_FLOW_CLOSING = "Reorder. Understand. Master English sentence structure.";
+
 export type SyntaxFlowLevel = "A1" | "A2" | "B1" | "B2" | "C1";
 
 export const SYNTAX_FLOW_LEVEL_ORDER: SyntaxFlowLevel[] = ["A1", "A2", "B1", "B2", "C1"];

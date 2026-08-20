@@ -6,6 +6,10 @@ import {
   listSyntaxFlowItems,
   SYNTAX_FLOW_LEVEL_ORDER,
   SYNTAX_FLOW_LANGUAGES,
+  SYNTAX_FLOW_HEADLINE,
+  SYNTAX_FLOW_DESCRIPTION,
+  SYNTAX_FLOW_DESCRIPTION_2,
+  SYNTAX_FLOW_CLOSING,
 } from "../../../../lib/syntaxFlow";
 
 export default function SyntaxFlowLanguagePage({
@@ -24,7 +28,20 @@ export default function SyntaxFlowLanguagePage({
     <CatalogPageShell
       eyebrow="SyntaxFlow"
       title={`SyntaxFlow · ${language.flag} ${language.label}`}
-      description="100 drag-and-drop Word Order sentences per CEFR level (A1 to C1), 3 volumes each, for building English sentence-structure fluency."
+      description={
+        <>
+          <strong className="text-[var(--ink)]">{SYNTAX_FLOW_HEADLINE}</strong>
+          <br />
+          <br />
+          {SYNTAX_FLOW_DESCRIPTION}
+          <br />
+          <br />
+          {SYNTAX_FLOW_DESCRIPTION_2}
+          <br />
+          <br />
+          <strong className="text-[var(--ink)]">{SYNTAX_FLOW_CLOSING}</strong>
+        </>
+      }
     >
       <ContentCatalogSections
         groups={SYNTAX_FLOW_LEVEL_ORDER.map((level) => ({

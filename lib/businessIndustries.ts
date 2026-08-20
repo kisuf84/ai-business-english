@@ -3,6 +3,21 @@ import { resolveCuratedFilePath } from "./contentLibraries";
 const LIBRARY = "business-industries" as const;
 const THUMBNAIL_ROOT = "/business-industries-thumbnails";
 
+/**
+ * Exact client-provided copy, verbatim from "TAGLINES.pdf" (delivered
+ * 2026-08-20 with the final Aug 19 icon package). Do not rewrite. Note the
+ * "100 practical modules" figure does not match the 61 industries actually
+ * imported below — reproduced as-is per explicit client instruction not to
+ * reconcile the marketing copy against the current file count.
+ */
+export const BUSINESS_INDUSTRIES_HEADLINE = "Master the Language of Your Industry.";
+
+export const BUSINESS_INDUSTRIES_DESCRIPTION =
+  "Develop the English you need to succeed in today’s global workplace with 100 practical modules for every industry. Each module combines relevant industry-focused content with 10 auto-graded MCQs designed to test your understanding, reinforce key concepts, and build confidence in professional communication.";
+
+export const BUSINESS_INDUSTRIES_CLOSING =
+  "Learn your industry. Test your knowledge. Master Business English.";
+
 export type BusinessIndustriesItem = {
   id: string;
   slug: string;
