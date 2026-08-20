@@ -164,7 +164,7 @@ const businessIndustriesNavItem: NavItem = {
 
 const syntaxFlowNavItem: NavItem = {
   href: "/syntax-flow",
-  label: "Syntaxflow",
+  label: "SyntaxFlow",
   icon: SECTION_ICONS.syntaxFlow,
   children: [
     { href: "/syntax-flow/espanol", label: "Spanish", icon: SECTION_ICONS.syntaxFlow, iconEmoji: "🇪🇸" },
@@ -203,9 +203,17 @@ const navGroups: NavGroup[] = [
   {
     label: "Library",
     items: [
-      { href: "/lessons", label: "Lesson library", icon: "/icons/books-medical_9856367.png" },
+      // Client-requested top order (Aug 20): Your Lessons, Level Test,
+      // Premium Courses, Business Industries, SyntaxFlow, Listening Hub,
+      // Gossip English — then everything else in its prior relative order,
+      // with For Teachers pinned last.
+      { href: "/lessons", label: "Your Lessons", icon: "/icons/books-medical_9856367.png" },
+      ...(AUG19_CONTENT_RELEASED ? [levelTestNavItem] : []),
       { href: "/premium-classes", label: "Premium Courses", icon: "/icons/digital-certificate_19008425.png" },
-      { href: "/for-teachers", label: "For Teachers", icon: "/icons/chalkboard-user_10489812.png" },
+      ...(AUG19_CONTENT_RELEASED
+        ? [businessIndustriesNavItem, syntaxFlowNavItem, listeningHubNavItem]
+        : []),
+      ...(AUGUST_CONTENT_RELEASED ? [gossipEnglishNavItem] : []),
       ...(ENGLISH_TRAINING_RELEASED ? [englishTrainingNavItem] : []),
       ...(AUGUST_CONTENT_RELEASED
         ? [
@@ -216,18 +224,10 @@ const navGroups: NavGroup[] = [
             lexiproNavItem,
             lexicaNavItem,
             bizCompendiumNavItem,
-            gossipEnglishNavItem,
           ]
         : []),
-      ...(AUG19_CONTENT_RELEASED
-        ? [
-            businessIndustriesNavItem,
-            syntaxFlowNavItem,
-            levelTestNavItem,
-            listeningHubNavItem,
-            speakingTopicsNavItem,
-          ]
-        : []),
+      ...(AUG19_CONTENT_RELEASED ? [speakingTopicsNavItem] : []),
+      { href: "/for-teachers", label: "For Teachers", icon: "/icons/chalkboard-user_10489812.png" },
     ],
   },
   {

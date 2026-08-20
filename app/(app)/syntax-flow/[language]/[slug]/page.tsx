@@ -23,7 +23,7 @@ export default function SyntaxFlowLessonPage({
 
   return (
     <ContentReaderPage
-      eyebrow="Syntaxflow"
+      eyebrow="SyntaxFlow"
       title={`${language.flag} ${language.label} · ${item.level} · ${item.title}`}
       iframeSrc={`/content/syntax-flow-${params.language}/${item.slug}`}
       backLinks={[{ href: `/syntax-flow/${params.language}`, label: `All ${language.label}` }]}

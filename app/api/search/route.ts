@@ -392,7 +392,7 @@ export async function GET(request: Request) {
           if (matches(query, item.title, item.level, language.label, `Volume ${item.volume}`)) {
             results.push({
               type: "syntax-flow",
-              typeLabel: "Syntaxflow",
+              typeLabel: "SyntaxFlow",
               title: item.title,
               subtitle: `${language.label} · ${item.level}`,
               href: `/syntax-flow/${language.slug}/${item.slug}`,
@@ -427,7 +427,7 @@ export async function GET(request: Request) {
 
           results.push({
             type: "syntax-flow",
-            typeLabel: "Syntaxflow",
+            typeLabel: "SyntaxFlow",
             title: item.title,
             subtitle: `${language.label} · ${item.level}`,
             href: `/syntax-flow/${language.slug}/${item.slug}`,
