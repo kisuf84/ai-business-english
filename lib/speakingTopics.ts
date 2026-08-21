@@ -1,7 +1,3 @@
-import { resolveCuratedFilePath } from "./contentLibraries";
-
-const LIBRARY = "speaking-topics" as const;
-
 export type SpeakingTopicsItem = {
   id: string;
   slug: string;
@@ -32,8 +28,4 @@ export const SPEAKING_TOPICS_CLOSING =
 
 export function getSpeakingTopicsItem(): SpeakingTopicsItem {
   return ITEM;
-}
-
-export async function getSpeakingTopicsFilePath(slug: string): Promise<string | null> {
-  return resolveCuratedFilePath(LIBRARY, ITEMS, slug);
 }

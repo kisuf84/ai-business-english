@@ -1,7 +1,3 @@
-import { resolveCuratedFilePath } from "./contentLibraries";
-
-const LIBRARY = "lexica" as const;
-
 export type LexicaItem = {
   id: string;
   slug: string;
@@ -20,8 +16,4 @@ const ITEMS: LexicaItem[] = [ITEM];
 
 export function getLexicaItem(): LexicaItem {
   return ITEM;
-}
-
-export async function getLexicaFilePath(slug: string): Promise<string | null> {
-  return resolveCuratedFilePath(LIBRARY, ITEMS, slug);
 }

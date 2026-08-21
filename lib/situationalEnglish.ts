@@ -1,6 +1,3 @@
-import { resolveCuratedFilePath } from "./contentLibraries";
-
-const LIBRARY = "situational-english" as const;
 const THUMBNAIL_ROOT = "/situational-english-thumbnails";
 
 export type SituationalEnglishItem = {
@@ -34,8 +31,4 @@ export function listSituationalEnglishItems(): SituationalEnglishItem[] {
 
 export function getSituationalEnglishItem(slug: string): SituationalEnglishItem | null {
   return ITEMS.find((item) => item.slug === slug) ?? null;
-}
-
-export async function getSituationalEnglishFilePath(slug: string): Promise<string | null> {
-  return resolveCuratedFilePath(LIBRARY, ITEMS, slug);
 }

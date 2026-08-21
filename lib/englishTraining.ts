@@ -1,12 +1,3 @@
-import { promises as fs } from "fs";
-import path from "path";
-
-const ENGLISH_TRAINING_CONTENT_ROOT = path.join(
-  process.cwd(),
-  "english-training-content",
-  "lessons"
-);
-
 export type EnglishTrainingCategory =
   | "General English Training"
   | "Business English Training"
@@ -123,24 +114,4 @@ export function getEnglishTrainingCategoryFromSlug(
 
 export function getEnglishTrainingLesson(slug: string): EnglishTrainingLesson | null {
   return LESSONS.find((lesson) => lesson.slug === slug) ?? null;
-}
-
-/**
- * Resolves a lesson slug to its content file path on disk. Only slugs present
- * in the curated LESSONS table above are ever looked up, so this cannot be
- * used to traverse to an arbitrary filesystem path.
- */
-export async function getEnglishTrainingLessonFilePath(slug: string) {
-  const lesson = getEnglishTrainingLesson(slug);
-  if (!lesson) return null;
-
-  const filePath = path.join(ENGLISH_TRAINING_CONTENT_ROOT, `${lesson.slug}.html`);
-
-  try {
-    await fs.access(filePath);
-  } catch {
-    return null;
-  }
-
-  return { lesson, filePath };
 }

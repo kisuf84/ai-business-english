@@ -1,6 +1,3 @@
-import { resolveCuratedFilePath } from "./contentLibraries";
-
-const LIBRARY = "reading-training" as const;
 const THUMBNAIL_ROOT = "/reading-training-thumbnails";
 
 export type ReadingTrainingLevel = "A1" | "A2" | "B1" | "B2" | "C1";
@@ -44,8 +41,4 @@ export function listReadingTrainingItems(): ReadingTrainingItem[] {
 
 export function getReadingTrainingItem(slug: string): ReadingTrainingItem | null {
   return ITEMS.find((item) => item.slug === slug) ?? null;
-}
-
-export async function getReadingTrainingFilePath(slug: string): Promise<string | null> {
-  return resolveCuratedFilePath(LIBRARY, ITEMS, slug);
 }

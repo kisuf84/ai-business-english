@@ -1,7 +1,3 @@
-import { resolveCuratedFilePath } from "./contentLibraries";
-
-const LIBRARY = "biz-compendium" as const;
-
 export type BizCompendiumItem = {
   id: string;
   slug: string;
@@ -20,8 +16,4 @@ const ITEMS: BizCompendiumItem[] = [ITEM];
 
 export function getBizCompendiumItem(): BizCompendiumItem {
   return ITEM;
-}
-
-export async function getBizCompendiumFilePath(slug: string): Promise<string | null> {
-  return resolveCuratedFilePath(LIBRARY, ITEMS, slug);
 }

@@ -1,7 +1,3 @@
-import { resolveCuratedFilePath } from "./contentLibraries";
-
-const LIBRARY = "listening-hub" as const;
-
 export type ListeningHubItem = {
   id: string;
   slug: string;
@@ -32,8 +28,4 @@ export const LISTENING_HUB_CLOSING =
 
 export function getListeningHubItem(): ListeningHubItem {
   return ITEM;
-}
-
-export async function getListeningHubFilePath(slug: string): Promise<string | null> {
-  return resolveCuratedFilePath(LIBRARY, ITEMS, slug);
 }

@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import { NextResponse } from "next/server";
-import { getEnglishTrainingLessonFilePath } from "../../../lib/englishTraining";
+import { getEnglishTrainingLessonFilePath } from "../../../lib/englishTraining.files";
 
 type EnglishTrainingContentRouteProps = {
   params: {

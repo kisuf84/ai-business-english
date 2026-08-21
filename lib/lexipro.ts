@@ -1,7 +1,3 @@
-import { resolveCuratedFilePath } from "./contentLibraries";
-
-const LIBRARY = "lexipro" as const;
-
 export type LexiproLanguage = "espanol" | "francais" | "portugues";
 
 export type LexiproItem = {
@@ -24,8 +20,4 @@ export function listLexiproItems(): LexiproItem[] {
 
 export function getLexiproItem(slug: string): LexiproItem | null {
   return ITEMS.find((item) => item.slug === slug) ?? null;
-}
-
-export async function getLexiproFilePath(slug: string): Promise<string | null> {
-  return resolveCuratedFilePath(LIBRARY, ITEMS, slug);
 }

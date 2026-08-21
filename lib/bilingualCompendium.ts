@@ -1,7 +1,3 @@
-import { resolveCuratedFilePath } from "./contentLibraries";
-
-const LIBRARY = "bilingual-compendium" as const;
-
 export type BilingualCompendiumLanguage = "espanol" | "francais" | "portugues";
 
 export type BilingualCompendiumItem = {
@@ -24,8 +20,4 @@ export function listBilingualCompendiumItems(): BilingualCompendiumItem[] {
 
 export function getBilingualCompendiumItem(slug: string): BilingualCompendiumItem | null {
   return ITEMS.find((item) => item.slug === slug) ?? null;
-}
-
-export async function getBilingualCompendiumFilePath(slug: string): Promise<string | null> {
-  return resolveCuratedFilePath(LIBRARY, ITEMS, slug);
 }

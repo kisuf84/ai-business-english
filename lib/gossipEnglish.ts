@@ -1,6 +1,3 @@
-import { resolveCuratedFilePath } from "./contentLibraries";
-
-const LIBRARY = "gossip-english" as const;
 const THUMBNAIL_ROOT = "/gossip-english-thumbnails";
 
 export type GossipEnglishLevel = "A1" | "A2" | "B1" | "B2" | "C1";
@@ -78,8 +75,4 @@ export function listGossipEnglishItems(): GossipEnglishItem[] {
 
 export function getGossipEnglishItem(slug: string): GossipEnglishItem | null {
   return ITEMS.find((item) => item.slug === slug) ?? null;
-}
-
-export async function getGossipEnglishFilePath(slug: string): Promise<string | null> {
-  return resolveCuratedFilePath(LIBRARY, ITEMS, slug);
 }

@@ -1,6 +1,3 @@
-import { resolveCuratedFilePath } from "./contentLibraries";
-
-const LIBRARY = "business-industries" as const;
 const THUMBNAIL_ROOT = "/business-industries-thumbnails";
 
 /**
@@ -108,8 +105,4 @@ export function listBusinessIndustriesItems(): BusinessIndustriesItem[] {
 
 export function getBusinessIndustriesItem(slug: string): BusinessIndustriesItem | null {
   return ITEMS.find((item) => item.slug === slug) ?? null;
-}
-
-export async function getBusinessIndustriesFilePath(slug: string): Promise<string | null> {
-  return resolveCuratedFilePath(LIBRARY, ITEMS, slug);
 }

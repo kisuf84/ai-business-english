@@ -1,19 +1,19 @@
 import { promises as fs } from "fs";
 import { NextResponse } from "next/server";
 import type { ContentLibraryId } from "../../../../lib/contentLibraries";
-import { getSituationalEnglishFilePath } from "../../../../lib/situationalEnglish";
-import { getListeningTrainingFilePath } from "../../../../lib/listeningTraining";
-import { getReadingTrainingFilePath } from "../../../../lib/readingTraining";
-import { getBilingualCompendiumFilePath } from "../../../../lib/bilingualCompendium";
-import { getLexiproFilePath } from "../../../../lib/lexipro";
-import { getLexicaFilePath } from "../../../../lib/lexica";
-import { getBizCompendiumFilePath } from "../../../../lib/bizCompendium";
-import { getGossipEnglishFilePath } from "../../../../lib/gossipEnglish";
-import { getBusinessIndustriesFilePath } from "../../../../lib/businessIndustries";
-import { getSyntaxFlowFilePath } from "../../../../lib/syntaxFlow";
-import { getLevelTestFilePath } from "../../../../lib/levelTest";
-import { getListeningHubFilePath } from "../../../../lib/listeningHub";
-import { getSpeakingTopicsFilePath } from "../../../../lib/speakingTopics";
+import { getSituationalEnglishFilePath } from "../../../../lib/situationalEnglish.files";
+import { getListeningTrainingFilePath } from "../../../../lib/listeningTraining.files";
+import { getReadingTrainingFilePath } from "../../../../lib/readingTraining.files";
+import { getBilingualCompendiumFilePath } from "../../../../lib/bilingualCompendium.files";
+import { getLexiproFilePath } from "../../../../lib/lexipro.files";
+import { getLexicaFilePath } from "../../../../lib/lexica.files";
+import { getBizCompendiumFilePath } from "../../../../lib/bizCompendium.files";
+import { getGossipEnglishFilePath } from "../../../../lib/gossipEnglish.files";
+import { getBusinessIndustriesFilePath } from "../../../../lib/businessIndustries.files";
+import { getSyntaxFlowFilePath } from "../../../../lib/syntaxFlow.files";
+import { getLevelTestFilePath } from "../../../../lib/levelTest.files";
+import { getListeningHubFilePath } from "../../../../lib/listeningHub.files";
+import { getSpeakingTopicsFilePath } from "../../../../lib/speakingTopics.files";
 
 type ContentRouteProps = {
   params: {

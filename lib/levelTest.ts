@@ -1,7 +1,3 @@
-import { resolveCuratedFilePath } from "./contentLibraries";
-
-const LIBRARY = "level-test" as const;
-
 export type LevelTestItem = {
   id: string;
   slug: string;
@@ -32,8 +28,4 @@ export const LEVEL_TEST_CLOSING =
 
 export function getLevelTestItem(): LevelTestItem {
   return ITEM;
-}
-
-export async function getLevelTestFilePath(slug: string): Promise<string | null> {
-  return resolveCuratedFilePath(LIBRARY, ITEMS, slug);
 }

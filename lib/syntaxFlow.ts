@@ -1,5 +1,3 @@
-import { resolveCuratedFilePath, type ContentLibraryId } from "./contentLibraries";
-
 export type SyntaxFlowLanguage = "espanol" | "francais" | "portugues";
 
 /**
@@ -45,12 +43,6 @@ export type SyntaxFlowItem = {
 };
 
 type Seed = Omit<SyntaxFlowItem, "thumbnailUrl">;
-
-const LIBRARY_BY_LANGUAGE: Record<SyntaxFlowLanguage, ContentLibraryId> = {
-  espanol: "syntax-flow-espanol",
-  francais: "syntax-flow-francais",
-  portugues: "syntax-flow-portugues",
-};
 
 const THUMBNAIL_ROOT_BY_LANGUAGE: Record<SyntaxFlowLanguage, string> = {
   espanol: "/syntax-flow-thumbnails/espanol",
@@ -103,11 +95,4 @@ export function listSyntaxFlowItems(language: SyntaxFlowLanguage): SyntaxFlowIte
 
 export function getSyntaxFlowItem(language: SyntaxFlowLanguage, slug: string): SyntaxFlowItem | null {
   return ITEMS_BY_LANGUAGE[language].find((item) => item.slug === slug) ?? null;
-}
-
-export async function getSyntaxFlowFilePath(
-  language: SyntaxFlowLanguage,
-  slug: string
-): Promise<string | null> {
-  return resolveCuratedFilePath(LIBRARY_BY_LANGUAGE[language], ITEMS_BY_LANGUAGE[language], slug);
 }
