@@ -12,15 +12,20 @@
  * from embedded script data (the actual sentences), while discarding
  * base64 image data, CSS, and JS/code/URL noise.
  *
+ * Output stores ORIGINAL chunks only (no precomputed normalized copy —
+ * that's built once at runtime module-init instead, see
+ * app/api/search/route.ts) to keep this artifact small. Plain .mjs (not
+ * .ts) so it runs with plain `node`, matching the rest of scripts/ and
+ * requiring no tsconfig changes to execute.
+ *
  * Does NOT modify any source HTML. Not part of the app runtime — run
- * manually (`node scripts/buildSyntaxFlowSearchIndex.ts`) when Syntaxflow
+ * manually (`node scripts/buildSyntaxFlowSearchIndex.mjs`) when Syntaxflow
  * content changes. Output is a committed static JSON artifact loaded once
  * by the search route at module-init (no runtime HTML parsing).
  */
 import { promises as fs } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { normalizeSearchText } from "../lib/textNormalize.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -31,7 +36,7 @@ const SYNTAX_FLOW_LIBRARIES = [
   "syntax-flow-espanol",
   "syntax-flow-francais",
   "syntax-flow-portugues",
-] as const;
+];
 
 const BASE64_RE = /data:[a-zA-Z0-9/+.-]+;base64,[A-Za-z0-9+/=]+/g;
 const STYLE_RE = /<style\b[^>]*>[\s\S]*?<\/style>/gi;
@@ -43,14 +48,7 @@ const STRING_LITERAL_RE = /"((?:[^"\\]|\\.){4,2000})"|'((?:[^'\\]|\\.){4,2000})'
 const CODE_NOISE_RE = /[<>{}]|function|=>|px;|\$\{/;
 const URL_OR_MARKUP_START_RE = /^(https?:|\/|#|data:|rgba?\()/;
 
-type IndexRecord = {
-  library: string;
-  slug: string;
-  chunks: string[];
-  normalizedChunks: string[];
-};
-
-function isProseLikeLiteral(raw: string): boolean {
+function isProseLikeLiteral(raw) {
   const s = raw.trim();
   if (!s) return false;
   const words = s.split(/\s+/);
@@ -61,19 +59,19 @@ function isProseLikeLiteral(raw: string): boolean {
   return true;
 }
 
-function extractChunks(html: string): string[] {
+function extractChunks(html) {
   const noBase64 = html.replace(BASE64_RE, "");
   const noStyle = noBase64.replace(STYLE_RE, "");
 
-  const scriptBlocks: string[] = [];
+  const scriptBlocks = [];
   const scriptScan = new RegExp(SCRIPT_RE);
-  let scriptMatch: RegExpExecArray | null;
+  let scriptMatch;
   while ((scriptMatch = scriptScan.exec(noStyle))) {
     scriptBlocks.push(scriptMatch[1]);
   }
   const nonScript = noStyle.replace(SCRIPT_RE, " ");
 
-  const chunks: string[] = [];
+  const chunks = [];
 
   // Leftover static DOM text (mostly generic template copy for this
   // library, but included for generality — matches the investigation's
@@ -85,10 +83,10 @@ function extractChunks(html: string): string[] {
 
   // Human-readable literals from embedded lesson data (the actual sentence
   // content for Syntaxflow).
-  const seen = new Set<string>();
+  const seen = new Set();
   for (const block of scriptBlocks) {
     const literalScan = new RegExp(STRING_LITERAL_RE);
-    let literalMatch: RegExpExecArray | null;
+    let literalMatch;
     while ((literalMatch = literalScan.exec(block))) {
       const raw = (literalMatch[1] ?? literalMatch[2] ?? "").trim();
       if (!raw || seen.has(raw)) continue;
@@ -101,24 +99,23 @@ function extractChunks(html: string): string[] {
   return chunks;
 }
 
-async function buildLibraryRecords(library: string): Promise<IndexRecord[]> {
+async function buildLibraryRecords(library) {
   const dir = path.join(CONTENT_ROOT, library);
   const entries = await fs.readdir(dir);
   const htmlFiles = entries.filter((f) => f.endsWith(".html")).sort();
 
-  const records: IndexRecord[] = [];
+  const records = [];
   for (const file of htmlFiles) {
     const slug = file.replace(/\.html$/, "");
     const html = await fs.readFile(path.join(dir, file), "utf-8");
     const chunks = extractChunks(html);
-    const normalizedChunks = chunks.map(normalizeSearchText);
-    records.push({ library, slug, chunks, normalizedChunks });
+    records.push({ library, slug, chunks });
   }
   return records;
 }
 
 async function main() {
-  const allRecords: IndexRecord[] = [];
+  const allRecords = [];
   for (const library of SYNTAX_FLOW_LIBRARIES) {
     const records = await buildLibraryRecords(library);
     allRecords.push(...records);

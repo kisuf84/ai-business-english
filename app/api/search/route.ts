@@ -28,6 +28,18 @@ import { getSpeakingTopicsItem } from "../../../lib/speakingTopics";
 import { normalizeSearchText } from "../../../lib/textNormalize";
 import syntaxFlowSearchIndex from "../../../lib/generated/syntaxFlowSearchIndex.json";
 
+/**
+ * The generated index stores ORIGINAL chunks only (see
+ * scripts/buildSyntaxFlowSearchIndex.mjs) to keep the committed artifact
+ * small — normalizing a second full copy at build time roughly doubled it.
+ * Instead, the normalized copy is built once here, at module init (i.e.
+ * once per warm serverless instance), not per chunk on every request and
+ * not stored in the JSON.
+ */
+const syntaxFlowNormalizedChunks: string[][] = syntaxFlowSearchIndex.records.map((record) =>
+  record.chunks.map(normalizeSearchText)
+);
+
 export type SearchResultType =
   | "lesson"
   | "premium-course"
@@ -407,8 +419,11 @@ export async function GET(request: Request) {
       // Spanish/French/Portuguese sentence text), not just curated
       // metadata. Skips anything the metadata loop above already matched.
       if (normalizedQuery) {
-        for (const record of syntaxFlowSearchIndex.records) {
+        for (let recordIndex = 0; recordIndex < syntaxFlowSearchIndex.records.length; recordIndex++) {
           if (syntaxFlowCount >= RESULTS_PER_SOURCE) break;
+
+          const record = syntaxFlowSearchIndex.records[recordIndex];
+          const normalizedChunks = syntaxFlowNormalizedChunks[recordIndex];
 
           const languageSlug = record.library.replace("syntax-flow-", "");
           if (!isSyntaxFlowLanguage(languageSlug)) continue;
@@ -416,9 +431,7 @@ export async function GET(request: Request) {
           const key = `${languageSlug}:${record.slug}`;
           if (syntaxFlowMatchedKeys.has(key)) continue;
 
-          const chunkIndex = record.normalizedChunks.findIndex((chunk) =>
-            chunk.includes(normalizedQuery)
-          );
+          const chunkIndex = normalizedChunks.findIndex((chunk) => chunk.includes(normalizedQuery));
           if (chunkIndex === -1) continue;
 
           const language = SYNTAX_FLOW_LANGUAGES.find((entry) => entry.slug === languageSlug);
@@ -433,7 +446,7 @@ export async function GET(request: Request) {
             href: `/syntax-flow/${language.slug}/${item.slug}`,
             excerpt: buildExcerpt(
               record.chunks[chunkIndex],
-              record.normalizedChunks[chunkIndex],
+              normalizedChunks[chunkIndex],
               normalizedQuery
             ),
           });
