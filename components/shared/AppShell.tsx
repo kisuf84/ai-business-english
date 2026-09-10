@@ -186,6 +186,42 @@ const speakingTopicsNavItem: NavItem = {
   icon: SECTION_ICONS.speakingTopics,
 };
 
+/**
+ * Langslate Apps: each entry is a gateway to its own product. For now,
+ * without external URLs or gating from the client, Corporate and Academy
+ * are non-broken placeholders and 365/Flow are internal routes serving the
+ * client-supplied HTML. Swapping any `href` here for an external URL later
+ * needs no structural change — just update the string (and, if it should
+ * open in a new tab, add a `target`/`rel` pair to NavLink).
+ */
+const langslateCorporateNavItem: NavItem = {
+  href: "/apps/corporate",
+  label: "Langslate Corporate",
+  icon: SECTION_ICONS.businessIndustries,
+  iconEmoji: "🏢",
+};
+
+const langslateAcademyNavItem: NavItem = {
+  href: "/apps/academy",
+  label: "Langslate Academy",
+  icon: SECTION_ICONS.englishTraining,
+  iconEmoji: "🎓",
+};
+
+const langslate365NavItem: NavItem = {
+  href: "/apps/365",
+  label: "Langslate 365",
+  icon: SECTION_ICONS.levelTest,
+  iconEmoji: "🗓️",
+};
+
+const langslateFlowNavItem: NavItem = {
+  href: "/apps/flow",
+  label: "Langslate Flow",
+  icon: SECTION_ICONS.syntaxFlow,
+  iconEmoji: "🎙️",
+};
+
 const navGroups: NavGroup[] = [
   {
     label: "Workspace",
@@ -226,6 +262,15 @@ const navGroups: NavGroup[] = [
     ],
   },
   {
+    label: "Langslate Apps",
+    items: [
+      langslateCorporateNavItem,
+      langslateAcademyNavItem,
+      langslate365NavItem,
+      langslateFlowNavItem,
+    ],
+  },
+  {
     label: "Account",
     items: [
       { href: "/pricing", label: "Pricing", icon: "/icons/comments-dollar_17919141.png" },
@@ -253,10 +298,23 @@ const SINGLE_SEGMENT_READER_PREFIXES = [
   "/bilingual-compendium",
   "/lexipro",
   "/business-industries",
+  // Langslate 365 / Flow: the landing page at the top level is a single
+  // immersive reader, and its one child route (the actual app/course) is
+  // reached the same way as any other single-segment reader below it.
+  "/apps/365",
+  "/apps/flow",
 ];
 
 /** Top-level routes that are themselves a single immersive reader (no catalog). */
-const TOP_LEVEL_READER_PATHS = ["/lexica", "/biz-compendium", "/level-test", "/listening-hub", "/speaking-topics"];
+const TOP_LEVEL_READER_PATHS = [
+  "/lexica",
+  "/biz-compendium",
+  "/level-test",
+  "/listening-hub",
+  "/speaking-topics",
+  "/apps/365",
+  "/apps/flow",
+];
 
 /**
  * Route prefixes whose reader is two segments deep (a catalog page sits at

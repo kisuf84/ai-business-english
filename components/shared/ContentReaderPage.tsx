@@ -12,12 +12,14 @@ export default function ContentReaderPage({
   description,
   iframeSrc,
   backLinks,
+  primaryAction,
 }: {
   eyebrow: string;
   title: string;
   description?: React.ReactNode;
   iframeSrc: string;
   backLinks: ContentReaderBackLink[];
+  primaryAction?: ContentReaderBackLink;
 }) {
   return (
     <section className="flex h-full min-h-0 w-full flex-col overflow-hidden">
@@ -36,6 +38,11 @@ export default function ContentReaderPage({
           ) : null}
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          {primaryAction ? (
+            <Link href={primaryAction.href} className="lumen-primary-action px-3 py-2 text-xs">
+              {primaryAction.label}
+            </Link>
+          ) : null}
           {backLinks.map((link) => (
             <Link key={link.href} href={link.href} className="lumen-secondary-action px-3 py-2 text-xs">
               {link.label}

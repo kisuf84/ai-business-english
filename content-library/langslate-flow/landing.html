@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Langslate Flow — Practice Real Conversations. Speak with Confidence.</title>
+<meta name="description" content="Practice real spoken English with Aria, your AI voice tutor. Shadow native sentences or hold free-flowing conversations across Social, Travel, and Business scenarios — with instant feedback on tone, fluency, grammar, and vocabulary.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================= TOKENS (shared with Langslate Corporate) ============================= */
+:root{
+  --ink:#0b1638; --ink-2:#0e1c46;
+  --on-ink-text:#ffffff; --on-ink-muted:rgba(255,255,255,.66); --on-ink-dim:rgba(255,255,255,.42);
+  --on-ink-border:rgba(255,255,255,.11); --on-ink-border-strong:rgba(255,255,255,.22);
+  --on-ink-surface:rgba(255,255,255,.045); --on-ink-surface-hover:rgba(255,255,255,.075);
+  --on-ink-orange:#ff9a4d;
+
+  --bg:#0e1c46; --bg-alt:#122353; --surface:#16295e; --surface-hover:#1c3170;
+  --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.20);
+  --text:#f5f6f8; --text-muted:rgba(245,246,248,.64); --text-dim:rgba(245,246,248,.42);
+  --nav-bg:rgba(11,22,56,.82);
+  --shadow-md:0 8px 24px rgba(0,0,0,.28);
+  --shadow-lg:0 24px 60px rgba(0,0,0,.5);
+
+  --blue:#4c7dff; --blue-lt:#8fadff; --blue-tint:rgba(76,125,255,.16); --blue-tint-border:rgba(76,125,255,.36);
+  --orange:#ff8a3d; --orange-lt:#ffb37a; --orange-tint:rgba(255,138,61,.16); --orange-tint-border:rgba(255,138,61,.38);
+  --emerald:#34c98a;
+
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:22px;
+  --f-serif:'Fraunces',Georgia,serif;
+  --f-sans:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --container:1200px; --nav-h:76px;
+}
+html[data-theme="light"]{
+  --bg:#f3f6fd; --bg-alt:#e9eefb; --surface:#ffffff; --surface-hover:#eef2fc;
+  --border:rgba(13,17,23,.09); --border-strong:rgba(13,17,23,.17);
+  --text:#0b1220; --text-muted:#4a5568; --text-dim:#8a93a3;
+  --nav-bg:rgba(243,246,253,.84);
+  --shadow-md:0 8px 24px rgba(16,24,40,.06);
+  --shadow-lg:0 24px 60px rgba(16,24,40,.10);
+  --blue:#2a4fe0; --blue-lt:#3f5fe6; --blue-tint:rgba(42,79,224,.08); --blue-tint-border:rgba(42,79,224,.24);
+  --orange:#dd6a15; --orange-lt:#b8560f; --orange-tint:rgba(221,106,21,.10); --orange-tint-border:rgba(221,106,21,.3);
+  --emerald:#1f8a5f;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}}
+body{margin:0;font-family:var(--f-sans);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.5;overflow-x:hidden;transition:background .35s ease,color .35s ease}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;background:none;border:none;color:inherit}
+input{font-family:inherit}
+ul{list-style:none;margin:0;padding:0}
+h1,h2,h3,h4,p{margin:0}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+section{position:relative}
+.container{max-width:var(--container);margin:0 auto;padding:0 28px}
+.ink{background:var(--ink);color:var(--on-ink-text)}
+.ink-2{background:var(--ink-2);color:var(--on-ink-text)}
+.bg-base{background:var(--bg)}
+.bg-alt{background:var(--bg-alt)}
+
+.icon{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:-.15em}
+.icon.i-sun{display:inline-block}
+.icon.i-moon{display:none}
+html[data-theme="light"] .icon.i-sun{display:none}
+html[data-theme="light"] .icon.i-moon{display:inline-block}
+
+/* ============================= TYPE UTILITIES ============================= */
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:16px;height:1.5px;background:var(--blue);display:inline-block}
+.ink .eyebrow,.ink-2 .eyebrow{color:var(--orange-lt)}
+.ink .eyebrow::before,.ink-2 .eyebrow::before{background:var(--orange-lt)}
+h2.h-serif{font-family:var(--f-serif);font-weight:600;font-size:clamp(1.9rem,3.4vw,2.9rem);line-height:1.12;letter-spacing:-.01em;color:var(--text)}
+.ink h2.h-serif,.ink-2 h2.h-serif{color:var(--on-ink-text)}
+.section-head{max-width:640px;margin-bottom:50px}
+.section-head p{margin-top:16px;font-size:1.05rem;line-height:1.65;color:var(--text-muted)}
+.ink .section-head p,.ink-2 .section-head p{color:var(--on-ink-muted)}
+.section-pad{padding:104px 0}
+@media(max-width:768px){.section-pad{padding:66px 0}.section-head{margin-bottom:36px}}
+
+/* ============================= BUTTONS ============================= */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--f-sans);font-weight:700;font-size:.92rem;padding:14px 26px;border-radius:99px;transition:transform .18s ease,box-shadow .18s ease,background .18s ease,color .18s ease,border-color .18s ease;white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--orange));color:#fff;box-shadow:0 10px 28px -6px rgba(255,138,61,.4)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 34px -6px rgba(255,138,61,.5)}
+.ink .btn-primary,.ink-2 .btn-primary{background:var(--on-ink-text);color:var(--ink);box-shadow:none}
+.ink .btn-primary:hover,.ink-2 .btn-primary:hover{box-shadow:var(--shadow-md)}
+.btn-outline{border:1.5px solid var(--border-strong);color:var(--text);background:transparent}
+.btn-outline:hover{border-color:var(--text);transform:translateY(-1px)}
+.ink .btn-outline,.ink-2 .btn-outline{border-color:var(--on-ink-border-strong);color:var(--on-ink-text)}
+.ink .btn-outline:hover,.ink-2 .btn-outline:hover{border-color:var(--on-ink-text)}
+.btn-orange{background:var(--orange);color:var(--ink)}
+.btn-orange:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(255,138,61,.35)}
+.btn-sm{padding:10px 18px;font-size:.82rem}
+.btn-block{width:100%}
+
+/* ============================= NAV ============================= */
+#nav{position:fixed;top:0;left:0;right:0;z-index:400;height:var(--nav-h);display:flex;align-items:center;transition:background .3s ease,border-color .3s ease}
+#nav .container{display:flex;align-items:center;justify-content:space-between;width:100%;gap:18px}
+#nav.solid{background:var(--nav-bg);backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--border)}
+#nav.at-top{border-bottom:1px solid transparent}
+.nav-logo{display:flex;align-items:center;gap:11px;background:none;border:none;cursor:pointer;padding:0}
+.orb-mark{width:36px;height:36px;border-radius:50%;position:relative;flex-shrink:0;background:conic-gradient(from 180deg,var(--blue),var(--orange),var(--blue));animation:orbit 7s linear infinite;box-shadow:0 0 0 3px var(--nav-mark-ring,transparent)}
+.orb-mark::after{content:'';position:absolute;inset:5px;border-radius:50%;background:var(--ink)}
+@keyframes orbit{to{transform:rotate(360deg)}}
+.nav-wordmark{font-family:var(--f-serif);font-weight:600;font-size:1.06rem;letter-spacing:-.005em;color:var(--text)}
+.nav-wordmark span{color:var(--orange)}
+#nav.at-top .nav-wordmark{color:#fff}
+#nav.at-top .nav-wordmark span{color:var(--orange-lt)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{font-size:.85rem;font-weight:600;color:var(--text-muted);padding:9px 13px;border-radius:99px;transition:color .18s,background .18s}
+.nav-links a:hover{color:var(--text);background:var(--surface-hover)}
+#nav.at-top .nav-links a{color:rgba(255,255,255,.72)}
+#nav.at-top .nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.theme-toggle{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);border:1px solid var(--border)}
+.theme-toggle:hover{color:var(--text);background:var(--surface-hover)}
+#nav.at-top .theme-toggle{color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.18)}
+#nav.at-top .theme-toggle:hover{color:#fff;background:rgba(255,255,255,.08)}
+.theme-toggle svg{width:15px;height:15px}
+.nav-loginbtn{font-size:.85rem;font-weight:700;color:var(--text);padding:9px 13px}
+#nav.at-top .nav-loginbtn{color:#fff}
+.nav-burger{display:none;width:38px;height:38px;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border-strong);color:var(--text)}
+#nav.at-top .nav-burger{border-color:rgba(255,255,255,.3);color:#fff}
+
+/* mobile menu */
+#mobile-menu{position:fixed;inset:0;z-index:500;background:var(--ink);transform:translateY(-100%);transition:transform .4s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;padding:22px 24px 32px;overflow-y:auto}
+#mobile-menu.open{transform:translateY(0)}
+.mm-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+.mm-links a{display:flex;align-items:center;justify-content:space-between;padding:16px 2px;border-bottom:1px solid var(--on-ink-border);font-family:var(--f-serif);font-size:1.4rem;color:var(--on-ink-text)}
+.mm-links a .icon{width:16px;height:16px;opacity:.5}
+.mm-actions{display:flex;flex-direction:column;gap:12px;margin-top:28px}
+.mm-theme{display:flex;align-items:center;gap:10px;margin-top:24px;color:var(--on-ink-muted);font-size:.85rem}
+.mm-theme button{border:1px solid var(--on-ink-border-strong);border-radius:9px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;color:var(--on-ink-text)}
+
+/* ============================= HERO (constant ink band) ============================= */
+#hero{background:var(--ink);color:var(--on-ink-text);padding:calc(var(--nav-h) + 56px) 0 90px;position:relative;overflow:hidden}
+#hero::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(55% 50% at 15% 0%, rgba(76,125,255,.26), transparent 60%),
+  radial-gradient(50% 45% at 100% 20%, rgba(255,138,61,.18), transparent 60%);
+  pointer-events:none}
+#hero::after{content:'';position:absolute;inset:0;opacity:.5;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size:26px 26px; mask-image:radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent 75%)}
+.hero-inner{position:relative;z-index:1;text-align:center;max-width:760px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8);border:1px solid var(--on-ink-border-strong);padding:8px 14px 8px 10px;border-radius:99px;margin-bottom:26px}
+.hero-badge i{width:6px;height:6px;border-radius:50%;background:var(--orange-lt);display:inline-block;box-shadow:0 0 0 3px rgba(255,138,61,.25)}
+#hero h1{font-family:var(--f-serif);font-weight:600;font-size:clamp(2.4rem,5vw,3.7rem);line-height:1.1;letter-spacing:-.015em;color:#fff}
+#hero h1 em{font-style:italic;font-weight:500;color:var(--on-ink-text)}
+#hero h1 .hl-orange{color:var(--on-ink-orange);font-style:normal}
+.hero-sub{margin-top:22px;font-size:1.1rem;line-height:1.62;color:rgba(255,255,255,.68);max-width:560px;margin-left:auto;margin-right:auto}
+.hero-ctas{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:34px;flex-wrap:wrap}
+
+/* ===== Voice orb — Flow's signature hero element ===== */
+.orb-wrap{position:relative;width:210px;height:210px;margin:56px auto 8px;z-index:1}
+.orb-ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 180deg,var(--blue),var(--orange),var(--blue));animation:spin 7s linear infinite}
+.orb-ring.r2{inset:-16px;opacity:.35;filter:blur(10px);animation:spin 10s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orb-core{position:absolute;inset:16px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 34px rgba(0,0,0,.4)}
+.orb-core svg{width:48px;height:48px;color:#fff}
+.orb-wrap.breathe .orb-core{animation:breathe 3.6s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+
+.hero-mock-row{position:relative;max-width:640px;margin:8px auto 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.mock-card{background:rgba(14,28,70,.7);backdrop-filter:blur(18px) saturate(140%);border:1px solid var(--on-ink-border-strong);border-radius:var(--r-lg);box-shadow:0 20px 50px rgba(0,0,0,.4);padding:16px 18px;text-align:left;flex:1;min-width:230px}
+.mock-label{display:flex;align-items:center;gap:7px;font-family:var(--f-mono);font-size:.63rem;letter-spacing:.08em;text-transform:uppercase;color:var(--on-ink-dim);margin-bottom:10px}
+.mock-label .dot{width:6px;height:6px;border-radius:50%;background:var(--orange-lt);box-shadow:0 0 0 3px rgba(255,138,61,.22)}
+.mock-transcript{font-family:var(--f-serif);font-style:italic;font-size:.98rem;line-height:1.5;color:#fff}
+.mock-wave{display:flex;align-items:center;gap:3px;height:20px;margin-top:12px}
+.mock-wave span{width:3px;border-radius:2px;background:linear-gradient(180deg,var(--blue),var(--orange));animation:wave 1.1s ease-in-out infinite}
+.mock-wave span:nth-child(2n){animation-delay:.14s}.mock-wave span:nth-child(3n){animation-delay:.28s}
+@keyframes wave{0%,100%{height:5px}50%{height:18px}}
+.mock-score-row{display:flex;align-items:center;gap:14px}
+.mock-score-num{font-family:var(--f-serif);font-size:2.2rem;font-weight:600;color:#fff}
+.mock-score-breakdown{display:flex;flex-direction:column;gap:5px}
+.mock-score-chip{font-size:.68rem;color:var(--on-ink-muted);display:flex;align-items:center;gap:6px}
+.mock-score-chip b{color:#fff;font-weight:700}
+@media(max-width:600px){.hero-mock-row{margin-top:24px}.orb-wrap{width:170px;height:170px;margin:36px auto 8px}}
+
+/* stat strip */
+#stat-strip{background:var(--bg-alt);border-bottom:1px solid var(--border)}
+.stat-strip-row{display:grid;grid-template-columns:repeat(5,1fr);padding:36px 0}
+.stat-item{text-align:center;border-right:1px solid var(--border)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:var(--f-mono);font-weight:600;font-size:1.6rem;color:var(--blue);letter-spacing:-.02em}
+.stat-label{margin-top:5px;font-size:.7rem;color:var(--text-muted)}
+
+/* ============================= VALUE PROP ============================= */
+.vp-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:60px;align-items:center}
+.vp-copy p{font-size:1.02rem;line-height:1.72;color:var(--text-muted);margin-top:16px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.compare-col{border-radius:var(--r-lg);padding:26px 22px}
+.compare-col.trad{background:var(--surface);border:1px solid var(--border)}
+.compare-col.flow{background:var(--ink);color:var(--on-ink-text)}
+.compare-head{font-size:.76rem;font-weight:700;letter-spacing:.03em;margin-bottom:20px}
+.compare-col.trad .compare-head{color:var(--text-dim)}
+.compare-col.flow .compare-head{color:var(--orange-lt)}
+.compare-step{padding:13px 0;border-bottom:1px dashed var(--border-strong);font-size:.88rem;color:var(--text)}
+.compare-col.flow .compare-step{border-bottom:1px dashed var(--on-ink-border);color:var(--on-ink-muted)}
+.compare-step:last-child{border-bottom:none;font-weight:700}
+.compare-col.flow .compare-step:last-child{color:#fff}
+.compare-arrow{text-align:center;color:var(--text-dim);font-size:.75rem;padding:2px 0}
+.compare-col.flow .compare-arrow{color:rgba(255,255,255,.28)}
+
+/* ============================= MODES ============================= */
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.mode-card{position:relative;overflow:hidden;padding:34px 30px;border-radius:var(--r-xl);border:1px solid var(--border);background:var(--surface);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.mode-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.mode-card .glow{position:absolute;width:220px;height:220px;border-radius:50%;filter:blur(70px);opacity:.22;top:-70px;right:-70px;pointer-events:none}
+.mode-card.m-shadow{border-color:var(--blue-tint-border)}
+.mode-card.m-shadow .glow{background:var(--blue)}
+.mode-card.m-flow{border-color:var(--orange-tint-border)}
+.mode-card.m-flow .glow{background:var(--orange)}
+.mode-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.mode-card.m-shadow .mode-icon{background:var(--blue-tint);color:var(--blue)}
+.mode-card.m-flow .mode-icon{background:var(--orange-tint);color:var(--orange)}
+.mode-icon svg{width:24px;height:24px}
+.mode-card h3{font-family:var(--f-serif);font-size:1.5rem;font-weight:600;color:var(--text);margin-bottom:10px}
+.mode-card p{color:var(--text-muted);font-size:.92rem;line-height:1.6;margin-bottom:18px}
+.mode-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.mode-tags span{font-size:.7rem;font-weight:700;padding:5px 12px;border-radius:99px;background:var(--bg-alt);color:var(--text-muted)}
+.mode-cta{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.85rem;color:var(--text)}
+.mode-cta .icon{width:14px;height:14px;transition:transform .18s ease}
+.mode-card:hover .mode-cta .icon{transform:translateX(4px)}
+
+/* ============================= SCENARIO TRACKS ============================= */
+.track-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.track-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--r-xl);padding:28px 24px;transition:all .2s ease}
+.track-card:hover{border-color:var(--track-color,var(--blue));transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.track-icon{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;background:color-mix(in srgb, var(--track-color,var(--blue)) 16%, transparent);color:var(--track-color,var(--blue))}
+.track-icon svg{width:22px;height:22px}
+.track-card h4{font-family:var(--f-serif);font-size:1.25rem;font-weight:600;color:var(--text)}
+.track-card p{margin-top:8px;font-size:.86rem;line-height:1.55;color:var(--text-muted)}
+.track-example{margin-top:16px;padding:12px 14px;border-radius:10px;background:var(--bg-alt);font-size:.8rem;font-style:italic;color:var(--text-muted);border-left:2px solid var(--track-color,var(--blue))}
+.track-count{margin-top:16px;font-family:var(--f-mono);font-size:.7rem;color:var(--track-color,var(--blue));font-weight:600}
+
+/* ============================= HOW IT WORKS ============================= */
+.steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.step-item{padding:0 28px 0 0;position:relative}
+.step-item:not(:last-child)::after{content:'';position:absolute;top:26px;right:0;width:calc(100% - 60px);height:1px;background:var(--border)}
+.step-num{font-family:var(--f-mono);font-size:.85rem;font-weight:700;color:var(--blue);margin-bottom:20px;letter-spacing:.04em}
+.step-item h3{font-family:var(--f-serif);font-size:1.2rem;font-weight:600;color:var(--text);line-height:1.3}
+.step-item p{margin-top:10px;font-size:.88rem;line-height:1.6;color:var(--text-muted)}
+@media(max-width:900px){.steps-row{grid-template-columns:1fr;gap:36px}.step-item:not(:last-child)::after{display:none}}
+
+/* ============================= FEEDBACK (constant ink band) ============================= */
+#feedback{background:var(--ink);color:var(--on-ink-text);overflow:hidden}
+#feedback::before{content:'';position:absolute;inset:0;background:radial-gradient(50% 60% at 90% 10%, rgba(76,125,255,.18), transparent 60%);pointer-events:none}
+.fb-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.fb-feat-list{margin-top:30px;display:flex;flex-direction:column;gap:2px}
+.fb-feat{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--on-ink-border)}
+.fb-feat:last-child{border-bottom:none}
+.fb-feat-icon{width:38px;height:38px;border-radius:10px;background:var(--blue-tint);border:1px solid var(--blue-tint-border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fb-feat-icon .icon{width:17px;height:17px;color:var(--blue-lt)}
+.fb-feat h4{font-size:.95rem;font-weight:700}
+.fb-feat p{margin-top:4px;font-size:.83rem;color:var(--on-ink-muted);line-height:1.5}
+.privacy-note{margin-top:28px;display:flex;gap:12px;align-items:flex-start;padding:16px 18px;border-radius:12px;background:var(--on-ink-surface);border:1px solid var(--on-ink-border)}
+.privacy-note .icon{width:19px;height:19px;color:var(--orange-lt);flex-shrink:0;margin-top:1px}
+.privacy-note p{font-size:.85rem;color:var(--on-ink-muted);line-height:1.55}
+.privacy-note b{color:#fff}
+
+.report-card{background:rgba(255,255,255,.04);border:1px solid var(--on-ink-border-strong);border-radius:var(--r-xl);padding:28px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.report-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.report-title{font-weight:700;font-size:.95rem}
+.report-sub{font-size:.72rem;color:var(--on-ink-dim);margin-top:2px}
+.report-overall{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--on-ink-border)}
+.report-overall .score{font-family:var(--f-serif);font-size:2.6rem;font-weight:600;color:#fff}
+.report-overall .label b{display:block;font-size:.9rem}
+.report-overall .label span{font-size:.72rem;color:var(--on-ink-dim)}
+.meter-row{margin-bottom:14px}
+.meter-row:last-child{margin-bottom:0}
+.meter-top{display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:7px}
+.meter-top b{font-weight:700}
+.meter-top span{font-family:var(--f-mono);color:var(--on-ink-muted)}
+.meter-bar{height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.meter-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--orange-lt));width:0%;transition:width 1.2s cubic-bezier(.16,1,.3,1)}
+
+/* ============================= PRICING ============================= */
+.price-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:34px 30px;position:relative;display:flex;flex-direction:column}
+.price-card.hi{border-color:var(--blue);box-shadow:0 20px 50px rgba(76,125,255,.16)}
+.price-card.deal{border-color:var(--orange)}
+.price-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-family:var(--f-mono);font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--blue);color:#fff;padding:6px 14px;border-radius:99px;white-space:nowrap}
+.price-badge.orange{left:auto;right:26px;transform:none;background:var(--orange);color:var(--ink)}
+.price-plan-name{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--text-dim)}
+.price-amount-row{display:flex;align-items:flex-start;margin-top:16px;line-height:1}
+.price-currency{font-family:var(--f-serif);font-size:1.6rem;font-weight:600;color:var(--text);margin-top:6px}
+.price-num{font-family:var(--f-serif);font-size:3.1rem;font-weight:600;color:var(--text);letter-spacing:-.02em}
+.price-per{font-size:.85rem;color:var(--text-muted);margin-top:8px}
+.price-equiv{font-family:var(--f-mono);font-size:.72rem;color:var(--blue);margin-top:4px;font-weight:600}
+.price-card.deal .price-equiv{color:var(--orange-lt)}
+.price-divider{height:1px;background:var(--border);margin:22px 0}
+.price-feat-list{flex:1}
+.price-feat{display:flex;align-items:flex-start;gap:9px;font-size:.86rem;color:var(--text);padding:7px 0}
+.price-feat .icon{width:14px;height:14px;color:var(--emerald);flex-shrink:0;margin-top:2px}
+.price-card .btn{margin-top:26px}
+.pricing-note{margin-top:34px;font-size:.85rem;color:var(--text-dim);text-align:center}
+@media(max-width:900px){.price-cards{grid-template-columns:1fr}}
+
+/* ============================= FAQ ============================= */
+.faq-list{max-width:800px;border-top:1px solid var(--border)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;padding:23px 4px;text-align:left;font-size:1rem;font-weight:700;color:var(--text);gap:20px}
+.faq-q .icon{width:16px;height:16px;color:var(--text-dim);flex-shrink:0;transition:transform .3s ease}
+.faq-item.open .faq-q .icon{transform:rotate(180deg);color:var(--blue)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-a p{padding:0 4px 23px;font-size:.92rem;line-height:1.68;color:var(--text-muted);max-width:680px}
+
+/* ============================= FINAL CTA (constant ink band) ============================= */
+#final-cta{background:var(--ink);color:var(--on-ink-text);text-align:center;overflow:hidden}
+#final-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(50% 70% at 50% 0%, rgba(76,125,255,.22), transparent 65%);pointer-events:none}
+.fc-inner{position:relative;z-index:1;max-width:640px;margin:0 auto}
+#final-cta h2{font-family:var(--f-serif);font-weight:600;font-size:clamp(2rem,4.4vw,3.2rem);line-height:1.12;letter-spacing:-.015em;color:#fff}
+#final-cta h2 em{font-style:italic;color:var(--orange-lt);font-weight:500}
+.fc-support{margin-top:18px;font-size:1rem;color:rgba(255,255,255,.6);max-width:440px;margin-left:auto;margin-right:auto;line-height:1.6}
+.fc-ctas{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:34px;flex-wrap:wrap}
+
+/* ============================= FOOTER (constant ink band) ============================= */
+footer{background:var(--ink);color:var(--on-ink-muted);border-top:1px solid var(--on-ink-border)}
+.footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding:70px 0 50px}
+.footer-logo-row{display:flex;align-items:center;gap:12px}
+.footer-wordmark{font-family:var(--f-serif);font-weight:600;font-size:1.28rem;color:#fff}
+.footer-wordmark span{color:var(--orange-lt)}
+.footer-brand p{margin-top:16px;font-size:.87rem;line-height:1.65;color:var(--on-ink-dim);max-width:280px}
+.footer-col h5{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-dim);margin-bottom:18px}
+.footer-col a{display:block;font-size:.87rem;color:var(--on-ink-muted);padding:7px 0;transition:color .18s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid var(--on-ink-border);padding:24px 0;display:flex;align-items:center;justify-content:space-between;font-size:.8rem;color:var(--on-ink-dim);flex-wrap:wrap;gap:12px}
+.footer-bottom-links{display:flex;gap:22px}
+@media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr;row-gap:40px}}
+@media(max-width:560px){.footer-top{grid-template-columns:1fr}.footer-bottom{flex-direction:column;text-align:center}}
+
+/* ============================= AUTH MODAL ============================= */
+#modal-overlay{position:fixed;inset:0;background:rgba(4,7,16,.62);backdrop-filter:blur(6px);z-index:900;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s ease}
+#modal-overlay.open{opacity:1;pointer-events:auto}
+#auth-modal{background:var(--surface);border-radius:var(--r-xl);width:100%;max-width:420px;padding:34px 34px 30px;position:relative;transform:translateY(14px) scale(.98);transition:transform .3s cubic-bezier(.16,1,.3,1);box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto}
+#modal-overlay.open #auth-modal{transform:translateY(0) scale(1)}
+.modal-close{position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);background:var(--bg-alt)}
+.modal-close:hover{color:var(--text)}
+.modal-logo{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.modal-logo span{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim)}
+.modal-tabs{display:flex;background:var(--bg-alt);border-radius:99px;padding:4px;margin-bottom:24px}
+.modal-tab{flex:1;text-align:center;padding:9px 0;border-radius:99px;font-size:.83rem;font-weight:700;color:var(--text-muted)}
+.modal-tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-md)}
+.modal-title{font-family:var(--f-serif);font-size:1.5rem;font-weight:600;color:var(--text)}
+.modal-sub{font-size:.85rem;color:var(--text-muted);margin-top:6px;margin-bottom:22px}
+.google-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px;border:1.5px solid var(--border-strong);border-radius:var(--r-md);font-weight:700;font-size:.9rem;color:var(--text);background:var(--surface);transition:border-color .2s,box-shadow .2s}
+.google-btn:hover{border-color:var(--text-dim);box-shadow:var(--shadow-md)}
+.google-btn svg{width:19px;height:19px}
+.modal-divider{display:flex;align-items:center;gap:14px;margin:20px 0;font-size:.75rem;color:var(--text-dim)}
+.modal-divider::before,.modal-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:7px}
+.field input{width:100%;padding:12px 14px;border:1.5px solid var(--border-strong);border-radius:var(--r-md);font-size:.9rem;color:var(--text);background:var(--bg-alt);transition:border-color .2s}
+.field input:focus{border-color:var(--blue);background:var(--surface)}
+.modal-foot-note{margin-top:18px;font-size:.78rem;color:var(--text-dim);text-align:center;line-height:1.5}
+#modal-msg{margin-top:14px;font-size:.8rem;background:var(--blue-tint);color:var(--blue);border:1px solid var(--blue-tint-border);border-radius:8px;padding:11px 13px;display:none;line-height:1.5}
+#modal-msg.show{display:block}
+
+/* ============================= SCROLL REVEAL ============================= */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal-stagger.in .rs-item{opacity:1;transform:translateY(0)}
+.rs-item{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.rs-item:nth-child(1){transition-delay:.03s}.rs-item:nth-child(2){transition-delay:.08s}.rs-item:nth-child(3){transition-delay:.13s}
+
+/* ============================= BACK TO TOP ============================= */
+#back-to-top{position:fixed;right:26px;bottom:26px;width:48px;height:48px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-lg);opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .3s ease,transform .3s ease,background .2s ease;z-index:300}
+#back-to-top.show{opacity:1;transform:translateY(0);pointer-events:auto}
+#back-to-top:hover{background:var(--blue-lt);transform:translateY(-2px)}
+#back-to-top svg{width:19px;height:19px}
+@media(max-width:768px){#back-to-top{right:18px;bottom:18px;width:44px;height:44px}}
+
+/* ============================= TOAST ============================= */
+#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--blue);color:#fff;padding:13px 22px;border-radius:99px;font-size:.85rem;font-weight:700;z-index:1000;opacity:0;pointer-events:none;transition:all .3s ease;box-shadow:var(--shadow-lg)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ============================= RESPONSIVE ============================= */
+@media(max-width:1024px){
+  .nav-links{display:none}
+  .nav-burger{display:flex}
+  .vp-grid,.fb-grid{grid-template-columns:1fr;gap:44px}
+  .mode-grid,.track-grid{grid-template-columns:1fr}
+  .stat-strip-row{grid-template-columns:repeat(3,1fr);row-gap:20px}
+  .stat-item:nth-child(3n){border-right:none}
+}
+@media(max-width:768px){
+  .container{padding:0 20px}
+  .price-cards{grid-template-columns:1fr}
+  .stat-strip-row{grid-template-columns:repeat(2,1fr)}
+  .stat-item:nth-child(3n){border-right:1px solid var(--border)}
+  .stat-item:nth-child(2n){border-right:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================= ICON SPRITE ============================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5 5l2.1 2.1M16.9 16.9 19 19M19 5l-2.1 2.1M7.1 16.9 5 19"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3Z"/><path d="M6 11a6 6 0 0 0 12 0M12 19v2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6"/></symbol>
+<symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M5.5 9l6.5 6.5L18.5 9"/></symbol>
+<symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4 12h16M13 5l7 7-7 7"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V4M5 11l7-7 7 7"/></symbol>
+<symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5Z"/></symbol>
+<symbol id="i-social" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+<symbol id="i-travel" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5a1.5 1.5 0 0 0-2.1-2.1L14 8.9 5.8 7 4.4 8.4l6.8 3.9-2.5 2.5-2.6-.3-1 1L8 17.5l1.5 3.9 1-1-.3-2.6 2.5-2.5 3.9 6.8Z"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><path d="M4 8h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-ear" viewBox="0 0 24 24"><path d="M6 15a5 5 0 0 0 5 5c3.3 0 5-2.5 5-5.5S13.8 4 9.5 4 3 7.5 3 10.5c0 1.3.4 2.2 1 3"/><path d="M9.5 8.5a2.5 2.5 0 0 1 2.5 2.5c0 1.5-1 2-1 3.2"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.2A2.2 2.2 0 0 1 6.2 3H12v18H6.2A2.2 2.2 0 0 0 4 23V5.2Z"/><path d="M20 5.2A2.2 2.2 0 0 0 17.8 3H12v18h5.8a2.2 2.2 0 0 1 2.2 2V5.2Z"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></symbol>
+</defs>
+</svg>
+
+<!-- ============================= NAV ============================= -->
+<header id="nav" class="at-top">
+  <div class="container">
+    <button class="nav-logo" onclick="goHome()" title="Langslate Flow — back to top" aria-label="Refresh and return to top">
+      <span class="orb-mark"></span>
+      <span class="nav-wordmark">Langslate <span>Flow</span></span>
+    </button>
+    <nav class="nav-links">
+      <a href="#modes">Modes</a>
+      <a href="#tracks">Scenarios</a>
+      <a href="#how">How It Works</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <div class="nav-right">
+      <button class="theme-toggle" onclick="Theme.toggle()" aria-label="Toggle light and dark mode">
+        <svg class="icon i-sun"><use href="#i-sun"/></svg>
+        <svg class="icon i-moon"><use href="#i-moon"/></svg>
+      </button>
+      <button class="nav-loginbtn" onclick="Auth.open('login')">Log In</button>
+      <button class="btn btn-primary btn-sm" onclick="Auth.open('signup')">Start Speaking</button>
+      <button class="nav-burger" onclick="MobileMenu.toggle()" aria-label="Open menu"><svg class="icon" style="width:16px;height:16px"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================= MOBILE MENU ============================= -->
+<div id="mobile-menu">
+  <div class="mm-top">
+    <span class="nav-wordmark" style="color:#fff">Langslate <span style="color:var(--orange-lt)">Flow</span></span>
+    <button class="nav-burger" style="border-color:rgba(255,255,255,.25);color:#fff" onclick="MobileMenu.toggle()" aria-label="Close menu"><svg class="icon" style="width:16px;height:16px"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="mm-links">
+    <a href="#modes" onclick="MobileMenu.toggle()">Modes</a>
+    <a href="#tracks" onclick="MobileMenu.toggle()">Scenarios</a>
+    <a href="#how" onclick="MobileMenu.toggle()">How It Works</a>
+    <a href="#pricing" onclick="MobileMenu.toggle()">Pricing</a>
+  </div>
+  <div class="mm-actions">
+    <button class="btn btn-outline btn-block" onclick="Auth.open('login')">Log In</button>
+    <button class="btn btn-primary btn-block" onclick="Auth.open('signup')">Start Speaking</button>
+  </div>
+  <div class="mm-theme">
+    Appearance
+    <button onclick="Theme.toggle()"><svg class="icon i-sun"><use href="#i-sun"/></svg><svg class="icon i-moon"><use href="#i-moon"/></svg></button>
+  </div>
+</div>
+
+<main>
+<!-- ============================= HERO ============================= -->
+<section id="hero" class="ink">
+  <div class="container hero-inner">
+    <span class="hero-badge"><i></i>Meet Aria — Your AI Voice Tutor</span>
+    <h1>Practice <span class="hl-orange">Real Conversations</span>. <em>Speak with Confidence.</em></h1>
+    <p class="hero-sub">Practice real spoken English with Aria, your AI voice tutor. Shadow native sentences or hold free-flowing conversations across Social, Travel, and Business scenarios — with instant feedback on tone, fluency, grammar, and vocabulary.</p>
+    <div class="hero-ctas">
+      <button class="btn btn-primary" onclick="Auth.open('signup')">Start Speaking</button>
+      <a href="#how" class="btn btn-outline">See How It Works</a>
+    </div>
+
+    <div class="orb-wrap breathe">
+      <div class="orb-ring"></div>
+      <div class="orb-ring r2"></div>
+      <div class="orb-core"><svg class="icon"><use href="#i-mic"/></svg></div>
+    </div>
+
+    <div class="hero-mock-row">
+      <div class="mock-card">
+        <div class="mock-label"><span class="dot"></span>Aria is listening · Shadow Mode</div>
+        <p class="mock-transcript">"I'd like to rent a car for five days. Is insurance included?"</p>
+        <div class="mock-wave"><span style="height:6px"></span><span style="height:14px"></span><span style="height:8px"></span><span style="height:18px"></span><span style="height:10px"></span><span style="height:15px"></span><span style="height:7px"></span></div>
+      </div>
+      <div class="mock-card">
+        <div class="mock-label"><span class="dot"></span>Instant Feedback</div>
+        <div class="mock-score-row">
+          <div class="mock-score-num" id="hero-score">0</div>
+          <div class="mock-score-breakdown">
+            <span class="mock-score-chip"><b>Fluency</b> 92</span>
+            <span class="mock-score-chip"><b>Grammar</b> 96</span>
+            <span class="mock-score-chip"><b>Tone</b> 90</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= STAT STRIP ============================= -->
+<section id="stat-strip">
+  <div class="container">
+    <div class="stat-strip-row">
+      <div class="stat-item"><div class="stat-num" data-count="6000" data-suffix="+">0</div><div class="stat-label">Practice Scenarios</div></div>
+      <div class="stat-item"><div class="stat-num" data-count="3">0</div><div class="stat-label">Scenario Tracks</div></div>
+      <div class="stat-item"><div class="stat-num" data-count="2">0</div><div class="stat-label">Practice Modes</div></div>
+      <div class="stat-item"><div class="stat-num" data-count="4">0</div><div class="stat-label">Feedback Dimensions</div></div>
+      <div class="stat-item"><div class="stat-num" data-count="100" data-suffix="%">0</div><div class="stat-label">Private, On-Device</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= VALUE PROP ============================= -->
+<section class="section-pad bg-base" id="value">
+  <div class="container">
+    <div class="vp-grid">
+      <div class="vp-copy reveal">
+        <span class="eyebrow">Why Langslate Flow</span>
+        <h2 class="h-serif" style="margin-top:18px">Fluency Isn't Built by just Reading. It's Built by Speaking.</h2>
+        <p>Most apps teach English through multiple-choice quizzes and passive listening. That builds vocabulary — not the confidence to actually open your mouth and speak.</p>
+        <p>Langslate Flow makes you talk. Every session, you produce real spoken English out loud, get instant feedback on how it landed, and try again — the only way fluency actually forms.</p>
+      </div>
+      <div class="compare reveal">
+        <div class="compare-col trad">
+          <div class="compare-head">TYPICAL APPS</div>
+          <div class="compare-step">Multiple-choice quizzes</div>
+          <div class="compare-arrow">↓</div>
+          <div class="compare-step">Passive listening</div>
+          <div class="compare-arrow">↓</div>
+          <div class="compare-step">No speaking practice</div>
+          <div class="compare-arrow">↓</div>
+          <div class="compare-step">Confidence gap stays</div>
+        </div>
+        <div class="compare-col flow">
+          <div class="compare-head">LANGSLATE FLOW</div>
+          <div class="compare-step">Speak out loud, every time</div>
+          <div class="compare-arrow">↓</div>
+          <div class="compare-step">Real conversation with Aria</div>
+          <div class="compare-arrow">↓</div>
+          <div class="compare-step">Instant, private feedback</div>
+          <div class="compare-arrow">↓</div>
+          <div class="compare-step">Confidence, built by repetition</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= MODES ============================= -->
+<section class="section-pad bg-alt" id="modes">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Two Ways to Practice</span>
+      <h2 class="h-serif" style="margin-top:18px">Shadow the Native. Or Just Talk.</h2>
+      <p>Pick a mode, or move between both in the same session.</p>
+    </div>
+    <div class="mode-grid reveal-stagger">
+      <div class="mode-card m-shadow rs-item">
+        <div class="glow"></div>
+        <span class="mode-icon"><svg class="icon"><use href="#i-repeat"/></svg></span>
+        <h3>Shadow Mode</h3>
+        <p>Listen to Aria say a native sentence, then repeat it back. Perfect your pronunciation, pacing, and rhythm sentence by sentence.</p>
+        <div class="mode-tags"><span>Pronunciation</span><span>Pacing</span><span>Muscle memory</span></div>
+        <div class="mode-cta">Try Shadow Mode <svg class="icon"><use href="#i-arrow-right"/></svg></div>
+      </div>
+      <div class="mode-card m-flow rs-item">
+        <div class="glow"></div>
+        <span class="mode-icon"><svg class="icon"><use href="#i-chat"/></svg></span>
+        <h3>Flow Mode</h3>
+        <p>Hold a real, free-flowing conversation. Respond in your own words to realistic scenarios — Aria adapts to what you actually say.</p>
+        <div class="mode-tags"><span>Free conversation</span><span>Real scenarios</span><span>Adaptive replies</span></div>
+        <div class="mode-cta">Try Flow Mode <svg class="icon"><use href="#i-arrow-right"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SCENARIO TRACKS ============================= -->
+<section class="section-pad bg-base" id="tracks">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Three Tracks, One Voice</span>
+      <h2 class="h-serif" style="margin-top:18px">Practice the English You'll Actually Use.</h2>
+      <p>Pick a focus, or mix all three.</p>
+    </div>
+    <div class="track-grid reveal-stagger">
+      <div class="track-card rs-item" style="--track-color:var(--blue)">
+        <span class="track-icon"><svg class="icon"><use href="#i-social"/></svg></span>
+        <h4>Social</h4>
+        <p>Everyday chats, small talk, making plans, and catching up with friends.</p>
+        <div class="track-example">"Catching up with an old friend at a coffee shop."</div>
+        <div class="track-count">1,000+ scenarios</div>
+      </div>
+      <div class="track-card rs-item" style="--track-color:var(--orange)">
+        <span class="track-icon"><svg class="icon"><use href="#i-travel"/></svg></span>
+        <h4>Travel</h4>
+        <p>Airports, hotels, asking for directions, and ordering food abroad.</p>
+        <div class="track-example">"Renting a car after landing in a new city."</div>
+        <div class="track-count">1,000+ scenarios</div>
+      </div>
+      <div class="track-card rs-item" style="--track-color:var(--blue)">
+        <span class="track-icon"><svg class="icon"><use href="#i-briefcase"/></svg></span>
+        <h4>Business</h4>
+        <p>Meetings, negotiations, workplace small talk, and presentations.</p>
+        <div class="track-example">"Discussing a missed deadline with your manager."</div>
+        <div class="track-count">1,000+ scenarios</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= HOW IT WORKS ============================= -->
+<section class="section-pad bg-alt" id="how">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">How It Works</span>
+      <h2 class="h-serif" style="margin-top:18px">Three Steps to Your First Real Conversation.</h2>
+    </div>
+    <div class="steps-row reveal-stagger">
+      <div class="step-item rs-item">
+        <div class="step-num">01 · CHOOSE</div>
+        <h3>Pick your mode &amp; topic</h3>
+        <p>Shadow a native sentence, or free-flow a real scenario across Social, Travel, or Business English.</p>
+      </div>
+      <div class="step-item rs-item">
+        <div class="step-num">02 · SPEAK</div>
+        <h3>Listen &amp; respond aloud</h3>
+        <p>Aria replies in a natural, expressive voice. Repeat it, or answer in your own words — your mic does the rest.</p>
+      </div>
+      <div class="step-item rs-item">
+        <div class="step-num">03 · IMPROVE</div>
+        <h3>Get instant, private feedback</h3>
+        <p>See scores for tone, fluency, grammar &amp; vocabulary the moment you stop talking.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= FEEDBACK ============================= -->
+<section class="section-pad ink" id="feedback">
+  <div class="container">
+    <div class="fb-grid">
+      <div class="reveal">
+        <span class="eyebrow">Instant Feedback</span>
+        <h2 class="h-serif" style="margin-top:18px">Know Exactly What to Improve.</h2>
+        <p style="margin-top:16px;color:var(--on-ink-muted);font-size:1.02rem;line-height:1.65">Every time you speak, Aria scores four dimensions that actually predict how you come across — not just whether you used the right verb tense.</p>
+        <div class="fb-feat-list">
+          <div class="fb-feat"><span class="fb-feat-icon"><svg class="icon"><use href="#i-ear"/></svg></span><div><h4>Tone</h4><p>How natural and confident you sound, not just what you said.</p></div></div>
+          <div class="fb-feat"><span class="fb-feat-icon"><svg class="icon"><use href="#i-mic"/></svg></span><div><h4>Fluency</h4><p>Pacing, hesitation, and how smoothly your ideas connect.</p></div></div>
+          <div class="fb-feat"><span class="fb-feat-icon"><svg class="icon"><use href="#i-book"/></svg></span><div><h4>Grammar</h4><p>Structure and accuracy, flagged clearly, not just marked wrong.</p></div></div>
+          <div class="fb-feat"><span class="fb-feat-icon"><svg class="icon"><use href="#i-target"/></svg></span><div><h4>Vocabulary</h4><p>Whether your word choice matched the situation.</p></div></div>
+        </div>
+        <div class="privacy-note">
+          <svg class="icon"><use href="#i-lock"/></svg>
+          <p><b>100% private.</b> Every analysis runs on your device. Your voice is never uploaded or recorded.</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="report-card">
+          <div class="report-head">
+            <div><div class="report-title">Feedback Report</div><div class="report-sub">Renting a car · Travel · Flow Mode</div></div>
+          </div>
+          <div class="report-overall">
+            <div class="score">92</div>
+            <div class="label"><b>Great fluency!</b><span>Above your last 5 sessions</span></div>
+          </div>
+          <div class="meter-row"><div class="meter-top"><b>Tone</b><span>90</span></div><div class="meter-bar"><div class="meter-fill" data-w="90"></div></div></div>
+          <div class="meter-row"><div class="meter-top"><b>Fluency</b><span>92</span></div><div class="meter-bar"><div class="meter-fill" data-w="92"></div></div></div>
+          <div class="meter-row"><div class="meter-top"><b>Grammar</b><span>96</span></div><div class="meter-bar"><div class="meter-fill" data-w="96"></div></div></div>
+          <div class="meter-row"><div class="meter-top"><b>Vocabulary</b><span>88</span></div><div class="meter-bar"><div class="meter-fill" data-w="88"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= PRICING ============================= -->
+<section class="section-pad bg-base" id="pricing">
+  <div class="container" style="text-align:center">
+    <div class="section-head reveal" style="margin-left:auto;margin-right:auto;text-align:center">
+      <span class="eyebrow" style="justify-content:center">Pricing · Simple, Fair, Premium</span>
+      <h2 class="h-serif" style="margin-top:18px">Choose Your Path to Fluency.</h2>
+      <p>Every plan includes the full Langslate Flow experience. Choose the commitment that fits.</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="price-cards reveal">
+      <div class="price-card">
+        <div class="price-plan-name">Starter</div>
+        <div class="price-amount-row"><span class="price-currency">$</span><span class="price-num">30</span></div>
+        <div class="price-per">For 3 months</div>
+        <div class="price-equiv">≈ $10 / month</div>
+        <div class="price-divider"></div>
+        <div class="price-feat-list">
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Unlimited Shadow &amp; Flow practice</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>All Social, Travel &amp; Business scenarios</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Instant tone, fluency, grammar &amp; vocabulary feedback</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Aria's natural voice responses</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>100% private, on-device analysis</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Progress tracking &amp; streaks</div>
+        </div>
+        <button class="btn btn-outline" onclick="Auth.open('signup')">Start with Starter</button>
+      </div>
+      <div class="price-card hi">
+        <span class="price-badge">Most Popular</span>
+        <div class="price-plan-name">Momentum</div>
+        <div class="price-amount-row"><span class="price-currency">$</span><span class="price-num">50</span></div>
+        <div class="price-per">For 6 months</div>
+        <div class="price-equiv">≈ $8.33 / month</div>
+        <div class="price-divider"></div>
+        <div class="price-feat-list">
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Unlimited Shadow &amp; Flow practice</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>All Social, Travel &amp; Business scenarios</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Instant tone, fluency, grammar &amp; vocabulary feedback</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Aria's natural voice responses</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>100% private, on-device analysis</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Progress tracking &amp; streaks</div>
+        </div>
+        <button class="btn btn-primary" onclick="Auth.open('signup')">Get Momentum</button>
+      </div>
+      <div class="price-card deal">
+        <span class="price-badge orange">Best Deal</span>
+        <div class="price-plan-name">Fluent</div>
+        <div class="price-amount-row"><span class="price-currency">$</span><span class="price-num">80</span></div>
+        <div class="price-per">For 12 months</div>
+        <div class="price-equiv">≈ $6.67 / month</div>
+        <div class="price-divider"></div>
+        <div class="price-feat-list">
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Unlimited Shadow &amp; Flow practice</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>All Social, Travel &amp; Business scenarios</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Instant tone, fluency, grammar &amp; vocabulary feedback</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Aria's natural voice responses</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>100% private, on-device analysis</div>
+          <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Progress tracking &amp; streaks</div>
+        </div>
+        <button class="btn btn-orange" onclick="Auth.open('signup')">Choose Fluent</button>
+      </div>
+    </div>
+    <p class="pricing-note reveal">No hidden fees. Cancel anytime on renewal.</p>
+  </div>
+</section>
+
+<!-- ============================= FAQ ============================= -->
+<section class="section-pad bg-alt" id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2 class="h-serif" style="margin-top:18px">Questions, Answered.</h2>
+    </div>
+    <div class="faq-list reveal" id="faq-list"></div>
+  </div>
+</section>
+
+<!-- ============================= FINAL CTA ============================= -->
+<section class="section-pad ink" id="final-cta">
+  <div class="container fc-inner">
+    <h2>Stop Studying English. <em>Start Speaking It.</em></h2>
+    <p class="fc-support">Your first conversation with Aria is one tap away — no pressure, instant feedback, real progress.</p>
+    <div class="fc-ctas">
+      <button class="btn btn-primary" onclick="Auth.open('signup')">Start Speaking</button>
+      <a href="#pricing" class="btn btn-outline">See Pricing</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============================= FOOTER ============================= -->
+<footer>
+  <div class="container footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-row">
+        <span class="orb-mark"></span>
+        <span class="footer-wordmark">Langslate <span>Flow</span></span>
+      </div>
+      <p>Practice real conversations. Speak with confidence — with Aria, your AI voice tutor, across Social, Travel, and Business English.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Product</h5>
+      <a href="#modes">Modes</a>
+      <a href="#tracks">Scenarios</a>
+      <a href="#how">How It Works</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <a href="#hero">About</a>
+      <a href="#hero">Contact</a>
+      <a href="#hero">Terms</a>
+      <a href="#hero">Privacy</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 Langslate Flow. Part of the Langslate family. All rights reserved.</span>
+    <div class="footer-bottom-links">
+      <a href="#hero">Terms</a>
+      <a href="#hero">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================= AUTH MODAL ============================= -->
+<div id="modal-overlay" onclick="if(event.target===this)Auth.close()">
+  <div id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" onclick="Auth.close()" aria-label="Close"><svg class="icon"><use href="#i-close"/></svg></button>
+    <div class="modal-logo"><span class="orb-mark" style="width:32px;height:32px"></span><span>Langslate Flow</span></div>
+    <div class="modal-tabs">
+      <button class="modal-tab" id="tab-login" onclick="Auth.setTab('login')">Log In</button>
+      <button class="modal-tab" id="tab-signup" onclick="Auth.setTab('signup')">Create Account</button>
+    </div>
+    <h3 class="modal-title" id="modal-title">Welcome to Flow</h3>
+    <p class="modal-sub" id="modal-sub">Sign in to keep your streak going with Aria.</p>
+    <button class="google-btn" onclick="Auth.submit('google')">
+      <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.6-6 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 3l5.7-5.7C34.5 6.1 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.3-.4-3.5Z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3 0 5.8 1.1 7.9 3l5.7-5.7C34.5 6.1 29.5 4 24 4c-7.7 0-14.3 4.3-17.7 10.7Z"/><path fill="#4CAF50" d="M24 44c5.4 0 10.3-2.1 14-5.5l-6.5-5.5C29.3 34.8 26.8 36 24 36c-5.2 0-9.6-3.3-11.2-8l-6.6 5.1C9.6 39.6 16.3 44 24 44Z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.5 5.5C39.5 37.5 44 31.5 44 24c0-1.2-.1-2.3-.4-3.5Z"/></svg>
+      Continue with Google
+    </button>
+    <div class="modal-divider">OR</div>
+    <form onsubmit="return Auth.submit('email', event)">
+      <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" required placeholder="you@email.com"></div>
+      <div class="field"><label for="f-pass">Password</label><input id="f-pass" type="password" required placeholder="••••••••" minlength="8"></div>
+      <button type="submit" class="btn btn-primary btn-block" id="modal-submit" style="margin-top:8px">Log In</button>
+    </form>
+    <div id="modal-msg"></div>
+    <p class="modal-foot-note" id="modal-foot-note">Don't have an account? <a href="#" style="font-weight:700;color:var(--text)" onclick="Auth.setTab('signup');return false">Create one</a></p>
+  </div>
+</div>
+
+<button id="back-to-top" onclick="scrollToTop()" aria-label="Back to top"><svg class="icon"><use href="#i-arrow-up"/></svg></button>
+<div id="toast"></div>
+
+<script>
+/* ============================= THEME ============================= */
+const Theme = {
+  toggle(){
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  }
+};
+
+/* ============================= NAV SCROLL STATE + BACK TO TOP ============================= */
+const nav = document.getElementById('nav');
+const backToTop = document.getElementById('back-to-top');
+function onScroll(){
+  const y = window.scrollY;
+  nav.classList.toggle('at-top', y < 40);
+  nav.classList.toggle('solid', y >= 40);
+  backToTop.classList.toggle('show', y > 500);
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* ============================= LOGO -> REFRESH TO HERO / BACK TO TOP ============================= */
+if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; }
+function goHome(){
+  window.location.hash = 'hero';
+  window.location.reload();
+}
+function scrollToTop(){
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ============================= MOBILE MENU ============================= */
+const MobileMenu = {
+  toggle(){
+    const m = document.getElementById('mobile-menu');
+    m.classList.toggle('open');
+    document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+  }
+};
+
+/* ============================= AUTH MODAL ============================= */
+const Auth = {
+  mode:'signup',
+  open(mode){
+    this.setTab(mode || 'signup');
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  },
+  close(){
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('modal-msg').classList.remove('show');
+  },
+  setTab(mode){
+    this.mode = mode;
+    document.getElementById('tab-login').classList.toggle('active', mode==='login');
+    document.getElementById('tab-signup').classList.toggle('active', mode==='signup');
+    document.getElementById('modal-title').textContent = mode==='login' ? 'Welcome back' : 'Create your account';
+    document.getElementById('modal-sub').textContent = mode==='login' ? 'Sign in to keep your streak going with Aria.' : 'Start practicing real conversations with Aria today.';
+    document.getElementById('modal-submit').textContent = mode==='login' ? 'Log In' : 'Create Account';
+    document.getElementById('modal-foot-note').innerHTML = mode==='login'
+      ? 'Don\'t have an account? <a href="#" style="font-weight:700;color:var(--text)" onclick="Auth.setTab(\'signup\');return false">Create one</a>'
+      : 'Already have an account? <a href="#" style="font-weight:700;color:var(--text)" onclick="Auth.setTab(\'login\');return false">Log in</a>';
+    document.getElementById('modal-msg').classList.remove('show');
+  },
+  submit(kind, e){
+    if(e) e.preventDefault();
+    const msg = document.getElementById('modal-msg');
+    msg.textContent = kind === 'google'
+      ? 'This demo is wired for Google OAuth — connect your client ID to enable sign-in.'
+      : 'This demo interface is ready to connect to your authentication backend.';
+    msg.classList.add('show');
+    return false;
+  }
+};
+
+/* ============================= FAQ ============================= */
+const faqData = [
+  ["What is Langslate Flow?","Langslate Flow is an AI voice tutor for practicing real spoken English. You talk out loud with Aria, either shadowing native sentences or holding free-flowing conversations, and get instant feedback."],
+  ["Who is Aria?","Aria is your AI voice tutor. She reads native sentences in a natural voice, holds free-flowing conversations across everyday scenarios, and scores your speaking the moment you stop talking."],
+  ["What's the difference between Shadow and Flow mode?","Shadow mode has you repeat a native sentence back, sentence by sentence, to build pronunciation and pacing. Flow mode is a free-flowing conversation where you respond in your own words."],
+  ["What do I get feedback on?","Every response is scored on four dimensions: tone, fluency, grammar, and vocabulary — plus specific tips on what to improve next time."],
+  ["Is my voice data private?","Yes. Voice analysis runs on your device. Your recordings are never uploaded or stored on a server."],
+  ["What English levels is Langslate Flow suitable for?","Scenarios range from everyday, straightforward conversations to more nuanced business and travel situations, so you can start where you are and progress naturally."],
+  ["Can I use Langslate Flow on mobile?","Yes. Langslate Flow works in your mobile browser — no app download required."],
+  ["How is pricing billed?","Plans are billed upfront for the period you choose — 3, 6, or 12 months — with no automatic price increases mid-term."]
+];
+const faqList = document.getElementById('faq-list');
+faqData.forEach((item)=>{
+  const div = document.createElement('div');
+  div.className = 'faq-item';
+  div.innerHTML = `<button class="faq-q" onclick="FAQ.toggle(this)">${item[0]} <svg class="icon"><use href="#i-chevron-down"/></svg></button>
+    <div class="faq-a"><p>${item[1]}</p></div>`;
+  faqList.appendChild(div);
+});
+const FAQ = {
+  toggle(btn){
+    const item = btn.parentElement;
+    const answer = item.querySelector('.faq-a');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el=>{
+      el.classList.remove('open');
+      el.querySelector('.faq-a').style.maxHeight = null;
+    });
+    if(!wasOpen){
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  }
+};
+
+/* ============================= TOAST ============================= */
+const Toast = {
+  show(text){
+    const t = document.getElementById('toast');
+    t.textContent = text;
+    t.classList.add('show');
+    clearTimeout(this._timer);
+    this._timer = setTimeout(()=>t.classList.remove('show'), 3200);
+  }
+};
+
+/* ============================= SCROLL REVEAL ============================= */
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>revealObserver.observe(el));
+
+/* ============================= ANIMATED COUNTERS ============================= */
+const countObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const el = entry.target;
+      const target = parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || '';
+      const dur = 1400;
+      const start = performance.now();
+      function tick(now){
+        const p = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased).toLocaleString() + suffix;
+        if(p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      countObserver.unobserve(el);
+    }
+  });
+}, {threshold:.5});
+document.querySelectorAll('.stat-num').forEach(el=>countObserver.observe(el));
+
+/* ============================= HERO SCORE COUNT-UP ============================= */
+window.addEventListener('DOMContentLoaded', ()=>{
+  setTimeout(()=>{
+    const el = document.getElementById('hero-score');
+    if(!el) return;
+    const dur = 1200, start = performance.now(), target = 94;
+    function tick(now){
+      const p = Math.min(1, (now - start) / dur);
+      el.textContent = Math.round(target * (1 - Math.pow(1-p,3)));
+      if(p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }, 400);
+});
+
+/* ============================= FEEDBACK METER FILL ON SCROLL ============================= */
+const meterObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.querySelectorAll('.meter-fill').forEach(el=>{
+        el.style.width = el.dataset.w + '%';
+      });
+      meterObserver.unobserve(entry.target);
+    }
+  });
+}, {threshold:.4});
+const reportCard = document.querySelector('.report-card');
+if(reportCard) meterObserver.observe(reportCard);
+
+/* ============================= SMOOTH ANCHOR SCROLL OFFSET FIX ============================= */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', function(e){
+    const id = this.getAttribute('href');
+    if(id.length > 1){
+      const target = document.querySelector(id);
+      if(target){
+        e.preventDefault();
+        const y = target.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({top:y, behavior:'smooth'});
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>

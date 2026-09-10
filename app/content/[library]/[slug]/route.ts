@@ -14,6 +14,8 @@ import { getSyntaxFlowFilePath } from "../../../../lib/syntaxFlow.files";
 import { getLevelTestFilePath } from "../../../../lib/levelTest.files";
 import { getListeningHubFilePath } from "../../../../lib/listeningHub.files";
 import { getSpeakingTopicsFilePath } from "../../../../lib/speakingTopics.files";
+import { getLangslate365FilePath } from "../../../../lib/langslate365.files";
+import { getLangslateFlowFilePath } from "../../../../lib/langslateFlow.files";
 
 type ContentRouteProps = {
   params: {
@@ -56,6 +58,8 @@ const RESOLVERS: Partial<Record<ContentLibraryId, LibraryResolver>> = {
   "level-test": getLevelTestFilePath,
   "listening-hub": getListeningHubFilePath,
   "speaking-topics": getSpeakingTopicsFilePath,
+  "langslate-365": getLangslate365FilePath,
+  "langslate-flow": getLangslateFlowFilePath,
 };
 
 export async function GET(_: Request, { params }: ContentRouteProps) {

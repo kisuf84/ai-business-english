@@ -43,7 +43,9 @@ export type ContentLibraryId =
   | "syntax-flow-portugues"
   | "level-test"
   | "listening-hub"
-  | "speaking-topics";
+  | "speaking-topics"
+  | "langslate-365"
+  | "langslate-flow";
 
 const CONTENT_LIBRARY_ROOT = path.join(process.cwd(), "content-library");
 
