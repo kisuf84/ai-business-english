@@ -433,43 +433,6 @@ footer{border-top:1px solid var(--hairline);padding:52px 0 40px}
 </head>
 <body>
 
-<!-- LOGIN MODAL -->
-<div class="modal-overlay" id="loginModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
-    <div class="modal-logo"><img class="logo-asset" alt="Langslate 365"><div class="modal-logo-text">Langslate <span>365</span></div></div>
-    <h2>Welcome back</h2>
-    <p class="modal-sub">Continue your streak. New here? <a onclick="switchModal('loginModal','signupModal')">Start free</a></p>
-    <button class="btn-google" onclick="handleGoogleAuth()">
-      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.57 2.7-3.88 2.7-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l2.99-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.46 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l2.99 2.33C4.66 5.17 6.65 3.58 9 3.58z"/></svg>
-      Continue with Google
-    </button>
-    <div class="modal-divider">or with email</div>
-    <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="you@company.com"></div>
-    <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
-    <button class="btn btn-gold" onclick="handleLogin()">Log In</button>
-  </div>
-</div>
-
-<!-- SIGNUP MODAL -->
-<div class="modal-overlay" id="signupModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('signupModal')">✕</button>
-    <div class="modal-logo"><img class="logo-asset" alt="Langslate 365"><div class="modal-logo-text">Langslate <span>365</span></div></div>
-    <h2>Start Day One</h2>
-    <p class="modal-sub">Free to begin. Already a member? <a onclick="switchModal('signupModal','loginModal')">Log in</a></p>
-    <button class="btn-google" onclick="handleGoogleAuth()">
-      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.57 2.7-3.88 2.7-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l2.99-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.46 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l2.99 2.33C4.66 5.17 6.65 3.58 9 3.58z"/></svg>
-      Continue with Google
-    </button>
-    <div class="modal-divider">or with email</div>
-    <div class="form-group"><label>Name</label><input type="text" id="signupName" placeholder="Your name"></div>
-    <div class="form-group"><label>Email</label><input type="email" id="signupEmail" placeholder="you@company.com"></div>
-    <div class="form-group"><label>Password</label><input type="password" id="signupPassword" placeholder="At least 8 characters"></div>
-    <button class="btn btn-gold" onclick="handleSignup()">Create Free Account</button>
-  </div>
-</div>
-
 <!-- TOAST -->
 <div class="toast" id="toast">
   <span id="toastIcon">✅</span><span id="toastMsg">Done!</span>
@@ -496,12 +459,7 @@ footer{border-top:1px solid var(--hairline);padding:52px 0 40px}
     <div style="display:flex;align-items:center;gap:12px">
     <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="Toggle light / dark mode">🌙</button>
     <div class="nav-right" id="navAuth">
-      <button class="btn btn-ghost" onclick="openModal('loginModal')">Log In</button>
-      <button class="btn btn-gold" onclick="openModal('signupModal')">Start Free</button>
-    </div>
-    <div class="nav-right user-chip" id="navUser" style="display:none">
-      <div class="user-avatar" id="userAvatar">?</div>
-      <button class="btn btn-ghost" onclick="handleLogout()">Log Out</button>
+      <button class="btn btn-gold" onclick="enterCourse()">Open the Course →</button>
     </div>
     </div>
   </div>
@@ -516,7 +474,7 @@ footer{border-top:1px solid var(--hairline);padding:52px 0 40px}
       <h1>5 Minutes a Day,<br><em>1 Year</em> of Mastery</h1>
       <p class="hero-desc">365 unique daily lessons. Six progressive levels, from your first workplace email to the boardroom. Every session pairs targeted <strong>vocabulary</strong>, a real <strong>workplace dialogue</strong>, a live <strong>AI-scored speaking task</strong>, an original <strong>reading</strong>, and a <strong>comprehension quiz</strong> — complete in five minutes flat.</p>
       <div class="hero-cta-row">
-        <button class="btn btn-gold btn-lg" onclick="openModal('signupModal')">Begin Day One — Free →</button>
+        <button class="btn btn-gold btn-lg" onclick="enterCourse()">Begin Day One — Free →</button>
         <button class="btn btn-ghost btn-lg" onclick="scrollToSection('showcase')">See the AI Coach</button>
       </div>
       <p class="hero-note">Don't be lazy, it's just 5 Minutes.</p>
@@ -629,7 +587,7 @@ footer{border-top:1px solid var(--hairline);padding:52px 0 40px}
         <li>Four-dimension scoring — Tone, Fluency, Grammar, Vocabulary</li>
         <li>Zero external API calls — everything runs on your device</li>
       </ul>
-      <button class="btn btn-gold" onclick="openModal('signupModal')">Try It Free →</button>
+      <button class="btn btn-gold" onclick="enterCourse()">Try It Free →</button>
     </div>
     <div class="speak-mock">
       <div class="speak-mock-head">🎤 Speaking Practice</div>
@@ -848,7 +806,7 @@ footer{border-top:1px solid var(--hairline);padding:52px 0 40px}
   <div class="wrap">
     <h2>Day 1 starts the moment<br>you say yes.</h2>
     <p class="cta-tagline">Don't be lazy, it's just 5 Minutes.</p>
-    <button class="btn btn-gold btn-lg" onclick="openModal('signupModal')">Begin Day One — Free →</button>
+    <button class="btn btn-gold btn-lg" onclick="enterCourse()">Begin Day One — Free →</button>
     <div class="cta-badges">
       <span class="cta-badge"><span class="cta-badge-dot"></span>Works on any device</span>
     </div>
@@ -868,7 +826,7 @@ footer{border-top:1px solid var(--hairline);padding:52px 0 40px}
       <a onclick="scrollToSection('levels')">Levels</a>
       <a onclick="scrollToSection('pricing')">Pricing</a>
       <a onclick="scrollToSection('faq')">FAQ</a>
-      <a onclick="openModal('loginModal')">Log In</a>
+      <a onclick="enterCourse()">Open the Course</a>
     </div>
     <p class="footer-copy">© 2026 Langslate 365. All rights reserved.</p>
   </div>
@@ -896,9 +854,6 @@ function toggleTheme(){
   applyTheme(saved === 'light' ? 'light' : 'dark');
 })();
 
-// ── STATE ──────────────────────────────────────────────
-let currentUser = null;
-
 // ── LOGO CLICK: reload the page and land on the Hero ────
 if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; }
 function goHome(){
@@ -923,29 +878,13 @@ function updateScrollTopBtn(){
 window.addEventListener('scroll', updateScrollTopBtn, {passive:true});
 updateScrollTopBtn();
 
-// ── MODALS ─────────────────────────────────────────────
-function openModal(id){
-  document.getElementById(id).classList.add('open');
-  document.body.style.overflow = 'hidden';
+// ── ENTER COURSE: users are already authenticated in Langslate,
+// so every CTA here goes straight into the course. ────
+function enterCourse(){
+  const target = '/apps/365/course';
+  if(window.top && window.top !== window){ window.top.location.href = target; }
+  else{ window.location.href = target; }
 }
-function closeModal(id){
-  document.getElementById(id).classList.remove('open');
-  document.body.style.overflow = '';
-}
-function switchModal(from, to){
-  closeModal(from);
-  setTimeout(()=>openModal(to), 200);
-}
-document.querySelectorAll('.modal-overlay').forEach(overlay=>{
-  overlay.addEventListener('click', e=>{
-    if(e.target === overlay) closeModal(overlay.id);
-  });
-});
-document.addEventListener('keydown', e=>{
-  if(e.key === 'Escape'){
-    document.querySelectorAll('.modal-overlay.open').forEach(m=>closeModal(m.id));
-  }
-});
 
 // ── TOAST ──────────────────────────────────────────────
 function showToast(msg, icon='✅'){
@@ -957,67 +896,10 @@ function showToast(msg, icon='✅'){
   t._timer = setTimeout(()=>t.classList.remove('show'), 3500);
 }
 
-// ── AUTH HELPERS ───────────────────────────────────────
-function updateNavAuth(){
-  const authEl = document.getElementById('navAuth');
-  const userEl = document.getElementById('navUser');
-  if(currentUser){
-    authEl.style.display = 'none';
-    userEl.style.display = 'flex';
-    document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
-  } else {
-    authEl.style.display = 'flex';
-    userEl.style.display = 'none';
-  }
-}
-
-function handleLogin(){
-  const email = document.getElementById('loginEmail').value.trim();
-  const pass = document.getElementById('loginPassword').value;
-  if(!email || !pass){ showToast('Please fill in all fields.','⚠️'); return; }
-  if(!email.includes('@')){ showToast('Please enter a valid email.','⚠️'); return; }
-  currentUser = { name: email.split('@')[0], email };
-  closeModal('loginModal');
-  updateNavAuth();
-  showToast(`Welcome back, ${currentUser.name}!`,'👋');
-}
-
-function handleSignup(){
-  const name = document.getElementById('signupName').value.trim();
-  const email = document.getElementById('signupEmail').value.trim();
-  const pass = document.getElementById('signupPassword').value;
-  if(!name || !email || !pass){ showToast('Please fill in all fields.','⚠️'); return; }
-  if(!email.includes('@')){ showToast('Please enter a valid email.','⚠️'); return; }
-  if(pass.length < 8){ showToast('Password must be at least 8 characters.','⚠️'); return; }
-  currentUser = { name, email };
-  closeModal('signupModal');
-  updateNavAuth();
-  showToast(`Account created! Day 1 unlocked, ${name} 🎉`,'🎓');
-}
-
-function handleGoogleAuth(){
-  const fakeName = 'Student';
-  currentUser = { name: fakeName, email: 'student@gmail.com' };
-  document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open'));
-  document.body.style.overflow = '';
-  updateNavAuth();
-  showToast(`Signed in with Google. Welcome, ${fakeName}!`,'🎉');
-}
-
-function handleLogout(){
-  currentUser = null;
-  updateNavAuth();
-  showToast('You have been logged out.','👋');
-}
-
 // ── PLAN SELECT ────────────────────────────────────────
 function handlePlanSelect(plan, price){
-  if(!currentUser){
-    openModal('signupModal');
-    showToast(`Sign up first to select the ${plan} plan.`,'💡');
-    return;
-  }
   showToast(`${plan} plan selected (${price}). Redirecting to checkout...`,'🚀');
+  enterCourse();
 }
 
 // ── FAQ ────────────────────────────────────────────────

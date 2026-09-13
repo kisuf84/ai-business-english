@@ -232,6 +232,15 @@ const navGroups: NavGroup[] = [
     ],
   },
   {
+    label: "Langslate Apps",
+    items: [
+      langslateCorporateNavItem,
+      langslateAcademyNavItem,
+      langslate365NavItem,
+      langslateFlowNavItem,
+    ],
+  },
+  {
     label: "Library",
     items: [
       // Client-requested top order (Aug 20): Your Lessons, Level Test,
@@ -259,15 +268,6 @@ const navGroups: NavGroup[] = [
         : []),
       ...(AUG19_CONTENT_RELEASED ? [speakingTopicsNavItem] : []),
       { href: "/for-teachers", label: "For Teachers", icon: "/icons/chalkboard-user_10489812.png" },
-    ],
-  },
-  {
-    label: "Langslate Apps",
-    items: [
-      langslateCorporateNavItem,
-      langslateAcademyNavItem,
-      langslate365NavItem,
-      langslateFlowNavItem,
     ],
   },
   {

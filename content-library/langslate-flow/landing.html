@@ -440,8 +440,7 @@ footer{background:var(--ink);color:var(--on-ink-muted);border-top:1px solid var(
         <svg class="icon i-sun"><use href="#i-sun"/></svg>
         <svg class="icon i-moon"><use href="#i-moon"/></svg>
       </button>
-      <button class="nav-loginbtn" onclick="Auth.open('login')">Log In</button>
-      <button class="btn btn-primary btn-sm" onclick="Auth.open('signup')">Start Speaking</button>
+      <button class="btn btn-primary btn-sm" onclick="enterPractice()">Start Speaking</button>
       <button class="nav-burger" onclick="MobileMenu.toggle()" aria-label="Open menu"><svg class="icon" style="width:16px;height:16px"><use href="#i-menu"/></svg></button>
     </div>
   </div>
@@ -460,8 +459,7 @@ footer{background:var(--ink);color:var(--on-ink-muted);border-top:1px solid var(
     <a href="#pricing" onclick="MobileMenu.toggle()">Pricing</a>
   </div>
   <div class="mm-actions">
-    <button class="btn btn-outline btn-block" onclick="Auth.open('login')">Log In</button>
-    <button class="btn btn-primary btn-block" onclick="Auth.open('signup')">Start Speaking</button>
+    <button class="btn btn-primary btn-block" onclick="enterPractice()">Start Speaking</button>
   </div>
   <div class="mm-theme">
     Appearance
@@ -477,7 +475,7 @@ footer{background:var(--ink);color:var(--on-ink-muted);border-top:1px solid var(
     <h1>Practice <span class="hl-orange">Real Conversations</span>. <em>Speak with Confidence.</em></h1>
     <p class="hero-sub">Practice real spoken English with Aria, your AI voice tutor. Shadow native sentences or hold free-flowing conversations across Social, Travel, and Business scenarios — with instant feedback on tone, fluency, grammar, and vocabulary.</p>
     <div class="hero-ctas">
-      <button class="btn btn-primary" onclick="Auth.open('signup')">Start Speaking</button>
+      <button class="btn btn-primary" onclick="enterPractice()">Start Speaking</button>
       <a href="#how" class="btn btn-outline">See How It Works</a>
     </div>
 
@@ -710,7 +708,7 @@ footer{background:var(--ink);color:var(--on-ink-muted);border-top:1px solid var(
           <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>100% private, on-device analysis</div>
           <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Progress tracking &amp; streaks</div>
         </div>
-        <button class="btn btn-outline" onclick="Auth.open('signup')">Start with Starter</button>
+        <button class="btn btn-outline" onclick="enterPractice()">Start with Starter</button>
       </div>
       <div class="price-card hi">
         <span class="price-badge">Most Popular</span>
@@ -727,7 +725,7 @@ footer{background:var(--ink);color:var(--on-ink-muted);border-top:1px solid var(
           <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>100% private, on-device analysis</div>
           <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Progress tracking &amp; streaks</div>
         </div>
-        <button class="btn btn-primary" onclick="Auth.open('signup')">Get Momentum</button>
+        <button class="btn btn-primary" onclick="enterPractice()">Get Momentum</button>
       </div>
       <div class="price-card deal">
         <span class="price-badge orange">Best Deal</span>
@@ -744,7 +742,7 @@ footer{background:var(--ink);color:var(--on-ink-muted);border-top:1px solid var(
           <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>100% private, on-device analysis</div>
           <div class="price-feat"><svg class="icon"><use href="#i-check"/></svg>Progress tracking &amp; streaks</div>
         </div>
-        <button class="btn btn-orange" onclick="Auth.open('signup')">Choose Fluent</button>
+        <button class="btn btn-orange" onclick="enterPractice()">Choose Fluent</button>
       </div>
     </div>
     <p class="pricing-note reveal">No hidden fees. Cancel anytime on renewal.</p>
@@ -768,7 +766,7 @@ footer{background:var(--ink);color:var(--on-ink-muted);border-top:1px solid var(
     <h2>Stop Studying English. <em>Start Speaking It.</em></h2>
     <p class="fc-support">Your first conversation with Aria is one tap away — no pressure, instant feedback, real progress.</p>
     <div class="fc-ctas">
-      <button class="btn btn-primary" onclick="Auth.open('signup')">Start Speaking</button>
+      <button class="btn btn-primary" onclick="enterPractice()">Start Speaking</button>
       <a href="#pricing" class="btn btn-outline">See Pricing</a>
     </div>
   </div>
@@ -808,32 +806,6 @@ footer{background:var(--ink);color:var(--on-ink-muted);border-top:1px solid var(
     </div>
   </div>
 </footer>
-
-<!-- ============================= AUTH MODAL ============================= -->
-<div id="modal-overlay" onclick="if(event.target===this)Auth.close()">
-  <div id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <button class="modal-close" onclick="Auth.close()" aria-label="Close"><svg class="icon"><use href="#i-close"/></svg></button>
-    <div class="modal-logo"><span class="orb-mark" style="width:32px;height:32px"></span><span>Langslate Flow</span></div>
-    <div class="modal-tabs">
-      <button class="modal-tab" id="tab-login" onclick="Auth.setTab('login')">Log In</button>
-      <button class="modal-tab" id="tab-signup" onclick="Auth.setTab('signup')">Create Account</button>
-    </div>
-    <h3 class="modal-title" id="modal-title">Welcome to Flow</h3>
-    <p class="modal-sub" id="modal-sub">Sign in to keep your streak going with Aria.</p>
-    <button class="google-btn" onclick="Auth.submit('google')">
-      <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.6-6 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 3l5.7-5.7C34.5 6.1 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.3-.4-3.5Z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3 0 5.8 1.1 7.9 3l5.7-5.7C34.5 6.1 29.5 4 24 4c-7.7 0-14.3 4.3-17.7 10.7Z"/><path fill="#4CAF50" d="M24 44c5.4 0 10.3-2.1 14-5.5l-6.5-5.5C29.3 34.8 26.8 36 24 36c-5.2 0-9.6-3.3-11.2-8l-6.6 5.1C9.6 39.6 16.3 44 24 44Z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.5 5.5C39.5 37.5 44 31.5 44 24c0-1.2-.1-2.3-.4-3.5Z"/></svg>
-      Continue with Google
-    </button>
-    <div class="modal-divider">OR</div>
-    <form onsubmit="return Auth.submit('email', event)">
-      <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" required placeholder="you@email.com"></div>
-      <div class="field"><label for="f-pass">Password</label><input id="f-pass" type="password" required placeholder="••••••••" minlength="8"></div>
-      <button type="submit" class="btn btn-primary btn-block" id="modal-submit" style="margin-top:8px">Log In</button>
-    </form>
-    <div id="modal-msg"></div>
-    <p class="modal-foot-note" id="modal-foot-note">Don't have an account? <a href="#" style="font-weight:700;color:var(--text)" onclick="Auth.setTab('signup');return false">Create one</a></p>
-  </div>
-</div>
 
 <button id="back-to-top" onclick="scrollToTop()" aria-label="Back to top"><svg class="icon"><use href="#i-arrow-up"/></svg></button>
 <div id="toast"></div>
@@ -879,41 +851,14 @@ const MobileMenu = {
   }
 };
 
-/* ============================= AUTH MODAL ============================= */
-const Auth = {
-  mode:'signup',
-  open(mode){
-    this.setTab(mode || 'signup');
-    document.getElementById('modal-overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  },
-  close(){
-    document.getElementById('modal-overlay').classList.remove('open');
-    document.body.style.overflow = '';
-    document.getElementById('modal-msg').classList.remove('show');
-  },
-  setTab(mode){
-    this.mode = mode;
-    document.getElementById('tab-login').classList.toggle('active', mode==='login');
-    document.getElementById('tab-signup').classList.toggle('active', mode==='signup');
-    document.getElementById('modal-title').textContent = mode==='login' ? 'Welcome back' : 'Create your account';
-    document.getElementById('modal-sub').textContent = mode==='login' ? 'Sign in to keep your streak going with Aria.' : 'Start practicing real conversations with Aria today.';
-    document.getElementById('modal-submit').textContent = mode==='login' ? 'Log In' : 'Create Account';
-    document.getElementById('modal-foot-note').innerHTML = mode==='login'
-      ? 'Don\'t have an account? <a href="#" style="font-weight:700;color:var(--text)" onclick="Auth.setTab(\'signup\');return false">Create one</a>'
-      : 'Already have an account? <a href="#" style="font-weight:700;color:var(--text)" onclick="Auth.setTab(\'login\');return false">Log in</a>';
-    document.getElementById('modal-msg').classList.remove('show');
-  },
-  submit(kind, e){
-    if(e) e.preventDefault();
-    const msg = document.getElementById('modal-msg');
-    msg.textContent = kind === 'google'
-      ? 'This demo is wired for Google OAuth — connect your client ID to enable sign-in.'
-      : 'This demo interface is ready to connect to your authentication backend.';
-    msg.classList.add('show');
-    return false;
-  }
-};
+/* ============================= ENTER PRACTICE ============================= */
+// Users are already authenticated in Langslate, so every CTA here goes
+// straight into the practice app.
+function enterPractice(){
+  const target = '/apps/flow/practice';
+  if(window.top && window.top !== window){ window.top.location.href = target; }
+  else{ window.location.href = target; }
+}
 
 /* ============================= FAQ ============================= */
 const faqData = [
