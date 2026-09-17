@@ -912,6 +912,13 @@ let rtTranscript = '';
 let rtInterim = '';
 let rtRestartCount = 0;
 let rtRestartWindowStart = 0;
+// Guards against a known continuous-mode quirk (mostly on mobile Chrome/
+// Android) where the engine silently restarts its internal result numbering
+// mid-session -- without ever firing onend/onstart -- and redelivers
+// already-finalized results as "new" isFinal entries at low indices again.
+// Tracks the highest ev.results array index we've already committed to
+// rtTranscript for the CURRENT recording session; see onresult below.
+let rtLastFinalizedResultIndex = -1;
 
 const SILENCE_AUTO_STOP_MS = 2200;
 
@@ -950,6 +957,13 @@ if(Recorder.sttSupported){
     for(let i = ev.resultIndex; i < ev.results.length; i++){
       const res = ev.results[i];
       if(res.isFinal){
+        // Only accept a final result once per array position. If the engine
+        // redelivers an index we've already committed (the reset described
+        // above), skip it -- but legitimate repeated speech ("in my opinion
+        // ... in my opinion ...") always lands at a new, higher index, so
+        // intentional repetition still comes through untouched.
+        if(i <= rtLastFinalizedResultIndex) continue;
+        rtLastFinalizedResultIndex = i;
         rtTranscript += (rtTranscript ? ' ' : '') + res[0].transcript.trim();
       } else {
         interim += res[0].transcript;
@@ -1011,6 +1025,11 @@ if(Recorder.sttSupported){
         finishRecordingWithError("We tried listening several times but never picked up any sound from your microphone. Check that it's connected and not muted.");
         return;
       }
+      // This is a genuine, spec-compliant session boundary (onend actually
+      // fired), unlike the silent mid-session reset guarded against in
+      // onresult -- nothing has been captured yet, so it's safe (and
+      // necessary) to let the next session's result indices start at 0 again.
+      rtLastFinalizedResultIndex = -1;
       try{ recognition.start(); }
       catch(e){ rtRecording = false; finishRecording(); }
       return;
@@ -1823,6 +1842,7 @@ function toggleRecord(){
   recSession++;
   rtTranscript = '';
   rtInterim = '';
+  rtLastFinalizedResultIndex = -1;
   rtRestartCount = 0;
   rtRestartWindowStart = Date.now();
   clearTimeout(silenceTimer);

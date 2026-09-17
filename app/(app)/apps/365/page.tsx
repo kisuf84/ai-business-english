@@ -10,7 +10,7 @@ export default function Langslate365LandingPage() {
       title={item.title}
       description="5 minutes a day, 365 days a year of business English mastery."
       iframeSrc={`/content/langslate-365/${item.slug}`}
-      primaryAction={{ href: "/apps/365/course", label: "Open the course" }}
+      primaryAction={{ href: "/apps/365/course", label: "Open the App" }}
       backLinks={[{ href: "/dashboard", label: "Back to Dashboard" }]}
     />
   );

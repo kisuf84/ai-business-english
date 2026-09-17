@@ -321,7 +321,11 @@ body{background:var(--bg);color:var(--cream);font-family:var(--font-b);min-heigh
   #sidebar{position:fixed;left:-280px;top:0;z-index:200}
   #sidebar.open{left:0;box-shadow:20px 0 60px rgba(0,0,0,.6)}
   .mob-menu{display:block}
-  .topbar{padding:10px 16px}
+  /* Start Lesson was being pushed off the right edge on narrow phones
+     because .topbar/.tb-right never wrapped; body's overflow-x:hidden then
+     made it unreachable. Let the row wrap instead of hiding anything. */
+  .topbar{padding:10px 16px;flex-wrap:wrap;row-gap:10px}
+  .tb-right{width:100%;flex-wrap:wrap;justify-content:flex-end;gap:10px}
   .lesson-hero{padding:32px 16px 28px}
   .sec-nav{padding:0 16px}
   .lesson-body{padding:28px 16px}
