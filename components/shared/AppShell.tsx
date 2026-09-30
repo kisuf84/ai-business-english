@@ -188,9 +188,10 @@ const speakingTopicsNavItem: NavItem = {
 
 /**
  * Langslate Apps: each entry is a gateway to its own product. For now,
- * without external URLs or gating from the client, Corporate and Academy
- * are non-broken placeholders and 365/Flow are internal routes serving the
- * client-supplied HTML. Swapping any `href` here for an external URL later
+ * without external URLs or gating from the client, Corporate is an internal
+ * metadata catalog (lessons served from the external content origin),
+ * Academy is a non-broken placeholder and 365/Flow are internal routes
+ * serving the client-supplied HTML. Swapping any `href` here for an external URL later
  * needs no structural change — just update the string (and, if it should
  * open in a new tab, add a `target`/`rel` pair to NavLink).
  */
@@ -504,11 +505,15 @@ export default function AppShell({ children }: AppShellProps) {
   const isTwoSegmentContentReader = TWO_SEGMENT_READER_PREFIXES.some((prefix) =>
     new RegExp(`^${prefix}/[^/]+/[^/]+$`).test(pathname || "")
   );
+  // Langslate Corporate lessons: /apps/corporate/{family}/{category}/{lesson}.
+  const isCorporateLessonReader =
+    /^\/apps\/corporate\/[^/]+\/[^/]+\/[^/]+$/.test(pathname || "");
   const isImmersiveReader =
     isPremiumModuleReader ||
     isSingleSegmentContentReader ||
     isTopLevelContentReader ||
-    isTwoSegmentContentReader;
+    isTwoSegmentContentReader ||
+    isCorporateLessonReader;
 
   useEffect(() => {
     if (!pathname) return;
@@ -527,7 +532,9 @@ export default function AppShell({ children }: AppShellProps) {
 
   const derivedPageTitle = pathname?.startsWith("/premium-classes")
     ? "Premium Courses"
-    : undefined;
+    : pathname?.startsWith("/apps/corporate/")
+      ? "Langslate Corporate"
+      : undefined;
   const pageTitle =
     navGroups.flatMap((group) => group.items).find((item) => item.href === pathname)
       ?.label ??
