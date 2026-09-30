@@ -22,15 +22,24 @@ import {
   isSafeContentKey,
   requireSourceRoot,
   requireStagingDir,
+  md5OfBuffer,
   sha256OfBuffer,
   sha256OfFile,
 } from "./lib.mjs";
 import {
+  JS_APOSTROPHE_REPAIR_TRANSFORM,
   REMOTE_AI_TRANSFORM,
   disableRemoteAi,
+  repairJsApostrophes,
   scriptSyntaxErrors,
   structureProblems,
 } from "./transform.mjs";
+
+const TRANSFORMS = {
+  [REMOTE_AI_TRANSFORM]: (html) => disableRemoteAi(html),
+  [JS_APOSTROPHE_REPAIR_TRANSFORM]: (html, record) =>
+    repairJsApostrophes(html, record.sourceRelativePath, record.sourceSha256),
+};
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 export const CONTENT_TYPE = "text/html; charset=utf-8";
@@ -58,6 +67,8 @@ async function main() {
   const info = { sourceStructureAnomalies: [], sourceScriptSyntaxErrors: [] };
   const plan = [];
   let transformed = 0;
+  const transformCounts = {};
+  const multiTransform = [];
   let unchanged = 0;
   const bytes = { total: 0, corporate: 0, academy: 0, transformedDelta: 0 };
 
@@ -93,28 +104,59 @@ async function main() {
       relativePath: rel,
       size: record.sourceSize,
       sha256: record.sourceSha256,
+      md5: md5OfBuffer(buffer),
       transforms: [],
     };
 
-    if (record.transforms.includes(REMOTE_AI_TRANSFORM)) {
-      let result;
+    if (record.transforms.length) {
+      // Apply the record's transforms in order; each step's change offsets
+      // are relative to that step's input.
+      let out = html;
+      const steps = [];
       try {
-        result = disableRemoteAi(html);
+        for (const transform of record.transforms) {
+          const apply = TRANSFORMS[transform];
+          if (!apply) throw new Error(`unknown transform ${transform}`);
+          const result = apply(out, record);
+          steps.push({ transform, changes: result.changes });
+          out = result.output;
+        }
       } catch (error) {
         failures.failedTransformation.push({ path: rel, error: error.message });
         continue;
       }
-      const out = result.output;
+
       const outProblems = structureProblems(out);
       if (outProblems.length) failures.transformedStructure.push({ path: rel, problems: outProblems });
       const outSyntax = scriptSyntaxErrors(out);
-      if (outSyntax.length > sourceSyntax.length) failures.transformedSyntax.push({ path: rel, errors: outSyntax });
+      // Remote-AI removal must not add errors; an apostrophe repair must leave none.
+      const maxSyntaxErrors = record.transforms.includes(JS_APOSTROPHE_REPAIR_TRANSFORM) ? 0 : sourceSyntax.length;
+      if (outSyntax.length > maxSyntaxErrors) failures.transformedSyntax.push({ path: rel, errors: outSyntax });
 
-      // The only difference must be the single replaced span.
-      const [change] = result.changes;
-      const reconstructed =
-        out.slice(0, change.offset) + change.removed + out.slice(change.offset + change.inserted.length);
-      if (result.changes.length !== 1 || reconstructed !== html) failures.unexpectedDiff.push(rel);
+      // The only differences must be the recorded spans: undo every change
+      // (last step first, highest offset first) and require the source back.
+      // Change offsets are in the step's input coordinates, so shift each by
+      // the length delta of the earlier changes in the same step.
+      let reconstructed = out;
+      for (const step of [...steps].reverse()) {
+        const ordered = [...step.changes].sort((a, b) => a.offset - b.offset);
+        let shift = 0;
+        const positioned = ordered.map((change) => {
+          const at = change.offset + shift;
+          shift += change.inserted.length - change.removed.length;
+          return { ...change, at };
+        });
+        for (const change of positioned.reverse()) {
+          if (reconstructed.slice(change.at, change.at + change.inserted.length) !== change.inserted) {
+            reconstructed = null;
+            break;
+          }
+          reconstructed =
+            reconstructed.slice(0, change.at) + change.removed + reconstructed.slice(change.at + change.inserted.length);
+        }
+        if (reconstructed === null) break;
+      }
+      if (reconstructed !== html) failures.unexpectedDiff.push(rel);
 
       const outBuffer = Buffer.from(out, "utf8");
       const target = path.join(uploadDir, record.objectKey);
@@ -126,11 +168,23 @@ async function main() {
         relativePath: path.posix.join("upload", record.objectKey),
         size: outBuffer.length,
         sha256: sha256OfBuffer(outBuffer),
+        md5: md5OfBuffer(outBuffer),
         sourceSha256: record.sourceSha256,
         sourceSize: record.sourceSize,
-        transforms: [REMOTE_AI_TRANSFORM],
+        transforms: [...record.transforms],
+        transformSteps: steps.map((step) => ({
+          transform: step.transform,
+          changes: step.changes.map((c) => ({
+            offset: c.offset,
+            removed: c.removed,
+            inserted: c.inserted,
+            byteDelta: Buffer.byteLength(c.inserted) - Buffer.byteLength(c.removed),
+          })),
+        })),
       };
       bytes.transformedDelta += outBuffer.length - record.sourceSize;
+      for (const t of record.transforms) transformCounts[t] = (transformCounts[t] ?? 0) + 1;
+      if (record.transforms.length > 1) multiTransform.push(rel);
       transformed++;
     } else {
       unchanged++;
@@ -156,6 +210,8 @@ async function main() {
     manifestRecords: manifest.records.length,
     planned: plan.length,
     transformed,
+    transformCounts,
+    multiTransformRecords: multiTransform,
     unchanged,
     bytes,
     failureCounts,

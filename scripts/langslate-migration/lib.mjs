@@ -246,6 +246,11 @@ export function sha256OfBuffer(buffer) {
   return createHash("sha256").update(buffer).digest("hex");
 }
 
+/** MD5 is only used to compare against R2's single-part ETag, never for integrity decisions alone. */
+export function md5OfBuffer(buffer) {
+  return createHash("md5").update(buffer).digest("hex");
+}
+
 export function sha256OfFile(absPath) {
   return new Promise((resolve, reject) => {
     const hash = createHash("sha256");

@@ -31,6 +31,69 @@ export function needsRemoteAiTransform(html) {
   return html.includes("api.anthropic.com");
 }
 
+// ---------------------------------------------------------------------------
+// repair-js-apostrophe (3 known Professions lessons):
+// Each file's single main <script> fails to parse because an apostrophe sits
+// unescaped inside a single-quoted string literal, so none of the lesson's
+// JS runs. The repair is an explicit allowlist pinned to the exact source
+// file + SHA-256 and the exact malformed literal(s); each literal must occur
+// exactly once, and only its inner apostrophe is escaped (' -> \').
+
+export const JS_APOSTROPHE_REPAIR_TRANSFORM = "repair-js-apostrophe";
+
+export const JS_APOSTROPHE_REPAIRS = {
+  "LANGSLATE CORPORATE/PROFESSIONS/ENTREPRENEUR/ENTREPRENEUR_MODULE_08_pitching-ideas.html": {
+    sourceSha256: "e21ec0b78eb33a68948c46b4d59c2804f4402c34b1a427320975088d0037da3a",
+    literals: [
+      "'devil's advocate'",
+      "'Excellent work — this reads like a founder whose idea clicks the first time it's explained.'",
+    ],
+  },
+  "LANGSLATE CORPORATE/PROFESSIONS/MUSICIAN/MUSICIAN_MODULE_12_songwriting-and-composition.html": {
+    sourceSha256: "dfb7944a110c1dc7c353b0eb7858d722fc7aed162340eb663ebf94edd834bf30",
+    literals: ["'writer's block'"],
+  },
+  "LANGSLATE CORPORATE/PROFESSIONS/SOFTWARE DEVELOPER/DEVELOPER_MODULE_09_technical-decision-making.html": {
+    sourceSha256: "a2156161590b84618c4a5caa5ccfcf64de3d12b230d0223da18105c03c8b7c56",
+    literals: ["'devil's advocate'"],
+  },
+};
+
+/**
+ * Returns { output, changes } or throws. Fails closed unless the source hash
+ * matches, every malformed literal occurs exactly once, and every inline
+ * script parses afterwards.
+ */
+export function repairJsApostrophes(html, sourceRelativePath, sourceSha256) {
+  const spec = JS_APOSTROPHE_REPAIRS[sourceRelativePath];
+  if (!spec) throw new Error("no apostrophe repair registered for this file");
+  if (spec.sourceSha256 !== sourceSha256) throw new Error(`source SHA-256 ${sourceSha256} differs from the pinned repair source`);
+
+  const changes = [];
+  for (const literal of spec.literals) {
+    const first = html.indexOf(literal);
+    if (first < 0 || html.indexOf(literal, first + 1) >= 0) {
+      throw new Error(`expected exactly one occurrence of ${literal}`);
+    }
+    const inner = literal.slice(1, -1);
+    const apostrophes = [...inner.matchAll(/'/g)];
+    if (apostrophes.length !== 1) throw new Error(`expected exactly one inner apostrophe in ${literal}`);
+    const offset = first + 1 + apostrophes[0].index;
+    changes.push({ offset, removed: "'", inserted: "\\'" });
+  }
+
+  // Apply from the end so earlier offsets stay valid; report offsets in
+  // source coordinates, ascending.
+  changes.sort((a, b) => a.offset - b.offset);
+  let output = html;
+  for (const change of [...changes].reverse()) {
+    output = output.slice(0, change.offset) + change.inserted + output.slice(change.offset + change.removed.length);
+  }
+  const syntax = scriptSyntaxErrors(output);
+  if (syntax.length) throw new Error(`scripts still fail to parse: ${syntax.join("; ")}`);
+  return { output, changes };
+}
+
 /**
  * Returns { output, changes } or throws with a precise reason. Guards:
  * exactly one call site; it must be awaited; it must sit inside a try block

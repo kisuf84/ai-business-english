@@ -41,7 +41,7 @@ import {
   sha256OfFile,
   slugify,
 } from "./lib.mjs";
-import { REMOTE_AI_TRANSFORM } from "./transform.mjs";
+import { JS_APOSTROPHE_REPAIRS, JS_APOSTROPHE_REPAIR_TRANSFORM, REMOTE_AI_TRANSFORM } from "./transform.mjs";
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const GENERATED_DIR = path.join(REPO_ROOT, "lib", "generated");
@@ -150,7 +150,10 @@ async function main() {
       sourceSize: stat.size,
       sourceSha256: sha256,
       prototypeId: proto?.id ?? null,
-      transforms: html.includes("api.anthropic.com") ? [REMOTE_AI_TRANSFORM] : [],
+      transforms: [
+        ...(html.includes("api.anthropic.com") ? [REMOTE_AI_TRANSFORM] : []),
+        ...(JS_APOSTROPHE_REPAIRS[rel] ? [JS_APOSTROPHE_REPAIR_TRANSFORM] : []),
+      ],
     };
 
     if (identity.product === "corporate") {
@@ -214,6 +217,9 @@ async function main() {
     if (path.isAbsolute(r.sourceRelativePath) || r.sourceRelativePath.split("/").includes(".."))
       problems.push(`non-relative source path ${r.sourceRelativePath}`);
     if (!r.title) problems.push(`missing title ${r.sourceRelativePath}`);
+  }
+  for (const rel of Object.keys(JS_APOSTROPHE_REPAIRS)) {
+    if (!records.some((r) => r.sourceRelativePath === rel)) problems.push(`registered repair has no canonical record: ${rel}`);
   }
   const collisions = [...byKey.entries()].filter(([, v]) => v.length > 1);
   for (const [key, paths] of collisions) problems.push(`key collision ${key}: ${paths.join(" | ")}`);
@@ -310,6 +316,8 @@ async function main() {
     duplicateContentGroups: duplicateContent.length,
     maxObjectKeyLength: Math.max(...records.map((r) => r.objectKey.length)),
     remoteAiTransformCount: records.filter((r) => r.transforms.includes(REMOTE_AI_TRANSFORM)).length,
+    jsApostropheRepairCount: records.filter((r) => r.transforms.includes(JS_APOSTROPHE_REPAIR_TRANSFORM)).length,
+    multiTransformRecords: records.filter((r) => r.transforms.length > 1).map((r) => r.sourceRelativePath),
     titleSources: countBy(records.map((r) => `${r.product}:${r.titleSource}`)),
     lessonNumbers: {
       corporateWithNumber: records.filter((r) => r.product === "corporate" && r.number !== null).length,

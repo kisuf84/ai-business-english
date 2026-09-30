@@ -15,8 +15,12 @@ node scripts/langslate-migration/build-manifest.mjs   # manifest + runtime catal
 node scripts/langslate-migration/dry-run.mjs          # verify, transform, plan (no upload)
 node scripts/langslate-migration/upload.mjs           # prints plan only
 
-# Upload (requires `wrangler login`; resumable; re-hashes every file first):
-LANGSLATE_R2_BUCKET=<bucket> node scripts/langslate-migration/upload.mjs --execute [--only corporate/]
+# Upload (requires `wrangler login`; resumable; re-hashes every file first).
+# With LANGSLATE_CONTENT_BASE_URL set, objects already serving identical
+# content (Content-Type, length, ETag == MD5) are skipped and every upload is
+# re-checked over HTTP; transient failures retry with backoff.
+LANGSLATE_R2_BUCKET=<bucket> LANGSLATE_CONTENT_BASE_URL=https://<content-host>/v1 \
+  node scripts/langslate-migration/upload.mjs --execute [--only corporate/] [--concurrency 8]
 LANGSLATE_CONTENT_BASE_URL=https://<content-host>/v1 node scripts/langslate-migration/upload.mjs --verify
 ```
 
@@ -28,4 +32,9 @@ LANGSLATE_CONTENT_BASE_URL=https://<content-host>/v1 node scripts/langslate-migr
   browser-side `fetch('https://api.anthropic.com/v1/messages'` call head so the
   lesson's existing offline Auto-Correction Report is used. Written to staging
   copies; every other file uploads byte-identical from source.
+- Transform `repair-js-apostrophe` (3 Professions lessons: Entrepreneur M08,
+  Musician M12, Software Developer M09): escapes only the unescaped apostrophe
+  inside the specific malformed JS string literals that stop each lesson's
+  main script from parsing. Pinned to the exact source path + SHA-256 and
+  literal text; fails closed on any difference.
 - Outputs are deterministic for an unchanged source tree.
