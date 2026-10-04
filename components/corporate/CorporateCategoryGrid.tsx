@@ -10,6 +10,7 @@ export type CorporateCategoryCard = {
   label: string;
   href: string;
   meta: string;
+  thumbnailSrc: string;
 };
 
 const INITIAL_VISIBLE_COUNT = 24;
@@ -68,15 +69,21 @@ export default function CorporateCategoryGrid({
           <p className="text-sm font-semibold text-[var(--ink)]">No {nounPlural} found.</p>
         </Card>
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {visible.map((item) => (
             <Link key={item.slug} href={item.href} className="group block" aria-label={`${item.label} — ${item.meta}`}>
-              <Card className="lumen-card-link h-full">
-                <div className="flex h-full items-center justify-between gap-3">
+              <Card className="lumen-card-link h-full overflow-hidden p-0">
+                <div className="aspect-[3/2] overflow-hidden bg-[var(--paper-soft)]">
+                  <img
+                    src={item.thumbnailSrc}
+                    alt=""
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="flex items-center justify-between gap-3 p-4">
                   <div className="min-w-0">
-                    <h2 className="mobile-safe-wrap text-base font-semibold leading-snug text-[var(--ink)]">
-                      {item.label}
-                    </h2>
+                    <h2 className="mobile-safe-wrap text-base font-semibold leading-snug text-[var(--ink)]">{item.label}</h2>
                     <p className="mt-1 text-xs text-[var(--ink-muted)]">{item.meta}</p>
                   </div>
                   <span aria-hidden="true" className="shrink-0 text-[var(--ink-faint)] transition group-hover:text-[var(--ink)]">

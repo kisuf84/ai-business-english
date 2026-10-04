@@ -749,6 +749,12 @@ export default function AppShell({ children }: AppShellProps) {
     </div>
   );
 
+  // The Langslate Corporate landing page is the client's full-page design with
+  // its own navigation and footer, so it renders without the shell chrome
+  // (still behind AuthGuard). Only this exact route; Corporate family,
+  // category and lesson pages keep the shell.
+  if (pathname === "/apps/corporate" || pathname === "/apps/academy") return <>{children}</>;
+
   return (
     <div className="font-ui min-h-dvh overflow-x-hidden text-[var(--ink-1)] lg:h-dvh lg:overflow-hidden">
       <div className="aurora" />
