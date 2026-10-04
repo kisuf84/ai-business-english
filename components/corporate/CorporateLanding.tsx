@@ -122,7 +122,11 @@ export default function CorporateLanding({
             <Link href={ROUTES.dashboard}>Dashboard preview</Link>
           </div>
           <div className="lc-nav-actions">
-            <Link href={ROUTES.dashboard} className="lc-btn lc-btn-ghost lc-btn-sm">
+            <Link href={ROUTES.dashboard} className="lc-btn lc-btn-ghost lc-btn-sm lc-back-apps">
+              <span className="lc-back-apps-icon" aria-hidden="true">←</span>
+              <span>Back to Langslate</span>
+            </Link>
+            <Link href={ROUTES.dashboard} className="lc-btn lc-btn-ghost lc-btn-sm lc-login-link">
               Log in
             </Link>
             <Link href={ROUTES.pricing} className="lc-btn lc-btn-primary lc-btn-sm">
