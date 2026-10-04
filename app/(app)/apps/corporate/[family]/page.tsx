@@ -20,7 +20,7 @@ export default function CorporateFamilyPage({ params }: { params: { family: stri
       eyebrow="Langslate Corporate"
       title={family.label}
       description={`${copy.description} ${family.categories.length} ${copy.categoryNounPlural}, ${countCorporateLessons(family).toLocaleString("en-US")} ${copy.lessonNounPlural}.`}
-      backLink={{ href: LANGSLATE_CORPORATE_BASE_PATH, label: "Langslate Corporate" }}
+      backLink={{ href: `${LANGSLATE_CORPORATE_BASE_PATH}/platform`, label: "Langslate Corporate" }}
     >
       <CorporateCategoryGrid
         nounSingular={copy.categoryNoun}

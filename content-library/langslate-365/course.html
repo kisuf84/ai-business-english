@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>5-Minute Business English Mastery — 365 Days</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -33,8 +33,8 @@ body.light{
 --blue:#1A6B9A;--purple:#6D4EA0;--success:#1B8A5A;--error:#C0392B
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--cream);font-family:var(--font-b);min-height:100vh;overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:hidden;max-width:100vw}
+body{background:var(--bg);color:var(--cream);font-family:var(--font-b);min-height:100vh;overflow-x:hidden;max-width:100vw}
 
 /* SPLASH */
 #splash{position:fixed;inset:0;z-index:2000;background:var(--midnight);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity 0.8s ease,transform 0.8s ease}
@@ -316,23 +316,114 @@ body{background:var(--bg);color:var(--cream);font-family:var(--font-b);min-heigh
 .sb-overlay{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.6);backdrop-filter:blur(2px)}
 .sb-overlay.active{display:block}
 
-/* MOBILE */
+/* ═══════════════════════════════════════════════════════
+   MOBILE — comprehensive responsive overrides
+   ═══════════════════════════════════════════════════════ */
 @media(max-width:768px){
-  #sidebar{position:fixed;left:-280px;top:0;z-index:200}
-  #sidebar.open{left:0;box-shadow:20px 0 60px rgba(0,0,0,.6)}
-  .mob-menu{display:block}
-  /* Start Lesson was being pushed off the right edge on narrow phones
-     because .topbar/.tb-right never wrapped; body's overflow-x:hidden then
-     made it unreachable. Let the row wrap instead of hiding anything. */
-  .topbar{padding:10px 16px;flex-wrap:wrap;row-gap:10px}
-  .tb-right{width:100%;flex-wrap:wrap;justify-content:flex-end;gap:10px}
-  .lesson-hero{padding:32px 16px 28px}
-  .sec-nav{padding:0 16px}
-  .lesson-body{padding:28px 16px}
+  /* ── Core layout: sidebar slides off-screen, main fills 100vw ── */
+  #app{display:block;width:100vw;overflow-x:hidden}
+  #sidebar{position:fixed;left:-100vw;top:0;bottom:0;z-index:200;width:min(280px,85vw);height:100%;overflow-y:auto;overflow-x:hidden;transition:left .28s cubic-bezier(.4,0,.2,1)}
+  #sidebar.open{left:0;box-shadow:20px 0 60px rgba(0,0,0,.7)}
+  #main{width:100vw;max-width:100vw;min-height:100vh;overflow-x:hidden}
+
+  /* Sidebar overlay when open */
+  .sb-overlay{z-index:199!important;background:rgba(0,0,0,.6)!important}
+
+  /* Topbar */
+  .topbar{padding:10px 14px;gap:8px;width:100%;box-sizing:border-box}
   .lesson-title-top{display:none}
-  .rdg-card{padding:20px 16px}
-  .ch-card{padding:24px 16px}
+  .tb-left{gap:8px;min-width:0;overflow:hidden}
+  .tb-right{gap:8px;flex-shrink:0}
+  .day-badge{font-size:10px;padding:3px 9px}
+  .theme-toggle{display:flex}
+
+  /* Topbar icons — unified 36×36px on mobile */
+  .mob-menu{display:flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;border-radius:8px;font-size:18px;background:var(--bg-card);border:1px solid var(--bd);flex-shrink:0}
+  .theme-icon-btn{width:36px;height:36px}
+  .timer-wrap{width:36px;height:36px}
+  .timer-wrap .timer-svg{width:36px;height:36px}
+  #tText{font-size:9px}
+
+  /* Hero section */
+  .lesson-hero{padding:24px 16px 20px;width:100%;box-sizing:border-box}
+  .h-meta{gap:6px;flex-wrap:wrap}
+  .hero-title{font-size:clamp(18px,5vw,28px);margin-bottom:10px}
+  .hero-goal{font-size:13.5px;padding:12px 14px}
+  .hero-stats{gap:14px;margin-top:18px}
+  .stat-pill{font-size:11px}
+
+  /* Section nav — horizontal scroll, tabs never overflow the screen */
+  .sec-nav{padding:0;width:100%;box-sizing:border-box;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .sec-nav::-webkit-scrollbar{display:none}
+  .nav-step{scroll-snap-align:start;flex-shrink:0;padding:10px 8px;font-size:10.5px;white-space:nowrap}
+  .nav-step .sn{width:20px;height:20px;font-size:10px}
+
+  /* Lesson body */
+  .lesson-body{padding:20px 14px 60px;width:100%;box-sizing:border-box;max-width:100vw;overflow-x:hidden}
+
+  /* Vocabulary cards */
+  .vocab-grid{grid-template-columns:1fr}
+  .vocab-card{padding:14px 16px}
+
+  /* Dialogue */
+  .dlg-wrap{gap:10px;width:100%;box-sizing:border-box}
+  .dlg-l,.dlg-r{max-width:100%;box-sizing:border-box}
+  .bubble{max-width:78%;padding:9px 12px;word-break:break-word}
+  .bbl-text{font-size:13.5px}
+  .av{width:28px;height:28px;font-size:13px;flex-shrink:0}
+
+  /* Speaking tasks */
+  .spk-hdr{padding:12px 14px;gap:8px}
+  .spk-row{padding:0 14px 12px;flex-direction:column;gap:8px;align-items:stretch}
+  .btn-rec{width:100%;justify-content:center;padding:14px 20px;font-size:14px;min-height:50px;border-radius:10px;touch-action:manipulation}
+  .btn-hint{width:100%;justify-content:center;padding:12px 16px;font-size:13.5px;min-height:46px;border-radius:10px;touch-action:manipulation}
+  .vfb-panel{padding:0 14px 14px}
   .vfb-metrics{grid-template-columns:1fr}
+  .vfb-transcript{font-size:13px;padding:10px 12px}
+
+  /* Reading */
+  .rdg-card{padding:18px 14px;width:100%;box-sizing:border-box;overflow-x:hidden}
+  .rdg-text{font-size:14.5px;line-height:1.75;word-break:break-word}
+
+  /* Quiz */
+  .quiz-card{padding:16px 14px;width:100%;box-sizing:border-box}
+  .q-opts{gap:8px}
+  .q-opt{padding:12px 14px;font-size:13.5px;min-height:48px;touch-action:manipulation;width:100%;box-sizing:border-box;word-break:break-word}
+
+  /* Challenge */
+  .ch-card{padding:22px 16px}
+  .ch-emoji{font-size:36px}
+  .ch-title{font-size:19px}
+  .ch-text{font-size:14.5px}
+
+  /* Motivation */
+  .mot-wrap{padding:28px 16px}
+  .mot-quote{font-size:clamp(16px,4.5vw,22px)}
+
+  /* Buttons — larger tap targets on mobile */
+  .btn-nav{padding:13px 20px;font-size:13.5px;min-height:48px;touch-action:manipulation}
+  .btn-start{padding:12px 22px;font-size:13.5px;min-height:48px;touch-action:manipulation}
+  .btn-ch{padding:13px 24px;font-size:13px;min-height:48px;touch-action:manipulation}
+
+  /* Nav arrows at bottom */
+  .lesson-nav{padding:16px 14px 32px;gap:10px;flex-wrap:wrap}
+  .lesson-nav .btn-nav{flex:1;min-width:120px;justify-content:center}
+
+  /* Sidebar day buttons — bigger touch target */
+  .day-btn{min-height:34px;min-width:34px;font-size:12px}
+
+  /* Fix bottom safe area on iOS */
+  .lesson-body{padding-bottom:max(60px, calc(60px + env(safe-area-inset-bottom)))}
+}
+
+/* Very small phones */
+@media(max-width:380px){
+  .lesson-body{padding:16px 12px 60px}
+  .topbar{padding:9px 12px}
+  .hero-title{font-size:18px}
+  .bbl-text{font-size:13px}
+  .nav-step{font-size:10px;padding:9px 7px}
+  .day-badge{display:none}
 }
 
 /* SIDEBAR AUTHOR */
@@ -345,11 +436,18 @@ body{background:var(--bg);color:var(--cream);font-family:var(--font-b);min-heigh
 .sb-author-name{font-family:var(--font-d);font-size:13px;font-weight:600;color:var(--cream);line-height:1.2}
 .sb-author-role{font-size:10px;color:var(--muted);font-style:italic;line-height:1.3}
 
-/* THEME TOGGLE */
-.theme-toggle{display:flex;align-items:center;gap:0;background:var(--bd);border-radius:20px;padding:3px;border:1px solid var(--bd);flex-shrink:0}
-.theme-btn{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:16px;border:none;background:none;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--text-muted);font-family:var(--font-b);letter-spacing:.03em}
-.theme-btn.active{background:var(--bg-card);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.15)}
-body.light .theme-btn.active{box-shadow:0 1px 4px rgba(0,0,0,.08)}
+/* THEME TOGGLE — single icon button */
+.theme-toggle{display:flex;align-items:center;flex-shrink:0}
+.theme-icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--bd);background:var(--bg-card);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s,transform .2s;flex-shrink:0}
+.theme-icon-btn:hover{background:var(--bg-card-hover);border-color:var(--gold-dim);transform:rotate(20deg)}
+.theme-icon-btn svg{width:17px;height:17px;flex-shrink:0}
+/* icon shown depends on current mode: moon in dark, sun in light */
+.theme-icon-btn .icon-moon{display:block;color:var(--gold)}
+.theme-icon-btn .icon-sun{display:none;color:var(--gold)}
+body.light .theme-icon-btn .icon-moon{display:none}
+body.light .theme-icon-btn .icon-sun{display:block}
+/* Legacy selectors kept for JS that targets .theme-btn — hidden */
+.theme-btn{display:none}
 /* Light mode overrides for specific elements */
 body.light .splash-ring,.light .spl-ring{border-top-color:var(--accent)}
 body.light .spl-inner{color:var(--accent)}
@@ -509,7 +607,7 @@ body.light .spl-bar{background:var(--bd)}
 
 <div id="app">
   <nav id="sidebar">
-    <div class="sb-logo" onclick="location.reload()" style="cursor:pointer" title="Go to home">
+    <div class="sb-logo" onclick="location.reload()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();location.reload()}" role="button" tabindex="0" aria-label="Reload Langslate 365 home" style="cursor:pointer" title="Go to home">
       <div class="sb-badge">⚡ 365-Day Course</div>
       <div class="sb-title">5-Min <span>Business English</span><br>Mastery</div>
     </div>
@@ -520,7 +618,7 @@ body.light .spl-bar{background:var(--bd)}
     </div>
     <div class="sb-days">
       <div class="sb-sec-label">All 365 Lessons</div>
-      <input class="day-search" type="number" min="1" max="365" placeholder="Jump to day (1–365)" id="daySearch" oninput="jumpToDay(this.value)">
+      <input class="day-search" type="number" min="1" max="365" placeholder="Jump to day (1–365)" aria-label="Jump to a lesson day" id="daySearch" oninput="jumpToDay(this.value)">
       <div id="levelAccordion"></div>
     </div>
     <div class="sb-footer">All 365 lessons unlocked · Zero subscriptions<br><span style="color:var(--gold)">5 minutes</span> a day · 1 year of mastery</div>
@@ -540,16 +638,23 @@ body.light .spl-bar{background:var(--bd)}
   <main id="main">
     <div class="topbar">
       <div class="tb-left">
-        <button class="mob-menu" onclick="openSB()">☰</button>
+        <button class="mob-menu" onclick="openSB()" aria-label="Open lesson navigation">☰</button>
         <div class="day-badge" id="topDayBadge">DAY 1 / 365</div>
         <div class="lesson-title-top" id="topTitle">Loading...</div>
       </div>
       <div class="tb-right">
         <div class="theme-toggle" id="themeToggle">
-          <button class="theme-btn active" id="btnDark" onclick="setTheme('dark')">🌙 Dark</button>
-          <button class="theme-btn" id="btnLight" onclick="setTheme('light')">☀️ Light</button>
+          <button class="theme-icon-btn" id="btnTheme" onclick="setTheme(document.body.classList.contains('light')?'dark':'light')" title="Toggle dark / light mode" aria-label="Toggle theme">
+            <!-- Moon icon (shown in dark mode) -->
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <!-- Sun icon (shown in light mode) -->
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
+          <!-- Legacy buttons hidden but kept so existing setTheme() JS still works -->
+          <button class="theme-btn" id="btnDark" style="display:none"></button>
+          <button class="theme-btn" id="btnLight" style="display:none"></button>
         </div>
-        <div class="timer-wrap" onclick="toggleTimer()" title="Start / Pause">
+        <div class="timer-wrap" onclick="toggleTimer()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTimer()}" role="button" tabindex="0" aria-label="Start or pause the five-minute lesson timer" title="Start / Pause">
           <svg class="timer-svg" width="50" height="50" viewBox="0 0 50 50">
             <circle class="t-track" cx="25" cy="25" r="22"/>
             <circle class="t-ring" id="tRing" cx="25" cy="25" r="22"/>
@@ -565,13 +670,13 @@ body.light .spl-bar{background:var(--bd)}
 
     <!-- Section Nav -->
     <nav class="sec-nav" id="secNav">
-      <div class="nav-step active" data-s="0" onclick="goSec(0)"><span class="sn">1</span>Vocabulary<span class="st">60s</span></div>
-      <div class="nav-step" data-s="1" onclick="goSec(1)"><span class="sn">2</span>Dialogue<span class="st">60s</span></div>
-      <div class="nav-step" data-s="2" onclick="goSec(2)"><span class="sn">3</span>Speaking<span class="st">60s</span></div>
-      <div class="nav-step" data-s="3" onclick="goSec(3)"><span class="sn">4</span>Reading<span class="st">45s</span></div>
-      <div class="nav-step" data-s="4" onclick="goSec(4)"><span class="sn">5</span>Quiz<span class="st">45s</span></div>
-      <div class="nav-step" data-s="5" onclick="goSec(5)"><span class="sn">6</span>Challenge<span class="st">15s</span></div>
-      <div class="nav-step" data-s="6" onclick="goSec(6)"><span class="sn">7</span>Motivation<span class="st">10s</span></div>
+      <div class="nav-step active" data-s="0" onclick="goSec(0)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goSec(0)}" role="button" tabindex="0"><span class="sn">1</span>Vocabulary<span class="st">60s</span></div>
+      <div class="nav-step" data-s="1" onclick="goSec(1)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goSec(1)}" role="button" tabindex="0"><span class="sn">2</span>Dialogue<span class="st">60s</span></div>
+      <div class="nav-step" data-s="2" onclick="goSec(2)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goSec(2)}" role="button" tabindex="0"><span class="sn">3</span>Speaking<span class="st">60s</span></div>
+      <div class="nav-step" data-s="3" onclick="goSec(3)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goSec(3)}" role="button" tabindex="0"><span class="sn">4</span>Reading<span class="st">45s</span></div>
+      <div class="nav-step" data-s="4" onclick="goSec(4)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goSec(4)}" role="button" tabindex="0"><span class="sn">5</span>Quiz<span class="st">45s</span></div>
+      <div class="nav-step" data-s="5" onclick="goSec(5)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goSec(5)}" role="button" tabindex="0"><span class="sn">6</span>Challenge<span class="st">15s</span></div>
+      <div class="nav-step" data-s="6" onclick="goSec(6)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goSec(6)}" role="button" tabindex="0"><span class="sn">7</span>Motivation<span class="st">10s</span></div>
     </nav>
 
     <div class="lesson-body" id="lessonBody"></div>
@@ -778,11 +883,25 @@ function logDebug(idx, msg) {
   console.log(`[SpeakingPractice][task ${idx}]`, msg);
 }
 
+// ── Per-recording session counter — prevents stale async callbacks from a
+//    previous recording session from polluting the current transcript.
+//    Bumped every time a NEW recording begins; all callbacks guard on it. ──
+let recSession = 0;
+
 if (S.asrSupported) {
   const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SpeechRecognitionCtor();
-  recognition.continuous = true;       // keep listening across natural pauses, don't cut the user off
-  recognition.interimResults = true;   // show live text as they speak
+
+  // KEY FIX: use non-continuous mode. In continuous mode, Chrome/Android
+  // accumulates ALL results across the lifetime of the recognition object —
+  // so re-recordings within the same session append to the same results
+  // array, causing the "my name is my name is my name is…" duplication the
+  // user reported. Non-continuous mode processes and returns each utterance
+  // as its own fresh result set, so no accumulation is possible. We achieve
+  // the same "keep listening until the user stops" behaviour by restarting
+  // the recognizer inside onend for each utterance (see below).
+  recognition.continuous = false;
+  recognition.interimResults = true;
   recognition.lang = 'en-US';
   recognition.maxAlternatives = 1;
 
@@ -792,28 +911,33 @@ if (S.asrSupported) {
     if (S.currentRecIdx !== null) logDebug(S.currentRecIdx, 'engine confirmed listening (onstart fired)');
   };
 
-  // Accumulate each newly-finalized chunk onto the running transcript rather
-  // than rebuilding it from e.results (which the engine can reset internally),
-  // and keep the not-yet-finalized "interim" tail separate for live preview.
-  // Every time new speech comes in, restart the silence clock — once that
-  // clock finishes uninterrupted, we treat it as "they've stopped talking"
-  // and finish automatically, exactly like tapping stop.
+  // ── Accumulate finalized chunks by CONTENT comparison (not by result
+  //    index, which can be unreliable). Each final transcript is appended
+  //    only if it isn't already the tail of what we have — this is the
+  //    duplicate guard that complements continuous:false.
+  //    Interim text is kept separately for the live-preview label. ──
   recognition.onresult = (e) => {
     if (S.currentRecIdx === null) return;
     const idx = S.currentRecIdx;
+    const mySession = recSession; // capture at start of handler
     let interim = '';
-    let finalChunks = 0;
     for (let i = e.resultIndex; i < e.results.length; i++) {
       const res = e.results[i];
       if (res.isFinal) {
-        S.transcripts[idx] = ((S.transcripts[idx] || '') + ' ' + res[0].transcript).trim();
-        finalChunks++;
+        // Guard: only ingest if this callback still belongs to the current session
+        if (recSession !== mySession) return;
+        const chunk = res[0].transcript.trim();
+        // Duplicate guard: skip if the running transcript already ends with this chunk
+        const current = (S.transcripts[idx] || '').trim();
+        if (chunk && !current.endsWith(chunk)) {
+          S.transcripts[idx] = (current + ' ' + chunk).trim();
+        }
+        logDebug(idx, `final chunk: "${chunk.slice(0, 60)}", running total: "${(S.transcripts[idx] || '').slice(0, 80)}"`);
       } else {
         interim += res[0].transcript;
       }
     }
     S.interimTranscripts[idx] = interim;
-    logDebug(idx, `onresult: ${finalChunks} final chunk(s), interim="${interim.slice(0, 40)}"${interim.length > 40 ? '…' : ''}, running total="${(S.transcripts[idx] || '').slice(0, 60)}"`);
 
     const panel = document.getElementById(`vfb-${idx}`);
     const transEl = panel ? panel.querySelector('.vfb-transcript') : null;
@@ -836,10 +960,8 @@ if (S.asrSupported) {
 
     if (e.error === 'no-speech') {
       // Not a real failure — the engine just hasn't picked up any audio YET.
-      // onend fires right after this; if the user hasn't said anything at
-      // all so far, we restart automatically down below. If they HAD
-      // already started speaking, this simply means they've gone quiet —
-      // onend will finalize it as a completed answer.
+      // onend fires right after this; the onend handler restarts for the next
+      // utterance, so the mic stays open until the user explicitly stops.
       return;
     }
 
@@ -860,14 +982,17 @@ if (S.asrSupported) {
     S.currentRecBtn = null;
   };
 
+  // ── onend fires after every utterance (because continuous:false).
+  //    We restart immediately for the next utterance — unless:
+  //      (a) the user tapped stop (S.recognizing is false), or
+  //      (b) the silence timer already fired and finalized the answer, or
+  //      (c) we've exhausted the retry budget (mic not delivering audio). ──
   recognition.onend = () => {
     recognitionActive = false;
     clearTimeout(startWatchdog);
     if (S.currentRecIdx !== null) logDebug(S.currentRecIdx, 'onend fired');
 
     if (errorHandled) {
-      // onerror already finalized the UI with a specific message — do not
-      // overwrite it with a generic "no speech" result.
       errorHandled = false;
       return;
     }
@@ -876,53 +1001,56 @@ if (S.asrSupported) {
       const idx = S.currentRecIdx;
       const hasContent = ((S.transcripts[idx] || '').trim() + (S.interimTranscripts[idx] || '').trim()).length > 0;
 
-      if (hasContent) {
-        // They'd already started answering and the engine's session simply
-        // ended (typically because they went quiet) — treat that exactly
-        // like the silence timer firing: the answer is complete.
-        clearTimeout(silenceTimer);
-        S.recognizing = false;
-        finishRecording();
-        return;
-      }
-
-      // Nothing captured yet — this is the engine's internal "haven't heard
-      // anything" timeout, which can fire within a few seconds even in
-      // continuous mode, often before the user has even started talking.
-      // The user hasn't clicked stop, so resume listening automatically.
+      // In non-continuous mode the engine ends after each utterance whether
+      // or not the user has finished. The silence timer (autoFinishOnSilence)
+      // is the authoritative "done" signal; here we just restart for the
+      // next utterance unless the timer already fired.
       const now = Date.now();
       if (now - S.restartWindowStart > 20000) { S.restartWindowStart = now; S.restartCount = 0; }
-      S.restartCount = (S.restartCount || 0) + 1;
-      logDebug(idx, `no content yet — auto-restarting (attempt ${S.restartCount}/10)`);
 
-      if (S.restartCount > 10) {
-        // The microphone genuinely isn't delivering any audio — stop
-        // silently retrying and say so plainly instead of looping forever.
-        logDebug(idx, 'restart limit reached — giving up with diagnostic message');
-        S.recognizing = false;
-        const btn = document.getElementById(`rec${idx}`);
-        if (btn) {
-          btn.disabled = false;
-          btn.classList.remove('recording');
-          btn.innerHTML = '<span class="r-dot"></span> Try Again';
+      // If we already have content AND the silence timer is active, let it
+      // fire rather than restarting — avoids a brief mic-off gap mid-sentence.
+      // If no silence timer is pending, restart immediately.
+      if (!hasContent) {
+        S.restartCount = (S.restartCount || 0) + 1;
+        logDebug(idx, `no content yet — auto-restarting (attempt ${S.restartCount}/10)`);
+
+        if (S.restartCount > 10) {
+          logDebug(idx, 'restart limit reached — giving up');
+          S.recognizing = false;
+          const btn = document.getElementById(`rec${idx}`);
+          if (btn) {
+            btn.disabled = false;
+            btn.classList.remove('recording');
+            btn.innerHTML = '<span class="r-dot"></span> Try Again';
+          }
+          renderNoSpeechDiagnostics(idx, `vfb-${idx}`, "We tried listening 10 times but never picked up any sound from your microphone.");
+          S.currentRecIdx = null;
+          S.currentRecBtn = null;
+          return;
         }
-        renderNoSpeechDiagnostics(idx, `vfb-${idx}`, "We tried listening 10 times but never picked up any sound from your microphone.");
-        S.currentRecIdx = null;
-        S.currentRecBtn = null;
-        return;
       }
 
       try {
         recognition.start();
       } catch (err) {
-        logDebug(idx, `restart failed to start: ${err && err.message}`);
-        S.recognizing = false;
-        finishRecording();
+        logDebug(idx, `restart failed: ${err && err.message}`);
+        if (hasContent) {
+          // Had content but couldn't restart — that's fine, show what we got
+          S.recognizing = false;
+          finishRecording();
+        } else {
+          S.recognizing = false;
+          showRecordError(idx, "Couldn't restart the microphone. Please tap Record again.");
+          S.currentRecIdx = null;
+          S.currentRecBtn = null;
+        }
       }
       return;
     }
 
-    // The user clicked "stop" manually — this is the real, intentional end.
+    // The user clicked "stop" manually or silence timer already finalized —
+    // this is the real, intentional end.
     clearTimeout(silenceTimer);
     S.recognizing = false;
     finishRecording();
@@ -1054,9 +1182,13 @@ function startRecording(btnId, taskIdx) {
   }
 
   // ── START a fresh recording for this task ──
+  // Bump session counter FIRST — any stale onresult/onend callbacks from
+  // the previous recording will see a mismatched session and bail out
+  // before they can append to the new transcript.
+  recSession++;
   S.currentRecBtn = btnId;
   S.currentRecIdx = taskIdx;
-  S.transcripts[taskIdx] = '';
+  S.transcripts[taskIdx] = '';       // clear old transcript — fresh start
   S.interimTranscripts[taskIdx] = '';
   S.debugLog[taskIdx] = [];
   S.recognizing = true;

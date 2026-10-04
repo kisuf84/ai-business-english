@@ -813,20 +813,29 @@ function applyTheme(t){
   document.documentElement.setAttribute('data-theme', t);
   const btn = document.getElementById('themeToggle');
   if(btn) btn.innerHTML = t === 'dark' ? ICONS.sun : ICONS.moon;
+  // Persist to both a plain localStorage key (works on any real deployment,
+  // e.g. this app hosted standalone on Vercel) and the Artifacts sandbox
+  // storage API when present (works when opened inside Claude), so the
+  // choice sticks across visits in either context.
+  try{ localStorage.setItem('langslate-flow-theme', t); }catch(e){}
   try{ if(window.storage) window.storage.set('langslate-flow-theme', t, false); }catch(e){}
 }
 async function loadTheme(){
+  // Dark is this app's default look, full stop -- it must never be
+  // silently overridden by the device/browser's system color-scheme
+  // preference. The ONLY thing allowed to switch it to light is the person
+  // explicitly tapping the theme toggle themselves in a previous visit,
+  // recovered here from whichever persistence layer is available.
   let t = 'dark';
   try{
-    if(window.storage){
+    const saved = localStorage.getItem('langslate-flow-theme');
+    if(saved === 'dark' || saved === 'light'){
+      t = saved;
+    } else if(window.storage){
       const res = await window.storage.get('langslate-flow-theme', false);
-      if(res && res.value) t = res.value;
-    } else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches){
-      t = 'light';
+      if(res && (res.value === 'dark' || res.value === 'light')) t = res.value;
     }
-  }catch(e){
-    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) t = 'light';
-  }
+  }catch(e){}
   applyTheme(t);
 }
 
@@ -908,17 +917,73 @@ let startWatchdog = null;        // catches "recognition.start() was called but 
 let silenceTimer = null;         // auto-finish once the user has gone quiet AFTER already saying something
 let recSession = 0;              // bumped every time a new recording begins; guards stale async callbacks
 
-let rtTranscript = '';
+// Finalized speech is stored as a list of distinct CONTENT chunks, merged by
+// comparing text, not by trusting the engine's result index. Chrome on
+// Android (and other mobile engines) has a long-standing continuous-mode bug
+// where each "final" delivery repeats the ENTIRE growing hypothesis so far
+// ("hey" -> "hey Alex" -> "hey Alex do" -> ...) -- and, contrary to what a
+// first look suggests, each of those redeliveries can arrive under a
+// DIFFERENT, incrementing result index, not the same one. That means an
+// index-keyed store (this file's first attempt at this fix) still stacks
+// every growing snapshot as its own separate chunk and reproduces the exact
+// word-repetition cascade. The only reliable signal is the text itself: when
+// a newly-finalized chunk is simply a longer (or shorter) version of the
+// chunk most recently committed -- one is a prefix of the other, or the two
+// otherwise overlap almost completely -- it's a redelivery of the same
+// utterance and should REPLACE that chunk, never sit alongside it. Only text
+// that doesn't overlap the last chunk is genuinely new speech and gets
+// appended.
+let rtFinalChunks = [];
+
+function normalizeForCompare(s){
+  return (s || '').toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+function ingestFinalChunk(rawText){
+  const text = (rawText || '').trim();
+  if(!text) return;
+  if(rtFinalChunks.length === 0){ rtFinalChunks.push(text); return; }
+
+  const lastIdx = rtFinalChunks.length - 1;
+  const last = rtFinalChunks[lastIdx];
+  const normNew = normalizeForCompare(text);
+  const normLast = normalizeForCompare(last);
+  if(!normNew || normNew === normLast) return; // empty or an exact resend -- nothing new
+
+  if(normNew.startsWith(normLast) || normLast.startsWith(normNew)){
+    // One is a growing/shrinking variant of the other (the mobile bug
+    // above) -- keep whichever is more complete instead of stacking both.
+    if(text.length >= last.length) rtFinalChunks[lastIdx] = text;
+    return;
+  }
+
+  // Fuzzy fallback: some engines re-guess slightly different wording for
+  // words already spoken (punctuation, minor corrections) while still
+  // extending the phrase, so an exact prefix match can miss a real
+  // redelivery. Treat it as the same underlying utterance only when the two
+  // share a long, unbroken common prefix of WORDS (not just characters) --
+  // a high bar, so two genuinely separate short sentences don't accidentally
+  // get merged into one.
+  const wordsNew = normNew.split(' ');
+  const wordsLast = normLast.split(' ');
+  const minLen = Math.min(wordsNew.length, wordsLast.length);
+  let commonPrefixWords = 0;
+  while(commonPrefixWords < minLen && wordsNew[commonPrefixWords] === wordsLast[commonPrefixWords]) commonPrefixWords++;
+  const overlapRatio = minLen > 0 ? commonPrefixWords / minLen : 0;
+  if(minLen >= 3 && overlapRatio >= 0.8 && wordsNew.length >= wordsLast.length){
+    rtFinalChunks[lastIdx] = text;
+    return;
+  }
+
+  // Genuinely new, unrelated content -- a separate finalized segment.
+  rtFinalChunks.push(text);
+}
+
+function finalTranscriptText(){ return rtFinalChunks.join(' ').trim(); }
+
 let rtInterim = '';
 let rtRestartCount = 0;
 let rtRestartWindowStart = 0;
-// Guards against a known continuous-mode quirk (mostly on mobile Chrome/
-// Android) where the engine silently restarts its internal result numbering
-// mid-session -- without ever firing onend/onstart -- and redelivers
-// already-finalized results as "new" isFinal entries at low indices again.
-// Tracks the highest ev.results array index we've already committed to
-// rtTranscript for the CURRENT recording session; see onresult below.
-let rtLastFinalizedResultIndex = -1;
 
 const SILENCE_AUTO_STOP_MS = 2200;
 
@@ -929,7 +994,18 @@ const Recorder = {
 if(Recorder.sttSupported){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SR();
-  recognition.continuous = true;
+  // Deliberately NOT continuous. Chrome on Android buffers noticeably (often
+  // a full second or more) before it will fire anything at all in
+  // continuous mode, which is exactly the "transcript lags behind my voice"
+  // delay users reported -- it's also what produced the growing-duplicate
+  // "final" results fixed above. Non-continuous mode processes and returns
+  // each utterance far more promptly. To still support recording longer,
+  // multi-sentence answers, onend below immediately restarts the recognizer
+  // for the next utterance whenever the user hasn't actually finished (see
+  // the onend handler) -- so from the user's perspective the mic never
+  // stops listening, it just returns each phrase quickly instead of
+  // stalling on one long buffered stream.
+  recognition.continuous = false;
   recognition.interimResults = true;
   recognition.lang = 'en-US';
   recognition.maxAlternatives = 1;
@@ -957,21 +1033,16 @@ if(Recorder.sttSupported){
     for(let i = ev.resultIndex; i < ev.results.length; i++){
       const res = ev.results[i];
       if(res.isFinal){
-        // Only accept a final result once per array position. If the engine
-        // redelivers an index we've already committed (the reset described
-        // above), skip it -- but legitimate repeated speech ("in my opinion
-        // ... in my opinion ...") always lands at a new, higher index, so
-        // intentional repetition still comes through untouched.
-        if(i <= rtLastFinalizedResultIndex) continue;
-        rtLastFinalizedResultIndex = i;
-        rtTranscript += (rtTranscript ? ' ' : '') + res[0].transcript.trim();
+        // Content-based merge, not index-based: see the comment above
+        // rtFinalChunks/ingestFinalChunk for why the index can't be trusted.
+        ingestFinalChunk(res[0].transcript);
       } else {
         interim += res[0].transcript;
       }
     }
     rtInterim = interim;
     updateLiveCaption();
-    const hasContent = (rtTranscript.trim() + interim.trim()).length > 0;
+    const hasContent = (finalTranscriptText() + interim.trim()).length > 0;
     if(hasContent){
       clearTimeout(silenceTimer);
       silenceTimer = setTimeout(() => autoFinishOnSilence(recSession), SILENCE_AUTO_STOP_MS);
@@ -1003,33 +1074,31 @@ if(Recorder.sttSupported){
     if(recordingAborted){ recordingAborted = false; return; }
 
     if(rtRecording){
-      const hasContent = (rtTranscript.trim() + rtInterim.trim()).length > 0;
-      if(hasContent){
-        // Already answering and the engine's session simply ended (usually
-        // because the user went quiet) -- treat exactly like the silence
-        // timer firing: the answer is complete.
-        clearTimeout(silenceTimer);
-        rtRecording = false;
-        finishRecording();
-        return;
+      // Since recognition.continuous is false, the engine ends its session
+      // after EVERY utterance -- whether or not it heard anything -- so
+      // this firing does not by itself mean "the user is done." The
+      // dedicated silence timer (autoFinishOnSilence, below) is what
+      // decides that, independent of this per-utterance engine end: it
+      // watches for SILENCE_AUTO_STOP_MS of quiet time after the user has
+      // already said something. Here, as long as rtRecording is still true
+      // (the user hasn't tapped stop and the silence timer hasn't fired),
+      // simply restart listening for the next utterance -- from the user's
+      // perspective this keeps the mic open continuously.
+      const hasContent = (finalTranscriptText() + rtInterim.trim()).length > 0;
+      if(!hasContent){
+        // The restart-limit safety net applies ONLY while nothing has been
+        // heard yet this session. Restarting after every utterance is the
+        // normal, expected steady state once real speech has come through,
+        // so it must never trip this "mic seems dead" diagnostic.
+        const now = Date.now();
+        if(now - rtRestartWindowStart > 20000){ rtRestartWindowStart = now; rtRestartCount = 0; }
+        rtRestartCount++;
+        if(rtRestartCount > 10){
+          rtRecording = false;
+          finishRecordingWithError("We tried listening several times but never picked up any sound from your microphone. Check that it's connected and not muted.");
+          return;
+        }
       }
-      // Nothing captured yet -- this is the engine's own "haven't heard
-      // anything" timeout, which can fire within a few seconds even in
-      // continuous mode, often before the user has started talking. They
-      // haven't tapped stop, so resume listening automatically.
-      const now = Date.now();
-      if(now - rtRestartWindowStart > 20000){ rtRestartWindowStart = now; rtRestartCount = 0; }
-      rtRestartCount++;
-      if(rtRestartCount > 10){
-        rtRecording = false;
-        finishRecordingWithError("We tried listening several times but never picked up any sound from your microphone. Check that it's connected and not muted.");
-        return;
-      }
-      // This is a genuine, spec-compliant session boundary (onend actually
-      // fired), unlike the silent mid-session reset guarded against in
-      // onresult -- nothing has been captured yet, so it's safe (and
-      // necessary) to let the next session's result indices start at 0 again.
-      rtLastFinalizedResultIndex = -1;
       try{ recognition.start(); }
       catch(e){ rtRecording = false; finishRecording(); }
       return;
@@ -1056,6 +1125,9 @@ function friendlyASRError(code){
   }
 }
 
+// The one true "the user is done talking" signal, independent of whatever
+// the engine's own per-utterance onend is doing: fires after
+// SILENCE_AUTO_STOP_MS of quiet following speech that was actually heard.
 function autoFinishOnSilence(session){
   if(session !== recSession || !rtRecording) return; // stale timer from a finished/switched recording
   rtRecording = false;
@@ -1790,7 +1862,7 @@ function toggleSampleUI(){
 function updateLiveCaption(){
   const caption = document.getElementById('liveCaption');
   if(!caption) return;
-  const text = (rtTranscript + ' ' + rtInterim).trim();
+  const text = (finalTranscriptText() + ' ' + rtInterim).trim();
   if(text){ caption.textContent = '"' + text + '"'; caption.classList.remove('placeholder'); }
   else { caption.textContent = 'Listening…'; caption.classList.add('placeholder'); }
 }
@@ -1840,9 +1912,8 @@ function toggleRecord(){
   // ── Start a fresh recording ──
   if(rtPlaying){ TTS.stop(); rtPlaying = false; }
   recSession++;
-  rtTranscript = '';
+  rtFinalChunks = [];
   rtInterim = '';
-  rtLastFinalizedResultIndex = -1;
   rtRestartCount = 0;
   rtRestartWindowStart = Date.now();
   clearTimeout(silenceTimer);
@@ -1900,6 +1971,13 @@ function toggleRecord(){
 }
 
 function finishRecording(){
+  // Defensive idempotency guard: with the engine now ending its session
+  // after every single utterance (see the continuous:false comment above)
+  // and restarting rapidly, finalize must never run twice for one recording
+  // even if two termination paths happened to race. rtSessionActive flips
+  // false only once, right here or in finishRecordingWithError, so a
+  // second call becomes a harmless no-op.
+  if(!rtSessionActive) return;
   if(recordingAborted){ recordingAborted = false; rtSessionActive = false; return; }
   clearTimeout(silenceTimer);
   clearInterval(rtTimerId);
@@ -1912,7 +1990,7 @@ function finishRecording(){
   // Combine the committed (finalized) transcript with any trailing "interim"
   // words still being recognized the moment the session ended -- otherwise
   // the last couple of spoken words can be lost.
-  const transcript = (rtTranscript + ' ' + rtInterim).trim();
+  const transcript = (finalTranscriptText() + ' ' + rtInterim).trim();
   const durationMs = performance.now() - rtStartedAt;
   setLiveBoxState('idle');
   const caption = document.getElementById('liveCaption');
@@ -1932,6 +2010,7 @@ function finishRecording(){
 }
 
 function finishRecordingWithError(message){
+  if(!rtSessionActive) return; // see the guard comment in finishRecording()
   if(recordingAborted){ recordingAborted = false; rtSessionActive = false; return; }
   rtRecording = false;
   clearTimeout(silenceTimer);

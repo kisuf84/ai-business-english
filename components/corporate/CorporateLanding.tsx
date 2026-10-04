@@ -26,7 +26,8 @@ export type CorporateLandingProps = {
 };
 
 const ROUTES = {
-  landing: "/apps/corporate",
+  landing: "/apps/corporate/platform",
+  marketing: "/apps/corporate",
   dashboard: "/dashboard",
   pricing: "/pricing",
   explore: "/apps/corporate/professions",
@@ -122,9 +123,14 @@ export default function CorporateLanding({
             <Link href={ROUTES.dashboard}>Dashboard preview</Link>
           </div>
           <div className="lc-nav-actions">
+            <a href={ROUTES.marketing} className="lc-btn lc-btn-ghost lc-btn-sm lc-marketing-link">
+              <span className="lc-marketing-long">Corporate overview</span>
+              <span className="lc-marketing-short">Overview</span>
+            </a>
             <Link href={ROUTES.dashboard} className="lc-btn lc-btn-ghost lc-btn-sm lc-back-apps">
               <span className="lc-back-apps-icon" aria-hidden="true">←</span>
-              <span>Back to Langslate</span>
+              <span className="lc-back-apps-long">Back to Langslate</span>
+              <span className="lc-back-apps-short">Back to Apps</span>
             </Link>
             <Link href={ROUTES.dashboard} className="lc-btn lc-btn-ghost lc-btn-sm lc-login-link">
               Log in
