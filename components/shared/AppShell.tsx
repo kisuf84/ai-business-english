@@ -187,13 +187,9 @@ const speakingTopicsNavItem: NavItem = {
 };
 
 /**
- * Langslate Apps: each entry is a gateway to its own product. For now,
- * without external URLs or gating from the client, Corporate is an internal
- * metadata catalog (lessons served from the external content origin),
- * Academy is a non-broken placeholder and 365/Flow are internal routes
- * serving the client-supplied HTML. Swapping any `href` here for an external URL later
- * needs no structural change — just update the string (and, if it should
- * open in a new tab, add a `target`/`rel` pair to NavLink).
+ * Langslate Apps: each entry is a gateway to its own product inside the
+ * main Langslate shell. Product-specific pages keep their supplied visual
+ * design while this shell preserves the shared app relationship.
  */
 const langslateCorporateNavItem: NavItem = {
   href: "/apps/corporate",
@@ -315,6 +311,7 @@ const TOP_LEVEL_READER_PATHS = [
   "/speaking-topics",
   "/apps/365",
   "/apps/flow",
+  "/apps/academy/platform",
 ];
 
 /**
@@ -748,12 +745,6 @@ export default function AppShell({ children }: AppShellProps) {
       ))}
     </div>
   );
-
-  // The Langslate Corporate landing page is the client's full-page design with
-  // its own navigation and footer, so it renders without the shell chrome
-  // (still behind AuthGuard). Corporate family, category and lesson pages
-  // keep the shell.
-  if (pathname === "/apps/corporate" || pathname === "/apps/corporate/platform" || pathname === "/apps/academy") return <>{children}</>;
 
   return (
     <div className="font-ui min-h-dvh overflow-x-hidden text-[var(--ink-1)] lg:h-dvh lg:overflow-hidden">

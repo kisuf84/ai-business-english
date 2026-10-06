@@ -1,23 +1,11 @@
 import type { Metadata } from "next";
-import CorporateLanding, { type CorporateLandingTab } from "../../../../../components/corporate/CorporateLanding";
-import {
-  corporateCategoryThumbnailSrc,
-  corporateCategoryHref,
-  corporateFamilyHref,
-  countCorporateLessons,
-  getCorporateFamily,
-  listCorporateFamilies,
-  type CorporateFamily,
-  type CorporateFamilySlug,
-} from "../../../../../lib/langslateCorporate";
+import Link from "next/link";
+import Card from "../../../../../components/shared/Card";
+import CatalogPageShell from "../../../../../components/shared/CatalogPageShell";
+import { corporateFamilyHref, countCorporateLessons, listCorporateFamilies } from "../../../../../lib/langslateCorporate";
 
-const PROTOTYPE_FONTS_HREF =
-  "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap";
-const TAB_ORDER: CorporateFamilySlug[] = ["professions", "industries", "departments", "pro"];
-const PREVIEW_CARD_COUNT = 8;
 const families = listCorporateFamilies();
 const totalLessons = families.reduce((sum, family) => sum + countCorporateLessons(family), 0);
-const totalLessonsRounded = Math.floor(totalLessons / 100) * 100;
 
 export const metadata: Metadata = {
   title: "Langslate Corporate Platform",
@@ -25,33 +13,37 @@ export const metadata: Metadata = {
 };
 
 export default function LangslateCorporatePlatformPage() {
-  const tabs: CorporateLandingTab[] = TAB_ORDER.map((slug) => getCorporateFamily(slug))
-    .filter((family): family is CorporateFamily => family !== null)
-    .map((family) => ({
-      key: family.slug,
-      label: family.label,
-      categoryCount: family.categories.length,
-      href: corporateFamilyHref(family.slug),
-      cards: family.categories.slice(0, PREVIEW_CARD_COUNT).map((category) => ({
-        slug: category.slug,
-        name: category.label.toUpperCase(),
-        count: category.lessons.length,
-        href: corporateCategoryHref(family.slug, category.slug),
-        thumbnailSrc: corporateCategoryThumbnailSrc(family.slug, category.slug),
-      })),
-    }));
-
   return (
-    <>
-      {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-      <link rel="stylesheet" href={PROTOTYPE_FONTS_HREF} />
-      <CorporateLanding
-        totalLessons={totalLessons}
-        totalLessonsRounded={totalLessonsRounded}
-        totalCategories={families.reduce((sum, family) => sum + family.categories.length, 0)}
-        professionCount={getCorporateFamily("professions")?.categories.length ?? 0}
-        tabs={tabs}
-      />
-    </>
+    <CatalogPageShell
+      eyebrow="Langslate Corporate"
+      title="Corporate Platform"
+      description={`${totalLessons.toLocaleString("en-US")} live professional English lessons across professions, industries, departments, and Langslate Pro.`}
+      backLink={{ href: "/apps/corporate", label: "Corporate landing" }}
+    >
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {families.map((family) => {
+          const lessonCount = countCorporateLessons(family);
+
+          return (
+            <Link key={family.slug} href={corporateFamilyHref(family.slug)} className="group block">
+              <Card className="lumen-card-link h-full">
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--ink-faint)]">
+                  {family.categories.length} categories
+                </p>
+                <h2 className="mobile-safe-wrap mt-3 text-xl font-semibold text-[var(--ink)]">
+                  {family.label}
+                </h2>
+                <p className="mt-2 text-sm text-[var(--ink-muted)]">
+                  {lessonCount.toLocaleString("en-US")} lessons
+                </p>
+                <span className="mt-5 inline-flex text-sm font-semibold text-[var(--accent)]">
+                  Open library →
+                </span>
+              </Card>
+            </Link>
+          );
+        })}
+      </div>
+    </CatalogPageShell>
   );
 }
