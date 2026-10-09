@@ -682,7 +682,7 @@ export default function AppShell({ children }: AppShellProps) {
       className="lumen-focus flex min-w-0 items-center gap-3 rounded-[12px]"
     >
       <img
-        src="/logo/langslate-ai-logo.png"
+        src="/logo/langslate-ai-logo-96.png"
         alt="Langslate logo"
         className={`shrink-0 rounded-[12px] object-contain shadow-glow ${
           compact ? "h-9 w-9" : "h-[38px] w-[38px]"
