@@ -312,6 +312,7 @@ const TOP_LEVEL_READER_PATHS = [
   "/apps/365",
   "/apps/flow",
   "/apps/academy/platform",
+  "/apps/corporate/platform",
 ];
 
 /**
