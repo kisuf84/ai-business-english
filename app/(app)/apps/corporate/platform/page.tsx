@@ -3,7 +3,6 @@ import CorporatePlatform, { type CorporatePlatformFamily } from "../../../../../
 import { buildLangslateContentUrl, normalizeLangslateContentBaseUrl } from "../../../../../lib/langslateContent";
 import {
   corporateCategoryHref,
-  corporateCategoryThumbnailSrc,
   corporateFamilyHref,
   corporateLessonHref,
   countCorporateLessons,
@@ -37,7 +36,6 @@ export default function LangslateCorporatePlatformPage() {
       slug: category.slug,
       label: category.label,
       href: corporateCategoryHref(family.slug, category.slug),
-      thumbnailSrc: corporateCategoryThumbnailSrc(family.slug, category.slug),
       lessons: category.lessons.map((lesson) => ({
         id: ++lessonId,
         slug: lesson.slug,

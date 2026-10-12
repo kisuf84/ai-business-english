@@ -14,7 +14,7 @@ export type CorporateLandingTab = {
   label: string;
   categoryCount: number;
   href: string;
-  cards: { slug: string; name: string; count: number; href: string; thumbnailSrc: string }[];
+  cards: { slug: string; name: string; count: number; href: string }[];
 };
 
 export type CorporateLandingProps = {
@@ -32,6 +32,13 @@ const ROUTES = {
   pricing: "/pricing",
   explore: "/apps/corporate/professions",
 };
+
+function initialsFor(name: string) {
+  const words = name.replace(/[()&-]/g, " ").trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return "??";
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return `${words[0][0]}${words[1][0]}`.toUpperCase();
+}
 
 export default function CorporateLanding({
   totalLessons,
@@ -335,9 +342,7 @@ export default function CorporateLanding({
                 href={card.href}
                 className="lc-card lc-mini-cat-card lc-reveal lc-is-visible"
               >
-                <div className="lc-mini-cat-thumb">
-                  <img src={card.thumbnailSrc} alt="" loading="lazy" />
-                </div>
+                <div className="lc-mini-cat-tile" aria-hidden="true">{initialsFor(card.name)}</div>
                 <div>
                   <div className="lc-cat-name">{card.name}</div>
                   <div className="lc-cat-count">{card.count} lessons</div>

@@ -5,7 +5,6 @@ import {
   CORPORATE_FAMILY_COPY,
   LANGSLATE_CORPORATE_BASE_PATH,
   corporateCategoryHref,
-  corporateCategoryThumbnailSrc,
   countCorporateLessons,
   getCorporateFamily,
 } from "../../../../../lib/langslateCorporate";
@@ -30,7 +29,7 @@ export default function CorporateFamilyPage({ params }: { params: { family: stri
           label: category.label,
           href: corporateCategoryHref(family.slug, category.slug),
           meta: `${category.lessons.length} ${category.lessons.length === 1 ? copy.lessonNoun : copy.lessonNounPlural}`,
-          thumbnailSrc: corporateCategoryThumbnailSrc(family.slug, category.slug),
+          lessonCount: category.lessons.length,
         }))}
       />
     </CatalogPageShell>

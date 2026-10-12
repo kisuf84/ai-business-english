@@ -10,10 +10,44 @@ export type CorporateCategoryCard = {
   label: string;
   href: string;
   meta: string;
-  thumbnailSrc: string;
+  lessonCount: number;
 };
 
 const INITIAL_VISIBLE_COUNT = 24;
+const GRADIENTS = [
+  "linear-gradient(120deg,#2f7bff,#1d3fe0)",
+  "linear-gradient(120deg,#10b981,#059669)",
+  "linear-gradient(120deg,#7fb0ff,#2f7bff)",
+  "linear-gradient(120deg,#34d399,#10b981)",
+  "linear-gradient(120deg,#1d3fe0,#0a1330)",
+  "linear-gradient(120deg,#2f7bff,#34d399)",
+  "linear-gradient(120deg,#0a1330,#1d3fe0)",
+  "linear-gradient(120deg,#059669,#2f7bff)",
+];
+
+function hashStr(value: string) {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash << 5) - hash + value.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
+
+function gradientFor(name: string) {
+  return GRADIENTS[hashStr(name) % GRADIENTS.length];
+}
+
+function initialsFor(name: string) {
+  const words = name.replace(/[()&-]/g, " ").trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return "??";
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return `${words[0][0]}${words[1][0]}`.toUpperCase();
+}
+
+function estimateMinutes(lessonCount: number) {
+  return lessonCount * 14;
+}
 
 /**
  * Category/program/profession grid for one Corporate family. Up to 128
@@ -72,23 +106,27 @@ export default function CorporateCategoryGrid({
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {visible.map((item) => (
             <Link key={item.slug} href={item.href} className="group block" aria-label={`${item.label} — ${item.meta}`}>
-              <Card className="lumen-card-link h-full overflow-hidden p-0">
-                <div className="aspect-[3/2] overflow-hidden bg-[var(--paper-soft)]">
-                  <img
-                    src={item.thumbnailSrc}
-                    alt=""
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="flex items-center justify-between gap-3 p-4">
-                  <div className="min-w-0">
-                    <h2 className="mobile-safe-wrap text-base font-semibold leading-snug text-[var(--ink)]">{item.label}</h2>
-                    <p className="mt-1 text-xs text-[var(--ink-muted)]">{item.meta}</p>
-                  </div>
-                  <span aria-hidden="true" className="shrink-0 text-[var(--ink-faint)] transition group-hover:text-[var(--ink)]">
-                    →
+              <Card className="lumen-card-link flex h-full flex-col gap-3 p-5 sm:p-6">
+                <div className="flex items-center justify-between gap-3">
+                  <span
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xs font-extrabold text-white shadow-sm"
+                    style={{ background: gradientFor(item.label) }}
+                    aria-hidden="true"
+                  >
+                    {initialsFor(item.label)}
                   </span>
+                  <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.08em] text-emerald-500">
+                    {item.lessonCount > 0 ? "Live" : "Soon"}
+                  </span>
+                </div>
+                <div className="min-w-0">
+                  <h2 className="mobile-safe-wrap text-base font-semibold leading-snug text-[var(--ink)]">{item.label}</h2>
+                  <p className="mt-1 text-xs text-[var(--ink-muted)]">
+                    {item.meta} · {estimateMinutes(item.lessonCount).toLocaleString("en-US")} min
+                  </p>
+                </div>
+                <div className="mt-auto h-1.5 overflow-hidden rounded-full bg-[var(--surface-raised)]">
+                  <div className="h-full rounded-full bg-[var(--ink-faint)]" style={{ width: 0 }} />
                 </div>
               </Card>
             </Link>

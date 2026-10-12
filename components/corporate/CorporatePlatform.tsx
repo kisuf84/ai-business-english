@@ -17,7 +17,6 @@ export type CorporatePlatformCategory = {
   slug: string;
   label: string;
   href: string;
-  thumbnailSrc: string;
   lessons: CorporatePlatformLesson[];
 };
 
@@ -138,6 +137,41 @@ function lessonKey(lesson: CorporatePlatformLesson) {
 
 function icon(name: string) {
   return <i className={`fas fa-${name}`} aria-hidden="true" />;
+}
+
+const CATEGORY_GRADIENTS = [
+  "linear-gradient(120deg,#2f7bff,#1d3fe0)",
+  "linear-gradient(120deg,#10b981,#059669)",
+  "linear-gradient(120deg,#7fb0ff,#2f7bff)",
+  "linear-gradient(120deg,#34d399,#10b981)",
+  "linear-gradient(120deg,#1d3fe0,#0a1330)",
+  "linear-gradient(120deg,#2f7bff,#34d399)",
+  "linear-gradient(120deg,#0a1330,#1d3fe0)",
+  "linear-gradient(120deg,#059669,#2f7bff)",
+];
+
+function hashStr(value: string) {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash << 5) - hash + value.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
+
+function gradientFor(name: string) {
+  return CATEGORY_GRADIENTS[hashStr(name) % CATEGORY_GRADIENTS.length];
+}
+
+function initialsFor(name: string) {
+  const words = name.replace(/[()&-]/g, " ").trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return "??";
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return `${words[0][0]}${words[1][0]}`.toUpperCase();
+}
+
+function estimateMinutes(lessonCount: number) {
+  return lessonCount * 14;
 }
 
 export default function CorporatePlatform({ families }: CorporatePlatformProps) {
@@ -878,16 +912,22 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
     const pct = category.lessons.length ? Math.round((done / category.lessons.length) * 100) : 0;
     return (
       <button className="corporate-category-card" key={category.slug} type="button" onClick={() => nav("courses", family.slug, category.slug)}>
-        <img src={category.thumbnailSrc} alt="" />
-        <span className="corporate-lesson-head">
-          <span style={{ background: meta.bg, color: meta.color }}>{category.lessons.length} lessons</span>
-          {pct ? <em>{pct}%</em> : null}
-        </span>
+        <div className="corporate-category-card-top">
+          <span className="corporate-category-tile" style={{ background: gradientFor(category.label) }}>
+            {initialsFor(category.label)}
+          </span>
+          <span className={category.lessons.length > 0 ? "corporate-category-badge live" : "corporate-category-badge soon"}>
+            {category.lessons.length > 0 ? "Live" : "Soon"}
+          </span>
+        </div>
         <strong>{category.label}</strong>
+        <span className="corporate-category-meta">
+          {category.lessons.length} lessons - {estimateMinutes(category.lessons.length).toLocaleString("en-US")} min
+        </span>
         <div className="corporate-progress-bar">
           <div style={{ background: meta.color, width: `${pct}%` }} />
         </div>
-        <Link href={category.href} onClick={(event) => event.stopPropagation()}>
+        <Link className="corporate-category-route" href={category.href} onClick={(event) => event.stopPropagation()}>
           Open route
         </Link>
       </button>
