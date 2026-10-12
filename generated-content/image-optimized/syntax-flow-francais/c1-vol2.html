@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Order C1 Vol. II · 100 C1 Drag-&amp;-Drop Sentences — Premium Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500;1,6..72,600&family=Manrope:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #150b06;
+  --panel: #20120a;
+  --panel-2: #2c190e;
+  --panel-warm: #25150b;
+  --line: #6e3c1c;
+  --line-soft: #3c2314;
+  --text: #fdf6f0;
+  --muted: #e2c1a2;
+  --muted-2: #a97f65;
+  --violet: #ff4fa3;
+  --violet-deep: #d61e7a;
+  --cyan: #ffcc33;
+  --pink: #ff3d5c;
+  --amber: #f4ff5c;
+  --blue: #ff6b4a;
+  --gold: #ff8a00;
+  --gold-deep: #cc5500;
+  --green: #ffd23f;
+  --shadow: 0 30px 70px -20px rgba(0,0,0,0.8);
+  --shadow-gold: 0 20px 55px -14px rgba(255,138,0,0.32);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Manrope', sans-serif;
+  background: var(--ink);
+  color: var(--text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    radial-gradient(circle at 10% 6%, rgba(255,61,92,0.20) 0%, transparent 42%),
+    radial-gradient(circle at 90% 14%, rgba(255,79,163,0.20) 0%, transparent 42%),
+    radial-gradient(circle at 50% 96%, rgba(255,204,51,0.14) 0%, transparent 46%),
+    radial-gradient(circle at 78% 70%, rgba(244,255,92,0.08) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+::selection { background: var(--pink); color: var(--ink); }
+
+/* === RIBBON === */
+.ribbon {
+  position: sticky; top: 0; z-index: 100;
+  background: #160b04;
+  color: var(--muted);
+  padding: 8px 24px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--line-soft);
+  overflow: hidden;
+}
+.ribbon .marquee { display: flex; gap: 32px; }
+.ribbon .marquee span::before { content: '◆'; margin-right: 8px; color: var(--pink); text-shadow: 0 0 8px var(--pink); }
+.ribbon .marquee span.premium-tag { color: var(--gold); font-weight: 700; text-shadow: 0 0 10px rgba(255,138,0,0.6); }
+.ribbon .marquee span.premium-tag::before { color: var(--gold); content: '✦'; }
+.ribbon-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.ribbon-status { color: var(--green); text-shadow: 0 0 8px rgba(255,210,63,0.7); }
+.ribbon-status::before { content: '●'; color: var(--cyan); margin-right: 6px; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:0.35 } }
+
+/* === NAV === */
+.nav {
+  position: sticky; top: 33px; z-index: 99;
+  background: rgba(18,9,4,0.85);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--line-soft);
+  padding: 16px 32px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.brand { display: flex; align-items: center; gap: 14px; cursor: pointer; }
+.brand-mark {
+  width: 42px; height: 42px;
+  background: linear-gradient(135deg, var(--pink), var(--violet));
+  color: #fff;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800; font-family: 'Space Grotesk', sans-serif;
+  box-shadow: 0 0 28px rgba(255,61,92,0.6);
+}
+.brand-text { display: flex; flex-direction: column; }
+.brand-name { font-family: 'Newsreader', serif; font-weight: 700; font-size: 21px; letter-spacing: -0.01em; line-height: 1; color: var(--text); }
+.brand-tag { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.22em; color: var(--cyan); text-transform: uppercase; margin-top: 5px; }
+.nav-links { display: flex; gap: 26px; align-items: center; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; transition: color 0.2s; cursor: pointer; }
+.nav-links a:hover { color: var(--cyan); }
+.nav-cta {
+  background: linear-gradient(90deg, var(--pink), var(--violet));
+  color: #fff; padding: 11px 24px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  border: none; cursor: pointer; transition: all 0.25s; font-family: inherit;
+  box-shadow: 0 8px 26px rgba(255,61,92,0.35);
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(255,79,163,0.45); }
+
+/* === HERO === */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 88vh;
+  display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px;
+  padding: 72px 64px 60px;
+  align-items: center;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 7px 16px;
+  border: 1px solid var(--pink);
+  border-radius: 999px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  margin-bottom: 26px; color: var(--pink);
+  box-shadow: 0 0 18px rgba(255,61,92,0.25) inset;
+}
+.hero-eyebrow::before { content:''; width:6px; height:6px; background: var(--pink); border-radius:50%; box-shadow: 0 0 10px var(--pink); }
+.hero h1 {
+  font-family: 'Newsreader', serif; font-weight: 400;
+  font-size: clamp(46px, 6.4vw, 92px);
+  line-height: 0.98; letter-spacing: -0.03em; margin-bottom: 26px; color: var(--text);
+}
+.hero h1 em {
+  font-style: italic; font-weight: 300;
+  background: linear-gradient(90deg, var(--pink), var(--violet) 55%, var(--cyan));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 22px rgba(255,79,163,0.35));
+}
+.hero-lede { font-size: 18px; line-height: 1.65; max-width: 540px; color: var(--muted); margin-bottom: 34px; }
+.hero-lede strong { color: var(--text); font-weight: 700; }
+.hero-meta {
+  display: grid; grid-template-columns: repeat(4, auto);
+  gap: 30px; padding: 22px 0;
+  border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft);
+  margin-bottom: 32px;
+}
+.meta-item .num { font-family: 'Newsreader', serif; font-size: 28px; font-weight: 600; line-height: 1; color: var(--text); }
+.meta-item .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-2); margin-top: 4px; }
+.hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-primary {
+  background: linear-gradient(90deg, var(--pink), var(--violet));
+  color: #fff; padding: 16px 30px; border-radius: 999px;
+  font-size: 14px; font-weight: 700; letter-spacing: 0.03em;
+  border: none; cursor: pointer; transition: all 0.25s;
+  display: inline-flex; align-items: center; gap: 10px; font-family: inherit;
+  box-shadow: 0 10px 32px rgba(255,61,92,0.4);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(255,79,163,0.5); }
+.btn-primary .arr { transition: transform 0.25s; }
+.btn-primary:hover .arr { transform: translateX(4px); }
+.btn-ghost {
+  background: transparent; color: var(--text); padding: 16px 26px; border-radius: 999px;
+  font-size: 14px; font-weight: 700; letter-spacing: 0.03em; border: 1px solid var(--line);
+  cursor: pointer; transition: all 0.25s; font-family: inherit;
+}
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 18px rgba(255,204,51,0.2); }
+
+.hero-image { position: relative; height: 74vh; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow); background: #271609; border: 1px solid var(--line-soft); }
+.hero-image img { width: 100%; height: 100%; object-fit: cover; display: block; filter: contrast(1.08) saturate(1.15); transition: transform 6s ease-out; }
+.hero-image:hover img { transform: scale(1.05); }
+.hero-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(18,9,4,0) 55%, rgba(18,9,4,0.88) 100%); pointer-events: none; }
+.hero-badge {
+  position: absolute; bottom: 26px; left: 26px;
+  background: rgba(30,17,8,0.92); backdrop-filter: blur(10px);
+  padding: 16px 20px; border-radius: 14px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  z-index: 2; border-left: 3px solid var(--pink); color: var(--muted);
+}
+.hero-badge .num { font-family: 'Newsreader', serif; font-size: 26px; font-weight: 700; color: var(--pink); letter-spacing: -0.02em; text-transform: none; display: block; line-height: 1; margin-bottom: 4px; text-shadow: 0 0 16px rgba(255,61,92,0.5); }
+.photo-credit {
+  position: absolute; bottom: 26px; right: 26px; z-index: 2;
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(253,246,240,0.78); background: rgba(30,17,8,0.6); padding: 8px 12px; border-radius: 999px;
+}
+.author-chip {
+  position: absolute; top: 26px; right: 26px;
+  background: rgba(30,17,8,0.94); color: var(--text); padding: 8px 16px 8px 8px; border-radius: 999px;
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  z-index: 3; backdrop-filter: blur(10px); border: 1px solid var(--line-soft);
+}
+.author-chip .chip-portrait { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--gold); object-fit: cover; display: block; box-shadow: 0 0 12px rgba(255,138,0,0.4); }
+
+/* === SECTION HEADS === */
+section { position: relative; z-index: 1; }
+.section-head { padding: 72px 64px 28px; display: grid; grid-template-columns: 1fr 2fr; gap: 60px; align-items: end; border-top: 1px solid var(--line-soft); }
+.section-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--pink); text-transform: uppercase; margin-bottom: 12px; }
+.section-title { font-family: 'Newsreader', serif; font-size: clamp(36px, 4.6vw, 64px); font-weight: 400; line-height: 0.98; letter-spacing: -0.025em; color: var(--text); }
+.section-title em { font-style: italic; background: linear-gradient(90deg, var(--pink), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.section-desc { font-size: 16px; line-height: 1.65; color: var(--muted); max-width: 640px; }
+
+/* === FEATURES === */
+.features { padding: 40px 64px 80px; }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1300px; margin: 0 auto; }
+@media (min-width: 1120px) { .features-grid { grid-template-columns: repeat(5, 1fr); } }
+.feature { padding: 26px 22px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line-soft); border-top: 3px solid var(--violet); }
+.feature:nth-child(2) { border-top-color: var(--cyan); }
+.feature:nth-child(3) { border-top-color: var(--pink); }
+.feature:nth-child(4) { border-top-color: var(--amber); }
+.feature:nth-child(5) { border-top-color: var(--blue); }
+.feature-icon { font-size: 22px; margin-bottom: 12px; display: block; }
+.feature h4 { font-family: 'Newsreader', serif; font-size: 20px; font-weight: 500; margin-bottom: 10px; color: var(--text); }
+.feature p { font-size: 13.5px; line-height: 1.6; color: var(--muted); }
+
+/* === PROGRESS DASHBOARD === */
+.progress-dashboard-wrap { padding: 0 64px 40px; }
+.progress-dashboard {
+  max-width: 1300px; margin: 0 auto;
+  background: linear-gradient(135deg, #25150b, #3c2314);
+  border: 1px solid rgba(255,138,0,0.28);
+  border-radius: 20px;
+  padding: 32px 36px;
+  display: flex; align-items: center; gap: 40px;
+  position: relative; overflow: hidden;
+  box-shadow: var(--shadow-gold);
+  flex-wrap: wrap;
+}
+.progress-dashboard::before {
+  content: ''; position: absolute; top: -60px; left: -60px; width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(255,138,0,0.16), transparent 70%);
+  pointer-events: none;
+}
+.pd-ring-wrap { position: relative; width: 120px; height: 120px; flex-shrink: 0; }
+.pd-ring-svg { width: 120px; height: 120px; transform: rotate(-90deg); }
+.pd-ring-bg { fill: none; stroke: var(--line-soft); stroke-width: 8; }
+.pd-ring-fill { fill: none; stroke: url(#pd-gradient); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 0.6s cubic-bezier(0.2,0.8,0.2,1); }
+.pd-ring-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.pd-ring-num { font-family: 'Newsreader', serif; font-size: 30px; font-weight: 700; color: var(--gold); line-height: 1; text-shadow: 0 0 14px rgba(255,138,0,0.45); }
+.pd-ring-total { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted-2); letter-spacing: 0.08em; margin-top: 2px; }
+.pd-info { flex: 1; position: relative; z-index: 1; min-width: 260px; }
+.pd-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; font-weight: 700; }
+.pd-title { font-family: 'Newsreader', serif; font-size: 21px; font-weight: 500; color: var(--text); margin-bottom: 20px; }
+.pd-stats { display: flex; gap: 40px; flex-wrap: wrap; }
+.pd-stat-num { font-family: 'Newsreader', serif; font-size: 24px; font-weight: 700; color: var(--text); line-height: 1; }
+.pd-stat-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: var(--muted-2); text-transform: uppercase; margin-top: 5px; }
+
+/* === DASHBOARD ROW + SCORE CARD === */
+.dashboard-row { max-width: 1300px; margin: 0 auto; display: flex; gap: 22px; align-items: stretch; flex-wrap: wrap; }
+.dashboard-row .progress-dashboard { flex: 2.1; min-width: 320px; margin: 0; }
+
+.score-card {
+  flex: 1; min-width: 260px;
+  background: linear-gradient(150deg, #2c1a0d, #331d0f 55%, #25150b);
+  border: 1px solid rgba(255,61,92,0.35);
+  border-radius: 20px;
+  padding: 28px 30px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 20px 55px -14px rgba(255,61,92,0.32);
+  display: flex; flex-direction: column; justify-content: center;
+  transition: box-shadow 0.3s;
+}
+.score-card-glow {
+  position: absolute; top: -70px; right: -70px; width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(255,204,51,0.22), transparent 70%);
+  pointer-events: none;
+}
+.score-card.pulse { box-shadow: 0 0 0 3px rgba(255,204,51,0.5), 0 20px 60px -10px rgba(255,61,92,0.5); }
+.score-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--pink); text-transform: uppercase; margin-bottom: 10px; font-weight: 700; position: relative; z-index: 1; }
+.score-num { font-family: 'Newsreader', serif; font-size: 52px; font-weight: 700; line-height: 1; color: var(--cyan); text-shadow: 0 0 24px rgba(255,204,51,0.5); position: relative; z-index: 1; display: inline-block; }
+.score-max { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--muted-2); letter-spacing: 0.06em; margin: 4px 0 12px; position: relative; z-index: 1; }
+.score-rank { font-family: 'Newsreader', serif; font-style: italic; font-size: 17px; color: var(--gold); margin-bottom: 14px; position: relative; z-index: 1; }
+.score-bar-wrap { height: 8px; background: var(--line-soft); border-radius: 999px; overflow: hidden; position: relative; z-index: 1; margin-bottom: 10px; }
+.score-bar-fill { height: 100%; width: 0%; border-radius: 999px; background: linear-gradient(90deg, var(--pink), var(--violet), var(--cyan)); transition: width 0.6s cubic-bezier(0.2,0.8,0.2,1); box-shadow: 0 0 10px rgba(255,61,92,0.5); }
+.score-next { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: var(--muted-2); text-transform: uppercase; position: relative; z-index: 1; }
+
+/* --- Score toast (floating +N popup) --- */
+.score-toast {
+  position: fixed; top: 90px; left: 50%; transform: translateX(-50%) translateY(-12px);
+  z-index: 2500; pointer-events: none; opacity: 0;
+  font-family: 'Newsreader', serif; font-weight: 700; font-size: 26px;
+  color: var(--gold); text-shadow: 0 0 18px rgba(255,138,0,0.6);
+  background: rgba(30,17,8,0.85); border: 1px solid rgba(255,138,0,0.4);
+  padding: 10px 24px; border-radius: 999px;
+  transition: opacity 0.35s, transform 0.35s;
+}
+.score-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* --- Round score badge inside modal results --- */
+.wb-result-score {
+  margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-weight: 800; font-size: 15px;
+  color: var(--gold); background: rgba(255,138,0,0.12); border: 1px solid rgba(255,138,0,0.4);
+  padding: 6px 14px; border-radius: 999px; white-space: nowrap;
+}
+
+/* --- Confetti canvas --- */
+#confetti-canvas { position: fixed; inset: 0; z-index: 3000; pointer-events: none; }
+
+@media (max-width: 900px) {
+  .dashboard-row { flex-direction: column; }
+}
+
+/* === CONTROLS === */
+.controls { padding: 28px 64px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--line-soft); border-top: 1px solid var(--line-soft); background: var(--panel-warm); }
+.search-wrap { flex: 1; min-width: 260px; position: relative; }
+.search-wrap input { width: 100%; padding: 13px 18px 13px 44px; border: 1px solid var(--line); background: var(--panel); border-radius: 999px; font-family: inherit; font-size: 14px; color: var(--text); transition: border 0.2s; }
+.search-wrap input::placeholder { color: var(--muted-2); }
+.search-wrap input:focus { outline: none; border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,61,92,0.15); }
+.search-wrap::before { content: '⌕'; position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 17px; color: var(--muted-2); }
+.filter-chip { padding: 9px 16px; border: 1px solid var(--line); background: var(--panel); border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; letter-spacing: 0.02em; white-space: nowrap; font-family: inherit; color: var(--muted); }
+.filter-chip:hover { border-color: var(--pink); color: var(--text); }
+.filter-chip.active { background: linear-gradient(90deg, var(--pink), var(--violet)); color: #fff; border-color: transparent; box-shadow: 0 0 16px rgba(255,61,92,0.35); }
+.controls-counter { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: var(--muted-2); text-transform: uppercase; margin-left: auto; }
+.controls-counter span { color: var(--pink); font-weight: 700; }
+
+/* === GRID === */
+.topics-grid { padding: 36px 64px 80px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.topic-card {
+  background: var(--panel); border: 1px solid var(--line-soft); border-radius: 14px; padding: 24px 22px 20px;
+  cursor: pointer; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); position: relative; overflow: hidden;
+  display: flex; flex-direction: column; min-height: 168px;
+}
+.topic-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,61,92,0.10), rgba(255,204,51,0.08)); opacity: 0; transition: opacity 0.3s; }
+.topic-card:hover { border-color: var(--pink); transform: translateY(-4px); box-shadow: 0 18px 44px -12px rgba(255,61,92,0.3); }
+.topic-card:hover::before { opacity: 1; }
+.topic-card.completed { border-left: 3px solid var(--green); box-shadow: 0 0 0 1px rgba(255,210,63,0.18); }
+.topic-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; position: relative; z-index: 1; }
+.topic-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--pink); font-weight: 700; }
+.topic-kind { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; background: var(--panel-2); color: var(--muted); }
+.topic-kind.done { background: linear-gradient(90deg, var(--green), #ffcf33); color: #332405; font-weight: 700; }
+.topic-title { font-family: 'Newsreader', serif; font-size: 21px; font-weight: 500; line-height: 1.28; letter-spacing: -0.005em; margin-bottom: 10px; position: relative; z-index: 1; color: var(--text); }
+.topic-intro { font-size: 13px; line-height: 1.55; color: var(--muted); position: relative; z-index: 1; flex: 1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.topic-card-foot { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+.topic-meta { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--muted-2); text-transform: uppercase; }
+.topic-arrow { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 15px; transition: all 0.25s; color: var(--muted); }
+.topic-card:hover .topic-arrow { background: linear-gradient(90deg, var(--pink), var(--violet)); color: #fff; border-color: transparent; transform: rotate(-45deg); }
+
+/* === MODAL === */
+.modal-bg { position: fixed; inset: 0; background: rgba(14,7,3,0.9); backdrop-filter: blur(8px); z-index: 1000; display: none; overflow-y: auto; padding: 40px 20px; }
+.modal-bg.open { display: block; }
+.modal { max-width: 780px; margin: 0 auto; background: var(--panel); border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 40px 110px rgba(0,0,0,0.7); animation: slideUp 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); border: 1px solid var(--line-soft); }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+.modal-header { padding: 34px 36px 26px; background: linear-gradient(135deg, #25150b, #3c2314); position: relative; }
+.modal-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--pink), var(--violet), var(--cyan)); }
+.modal-close { position: absolute; top: 22px; right: 22px; width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); color: var(--text); border: none; cursor: pointer; font-size: 17px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.modal-close:hover { background: var(--pink); }
+.modal-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--pink); text-transform: uppercase; margin-bottom: 10px; }
+.modal-title { font-family: 'Newsreader', serif; font-size: clamp(24px, 3.6vw, 32px); font-weight: 400; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 12px; color: var(--text); }
+.modal-cat-badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: var(--panel-2); color: var(--muted); margin-bottom: 14px; }
+.modal-body { padding: 30px 36px 36px; display: flex; flex-direction: column; gap: 20px; }
+
+/* --- Shared section-card look, colored per section --- */
+.gcard { padding: 24px 24px 22px; background: var(--panel-warm); border-radius: 16px; border: 1px solid var(--line-soft); border-left: 3px solid var(--violet); position: relative; overflow: hidden; }
+.gcard::after { content: ''; position: absolute; top: -30px; right: -30px; width: 130px; height: 130px; border-radius: 50%; pointer-events: none; opacity: 0.55; }
+.gcard-es { border-left-color: var(--gold); }
+.gcard-es::after { background: radial-gradient(circle, rgba(255,138,0,0.18), transparent 70%); }
+.gcard-game { border-left-color: var(--cyan); }
+.gcard-game::after { background: radial-gradient(circle, rgba(255,204,51,0.16), transparent 70%); }
+.gcard-tip { border-left-color: var(--pink); }
+.gcard-tip::after { background: radial-gradient(circle, rgba(255,61,92,0.16), transparent 70%); }
+
+.gcard-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; position: relative; z-index: 1; }
+.gcard-icon { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.gcard-es .gcard-icon { background: rgba(255,138,0,0.16); color: var(--gold); }
+.gcard-game .gcard-icon { background: rgba(255,204,51,0.16); color: var(--cyan); }
+.gcard-tip .gcard-icon { background: rgba(255,61,92,0.16); color: var(--pink); }
+.gcard-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; }
+.gcard-es .gcard-eyebrow { color: var(--gold); }
+.gcard-game .gcard-eyebrow { color: var(--cyan); }
+.gcard-tip .gcard-eyebrow { color: var(--pink); }
+.gcard-head h4 { font-family: 'Newsreader', serif; font-size: 19px; font-weight: 500; color: var(--text); margin-left: 2px; }
+
+/* --- Spanish card --- */
+.es-text { font-family: 'Newsreader', serif; font-size: 24px; font-style: italic; font-weight: 500; line-height: 1.4; color: var(--text); position: relative; z-index: 1; }
+.es-help { font-size: 12.5px; color: var(--muted); margin-top: 10px; position: relative; z-index: 1; }
+
+/* --- Word-order game --- */
+.wb-instructions { font-size: 12.5px; color: var(--muted); margin-bottom: 16px; position: relative; z-index: 1; }
+.wb-instructions strong { color: var(--text); }
+
+.wb-slots { display: flex; flex-wrap: wrap; gap: 10px; min-height: 58px; padding: 14px; background: #170d05; border: 1.5px dashed var(--line); border-radius: 12px; position: relative; z-index: 1; margin-bottom: 18px; align-items: flex-start; }
+.slot { min-width: 46px; height: 42px; border-radius: 10px; border: 1.5px dashed var(--line); display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.slot.drag-over { border-color: var(--cyan); background: rgba(255,204,51,0.08); }
+.slot.filled { border-style: solid; border-color: transparent; padding: 0; }
+.slot.correct { box-shadow: 0 0 0 2px var(--green); }
+.slot.wrong { box-shadow: 0 0 0 2px var(--pink); }
+
+.wb-bank-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: var(--muted-2); text-transform: uppercase; margin-bottom: 10px; position: relative; z-index: 1; }
+.wb-bank { display: flex; flex-wrap: wrap; gap: 10px; min-height: 58px; padding: 14px; background: var(--panel); border: 1px solid var(--line-soft); border-radius: 12px; position: relative; z-index: 1; margin-bottom: 20px; }
+
+.tile {
+  padding: 9px 16px; border-radius: 10px; background: linear-gradient(135deg, #2c1a0e, #3d2513);
+  border: 1px solid var(--line); color: var(--text); font-family: 'Newsreader', serif; font-size: 16px; font-weight: 500;
+  cursor: grab; user-select: none; transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+.tile:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,204,51,0.2); }
+.tile:active { cursor: grabbing; }
+.tile.dragging { opacity: 0.35; }
+.tile.placed { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; margin: 0; }
+.tile.locked { cursor: default; }
+.tile.locked:hover { transform: none; box-shadow: 0 4px 14px rgba(0,0,0,0.35); border-color: var(--line); }
+.tile.hinted { border-color: var(--gold); box-shadow: 0 0 14px rgba(255,138,0,0.35); }
+
+.wb-actions { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; position: relative; z-index: 1; }
+.btn-check { background: linear-gradient(90deg, var(--cyan), var(--blue)); color: #331c04; padding: 12px 26px; border-radius: 999px; font-size: 13px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.25s; font-family: inherit; }
+.btn-check:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(255,204,51,0.35); }
+.btn-check:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn-hint { background: transparent; color: var(--gold); padding: 12px 20px; border: 1px solid var(--gold); border-radius: 999px; font-size: 13px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.btn-hint:hover { background: rgba(255,138,0,0.1); box-shadow: 0 0 16px rgba(255,138,0,0.25); }
+.btn-reset { background: transparent; color: var(--text); padding: 12px 22px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; cursor: pointer; font-family: inherit; }
+.btn-reset:hover { border-color: var(--pink); color: var(--pink); }
+
+.wb-results { margin-top: 18px; padding: 22px; background: linear-gradient(135deg, #25150b, #3c2314); border-radius: 16px; display: none; position: relative; overflow: hidden; border: 1px solid var(--line-soft); z-index: 1; }
+.wb-results.show { display: block; }
+.wb-results.ok { border-color: rgba(255,210,63,0.4); }
+.wb-results.bad { border-color: rgba(255,61,92,0.35); }
+.wb-results::before { content: ''; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(255,210,63,0.22), transparent 70%); pointer-events: none; }
+.wb-results.bad::before { background: radial-gradient(circle, rgba(255,61,92,0.22), transparent 70%); }
+.wb-result-head { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; position: relative; z-index: 1; }
+.wb-result-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.wb-results.ok .wb-result-icon { background: rgba(255,210,63,0.18); color: var(--green); }
+.wb-results.bad .wb-result-icon { background: rgba(255,61,92,0.18); color: var(--pink); }
+.wb-result-title { font-family: 'Newsreader', serif; font-size: 20px; font-weight: 500; color: var(--text); }
+.wb-result-text { font-size: 13.5px; line-height: 1.6; color: var(--muted); position: relative; z-index: 1; }
+.wb-result-text strong { color: var(--text); }
+.wb-result-actions { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; position: relative; z-index: 1; }
+.btn-listen { background: transparent; color: var(--cyan); padding: 10px 18px; border: 1px solid var(--cyan); border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.btn-listen:hover { background: rgba(255,204,51,0.1); }
+.btn-next { background: linear-gradient(90deg, var(--green), #ffcf33); color: #332405; padding: 10px 20px; border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: 0.03em; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.btn-next:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(255,210,63,0.35); }
+
+/* --- Grammar tip --- */
+.tip-text { font-size: 14px; line-height: 1.7; color: var(--muted); position: relative; z-index: 1; }
+.tip-text strong { color: var(--text); }
+
+/* === CREATOR SECTION === */
+.creator-section { padding: 96px 64px; background: linear-gradient(160deg, #271609 0%, #32200f 100%); position: relative; overflow: hidden; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+.creator-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--pink), var(--cyan), transparent); }
+.creator-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 70px; align-items: center; max-width: 1180px; margin: 0 auto; }
+.creator-portrait { position: relative; aspect-ratio: 1; max-width: 340px; margin: 0 auto; }
+.creator-portrait .portrait-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; box-shadow: 0 30px 70px rgba(0,0,0,0.65); }
+.creator-portrait::before { content: ''; position: absolute; inset: -14px; border: 1px solid var(--cyan); border-radius: 50%; opacity: 0.5; }
+.creator-portrait::after { content: ''; position: absolute; inset: -28px; border: 1px dashed rgba(255,61,92,0.4); border-radius: 50%; animation: rotateRing 60s linear infinite; }
+@keyframes rotateRing { to { transform: rotate(360deg); } }
+.creator-tag { position: absolute; bottom: 14px; right: -14px; background: linear-gradient(90deg, var(--pink), var(--violet)); color: #fff; padding: 9px 16px; border-radius: 999px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; z-index: 2; box-shadow: 0 0 20px rgba(255,61,92,0.4); }
+.creator-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
+.creator-name { font-family: 'Newsreader', serif; font-size: clamp(36px, 4.6vw, 56px); font-weight: 400; line-height: 1; letter-spacing: -0.025em; margin-bottom: 8px; color: var(--text); }
+.creator-role { font-family: 'Newsreader', serif; font-style: italic; font-size: 21px; font-weight: 300; background: linear-gradient(90deg, var(--pink), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 24px; }
+.creator-bio { font-size: 15.5px; line-height: 1.7; color: var(--muted); margin-bottom: 22px; max-width: 560px; }
+.creator-bio strong { color: var(--text); font-weight: 700; }
+.creator-bio em { color: var(--gold); font-style: italic; }
+.creator-stats { display: grid; grid-template-columns: repeat(3, auto); gap: 30px; padding: 22px 0; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); max-width: 560px; }
+.creator-stat .num { font-family: 'Newsreader', serif; font-size: 30px; font-weight: 600; color: var(--cyan); letter-spacing: -0.02em; text-shadow: 0 0 14px rgba(255,204,51,0.35); }
+.creator-stat .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-2); margin-top: 4px; }
+
+/* === FOOTER === */
+footer { background: #120903; padding: 56px 64px 26px; position: relative; }
+footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--violet), transparent); }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 44px; margin-bottom: 36px; }
+.footer-brand .brand-name { color: var(--text); }
+.footer-tagline { font-family: 'Newsreader', serif; font-style: italic; font-size: 17px; line-height: 1.5; color: var(--muted); margin-top: 16px; max-width: 360px; }
+.footer-col h5 { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cyan); margin-bottom: 14px; }
+.footer-col ul { list-style: none; }
+.footer-col li { font-size: 13px; color: var(--muted); margin-bottom: 9px; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--line-soft); font-size: 12px; color: var(--muted-2); flex-wrap: wrap; gap: 12px; }
+.footer-credit { display: flex; align-items: center; gap: 10px; }
+.footer-portrait { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1px solid var(--pink); }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; padding: 48px 22px; min-height: auto; }
+  .hero-image { height: 320px; order: -1; }
+  .nav, .section-head, .controls, .topics-grid, .features, .creator-section, footer { padding-left: 22px; padding-right: 22px; }
+  .section-head { grid-template-columns: 1fr; gap: 18px; }
+  .creator-grid { grid-template-columns: 1fr; text-align: center; }
+  .creator-bio, .footer-tagline { margin-left: auto; margin-right: auto; }
+  .creator-stats { grid-template-columns: repeat(3, 1fr); justify-items: center; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .hero-meta { grid-template-columns: repeat(2, auto); }
+  .ribbon .marquee span:nth-child(n+3) { display: none; }
+}
+
+</style>
+
+<style data-langslate-optimized-overflow-fix>
+@media (max-width: 480px) {
+  html, body { max-width: 100%; }
+  * { box-sizing: border-box; }
+  .nav { gap: 10px; padding-left: 16px; padding-right: 16px; }
+  .brand { gap: 10px; min-width: 0; }
+  .brand-mark { width: 36px; height: 36px; border-radius: 12px; flex: 0 0 36px; }
+  .brand-name { font-size: 18px; white-space: nowrap; }
+  .brand-tag { display: none; }
+  .nav-links { gap: 10px; flex-shrink: 0; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .nav-cta { padding: 10px 16px; font-size: 11px; }
+  .hero, .creator-section, footer, .progress-dashboard-wrap { width: 100%; max-width: 100%; }
+  .progress-dashboard-wrap { padding-left: 22px; padding-right: 22px; }
+  .dashboard-row, .dashboard-row .progress-dashboard, .score-card { width: 100%; min-width: 0; }
+  .score-card-glow { right: -110px; }
+  .creator-grid, .creator-portrait { max-width: 100%; }
+  .creator-portrait { width: min(284px, 100%); }
+  .creator-portrait::before { inset: -8px; }
+  .creator-portrait::after { inset: -16px; }
+  .creator-tag { right: 0; }
+  .modal-bg { width: 100%; max-width: 100%; padding-left: 16px; padding-right: 16px; }
+  .modal { width: 100%; max-width: 100%; }
+  .modal-body, .modal-head { padding-left: 20px; padding-right: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  <div class="marquee">
+    <span>100 NEW C1 SENTENCES</span>
+    <span>C1 · VOLUME II · TRANSLATE · DRAG · ORDER</span>
+    <span>FRENCH HINTS · WORD BANK · INSTANT FEEDBACK</span>
+    <span class="premium-tag">PREMIUM EDITION</span>
+    <span>BUILT BY BRICE GADOU</span>
+  </div>
+  <div class="ribbon-right"><span class="ribbon-status">LIVE</span></div>
+</div>
+
+<div class="nav">
+  <div class="brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div class="brand-mark">WO</div>
+    <div class="brand-text">
+      <div class="brand-name">Word Order <span style="color:var(--gold)">C1 · Vol. II</span></div>
+      <div class="brand-tag">Sentence Bank · C1 Premium</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a onclick="document.getElementById('sentences').scrollIntoView({behavior:'smooth'})">Sentences</a>
+    <a onclick="document.getElementById('author').scrollIntoView({behavior:'smooth'})">Author</a>
+    <button class="nav-cta" onclick="document.getElementById('sentences').scrollIntoView({behavior:'smooth'})">Start Playing</button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow"><span></span>Level C1 · CEFR Advanced · Volume II</div>
+    <h1>Translate.<br><em>Drag.</em><br>Order.</h1>
+    <p class="hero-lede">A second, fully independent <strong>C1 volume</strong> of the most premium word-order bank ever built for English learners — 100 all-new C1 sentences covering executive and strategic business language, mixed conditionals, inversion and formal correlative structures, each with its <strong>French translation shown first</strong> so you always know the meaning, then a <strong>drag-and-drop word bank</strong> to rebuild the sentence yourself, with hints and instant, word-by-word feedback along the way.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><div class="num">100</div><div class="lbl">New Sentences</div></div>
+      <div class="meta-item"><div class="num">5</div><div class="lbl">Grammar Themes</div></div>
+      <div class="meta-item"><div class="num">C1</div><div class="lbl">CEFR Level</div></div>
+      <div class="meta-item"><div class="num">FR→EN</div><div class="lbl">Translation First</div></div>
+    </div>
+    <div class="hero-cta-row">
+      <button class="btn-primary" onclick="document.getElementById('sentences').scrollIntoView({behavior:'smooth'})">Browse all 100 <span class="arr">→</span></button>
+      <button class="btn-ghost" onclick="document.getElementById('author').scrollIntoView({behavior:'smooth'})">Meet the author</button>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="/optimized-content-assets/syntax-flow-francais/c1-vol2/image-b4f9447bfb1b21d1.jpg" alt="A smiling woman with glasses working on her laptop in a co-working space with an orange and yellow striped wall behind her">
+    <div class="author-chip"><img class="chip-portrait" src="/optimized-content-assets/syntax-flow-francais/c1-vol2/image-6deaa3cd5a3e5a72.jpg" alt="Brice Gadou">CURATED BY B. GADOU</div>
+    <div class="hero-badge"><span class="num">WO</span>Word Bank · C1 Vol. II</div>
+    <div class="photo-credit">Photo: Brice Gadou</div>
+  </div>
+</div>
+
+<section class="features">
+  <div class="features-grid">
+    <div class="feature"><span class="feature-icon">🇫🇷</span><h4>French First</h4><p>Every sentence shows its French translation first, so you always know exactly what you're building before you touch a single word.</p></div>
+    <div class="feature"><span class="feature-icon">🧩</span><h4>Drag &amp; Drop</h4><p>Pick up each word tile and drop it into place. Built for mouse and trackpad — with tap-to-place for touch and mobile too.</p></div>
+    <div class="feature"><span class="feature-icon">💡</span><h4>Smart Hints</h4><p>Stuck on a sentence? Reveal the next correct word without losing your progress or resetting the board.</p></div>
+    <div class="feature"><span class="feature-icon">✅</span><h4>Instant Feedback</h4><p>Check your order any time — correct tiles glow green, misplaced tiles glow pink, so you know exactly what to fix.</p></div>
+    <div class="feature"><span class="feature-icon">📊</span><h4>Progress Dashboard</h4><p>Track solved sentences, first-try streaks, and hints used — no internet connection or account required.</p></div>
+  </div>
+</section>
+
+<div class="progress-dashboard-wrap">
+  <div class="dashboard-row">
+    <div class="progress-dashboard">
+      <svg width="0" height="0" style="position:absolute">
+        <defs><linearGradient id="pd-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f4ff5c"/><stop offset="100%" stop-color="#ff3d5c"/>
+        </linearGradient></defs>
+      </svg>
+      <div class="pd-ring-wrap">
+        <svg class="pd-ring-svg" viewBox="0 0 120 120">
+          <circle class="pd-ring-bg" cx="60" cy="60" r="52"></circle>
+          <circle class="pd-ring-fill" id="pd-ring-fill" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <div class="pd-ring-label"><div class="pd-ring-num" id="pd-count">0</div><div class="pd-ring-total">/ 100</div></div>
+      </div>
+      <div class="pd-info">
+        <div class="pd-eyebrow">Your Progress</div>
+        <div class="pd-title">Solve your first sentence to start tracking progress.</div>
+        <div class="pd-stats">
+          <div class="pd-stat"><div class="pd-stat-num" id="pd-solved">0</div><div class="pd-stat-lbl">Solved</div></div>
+          <div class="pd-stat"><div class="pd-stat-num" id="pd-firsttry">0</div><div class="pd-stat-lbl">First-Try Solves</div></div>
+          <div class="pd-stat"><div class="pd-stat-num" id="pd-hints">0</div><div class="pd-stat-lbl">Hints Used</div></div>
+          <div class="pd-stat"><div class="pd-stat-num" id="pd-best">—</div><div class="pd-stat-lbl">Strongest Theme</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="score-card" id="score-card">
+      <div class="score-card-glow"></div>
+      <div class="score-eyebrow">🏆 Your Score</div>
+      <div class="score-num" id="score-num">0</div>
+      <div class="score-max">/ 10,000 pts</div>
+      <div class="score-rank" id="score-rank">Rookie Wordsmith</div>
+      <div class="score-bar-wrap"><div class="score-bar-fill" id="score-bar-fill"></div></div>
+      <div class="score-next" id="score-next">Solve a sentence to start scoring.</div>
+    </div>
+  </div>
+</div>
+
+<section id="sentences">
+  <div class="section-head">
+    <div class="section-num">Sentence Bank · C1 Vol. II</div>
+    <div>
+      <div class="section-title">100 more sentences, <em>zero repeats</em></div>
+      <p class="section-desc">A second, fully independent C1 set — every card gives you the French translation first, then a shuffled word bank you drag or tap into order — executive statements &amp; perfect modals, business verbs &amp; negatives, opinion questions, hypothetical &amp; mixed conditionals, and advanced structures. Search by topic, filter by theme, and start playing.</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap"><input type="text" id="search" placeholder="Search sentences, e.g. 'roadmap', 'stratégie', 'whatever'…" oninput="handleSearch(this.value)"></div>
+    <div class="filter-chips">
+      <button class="filter-chip active" data-filter="all">All 100</button>
+      <button class="filter-chip" data-filter="past">Executive Statements</button>
+      <button class="filter-chip" data-filter="future">Business Verbs &amp; Negatives</button>
+      <button class="filter-chip" data-filter="neg">Negatives &amp; Opinion Qs</button>
+      <button class="filter-chip" data-filter="questions">Hypotheticals &amp; Conditionals</button>
+      <button class="filter-chip" data-filter="advanced">Advanced Structures</button>
+    </div>
+    <div class="controls-counter"><span id="counter">100</span> / 100 sentences</div>
+  </div>
+
+  <div class="topics-grid" id="grid"></div>
+</section>
+
+<section class="creator-section" id="author">
+  <div class="creator-grid">
+    <div class="creator-portrait">
+      <img class="portrait-img" src="/optimized-content-assets/syntax-flow-francais/c1-vol2/image-6deaa3cd5a3e5a72.jpg" alt="Brice Gadou">
+      <div class="creator-tag">Creator</div>
+    </div>
+    <div class="creator-text">
+      <div class="creator-eyebrow">The Author</div>
+      <h2 class="creator-name">Brice Gadou</h2>
+      <div class="creator-role">Building sentences worth putting back together</div>
+      <p class="creator-bio">Brice Gadou builds <strong>reading-and-writing-first English resources</strong> for learners at every level, from their first sentence to their first conditional. This second C1 volume brings <strong>100 entirely new sentences</strong> — its own bank, its own score, its own progress — completely independent from the first C1 edition and every A1, A2 and B1 volume, so nothing you've already solved gets in the way of this next set.</p>
+      <div class="creator-stats">
+        <div class="creator-stat"><div class="num">100</div><div class="lbl">New sentences</div></div>
+        <div class="creator-stat"><div class="num">C1</div><div class="lbl">CEFR level</div></div>
+        <div class="creator-stat"><div class="num">Vol II</div><div class="lbl">Independent bank</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="brand"><div class="brand-mark">WO</div><div class="brand-text"><div class="brand-name">Word Order C1 Vol. II</div><div class="brand-tag">Sentence Bank · C1 Premium</div></div></div>
+      <p class="footer-tagline">"A whole new set of C1 sentences comes apart — and you put it back together."</p>
+    </div>
+    <div class="footer-col"><h5>Bank</h5><ul><li>100 New Sentences</li><li>CEFR C1</li><li>Self-Paced</li><li>Independent Progress</li></ul></div>
+    <div class="footer-col"><h5>Learn</h5><ul><li>French Translation</li><li>Drag &amp; Drop Words</li><li>Smart Hints</li><li>Instant Feedback</li></ul></div>
+    <div class="footer-col"><h5>Themes</h5><ul><li>Executive Statements</li><li>Business Verbs &amp; Negatives</li><li>Negatives &amp; Opinion Qs</li><li>Advanced Structures</li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-credit"><img class="footer-portrait" src="/optimized-content-assets/syntax-flow-francais/c1-vol2/image-6deaa3cd5a3e5a72.jpg" alt="Brice Gadou">Curated by Brice Gadou</div>
+    <div>Word Order C1 Vol. II · Premium Edition</div>
+  </div>
+</footer>
+
+<div class="modal-bg" id="modal-bg" onclick="if(event.target===this) closeModal()">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-eyebrow" id="m-eyebrow">Sentence № 001</div>
+      <span class="modal-cat-badge" id="m-cat">Executive Statements</span>
+      <h2 class="modal-title" id="m-title">Put the words in order</h2>
+    </div>
+    <div class="modal-body">
+
+      <div class="gcard gcard-es">
+        <div class="gcard-head"><span class="gcard-icon">🇫🇷</span><span class="gcard-eyebrow">French Translation</span></div>
+        <p class="es-text" id="m-es"></p>
+        <p class="es-help">Use this as your guide — now drag the English words below into the matching order.</p>
+      </div>
+
+
+      <div class="gcard gcard-game">
+        <div class="gcard-head"><span class="gcard-icon">🧩</span><span class="gcard-eyebrow">Build the Sentence</span></div>
+        <p class="wb-instructions"><strong>Drag</strong> the tiles into the boxes below, or <strong>tap</strong> a tile to place it in the next empty box — tap a placed tile to send it back.</p>
+        <div class="wb-slots" id="wb-slots" ondragover="onSlotDragOver(event)" ondrop="onBankDrop(event)"></div>
+        <div class="wb-bank-label">Word Bank</div>
+        <div class="wb-bank" id="wb-bank"></div>
+        <div class="wb-actions">
+          <button class="btn-reset" onclick="resetGame()">Reset</button>
+          <button class="btn-hint" onclick="giveHint()">💡 Hint</button>
+          <button class="btn-check" id="check-btn" onclick="checkOrder()" disabled>Check my order</button>
+        </div>
+        <div class="wb-results" id="wb-results">
+          <div class="wb-result-head">
+            <div class="wb-result-icon" id="wb-result-icon">✓</div>
+            <div class="wb-result-title" id="wb-result-title">Well done!</div>
+            <div class="wb-result-score" id="wb-result-score"></div>
+          </div>
+          <p class="wb-result-text" id="wb-result-text"></p>
+          <div class="wb-result-actions" id="wb-result-actions"></div>
+        </div>
+      </div>
+
+      <div class="gcard gcard-tip">
+        <div class="gcard-head"><span class="gcard-icon">🎓</span><span class="gcard-eyebrow">Grammar Tip</span></div>
+        <p class="tip-text" id="m-tip"></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<canvas id="confetti-canvas"></canvas>
+<div class="score-toast" id="score-toast"></div>
+
+<script>
+/* === DATA === */
+const SENTENCES = [{"id": 1, "cat": "past", "es": "L'entreprise réévalue ses priorités d'investissement à la lumière du climat économique changeant.", "en": "The company is reassessing its investment priorities in light of the changing economic climate.", "w": ["The", "company", "is", "reassessing", "its", "investment", "priorities", "in", "light", "of", "the", "changing", "economic", "climate."]}, {"id": 2, "cat": "past", "es": "Le directeur financier a proposé une stratégie pour améliorer la structure du capital de l'organisation.", "en": "The chief financial officer proposed a strategy for improving the organization's capital structure.", "w": ["The", "chief", "financial", "officer", "proposed", "a", "strategy", "for", "improving", "the", "organization's", "capital", "structure."]}, {"id": 3, "cat": "past", "es": "La firme a renforcé ses procédures de conformité suite à une série de changements réglementaires.", "en": "The firm has strengthened its compliance procedures following a series of regulatory changes.", "w": ["The", "firm", "has", "strengthened", "its", "compliance", "procedures", "following", "a", "series", "of", "regulatory", "changes."]}, {"id": 4, "cat": "past", "es": "Le service marketing analyse les données des consommateurs pour identifier les tendances d'achat émergentes.", "en": "The marketing department is analyzing consumer data to identify emerging purchasing trends.", "w": ["The", "marketing", "department", "is", "analyzing", "consumer", "data", "to", "identify", "emerging", "purchasing", "trends."]}, {"id": 5, "cat": "past", "es": "Le comité exécutif a commandé une révision indépendante des pratiques de gouvernance de l'entreprise.", "en": "The executive committee commissioned an independent review of the company's governance practices.", "w": ["The", "executive", "committee", "commissioned", "an", "independent", "review", "of", "the", "company's", "governance", "practices."]}, {"id": 6, "cat": "past", "es": "Notre équipe juridique négocie un règlement qui pourrait éviter un long litige judiciaire.", "en": "Our legal team is negotiating a settlement that could prevent a lengthy court dispute.", "w": ["Our", "legal", "team", "is", "negotiating", "a", "settlement", "that", "could", "prevent", "a", "lengthy", "court", "dispute."]}, {"id": 7, "cat": "past", "es": "L'organisation a élargi son programme de développement des talents pour préparer les employés à de futurs rôles de leadership.", "en": "The organization has expanded its talent-development program to prepare employees for future leadership roles.", "w": ["The", "organization", "has", "expanded", "its", "talent-development", "program", "to", "prepare", "employees", "for", "future", "leadership", "roles."]}, {"id": 8, "cat": "past", "es": "Le directeur des opérations a introduit plusieurs mesures pour minimiser les perturbations tout au long de la chaîne d'approvisionnement.", "en": "The operations director introduced several measures to minimize disruptions throughout the supply chain.", "w": ["The", "operations", "director", "introduced", "several", "measures", "to", "minimize", "disruptions", "throughout", "the", "supply", "chain."]}, {"id": 9, "cat": "past", "es": "L'entreprise explore des arrangements de financement alternatifs pour soutenir son expansion internationale.", "en": "The company is exploring alternative financing arrangements to support its international expansion.", "w": ["The", "company", "is", "exploring", "alternative", "financing", "arrangements", "to", "support", "its", "international", "expansion."]}, {"id": 10, "cat": "past", "es": "Le fonds d'investissement a augmenté son exposition aux secteurs censés bénéficier de l'innovation technologique.", "en": "The investment fund has increased its exposure to sectors expected to benefit from technological innovation.", "w": ["The", "investment", "fund", "has", "increased", "its", "exposure", "to", "sectors", "expected", "to", "benefit", "from", "technological", "innovation."]}, {"id": 11, "cat": "past", "es": "Elle a élaboré une feuille de route de mise en œuvre détaillée pour garantir que la stratégie puisse être exécutée efficacement.", "en": "She developed a detailed implementation roadmap to ensure that the strategy could be executed effectively.", "w": ["She", "developed", "a", "detailed", "implementation", "roadmap", "to", "ensure", "that", "the", "strategy", "could", "be", "executed", "effectively."]}, {"id": 12, "cat": "past", "es": "Il a gagné la confiance des investisseurs en communiquant systématiquement des informations difficiles avec transparence.", "en": "He has earned the confidence of investors by consistently communicating difficult information transparently.", "w": ["He", "has", "earned", "the", "confidence", "of", "investors", "by", "consistently", "communicating", "difficult", "information", "transparently."]}, {"id": 13, "cat": "past", "es": "L'organisation consolide plusieurs bureaux régionaux pour éliminer les fonctions administratives dupliquées.", "en": "The organization is consolidating several regional offices to eliminate duplicated administrative functions.", "w": ["The", "organization", "is", "consolidating", "several", "regional", "offices", "to", "eliminate", "duplicated", "administrative", "functions."]}, {"id": 14, "cat": "past", "es": "Nous avons mené une diligence raisonnable approfondie avant d'entrer dans la coentreprise.", "en": "We conducted extensive due diligence before entering into the joint venture.", "w": ["We", "conducted", "extensive", "due", "diligence", "before", "entering", "into", "the", "joint", "venture."]}, {"id": 15, "cat": "past", "es": "L'entreprise a renforcé son infrastructure de cybersécurité en réponse à des menaces de plus en plus sophistiquées.", "en": "The company has strengthened its cybersecurity infrastructure in response to increasingly sophisticated threats.", "w": ["The", "company", "has", "strengthened", "its", "cybersecurity", "infrastructure", "in", "response", "to", "increasingly", "sophisticated", "threats."]}, {"id": 16, "cat": "past", "es": "Le conseil examine si la structure de rémunération actuelle encourage les bons comportements.", "en": "The board is examining whether the current compensation structure encourages the right behaviors.", "w": ["The", "board", "is", "examining", "whether", "the", "current", "compensation", "structure", "encourages", "the", "right", "behaviors."]}, {"id": 17, "cat": "past", "es": "Elle a réussi à transformer un litige potentiellement dommageable en une opportunité de renforcer la relation client.", "en": "She managed to turn a potentially damaging dispute into an opportunity to strengthen the client relationship.", "w": ["She", "managed", "to", "turn", "a", "potentially", "damaging", "dispute", "into", "an", "opportunity", "to", "strengthen", "the", "client", "relationship."]}, {"id": 18, "cat": "past", "es": "Il a recommandé d'introduire des revues trimestrielles pour suivre les progrès par rapport aux objectifs stratégiques.", "en": "He recommended introducing quarterly reviews to monitor progress against the strategic objectives.", "w": ["He", "recommended", "introducing", "quarterly", "reviews", "to", "monitor", "progress", "against", "the", "strategic", "objectives."]}, {"id": 19, "cat": "past", "es": "L'entreprise a accumulé une expertise substantielle dans la gestion des transactions transfrontalières.", "en": "The business has accumulated substantial expertise in managing cross-border transactions.", "w": ["The", "business", "has", "accumulated", "substantial", "expertise", "in", "managing", "cross-border", "transactions."]}, {"id": 20, "cat": "past", "es": "Nous élaborons un plan de succession pour minimiser les perturbations lors du départ à la retraite des cadres supérieurs.", "en": "We are developing a succession plan to minimize disruption when senior executives retire.", "w": ["We", "are", "developing", "a", "succession", "plan", "to", "minimize", "disruption", "when", "senior", "executives", "retire."]}, {"id": 21, "cat": "future", "es": "L'entreprise a l'intention de tirer parti de son réseau de distribution existant pour lancer le nouveau produit.", "en": "The company intends to leverage its existing distribution network to launch the new product.", "w": ["The", "company", "intends", "to", "leverage", "its", "existing", "distribution", "network", "to", "launch", "the", "new", "product."]}, {"id": 22, "cat": "future", "es": "Elle a réussi à aligner les intérêts de plusieurs départements qui travaillaient auparavant de manière isolée.", "en": "She successfully aligned the interests of several departments that had previously worked in isolation.", "w": ["She", "successfully", "aligned", "the", "interests", "of", "several", "departments", "that", "had", "previously", "worked", "in", "isolation."]}, {"id": 23, "cat": "future", "es": "Il a identifié un écart significatif entre la stratégie déclarée de l'entreprise et son allocation réelle des ressources.", "en": "He identified a significant gap between the company's stated strategy and its actual resource allocation.", "w": ["He", "identified", "a", "significant", "gap", "between", "the", "company's", "stated", "strategy", "and", "its", "actual", "resource", "allocation."]}, {"id": 24, "cat": "future", "es": "L'organisation a adopté une approche plus rigoureuse pour évaluer les acquisitions potentielles.", "en": "The organization has adopted a more rigorous approach to evaluating potential acquisitions.", "w": ["The", "organization", "has", "adopted", "a", "more", "rigorous", "approach", "to", "evaluating", "potential", "acquisitions."]}, {"id": 25, "cat": "future", "es": "Nous devons distinguer entre les fluctuations temporaires du marché et les changements fondamentaux de la demande.", "en": "We need to distinguish between temporary market fluctuations and fundamental changes in demand.", "w": ["We", "need", "to", "distinguish", "between", "temporary", "market", "fluctuations", "and", "fundamental", "changes", "in", "demand."]}, {"id": 26, "cat": "future", "es": "L'entreprise dépend de plus en plus des canaux numériques pour l'acquisition de clients.", "en": "The business is increasingly dependent on digital channels for customer acquisition.", "w": ["The", "business", "is", "increasingly", "dependent", "on", "digital", "channels", "for", "customer", "acquisition."]}, {"id": 27, "cat": "future", "es": "Elle a persuadé le conseil d'allouer un financement supplémentaire à la recherche et au développement.", "en": "She persuaded the board to allocate additional funding to research and development.", "w": ["She", "persuaded", "the", "board", "to", "allocate", "additional", "funding", "to", "research", "and", "development."]}, {"id": 28, "cat": "future", "es": "Il a démontré une capacité à anticiper les développements réglementaires avant qu'ils n'affectent l'entreprise.", "en": "He has demonstrated an ability to anticipate regulatory developments before they affect the business.", "w": ["He", "has", "demonstrated", "an", "ability", "to", "anticipate", "regulatory", "developments", "before", "they", "affect", "the", "business."]}, {"id": 29, "cat": "future", "es": "L'entreprise redessine son parcours client pour éliminer les points de friction inutiles.", "en": "The company is redesigning its customer journey to eliminate unnecessary points of friction.", "w": ["The", "company", "is", "redesigning", "its", "customer", "journey", "to", "eliminate", "unnecessary", "points", "of", "friction."]}, {"id": 30, "cat": "future", "es": "Ils sont parvenus à un accord mutuellement bénéfique après plusieurs rounds de négociation intensive.", "en": "They reached a mutually beneficial agreement after several rounds of intensive negotiation.", "w": ["They", "reached", "a", "mutually", "beneficial", "agreement", "after", "several", "rounds", "of", "intensive", "negotiation."]}, {"id": 31, "cat": "future", "es": "L'entreprise n'a pas divulgué toutes les implications financières de la transaction proposée.", "en": "The company has not disclosed the full financial implications of the proposed transaction.", "w": ["The", "company", "has", "not", "disclosed", "the", "full", "financial", "implications", "of", "the", "proposed", "transaction."]}, {"id": 32, "cat": "future", "es": "La direction ne semble pas avoir considéré l'impact sur le moral des employés.", "en": "Management does not appear to have considered the impact on employee morale.", "w": ["Management", "does", "not", "appear", "to", "have", "considered", "the", "impact", "on", "employee", "morale."]}, {"id": 33, "cat": "future", "es": "Le projet ne progresse pas aussi vite que les cadres supérieurs l'avaient anticipé.", "en": "The project isn't progressing as quickly as senior executives had anticipated.", "w": ["The", "project", "isn't", "progressing", "as", "quickly", "as", "senior", "executives", "had", "anticipated."]}, {"id": 34, "cat": "future", "es": "Nous n'avons pas établi de méthode fiable pour mesurer l'impact à long terme de l'initiative.", "en": "We haven't established a reliable method for measuring the initiative's long-term impact.", "w": ["We", "haven't", "established", "a", "reliable", "method", "for", "measuring", "the", "initiative's", "long-term", "impact."]}, {"id": 35, "cat": "future", "es": "L'organisation n'a pas suffisamment préparé ses managers au processus de restructuration.", "en": "The organization didn't adequately prepare its managers for the restructuring process.", "w": ["The", "organization", "didn't", "adequately", "prepare", "its", "managers", "for", "the", "restructuring", "process."]}, {"id": 36, "cat": "future", "es": "Elle n'est pas convaincue que l'expansion proposée générera des rendements suffisants.", "en": "She isn't convinced that the proposed expansion will generate sufficient returns.", "w": ["She", "isn't", "convinced", "that", "the", "proposed", "expansion", "will", "generate", "sufficient", "returns."]}, {"id": 37, "cat": "future", "es": "Il n'a pas démontré que la nouvelle technologie peut fonctionner de manière fiable à grande échelle.", "en": "He hasn't demonstrated that the new technology can operate reliably at scale.", "w": ["He", "hasn't", "demonstrated", "that", "the", "new", "technology", "can", "operate", "reliably", "at", "scale."]}, {"id": 38, "cat": "future", "es": "L'entreprise ne peut pas continuer à dépendre de systèmes obsolètes indéfiniment.", "en": "The company cannot continue to depend on outdated systems indefinitely.", "w": ["The", "company", "cannot", "continue", "to", "depend", "on", "outdated", "systems", "indefinitely."]}, {"id": 39, "cat": "future", "es": "Nous ne devrions pas confondre une croissance rapide des revenus avec de véritables améliorations de la rentabilité.", "en": "We shouldn't confuse rapid revenue growth with genuine improvements in profitability.", "w": ["We", "shouldn't", "confuse", "rapid", "revenue", "growth", "with", "genuine", "improvements", "in", "profitability."]}, {"id": 40, "cat": "future", "es": "Ils n'ont pas résolu le désaccord concernant la propriété de la propriété intellectuelle.", "en": "They haven't resolved the disagreement concerning ownership of the intellectual property.", "w": ["They", "haven't", "resolved", "the", "disagreement", "concerning", "ownership", "of", "the", "intellectual", "property."]}, {"id": 41, "cat": "neg", "es": "Le rapport n'explique pas adéquatement pourquoi la satisfaction client a diminué.", "en": "The report doesn't adequately explain why customer satisfaction has declined.", "w": ["The", "report", "doesn't", "adequately", "explain", "why", "customer", "satisfaction", "has", "declined."]}, {"id": 42, "cat": "neg", "es": "Le conseil n'était pas prêt à approuver l'investissement sans garanties supplémentaires.", "en": "The board wasn't prepared to approve the investment without additional safeguards.", "w": ["The", "board", "wasn't", "prepared", "to", "approve", "the", "investment", "without", "additional", "safeguards."]}, {"id": 43, "cat": "neg", "es": "Nous ne devons pas négliger les conséquences potentielles du non-respect des nouvelles réglementations.", "en": "We mustn't overlook the potential consequences of failing to comply with the new regulations.", "w": ["We", "mustn't", "overlook", "the", "potential", "consequences", "of", "failing", "to", "comply", "with", "the", "new", "regulations."]}, {"id": 44, "cat": "neg", "es": "L'organisation n'a pas suffisamment diversifié sa base de fournisseurs.", "en": "The organization hasn't sufficiently diversified its supplier base.", "w": ["The", "organization", "hasn't", "sufficiently", "diversified", "its", "supplier", "base."]}, {"id": 45, "cat": "neg", "es": "Il ne semble pas disposé à reconsidérer sa position malgré les nouvelles preuves.", "en": "He doesn't appear willing to reconsider his position despite the new evidence.", "w": ["He", "doesn't", "appear", "willing", "to", "reconsider", "his", "position", "despite", "the", "new", "evidence."]}, {"id": 46, "cat": "neg", "es": "L'entreprise n'aurait pas atteint sa position actuelle sur le marché sans un investissement significatif dans l'innovation.", "en": "The company wouldn't have achieved its current market position without significant investment in innovation.", "w": ["The", "company", "wouldn't", "have", "achieved", "its", "current", "market", "position", "without", "significant", "investment", "in", "innovation."]}, {"id": 47, "cat": "neg", "es": "Nous ne pouvons pas supposer que la stratégie gagnante d'hier restera efficace indéfiniment.", "en": "We cannot assume that yesterday's successful strategy will remain effective indefinitely.", "w": ["We", "cannot", "assume", "that", "yesterday's", "successful", "strategy", "will", "remain", "effective", "indefinitely."]}, {"id": 48, "cat": "neg", "es": "Le département n'a pas développé de cadre clair pour évaluer la performance des employés.", "en": "The department hasn't developed a clear framework for evaluating employee performance.", "w": ["The", "department", "hasn't", "developed", "a", "clear", "framework", "for", "evaluating", "employee", "performance."]}, {"id": 49, "cat": "neg", "es": "On ne s'attend pas à ce qu'ils atteignent la rentabilité avant la seconde moitié de l'année.", "en": "They aren't expected to achieve profitability until the second half of the year.", "w": ["They", "aren't", "expected", "to", "achieve", "profitability", "until", "the", "second", "half", "of", "the", "year."]}, {"id": 50, "cat": "neg", "es": "L'organisation ne pourra pas se développer efficacement à moins que ses processus internes ne s'améliorent.", "en": "The organization will not be able to scale efficiently unless its internal processes improve.", "w": ["The", "organization", "will", "not", "be", "able", "to", "scale", "efficiently", "unless", "its", "internal", "processes", "improve."]}, {"id": 51, "cat": "neg", "es": "Comment une entreprise devrait-elle réagir quand son client le plus rentable crée aussi le plus grand risque opérationnel ?", "en": "How should a company respond when its most profitable customer also creates the greatest operational risk?", "w": ["How", "should", "a", "company", "respond", "when", "its", "most", "profitable", "customer", "also", "creates", "the", "greatest", "operational", "risk?"]}, {"id": 52, "cat": "neg", "es": "Que privilégierais-tu si on te donnait un budget limité et trois projets également importants ?", "en": "What would you prioritize if you were given a limited budget and three equally important projects?", "w": ["What", "would", "you", "prioritize", "if", "you", "were", "given", "a", "limited", "budget", "and", "three", "equally", "important", "projects?"]}, {"id": 53, "cat": "neg", "es": "Pourquoi certaines organisations ont-elles du mal à exécuter des stratégies qui semblent excellentes sur le papier ?", "en": "Why do some organizations struggle to execute strategies that appear excellent on paper?", "w": ["Why", "do", "some", "organizations", "struggle", "to", "execute", "strategies", "that", "appear", "excellent", "on", "paper?"]}, {"id": 54, "cat": "neg", "es": "Les dirigeants devraient-ils être récompensés pour avoir atteint des objectifs à court terme si ces décisions nuisent à la performance à long terme ?", "en": "Should executives be rewarded for achieving short-term targets if those decisions damage long-term performance?", "w": ["Should", "executives", "be", "rewarded", "for", "achieving", "short-term", "targets", "if", "those", "decisions", "damage", "long-term", "performance?"]}, {"id": 55, "cat": "neg", "es": "Comment les entreprises peuvent-elles distinguer entre une innovation véritable et une technologie simplement à la mode ?", "en": "How can companies distinguish between genuine innovation and technology that is merely fashionable?", "w": ["How", "can", "companies", "distinguish", "between", "genuine", "innovation", "and", "technology", "that", "is", "merely", "fashionable?"]}, {"id": 56, "cat": "neg", "es": "Investirais-tu dans une startup dont les fondateurs avaient un excellent produit mais aucun modèle d'affaires éprouvé ?", "en": "Would you invest in a startup whose founders had an excellent product but no proven business model?", "w": ["Would", "you", "invest", "in", "a", "startup", "whose", "founders", "had", "an", "excellent", "product", "but", "no", "proven", "business", "model?"]}, {"id": 57, "cat": "neg", "es": "Que pourrait faire une entreprise si ses employés résistaient à une transformation numérique par ailleurs nécessaire ?", "en": "What could a company do if its employees resisted an otherwise necessary digital transformation?", "w": ["What", "could", "a", "company", "do", "if", "its", "employees", "resisted", "an", "otherwise", "necessary", "digital", "transformation?"]}, {"id": 58, "cat": "neg", "es": "Comment les managers devraient-ils gérer une situation où deux employés performants refusent de coopérer ?", "en": "How should managers handle a situation in which two high-performing employees refuse to cooperate?", "w": ["How", "should", "managers", "handle", "a", "situation", "in", "which", "two", "high-performing", "employees", "refuse", "to", "cooperate?"]}, {"id": 59, "cat": "neg", "es": "Pourquoi une entreprise pourrait-elle délibérément choisir une croissance plus lente plutôt qu'une expansion internationale rapide ?", "en": "Why might a company deliberately choose slower growth over rapid international expansion?", "w": ["Why", "might", "a", "company", "deliberately", "choose", "slower", "growth", "over", "rapid", "international", "expansion?"]}, {"id": 60, "cat": "neg", "es": "Les entreprises devraient-elles divulguer l'impact environnemental de toute leur chaîne d'approvisionnement ?", "en": "Should businesses disclose the environmental impact of their entire supply chain?", "w": ["Should", "businesses", "disclose", "the", "environmental", "impact", "of", "their", "entire", "supply", "chain?"]}, {"id": 61, "cat": "questions", "es": "Comment une organisation pourrait-elle déterminer si sa culture d'entreprise aide ou nuit à la performance ?", "en": "How could an organization determine whether its corporate culture is helping or hindering performance?", "w": ["How", "could", "an", "organization", "determine", "whether", "its", "corporate", "culture", "is", "helping", "or", "hindering", "performance?"]}, {"id": 62, "cat": "questions", "es": "Quels risques une entreprise devrait-elle considérer avant d'externaliser une fonction commerciale critique ?", "en": "What risks should a company consider before outsourcing a critical business function?", "w": ["What", "risks", "should", "a", "company", "consider", "before", "outsourcing", "a", "critical", "business", "function?"]}, {"id": 63, "cat": "questions", "es": "Accepterais-tu des bénéfices plus faibles si cela améliorait significativement la réputation sociale de l'entreprise ?", "en": "Would you accept lower profits if doing so significantly improved the company's social reputation?", "w": ["Would", "you", "accept", "lower", "profits", "if", "doing", "so", "significantly", "improved", "the", "company's", "social", "reputation?"]}, {"id": 64, "cat": "questions", "es": "Comment le télétravail pourrait-il affecter la culture organisationnelle à long terme ?", "en": "How might remote work affect organizational culture over the long term?", "w": ["How", "might", "remote", "work", "affect", "organizational", "culture", "over", "the", "long", "term?"]}, {"id": 65, "cat": "questions", "es": "Pourquoi les dirigeants expérimentés prennent-ils parfois des décisions qui semblent irrationnelles avec le recul ?", "en": "Why do experienced executives sometimes make decisions that appear irrational in hindsight?", "w": ["Why", "do", "experienced", "executives", "sometimes", "make", "decisions", "that", "appear", "irrational", "in", "hindsight?"]}, {"id": 66, "cat": "questions", "es": "Que ferais-tu si une étude de marché contredisait ta croyance personnelle sur un produit ?", "en": "What would you do if market research contradicted your personal belief about a product?", "w": ["What", "would", "you", "do", "if", "market", "research", "contradicted", "your", "personal", "belief", "about", "a", "product?"]}, {"id": 67, "cat": "questions", "es": "Les entreprises devraient-elles être autorisées à utiliser les données clients à des fins qui n'avaient pas été explicitement divulguées ?", "en": "Should companies be allowed to use customer data for purposes that were not explicitly disclosed?", "w": ["Should", "companies", "be", "allowed", "to", "use", "customer", "data", "for", "purposes", "that", "were", "not", "explicitly", "disclosed?"]}, {"id": 68, "cat": "questions", "es": "Comment une entreprise peut-elle maintenir l'innovation tout en imposant des contrôles financiers stricts ?", "en": "How can a business maintain innovation while imposing strict financial controls?", "w": ["How", "can", "a", "business", "maintain", "innovation", "while", "imposing", "strict", "financial", "controls?"]}, {"id": 69, "cat": "questions", "es": "Qu'est-ce qui pourrait persuader un dirigeant expérimenté de quitter une organisation très prospère ?", "en": "What might persuade an experienced executive to leave a highly successful organization?", "w": ["What", "might", "persuade", "an", "experienced", "executive", "to", "leave", "a", "highly", "successful", "organization?"]}, {"id": 70, "cat": "questions", "es": "Une transparence excessive pourrait-elle un jour devenir un désavantage concurrentiel ?", "en": "Could excessive transparency ever become a competitive disadvantage?", "w": ["Could", "excessive", "transparency", "ever", "become", "a", "competitive", "disadvantage?"]}, {"id": 71, "cat": "questions", "es": "Si la direction avait identifié la vulnérabilité de la chaîne d'approvisionnement plus tôt, l'entreprise aurait pu éviter des pertes substantielles.", "en": "Had management identified the supply-chain vulnerability sooner, the company could have avoided substantial losses.", "w": ["Had", "management", "identified", "the", "supply-chain", "vulnerability", "sooner,", "the", "company", "could", "have", "avoided", "substantial", "losses."]}, {"id": 72, "cat": "questions", "es": "Si l'environnement réglementaire devient plus restrictif, l'organisation devra peut-être redessiner tout son modèle opérationnel.", "en": "If the regulatory environment becomes more restrictive, the organization may need to redesign its entire operating model.", "w": ["If", "the", "regulatory", "environment", "becomes", "more", "restrictive,", "the", "organization", "may", "need", "to", "redesign", "its", "entire", "operating", "model."]}, {"id": 73, "cat": "questions", "es": "À moins que l'équipe dirigeante n'établisse une responsabilisation claire, le programme de transformation a peu de chances de produire des résultats durables.", "en": "Unless the leadership team establishes clear accountability, the transformation program is unlikely to deliver lasting results.", "w": ["Unless", "the", "leadership", "team", "establishes", "clear", "accountability,", "the", "transformation", "program", "is", "unlikely", "to", "deliver", "lasting", "results."]}, {"id": 74, "cat": "questions", "es": "Bien que l'acquisition ait généré un enthousiasme considérable parmi les investisseurs, sa logique stratégique restait floue.", "en": "Although the acquisition generated considerable excitement among investors, its strategic rationale remained unclear.", "w": ["Although", "the", "acquisition", "generated", "considerable", "excitement", "among", "investors,", "its", "strategic", "rationale", "remained", "unclear."]}, {"id": 75, "cat": "questions", "es": "Après avoir examiné les données de marché en détail, les analystes ont recommandé de retarder le lancement.", "en": "Having examined the market data in detail, the analysts recommended delaying the launch.", "w": ["Having", "examined", "the", "market", "data", "in", "detail,", "the", "analysts", "recommended", "delaying", "the", "launch."]}, {"id": 76, "cat": "questions", "es": "Le directeur s'est comporté comme si les conséquences financières étaient la responsabilité de quelqu'un d'autre.", "en": "The director behaved as though the financial consequences were someone else's responsibility.", "w": ["The", "director", "behaved", "as", "though", "the", "financial", "consequences", "were", "someone", "else's", "responsibility."]}, {"id": 77, "cat": "questions", "es": "Le comité voulait savoir si les contrôles proposés seraient suffisants pour atténuer les risques identifiés.", "en": "The committee wanted to know whether the proposed controls would be sufficient to mitigate the identified risks.", "w": ["The", "committee", "wanted", "to", "know", "whether", "the", "proposed", "controls", "would", "be", "sufficient", "to", "mitigate", "the", "identified", "risks."]}, {"id": 78, "cat": "questions", "es": "Nous devons déterminer quels investissements sont capables de générer des rendements durables plutôt que des gains temporaires.", "en": "We must determine which investments are capable of generating sustainable returns rather than temporary gains.", "w": ["We", "must", "determine", "which", "investments", "are", "capable", "of", "generating", "sustainable", "returns", "rather", "than", "temporary", "gains."]}, {"id": 79, "cat": "questions", "es": "L'entreprise a créé une équipe dédiée pour traiter les problèmes qui étaient auparavant tombés entre les frontières départementales.", "en": "The company created a dedicated task force to address issues that had previously fallen between departmental boundaries.", "w": ["The", "company", "created", "a", "dedicated", "task", "force", "to", "address", "issues", "that", "had", "previously", "fallen", "between", "departmental", "boundaries."]}, {"id": 80, "cat": "questions", "es": "Le nouveau cadre vise à garantir que les décisions stratégiques soient soutenues par des preuves fiables.", "en": "The new framework is intended to ensure that strategic decisions are supported by reliable evidence.", "w": ["The", "new", "framework", "is", "intended", "to", "ensure", "that", "strategic", "decisions", "are", "supported", "by", "reliable", "evidence."]}, {"id": 81, "cat": "advanced", "es": "Quelle que soit l'approche adoptée par la direction, elle devra communiquer clairement le raisonnement derrière la décision.", "en": "Whatever approach management adopts, it will need to communicate the reasoning behind the decision clearly.", "w": ["Whatever", "approach", "management", "adopts,", "it", "will", "need", "to", "communicate", "the", "reasoning", "behind", "the", "decision", "clearly."]}, {"id": 82, "cat": "advanced", "es": "Plus tôt l'entreprise identifie la source du problème, moins chère l'action corrective risque d'être.", "en": "The sooner the company identifies the source of the problem, the less expensive the corrective action is likely to be.", "w": ["The", "sooner", "the", "company", "identifies", "the", "source", "of", "the", "problem,", "the", "less", "expensive", "the", "corrective", "action", "is", "likely", "to", "be."]}, {"id": 83, "cat": "advanced", "es": "L'investissement n'a été approuvé qu'après que le conseil ait remis en question plusieurs hypothèses de la proposition initiale.", "en": "The investment was approved only after the board had challenged several assumptions in the original proposal.", "w": ["The", "investment", "was", "approved", "only", "after", "the", "board", "had", "challenged", "several", "assumptions", "in", "the", "original", "proposal."]}, {"id": 84, "cat": "advanced", "es": "Elle a accepté de superviser la restructuration à condition que des ressources suffisantes soient mises à disposition.", "en": "She agreed to oversee the restructuring provided that sufficient resources were made available.", "w": ["She", "agreed", "to", "oversee", "the", "restructuring", "provided", "that", "sufficient", "resources", "were", "made", "available."]}, {"id": 85, "cat": "advanced", "es": "Il a continué à défendre la fusion même quand plusieurs actionnaires majeurs ont commencé à questionner sa valeur stratégique.", "en": "He continued to defend the merger even as several major shareholders began questioning its strategic value.", "w": ["He", "continued", "to", "defend", "the", "merger", "even", "as", "several", "major", "shareholders", "began", "questioning", "its", "strategic", "value."]}, {"id": 86, "cat": "advanced", "es": "En intégrant ses systèmes de vente et de service client, l'entreprise s'attend à obtenir une vue plus complète du comportement des clients.", "en": "By integrating its sales and customer-service systems, the company expects to gain a more comprehensive view of customer behavior.", "w": ["By", "integrating", "its", "sales", "and", "customer-service", "systems,", "the", "company", "expects", "to", "gain", "a", "more", "comprehensive", "view", "of", "customer", "behavior."]}, {"id": 87, "cat": "advanced", "es": "L'initiative aura du mal à gagner en crédibilité à moins que les dirigeants seniors ne démontrent leur engagement par des actions concrètes.", "en": "The initiative will struggle to gain credibility unless senior leaders demonstrate their commitment through concrete actions.", "w": ["The", "initiative", "will", "struggle", "to", "gain", "credibility", "unless", "senior", "leaders", "demonstrate", "their", "commitment", "through", "concrete", "actions."]}, {"id": 88, "cat": "advanced", "es": "Après avoir identifié les faiblesses dans le processus existant, l'équipe l'a entièrement repensé.", "en": "Having identified the weaknesses in the existing process, the team redesigned it from the ground up.", "w": ["Having", "identified", "the", "weaknesses", "in", "the", "existing", "process,", "the", "team", "redesigned", "it", "from", "the", "ground", "up."]}, {"id": 89, "cat": "advanced", "es": "Ce qui détermine finalement la résilience d'une entreprise n'est pas l'absence de perturbations mais sa capacité à s'en remettre.", "en": "What ultimately determines a company's resilience is not the absence of disruption but its ability to recover from it.", "w": ["What", "ultimately", "determines", "a", "company's", "resilience", "is", "not", "the", "absence", "of", "disruption", "but", "its", "ability", "to", "recover", "from", "it."]}, {"id": 90, "cat": "advanced", "es": "Plus la structure de prise de décision d'une organisation devient complexe, plus il peut être difficile d'établir une responsabilisation claire.", "en": "The more complex an organization's decision-making structure becomes, the more difficult it can be to establish clear accountability.", "w": ["The", "more", "complex", "an", "organization's", "decision-making", "structure", "becomes,", "the", "more", "difficult", "it", "can", "be", "to", "establish", "clear", "accountability."]}, {"id": 91, "cat": "advanced", "es": "Pourquoi l'entreprise n'a-t-elle pas publié d'explication détaillée de ses marges bénéficiaires en déclin ?", "en": "Why hasn't the company published a detailed explanation of its declining profit margins?", "w": ["Why", "hasn't", "the", "company", "published", "a", "detailed", "explanation", "of", "its", "declining", "profit", "margins?"]}, {"id": 92, "cat": "advanced", "es": "Le conseil n'aurait-il pas pu identifier ces risques pendant le processus de diligence raisonnable ?", "en": "Couldn't the board have identified these risks during the due-diligence process?", "w": ["Couldn't", "the", "board", "have", "identified", "these", "risks", "during", "the", "due-diligence", "process?"]}, {"id": 93, "cat": "advanced", "es": "N'y a-t-il pas un danger qu'une dépendance excessive à l'automatisation affaiblisse les compétences de pensée critique des employés ?", "en": "Isn't there a danger that excessive reliance on automation could weaken employees' critical-thinking skills?", "w": ["Isn't", "there", "a", "danger", "that", "excessive", "reliance", "on", "automation", "could", "weaken", "employees'", "critical-thinking", "skills?"]}, {"id": 94, "cat": "advanced", "es": "Pourquoi la direction générale n'est-elle pas intervenue quand le projet a commencé à dépasser son budget initial ?", "en": "Why didn't senior management intervene when the project began exceeding its original budget?", "w": ["Why", "didn't", "senior", "management", "intervene", "when", "the", "project", "began", "exceeding", "its", "original", "budget?"]}, {"id": 95, "cat": "advanced", "es": "Ne serait-il pas plus efficace de traiter le problème sous-jacent plutôt que de traiter sans cesse ses symptômes ?", "en": "Wouldn't it be more effective to address the underlying problem rather than repeatedly treating its symptoms?", "w": ["Wouldn't", "it", "be", "more", "effective", "to", "address", "the", "underlying", "problem", "rather", "than", "repeatedly", "treating", "its", "symptoms?"]}, {"id": 96, "cat": "advanced", "es": "Les concurrents n'ont-ils pas déjà démontré que les clients sont prêts à changer de marque pour plus de commodité ?", "en": "Haven't competitors already demonstrated that customers are willing to switch brands for greater convenience?", "w": ["Haven't", "competitors", "already", "demonstrated", "that", "customers", "are", "willing", "to", "switch", "brands", "for", "greater", "convenience?"]}, {"id": 97, "cat": "advanced", "es": "Qu'est-ce qui aurait pu empêcher l'organisation de perdre autant d'employés expérimentés ?", "en": "What could have prevented the organization from losing so many experienced employees?", "w": ["What", "could", "have", "prevented", "the", "organization", "from", "losing", "so", "many", "experienced", "employees?"]}, {"id": 98, "cat": "advanced", "es": "Pourquoi les actionnaires ne devraient-ils pas exiger plus de transparence concernant la rémunération des dirigeants ?", "en": "Why shouldn't shareholders demand greater transparency regarding executive compensation?", "w": ["Why", "shouldn't", "shareholders", "demand", "greater", "transparency", "regarding", "executive", "compensation?"]}, {"id": 99, "cat": "advanced", "es": "L'entreprise ne pourrait-elle pas améliorer sa rentabilité sans réduire ses effectifs ?", "en": "Couldn't the company improve its profitability without reducing its workforce?", "w": ["Couldn't", "the", "company", "improve", "its", "profitability", "without", "reducing", "its", "workforce?"]}, {"id": 100, "cat": "advanced", "es": "N'est-il pas possible que l'expansion rapide de l'organisation ait créé des faiblesses opérationnelles qui ne sont pas encore devenues visibles ?", "en": "Isn't it possible that the organization's rapid expansion has created operational weaknesses that haven't yet become visible?", "w": ["Isn't", "it", "possible", "that", "the", "organization's", "rapid", "expansion", "has", "created", "operational", "weaknesses", "that", "haven't", "yet", "become", "visible?"]}];
+
+const CATEGORY_LABELS = {
+  past: "Executive Statements & Perfect Modals",
+  future: "Business Verbs & Negatives",
+  neg: "Negatives & Opinion Questions",
+  questions: "Hypothetical Qs & Mixed Conditionals",
+  advanced: "Negative Questions & Advanced Structures"
+};
+
+const CATEGORY_TIPS = {
+  past: "Grammar focus: the <strong>present perfect</strong> and <strong>past simple</strong> in executive and strategic contexts, and modal perfect forms for speculation about the past (<strong>would have, could have, might have</strong>).",
+  future: "Grammar focus: business-register verb patterns (<strong>intends to, is responsible for, was instrumental in</strong>), and negative forms across advanced tenses used in professional discourse.",
+  neg: "Grammar focus: more negative forms in formal register (<strong>hasn't ruled out, mustn't underestimate, is unlikely to</strong>), and complex opinion-based Wh- questions common in leadership discussion.",
+  questions: "Grammar focus: hypothetical and ethical dilemma questions, <strong>mixed conditionals</strong> (Had the company diversified earlier, it might have avoided...), and complex sentences with <strong>whether, as though</strong> and participle clauses.",
+  advanced: "Grammar focus: negative questions for challenging assumptions, <strong>inversion</strong> and correlative structures (Whatever the outcome..., The longer... the more...), cleft sentences (What distinguishes... is...), and formal linking (<strong>on the grounds that, provided that, despite mounting evidence</strong>)."
+};
+
+let currentCard = null;
+let activeFilter = "all";
+let searchTerm = "";
+let progress = {};
+
+/* === STORAGE (dual backend, same pattern as Claude.ai artifacts / standalone browser) ===
+   IMPORTANT: this key is unique to Word Order — C1 Vol. II. Every file in
+   this series (each CEFR level, each volume) uses its own storage key so
+   that progress never leaks between files — solving a sentence here never
+   marks anything as "done" in a different Word Order file, and vice versa. */
+const PROGRESS_KEY = "word_order_c1_vol2_fr_progress_v1";
+const HAS_CLAUDE_STORAGE = (typeof window !== "undefined" && !!window.storage);
+
+function localStorageWorks() {
+  try {
+    const t = "__storage_test__";
+    window.localStorage.setItem(t, "1");
+    window.localStorage.removeItem(t);
+    return true;
+  } catch (e) { return false; }
+}
+
+async function loadProgress() {
+  if (HAS_CLAUDE_STORAGE) {
+    try {
+      const r = await window.storage.get(PROGRESS_KEY);
+      if (r && r.value) progress = JSON.parse(r.value);
+    } catch (e) {}
+    return;
+  }
+  try {
+    if (localStorageWorks()) {
+      const raw = window.localStorage.getItem(PROGRESS_KEY);
+      if (raw) progress = JSON.parse(raw);
+    }
+  } catch (e) {}
+}
+function saveProgress() {
+  if (HAS_CLAUDE_STORAGE) {
+    try { window.storage.set(PROGRESS_KEY, JSON.stringify(progress)).catch(()=>{}); } catch (e) {}
+    return;
+  }
+  try {
+    if (localStorageWorks()) {
+      window.localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+    }
+  } catch (e) {}
+}
+
+function escHtml(s) {
+  const d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* === RENDER GRID === */
+function renderGrid() {
+  const grid = document.getElementById("grid");
+  const term = searchTerm.trim().toLowerCase();
+  const filtered = SENTENCES.filter(c => {
+    const matchesFilter = activeFilter === "all" || c.cat === activeFilter;
+    if (!matchesFilter) return false;
+    if (!term) return true;
+    const hay = (c.en + " " + c.es).toLowerCase();
+    return hay.includes(term);
+  });
+  document.getElementById("counter").textContent = filtered.length;
+
+  grid.innerHTML = filtered.map(c => {
+    const p = progress[c.id];
+    const done = p && p.solved;
+    const kindLabel = done ? (p.firstTry ? "✓ First try" : "✓ Solved") : (CATEGORY_LABELS[c.cat] || c.cat);
+    return `
+    <div class="topic-card${done ? ' completed' : ''}" onclick="openCard(${c.id})">
+      <div class="topic-card-head">
+        <span class="topic-num">№ ${String(c.id).padStart(3,"0")}</span>
+        <span class="topic-kind${done ? ' done' : ''}">${escHtml(kindLabel)}</span>
+      </div>
+      <div class="topic-title">${escHtml(c.es)}</div>
+      <div class="topic-intro">${c.w.length} words &middot; ${escHtml(CATEGORY_LABELS[c.cat] || c.cat)}</div>
+      <div class="topic-card-foot">
+        <span class="topic-meta">${done ? (p.tries + ' ' + (p.tries===1?'try':'tries')) : 'Not started'}</span>
+        <span class="topic-arrow">→</span>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function handleSearch(v) { searchTerm = v; renderGrid(); }
+
+/* Script tag sits at the end of <body>, so every element above already
+   exists in the DOM by the time this runs — no need to wait for
+   DOMContentLoaded, which avoids any timing edge cases. */
+document.querySelectorAll(".filter-chip").forEach(chip => {
+  chip.addEventListener("click", () => {
+    document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+    chip.classList.add("active");
+    activeFilter = chip.dataset.filter;
+    renderGrid();
+  });
+});
+
+/* === WORD-ORDER GAME ENGINE ===
+   Two interaction modes, both always active:
+   1. Native HTML5 drag-and-drop (desktop mouse / trackpad) — tiles are
+      draggable; slots and the word bank are drop targets.
+   2. Tap-to-place (works everywhere, including touch) — tapping a tile in
+      the bank sends it to the first empty slot; tapping a placed tile sends
+      it back to the bank.
+   Both are driven by the same state model so they never conflict. */
+
+let gameState = { order: [], bank: [] }; // order: array of {uid,word}|null ; bank: array of {uid,word}
+let draggedUid = null;
+let sessionTries = 0;
+let sessionHints = 0;
+let sessionLocked = false;
+
+function buildGameState(card) {
+  const tiles = card.w.map((word, i) => ({ uid: "t" + i, word }));
+  let bank = shuffle(tiles);
+  // avoid an already-solved shuffle
+  let attempts = 0;
+  while (attempts < 6 && bank.every((t, i) => t.word === card.w[i])) {
+    bank = shuffle(tiles);
+    attempts++;
+  }
+  gameState = { order: new Array(tiles.length).fill(null), bank };
+  sessionTries = 0;
+  sessionHints = 0;
+  sessionLocked = false;
+}
+
+function findTile(uid) {
+  const bi = gameState.bank.findIndex(t => t.uid === uid);
+  if (bi > -1) return { loc: "bank", index: bi, tile: gameState.bank[bi] };
+  const si = gameState.order.findIndex(t => t && t.uid === uid);
+  if (si > -1) return { loc: "slot", index: si, tile: gameState.order[si] };
+  return null;
+}
+
+function removeTileFromCurrentLocation(uid) {
+  const found = findTile(uid);
+  if (!found) return null;
+  if (found.loc === "bank") gameState.bank.splice(found.index, 1);
+  else gameState.order[found.index] = null;
+  return found.tile;
+}
+
+function placeTileInSlot(tile, slotIndex) {
+  const displaced = gameState.order[slotIndex];
+  gameState.order[slotIndex] = tile;
+  if (displaced) gameState.bank.push(displaced);
+}
+
+function placeTileInBank(tile) {
+  gameState.bank.push(tile);
+}
+
+function firstEmptySlot() {
+  return gameState.order.findIndex(s => s === null);
+}
+
+function renderGame() {
+  const slotsEl = document.getElementById("wb-slots");
+  const bankEl = document.getElementById("wb-bank");
+
+  slotsEl.innerHTML = gameState.order.map((tile, i) => {
+    if (!tile) {
+      return `<div class="slot" data-slot="${i}" ondragover="onSlotDragOver(event)" ondragleave="onSlotDragLeave(event)" ondrop="onSlotDrop(event, ${i})"></div>`;
+    }
+    return `<div class="slot filled" data-slot="${i}" ondragover="onSlotDragOver(event)" ondragleave="onSlotDragLeave(event)" ondrop="onSlotDrop(event, ${i})">${renderTile(tile, true)}</div>`;
+  }).join("");
+
+  bankEl.innerHTML = gameState.bank.map(tile => renderTile(tile, false)).join("");
+  if (!gameState.bank.length) {
+    bankEl.ondragover = onSlotDragOver;
+    bankEl.ondrop = (e) => onBankDrop(e);
+  } else {
+    bankEl.ondragover = onSlotDragOver;
+    bankEl.ondrop = (e) => onBankDrop(e);
+  }
+
+  const allFilled = gameState.order.every(s => s !== null);
+  document.getElementById("check-btn").disabled = !allFilled || sessionLocked;
+}
+
+function renderTile(tile, placed) {
+  const cls = ["tile"];
+  if (placed) cls.push("placed");
+  if (sessionLocked) cls.push("locked");
+  return `<div class="${cls.join(' ')}" draggable="${!sessionLocked}" data-uid="${tile.uid}"
+    ondragstart="onTileDragStart(event, '${tile.uid}')" ondragend="onTileDragEnd(event)"
+    onclick="onTileClick('${tile.uid}')">${escHtml(tile.word)}</div>`;
+}
+
+function onTileDragStart(e, uid) {
+  if (sessionLocked) { e.preventDefault(); return; }
+  draggedUid = uid;
+  e.dataTransfer.setData("text/plain", uid);
+  e.dataTransfer.effectAllowed = "move";
+  e.target.classList.add("dragging");
+}
+function onTileDragEnd(e) {
+  e.target.classList.remove("dragging");
+  draggedUid = null;
+}
+function onSlotDragOver(e) {
+  e.preventDefault();
+  if (e.currentTarget && e.currentTarget.classList) e.currentTarget.classList.add("drag-over");
+}
+function onSlotDragLeave(e) {
+  if (e.currentTarget && e.currentTarget.classList) e.currentTarget.classList.remove("drag-over");
+}
+function onSlotDrop(e, slotIndex) {
+  e.preventDefault();
+  if (sessionLocked) return;
+  const uid = draggedUid || e.dataTransfer.getData("text/plain");
+  if (!uid) return;
+  const tile = removeTileFromCurrentLocation(uid);
+  if (!tile) return;
+  placeTileInSlot(tile, slotIndex);
+  clearResultState();
+  renderGame();
+}
+function onBankDrop(e) {
+  e.preventDefault();
+  if (sessionLocked) return;
+  const uid = draggedUid || e.dataTransfer.getData("text/plain");
+  if (!uid) return;
+  const tile = removeTileFromCurrentLocation(uid);
+  if (!tile) return;
+  placeTileInBank(tile);
+  clearResultState();
+  renderGame();
+}
+function onTileClick(uid) {
+  if (sessionLocked) return;
+  const found = findTile(uid);
+  if (!found) return;
+  if (found.loc === "bank") {
+    const slotIndex = firstEmptySlot();
+    if (slotIndex === -1) return;
+    const tile = removeTileFromCurrentLocation(uid);
+    placeTileInSlot(tile, slotIndex);
+  } else {
+    const tile = removeTileFromCurrentLocation(uid);
+    placeTileInBank(tile);
+  }
+  clearResultState();
+  renderGame();
+}
+
+function clearResultState() {
+  document.getElementById("wb-results").classList.remove("show", "ok", "bad");
+  document.querySelectorAll(".slot").forEach(s => s.classList.remove("correct", "wrong"));
+}
+
+function resetGame() {
+  if (!currentCard) return;
+  buildGameState(currentCard);
+  clearResultState();
+  renderGame();
+}
+
+function giveHint() {
+  if (!currentCard || sessionLocked) return;
+  const correctWords = currentCard.w;
+  const slotIndex = firstEmptySlot();
+  if (slotIndex === -1) return;
+  const wantedWord = correctWords[slotIndex];
+  // find a tile with this exact word, preferring the bank
+  let uid = null;
+  const bankMatch = gameState.bank.find(t => t.word === wantedWord);
+  if (bankMatch) uid = bankMatch.uid;
+  else {
+    const slotMatch = gameState.order.find(t => t && t.word === wantedWord);
+    if (slotMatch) uid = slotMatch.uid;
+  }
+  if (!uid) return;
+  const tile = removeTileFromCurrentLocation(uid);
+  placeTileInSlot(tile, slotIndex);
+  sessionHints++;
+  clearResultState();
+  renderGame();
+  const slotEl = document.querySelector(`.slot[data-slot="${slotIndex}"] .tile`);
+  if (slotEl) { slotEl.classList.add("hinted"); setTimeout(() => slotEl.classList.remove("hinted"), 900); }
+}
+
+function checkOrder() {
+  if (!currentCard) return;
+  const allFilled = gameState.order.every(s => s !== null);
+  if (!allFilled) return;
+
+  const correctWords = currentCard.w;
+  let allCorrect = true;
+  gameState.order.forEach((tile, i) => {
+    const slotEl = document.querySelector(`.slot[data-slot="${i}"]`);
+    const isCorrect = tile.word === correctWords[i];
+    if (!isCorrect) allCorrect = false;
+    if (slotEl) slotEl.classList.toggle("correct", isCorrect);
+    if (slotEl) slotEl.classList.toggle("wrong", !isCorrect);
+  });
+
+  const resultsEl = document.getElementById("wb-results");
+  resultsEl.classList.add("show");
+
+  if (allCorrect) {
+    sessionLocked = true;
+    renderGame(); // lock tiles visually
+    resultsEl.classList.add("ok");
+    resultsEl.classList.remove("bad");
+    document.getElementById("wb-result-icon").textContent = "✓";
+    document.getElementById("wb-result-title").textContent = sessionTries === 0 && sessionHints === 0 ? "Perfect — first try!" : "Well done!";
+
+    const roundScore = computeRoundScore(sessionTries, sessionHints);
+    document.getElementById("wb-result-score").textContent = "+" + roundScore + " pts";
+
+    document.getElementById("wb-result-text").innerHTML =
+      `<strong>${escHtml(currentCard.en)}</strong><br>You solved this sentence` +
+      (sessionTries > 0 ? ` in ${sessionTries + 1} tries` : "") +
+      (sessionHints > 0 ? (sessionTries > 0 ? " and" : " with") + ` ${sessionHints} hint${sessionHints===1?"":"s"}` : "") + ".";
+
+    const prev = progress[currentCard.id] || {};
+    const firstTry = sessionTries === 0 && sessionHints === 0;
+    const prevBest = prev.bestScore || 0;
+    const bestScore = Math.max(prevBest, roundScore);
+    progress[currentCard.id] = {
+      solved: true,
+      firstTry: prev.firstTry || firstTry,
+      tries: prev.tries !== undefined ? Math.min(prev.tries, sessionTries + 1) : sessionTries + 1,
+      hintsUsed: (prev.hintsUsed || 0) + sessionHints,
+      bestScore: bestScore,
+      solvedAt: new Date().toISOString()
+    };
+    saveProgress();
+    updateProgressDashboard();
+    updateScoreCard();
+    renderGrid();
+
+    // 100% correct on every check — celebrate every time, not just first try.
+    launchConfetti();
+    showScoreToast(roundScore);
+  } else {
+    sessionTries++;
+    resultsEl.classList.add("bad");
+    resultsEl.classList.remove("ok");
+    document.getElementById("wb-result-icon").textContent = "!";
+    document.getElementById("wb-result-title").textContent = "Not quite yet";
+    document.getElementById("wb-result-text").innerHTML =
+      "The tiles outlined in pink are in the wrong place. Drag them out, or tap them to send them back to the word bank, then try again.";
+    document.getElementById("wb-result-actions").innerHTML = "";
+  }
+
+  if (allCorrect) {
+    document.getElementById("wb-result-actions").innerHTML = `
+      <button class="btn-listen" onclick="listenSentence()">🔊 Listen</button>
+      <button class="btn-next" onclick="nextCard()">Next sentence →</button>
+    `;
+  }
+}
+
+function listenSentence() {
+  if (!currentCard || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(currentCard.en);
+  utter.lang = "en-GB";
+  utter.rate = 0.92;
+  window.speechSynthesis.speak(utter);
+}
+
+function nextCard() {
+  if (!currentCard) return;
+  const term = searchTerm.trim().toLowerCase();
+  const list = SENTENCES.filter(c => {
+    const matchesFilter = activeFilter === "all" || c.cat === activeFilter;
+    if (!matchesFilter) return false;
+    if (!term) return true;
+    return (c.en + " " + c.es).toLowerCase().includes(term);
+  });
+  const idx = list.findIndex(c => c.id === currentCard.id);
+  const next = list[(idx + 1) % list.length];
+  openCard(next.id);
+}
+
+/* === PROGRESS DASHBOARD === */
+function updateProgressDashboard() {
+  const total = SENTENCES.length;
+  const solvedIds = Object.keys(progress).filter(id => progress[id] && progress[id].solved);
+  const completed = solvedIds.length;
+  const firstTryCount = solvedIds.filter(id => progress[id].firstTry).length;
+  const hintsTotal = solvedIds.reduce((acc, id) => acc + (progress[id].hintsUsed || 0), 0);
+
+  const circumference = 2 * Math.PI * 52;
+  const ring = document.getElementById("pd-ring-fill");
+  if (ring) {
+    ring.style.strokeDasharray = String(circumference);
+    ring.style.strokeDashoffset = String(circumference * (1 - completed / total));
+  }
+
+  const countEl = document.getElementById("pd-count");
+  if (countEl) countEl.textContent = completed;
+  const solvedEl = document.getElementById("pd-solved");
+  if (solvedEl) solvedEl.textContent = completed;
+  const firstEl = document.getElementById("pd-firsttry");
+  if (firstEl) firstEl.textContent = firstTryCount;
+  const hintsEl = document.getElementById("pd-hints");
+  if (hintsEl) hintsEl.textContent = hintsTotal;
+
+  const bestEl = document.getElementById("pd-best");
+  if (bestEl) {
+    const catScores = {};
+    solvedIds.forEach(id => {
+      const t = SENTENCES.find(tt => tt.id === parseInt(id, 10));
+      if (!t) return;
+      if (!catScores[t.cat]) catScores[t.cat] = 0;
+      catScores[t.cat]++;
+    });
+    let bestCat = null, bestCount = -1;
+    Object.keys(catScores).forEach(cat => {
+      if (catScores[cat] > bestCount) { bestCount = catScores[cat]; bestCat = cat; }
+    });
+    bestEl.textContent = bestCat ? (CATEGORY_LABELS[bestCat] || bestCat) : "—";
+  }
+
+  const titleEl = document.querySelector(".pd-title");
+  if (titleEl) {
+    if (completed === 0) {
+      titleEl.textContent = "Solve your first sentence to start tracking progress.";
+    } else if (completed >= total) {
+      titleEl.textContent = "All 100 sentences solved — remarkable work.";
+    } else {
+      titleEl.textContent = `${total - completed} sentence${total - completed === 1 ? "" : "s"} to go. Every session picks up right where you left off.`;
+    }
+  }
+}
+
+/* === SCORING === */
+const MAX_SCORE_PER_CARD = 100;
+const TOTAL_MAX_SCORE = MAX_SCORE_PER_CARD * SENTENCES.length;
+
+const RANKS = [
+  { min: 0,    label: "Rookie Wordsmith" },
+  { min: 1000, label: "Sharp Learner" },
+  { min: 2500, label: "Word Order Pro" },
+  { min: 5000, label: "Fluent Builder" },
+  { min: 7500, label: "Grammar Virtuoso" },
+  { min: 9500, label: "Word Order Legend" }
+];
+
+function computeRoundScore(tries, hints) {
+  let score = MAX_SCORE_PER_CARD;
+  score -= hints * 15;
+  score -= tries * 10;
+  return Math.max(score, 10);
+}
+
+function totalScoreFromProgress() {
+  return Object.keys(progress).reduce((sum, id) => {
+    const p = progress[id];
+    return sum + (p && p.bestScore ? p.bestScore : 0);
+  }, 0);
+}
+
+function rankFor(score) {
+  let r = RANKS[0];
+  for (const x of RANKS) { if (score >= x.min) r = x; }
+  return r;
+}
+
+function animateNumber(el, from, to, duration) {
+  if (from === to) { el.textContent = to.toLocaleString(); return; }
+  const start = (window.performance && performance.now) ? performance.now() : Date.now();
+  const dur = duration || 700;
+  function step(now) {
+    const elapsed = ((window.performance && performance.now) ? performance.now() : Date.now()) - start;
+    const p = Math.min(elapsed / dur, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(from + (to - from) * eased).toLocaleString();
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+let lastRenderedScore = 0;
+function updateScoreCard() {
+  const total = totalScoreFromProgress();
+  const numEl = document.getElementById("score-num");
+  if (numEl) {
+    animateNumber(numEl, lastRenderedScore, total);
+    lastRenderedScore = total;
+  }
+  const rank = rankFor(total);
+  const rankEl = document.getElementById("score-rank");
+  if (rankEl) rankEl.textContent = rank.label;
+
+  const barEl = document.getElementById("score-bar-fill");
+  if (barEl) barEl.style.width = Math.min(100, (total / TOTAL_MAX_SCORE) * 100) + "%";
+
+  const nextEl = document.getElementById("score-next");
+  if (nextEl) {
+    const nextRank = RANKS.find(r => r.min > total);
+    if (total === 0) {
+      nextEl.textContent = "Solve a sentence to start scoring.";
+    } else if (nextRank) {
+      nextEl.textContent = `${(nextRank.min - total).toLocaleString()} pts to ${nextRank.label}`;
+    } else {
+      nextEl.textContent = "Top rank reached — legendary!";
+    }
+  }
+
+  const card = document.getElementById("score-card");
+  if (card) {
+    card.classList.add("pulse");
+    setTimeout(() => card.classList.remove("pulse"), 700);
+  }
+}
+
+function showScoreToast(points) {
+  const toast = document.getElementById("score-toast");
+  if (!toast) return;
+  toast.textContent = "+" + points + " points";
+  toast.classList.add("show");
+  clearTimeout(showScoreToast._t);
+  showScoreToast._t = setTimeout(() => toast.classList.remove("show"), 1600);
+}
+
+/* === CONFETTI ===
+   Lightweight canvas particle burst, no external library — fires every time
+   a sentence is checked and found 100% correct. */
+function launchConfetti() {
+  const canvas = document.getElementById("confetti-canvas");
+  if (!canvas || !canvas.getContext) return;
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let ctx;
+  try { ctx = canvas.getContext("2d"); } catch (e) { return; }
+  if (!ctx) return;
+
+  const colors = ["#ff3d5c", "#ffcc33", "#ff4fa3", "#f4ff5c", "#ffd23f", "#ff8a00"];
+  const count = 150;
+  const particles = [];
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: canvas.width / 2 + (Math.random() - 0.5) * 200,
+      y: canvas.height * 0.3 + (Math.random() - 0.5) * 80,
+      vx: (Math.random() - 0.5) * 15,
+      vy: Math.random() * -15 - 4,
+      size: 6 + Math.random() * 7,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 22,
+      shape: Math.random() < 0.5 ? "rect" : "circle",
+      life: 0,
+      maxLife: 85 + Math.random() * 45
+    });
+  }
+
+  const gravity = 0.45;
+  const drag = 0.99;
+  let frame = 0;
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    particles.forEach(p => {
+      if (p.life > p.maxLife) return;
+      alive = true;
+      p.vy += gravity;
+      p.vx *= drag;
+      p.vy *= drag;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rotation += p.rotSpeed;
+      p.life++;
+      const alpha = Math.max(1 - p.life / p.maxLife, 0);
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate((p.rotation * Math.PI) / 180);
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = p.color;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = 6;
+      if (p.shape === "rect") ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+      else { ctx.beginPath(); ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2); ctx.fill(); }
+      ctx.restore();
+    });
+    frame++;
+    if (alive && frame < 280) {
+      requestAnimationFrame(tick);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+  requestAnimationFrame(tick);
+}
+
+/* === MODAL === */
+function openCard(id) {
+  const c = SENTENCES.find(t => t.id === id);
+  if (!c) return;
+  currentCard = c;
+
+  document.getElementById("m-eyebrow").textContent = `Sentence № ${String(c.id).padStart(3,"0")}`;
+  document.getElementById("m-cat").textContent = CATEGORY_LABELS[c.cat] || c.cat;
+  document.getElementById("m-title").textContent = "Put the words in order";
+  document.getElementById("m-es").textContent = c.es;
+  document.getElementById("m-tip").innerHTML = CATEGORY_TIPS[c.cat] || "";
+
+  buildGameState(c);
+  clearResultState();
+  renderGame();
+
+  document.getElementById("modal-bg").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  document.getElementById("modal-bg").classList.remove("open");
+  document.body.style.overflow = "";
+  currentCard = null;
+}
+
+/* === INIT === */
+(async function init() {
+  await loadProgress();
+  renderGrid();
+  updateProgressDashboard();
+  updateScoreCard();
+})();
+
+</script>
+</body>
+</html>

@@ -6,6 +6,10 @@
     "dev": "next dev",
     "dev:log": "mkdir -p logs; next dev 2>&1 | tee logs/dev.log",
     "dev:clean": "kill -9 $(lsof -ti :3000) 2>/dev/null || true; rm -rf .next; next dev",
+    "optimize:syntax-flow": "node scripts/optimizeContentImages.mjs --syntax-sample",
+    "optimize:syntax-flow:all": "node scripts/optimizeContentImages.mjs --syntax-all",
+    "optimize:gossip": "node scripts/optimizeContentImages.mjs --gossip-sample",
+    "optimize:gossip:all": "node scripts/optimizeContentImages.mjs --gossip-all",
     "build": "next build",
     "start": "next start",
     "start:clean": "kill -9 $(lsof -ti :3000) 2>/dev/null || true; rm -rf .next; next build && next start"

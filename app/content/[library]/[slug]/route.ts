@@ -1,4 +1,5 @@
 import { promises as fs } from "fs";
+import path from "path";
 import { NextResponse } from "next/server";
 import type { ContentLibraryId } from "../../../../lib/contentLibraries";
 import { getSituationalEnglishFilePath } from "../../../../lib/situationalEnglish.files";
@@ -29,6 +30,8 @@ const HTML_HEADERS = {
   "cache-control": "private, no-store, max-age=0",
   "x-robots-tag": "noindex, nofollow",
 } as const;
+
+const IMAGE_OPTIMIZED_ROOT = path.join(process.cwd(), "generated-content", "image-optimized");
 
 type LibraryResolver = (slug: string) => Promise<string | null>;
 
@@ -62,6 +65,26 @@ const RESOLVERS: Partial<Record<ContentLibraryId, LibraryResolver>> = {
   "langslate-flow": getLangslateFlowFilePath,
 };
 
+function supportsImageOptimizedHtml(library: string): boolean {
+  return library.startsWith("syntax-flow-") || library === "gossip-english";
+}
+
+async function readImageOptimizedHtml(library: string, slug: string): Promise<string | null> {
+  if (!supportsImageOptimizedHtml(library)) return null;
+
+  const filePath = path.join(IMAGE_OPTIMIZED_ROOT, library, `${slug}.html`);
+
+  try {
+    return await fs.readFile(filePath, "utf-8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      return null;
+    }
+
+    throw error;
+  }
+}
+
 export async function GET(_: Request, { params }: ContentRouteProps) {
   const resolver = RESOLVERS[params.library as ContentLibraryId];
   if (!resolver) {
@@ -73,7 +96,7 @@ export async function GET(_: Request, { params }: ContentRouteProps) {
     return new NextResponse("Not found.", { status: 404 });
   }
 
-  const html = await fs.readFile(filePath, "utf-8");
+  const html = (await readImageOptimizedHtml(params.library, params.slug)) ?? (await fs.readFile(filePath, "utf-8"));
 
   return new NextResponse(html, {
     status: 200,
