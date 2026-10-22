@@ -4,11 +4,20 @@ import {
   getYouTubeLessonJob,
 } from "../../../../../lib/data/youtubeJobs";
 import { processYouTubeLessonJob } from "../../../../../lib/jobs/youtubeLessonProcessor";
+import { getRequestAuthUser } from "../../../../../lib/supabase/auth";
+
+const MAX_TRANSCRIPT_LENGTH = 200_000;
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
+  const authUser = await getRequestAuthUser(request);
+  if (!authUser) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   let payload: { transcript?: string };
   try {
     payload = (await request.json()) as { transcript?: string };
@@ -27,13 +36,20 @@ export async function POST(
     );
   }
 
+  if (transcript.length > MAX_TRANSCRIPT_LENGTH) {
+    return NextResponse.json(
+      { error: "The transcript is too large. Please keep it under 200,000 characters." },
+      { status: 413 }
+    );
+  }
+
   try {
-    const existing = await getYouTubeLessonJob(params.id);
-    if (!existing) {
+    const existing = await getYouTubeLessonJob(id);
+    if (!existing || existing.user_id !== authUser.id) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
 
-    const queued = await attachTranscriptAndQueueJob(params.id, transcript);
+    const queued = await attachTranscriptAndQueueJob(id, transcript);
     console.info("[youtube-job] transcript_submitted", { id: queued.id });
 
     const result = await processYouTubeLessonJob(queued);

@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 import { getEnglishTrainingLessonFilePath } from "../../../lib/englishTraining.files";
 
 type EnglishTrainingContentRouteProps = {
-  params: {
+  params: Promise<{
     lesson: string;
-  };
+  }>;
 };
 
 const HTML_HEADERS = {
@@ -15,7 +15,8 @@ const HTML_HEADERS = {
 } as const;
 
 export async function GET(_: Request, { params }: EnglishTrainingContentRouteProps) {
-  const entry = await getEnglishTrainingLessonFilePath(params.lesson);
+  const { lesson } = await params;
+  const entry = await getEnglishTrainingLessonFilePath(lesson);
 
   if (!entry) {
     return new NextResponse("Not found.", { status: 404 });

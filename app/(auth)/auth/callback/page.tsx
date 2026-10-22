@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Card from "../../../../components/shared/Card";
 import { getSupabaseBrowserClient } from "../../../../lib/supabase/client";
+import { safeInternalRedirect } from "../../../../lib/auth/redirect";
 
 export default function AuthCallbackPage() {
   const router = useRouter();
@@ -14,11 +15,8 @@ export default function AuthCallbackPage() {
 
     const completeOAuth = async () => {
       try {
-        console.error("[auth-callback]", {
-          href: window.location.href,
-          search: window.location.search,
-          hash: window.location.hash,
-        });
+        const params = new URLSearchParams(window.location.search);
+        const nextPath = safeInternalRedirect(params.get("next"));
 
         const supabase = getSupabaseBrowserClient();
         if (!supabase) {
@@ -28,65 +26,39 @@ export default function AuthCallbackPage() {
 
         const { data: initialSessionData, error: initialSessionError } = await supabase.auth.getSession();
         if (initialSessionError) {
-          console.error("[auth-callback]", initialSessionError);
+          console.warn("[auth-callback] initial session unavailable");
         }
-        console.log("[auth-callback-debug]", {
-          href: window.location.href,
-          search: window.location.search,
-          hash: window.location.hash,
-          session: Boolean(initialSessionData.session),
-          step: "initial_get_session",
-        });
         if (initialSessionData.session) {
-          router.replace("/dashboard");
+          router.replace(nextPath);
           return;
         }
 
         await new Promise((resolve) => window.setTimeout(resolve, 500));
         const { data: delayedSessionData, error: delayedSessionError } = await supabase.auth.getSession();
         if (delayedSessionError) {
-          console.error("[auth-callback]", delayedSessionError);
+          console.warn("[auth-callback] delayed session unavailable");
         }
-        console.log("[auth-callback-debug]", {
-          href: window.location.href,
-          search: window.location.search,
-          hash: window.location.hash,
-          session: Boolean(delayedSessionData.session),
-          step: "delayed_get_session",
-        });
         if (delayedSessionData.session) {
-          router.replace("/dashboard");
+          router.replace(nextPath);
           return;
         }
 
-        const params = new URLSearchParams(window.location.search);
         const code = params.get("code");
         if (code) {
           const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
           if (exchangeError) {
-            console.error("[auth-callback]", exchangeError);
-            router.replace(
-              `/auth?error=callback_failed&error_description=${encodeURIComponent(
-                exchangeError.message
-              )}`
-            );
+            console.warn("[auth-callback] code exchange failed");
+            router.replace("/auth?error=callback_failed");
             return;
           }
 
           const { data: postExchangeSessionData, error: postExchangeSessionError } =
             await supabase.auth.getSession();
           if (postExchangeSessionError) {
-            console.error("[auth-callback]", postExchangeSessionError);
+            console.warn("[auth-callback] exchanged session unavailable");
           }
-          console.log("[auth-callback-debug]", {
-            href: window.location.href,
-            search: window.location.search,
-            hash: window.location.hash,
-            session: Boolean(postExchangeSessionData.session),
-            step: "post_exchange_get_session",
-          });
           if (postExchangeSessionData.session) {
-            router.replace("/dashboard");
+            router.replace(nextPath);
             return;
           }
         }
@@ -100,45 +72,26 @@ export default function AuthCallbackPage() {
           const { data: hashSessionData, error: hashSessionError } =
             await supabase.auth.getSession();
           if (hashSessionError) {
-            console.error("[auth-callback]", hashSessionError);
+            console.warn("[auth-callback] legacy hash session unavailable");
           }
-          console.log("[auth-callback-debug]", {
-            href: window.location.href,
-            search: window.location.search,
-            hash: window.location.hash,
-            session: Boolean(hashSessionData.session),
-            step: "hash_get_session",
-          });
           if (hashSessionData.session) {
-            router.replace("/dashboard");
+            router.replace(nextPath);
             return;
           }
-          router.replace(
-            "/auth?error=callback_failed&error_description=hash_present_but_no_session"
-          );
+          router.replace("/auth?error=callback_failed");
           return;
         }
 
-        const hasSearch = window.location.search.length > 0;
-        const hasHash = hash.length > 0;
-        router.replace(
-          `/auth?error=callback_failed&error_description=${encodeURIComponent(
-            `no_code_or_session|href=${window.location.href}|search=${window.location.search}|hash=${window.location.hash}|hasSearch=${hasSearch}|hasHash=${hasHash}`
-          )}`
-        );
+        router.replace("/auth?error=callback_failed");
       } catch (callbackError) {
-        console.error("[auth-callback]", callbackError);
+        console.error("[auth-callback] unexpected failure", {
+          name: callbackError instanceof Error ? callbackError.name : "unknown",
+        });
         if (!active) return;
         setError("We couldn’t complete sign-in. Redirecting back to login...");
         window.setTimeout(() => {
           if (!active) return;
-          const message =
-            callbackError instanceof Error
-              ? callbackError.message
-              : "unknown_callback_error";
-          router.replace(
-            `/auth?error=callback_failed&error_description=${encodeURIComponent(message)}`
-          );
+          router.replace("/auth?error=callback_failed");
         }, 1200);
       }
     };

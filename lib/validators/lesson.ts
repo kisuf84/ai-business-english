@@ -26,6 +26,10 @@ const MIN_VOCAB_EXERCISE_COUNT = 1;
 const MIN_FINAL_ASSESSMENT_COUNT = 15;
 const MIN_READING_PARAGRAPH_LENGTH = 220;
 const MIN_SPEAKING_QUESTIONS = 15;
+const MAX_TOPIC_LENGTH = 500;
+const MAX_SOURCE_URL_LENGTH = 2_048;
+const MAX_SOURCE_TEXT_LENGTH = 200_000;
+const MAX_SHORT_FIELD_LENGTH = 200;
 
 export function validateLessonPayload(
   payload: LessonGenerationInput
@@ -44,10 +48,33 @@ export function validateLessonPayload(
     errors.push("Level is required.");
   }
 
+  if ((payload.topic?.length || 0) > MAX_TOPIC_LENGTH) {
+    errors.push(`Topic must be ${MAX_TOPIC_LENGTH.toLocaleString()} characters or fewer.`);
+  }
+
+  if ((payload.source_url?.length || 0) > MAX_SOURCE_URL_LENGTH) {
+    errors.push(`Source URL must be ${MAX_SOURCE_URL_LENGTH.toLocaleString()} characters or fewer.`);
+  }
+
+  if ((payload.source_text?.length || 0) > MAX_SOURCE_TEXT_LENGTH) {
+    errors.push(`Source text must be ${MAX_SOURCE_TEXT_LENGTH.toLocaleString()} characters or fewer.`);
+  }
+
+  for (const [label, value] of [
+    ["Level", payload.level],
+    ["Industry", payload.industry],
+    ["Profession", payload.profession],
+    ["Lesson type", payload.lesson_type],
+  ] as const) {
+    if ((value?.length || 0) > MAX_SHORT_FIELD_LENGTH) {
+      errors.push(`${label} must be ${MAX_SHORT_FIELD_LENGTH} characters or fewer.`);
+    }
+  }
+
   if (hasSourceUrl) {
     try {
       const parsed = new URL(payload.source_url as string);
-      if (!parsed.protocol.startsWith("http")) {
+      if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
         errors.push("Source URL must start with http:// or https://.");
       }
     } catch {

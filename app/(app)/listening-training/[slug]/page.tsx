@@ -2,12 +2,13 @@ import { notFound } from "next/navigation";
 import ContentReaderPage from "../../../../components/shared/ContentReaderPage";
 import { getListeningTrainingItem } from "../../../../lib/listeningTraining";
 
-export default function ListeningTrainingLessonPage({
+export default async function ListeningTrainingLessonPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const item = getListeningTrainingItem(params.slug);
+  const { slug } = await params;
+  const item = getListeningTrainingItem(slug);
   if (!item) {
     notFound();
   }

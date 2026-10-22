@@ -7,7 +7,7 @@ import { getAuthUserFromCookieHeader } from "../../../lib/supabase/auth";
 export default async function MyCoursesPage() {
   let courses = [] as Awaited<ReturnType<typeof listCourses>>;
   let loadError: string | null = null;
-  const authUser = await getAuthUserFromCookieHeader(cookies().toString());
+  const authUser = await getAuthUserFromCookieHeader((await cookies()).toString());
 
   if (!authUser) {
     loadError = "Please sign in to view your courses.";

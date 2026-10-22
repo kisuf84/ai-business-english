@@ -8,12 +8,13 @@ import {
   getCorporateCategory,
 } from "../../../../../../lib/langslateCorporate";
 
-export default function CorporateCategoryPage({
+export default async function CorporateCategoryPage({
   params,
 }: {
-  params: { family: string; category: string };
+  params: Promise<{ family: string; category: string }>;
 }) {
-  const found = getCorporateCategory(params.family, params.category);
+  const { family: familySlug, category: categorySlug } = await params;
+  const found = getCorporateCategory(familySlug, categorySlug);
   if (!found) notFound();
   const { family, category } = found;
   const copy = CORPORATE_FAMILY_COPY[family.slug];

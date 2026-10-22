@@ -2,12 +2,13 @@ import { notFound } from "next/navigation";
 import ContentReaderPage from "../../../../components/shared/ContentReaderPage";
 import { getLexiproItem } from "../../../../lib/lexipro";
 
-export default function LexiproLanguagePage({
+export default async function LexiproLanguagePage({
   params,
 }: {
-  params: { language: string };
+  params: Promise<{ language: string }>;
 }) {
-  const item = getLexiproItem(params.language);
+  const { language } = await params;
+  const item = getLexiproItem(language);
   if (!item) {
     notFound();
   }

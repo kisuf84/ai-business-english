@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 type SupabaseUser = {
   id: string;
   email?: string;
+  app_metadata?: Record<string, unknown>;
   user_metadata?: Record<string, unknown>;
   access_token: string;
 };
@@ -67,13 +68,34 @@ function readTokenFromCookies(request: Request): string | null {
   if (!cookieHeader) return null;
   const parts = cookieHeader.split(";").map((part) => part.trim());
 
+  const values = new Map<string, string>();
   for (const part of parts) {
     const eqIndex = part.indexOf("=");
     if (eqIndex <= 0) continue;
-    const key = part.slice(0, eqIndex);
+    values.set(part.slice(0, eqIndex), decodeURIComponent(part.slice(eqIndex + 1)));
+  }
+
+  for (const [key, rawValue] of values) {
     if (!key.startsWith("sb-") || !key.endsWith("-auth-token")) continue;
-    const rawValue = decodeURIComponent(part.slice(eqIndex + 1));
     const token = readTokenFromSupabaseCookie(rawValue);
+    if (token) return token;
+  }
+
+  const chunkRoots = new Set<string>();
+  for (const key of values.keys()) {
+    const match = key.match(/^(sb-.+-auth-token)\.\d+$/);
+    if (match) chunkRoots.add(match[1]);
+  }
+
+  for (const root of chunkRoots) {
+    const chunks = [...values.entries()]
+      .map(([key, value]) => {
+        const match = key.match(new RegExp(`^${root.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\.(\\d+)$`));
+        return match ? { index: Number(match[1]), value } : null;
+      })
+      .filter((entry): entry is { index: number; value: string } => Boolean(entry))
+      .sort((a, b) => a.index - b.index);
+    const token = readTokenFromSupabaseCookie(chunks.map((entry) => entry.value).join(""));
     if (token) return token;
   }
 
@@ -97,6 +119,7 @@ export async function getRequestAuthUser(request: Request): Promise<SupabaseUser
   return {
     id: data.user.id,
     email: data.user.email,
+    app_metadata: data.user.app_metadata as Record<string, unknown> | undefined,
     user_metadata: data.user.user_metadata as Record<string, unknown> | undefined,
     access_token: token,
   };

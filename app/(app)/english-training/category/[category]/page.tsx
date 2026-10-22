@@ -6,12 +6,13 @@ import {
 } from "../../../../../lib/englishTraining";
 import EnglishTrainingCategorySections from "../../../../../components/englishTraining/EnglishTrainingCategorySections";
 
-export default function EnglishTrainingCategoryPage({
+export default async function EnglishTrainingCategoryPage({
   params,
 }: {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }) {
-  const category = getEnglishTrainingCategoryFromSlug(params.category);
+  const { category: categorySlug } = await params;
+  const category = getEnglishTrainingCategoryFromSlug(categorySlug);
   if (!category) {
     notFound();
   }

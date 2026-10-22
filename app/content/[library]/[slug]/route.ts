@@ -19,10 +19,10 @@ import { getLangslate365FilePath } from "../../../../lib/langslate365.files";
 import { getLangslateFlowFilePath } from "../../../../lib/langslateFlow.files";
 
 type ContentRouteProps = {
-  params: {
+  params: Promise<{
     library: string;
     slug: string;
-  };
+  }>;
 };
 
 const HTML_HEADERS = {
@@ -86,17 +86,18 @@ async function readImageOptimizedHtml(library: string, slug: string): Promise<st
 }
 
 export async function GET(_: Request, { params }: ContentRouteProps) {
-  const resolver = RESOLVERS[params.library as ContentLibraryId];
+  const { library, slug } = await params;
+  const resolver = RESOLVERS[library as ContentLibraryId];
   if (!resolver) {
     return new NextResponse("Not found.", { status: 404 });
   }
 
-  const filePath = await resolver(params.slug);
+  const filePath = await resolver(slug);
   if (!filePath) {
     return new NextResponse("Not found.", { status: 404 });
   }
 
-  const html = (await readImageOptimizedHtml(params.library, params.slug)) ?? (await fs.readFile(filePath, "utf-8"));
+  const html = (await readImageOptimizedHtml(library, slug)) ?? (await fs.readFile(filePath, "utf-8"));
 
   return new NextResponse(html, {
     status: 200,

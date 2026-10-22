@@ -12,17 +12,18 @@ import {
   SYNTAX_FLOW_CLOSING,
 } from "../../../../lib/syntaxFlow";
 
-export default function SyntaxFlowLanguagePage({
+export default async function SyntaxFlowLanguagePage({
   params,
 }: {
-  params: { language: string };
+  params: Promise<{ language: string }>;
 }) {
-  if (!isSyntaxFlowLanguage(params.language)) {
+  const { language: languageSlug } = await params;
+  if (!isSyntaxFlowLanguage(languageSlug)) {
     notFound();
   }
 
-  const language = SYNTAX_FLOW_LANGUAGES.find((entry) => entry.slug === params.language)!;
-  const items = listSyntaxFlowItems(params.language);
+  const language = SYNTAX_FLOW_LANGUAGES.find((entry) => entry.slug === languageSlug)!;
+  const items = listSyntaxFlowItems(languageSlug);
 
   return (
     <CatalogPageShell
@@ -52,7 +53,7 @@ export default function SyntaxFlowLanguagePage({
             .map((item) => ({
               id: item.id,
               title: item.title,
-              href: `/syntax-flow/${params.language}/${item.slug}`,
+              href: `/syntax-flow/${languageSlug}/${item.slug}`,
               thumbnailUrl: item.thumbnailUrl,
               fallbackLabel: item.level,
               ctaLabel: "Start Practice",

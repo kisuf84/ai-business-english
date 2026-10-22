@@ -12,11 +12,12 @@ export async function generateStaticParams() {
 }
 
 type PremiumCoursePageProps = {
-  params: { course: string };
+  params: Promise<{ course: string }>;
 };
 
 export default async function PremiumCoursePage({ params }: PremiumCoursePageProps) {
-  const course = await getPremiumCourse(params.course);
+  const { course: courseSlug } = await params;
+  const course = await getPremiumCourse(courseSlug);
 
   if (!course) {
     notFound();

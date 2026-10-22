@@ -31,17 +31,18 @@ function getSafeModules(value: unknown): CourseModule[] {
 export default async function CourseDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   let courseRecord = null;
   let error: string | null = null;
-  const authUser = await getAuthUserFromCookieHeader(cookies().toString());
+  const [{ id }, cookieStore] = await Promise.all([params, cookies()]);
+  const authUser = await getAuthUserFromCookieHeader(cookieStore.toString());
 
   if (!authUser) {
     error = "Please sign in to view this course.";
   } else {
     try {
-      courseRecord = await getCourseById(params.id, authUser.id);
+      courseRecord = await getCourseById(id, authUser.id);
     } catch {
       error = "We could not load this course right now.";
     }

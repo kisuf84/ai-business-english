@@ -20,10 +20,14 @@ function normalizeSourceUrl(payload: YouTubeJobCreatePayload): string {
 
 export async function POST(request: Request) {
   const authUser = await getRequestAuthUser(request);
-  console.info("[youtube-job] auth_resolved", {
-    authenticated: Boolean(authUser),
-    userId: authUser?.id ?? null,
-  });
+  if (!authUser) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const contentLength = Number(request.headers.get("content-length") || 0);
+  if (Number.isFinite(contentLength) && contentLength > 25_000) {
+    return NextResponse.json({ error: "Request body is too large." }, { status: 413 });
+  }
 
   let payload: YouTubeJobCreatePayload;
 
@@ -37,6 +41,17 @@ export async function POST(request: Request) {
   }
 
   const sourceUrl = normalizeSourceUrl(payload);
+  const oversizedField = [
+    sourceUrl.length > 2_048,
+    (payload.topic?.length || 0) > 500,
+    (payload.level?.length || 0) > 200,
+    (payload.industry?.length || 0) > 200,
+    (payload.profession?.length || 0) > 200,
+    (payload.lesson_type?.length || 0) > 200,
+  ].some(Boolean);
+  if (oversizedField) {
+    return NextResponse.json({ error: "One or more fields are too large." }, { status: 400 });
+  }
   const parsed = parseYouTubeVideoIdDetailed(sourceUrl);
   console.info("[youtube-job] source_received", {
     hasSourceUrl: Boolean(sourceUrl),
@@ -53,7 +68,7 @@ export async function POST(request: Request) {
 
   try {
     const job = await createYouTubeLessonJob({
-      user_id: authUser?.id ?? null,
+      user_id: authUser.id,
       topic: payload.topic?.trim() || "YouTube lesson",
       source_url: sourceUrl,
       video_id: parsed.videoId,

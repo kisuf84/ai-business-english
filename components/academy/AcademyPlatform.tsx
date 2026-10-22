@@ -91,6 +91,7 @@ function lessonKey(lesson: AcademyRuntimeLesson) {
 
 export default function AcademyPlatform({ levels }: AcademyPlatformProps) {
   const [state, setState] = useState<AcademyState>(() => defaultState());
+  const [stateLoaded, setStateLoaded] = useState(false);
   const [route, setRoute] = useState<Route>("dashboard");
   const [activeLevel, setActiveLevel] = useState<AcademyLevelLabel | null>(null);
   const [query, setQuery] = useState("");
@@ -122,14 +123,16 @@ export default function AcademyPlatform({ levels }: AcademyPlatformProps) {
       next.xpToday = 0;
     }
     setState(next);
+    setStateLoaded(true);
   }, []);
 
   useEffect(() => {
+    if (!stateLoaded) return;
     document.documentElement.setAttribute("data-academy-theme", state.theme);
     try {
       window.localStorage.setItem(STATE_KEY, JSON.stringify(state));
     } catch {}
-  }, [state]);
+  }, [state, stateLoaded]);
 
   useEffect(() => {
     const applyHash = () => {
@@ -137,9 +140,14 @@ export default function AcademyPlatform({ levels }: AcademyPlatformProps) {
       const [rawRoute, rawLevel] = hash.split("/");
       if (rawRoute === "lesson" && rawLevel) {
         const found = lessons.find((lesson) => lesson.id === Number(rawLevel));
-        if (found) setViewerLesson(found);
+        if (found) {
+          setViewerLesson(found);
+          setViewerListCollapsed(false);
+          setFocusMode(false);
+        }
         return;
       }
+      setViewerLesson(null);
       const nextRoute = ["dashboard", "courses", "progress", "achievements", "settings"].includes(rawRoute)
         ? (rawRoute as Route)
         : "dashboard";
@@ -148,7 +156,11 @@ export default function AcademyPlatform({ levels }: AcademyPlatformProps) {
     };
     applyHash();
     window.addEventListener("hashchange", applyHash);
-    return () => window.removeEventListener("hashchange", applyHash);
+    window.addEventListener("popstate", applyHash);
+    return () => {
+      window.removeEventListener("hashchange", applyHash);
+      window.removeEventListener("popstate", applyHash);
+    };
   }, [lessons]);
 
   useEffect(() => {
@@ -195,7 +207,7 @@ export default function AcademyPlatform({ levels }: AcademyPlatformProps) {
     setViewerLesson(lesson);
     setViewerListCollapsed(false);
     setFocusMode(false);
-    window.history.replaceState(null, "", `#lesson/${lesson.id}`);
+    window.location.hash = `lesson/${lesson.id}`;
   };
 
   const closeViewer = () => {
@@ -347,8 +359,8 @@ export default function AcademyPlatform({ levels }: AcademyPlatformProps) {
       <div className={viewerLesson ? `academy-viewer open ${focusMode ? "focus" : ""}` : "academy-viewer"}>
         <div className="academy-vw-header">
           <button className="academy-vw-btn" type="button" onClick={() => setViewerListCollapsed((value) => !value)}><i className="fas fa-bars" /></button>
-          <button className="academy-vw-btn" type="button" onClick={() => viewerIndex > 0 && setViewerLesson(viewerLevelLessons[viewerIndex - 1])}><i className="fas fa-chevron-left" /></button>
-          <button className="academy-vw-btn" type="button" onClick={() => viewerIndex < viewerLevelLessons.length - 1 && setViewerLesson(viewerLevelLessons[viewerIndex + 1])}><i className="fas fa-chevron-right" /></button>
+          <button className="academy-vw-btn" type="button" aria-label="Previous lesson" onClick={() => viewerIndex > 0 && openViewer(viewerLevelLessons[viewerIndex - 1])}><i className="fas fa-chevron-left" /></button>
+          <button className="academy-vw-btn" type="button" aria-label="Next lesson" onClick={() => viewerIndex < viewerLevelLessons.length - 1 && openViewer(viewerLevelLessons[viewerIndex + 1])}><i className="fas fa-chevron-right" /></button>
           <div className="academy-vw-title-wrap">
             <div className="academy-vw-title">{viewerLesson?.title}</div>
             <div className="academy-vw-meta">{viewerLesson ? `${viewerLesson.level} · ${viewerLesson.duration} min · +${viewerLesson.xp} XP` : ""}</div>
@@ -367,7 +379,7 @@ export default function AcademyPlatform({ levels }: AcademyPlatformProps) {
               {viewerLevelLessons.map((lesson) => {
                 const done = Boolean(state.completed[lessonKey(lesson)]);
                 return (
-                  <button key={lesson.contentKey} className={viewerLesson?.id === lesson.id ? "academy-vl-item active" : "academy-vl-item"} type="button" onClick={() => setViewerLesson(lesson)}>
+                  <button key={lesson.contentKey} className={viewerLesson?.id === lesson.id ? "academy-vl-item active" : "academy-vl-item"} type="button" onClick={() => openViewer(lesson)}>
                     <span className={done ? "academy-vl-check done" : "academy-vl-check"}>{done ? <i className="fas fa-check" /> : null}</span>
                     <span>
                       <span className="academy-vl-title">{lesson.title}</span>
@@ -643,12 +655,14 @@ function LessonCard({ lesson, done, openViewer }: { lesson: AcademyRuntimeLesson
   return (
     <button className={done ? "academy-lesson-card completed" : "academy-lesson-card"} type="button" onClick={() => openViewer(lesson)}>
       <span className="academy-focus-mini"><i className="fas fa-expand" /></span>
-      <span className="academy-lesson-head"><span style={{ background: meta.bg, color: meta.color }}>{lesson.level}</span><em>#{lesson.id}</em></span>
-      <strong>{lesson.title}</strong>
-      <span className="academy-lesson-meta">
-        <span><i className="fas fa-clock" /> {lesson.duration}m</span>
-        <span className="gold">★ {lesson.xp} XP</span>
-        {done ? <span className="done"><i className="fas fa-check-circle" /> Done</span> : null}
+      <span className="academy-lesson-card-body">
+        <span className="academy-lesson-head"><span style={{ background: meta.bg, color: meta.color }}>{lesson.level}</span><em>#{lesson.id}</em></span>
+        <strong className="academy-lesson-title">{lesson.title}</strong>
+        <span className="academy-lesson-meta">
+          <span><i className="fas fa-clock" /> {lesson.duration}m</span>
+          <span className="gold">★ {lesson.xp} XP</span>
+          {done ? <span className="done"><i className="fas fa-check-circle" /> Done</span> : null}
+        </span>
       </span>
     </button>
   );

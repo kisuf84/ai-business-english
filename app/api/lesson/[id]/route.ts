@@ -4,15 +4,16 @@ import { getRequestAuthUser } from "../../../../lib/supabase/auth";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const authUser = await getRequestAuthUser(request);
   if (!authUser) {
     return NextResponse.json({ error: "Authentication required." }, { status: 401 });
   }
 
   try {
-    const lesson = await getLessonById(params.id, authUser.id);
+    const lesson = await getLessonById(id, authUser.id);
     if (!lesson) {
       return NextResponse.json({ error: "Lesson not found." }, { status: 404 });
     }
@@ -20,7 +21,7 @@ export async function GET(
   } catch (error) {
     console.error("[lesson/get] failed", {
       user_id: authUser.id,
-      lesson_id: params.id,
+      lesson_id: id,
       message: error instanceof Error ? error.message : "unknown_error",
     });
     return NextResponse.json(

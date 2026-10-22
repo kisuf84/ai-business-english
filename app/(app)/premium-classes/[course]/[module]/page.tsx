@@ -18,11 +18,12 @@ export async function generateStaticParams() {
 }
 
 type PremiumModulePageProps = {
-  params: { course: string; module: string };
+  params: Promise<{ course: string; module: string }>;
 };
 
 export default async function PremiumModulePage({ params }: PremiumModulePageProps) {
-  const entry = await getPremiumModule(params.course, params.module);
+  const { course: courseSlug, module: moduleSlug } = await params;
+  const entry = await getPremiumModule(courseSlug, moduleSlug);
 
   if (!entry) {
     notFound();

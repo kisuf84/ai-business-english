@@ -193,9 +193,9 @@ function wait(ms: number) {
   });
 }
 
-function triggerYouTubeJobProcessing() {
-  void fetch("/api/cron/process-youtube-jobs", {
-    method: "GET",
+function triggerYouTubeJobProcessing(jobId: string) {
+  void authenticatedFetch(`/api/youtube-jobs/${jobId}/process`, {
+    method: "POST",
     cache: "no-store",
     keepalive: true,
   }).catch((error) => {
@@ -349,7 +349,7 @@ export default function GeneratorPage() {
   const fetchYouTubeJobStatus = async (
     nextJobId: string
   ): Promise<YouTubeJobStatusPayload> => {
-    const response = await fetch(`/api/youtube-jobs/${nextJobId}`, {
+    const response = await authenticatedFetch(`/api/youtube-jobs/${nextJobId}`, {
       cache: "no-store",
     });
     const payload = (await response.json().catch(() => null)) as
@@ -592,7 +592,7 @@ export default function GeneratorPage() {
         setJobStatusUrl(jobPayload?.status_url || null);
         setYoutubeGenerationState("processing_initial");
         setLessonStage("generating_lesson");
-        triggerYouTubeJobProcessing();
+        triggerYouTubeJobProcessing(jobPayload.id);
         startYouTubePolling(jobPayload.id);
         startLoadingTimers(jobPayload.id);
         return;
@@ -605,7 +605,7 @@ export default function GeneratorPage() {
       let rawResult: unknown = null;
 
       for (let transcriptAttempt = 1; transcriptAttempt <= maxAttempts; transcriptAttempt += 1) {
-        const response = await fetch("/api/lesson/generate", {
+        const response = await authenticatedFetch("/api/lesson/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

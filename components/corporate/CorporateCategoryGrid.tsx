@@ -11,6 +11,7 @@ export type CorporateCategoryCard = {
   href: string;
   meta: string;
   lessonCount: number;
+  thumbnailSrc: string;
 };
 
 const INITIAL_VISIBLE_COUNT = 24;
@@ -106,27 +107,43 @@ export default function CorporateCategoryGrid({
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {visible.map((item) => (
             <Link key={item.slug} href={item.href} className="group block" aria-label={`${item.label} — ${item.meta}`}>
-              <Card className="lumen-card-link flex h-full flex-col gap-3 p-5 sm:p-6">
-                <div className="flex items-center justify-between gap-3">
+              <Card className="lumen-card-link h-full overflow-hidden p-0">
+                <div
+                  className="relative aspect-[3/2] overflow-hidden bg-[var(--paper-soft)]"
+                  style={{ background: gradientFor(item.label) }}
+                >
                   <span
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xs font-extrabold text-white shadow-sm"
-                    style={{ background: gradientFor(item.label) }}
+                    className="absolute inset-0 flex items-center justify-center text-3xl font-extrabold text-white/90"
                     aria-hidden="true"
                   >
                     {initialsFor(item.label)}
                   </span>
-                  <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.08em] text-emerald-500">
+                  <img
+                    src={item.thumbnailSrc}
+                    alt=""
+                    width={1200}
+                    height={800}
+                    className="relative h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(event) => {
+                      event.currentTarget.hidden = true;
+                    }}
+                  />
+                  <span className="absolute right-3 top-3 rounded-full border border-emerald-300/40 bg-slate-950/75 px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.08em] text-emerald-300 backdrop-blur-sm">
                     {item.lessonCount > 0 ? "Live" : "Soon"}
                   </span>
                 </div>
-                <div className="min-w-0">
+                <div className="flex min-h-[132px] flex-col gap-3 p-4 sm:p-5">
+                  <div className="min-w-0">
                   <h2 className="mobile-safe-wrap text-base font-semibold leading-snug text-[var(--ink)]">{item.label}</h2>
                   <p className="mt-1 text-xs text-[var(--ink-muted)]">
                     {item.meta} · {estimateMinutes(item.lessonCount).toLocaleString("en-US")} min
                   </p>
-                </div>
-                <div className="mt-auto h-1.5 overflow-hidden rounded-full bg-[var(--surface-raised)]">
-                  <div className="h-full rounded-full bg-[var(--ink-faint)]" style={{ width: 0 }} />
+                  </div>
+                  <div className="mt-auto h-1.5 overflow-hidden rounded-full bg-[var(--surface-raised)]">
+                    <div className="h-full rounded-full bg-[var(--ink-faint)]" style={{ width: 0 }} />
+                  </div>
                 </div>
               </Card>
             </Link>

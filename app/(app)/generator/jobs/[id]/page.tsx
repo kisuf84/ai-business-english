@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import Button from "../../../../../components/shared/Button";
 import Card from "../../../../../components/shared/Card";
 import Textarea from "../../../../../components/shared/Textarea";
+import { authenticatedFetch } from "../../../../../lib/api/authenticatedFetch";
 
 type JobStatus = {
   id: string;
@@ -56,7 +57,8 @@ function getStatusCopy(job: JobStatus) {
   };
 }
 
-export default function YouTubeJobPage({ params }: { params: { id: string } }) {
+export default function YouTubeJobPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const [job, setJob] = useState<JobStatus | null>(null);
   const [transcript, setTranscript] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -64,7 +66,7 @@ export default function YouTubeJobPage({ params }: { params: { id: string } }) {
 
   const loadJob = async () => {
     try {
-      const response = await fetch(`/api/youtube-jobs/${params.id}`, {
+      const response = await authenticatedFetch(`/api/youtube-jobs/${id}`, {
         cache: "no-store",
       });
       if (!response.ok) throw new Error("load_failed");
@@ -81,13 +83,13 @@ export default function YouTubeJobPage({ params }: { params: { id: string } }) {
       void loadJob();
     }, 5000);
     return () => window.clearInterval(interval);
-  }, [params.id]);
+  }, [id]);
 
   const submitTranscript = async () => {
     setIsSubmitting(true);
     setError(null);
     try {
-      const response = await fetch(`/api/youtube-jobs/${params.id}/transcript`, {
+      const response = await authenticatedFetch(`/api/youtube-jobs/${id}/transcript`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ transcript }),

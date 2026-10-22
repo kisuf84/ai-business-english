@@ -2,12 +2,13 @@ import { notFound } from "next/navigation";
 import ContentReaderPage from "../../../../components/shared/ContentReaderPage";
 import { getGossipEnglishItem } from "../../../../lib/gossipEnglish";
 
-export default function GossipEnglishLessonPage({
+export default async function GossipEnglishLessonPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const item = getGossipEnglishItem(params.slug);
+  const { slug } = await params;
+  const item = getGossipEnglishItem(slug);
   if (!item) {
     notFound();
   }

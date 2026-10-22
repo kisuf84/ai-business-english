@@ -5,12 +5,14 @@ import {
   CORPORATE_FAMILY_COPY,
   LANGSLATE_CORPORATE_BASE_PATH,
   corporateCategoryHref,
+  corporateCategoryThumbnailSrc,
   countCorporateLessons,
   getCorporateFamily,
 } from "../../../../../lib/langslateCorporate";
 
-export default function CorporateFamilyPage({ params }: { params: { family: string } }) {
-  const family = getCorporateFamily(params.family);
+export default async function CorporateFamilyPage({ params }: { params: Promise<{ family: string }> }) {
+  const { family: familySlug } = await params;
+  const family = getCorporateFamily(familySlug);
   if (!family) notFound();
   const copy = CORPORATE_FAMILY_COPY[family.slug];
 
@@ -30,6 +32,7 @@ export default function CorporateFamilyPage({ params }: { params: { family: stri
           href: corporateCategoryHref(family.slug, category.slug),
           meta: `${category.lessons.length} ${category.lessons.length === 1 ? copy.lessonNoun : copy.lessonNounPlural}`,
           lessonCount: category.lessons.length,
+          thumbnailSrc: corporateCategoryThumbnailSrc(family.slug, category.slug),
         }))}
       />
     </CatalogPageShell>

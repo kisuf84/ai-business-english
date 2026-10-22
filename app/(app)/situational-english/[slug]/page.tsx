@@ -2,12 +2,13 @@ import { notFound } from "next/navigation";
 import ContentReaderPage from "../../../../components/shared/ContentReaderPage";
 import { getSituationalEnglishItem } from "../../../../lib/situationalEnglish";
 
-export default function SituationalEnglishLessonPage({
+export default async function SituationalEnglishLessonPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const item = getSituationalEnglishItem(params.slug);
+  const { slug } = await params;
+  const item = getSituationalEnglishItem(slug);
   if (!item) {
     notFound();
   }

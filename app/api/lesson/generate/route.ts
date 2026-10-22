@@ -21,6 +21,7 @@ import {
   repairLesson,
 } from "../../../../lib/ai/lesson";
 import { parseYouTubeVideoIdDetailed } from "../../../../lib/youtube/url";
+import { getRequestAuthUser } from "../../../../lib/supabase/auth";
 
 // Measured real generate+repair round trip can take ~70s; give headroom so
 // the platform doesn't kill the function before our own OpenAI timeout fires.
@@ -345,6 +346,16 @@ async function extractSource(params: {
 }
 
 export async function POST(request: Request) {
+  const authUser = await getRequestAuthUser(request);
+  if (!authUser) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const contentLength = Number(request.headers.get("content-length") || 0);
+  if (Number.isFinite(contentLength) && contentLength > 250_000) {
+    return NextResponse.json({ error: "Request body is too large." }, { status: 413 });
+  }
+
   try {
     console.info("[lesson-generate] request_start");
     const payload = (await request.json()) as LessonGenerationRequestInput;

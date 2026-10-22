@@ -128,3 +128,7 @@ export function corporateCategoryHref(familySlug: string, categorySlug: string):
 export function corporateLessonHref(familySlug: string, categorySlug: string, lessonSlug: string): string {
   return `${corporateCategoryHref(familySlug, categorySlug)}/${lessonSlug}`;
 }
+
+export function corporateCategoryThumbnailSrc(familySlug: string, categorySlug: string): string {
+  return `/corporate-thumbnails/${familySlug}/${familySlug}__${categorySlug}.webp`;
+}

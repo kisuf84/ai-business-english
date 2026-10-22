@@ -17,6 +17,7 @@ export type CorporatePlatformCategory = {
   slug: string;
   label: string;
   href: string;
+  thumbnailSrc: string;
   lessons: CorporatePlatformLesson[];
 };
 
@@ -180,6 +181,7 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
   const [activeFamilySlug, setActiveFamilySlug] = useState<CorporatePlatformFamily["slug"] | null>(null);
   const [activeCategorySlug, setActiveCategorySlug] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [categoryQuery, setCategoryQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [viewerLesson, setViewerLesson] = useState<CorporatePlatformLesson | null>(null);
   const [viewerListCollapsed, setViewerListCollapsed] = useState(false);
@@ -255,6 +257,7 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
     setRoute(nextRoute);
     setActiveFamilySlug(familySlug ?? null);
     setActiveCategorySlug(categorySlug ?? null);
+    setCategoryQuery("");
     setSidebarOpen(false);
     setViewerLesson(null);
     const hash = categorySlug ? `#${nextRoute}/${familySlug}/${categorySlug}` : familySlug ? `#${nextRoute}/${familySlug}` : `#${nextRoute}`;
@@ -355,7 +358,7 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
           </div>
           <div className="corporate-section">Menu</div>
           <SideButton active={route === "dashboard"} iconName="home" label="Dashboard" onClick={() => nav("dashboard")} />
-          <SideButton active={route === "courses"} iconName="book-open" label="All Categories" onClick={() => nav("courses")} />
+          <SideButton active={route === "courses" && !activeFamily} iconName="book-open" label="All Categories" onClick={() => nav("courses")} />
           <SideButton active={route === "progress"} iconName="chart-line" label="Progress" onClick={() => nav("progress")} />
           <SideButton active={route === "achievements"} iconName="trophy" label="Achievements" onClick={() => nav("achievements")} />
           <SideButton active={route === "settings"} iconName="cog" label="Settings" onClick={() => nav("settings")} />
@@ -365,7 +368,7 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
             const meta = FAMILY_META[family.slug];
             return (
               <button
-                className="corporate-level-pill"
+                className={activeFamilySlug === family.slug ? "corporate-level-pill active" : "corporate-level-pill"}
                 key={family.slug}
                 type="button"
                 onClick={() => nav("courses", family.slug)}
@@ -381,10 +384,10 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
             );
           })}
           <div className="corporate-credit">
-            <img src="/corporate-platform/brice.webp" alt="Brice Gadou" />
+            <img src="/corporate-platform/brice.webp" alt="Brice Gadeau" />
             <span>
               <span className="corporate-credit-label">Crafted by</span>
-              <span className="corporate-credit-name">Brice Gadou</span>
+              <span className="corporate-credit-name">Brice Gadeau</span>
               <span className="corporate-credit-role">Business English Expert &amp; Vibe Coder</span>
             </span>
           </div>
@@ -480,14 +483,18 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
 
   function renderDashboard() {
     const pct = totalLessons ? Math.round((completedCount / totalLessons) * 100) : 0;
+    const completedLessons = lessons
+      .filter((lesson) => state.completed[lessonKey(lesson)])
+      .sort((a, b) => state.completed[lessonKey(b)] - state.completed[lessonKey(a)])
+      .slice(0, 5);
     return (
       <div className="corporate-page-stack">
         <section className="corporate-hero-card corporate-fade-up">
           <div className="corporate-hero-inner">
             <div>
-              <div className="corporate-hero-kicker">Welcome back</div>
+              <div className="corporate-hero-kicker">Welcome back 👋</div>
               <h1>{state.user.name}</h1>
-              <p>Keep your streak alive - learn something new today.</p>
+              <p>Keep your streak alive — learn something new today!</p>
               <div className="corporate-hero-actions">
                 <button className="corporate-btn-primary" type="button" onClick={() => nextLesson && openFirstAvailable(nextLesson)}>
                   {icon("play")} Continue Learning
@@ -519,19 +526,35 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
         </section>
 
         <section className="corporate-stats-grid corporate-fade-up delay-1">
-          <StatCard iconName="bolt" label="Total XP" value={`${state.xp} XP`} color="#f59e0b" bg="rgba(245,158,11,.15)" />
-          <StatCard iconName="fire" label="Streak" value={`${state.streak} days`} color="#ef4444" bg="rgba(239,68,68,.15)" />
-          <StatCard iconName="book" label="Completed" value={`${completedCount} lessons`} color="#7c3aed" bg="rgba(124,58,237,.15)" />
+          <StatCard iconName="bolt" emoji="⚡" label="Total XP" value={`${state.xp} XP`} color="#f59e0b" bg="rgba(245,158,11,.15)" />
+          <StatCard iconName="fire" emoji="🔥" label="Streak" value={`${state.streak} days`} color="#ef4444" bg="rgba(239,68,68,.15)" />
+          <StatCard iconName="book" emoji="📚" label="Completed" value={`${completedCount} lessons`} color="#7c3aed" bg="rgba(124,58,237,.15)" />
           <StatCard
             iconName="folder-open"
-            label="Catalog"
-            value={`${totalLessons.toLocaleString("en-US")} lessons`}
+            emoji="📁"
+            label="Lessons"
+            value={`${totalLessons.toLocaleString("en-US")} total`}
             color="#10b981"
             bg="rgba(16,185,129,.15)"
           />
         </section>
 
-        <section className="corporate-glass corporate-fade-up delay-2">
+        <section className="corporate-two-col corporate-fade-up delay-2">
+          <div className="corporate-glass">
+            <h2 className="corporate-section-title">{icon("bullseye")} Daily Goals</h2>
+            <Goal label="Complete 1 lesson" meta="+15 XP" done={state.dailyDone >= 1} />
+            <Goal label="Complete 3 lessons" meta="+45 XP" done={state.dailyDone >= 3} />
+            <Goal label="Earn 50 XP today" meta="Bonus" done={state.xpToday >= 50} />
+          </div>
+          <div className="corporate-glass">
+            <h2 className="corporate-section-title">{icon("calendar-check")} Activity</h2>
+            <p className="corporate-activity-caption">16-week learning activity</p>
+            <div className="corporate-heatmap-scroll"><Heatmap heatmap={state.heatmap} weeks={16} /></div>
+            <div className="corporate-heatmap-legend"><span>Less</span><i /><i className="heat1" /><i className="heat2" /><i className="heat3" /><i className="heat4" /><span>More</span></div>
+          </div>
+        </section>
+
+        <section className="corporate-glass corporate-fade-up delay-3">
           <h2 className="corporate-section-title">{icon("layer-group")} Category Progress</h2>
           <div className="corporate-level-progress-grid">
             {families.map((family) => {
@@ -560,16 +583,23 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
           </div>
         </section>
 
-        <section className="corporate-two-col corporate-fade-up delay-3">
+        <section className="corporate-two-col corporate-fade-up delay-4">
           <div className="corporate-glass">
-            <h2 className="corporate-section-title">{icon("bullseye")} Daily Goals</h2>
-            <Goal label="Complete 1 lesson" meta="+15 XP" done={state.dailyDone >= 1} />
-            <Goal label="Complete 3 lessons" meta="+45 XP" done={state.dailyDone >= 3} />
-            <Goal label="Earn 50 XP today" meta="Bonus" done={state.xpToday >= 50} />
+            <h2 className="corporate-section-title">{icon("history")} Recent Lessons</h2>
+            {completedLessons.length ? completedLessons.map((lesson) => {
+              const found = findLessonContext(lesson);
+              return found ? (
+                <button className="corporate-mini-row" key={lesson.href} type="button" onClick={() => openViewer(lesson, found.family.slug, found.category.slug)}>
+                  <span className="corporate-mini-icon" style={{ background: FAMILY_META[found.family.slug].bg }}>{icon(FAMILY_META[found.family.slug].icon)}</span>
+                  <span><strong>{lesson.title}</strong><small>{found.category.label} - 15min</small></span>
+                  <i className="fas fa-check-circle" aria-label="Completed" />
+                </button>
+              ) : null;
+            }) : <p className="corporate-empty-note">Start your first lesson!</p>}
           </div>
           <div className="corporate-glass">
             <h2 className="corporate-section-title">{icon("star")} Up Next</h2>
-            {lessons.slice(0, 5).map((lesson) => {
+            {lessons.filter((lesson) => !state.completed[lessonKey(lesson)]).slice(0, 5).map((lesson) => {
               const found = findLessonContext(lesson);
               return found ? (
                 <button
@@ -591,6 +621,7 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
                 </button>
               ) : null;
             })}
+            {lessons.every((lesson) => state.completed[lessonKey(lesson)]) ? <p className="corporate-empty-note">🎉 All done!</p> : null}
           </div>
         </section>
       </div>
@@ -617,6 +648,8 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
     const meta = FAMILY_META[activeFamily.slug];
     if (!activeCategory) {
       const done = doneForFamily(activeFamily);
+      const categorySearch = categoryQuery.trim().toLowerCase();
+      const visibleCategories = activeFamily.categories.filter((category) => category.label.toLowerCase().includes(categorySearch));
       return (
         <div className="corporate-page-stack">
           <div className="corporate-breadcrumb">
@@ -637,9 +670,20 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
               <span>of {lessonCount(activeFamily).toLocaleString("en-US")} done</span>
             </div>
           </section>
+          {activeFamily.categories.length > 12 ? (
+            <input
+              className="corporate-category-filter"
+              type="search"
+              aria-label={`Filter ${activeFamily.label} categories`}
+              placeholder={`Filter ${activeFamily.categories.length} categories...`}
+              value={categoryQuery}
+              onChange={(event) => setCategoryQuery(event.target.value)}
+            />
+          ) : null}
           <div className="corporate-lessons-grid">
-            {activeFamily.categories.map((category) => renderCategoryCard(activeFamily, category))}
+            {visibleCategories.map((category) => renderCategoryCard(activeFamily, category))}
           </div>
+          {visibleCategories.length === 0 ? <p className="corporate-empty-note">No categories match “{categoryQuery}”.</p> : null}
         </div>
       );
     }
@@ -721,18 +765,35 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
             })}
           </div>
         </section>
+        <section className="corporate-glass">
+          <h2 className="corporate-section-title">{icon("fire")} Activity Heatmap</h2>
+          <p className="corporate-activity-caption">52 weeks of learning</p>
+          <div className="corporate-heatmap-scroll"><Heatmap heatmap={state.heatmap} weeks={52} /></div>
+          <div className="corporate-heatmap-legend"><span>Less</span><i /><i className="heat1" /><i className="heat2" /><i className="heat3" /><i className="heat4" /><span>More</span></div>
+        </section>
       </div>
     );
   }
 
   function renderAchievements() {
     const badges = [
-      { iconName: "seedling", title: "First Step", desc: "1 lesson", unlocked: completedCount >= 1 },
-      { iconName: "book", title: "Bookworm", desc: "10 done", unlocked: completedCount >= 10 },
-      { iconName: "bullseye", title: "On Target", desc: "25 done", unlocked: completedCount >= 25 },
-      { iconName: "rocket", title: "Momentum", desc: "50 done", unlocked: completedCount >= 50 },
-      { iconName: "gem", title: "Focused Learner", desc: "100 done", unlocked: completedCount >= 100 },
-      { iconName: "crown", title: "Corporate Legend", desc: "1000 done", unlocked: completedCount >= 1000 },
+      { icon: "🌿", title: "First Step", desc: "1 lesson", xp: 25, unlocked: completedCount >= 1 },
+      { icon: "📖", title: "Bookworm", desc: "10 done", xp: 50, unlocked: completedCount >= 10 },
+      { icon: "🎯", title: "On Target", desc: "25 done", xp: 75, unlocked: completedCount >= 25 },
+      { icon: "🚀", title: "Rocket", desc: "50 done", xp: 100, unlocked: completedCount >= 50 },
+      { icon: "💎", title: "Gem Learner", desc: "100 done", xp: 150, unlocked: completedCount >= 100 },
+      { icon: "⭐", title: "Star Student", desc: "250 done", xp: 200, unlocked: completedCount >= 250 },
+      { icon: "🏆", title: "Half Millennium", desc: "500 done", xp: 300, unlocked: completedCount >= 500 },
+      { icon: "👑", title: "Corporate Legend", desc: "1000 done", xp: 500, unlocked: completedCount >= 1000 },
+      { icon: "🔥", title: "On Fire", desc: "7-day streak", xp: 100, unlocked: state.streak >= 7 },
+      { icon: "⚡", title: "XP Legend", desc: "1000 XP", xp: 200, unlocked: state.xp >= 1000 },
+      ...families.map((family) => ({
+        icon: ({ professions: "💼", industries: "🏭", departments: "🏢", pro: "👑" } as const)[family.slug],
+        title: `${FAMILY_META[family.slug].label} Master`,
+        desc: `Complete all ${FAMILY_META[family.slug].label}`,
+        xp: 400,
+        unlocked: family.categories.every((category) => category.lessons.every((lesson) => Boolean(state.completed[lessonKey(lesson)]))),
+      })),
     ];
     return (
       <div className="corporate-page-stack">
@@ -743,10 +804,10 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
         <div className="corporate-badge-grid">
           {badges.map((badge) => (
             <div className={badge.unlocked ? "corporate-badge-card" : "corporate-badge-card locked"} key={badge.title}>
-              <div>{icon(badge.iconName)}</div>
+              <div>{badge.icon}</div>
               <strong>{badge.title}</strong>
               <span>{badge.desc}</span>
-              {badge.unlocked ? <em>Unlocked</em> : <small>Locked</small>}
+              {badge.unlocked ? <em>+{badge.xp} XP</em> : <small>Locked</small>}
             </div>
           ))}
         </div>
@@ -803,6 +864,27 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
           >
             Toggle Dark / Light
           </button>
+        </section>
+        <section className="corporate-glass">
+          <h2 className="corporate-section-title">{icon("bullseye")} Daily Lesson Goal</h2>
+          <div className="corporate-goal-setting-label"><span>Lessons per day</span><strong>{state.dailyGoal}</strong></div>
+          <input
+            aria-label="Lessons per day"
+            type="range"
+            min="1"
+            max="10"
+            value={state.dailyGoal}
+            onChange={(event) => saveState((current) => ({ ...current, dailyGoal: Number(event.target.value) }))}
+          />
+        </section>
+        <section className="corporate-glass">
+          <h2 className="corporate-section-title danger">{icon("trash")} Reset Progress</h2>
+          <button className="corporate-btn-ghost danger" type="button" onClick={() => {
+            if (window.confirm("Reset all progress?")) {
+              window.localStorage.removeItem(STATE_KEY);
+              window.location.reload();
+            }
+          }}>Reset All Progress</button>
         </section>
       </div>
     );
@@ -912,10 +994,21 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
     const pct = category.lessons.length ? Math.round((done / category.lessons.length) * 100) : 0;
     return (
       <button className="corporate-category-card" key={category.slug} type="button" onClick={() => nav("courses", family.slug, category.slug)}>
-        <div className="corporate-category-card-top">
-          <span className="corporate-category-tile" style={{ background: gradientFor(category.label) }}>
+        <div className="corporate-category-thumb" style={{ background: gradientFor(category.label) }}>
+          <span className="corporate-category-thumb-fallback" aria-hidden="true">
             {initialsFor(category.label)}
           </span>
+          <img
+            src={category.thumbnailSrc}
+            alt=""
+            width={1200}
+            height={800}
+            loading="lazy"
+            decoding="async"
+            onError={(event) => {
+              event.currentTarget.hidden = true;
+            }}
+          />
           <span className={category.lessons.length > 0 ? "corporate-category-badge live" : "corporate-category-badge soon"}>
             {category.lessons.length > 0 ? "Live" : "Soon"}
           </span>
@@ -1014,11 +1107,11 @@ function BottomButton({
   );
 }
 
-function StatCard({ iconName, label, value, color, bg }: { iconName: string; label: string; value: string; color: string; bg: string }) {
+function StatCard({ iconName, emoji, label, value, color, bg }: { iconName: string; emoji?: string; label: string; value: string; color: string; bg: string }) {
   return (
     <div className="corporate-stat-card">
       <span className="corporate-stat-icon" style={{ background: bg }}>
-        {icon(iconName)}
+        {emoji ? <span>{emoji}</span> : icon(iconName)}
       </span>
       <span className="corporate-stat-value" style={{ color }}>
         {value}
@@ -1038,4 +1131,22 @@ function Goal({ label, meta, done }: { label: string; meta: string; done: boolea
       </span>
     </div>
   );
+}
+
+function Heatmap({ heatmap, weeks }: { heatmap: Record<string, number>; weeks: number }) {
+  const today = new Date();
+  const columns = [];
+  for (let week = weeks - 1; week >= 0; week -= 1) {
+    const cells = [];
+    for (let day = 6; day >= 0; day -= 1) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - (week * 7 + day));
+      const key = date.toISOString().split("T")[0];
+      const count = heatmap[key] || 0;
+      const className = count === 0 ? "" : count === 1 ? "heat1" : count <= 3 ? "heat2" : count <= 5 ? "heat3" : "heat4";
+      cells.push(<span key={key} className={className} title={`${key}: ${count}`} />);
+    }
+    columns.push(<div key={week}>{cells}</div>);
+  }
+  return <div className="corporate-heatmap">{columns}</div>;
 }

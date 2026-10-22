@@ -56,13 +56,14 @@ function groupSegments(
 export default async function SharedLessonPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   let lessonRecord = null;
   let error: string | null = null;
 
   try {
-    lessonRecord = await getLessonById(params.id);
+    lessonRecord = await getLessonById(id);
   } catch {
     error = "This lesson is unavailable.";
   }

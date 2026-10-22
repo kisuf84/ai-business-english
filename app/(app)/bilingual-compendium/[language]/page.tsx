@@ -2,12 +2,13 @@ import { notFound } from "next/navigation";
 import ContentReaderPage from "../../../../components/shared/ContentReaderPage";
 import { getBilingualCompendiumItem } from "../../../../lib/bilingualCompendium";
 
-export default function BilingualCompendiumLanguagePage({
+export default async function BilingualCompendiumLanguagePage({
   params,
 }: {
-  params: { language: string };
+  params: Promise<{ language: string }>;
 }) {
-  const item = getBilingualCompendiumItem(params.language);
+  const { language } = await params;
+  const item = getBilingualCompendiumItem(language);
   if (!item) {
     notFound();
   }

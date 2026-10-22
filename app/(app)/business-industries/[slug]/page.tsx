@@ -2,12 +2,13 @@ import { notFound } from "next/navigation";
 import ContentReaderPage from "../../../../components/shared/ContentReaderPage";
 import { getBusinessIndustriesItem } from "../../../../lib/businessIndustries";
 
-export default function BusinessIndustriesLessonPage({
+export default async function BusinessIndustriesLessonPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const item = getBusinessIndustriesItem(params.slug);
+  const { slug } = await params;
+  const item = getBusinessIndustriesItem(slug);
   if (!item) {
     notFound();
   }

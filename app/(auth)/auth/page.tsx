@@ -9,9 +9,12 @@ import {
   getSupabaseBrowserClient,
   hasSupabaseBrowserConfig,
 } from "../../../lib/supabase/client";
+import { safeInternalRedirect } from "../../../lib/auth/redirect";
 
-function getAuthCallbackUrl() {
-  return new URL("/auth/callback", window.location.origin).toString();
+function getAuthCallbackUrl(nextPath: string) {
+  const callback = new URL("/auth/callback", window.location.origin);
+  callback.searchParams.set("next", safeInternalRedirect(nextPath));
+  return callback.toString();
 }
 
 export default function AuthPage() {
@@ -27,18 +30,17 @@ export default function AuthPage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
-    const next = params.get("next") || "/dashboard";
+    const next = safeInternalRedirect(params.get("next"));
     const oauthError = params.get("error");
-    const errorDescription = params.get("error_description");
     setNextPath(next);
     if (!oauthError) return;
 
     if (oauthError === "callback_failed") {
-      setError(errorDescription || "Google sign-in failed. Please try again.");
+      setError("Sign-in could not be completed. Please try again.");
     } else if (oauthError === "missing_supabase_config") {
       setError("Supabase auth is not configured correctly.");
     } else {
-      setError(errorDescription || "Authentication failed. Please try again.");
+      setError("Authentication failed. Please try again.");
     }
   }, []);
 
@@ -105,7 +107,7 @@ export default function AuthPage() {
 
     setIsGoogleLoading(true);
     setStatusMessage("Opening Google sign-in...");
-    const redirectTo = getAuthCallbackUrl();
+    const redirectTo = getAuthCallbackUrl(nextPath);
 
     const { error: signInError } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -141,7 +143,7 @@ export default function AuthPage() {
     }
 
     setIsMagicLinkLoading(true);
-    const emailRedirectTo = getAuthCallbackUrl();
+    const emailRedirectTo = getAuthCallbackUrl(nextPath);
 
     const { error: otpError } = await supabase.auth.signInWithOtp({
       email: trimmedEmail,

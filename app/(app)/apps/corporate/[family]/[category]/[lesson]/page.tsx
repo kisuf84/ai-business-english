@@ -12,12 +12,13 @@ import {
 // The content origin is runtime configuration, so resolve it per request.
 export const dynamic = "force-dynamic";
 
-export default function CorporateLessonPage({
+export default async function CorporateLessonPage({
   params,
 }: {
-  params: { family: string; category: string; lesson: string };
+  params: Promise<{ family: string; category: string; lesson: string }>;
 }) {
-  const found = getCorporateLesson(params.family, params.category, params.lesson);
+  const { family: familySlug, category: categorySlug, lesson: lessonSlug } = await params;
+  const found = getCorporateLesson(familySlug, categorySlug, lessonSlug);
   if (!found) notFound();
   const { family, category, lesson, next } = found;
   const copy = CORPORATE_FAMILY_COPY[family.slug];

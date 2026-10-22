@@ -6,12 +6,13 @@ import {
   getEnglishTrainingLesson,
 } from "../../../../lib/englishTraining";
 
-export default function EnglishTrainingLessonPage({
+export default async function EnglishTrainingLessonPage({
   params,
 }: {
-  params: { lesson: string };
+  params: Promise<{ lesson: string }>;
 }) {
-  const lesson = getEnglishTrainingLesson(params.lesson);
+  const { lesson: lessonSlug } = await params;
+  const lesson = getEnglishTrainingLesson(lessonSlug);
   if (!lesson) {
     notFound();
   }

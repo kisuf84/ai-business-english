@@ -3,12 +3,13 @@ import { notFound } from "next/navigation";
 import Card from "../../../../components/shared/Card";
 import { getTeacherResourceById } from "../../../../lib/forTeachersResources";
 
-export default function TeacherLessonViewerPage({
+export default async function TeacherLessonViewerPage({
   params,
 }: {
-  params: { docId: string };
+  params: Promise<{ docId: string }>;
 }) {
-  const resource = getTeacherResourceById(params.docId);
+  const { docId } = await params;
+  const resource = getTeacherResourceById(docId);
   if (!resource) {
     notFound();
   }

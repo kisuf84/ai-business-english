@@ -4,28 +4,35 @@ import {
   getYouTubeLessonJobLogSnapshot,
 } from "../../../../lib/data/youtubeJobs";
 import { getSupabaseServerDiagnostics } from "../../../../lib/supabase/server";
+import { getRequestAuthUser } from "../../../../lib/supabase/auth";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET(
-  _request: Request,
-  { params }: { params: { id: string } }
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
+  const authUser = await getRequestAuthUser(request);
+  if (!authUser) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     console.info("[youtube-job:status] incoming", {
-      id: params.id,
+      id,
       helper: "getYouTubeLessonJob -> supabaseServiceRoleRest",
       supabase: getSupabaseServerDiagnostics(),
     });
 
-    const job = await getYouTubeLessonJob(params.id);
+    const job = await getYouTubeLessonJob(id);
     console.info("[youtube-job:status] raw_row", {
-      id: params.id,
+      id,
       row: getYouTubeLessonJobLogSnapshot(job),
     });
 
-    if (!job) {
+    if (!job || job.user_id !== authUser.id) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
 
@@ -47,11 +54,11 @@ export async function GET(
     };
 
     console.info("[youtube-job:status] response_payload", {
-      id: params.id,
+      id,
       payload,
     });
     console.info("[youtube-job-status] response", {
-      id: params.id,
+      id,
       status: payload.status,
       lastErrorCode: payload.last_error_code,
       hasLessonUrl: Boolean(payload.lesson_url),

@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 import { getPremiumModuleFilePath } from "../../../../lib/premiumClasses";
 
 type PremiumContentRouteProps = {
-  params: {
+  params: Promise<{
     course: string;
     module: string;
-  };
+  }>;
 };
 
 const HTML_HEADERS = {
@@ -51,7 +51,8 @@ function patchNavScroll(html: string): string {
 }
 
 export async function GET(_: Request, { params }: PremiumContentRouteProps) {
-  const entry = await getPremiumModuleFilePath(params.course, params.module);
+  const { course, module } = await params;
+  const entry = await getPremiumModuleFilePath(course, module);
 
   if (!entry) {
     return new NextResponse("Not found.", { status: 404 });

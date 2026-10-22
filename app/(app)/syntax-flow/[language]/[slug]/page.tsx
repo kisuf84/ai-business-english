@@ -6,17 +6,18 @@ import {
   SYNTAX_FLOW_LANGUAGES,
 } from "../../../../../lib/syntaxFlow";
 
-export default function SyntaxFlowLessonPage({
+export default async function SyntaxFlowLessonPage({
   params,
 }: {
-  params: { language: string; slug: string };
+  params: Promise<{ language: string; slug: string }>;
 }) {
-  if (!isSyntaxFlowLanguage(params.language)) {
+  const { language: languageSlug, slug } = await params;
+  if (!isSyntaxFlowLanguage(languageSlug)) {
     notFound();
   }
 
-  const language = SYNTAX_FLOW_LANGUAGES.find((entry) => entry.slug === params.language)!;
-  const item = getSyntaxFlowItem(params.language, params.slug);
+  const language = SYNTAX_FLOW_LANGUAGES.find((entry) => entry.slug === languageSlug)!;
+  const item = getSyntaxFlowItem(languageSlug, slug);
   if (!item) {
     notFound();
   }
@@ -25,8 +26,8 @@ export default function SyntaxFlowLessonPage({
     <ContentReaderPage
       eyebrow="SyntaxFlow"
       title={`${language.flag} ${language.label} · ${item.level} · ${item.title}`}
-      iframeSrc={`/content/syntax-flow-${params.language}/${item.slug}`}
-      backLinks={[{ href: `/syntax-flow/${params.language}`, label: `All ${language.label}` }]}
+      iframeSrc={`/content/syntax-flow-${languageSlug}/${item.slug}`}
+      backLinks={[{ href: `/syntax-flow/${languageSlug}`, label: `All ${language.label}` }]}
     />
   );
 }
