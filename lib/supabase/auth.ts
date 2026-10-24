@@ -72,7 +72,13 @@ function readTokenFromCookies(request: Request): string | null {
   for (const part of parts) {
     const eqIndex = part.indexOf("=");
     if (eqIndex <= 0) continue;
-    values.set(part.slice(0, eqIndex), decodeURIComponent(part.slice(eqIndex + 1)));
+    const name = part.slice(0, eqIndex);
+    try {
+      values.set(name, decodeURIComponent(part.slice(eqIndex + 1)));
+    } catch {
+      // Ignore malformed cookie values; they must not turn an unauthenticated
+      // admin API request into a server error.
+    }
   }
 
   for (const [key, rawValue] of values) {
