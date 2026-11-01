@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import "./admin.css";
 import AdminShell from "../../components/admin/AdminShell";
 import { getServerAdminAuth } from "../../lib/admin/serverAuth";
 

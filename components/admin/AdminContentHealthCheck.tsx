@@ -29,9 +29,9 @@ export default function AdminContentHealthCheck({ id }: { id: string }) {
   };
 
   if (result) {
-    const tone = result.status === "available" ? "text-emerald-200" : result.status === "missing" ? "text-rose-200" : "text-amber-200";
-    return <button type="button" onClick={() => void check()} className={`text-left text-xs font-bold ${tone}`} title={result.detail}>{result.status === "available" ? "Reference available" : result.status === "missing" ? "Reference missing" : "Check unavailable"}</button>;
+    const tone = result.status === "available" ? "is-good" : result.status === "missing" ? "is-error" : "is-warning";
+    return <button type="button" onClick={() => void check()} className={`admin-status admin-health-button ${tone}`} title={result.detail}>{result.status === "available" ? "Reference available" : result.status === "missing" ? "Reference missing" : "Check unavailable"}</button>;
   }
 
-  return <button type="button" onClick={() => void check()} disabled={loading} className="text-xs font-bold text-cyan-300 hover:text-cyan-200 disabled:opacity-60">{loading ? "Checking…" : "Check reference"}</button>;
+  return <button type="button" onClick={() => void check()} disabled={loading} className="admin-table-link admin-health-button" aria-live="polite">{loading ? "Checking…" : "Check reference"}</button>;
 }

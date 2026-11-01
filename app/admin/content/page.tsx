@@ -54,25 +54,23 @@ export default async function AdminContentPage({
         ) : generated.lessons.length === 0 ? (
           <EmptyState title="No generated lessons found" detail="Try another search." />
         ) : (
-          <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-white/10 text-left text-sm">
-                <thead className="bg-white/[0.055] text-xs uppercase tracking-wider text-slate-400">
-                  <tr><th className="px-4 py-3">Lesson</th><th className="px-4 py-3">Level</th><th className="px-4 py-3">Status</th><th className="px-4 py-3">Created</th><th className="px-4 py-3">Preview</th></tr>
-                </thead>
-                <tbody className="divide-y divide-white/10 bg-white/[0.025]">
-                  {generated.lessons.map((lesson) => (
-                    <tr key={lesson.id}>
-                      <td className="px-4 py-4"><strong className="block text-white">{lesson.title}</strong><span className="mt-1 block max-w-md truncate text-xs text-slate-500">{lesson.topic}</span></td>
-                      <td className="px-4 py-4 text-slate-300">{lesson.level}</td>
-                      <td className="px-4 py-4"><span className="rounded-full border border-white/10 px-2 py-1 text-xs text-slate-300">{lesson.status} · {lesson.visibility}</span></td>
-                      <td className="px-4 py-4 whitespace-nowrap text-slate-400">{lesson.created_at ? new Date(lesson.created_at).toLocaleDateString("en-US") : "Unknown"}</td>
-                      <td className="px-4 py-4"><Link className="font-semibold text-cyan-300 hover:text-cyan-200" href={`/lessons/${lesson.id}`}>Open</Link></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          <div className="admin-table-wrap admin-section">
+            <table className="admin-table admin-wide-table">
+              <thead>
+                <tr><th>Lesson</th><th>Level</th><th>Status</th><th>Created</th><th>Preview</th></tr>
+              </thead>
+              <tbody>
+                {generated.lessons.map((lesson) => (
+                  <tr key={lesson.id}>
+                    <td><strong>{lesson.title}</strong><span className="admin-block admin-muted admin-small">{lesson.topic}</span></td>
+                    <td className="admin-nowrap">{lesson.level}</td>
+                    <td><span className="admin-status">{lesson.status} · {lesson.visibility}</span></td>
+                    <td className="admin-nowrap admin-muted">{lesson.created_at ? new Date(lesson.created_at).toLocaleDateString("en-US") : "Unknown"}</td>
+                    <td><Link className="admin-table-link" href={`/lessons/${lesson.id}`}>Open</Link></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
@@ -98,7 +96,7 @@ export default async function AdminContentPage({
         description="Search the catalog, inspect source references, and open existing previews. “Catalogued” means a metadata reference exists; it is not a live R2 health check."
       />
       <ContentControls source={source} query={query} />
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
+      <div className="admin-pagination admin-result-summary">
         <span>{filtered.length.toLocaleString()} matching items</span>
         <span>Read-only · publishing state is shown only where the source models it</span>
       </div>
@@ -106,26 +104,22 @@ export default async function AdminContentPage({
       {visible.length === 0 ? (
         <EmptyState title="No content found" detail="Try another source or search term." />
       ) : (
-        <div className="mt-4 grid gap-3">
+        <div className="admin-content-list">
           {visible.map((item) => (
-            <article key={item.id} className="grid gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+            <article key={item.id} className="admin-content-card">
               <div className="min-w-0">
-                <div className="flex flex-wrap gap-2 text-[11px] font-bold uppercase tracking-wide">
-                  <span className="rounded-full bg-cyan-300/10 px-2 py-1 text-cyan-200">{item.platform}</span>
-                  <span className="rounded-full bg-white/5 px-2 py-1 text-slate-400">{item.category}</span>
-                  <span className="rounded-full bg-white/5 px-2 py-1 text-slate-400">{item.availability}</span>
+                <div className="admin-content-tags">
+                  <span className="admin-tag admin-tag-primary">{item.platform}</span>
+                  <span className="admin-tag">{item.category}</span>
+                  <span className="admin-tag">{item.availability}</span>
                 </div>
-                <h2 className="mt-3 font-bold text-white">{item.title}</h2>
-                <p className="mt-1 break-all font-mono text-xs text-slate-500">{item.contentReference}</p>
-                <p className="mt-2 text-xs text-slate-500">
-                  Publishing: {item.publishing === "not-modelled" ? "not modelled" : item.publishing}
-                </p>
-                <div className="mt-3"><AdminContentHealthCheck id={item.id} /></div>
+                <h2>{item.title}</h2>
+                <p className="admin-mono admin-wrap">{item.contentReference}</p>
+                <p>Publishing: {item.publishing === "not-modelled" ? "not modelled" : item.publishing}</p>
+                <div className="admin-health-check"><AdminContentHealthCheck id={item.id} /></div>
               </div>
               {item.previewHref ? (
-                <Link className="justify-self-start rounded-full border border-white/15 px-4 py-2 text-sm font-bold text-slate-200 hover:border-cyan-300/60 hover:text-white" href={item.previewHref}>
-                  Preview
-                </Link>
+                <Link className="admin-button" href={item.previewHref}>Preview</Link>
               ) : null}
             </article>
           ))}
@@ -133,10 +127,10 @@ export default async function AdminContentPage({
       )}
 
       {pageCount > 1 ? (
-        <nav className="mt-6 flex items-center justify-between" aria-label="Content pagination">
-          {safePage > 1 ? <Link className="rounded-full border border-white/15 px-4 py-2 text-sm" href={filterHref(source, query, safePage - 1)}>Previous</Link> : <span />}
-          <span className="text-xs text-slate-400">Page {safePage} of {pageCount}</span>
-          {safePage < pageCount ? <Link className="rounded-full border border-white/15 px-4 py-2 text-sm" href={filterHref(source, query, safePage + 1)}>Next</Link> : <span />}
+        <nav className="admin-pagination" aria-label="Content pagination">
+          {safePage > 1 ? <Link className="admin-button" href={filterHref(source, query, safePage - 1)}>Previous</Link> : <span />}
+          <span>Page {safePage} of {pageCount}</span>
+          {safePage < pageCount ? <Link className="admin-button" href={filterHref(source, query, safePage + 1)}>Next</Link> : <span />}
         </nav>
       ) : null}
     </div>
@@ -145,22 +139,22 @@ export default async function AdminContentPage({
 
 function ContentControls({ source, query }: { source: SourceFilter; query: string }) {
   return (
-    <form className="grid gap-3 rounded-2xl border border-white/10 bg-white/[0.035] p-4 sm:grid-cols-[180px_minmax(0,1fr)_auto]" action="/admin/content">
-      <label className="grid gap-1 text-xs font-bold uppercase tracking-wide text-slate-400">
+    <form className="admin-toolbar" action="/admin/content">
+      <label className="admin-field admin-field-source">
         Source
-        <select name="source" defaultValue={source} className="rounded-xl border border-white/10 bg-[#0d1b2d] px-3 py-3 text-sm normal-case tracking-normal text-white">
+        <select name="source" defaultValue={source} className="admin-select">
           <option value="all">All catalogues</option><option value="corporate">Corporate</option><option value="academy">Academy</option><option value="premium">Premium</option><option value="library">Other libraries</option><option value="generated">Generated lessons</option>
         </select>
       </label>
-      <label className="grid gap-1 text-xs font-bold uppercase tracking-wide text-slate-400">
+      <label className="admin-field admin-field-search">
         Search metadata
-        <input name="q" defaultValue={query} maxLength={120} placeholder="Title, category, slug, or reference" className="rounded-xl border border-white/10 bg-[#0d1b2d] px-3 py-3 text-sm normal-case tracking-normal text-white placeholder:text-slate-600" />
+        <input name="q" defaultValue={query} maxLength={120} placeholder="Title, category, slug, or reference" className="admin-input" />
       </label>
-      <button className="self-end rounded-xl bg-cyan-300 px-5 py-3 text-sm font-extrabold text-slate-950 hover:bg-cyan-200" type="submit">Search</button>
+      <button className="admin-button admin-button-primary" type="submit">Search</button>
     </form>
   );
 }
 
 function EmptyState({ title, detail }: { title: string; detail: string }) {
-  return <div className="mt-6 rounded-2xl border border-dashed border-white/15 p-8 text-center"><h2 className="font-bold text-white">{title}</h2><p className="mt-2 text-sm text-slate-400">{detail}</p></div>;
+  return <div className="admin-empty"><h2>{title}</h2><p>{detail}</p></div>;
 }

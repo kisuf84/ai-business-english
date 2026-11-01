@@ -32,51 +32,53 @@ export default async function AdminUsersPage({
         description="A minimal, read-only Supabase Auth directory. Passwords, sessions, tokens, and destructive account controls are never exposed."
       />
 
-      <form action="/admin/users" className="mb-5 flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.035] p-4 sm:flex-row">
-        <input name="q" defaultValue={query} maxLength={120} placeholder="Search email or user ID" className="min-w-0 flex-1 rounded-xl border border-white/10 bg-[#0d1b2d] px-4 py-3 text-sm text-white placeholder:text-slate-600" />
-        <button type="submit" className="rounded-xl bg-cyan-300 px-5 py-3 text-sm font-extrabold text-slate-950">Search users</button>
+      <form action="/admin/users" className="admin-toolbar admin-user-search">
+        <label className="admin-field admin-field-search">
+          Search users
+          <input name="q" defaultValue={query} maxLength={120} placeholder="Search email or user ID" className="admin-input" />
+        </label>
+        <button type="submit" className="admin-button admin-button-primary">Search</button>
       </form>
 
       {result.status === "unavailable" ? (
-        <div className="rounded-2xl border border-amber-300/25 bg-amber-300/10 p-6">
-          <h2 className="font-bold text-amber-100">User listing unavailable</h2>
-          <p className="mt-2 text-sm text-amber-100/70">{result.reason}</p>
+        <div className="admin-notice is-warning">
+          <h2>User listing unavailable</h2>
+          <p>{result.reason}</p>
         </div>
       ) : (
         <>
-          <div className="mb-4 flex items-center justify-between text-xs text-slate-400">
+          <div className="admin-pagination admin-result-summary">
             <span>{result.total.toLocaleString()} accounts</span>
             <span>{query ? `Search: ${query}` : `Page ${page}`}</span>
           </div>
-          {result.searchTruncated ? <p className="mb-4 text-xs text-amber-200">Search reached the 5,000-account safety cap. Narrow the query for a complete result.</p> : null}
-          <div className="overflow-hidden rounded-2xl border border-white/10">
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-white/10 text-left text-sm">
-                <thead className="bg-white/[0.055] text-xs uppercase tracking-wider text-slate-400">
+          {result.searchTruncated ? <p className="admin-notice is-warning">Search reached the 5,000-account safety cap. Narrow the query for a complete result.</p> : null}
+          <div className="admin-table-wrap">
+              <table className="admin-table admin-wide-table">
+                <thead>
                   <tr><th className="px-4 py-3">Account</th><th className="px-4 py-3">Role</th><th className="px-4 py-3">Created</th><th className="px-4 py-3">Last sign-in</th><th className="px-4 py-3">Status</th></tr>
                 </thead>
-                <tbody className="divide-y divide-white/10 bg-white/[0.025]">
+                <tbody>
                   {result.users.map((user) => (
                     <tr key={user.id}>
-                      <td className="px-4 py-4"><strong className="block text-white">{user.email || "No email"}</strong><span className="mt-1 block font-mono text-[11px] text-slate-600">{user.id}</span></td>
-                      <td className="px-4 py-4 text-slate-300">{user.role || "user"}</td>
-                      <td className="px-4 py-4 whitespace-nowrap text-slate-400">{new Date(user.created_at).toLocaleDateString("en-US")}</td>
-                      <td className="px-4 py-4 whitespace-nowrap text-slate-400">{user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString("en-US") : "Never"}</td>
-                      <td className="px-4 py-4"><span className={`rounded-full px-2 py-1 text-xs font-bold ${user.email_confirmed_at ? "bg-emerald-300/10 text-emerald-200" : "bg-amber-300/10 text-amber-200"}`}>{user.email_confirmed_at ? "Confirmed" : "Unconfirmed"}</span></td>
+                      <td><strong>{user.email || "No email"}</strong><span className="admin-block admin-mono admin-small admin-muted">{user.id}</span></td>
+                      <td>{user.role || "user"}</td>
+                      <td className="admin-nowrap admin-muted">{new Date(user.created_at).toLocaleDateString("en-US")}</td>
+                      <td className="admin-nowrap admin-muted">{user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString("en-US") : "Never"}</td>
+                      <td><span className={`admin-status ${user.email_confirmed_at ? "is-good" : "is-warning"}`}>{user.email_confirmed_at ? "Confirmed" : "Unconfirmed"}</span></td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
           </div>
-          <nav className="mt-6 flex justify-between" aria-label="User pagination">
-            {page > 1 ? <Link className="rounded-full border border-white/15 px-4 py-2 text-sm" href={pageHref(page - 1)}>Previous</Link> : <span />}
-            {page * PER_PAGE < result.total ? <Link className="rounded-full border border-white/15 px-4 py-2 text-sm" href={pageHref(page + 1)}>Next</Link> : <span />}
+          <nav className="admin-pagination" aria-label="User pagination">
+            {page > 1 ? <Link className="admin-button" href={pageHref(page - 1)}>Previous</Link> : <span />}
+            <span>Page {page} of {Math.max(1, Math.ceil(result.total / PER_PAGE))}</span>
+            {page * PER_PAGE < result.total ? <Link className="admin-button" href={pageHref(page + 1)}>Next</Link> : <span />}
           </nav>
         </>
       )}
 
-      <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.035] p-5 text-sm leading-6 text-slate-400">
+      <div className="admin-notice admin-section">
         Enrollment and Corporate/Academy progress are unavailable because those data are not centralized in the current architecture.
       </div>
     </div>

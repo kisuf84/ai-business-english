@@ -1,3 +1,8 @@
 export default function AdminLoading() {
-  return <div className="animate-pulse rounded-2xl border border-white/10 bg-white/5 p-8 text-sm text-slate-400">Loading admin data…</div>;
+  return (
+    <div className="admin-panel admin-panel-body" role="status" aria-live="polite">
+      <div className="admin-skeleton" style={{ width: "36%" }} />
+      <p className="admin-muted">Loading admin data…</p>
+    </div>
+  );
 }
