@@ -384,10 +384,10 @@ export default function CorporatePlatform({ families }: CorporatePlatformProps) 
             );
           })}
           <div className="corporate-credit">
-            <img src="/corporate-platform/brice.webp" alt="Brice Gadeau" />
+            <img src="/corporate-platform/brice.webp" alt="Brice Gadou" />
             <span>
               <span className="corporate-credit-label">Crafted by</span>
-              <span className="corporate-credit-name">Brice Gadeau</span>
+              <span className="corporate-credit-name">Brice Gadou</span>
               <span className="corporate-credit-role">Business English Expert &amp; Vibe Coder</span>
             </span>
           </div>

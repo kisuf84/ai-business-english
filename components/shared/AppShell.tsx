@@ -490,6 +490,7 @@ export default function AppShell({ children }: AppShellProps) {
     avatarUrl: null,
   });
   const [isAuthReady, setIsAuthReady] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [avatarFailed, setAvatarFailed] = useState(false);
   const router = useRouter();
@@ -542,6 +543,28 @@ export default function AppShell({ children }: AppShellProps) {
 
   useEffect(() => {
     let active = true;
+    let adminStatusRequest = 0;
+
+    const syncAdminStatus = async () => {
+      const requestId = ++adminStatusRequest;
+      try {
+        const response = await fetch("/api/admin/access", {
+          cache: "no-store",
+          credentials: "same-origin",
+        });
+        if (!active || requestId !== adminStatusRequest) return;
+        if (!response.ok) {
+          setIsAdmin(false);
+          return;
+        }
+        const result = (await response.json()) as { isAdmin?: unknown };
+        if (active && requestId === adminStatusRequest) {
+          setIsAdmin(result.isAdmin === true);
+        }
+      } catch {
+        if (active && requestId === adminStatusRequest) setIsAdmin(false);
+      }
+    };
 
     const mapAuthUser = (authUser: {
       email?: string;
@@ -575,6 +598,7 @@ export default function AppShell({ children }: AppShellProps) {
     const syncAuth = async () => {
       if (!hasSupabaseBrowserConfig()) {
         if (!active) return;
+        setIsAdmin(false);
         setUser({
           name: "Learner",
           role: "Member",
@@ -587,6 +611,7 @@ export default function AppShell({ children }: AppShellProps) {
       const supabase = getSupabaseBrowserClient();
       if (!supabase) {
         if (!active) return;
+        setIsAdmin(false);
         setIsAuthReady(true);
         return;
       }
@@ -595,9 +620,19 @@ export default function AppShell({ children }: AppShellProps) {
       if (!active) return;
       setUser(mapAuthUser(data.user ?? null));
       setIsAuthReady(true);
+      if (data.user) void syncAdminStatus();
+      else setIsAdmin(false);
 
-      const { data: authState } = supabase.auth.onAuthStateChange((_, session) => {
+      const { data: authState } = supabase.auth.onAuthStateChange((event, session) => {
+        if (!active) return;
         setUser(mapAuthUser(session?.user ?? null));
+        if (!session || event === "SIGNED_OUT") {
+          adminStatusRequest += 1;
+          setIsAdmin(false);
+        } else if (event === "SIGNED_IN" || event === "USER_UPDATED") {
+          setIsAdmin(false);
+          void syncAdminStatus();
+        }
       });
 
       return () => {
@@ -645,6 +680,7 @@ export default function AppShell({ children }: AppShellProps) {
   const handleSignOut = async () => {
     if (isSigningOut) return;
     setIsSigningOut(true);
+    setIsAdmin(false);
     const supabase = getSupabaseBrowserClient();
     if (supabase) {
       await supabase.auth.signOut();
@@ -795,6 +831,15 @@ export default function AppShell({ children }: AppShellProps) {
                 <p className="mt-5 rounded-[14px] border border-[var(--glass-border)] bg-[var(--glass)] p-3 text-xs leading-5 text-[var(--ink-2)]">
                   Generate lessons, run simulations, and manage teaching resources.
                 </p>
+                {isAdmin ? (
+                  <Link
+                    href="/admin"
+                    className="lumen-focus mt-3 flex items-center justify-between rounded-xl border border-[var(--glass-border)] bg-[var(--glass)] px-3 py-2 text-xs font-semibold text-[var(--ink-2)] transition hover:border-[var(--border-strong)] hover:text-[var(--ink-1)]"
+                  >
+                    <span>Admin Panel</span>
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                ) : null}
               </div>
 
               <div className="mt-5 min-h-0 flex-1 overflow-y-auto pr-1">
@@ -953,6 +998,16 @@ export default function AppShell({ children }: AppShellProps) {
                 <p className="truncate text-xs text-[var(--ink-muted)]">{user.role}</p>
               </div>
             </div>
+            {isAdmin ? (
+              <Link
+                href="/admin"
+                onClick={() => setIsMobileNavOpen(false)}
+                className="lumen-focus mt-3 flex min-h-10 items-center justify-between rounded-xl border border-[var(--glass-border)] bg-[var(--glass)] px-3 py-2 text-sm font-semibold text-[var(--ink-muted)] transition hover:border-[var(--border-strong)] hover:text-[var(--ink)]"
+              >
+                <span>Admin Panel</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            ) : null}
           </div>
 
           <div className="mt-5 min-h-0 flex-1 overflow-y-auto pb-4">
