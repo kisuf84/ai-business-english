@@ -10,11 +10,10 @@ import {
   hasSupabaseBrowserConfig,
 } from "../../../lib/supabase/client";
 import { safeInternalRedirect } from "../../../lib/auth/redirect";
+import { buildAuthCallbackUrl, getLangslateProductForHostname, getProductLearningPath, LANGSLATE_PRODUCTS, type LangslateProduct } from "../../../lib/langslateDomains.mjs";
 
 function getAuthCallbackUrl(nextPath: string) {
-  const callback = new URL("/auth/callback", window.location.origin);
-  callback.searchParams.set("next", safeInternalRedirect(nextPath));
-  return callback.toString();
+  return buildAuthCallbackUrl(window.location.origin, safeInternalRedirect(nextPath));
 }
 
 export default function AuthPage() {
@@ -26,11 +25,15 @@ export default function AuthPage() {
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isConfigured] = useState(hasSupabaseBrowserConfig());
   const [nextPath, setNextPath] = useState("/dashboard");
+  const [product, setProduct] = useState<LangslateProduct | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
-    const next = safeInternalRedirect(params.get("next"));
+    const detectedProduct = getLangslateProductForHostname(window.location.hostname);
+    const fallback = detectedProduct ? getProductLearningPath(detectedProduct) || "/dashboard" : "/dashboard";
+    setProduct(detectedProduct);
+    const next = safeInternalRedirect(params.get("next"), fallback);
     const oauthError = params.get("error");
     setNextPath(next);
     if (!oauthError) return;
@@ -162,6 +165,14 @@ export default function AuthPage() {
     setIsMagicLinkLoading(false);
   };
 
+  const productName = product ? LANGSLATE_PRODUCTS[product].displayName : "Langslate";
+  const productMessage: Record<LangslateProduct, string> = {
+    corporate: "Continue to professional English lessons tailored to your role and industry.",
+    academy: "Continue to structured English lessons across six learning levels.",
+    flow: "Continue to speaking practice with the Langslate Flow voice tutor.",
+    365: "Continue to daily business English lessons with Langslate 365.",
+  };
+
   return (
     <section className="auth-shell auth-page min-h-screen overflow-x-hidden">
       <div className="auth-layout grid min-h-screen grid-cols-1 lg:grid-cols-2">
@@ -175,14 +186,13 @@ export default function AuthPage() {
           <div className="relative z-10 mx-auto flex h-full w-full max-w-[560px] flex-col">
             <div>
               <p className="auth-kicker">
-                Langslate
+                {productName}
               </p>
               <h1 className="auth-title lumen-heading mt-5 text-balance text-4xl leading-tight sm:text-6xl">
-                Learn professional English from real-world content.
+                {product ? `${productName} learning starts here.` : "Learn professional English from real-world content."}
               </h1>
               <p className="auth-copy mt-4 max-w-[44ch] text-sm leading-7 sm:text-[15px]">
-                Transform YouTube videos, articles, and business topics into
-                structured AI-powered lessons.
+                {product ? productMessage[product] : "Transform YouTube videos, articles, and business topics into structured AI-powered lessons."}
               </p>
 
               <ul className="auth-list mt-8 space-y-3 text-sm">
@@ -207,7 +217,7 @@ export default function AuthPage() {
               <p className="auth-kicker">
                 Continue learning
               </p>
-              <h2 className="auth-form-title mt-4 text-3xl">Welcome to Langslate</h2>
+              <h2 className="auth-form-title mt-4 text-3xl">Welcome to {productName}</h2>
               <p className="auth-muted mt-2 text-sm leading-6">
                 Your professional English workspace is ready.
               </p>

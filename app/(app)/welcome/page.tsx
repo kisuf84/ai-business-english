@@ -7,6 +7,12 @@ import {
   getSupabaseBrowserClient,
   hasSupabaseBrowserConfig,
 } from "../../../lib/supabase/client";
+import { safeInternalRedirect } from "../../../lib/auth/redirect";
+
+function getWelcomeReturnPath() {
+  if (typeof window === "undefined") return "/dashboard";
+  return safeInternalRedirect(new URLSearchParams(window.location.search).get("next"));
+}
 
 function resolveName(metadata: Record<string, unknown> | undefined): string {
   if (!metadata) return "";
@@ -53,7 +59,7 @@ export default function WelcomePage() {
 
       const existingName = resolveName(session.user.user_metadata);
       if (existingName) {
-        router.replace("/dashboard");
+        router.replace(getWelcomeReturnPath());
       }
     };
 
@@ -90,7 +96,7 @@ export default function WelcomePage() {
       return;
     }
 
-    router.replace("/dashboard");
+    router.replace(getWelcomeReturnPath());
   };
 
   return (

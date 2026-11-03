@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const SOURCE_URL = "/corporate-sept14-landing.html";
-const PLATFORM_URL = "/apps/corporate/platform";
+const AUTH_URL = "/auth?next=%2Fapps%2Fcorporate%2Fplatform";
 
 export default function CorporateSept14Landing() {
   const [srcDoc, setSrcDoc] = useState("");
@@ -17,12 +17,12 @@ export default function CorporateSept14Landing() {
       let source = await response.text();
       source = source
         .replace("<head>", "<head><base href=\"/\">")
-        .replaceAll("Auth.open('signup')", `window.top.location.assign('${PLATFORM_URL}')`)
-        .replaceAll("Auth.open('login')", `window.top.location.assign('${PLATFORM_URL}')`)
-        .replaceAll("Auth.submit('signup',event)", `window.top.location.assign('${PLATFORM_URL}');return false`)
-        .replaceAll("Auth.submit('login',event)", `window.top.location.assign('${PLATFORM_URL}');return false`)
-        .replaceAll("Auth.submit('google',event)", `window.top.location.assign('${PLATFORM_URL}');return false`)
-        .replaceAll("Auth.submit('email', event)", `window.top.location.assign('${PLATFORM_URL}');return false`);
+        .replaceAll("Auth.open('signup')", `window.top.location.assign('${AUTH_URL}')`)
+        .replaceAll("Auth.open('login')", `window.top.location.assign('${AUTH_URL}')`)
+        .replaceAll("Auth.submit('signup',event)", `window.top.location.assign('${AUTH_URL}');return false`)
+        .replaceAll("Auth.submit('login',event)", `window.top.location.assign('${AUTH_URL}');return false`)
+        .replaceAll("Auth.submit('google',event)", `window.top.location.assign('${AUTH_URL}');return false`)
+        .replaceAll("Auth.submit('email', event)", `window.top.location.assign('${AUTH_URL}');return false`);
 
       if (cancelled) return;
       setSrcDoc(source);

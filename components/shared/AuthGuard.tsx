@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { getSupabaseBrowserClient, hasSupabaseBrowserConfig } from "../../lib/supabase/client";
+import { safeInternalRedirect } from "../../lib/auth/redirect";
 
 type AuthGuardProps = {
   children: React.ReactNode;
@@ -18,22 +19,24 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     let fallbackTimer: number | null = null;
 
     const checkAuth = async () => {
+      const redirectToAuth = () => {
+        if (!active) return;
+        const returnPath = pathname
+          ? safeInternalRedirect(`${window.location.pathname}${window.location.search}${window.location.hash}`)
+          : "/dashboard";
+        router.replace(`/auth?next=${encodeURIComponent(returnPath)}`);
+      };
+
       if (!hasSupabaseBrowserConfig()) {
-        router.replace("/auth");
+        redirectToAuth();
         return;
       }
 
       const supabase = getSupabaseBrowserClient();
       if (!supabase) {
-        router.replace("/auth");
+        redirectToAuth();
         return;
       }
-
-      const redirectToAuth = () => {
-        if (!active) return;
-        const next = pathname ? `?next=${encodeURIComponent(pathname)}` : "";
-        router.replace(`/auth${next}`);
-      };
       const resolvePreferredName = (metadata: Record<string, unknown> | undefined) => {
         if (!metadata) return "";
         const candidates = [
@@ -52,14 +55,20 @@ export default function AuthGuard({ children }: AuthGuardProps) {
       const handlePostAuthRouting = (session: { user?: { user_metadata?: Record<string, unknown> } }) => {
         const preferredName = resolvePreferredName(session.user?.user_metadata);
         const isWelcomePage = pathname === "/welcome";
+        const welcomeReturnPath = isWelcomePage
+          ? safeInternalRedirect(new URLSearchParams(window.location.search).get("next"))
+          : null;
 
         if (!preferredName && !isWelcomePage) {
-          router.replace("/welcome");
+          const returnPath = safeInternalRedirect(
+            `${window.location.pathname}${window.location.search}${window.location.hash}`
+          );
+          router.replace(`/welcome?next=${encodeURIComponent(returnPath)}`);
           return false;
         }
 
         if (preferredName && isWelcomePage) {
-          router.replace("/dashboard");
+          router.replace(welcomeReturnPath || "/dashboard");
           return false;
         }
 

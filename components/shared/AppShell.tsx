@@ -12,6 +12,8 @@ import GlobalSearch from "./GlobalSearch";
 import { ENGLISH_TRAINING_RELEASED } from "../../lib/englishTrainingRelease";
 import { AUGUST_CONTENT_RELEASED } from "../../lib/augustContentRelease";
 import { AUG19_CONTENT_RELEASED } from "../../lib/aug19ContentRelease";
+import type { LangslateProduct } from "../../lib/langslateDomains.mjs";
+import { getAdminNavigationHref, getProductNavigationHref } from "../../lib/langslateDomains.mjs";
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -21,6 +23,7 @@ type NavItem = {
   href: string;
   label: string;
   icon: string;
+  product?: LangslateProduct;
   /** Renders as the nav icon instead of `icon` when set (e.g. flag emoji for language rows). */
   iconEmoji?: string;
   children?: NavItem[];
@@ -193,6 +196,7 @@ const speakingTopicsNavItem: NavItem = {
  */
 const langslateCorporateNavItem: NavItem = {
   href: "/apps/corporate",
+  product: "corporate",
   label: "Langslate Corporate",
   icon: SECTION_ICONS.businessIndustries,
   iconEmoji: "🏢",
@@ -200,6 +204,7 @@ const langslateCorporateNavItem: NavItem = {
 
 const langslateAcademyNavItem: NavItem = {
   href: "/apps/academy",
+  product: "academy",
   label: "Langslate Academy",
   icon: SECTION_ICONS.englishTraining,
   iconEmoji: "🎓",
@@ -207,6 +212,7 @@ const langslateAcademyNavItem: NavItem = {
 
 const langslate365NavItem: NavItem = {
   href: "/apps/365",
+  product: "365",
   label: "Langslate 365",
   icon: SECTION_ICONS.levelTest,
   iconEmoji: "🗓️",
@@ -214,6 +220,7 @@ const langslate365NavItem: NavItem = {
 
 const langslateFlowNavItem: NavItem = {
   href: "/apps/flow",
+  product: "flow",
   label: "Langslate Flow",
   icon: SECTION_ICONS.syntaxFlow,
   iconEmoji: "🎙️",
@@ -368,14 +375,19 @@ function NavLink({
   item,
   isActive,
   onNavigate,
+  currentHostname,
 }: {
   item: NavItem;
   isActive: boolean;
   onNavigate?: () => void;
+  currentHostname: string;
 }) {
+  const href = item.product
+    ? getProductNavigationHref(item.product, item.href, currentHostname)
+    : item.href;
   return (
     <Link
-      href={item.href}
+      href={href}
       onClick={onNavigate}
       className={`app-nav-item group ${
         isActive
@@ -492,6 +504,7 @@ export default function AppShell({ children }: AppShellProps) {
   const [isAuthReady, setIsAuthReady] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [browserHostname, setBrowserHostname] = useState("");
   const [avatarFailed, setAvatarFailed] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -513,6 +526,10 @@ export default function AppShell({ children }: AppShellProps) {
     isTopLevelContentReader ||
     isTwoSegmentContentReader ||
     isCorporateLessonReader;
+
+  useEffect(() => {
+    setBrowserHostname(window.location.hostname);
+  }, []);
 
   useEffect(() => {
     if (!pathname) return;
@@ -760,7 +777,7 @@ export default function AppShell({ children }: AppShellProps) {
                       }
                     />
                   ) : (
-                    <NavLink item={item} isActive={isSectionActive} onNavigate={onNavigate} />
+                    <NavLink item={item} isActive={isSectionActive} onNavigate={onNavigate} currentHostname={browserHostname} />
                   )}
                   {hasChildren && isExpanded ? (
                     <div className="mt-1.5 ml-[18px] space-y-1.5 border-l border-[var(--glass-border)] pl-3">
@@ -770,6 +787,7 @@ export default function AppShell({ children }: AppShellProps) {
                           item={child}
                           isActive={pathname === child.href}
                           onNavigate={onNavigate}
+                          currentHostname={browserHostname}
                         />
                       ))}
                     </div>
@@ -833,7 +851,7 @@ export default function AppShell({ children }: AppShellProps) {
                 </p>
                 {isAdmin ? (
                   <Link
-                    href="/admin"
+                    href={getAdminNavigationHref(browserHostname)}
                     className="lumen-focus mt-3 flex items-center justify-between rounded-xl border border-[var(--glass-border)] bg-[var(--glass)] px-3 py-2 text-xs font-semibold text-[var(--ink-2)] transition hover:border-[var(--border-strong)] hover:text-[var(--ink-1)]"
                   >
                     <span>Admin Panel</span>
@@ -1000,7 +1018,7 @@ export default function AppShell({ children }: AppShellProps) {
             </div>
             {isAdmin ? (
               <Link
-                href="/admin"
+                href={getAdminNavigationHref(browserHostname)}
                 onClick={() => setIsMobileNavOpen(false)}
                 className="lumen-focus mt-3 flex min-h-10 items-center justify-between rounded-xl border border-[var(--glass-border)] bg-[var(--glass)] px-3 py-2 text-sm font-semibold text-[var(--ink-muted)] transition hover:border-[var(--border-strong)] hover:text-[var(--ink)]"
               >

@@ -6,6 +6,11 @@ import Card from "../../../../components/shared/Card";
 import { getSupabaseBrowserClient } from "../../../../lib/supabase/client";
 import { safeInternalRedirect } from "../../../../lib/auth/redirect";
 
+function getAuthErrorUrl(error: string, nextPath: string) {
+  const params = new URLSearchParams({ error, next: safeInternalRedirect(nextPath) });
+  return `/auth?${params.toString()}`;
+}
+
 export default function AuthCallbackPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
@@ -14,13 +19,14 @@ export default function AuthCallbackPage() {
     let active = true;
 
     const completeOAuth = async () => {
+      let nextPath = "/dashboard";
       try {
         const params = new URLSearchParams(window.location.search);
-        const nextPath = safeInternalRedirect(params.get("next"));
+        nextPath = safeInternalRedirect(params.get("next"));
 
         const supabase = getSupabaseBrowserClient();
         if (!supabase) {
-          if (active) router.replace("/auth?error=missing_supabase_config");
+          if (active) router.replace(getAuthErrorUrl("missing_supabase_config", nextPath));
           return;
         }
 
@@ -48,7 +54,7 @@ export default function AuthCallbackPage() {
           const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
           if (exchangeError) {
             console.warn("[auth-callback] code exchange failed");
-            router.replace("/auth?error=callback_failed");
+            router.replace(getAuthErrorUrl("callback_failed", nextPath));
             return;
           }
 
@@ -78,11 +84,11 @@ export default function AuthCallbackPage() {
             router.replace(nextPath);
             return;
           }
-          router.replace("/auth?error=callback_failed");
+          router.replace(getAuthErrorUrl("callback_failed", nextPath));
           return;
         }
 
-        router.replace("/auth?error=callback_failed");
+        router.replace(getAuthErrorUrl("callback_failed", nextPath));
       } catch (callbackError) {
         console.error("[auth-callback] unexpected failure", {
           name: callbackError instanceof Error ? callbackError.name : "unknown",
@@ -91,7 +97,7 @@ export default function AuthCallbackPage() {
         setError("We couldn’t complete sign-in. Redirecting back to login...");
         window.setTimeout(() => {
           if (!active) return;
-          router.replace("/auth?error=callback_failed");
+          router.replace(getAuthErrorUrl("callback_failed", nextPath));
         }, 1200);
       }
     };
