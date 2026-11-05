@@ -12,6 +12,8 @@ export const LANGSLATE_PRODUCTS: Readonly<Record<LangslateProduct, Readonly<Lang
 export const LANGSLATE_ADMIN_ORIGIN: string;
 export function normalizeHostname(value: string | null | undefined): string;
 export function getLangslateProductForHostname(hostname: string | null | undefined): LangslateProduct | null;
+export function getProductDomainRouteRedirect(hostname: string | null | undefined, pathname: string): string | null;
+export function isProductDomainApiRequest(hostname: string | null | undefined, pathname: string): boolean;
 export function getProductLandingRewritePath(hostname: string | null | undefined): string | null;
 export function getProductLearningPath(product: LangslateProduct): string | null;
 export function getProductAuthHref(product: LangslateProduct): string;

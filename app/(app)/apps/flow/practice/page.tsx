@@ -1,7 +1,10 @@
+import { headers } from "next/headers";
 import ContentReaderPage from "../../../../../components/shared/ContentReaderPage";
 import { getLangslateFlowAppItem } from "../../../../../lib/langslateFlow";
+import { getLangslateProductForHostname } from "../../../../../lib/langslateDomains.mjs";
 
-export default function LangslateFlowPracticePage() {
+export default async function LangslateFlowPracticePage() {
+  const product = getLangslateProductForHostname((await headers()).get("host"));
   const item = getLangslateFlowAppItem();
 
   return (
@@ -12,7 +15,7 @@ export default function LangslateFlowPracticePage() {
       iframeSrc={`/content/langslate-flow/${item.slug}`}
       backLinks={[
         { href: "/apps/flow", label: "Back to Langslate Flow" },
-        { href: "/dashboard", label: "Back to Dashboard" },
+        ...(!product ? [{ href: "/dashboard", label: "Back to Dashboard" }] : []),
       ]}
     />
   );

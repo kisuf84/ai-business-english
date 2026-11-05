@@ -1,7 +1,10 @@
+import { headers } from "next/headers";
 import ContentReaderPage from "../../../../../components/shared/ContentReaderPage";
 import { getLangslate365CourseItem } from "../../../../../lib/langslate365";
+import { getLangslateProductForHostname } from "../../../../../lib/langslateDomains.mjs";
 
-export default function Langslate365CoursePage() {
+export default async function Langslate365CoursePage() {
+  const product = getLangslateProductForHostname((await headers()).get("host"));
   const item = getLangslate365CourseItem();
 
   return (
@@ -12,7 +15,7 @@ export default function Langslate365CoursePage() {
       iframeSrc={`/content/langslate-365/${item.slug}`}
       backLinks={[
         { href: "/apps/365", label: "Back to Langslate 365" },
-        { href: "/dashboard", label: "Back to Dashboard" },
+        ...(!product ? [{ href: "/dashboard", label: "Back to Dashboard" }] : []),
       ]}
     />
   );

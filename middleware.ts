@@ -1,6 +1,6 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { getProductLandingRewritePath, getLangslateProductForHostname, LANGSLATE_ADMIN_ORIGIN } from "./lib/langslateDomains.mjs";
+import { getProductLandingRewritePath, getLangslateProductForHostname, getProductDomainRouteRedirect, isProductDomainApiRequest, LANGSLATE_ADMIN_ORIGIN } from "./lib/langslateDomains.mjs";
 
 export async function middleware(request: NextRequest) {
   const hostname = request.headers.get("host");
@@ -21,6 +21,32 @@ export async function middleware(request: NextRequest) {
   ) {
     const canonicalAdminUrl = new URL(`${pathname}${request.nextUrl.search}`, LANGSLATE_ADMIN_ORIGIN);
     return NextResponse.redirect(canonicalAdminUrl);
+  }
+
+  if (isProductDomainApiRequest(hostname, pathname)) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  const productRouteRedirect = getProductDomainRouteRedirect(hostname, pathname);
+  if (productRouteRedirect) {
+    return NextResponse.redirect(new URL(productRouteRedirect, request.url));
+  }
+
+  const isAuthRefreshPath =
+    pathname === "/auth" || pathname.startsWith("/auth/") ||
+    pathname === "/admin" || pathname.startsWith("/admin/") ||
+    pathname === "/api/admin" || pathname.startsWith("/api/admin/");
+
+  // Run route isolation for all product-domain page requests, but retain the
+  // existing Supabase refresh behavior only on auth and admin paths.
+  if (getLangslateProductForHostname(hostname) && !isAuthRefreshPath) {
+    return NextResponse.next();
+  }
+
+  // The expanded matcher is needed for product-domain isolation. Keep the
+  // main hub's previous middleware behavior on its original paths only.
+  if (!getLangslateProductForHostname(hostname) && !isAuthRefreshPath && pathname !== "/") {
+    return NextResponse.next();
   }
 
   let response = NextResponse.next({ request });
@@ -51,5 +77,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/admin/:path*", "/api/admin/:path*", "/auth/:path*"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"],
 };

@@ -13,10 +13,11 @@ import { ENGLISH_TRAINING_RELEASED } from "../../lib/englishTrainingRelease";
 import { AUGUST_CONTENT_RELEASED } from "../../lib/augustContentRelease";
 import { AUG19_CONTENT_RELEASED } from "../../lib/aug19ContentRelease";
 import type { LangslateProduct } from "../../lib/langslateDomains.mjs";
-import { getAdminNavigationHref, getProductNavigationHref } from "../../lib/langslateDomains.mjs";
+import { getAdminNavigationHref, getProductNavigationHref, LANGSLATE_PRODUCTS } from "../../lib/langslateDomains.mjs";
 
 type AppShellProps = {
   children: React.ReactNode;
+  product?: LangslateProduct | null;
 };
 
 type NavItem = {
@@ -283,6 +284,13 @@ const navGroups: NavGroup[] = [
   },
 ];
 
+const productNavItems: Record<LangslateProduct, NavItem> = {
+  corporate: langslateCorporateNavItem,
+  academy: langslateAcademyNavItem,
+  flow: langslateFlowNavItem,
+  365: langslate365NavItem,
+};
+
 const legacyPageTitles: Record<string, string> = {
   "/lesson/new": "Generator",
   "/courses": "Generator",
@@ -487,7 +495,7 @@ function ThemeToggle({
   );
 }
 
-export default function AppShell({ children }: AppShellProps) {
+export default function AppShell({ children, product = null }: AppShellProps) {
   const { mode, toggleTheme } = useTheme();
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -508,6 +516,16 @@ export default function AppShell({ children }: AppShellProps) {
   const [avatarFailed, setAvatarFailed] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const visibleNavGroups: NavGroup[] = product
+    ? [{
+        label: LANGSLATE_PRODUCTS[product].displayName,
+        items: [{
+          ...productNavItems[product],
+          href: LANGSLATE_PRODUCTS[product].learningPath,
+          label: "Workspace",
+        }],
+      }]
+    : navGroups;
   const isPremiumModuleReader =
     /^\/premium-classes\/[^/]+\/[^/]+$/.test(pathname || "");
   const isSingleSegmentContentReader = SINGLE_SEGMENT_READER_PREFIXES.some((prefix) =>
@@ -533,7 +551,7 @@ export default function AppShell({ children }: AppShellProps) {
 
   useEffect(() => {
     if (!pathname) return;
-    const activeParent = navGroups
+    const activeParent = visibleNavGroups
       .flatMap((group) => group.items)
       .find(
         (item) =>
@@ -544,7 +562,7 @@ export default function AppShell({ children }: AppShellProps) {
     if (activeParent) {
       setExpandedNavItem(activeParent.href);
     }
-  }, [pathname]);
+  }, [pathname, product]);
 
   const derivedPageTitle = pathname?.startsWith("/premium-classes")
     ? "Premium Courses"
@@ -552,7 +570,7 @@ export default function AppShell({ children }: AppShellProps) {
       ? "Langslate Corporate"
       : undefined;
   const pageTitle =
-    navGroups.flatMap((group) => group.items).find((item) => item.href === pathname)
+    visibleNavGroups.flatMap((group) => group.items).find((item) => item.href === pathname)
       ?.label ??
     derivedPageTitle ??
     (pathname ? legacyPageTitles[pathname] : undefined) ??
@@ -637,7 +655,7 @@ export default function AppShell({ children }: AppShellProps) {
       if (!active) return;
       setUser(mapAuthUser(data.user ?? null));
       setIsAuthReady(true);
-      if (data.user) void syncAdminStatus();
+      if (data.user && !product) void syncAdminStatus();
       else setIsAdmin(false);
 
       const { data: authState } = supabase.auth.onAuthStateChange((event, session) => {
@@ -648,7 +666,7 @@ export default function AppShell({ children }: AppShellProps) {
           setIsAdmin(false);
         } else if (event === "SIGNED_IN" || event === "USER_UPDATED") {
           setIsAdmin(false);
-          void syncAdminStatus();
+          if (!product) void syncAdminStatus();
         }
       });
 
@@ -666,7 +684,7 @@ export default function AppShell({ children }: AppShellProps) {
       active = false;
       if (unsubscribe) unsubscribe();
     };
-  }, []);
+  }, [product]);
 
   useEffect(() => {
     setIsMobileNavOpen(false);
@@ -729,10 +747,11 @@ export default function AppShell({ children }: AppShellProps) {
       </div>
     );
 
+  const productName = product ? LANGSLATE_PRODUCTS[product].displayName : "Langslate";
   const renderLogo = (compact = false) => (
     <Link
-      href="/dashboard"
-      aria-label="Langslate home"
+      href={product ? LANGSLATE_PRODUCTS[product].learningPath : "/dashboard"}
+      aria-label={product ? `${productName} workspace` : "Langslate home"}
       className="lumen-focus flex min-w-0 items-center gap-3 rounded-[12px]"
     >
       <img
@@ -744,7 +763,7 @@ export default function AppShell({ children }: AppShellProps) {
       />
       <span className="min-w-0">
         <span className="display block truncate text-lg leading-none text-[var(--ink-1)] lg:text-xl">
-          Langslate
+          {productName}
         </span>
       </span>
     </Link>
@@ -752,7 +771,7 @@ export default function AppShell({ children }: AppShellProps) {
 
   const renderNavigation = (onNavigate?: () => void) => (
     <div className="space-y-6">
-      {navGroups.map((group) => (
+      {visibleNavGroups.map((group) => (
         <div key={group.label}>
           <p className="font-mono px-3 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--ink-faint)]">
             {group.label}
@@ -761,7 +780,9 @@ export default function AppShell({ children }: AppShellProps) {
             {group.items.map((item) => {
               const hasChildren = Boolean(item.children && item.children.length > 0);
               const isExpanded = expandedNavItem === item.href;
-              const isSectionActive = hasChildren
+              const isSectionActive = item.product && product
+                ? pathname === item.href || pathname.startsWith(`/apps/${product}`)
+                : hasChildren
                 ? pathname === item.href || (pathname?.startsWith(`${item.href}/`) ?? false)
                 : pathname === item.href;
 
@@ -818,10 +839,10 @@ export default function AppShell({ children }: AppShellProps) {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="eyebrow text-[10px]">
-                      Workspace
+                      {product ? productName : "Workspace"}
                     </p>
                     <h2 className="display mt-2 text-xl leading-none">
-                      Langslate
+                      {productName}
                     </h2>
                   </div>
                   <button
@@ -847,9 +868,9 @@ export default function AppShell({ children }: AppShellProps) {
                 </div>
 
                 <p className="mt-5 rounded-[14px] border border-[var(--glass-border)] bg-[var(--glass)] p-3 text-xs leading-5 text-[var(--ink-2)]">
-                  Generate lessons, run simulations, and manage teaching resources.
+                  {product ? `Continue learning with ${productName}.` : "Generate lessons, run simulations, and manage teaching resources."}
                 </p>
-                {isAdmin ? (
+                {!product && isAdmin ? (
                   <Link
                     href={getAdminNavigationHref(browserHostname)}
                     className="lumen-focus mt-3 flex items-center justify-between rounded-xl border border-[var(--glass-border)] bg-[var(--glass)] px-3 py-2 text-xs font-semibold text-[var(--ink-2)] transition hover:border-[var(--border-strong)] hover:text-[var(--ink-1)]"
@@ -922,22 +943,16 @@ export default function AppShell({ children }: AppShellProps) {
                   {renderLogo()}
                 </div>
 
-                <GlobalSearch />
+                {!product ? <GlobalSearch /> : null}
 
                 <div className="flex shrink-0 items-center gap-2">
                   <ThemeToggle mode={mode} toggleTheme={toggleTheme} />
-                  <Link
-                    href="/simulation"
-                    className="btn btn-ghost lumen-focus"
-                  >
-                    Start simulation
-                  </Link>
-                  <Link
-                    href="/lesson/new"
-                    className="btn btn-aurora lumen-focus"
-                  >
-                    Create lesson
-                  </Link>
+                  {!product ? (
+                    <>
+                      <Link href="/simulation" className="btn btn-ghost lumen-focus">Start simulation</Link>
+                      <Link href="/lesson/new" className="btn btn-aurora lumen-focus">Create lesson</Link>
+                    </>
+                  ) : null}
                   <div className="flex items-center gap-2 rounded-full border border-[var(--glass-border)] bg-[var(--glass)] p-1.5 pr-3">
                     {renderProfileAvatar("h-8 w-8")}
                     <span className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--ink-3)]">
@@ -992,10 +1007,10 @@ export default function AppShell({ children }: AppShellProps) {
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--ink-faint)]">
-                Langslate
+                {productName}
               </p>
               <p className="mt-1 truncate text-lg font-extrabold text-[var(--ink)]">
-                Navigation
+              {product ? `${productName} navigation` : "Navigation"}
               </p>
             </div>
             <button
@@ -1016,7 +1031,7 @@ export default function AppShell({ children }: AppShellProps) {
                 <p className="truncate text-xs text-[var(--ink-muted)]">{user.role}</p>
               </div>
             </div>
-            {isAdmin ? (
+            {!product && isAdmin ? (
               <Link
                 href={getAdminNavigationHref(browserHostname)}
                 onClick={() => setIsMobileNavOpen(false)}
@@ -1039,20 +1054,12 @@ export default function AppShell({ children }: AppShellProps) {
               </span>
               <ThemeToggle mode={mode} toggleTheme={toggleTheme} />
             </div>
-            <div className="flex gap-2">
-              <Link
-                href="/simulation"
-                className="lumen-focus min-w-0 flex-1 rounded-full border border-[var(--border)] bg-[var(--glass)] px-4 py-3 text-center text-sm font-bold text-[var(--ink)]"
-              >
-                Start simulation
-              </Link>
-              <Link
-                href="/lesson/new"
-                className="lumen-focus min-w-0 flex-1 rounded-full bg-[image:var(--aurora-line)] px-4 py-3 text-center text-sm font-extrabold text-[var(--accent-ink)]"
-              >
-                Create lesson
-              </Link>
-            </div>
+            {!product ? (
+              <div className="flex gap-2">
+                <Link href="/simulation" className="lumen-focus min-w-0 flex-1 rounded-full border border-[var(--border)] bg-[var(--glass)] px-4 py-3 text-center text-sm font-bold text-[var(--ink)]">Start simulation</Link>
+                <Link href="/lesson/new" className="lumen-focus min-w-0 flex-1 rounded-full bg-[image:var(--aurora-line)] px-4 py-3 text-center text-sm font-extrabold text-[var(--accent-ink)]">Create lesson</Link>
+              </div>
+            ) : null}
             {isAuthReady ? (
               <button
                 type="button"

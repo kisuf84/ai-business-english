@@ -6,6 +6,8 @@ import {
   buildAuthCallbackUrl,
   getAdminNavigationHref,
   getLangslateProductForHostname,
+  getProductDomainRouteRedirect,
+  isProductDomainApiRequest,
   getProductAuthHref,
   getProductLandingRewritePath,
   getProductNavigationHref,
@@ -30,6 +32,55 @@ test("unknown, local, and existing Vercel hostnames retain the existing root", (
   for (const hostname of ["localhost:3000", "ai-business-english.vercel.app", "unknown.example.com", "www.langslateflow.com"]) {
     assert.equal(getLangslateProductForHostname(hostname), null);
     assert.equal(getProductLandingRewritePath(hostname), null);
+  }
+});
+
+test("each product domain keeps its own app routes and sends other product routes back to its root", () => {
+  for (const [product, [hostname, , learningPath]] of Object.entries(expected)) {
+    assert.equal(getProductDomainRouteRedirect(hostname, `/apps/${product}`), null);
+    assert.equal(getProductDomainRouteRedirect(hostname, `/apps/${product}/platform`), null);
+    assert.equal(getProductDomainRouteRedirect(hostname, learningPath), null);
+
+    for (const [otherProduct] of Object.entries(expected)) {
+      if (otherProduct === product) continue;
+      assert.equal(getProductDomainRouteRedirect(hostname, `/apps/${otherProduct}`), "/");
+      assert.equal(getProductDomainRouteRedirect(hostname, `/apps/${otherProduct}/platform`), "/");
+      assert.equal(getProductDomainRouteRedirect(hostname, expected[otherProduct][2]), "/");
+    }
+
+    for (const mainAppPath of ["/dashboard", "/simulation", "/generator", "/settings"]) {
+      assert.equal(getProductDomainRouteRedirect(hostname, mainAppPath), "/");
+    }
+  }
+});
+
+test("product domains retain shared auth/content/assets while main-app pages stay on the main host", () => {
+  for (const [hostname] of Object.values(expected)) {
+    for (const sharedPath of [
+      "/auth",
+      "/auth/callback?next=%2Fapps%2Fcorporate%2Fplatform",
+      "/welcome?next=%2Fapps%2Facademy%2Fplatform",
+      "/content/langslate-flow/landing",
+      "/english-training-content/lesson.html",
+      "/icons/english-training.png",
+    ]) {
+      assert.equal(getProductDomainRouteRedirect(hostname, new URL(sharedPath, "https://example.test").pathname), null);
+    }
+  }
+
+  for (const mainHostname of ["langslate.co", "ai-business-english.vercel.app", "localhost:3000"]) {
+    assert.equal(getProductDomainRouteRedirect(mainHostname, "/dashboard"), null);
+    for (const [, , learningPath] of Object.values(expected)) {
+      assert.equal(getProductDomainRouteRedirect(mainHostname, learningPath), null);
+    }
+    assert.equal(isProductDomainApiRequest(mainHostname, "/api/lesson/generate"), false);
+  }
+});
+
+test("product domains deny the main application's API endpoints", () => {
+  for (const [hostname] of Object.values(expected)) {
+    assert.equal(isProductDomainApiRequest(hostname, "/api/lesson/generate"), true);
+    assert.equal(isProductDomainApiRequest(hostname, "/api/admin/access"), true);
   }
 });
 
