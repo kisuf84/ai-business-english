@@ -11,7 +11,9 @@ import {
   getProductAuthHref,
   getProductLandingRewritePath,
   getProductNavigationHref,
+  getProductShellMode,
 } from "../lib/langslateDomains.mjs";
+import { getOriginalHtmlWorkspace } from "../lib/productWorkspace.mjs";
 
 const expected = {
   corporate: ["langslatecorporate.com", "/product-home/corporate", "/apps/corporate/platform"],
@@ -33,6 +35,28 @@ test("unknown, local, and existing Vercel hostnames retain the existing root", (
     assert.equal(getLangslateProductForHostname(hostname), null);
     assert.equal(getProductLandingRewritePath(hostname), null);
   }
+});
+
+test("product hostnames use the standalone shell while the main app keeps its AppShell", () => {
+  for (const [hostname] of Object.values(expected)) {
+    assert.equal(getProductShellMode(hostname), "standalone");
+  }
+  for (const hostname of ["ai-business-english.vercel.app", "langslate.co", "localhost:3000"]) {
+    assert.equal(getProductShellMode(hostname), "main");
+  }
+});
+
+test("the existing Flow and 365 HTML workspace files are selected without changing Corporate or Academy sources", () => {
+  assert.deepEqual(getOriginalHtmlWorkspace("flow"), {
+    src: "/content/langslate-flow/app",
+    title: "Langslate Flow",
+  });
+  assert.deepEqual(getOriginalHtmlWorkspace("365"), {
+    src: "/content/langslate-365/course",
+    title: "Langslate 365",
+  });
+  assert.equal(getOriginalHtmlWorkspace("corporate"), null);
+  assert.equal(getOriginalHtmlWorkspace("academy"), null);
 });
 
 test("each product domain keeps its own app routes and sends other product routes back to its root", () => {
@@ -99,6 +123,23 @@ test("OAuth callback URL stays on the initiating domain and preserves a deep lin
     assert.equal(callback.origin, `https://${hostname}`);
     assert.equal(callback.pathname, "/auth/callback");
     assert.equal(callback.searchParams.get("next"), deepLink);
+  }
+});
+
+test("OAuth redirect_to requires an allowlist pattern that accepts its next query", () => {
+  for (const [, [hostname, , learning]] of Object.entries(expected)) {
+    const redirectTo = buildAuthCallbackUrl(`https://${hostname}`, learning);
+    const exactPathAllowlistEntry = `https://${hostname}/auth/callback`;
+
+    // Supabase matches redirect_to including its query string. An exact entry
+    // for the path alone therefore does not match the URL sent by the client.
+    assert.notEqual(redirectTo, exactPathAllowlistEntry);
+
+    const parsed = new URL(redirectTo);
+    assert.equal(parsed.origin, `https://${hostname}`);
+    assert.equal(parsed.pathname, "/auth/callback");
+    assert.equal(parsed.searchParams.get("next"), learning);
+    assert.match(redirectTo, new RegExp(`^https://${hostname}/auth/callback\\?next=`));
   }
 });
 

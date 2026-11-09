@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import CorporatePlatform, { type CorporatePlatformFamily } from "../../../../../components/corporate/CorporatePlatform";
+import { ProductExperienceFrame } from "../../../../../components/shared/ProductExperienceFrame";
 import { buildLangslateContentUrl, normalizeLangslateContentBaseUrl } from "../../../../../lib/langslateContent";
+import { getLangslateProductForHostname } from "../../../../../lib/langslateDomains.mjs";
 import {
   corporateCategoryHref,
   corporateCategoryThumbnailSrc,
@@ -24,7 +27,12 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default function LangslateCorporatePlatformPage() {
+export default async function LangslateCorporatePlatformPage() {
+  const product = getLangslateProductForHostname((await headers()).get("host"));
+  if (product === "corporate") {
+    return <ProductExperienceFrame src="/apps/corporate/runtime/index.html" title="Langslate Corporate" />;
+  }
+
   const contentBaseUrl = normalizeLangslateContentBaseUrl(process.env.LANGSLATE_CONTENT_BASE_URL);
   let lessonId = 0;
   const families: CorporatePlatformFamily[] = [...listCorporateFamilies()].sort(

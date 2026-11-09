@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Langslate Corporate</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --bg:#01071b;--bg2:#030b29;--card:#051035;--card2:#091541;
+  --border:rgba(255,255,255,.07);--txt:#f0f0f8;--txt2:#94a3b8;--txt3:#64748b;
+  --violet:#7c3aed;--indigo:#4f46e5;--gold:#f59e0b;--emerald:#10b981;--rose:#f43f5e;
+  --sb:268px;--radius:14px;
+}
+[data-theme="light"]{
+  --bg:#f0f0f8;--bg2:#e8e8f0;--card:#fff;--card2:#f8f8fc;
+  --border:rgba(0,0,0,.08);--txt:#0f0f1a;--txt2:#475569;--txt3:#94a3b8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);font-size:15px}
+a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer;border:none;outline:none}
+input{font-family:inherit;border:1px solid var(--border);background:var(--card2);color:var(--txt);outline:none;border-radius:10px}
+/* Layout */
+#app{display:flex;height:100vh;overflow:hidden}
+#sidebar{width:var(--sb);flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;transition:transform .3s;z-index:50}
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#topbar{height:60px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:0 20px;background:var(--bg2);flex-shrink:0}
+#page{flex:1;overflow-y:auto;padding:28px 28px 40px;scroll-behavior:smooth}
+/* Sidebar */
+.sb-logo{padding:18px 16px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.sb-logo:hover{opacity:.85}
+.sb-logo-img{width:38px;height:38px;border-radius:10px;object-fit:cover;flex-shrink:0}
+.sb-logo-text{font-size:.95rem;font-weight:800;color:var(--txt)}.sb-logo-sub{font-size:.65rem;color:var(--txt3);letter-spacing:.05em}
+.sb-user{margin:0 12px 14px;padding:12px;border-radius:12px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.sb-avatar-wrap{width:40px;height:40px;border-radius:50%;border:2px solid var(--violet);overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,var(--violet),var(--indigo));display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.sb-avatar-wrap img{width:100%;height:100%;object-fit:cover}
+.sb-name{font-size:.85rem;font-weight:700;color:var(--txt)}.sb-streak{font-size:.72rem;color:var(--txt3);margin-top:1px}
+.sb-xp-wrap{margin:0 12px 14px}.sb-xp-row{display:flex;justify-content:space-between;font-size:.72rem;color:var(--txt3);margin-bottom:5px}
+.sb-xp-bar{height:5px;border-radius:99px;background:var(--card2)}.sb-xp-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--violet),var(--indigo));transition:width .6s}
+.sb-section{font-size:.65rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.1em;padding:10px 20px 6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;margin:1px 8px;border-radius:10px;cursor:pointer;transition:all .2s;font-size:.875rem;font-weight:500;color:var(--txt2)}
+.nav-item:hover{background:var(--card);color:var(--txt)}.nav-item.active{background:rgba(124,58,237,.15);color:var(--violet)}
+.nav-item .ni-icon{width:20px;text-align:center;font-size:.9rem}
+.level-pill{display:flex;align-items:center;justify-content:space-between;padding:8px 20px;margin:1px 8px;border-radius:10px;cursor:pointer;transition:all .2s;font-size:.8rem;color:var(--txt2)}
+.level-pill:hover{background:var(--card);color:var(--txt)}.sb-divider{height:1px;background:var(--border);margin:8px 16px}
+/* Crafted-by footer */
+.sb-credit{margin:auto 0 0;padding:14px 16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.sb-credit-img{width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1.5px solid var(--border)}
+.sb-credit-label{font-size:.58rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;line-height:1}
+.sb-credit-name{font-size:.78rem;font-weight:700;color:var(--txt);margin-top:2px;line-height:1.2}
+.sb-credit-role{font-size:.65rem;color:var(--txt3);font-style:italic;margin-top:1px;line-height:1.2}
+/* Topbar */
+#menu-btn{width:36px;height:36px;border-radius:9px;background:var(--card);border:1px solid var(--border);display:none;align-items:center;justify-content:center;color:var(--txt2);font-size:.9rem}
+#search-wrap{position:relative;flex:1;max-width:380px}
+#search-input{width:100%;padding:8px 14px 8px 36px;border-radius:99px;font-size:.85rem;height:36px}
+#search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--txt3);font-size:.8rem;pointer-events:none}
+#search-results{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.4);display:none;z-index:200;max-height:340px;overflow-y:auto}
+#search-results.show{display:block}.sr-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border)}.sr-item:last-child{border-bottom:none}.sr-item:hover{background:var(--card2)}
+.sr-title{font-size:.85rem;font-weight:600;color:var(--txt)}.sr-meta{font-size:.72rem;color:var(--txt3);margin-top:2px}
+.tb-actions{display:flex;align-items:center;gap:8px;margin-left:auto}
+.tb-btn{width:34px;height:34px;border-radius:9px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--txt2);font-size:.85rem;transition:all .2s}
+.tb-btn:hover{color:var(--txt);background:var(--card2)}
+#tb-xp{font-size:.8rem;font-weight:700;color:var(--gold);padding:5px 12px;background:rgba(245,158,11,.1);border-radius:99px;border:1px solid rgba(245,158,11,.2)}
+/* Page elements */
+.hero-card{border-radius:20px;background:linear-gradient(135deg,#3b0764 0%,#1e1b4b 50%,#0c0a20 100%);position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E")}
+.glass{background:var(--card);border:1px solid var(--border);border-radius:var(--radius)}
+.glass-solid{background:var(--card2);border:1px solid var(--border);border-radius:12px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.stat-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.section-title{font-size:.9rem;font-weight:700;color:var(--txt);display:flex;align-items:center;gap:8px}
+.progress-bar{height:6px;border-radius:99px;background:var(--card2);overflow:hidden}
+.progress-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--violet),var(--indigo));transition:width 1s}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:99px;background:linear-gradient(135deg,var(--violet),var(--indigo));color:#fff;font-size:.875rem;font-weight:600;transition:all .2s;border:none;cursor:pointer}
+.btn-primary:hover{opacity:.88;transform:translateY(-1px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:99px;background:transparent;color:var(--txt2);font-size:.875rem;font-weight:600;transition:all .2s;border:1px solid var(--border)}
+.btn-ghost:hover{color:var(--txt);border-color:var(--txt2)}
+.tab{padding:7px 14px;border-radius:99px;background:var(--card);border:1px solid var(--border);color:var(--txt2);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab.active{background:rgba(124,58,237,.18);border-color:var(--violet);color:var(--violet)}
+.goal-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.goal-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:transparent;transition:all .3s}
+.goal-check.done{background:var(--emerald);border-color:var(--emerald);color:#fff}
+/* Lesson cards */
+.lessons-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.lesson-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.lesson-card:hover{border-color:rgba(124,58,237,.4);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.3)}
+.lesson-card.completed{border-color:rgba(16,185,129,.2);background:rgba(16,185,129,.03)}
+.lesson-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.level-chip{font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:6px}
+.lesson-num{font-size:.72rem;color:var(--txt3)}
+.lesson-title{font-size:.9rem;font-weight:700;color:var(--txt);margin-bottom:8px;line-height:1.4}
+.lesson-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.meta-tag{font-size:.72rem;color:var(--txt3);display:flex;align-items:center;gap:3px}
+.focus-btn{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:7px;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.25);color:var(--violet);font-size:.72rem;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.lesson-card:hover .focus-btn{opacity:1}
+/* Category cards */
+.category-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:all .2s}
+.category-card:hover{border-color:rgba(124,58,237,.35);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.28)}
+/* Avatar picker */
+.avatar-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.av-opt{width:52px;height:52px;border-radius:50%;border:2.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;background:var(--card2);overflow:hidden;font-size:1.5rem}
+.av-opt:hover{border-color:var(--violet);transform:scale(1.05)}
+.av-opt.selected{border-color:var(--violet);box-shadow:0 0 0 3px rgba(124,58,237,.25)}
+.av-opt img{width:100%;height:100%;object-fit:cover}
+/* Badges */
+.badge-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;transition:all .2s}
+.badge-card:hover{border-color:rgba(124,58,237,.3);transform:translateY(-2px)}
+.badge-card.locked{opacity:.4;filter:grayscale(1)}
+.badge-icon{font-size:2rem;margin-bottom:8px}.badge-title{font-size:.85rem;font-weight:700;color:var(--txt);margin-bottom:3px}.badge-desc{font-size:.72rem;color:var(--txt3);margin-bottom:6px}
+/* Heatmap */
+.heatmap-grid{display:flex;gap:3px}.heatmap-cell{width:12px;height:12px;border-radius:2px;background:var(--card2)}
+.heat1{background:rgba(124,58,237,.3)}.heat2{background:rgba(124,58,237,.55)}.heat3{background:rgba(124,58,237,.8)}.heat4{background:#7c3aed}
+/* Viewer */
+#viewer-modal{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;flex-direction:column}
+#viewer-modal.open{display:flex}
+#vw-header{height:54px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:0 14px;flex-shrink:0}
+#vw-body{display:flex;flex:1;overflow:hidden}
+#vw-list{width:280px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;transition:width .3s}
+#vw-list.collapsed{width:0;overflow:hidden}
+#vw-level-header{padding:12px 14px;border-bottom:1px solid var(--border);flex-shrink:0}
+#vw-lesson-list{flex:1;overflow-y:auto}
+#vw-iframe-wrap{flex:1;position:relative;overflow:hidden}
+#lesson-iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.vl-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .15s}
+.vl-item:hover{background:var(--card)}.vl-item.active{background:rgba(124,58,237,.12)}
+.vl-item-title{font-size:.82rem;font-weight:600;color:var(--txt);line-height:1.3}.vl-item-meta{font-size:.7rem;color:var(--txt3);margin-top:2px}
+.vw-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:8px;font-size:.78rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--txt2);transition:all .2s;white-space:nowrap}
+.vw-btn:hover{color:var(--txt);background:var(--card2)}
+.vw-btn.done-btn{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.3);color:var(--emerald)}
+.vw-btn.focus-mode{background:rgba(124,58,237,.15);border-color:rgba(124,58,237,.3);color:var(--violet)}
+#viewer-modal.focus #vw-header,#viewer-modal.focus #vw-list{display:none}
+#focus-exit{position:fixed;top:12px;right:12px;z-index:200;padding:7px 14px;border-radius:99px;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:.78rem;cursor:pointer;display:none;backdrop-filter:blur(8px)}
+#viewer-modal.focus #focus-exit{display:block}
+/* Mobile */
+#bottomnav{display:none;position:fixed;bottom:0;left:0;right:0;height:60px;background:var(--bg2);border-top:1px solid var(--border);z-index:60;align-items:stretch}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:.6rem;color:var(--txt3);cursor:pointer;transition:color .2s}
+.bn-item.active,.bn-item:hover{color:var(--violet)}.bn-item i{font-size:1.1rem}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40;backdrop-filter:blur(2px)}#overlay.show{display:block}
+/* Toast */
+#toast{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:8px;z-index:999}
+.toast-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-size:.85rem;font-weight:500;color:var(--txt);box-shadow:0 4px 20px rgba(0,0,0,.4);animation:slideIn .3s ease}
+@keyframes slideIn{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+.confetti-piece{position:fixed;top:-10px;border-radius:2px;animation:fall linear forwards;z-index:9999;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.fade-up{animation:fadeUp .5s ease both}.delay-1{animation-delay:.1s}.delay-2{animation-delay:.2s}.delay-3{animation-delay:.3s}.delay-4{animation-delay:.4s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){
+  #sidebar{position:fixed;top:0;bottom:0;left:0;transform:translateX(-100%)}
+  #sidebar.open{transform:translateX(0)}#menu-btn{display:flex}#bottomnav{display:flex}
+  #page{padding:16px 14px 80px}.stats-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div id="overlay" onclick="App.closeSidebar()"></div>
+<div id="app">
+  <nav id="sidebar">
+    <div class="sb-logo" onclick="location.reload()" title="Refresh">
+      <img src="images/logo.png" alt="Langslate" class="sb-logo-img" onerror="this.style.display='none'">
+      <div><div class="sb-logo-text">Langslate</div><div class="sb-logo-sub">CORPORATE</div></div>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar-wrap" id="sb-avatar-wrap">
+        <span id="sb-avatar-emoji" style="font-size:1.3rem">&#128188;</span>
+      </div>
+      <div><div class="sb-name" id="sb-name">Learner</div><div class="sb-streak" id="sb-streak">0 day streak &#128293;</div></div>
+    </div>
+    <div class="sb-xp-wrap">
+      <div class="sb-xp-row"><span>Daily XP</span><span id="sb-xp-label">0 / 100</span></div>
+      <div class="sb-xp-bar"><div class="sb-xp-fill" id="sb-xp-bar" style="width:0%"></div></div>
+    </div>
+    <div class="sb-section">Menu</div>
+    <div class="nav-item active" data-route="dashboard" onclick="App.nav('dashboard')"><span class="ni-icon"><i class="fas fa-home"></i></span> Dashboard</div>
+    <div class="nav-item" data-route="courses" onclick="App.nav('courses')"><span class="ni-icon"><i class="fas fa-book-open"></i></span> All Categories</div>
+    <div class="nav-item" data-route="progress" onclick="App.nav('progress')"><span class="ni-icon"><i class="fas fa-chart-line"></i></span> Progress</div>
+    <div class="nav-item" data-route="achievements" onclick="App.nav('achievements')"><span class="ni-icon"><i class="fas fa-trophy"></i></span> Achievements</div>
+    <div class="nav-item" data-route="settings" onclick="App.nav('settings')"><span class="ni-icon"><i class="fas fa-cog"></i></span> Settings</div>
+    <div class="sb-divider"></div>
+    <div class="sb-section">Learn By</div>
+    <div id="level-nav"></div>
+    <div class="sb-credit">
+      <img src="images/brice.webp" alt="Brice Gadou" class="sb-credit-img" onerror="this.style.display='none'">
+      <div>
+        <div class="sb-credit-label">Crafted by</div>
+        <div class="sb-credit-name">Brice Gadou</div>
+        <div class="sb-credit-role">Business English Expert &amp; Vibe Coder</div>
+      </div>
+    </div>
+  </nav>
+  <div id="main">
+    <div id="topbar">
+      <button id="menu-btn" onclick="App.toggleSidebar()"><i class="fas fa-bars"></i></button>
+      <div id="search-wrap">
+        <i class="fas fa-search" id="search-icon"></i>
+        <input type="text" id="search-input" placeholder="Search 4,054 lessons..." oninput="App.search(this.value)" onfocus="App.searchFocus()" onblur="App.searchBlur()">
+        <div id="search-results"></div>
+      </div>
+      <div class="tb-actions">
+        <span id="tb-xp">0 XP</span>
+        <button class="tb-btn" id="theme-btn" onclick="App.toggleTheme()" title="Toggle theme"><i class="fas fa-moon"></i></button>
+        <button class="tb-btn" onclick="App.nav('achievements')" title="Achievements"><i class="fas fa-trophy"></i></button>
+      </div>
+    </div>
+    <div id="page"></div>
+  </div>
+</div>
+<!-- Lesson Viewer -->
+<div id="viewer-modal">
+  <div id="vw-header">
+    <button class="vw-btn" onclick="App.toggleSidebar2()"><i class="fas fa-bars"></i></button>
+    <button class="vw-btn" onclick="App.prevLesson()"><i class="fas fa-chevron-left"></i></button>
+    <button class="vw-btn" onclick="App.nextLesson()"><i class="fas fa-chevron-right"></i></button>
+    <div style="flex:1;min-width:0;padding:0 6px">
+      <div id="vw-title" style="font-size:.9rem;font-weight:700;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div>
+      <div id="vw-meta" style="font-size:.7rem;color:var(--txt3);margin-top:1px"></div>
+    </div>
+    <button class="vw-btn done-btn" onclick="App.markDone()"><i class="fas fa-check"></i> Done</button>
+    <button class="vw-btn focus-mode" id="vw-focus" onclick="App.toggleFocus()"><i class="fas fa-expand"></i> Focus</button>
+    <button class="vw-btn" onclick="App.closeViewer()"><i class="fas fa-times"></i></button>
+  </div>
+  <div id="vw-body">
+    <div id="vw-list">
+      <div id="vw-level-header">
+        <div id="vw-level-label" style="font-size:.85rem;font-weight:700;color:var(--txt)"></div>
+        <div id="vw-level-count" style="font-size:.72rem;color:var(--txt3);margin-top:2px"></div>
+      </div>
+      <div id="vw-lesson-list"></div>
+    </div>
+    <div id="vw-iframe-wrap"><iframe id="lesson-iframe" allow="fullscreen"></iframe></div>
+  </div>
+</div>
+<button id="focus-exit" onclick="App.exitFocus()"><i class="fas fa-compress"></i> Exit Focus</button>
+<div id="bottomnav">
+  <div class="bn-item active" data-route="dashboard" onclick="App.nav('dashboard')"><i class="fas fa-home"></i><span>Home</span></div>
+  <div class="bn-item" data-route="courses" onclick="App.nav('courses')"><i class="fas fa-book-open"></i><span>Learn</span></div>
+  <div class="bn-item" data-route="progress" onclick="App.nav('progress')"><i class="fas fa-chart-line"></i><span>Progress</span></div>
+  <div class="bn-item" data-route="achievements" onclick="App.nav('achievements')"><i class="fas fa-trophy"></i><span>Badges</span></div>
+  <div class="bn-item" data-route="settings" onclick="App.nav('settings')"><i class="fas fa-cog"></i><span>Settings</span></div>
+</div>
+<div id="toast"></div>
+<script src="js/lessons.js"></script>
+<script src="js/r2-lesson-adapter.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import AcademyPlatform from "../../../../../components/academy/AcademyPlatform";
+import { ProductExperienceFrame } from "../../../../../components/shared/ProductExperienceFrame";
 import { countAcademyLessons, listAcademyRuntimeLevels } from "../../../../../lib/langslateAcademy";
 import { normalizeLangslateContentBaseUrl } from "../../../../../lib/langslateContent";
+import { getLangslateProductForHostname } from "../../../../../lib/langslateDomains.mjs";
 
 const PROTOTYPE_FONTS_HREF =
   "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap";
@@ -14,7 +17,12 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default function LangslateAcademyPlatformPage() {
+export default async function LangslateAcademyPlatformPage() {
+  const product = getLangslateProductForHostname((await headers()).get("host"));
+  if (product === "academy") {
+    return <ProductExperienceFrame src="/apps/academy/runtime/index.html" title="Langslate Academy" />;
+  }
+
   const contentBaseUrl = normalizeLangslateContentBaseUrl(process.env.LANGSLATE_CONTENT_BASE_URL);
   const levels = listAcademyRuntimeLevels(contentBaseUrl);
 
