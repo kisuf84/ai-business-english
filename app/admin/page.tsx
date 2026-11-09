@@ -2,6 +2,7 @@ import Link from "next/link";
 import AdminPageHeader from "../../components/admin/AdminPageHeader";
 import { getAdminCatalogSummary } from "../../lib/admin/contentCatalog";
 import { getAdminDatabaseMetrics, type AdminMetric } from "../../lib/admin/data";
+import { LANGSLATE_PRODUCTS } from "../../lib/langslateDomains.mjs";
 
 function MetricCard({ label, metric, detail }: { label: string; metric: AdminMetric | number; detail: string }) {
   const available = typeof metric === "number" || metric.status === "available";
@@ -44,14 +45,14 @@ export default async function AdminOverviewPage() {
       <section className="admin-section">
         <div className="admin-section-heading">
           <h2>Application directory</h2>
-          <p>Open each platform on this application origin. Domain routing is not configured in this release.</p>
+          <p>Open each standalone product on its public landing page.</p>
         </div>
         <div className="admin-app-grid">
           {[
-            { name: "Corporate", href: "/apps/corporate", description: "Industry, department, profession, and Pro lessons" },
-            { name: "Academy", href: "/apps/academy", description: "Six levels of structured English lessons" },
-            { name: "Flow", href: "/apps/flow", description: "Guided practice experience" },
-            { name: "365", href: "/apps/365", description: "Daily learning experience" },
+            { name: "Corporate", href: `${LANGSLATE_PRODUCTS.corporate.origin}/`, description: "Industry, department, profession, and Pro lessons" },
+            { name: "Academy", href: `${LANGSLATE_PRODUCTS.academy.origin}/`, description: "Six levels of structured English lessons" },
+            { name: "Flow", href: `${LANGSLATE_PRODUCTS.flow.origin}/`, description: "Guided practice experience" },
+            { name: "365", href: `${LANGSLATE_PRODUCTS["365"].origin}/`, description: "Daily learning experience" },
           ].map((app) => (
             <Link key={app.name} href={app.href} className="admin-app-card">
               <strong>Langslate {app.name}</strong>

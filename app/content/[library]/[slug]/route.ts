@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
+import { createSupabaseServerClient } from "../../../../lib/supabase/ssr";
 import type { ContentLibraryId } from "../../../../lib/contentLibraries";
 import { getSituationalEnglishFilePath } from "../../../../lib/situationalEnglish.files";
 import { getListeningTrainingFilePath } from "../../../../lib/listeningTraining.files";
@@ -17,6 +18,11 @@ import { getListeningHubFilePath } from "../../../../lib/listeningHub.files";
 import { getSpeakingTopicsFilePath } from "../../../../lib/speakingTopics.files";
 import { getLangslate365FilePath } from "../../../../lib/langslate365.files";
 import { getLangslateFlowFilePath } from "../../../../lib/langslateFlow.files";
+import {
+  getProductContentDocumentAccess,
+  getProtectedProductContentDocument,
+  injectProductSignOutControl,
+} from "../../../../lib/productContentSecurity.mjs";
 
 type ContentRouteProps = {
   params: Promise<{
@@ -85,11 +91,32 @@ async function readImageOptimizedHtml(library: string, slug: string): Promise<st
   }
 }
 
-export async function GET(_: Request, { params }: ContentRouteProps) {
+export async function GET(request: Request, { params }: ContentRouteProps) {
   const { library, slug } = await params;
   const resolver = RESOLVERS[library as ContentLibraryId];
   if (!resolver) {
     return new NextResponse("Not found.", { status: 404 });
+  }
+
+  const protectedProduct = getProtectedProductContentDocument(library, slug);
+  if (protectedProduct) {
+    const initialAccess = getProductContentDocumentAccess(
+      request.headers.get("host"),
+      protectedProduct,
+      false,
+    );
+    if (initialAccess === "wrong-host") return new NextResponse("Not found.", { status: 404 });
+
+    const supabase = await createSupabaseServerClient();
+    if (!supabase) return new NextResponse("Authentication is unavailable.", { status: 503 });
+    const { data, error } = await supabase.auth.getUser();
+    const access = getProductContentDocumentAccess(
+      request.headers.get("host"),
+      protectedProduct,
+      Boolean(data.user && !error),
+    );
+    if (access === "wrong-host") return new NextResponse("Not found.", { status: 404 });
+    if (access !== "allow") return new NextResponse("Authentication required.", { status: 401 });
   }
 
   const filePath = await resolver(slug);
@@ -97,7 +124,8 @@ export async function GET(_: Request, { params }: ContentRouteProps) {
     return new NextResponse("Not found.", { status: 404 });
   }
 
-  const html = (await readImageOptimizedHtml(library, slug)) ?? (await fs.readFile(filePath, "utf-8"));
+  const sourceHtml = (await readImageOptimizedHtml(library, slug)) ?? (await fs.readFile(filePath, "utf-8"));
+  const html = protectedProduct ? injectProductSignOutControl(sourceHtml, protectedProduct) : sourceHtml;
 
   return new NextResponse(html, {
     status: 200,

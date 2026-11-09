@@ -13,7 +13,7 @@ import { ENGLISH_TRAINING_RELEASED } from "../../lib/englishTrainingRelease";
 import { AUGUST_CONTENT_RELEASED } from "../../lib/augustContentRelease";
 import { AUG19_CONTENT_RELEASED } from "../../lib/aug19ContentRelease";
 import type { LangslateProduct } from "../../lib/langslateDomains.mjs";
-import { getAdminNavigationHref, getProductNavigationHref, LANGSLATE_PRODUCTS } from "../../lib/langslateDomains.mjs";
+import { getAdminNavigationHref, getProductPublicLandingHref, LANGSLATE_PRODUCTS } from "../../lib/langslateDomains.mjs";
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -383,15 +383,13 @@ function NavLink({
   item,
   isActive,
   onNavigate,
-  currentHostname,
 }: {
   item: NavItem;
   isActive: boolean;
   onNavigate?: () => void;
-  currentHostname: string;
 }) {
   const href = item.product
-    ? getProductNavigationHref(item.product, item.href, currentHostname)
+    ? getProductPublicLandingHref(item.product) ?? item.href
     : item.href;
   return (
     <Link
@@ -798,7 +796,7 @@ export default function AppShell({ children, product = null }: AppShellProps) {
                       }
                     />
                   ) : (
-                    <NavLink item={item} isActive={isSectionActive} onNavigate={onNavigate} currentHostname={browserHostname} />
+                    <NavLink item={item} isActive={isSectionActive} onNavigate={onNavigate} />
                   )}
                   {hasChildren && isExpanded ? (
                     <div className="mt-1.5 ml-[18px] space-y-1.5 border-l border-[var(--glass-border)] pl-3">
@@ -808,7 +806,6 @@ export default function AppShell({ children, product = null }: AppShellProps) {
                           item={child}
                           isActive={pathname === child.href}
                           onNavigate={onNavigate}
-                          currentHostname={browserHostname}
                         />
                       ))}
                     </div>

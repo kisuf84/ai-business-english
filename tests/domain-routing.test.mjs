@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import {
   LANGSLATE_ADMIN_ORIGIN,
   LANGSLATE_PRODUCTS,
@@ -11,6 +12,7 @@ import {
   getProductAuthHref,
   getProductLandingRewritePath,
   getProductNavigationHref,
+  getProductPublicLandingHref,
   getProductShellMode,
 } from "../lib/langslateDomains.mjs";
 import { getOriginalHtmlWorkspace } from "../lib/productWorkspace.mjs";
@@ -149,4 +151,21 @@ test("product navigation uses the destination domain without changing same-produ
   assert.equal(getProductNavigationHref("flow", "/apps/flow", "ai-business-english.vercel.app"), "/apps/flow");
   assert.equal(getAdminNavigationHref("langslateacademy.com"), `${LANGSLATE_ADMIN_ORIGIN}/admin`);
   assert.equal(getAdminNavigationHref("ai-business-english.vercel.app"), "/admin");
+});
+
+test("main-app product entry links target each public custom-domain landing page", () => {
+  assert.equal(getProductPublicLandingHref("corporate"), "https://langslatecorporate.com/");
+  assert.equal(getProductPublicLandingHref("academy"), "https://langslateacademy.com/");
+  assert.equal(getProductPublicLandingHref("flow"), "https://langslateflow.com/");
+  assert.equal(getProductPublicLandingHref("365"), "https://langslate365.com/");
+});
+
+test("main-app sidebar and admin directory use public product landing links", async () => {
+  const shell = await readFile("components/shared/AppShell.tsx", "utf8");
+  const admin = await readFile("app/admin/page.tsx", "utf8");
+  assert.match(shell, /getProductPublicLandingHref\(item\.product\)/);
+  assert.match(admin, /LANGSLATE_PRODUCTS\.corporate\.origin/);
+  assert.match(admin, /LANGSLATE_PRODUCTS\.academy\.origin/);
+  assert.match(admin, /LANGSLATE_PRODUCTS\.flow\.origin/);
+  assert.match(admin, /LANGSLATE_PRODUCTS\["365"\]\.origin/);
 });

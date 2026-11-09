@@ -13,6 +13,11 @@ import {
 import { getProductRuntimeAccess } from "../lib/productRuntimeAccess.mjs";
 import { getOriginalHtmlWorkspace } from "../lib/productWorkspace.mjs";
 import { getProductShellMode } from "../lib/langslateDomains.mjs";
+import {
+  getProductContentDocumentAccess,
+  getProtectedProductContentDocument,
+  injectProductSignOutControl,
+} from "../lib/productContentSecurity.mjs";
 
 const ROOT = path.resolve("private-product-workspaces");
 const corporateCatalog = JSON.parse(await readFile("lib/generated/langslateCorporateCatalog.json", "utf8"));
@@ -118,4 +123,55 @@ test("main host, product isolation, Flow and 365 workspace selections remain int
   assert.deepEqual(getOriginalHtmlWorkspace("365"), { src: "/content/langslate-365/course", title: "Langslate 365" });
   assert.equal(getOriginalHtmlWorkspace("corporate"), null);
   assert.equal(getOriginalHtmlWorkspace("academy"), null);
+});
+
+test("only the Flow app and 365 course documents require protected content access", () => {
+  assert.equal(getProtectedProductContentDocument("langslate-flow", "app"), "flow");
+  assert.equal(getProtectedProductContentDocument("langslate-365", "course"), "365");
+  assert.equal(getProtectedProductContentDocument("langslate-flow", "landing"), null);
+  assert.equal(getProtectedProductContentDocument("langslate-365", "landing"), null);
+  assert.equal(getProtectedProductContentDocument("langslate-365", "some-lesson"), null);
+});
+
+test("Flow and 365 app documents require authentication and the matching product hostname", () => {
+  assert.equal(getProductContentDocumentAccess("langslateflow.com", "flow", false), "unauthenticated");
+  assert.equal(getProductContentDocumentAccess("langslateflow.com", "flow", true), "allow");
+  assert.equal(getProductContentDocumentAccess("langslate365.com", "flow", true), "wrong-host");
+  assert.equal(getProductContentDocumentAccess("langslateflow.com", "365", true), "wrong-host");
+  assert.equal(getProductContentDocumentAccess("langslate365.com", "365", true), "allow");
+  assert.equal(getProductContentDocumentAccess("ai-business-english.vercel.app", "365", false), "unauthenticated");
+  assert.equal(getProductContentDocumentAccess("ai-business-english.vercel.app", "365", true), "allow");
+  assert.equal(getProductContentDocumentAccess("unrecognized.example", "365", true), "wrong-host");
+});
+
+test("the raw content route verifies sessions before serving protected app documents", async () => {
+  const route = await readFile("app/content/[library]/[slug]/route.ts", "utf8");
+  assert.match(route, /getProtectedProductContentDocument\(library, slug\)/);
+  assert.match(route, /createSupabaseServerClient\(\)/);
+  assert.match(route, /supabase\.auth\.getUser\(\)/);
+  assert.match(route, /getProductContentDocumentAccess\(/);
+  assert.match(route, /injectProductSignOutControl\(sourceHtml, protectedProduct\)/);
+});
+
+test("Flow and 365 logout controls are placed inside their existing footers", () => {
+  const flowHtml = injectProductSignOutControl('<html><body><footer class="app-footer">Flow</footer></body></html>', "flow");
+  const dailyHtml = injectProductSignOutControl('<html><body><div class="sb-footer">365</div></body></html>', "365");
+  assert.match(flowHtml, /document\.querySelector\("\.app-footer"\)/);
+  assert.match(dailyHtml, /document\.querySelector\("\.sb-footer"\)/);
+  assert.match(flowHtml, /langslate:sign-out/);
+  assert.match(dailyHtml, /langslate:sign-out/);
+  assert.doesNotMatch(injectProductSignOutControl("<body></body>", "flow"), /position:\s*fixed/i);
+});
+
+test("Corporate and Academy logout actions use their original sidebar and the parent validates the iframe", async () => {
+  for (const product of ["corporate", "academy"]) {
+    const html = await readFile(path.join(ROOT, product, "index.html"), "utf8");
+    assert.match(html, /class="nav-item"[^>]*aria-label="Sign out"/);
+    assert.match(html, /parent\.postMessage\(\{type:'langslate:sign-out'\}/);
+  }
+  const frame = await readFile("components/shared/ProductExperienceFrame.tsx", "utf8");
+  assert.match(frame, /event\.origin !== window\.location\.origin/);
+  assert.match(frame, /event\.source !== iframeRef\.current\?\.contentWindow/);
+  const shellCss = await readFile("app/globals.css", "utf8");
+  assert.doesNotMatch(shellCss, /\.product-signout-control/);
 });

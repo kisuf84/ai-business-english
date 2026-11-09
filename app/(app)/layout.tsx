@@ -1,7 +1,6 @@
 import { headers } from "next/headers";
 import AuthGuard from "../../components/shared/AuthGuard";
 import AppShell from "../../components/shared/AppShell";
-import { ProductSignOutButton } from "../../components/shared/ProductExperienceFrame";
 import { getProductShellMode } from "../../lib/langslateDomains.mjs";
 
 export default async function AppLayout({
@@ -15,10 +14,7 @@ export default async function AppLayout({
   return (
     <AuthGuard>
       {getProductShellMode(hostname) === "standalone" ? (
-        <div className="product-domain-experience">
-          {children}
-          <ProductSignOutButton />
-        </div>
+        <div className="product-domain-experience">{children}</div>
       ) : (
         <AppShell product={null}>{children}</AppShell>
       )}

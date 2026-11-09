@@ -20,4 +20,5 @@ export function getProductLearningPath(product: LangslateProduct): string | null
 export function getProductAuthHref(product: LangslateProduct): string;
 export function buildAuthCallbackUrl(origin: string, nextPath: string): string;
 export function getProductNavigationHref(product: LangslateProduct, pathname: string, currentHostname: string | null | undefined): string;
+export function getProductPublicLandingHref(product: LangslateProduct): string | null;
 export function getAdminNavigationHref(currentHostname: string | null | undefined): string;
