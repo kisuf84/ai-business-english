@@ -21,6 +21,7 @@ import { getLangslateFlowFilePath } from "../../../../lib/langslateFlow.files";
 import {
   getProductContentDocumentAccess,
   getProtectedProductContentDocument,
+  injectProduct365LandingActions,
   injectProductSignOutControl,
 } from "../../../../lib/productContentSecurity.mjs";
 
@@ -125,7 +126,11 @@ export async function GET(request: Request, { params }: ContentRouteProps) {
   }
 
   const sourceHtml = (await readImageOptimizedHtml(library, slug)) ?? (await fs.readFile(filePath, "utf-8"));
-  const html = protectedProduct ? injectProductSignOutControl(sourceHtml, protectedProduct) : sourceHtml;
+  const html = protectedProduct
+    ? injectProductSignOutControl(sourceHtml, protectedProduct)
+    : library === "langslate-365" && slug === "landing"
+      ? injectProduct365LandingActions(sourceHtml)
+      : sourceHtml;
 
   return new NextResponse(html, {
     status: 200,

@@ -16,6 +16,7 @@ import { getProductShellMode } from "../lib/langslateDomains.mjs";
 import {
   getProductContentDocumentAccess,
   getProtectedProductContentDocument,
+  injectProduct365LandingActions,
   injectProductSignOutControl,
 } from "../lib/productContentSecurity.mjs";
 
@@ -172,19 +173,24 @@ test("updated Flow workspace routes auth and Supabase logout through the host in
 
 test("new 365 landing wires real auth and disables simulated demo and checkout actions", async () => {
   const landing = await readFile("content-library/langslate-365/landing.html", "utf8");
-  const frame = await readFile("components/products/PublicProductLandingFrame.tsx", "utf8");
+  const integrated = injectProduct365LandingActions(landing);
   assert.match(landing, /Six levels\. Sixty-plus lessons each/);
   assert.doesNotMatch(landing, /Langslate_265_P\.html/);
   assert.match(landing, /\/auth\?next=%2Fapps%2F365%2Fcourse/);
   for (const action of ["handleLogin", "handleSignup", "handleGoogleAuth", "handlePlanSelect", "handleDemoAccess"]) {
-    assert.ok(frame.includes(`frameGlobals.${action}`), `${action} is integrated`);
+    assert.ok(integrated.includes(`window.${action}=`), `${action} is integrated in the server-served page`);
   }
-  assert.match(frame, /This option is not available yet/);
+  assert.match(integrated, /function unavailable\(\)/);
+  assert.match(integrated, /modal==='loginModal'\|\|modal==='signupModal'/);
 
   const course = await readFile("content-library/langslate-365/course.html", "utf8");
   const data = course.match(/const LESSONS_DATA = (\[[\s\S]*?\]);/);
   assert.ok(data, "the existing protected course remains present");
   assert.match(course, /id="lessonContainer"|LESSONS_DATA/);
+
+  const route = await readFile("app/content/[library]/[slug]/route.ts", "utf8");
+  assert.match(route, /library === "langslate-365" && slug === "landing"/);
+  assert.match(route, /injectProduct365LandingActions\(sourceHtml\)/);
 });
 
 test("365 course logout remains inside its original footer", () => {

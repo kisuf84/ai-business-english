@@ -8,3 +8,4 @@ export function getProductContentDocumentAccess(
   authenticated: boolean,
 ): ProductContentAccess;
 export function injectProductSignOutControl(html: string, product: ProductContentApp): string;
+export function injectProduct365LandingActions(html: string): string;
