@@ -22,9 +22,41 @@ export default function PublicProductLandingFrame({
     const authUrl = getProductAuthHref(product);
     const goToAuth = () => frameWindow.top?.location.assign(authUrl);
     const frameGlobals = frameWindow as unknown as Record<string, unknown>;
+    const unavailable = () => {
+      const showToast = frameGlobals.showToast;
+      if (typeof showToast === "function") {
+        (showToast as (message: string, icon?: string) => void)(
+          "This option is not available yet.",
+          "ℹ️"
+        );
+      }
+    };
 
     if (product === "flow") frameGlobals.enterPractice = goToAuth;
-    if (product === "365") frameGlobals.enterCourse = goToAuth;
+    if (product === "365") {
+      frameGlobals.enterCourse = goToAuth;
+      frameGlobals.handleLogin = goToAuth;
+      frameGlobals.handleSignup = goToAuth;
+      frameGlobals.handleGoogleAuth = goToAuth;
+      frameGlobals.handleDemoAccess = unavailable;
+      frameGlobals.handlePlanSelect = unavailable;
+      frameGlobals.useDemoCode = unavailable;
+
+      const openModal = frameGlobals.openModal;
+      if (typeof openModal === "function") {
+        frameGlobals.openModal = (modal: unknown, ...args: unknown[]) => {
+          if (modal === "loginModal" || modal === "signupModal") {
+            goToAuth();
+            return;
+          }
+          if (modal === "demoModal") {
+            unavailable();
+            return;
+          }
+          (openModal as (...values: unknown[]) => void)(modal, ...args);
+        };
+      }
+    }
     if (product === "academy") {
       frameGlobals.handleLogin = goToAuth;
       frameGlobals.handleSignup = goToAuth;

@@ -153,14 +153,45 @@ test("the raw content route verifies sessions before serving protected app docum
   assert.match(route, /injectProductSignOutControl\(sourceHtml, protectedProduct\)/);
 });
 
-test("Flow and 365 logout controls are placed inside their existing footers", () => {
-  const flowHtml = injectProductSignOutControl('<html><body><footer class="app-footer">Flow</footer></body></html>', "flow");
-  const dailyHtml = injectProductSignOutControl('<html><body><div class="sb-footer">365</div></body></html>', "365");
-  assert.match(flowHtml, /document\.querySelector\("\.app-footer"\)/);
-  assert.match(dailyHtml, /document\.querySelector\("\.sb-footer"\)/);
+test("updated Flow workspace routes auth and Supabase logout through the host integration", async () => {
+  const source = await readFile("content-library/langslate-flow/app.html", "utf8");
+  const flowHtml = injectProductSignOutControl(source, "flow");
+  assert.match(flowHtml, /Shadow Flow/);
+  assert.match(flowHtml, /Free Flow/);
+  assert.match(flowHtml, /history\.replaceState\(history\.state,'',location\.pathname\+location\.search\+'#\/app'\)/);
+  assert.match(flowHtml, /action==='authGoogle'/);
+  assert.match(flowHtml, /action==='logout'\|\|control\.id==='logoutBtn'/);
   assert.match(flowHtml, /langslate:sign-out/);
+  assert.doesNotMatch(flowHtml, /id="langslate-product-signout"/);
+  assert.match(flowHtml, /langslate-flow-session/);
+
+  const route = await readFile("app/content/[library]/[slug]/route.ts", "utf8");
+  assert.match(route, /getProductContentDocumentAccess\(/);
+  assert.match(route, /injectProductSignOutControl\(sourceHtml, protectedProduct\)/);
+});
+
+test("new 365 landing wires real auth and disables simulated demo and checkout actions", async () => {
+  const landing = await readFile("content-library/langslate-365/landing.html", "utf8");
+  const frame = await readFile("components/products/PublicProductLandingFrame.tsx", "utf8");
+  assert.match(landing, /Six levels\. Sixty-plus lessons each/);
+  assert.doesNotMatch(landing, /Langslate_265_P\.html/);
+  assert.match(landing, /\/auth\?next=%2Fapps%2F365%2Fcourse/);
+  for (const action of ["handleLogin", "handleSignup", "handleGoogleAuth", "handlePlanSelect", "handleDemoAccess"]) {
+    assert.ok(frame.includes(`frameGlobals.${action}`), `${action} is integrated`);
+  }
+  assert.match(frame, /This option is not available yet/);
+
+  const course = await readFile("content-library/langslate-365/course.html", "utf8");
+  const data = course.match(/const LESSONS_DATA = (\[[\s\S]*?\]);/);
+  assert.ok(data, "the existing protected course remains present");
+  assert.match(course, /id="lessonContainer"|LESSONS_DATA/);
+});
+
+test("365 course logout remains inside its original footer", () => {
+  const dailyHtml = injectProductSignOutControl('<html><body><div class="sb-footer">365</div></body></html>', "365");
+  assert.match(dailyHtml, /document\.querySelector\("\.sb-footer"\)/);
   assert.match(dailyHtml, /langslate:sign-out/);
-  assert.doesNotMatch(injectProductSignOutControl("<body></body>", "flow"), /position:\s*fixed/i);
+  assert.match(dailyHtml, /margin-top:12px/);
 });
 
 test("Corporate and Academy logout actions use their original sidebar and the parent validates the iframe", async () => {

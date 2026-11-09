@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1">
 <title>Langslate Flow — AI Voice Tutor</title>
+<meta name="theme-color" content="#070B18">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id=%22g%22%20x1=%220%22%20y1=%220%22%20x2=%221%22%20y2=%221%22%3E%3Cstop%20offset=%220%22%20stop-color=%22%234F8CFF%22/%3E%3Cstop%20offset=%221%22%20stop-color=%22%23FF7A2F%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle%20cx=%2232%22%20cy=%2232%22%20r=%2230%22%20fill=%22url%28%23g%29%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2232%22%20r=%2221%22%20fill=%22%23070B18%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2232%22%20r=%2212%22%20fill=%22url%28%23g%29%22/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id=%22g%22%20x1=%220%22%20y1=%220%22%20x2=%221%22%20y2=%221%22%3E%3Cstop%20offset=%220%22%20stop-color=%22%234F8CFF%22/%3E%3Cstop%20offset=%221%22%20stop-color=%22%23FF7A2F%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle%20cx=%2232%22%20cy=%2232%22%20r=%2230%22%20fill=%22url%28%23g%29%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2232%22%20r=%2221%22%20fill=%22%23070B18%22/%3E%3Ccircle%20cx=%2232%22%20cy=%2232%22%20r=%2212%22%20fill=%22url%28%23g%29%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -227,6 +230,7 @@ footer.app-footer{ padding:34px 24px 44px; text-align:center; color:var(--text-3
 .play-btn:active{ transform:scale(.94); }
 .play-btn svg{ width:22px; height:22px; }
 .play-btn.playing svg{ display:none; }
+#hearBtn.playing{ color:var(--orange); border-color:var(--orange); }
 .play-btn .eq{ display:none; gap:3px; align-items:flex-end; height:20px; }
 .play-btn.playing .eq{ display:flex; }
 .play-btn .eq i{ width:3px; background:#fff; border-radius:2px; animation:eqbar 0.8s ease-in-out infinite; }
@@ -320,7 +324,7 @@ footer.app-footer{ padding:34px 24px 44px; text-align:center; color:var(--text-3
 .banner b{ color:var(--text-1); }
 
 /* toast */
-#toast-host{ position:fixed; bottom:22px; left:50%; transform:translateX(-50%); z-index:200; display:flex; flex-direction:column; gap:8px; align-items:center; width:100%; padding:0 16px; pointer-events:none; }
+#toast-host{ position:fixed; bottom:22px; left:0; right:0; z-index:200; display:flex; flex-direction:column; gap:8px; align-items:center; padding:0 16px; pointer-events:none; }
 .toast{ background:var(--text-1); color:var(--bg); font-weight:700; font-size:13.5px; padding:12px 20px; border-radius:100px; box-shadow:var(--shadow-lg); animation:toastIn .3s ease, toastOut .3s ease 2.4s forwards; max-width:340px; text-align:center; }
 @keyframes toastIn{ from{ opacity:0; transform:translateY(10px);} to{ opacity:1; transform:translateY(0);} }
 @keyframes toastOut{ to{ opacity:0; transform:translateY(-6px);} }
@@ -367,22 +371,233 @@ footer.app-footer{ padding:34px 24px 44px; text-align:center; color:var(--text-3
 @media (max-width:380px){
   .cat-card p{ display:none; }
 }
+
+/* ===== Language switcher ===== */
+.lang-wrap{ position:relative; }
+.lang-btn{ display:flex; align-items:center; gap:7px; height:38px; padding:0 10px 0 9px; border-radius:100px; border:1px solid var(--border); background:var(--surface); color:var(--text-1); font-weight:800; font-size:12.5px; letter-spacing:.04em; transition:all .2s ease; }
+.lang-btn:hover{ background:var(--surface-hover); transform:translateY(-1px); }
+.lang-btn .chev{ width:12px; height:12px; color:var(--text-3); transition:transform .2s ease; }
+.lang-btn[aria-expanded="true"] .chev{ transform:rotate(180deg); }
+.flag{ display:inline-flex; width:22px; height:15px; border-radius:3px; overflow:hidden; flex:none; box-shadow:0 0 0 1px rgba(128,140,180,.35), 0 1px 3px rgba(0,0,0,.3); }
+.flag svg{ width:100%; height:100%; display:block; }
+.lang-menu{ position:absolute; right:0; top:calc(100% + 10px); min-width:200px; padding:6px; border-radius:18px; background:var(--surface); border:1px solid var(--border-strong); box-shadow:var(--shadow-lg);
+  opacity:0; transform:translateY(-6px) scale(.97); transform-origin:top right; pointer-events:none; visibility:hidden; transition:opacity .16s ease, transform .16s ease, visibility .16s; z-index:70; }
+.lang-menu.open{ opacity:1; transform:none; pointer-events:auto; visibility:visible; }
+.lang-opt{ display:flex; align-items:center; gap:12px; width:100%; padding:11px 12px; border:none; background:none; border-radius:12px; color:var(--text-2); font-weight:700; font-size:14.5px; text-align:left; }
+.lang-opt:hover{ background:var(--surface-hover); color:var(--text-1); }
+.lang-opt.active{ color:var(--text-1); background:color-mix(in srgb, var(--blue) 14%, transparent); }
+.lang-opt .flag{ width:26px; height:18px; }
+.lang-opt .tick{ margin-left:auto; width:15px; height:15px; color:var(--blue); opacity:0; }
+.lang-opt.active .tick{ opacity:1; }
+.link-btn{ background:none; border:none; color:var(--text-2); font-size:12.5px; font-weight:700; text-decoration:underline; text-underline-offset:3px; margin-top:10px; padding:6px 10px; }
+.link-btn:hover{ color:var(--text-1); }
+.demo-btn{ display:none; padding:9px 18px; font-size:12.5px; letter-spacing:.1em; }
+.view-landing .demo-btn{ display:inline-flex; }
+.view-landing .streak-pill, .view-landing .to-landing{ display:none; }
+
+/* ===== Landing page ===== */
+.land-hero{ position:relative; max-width:1080px; margin:0 auto; padding:70px 24px 20px; text-align:center; overflow-x:clip; }
+.land-aurora{ position:absolute; inset:-40px 0 auto 0; height:520px; pointer-events:none; z-index:-1; overflow:hidden; }
+.land-aurora i{ position:absolute; border-radius:50%; filter:blur(90px); opacity:.35; }
+.land-aurora i:nth-child(1){ width:420px; height:420px; background:var(--blue); left:6%; top:-60px; animation:floaty 14s ease-in-out infinite; }
+.land-aurora i:nth-child(2){ width:360px; height:360px; background:var(--orange); right:4%; top:30px; opacity:.26; animation:floaty 17s ease-in-out infinite reverse; }
+@keyframes floaty{ 0%,100%{ transform:translate(0,0);} 50%{ transform:translate(24px,18px);} }
+.land-hero h1{ font-size:clamp(44px,9vw,92px); line-height:1.01; max-width:920px; margin:0 auto 22px; letter-spacing:-.025em; font-weight:500; }
+.land-hero h1 em{ font-style:italic; background:var(--grad-brand); -webkit-background-clip:text; background-clip:text; color:transparent; padding-right:.06em; }
+.land-hero .lead{ font-size:clamp(15px,2vw,19px); color:var(--text-2); max-width:660px; margin:0 auto; line-height:1.65; }
+.land-cta-row{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:34px 0 14px; }
+.demo-cta{ position:relative; overflow:hidden; padding:18px 34px; font-size:16px; letter-spacing:.02em; }
+.demo-cta::after{ content:''; position:absolute; top:0; left:-60%; width:40%; height:100%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent); transform:skewX(-18deg); animation:shine 3.8s ease-in-out infinite; }
+@keyframes shine{ 0%,55%{ left:-60%; } 100%{ left:140%; } }
+.demo-cta .live-dot{ width:8px; height:8px; border-radius:50%; background:#fff; box-shadow:0 0 0 4px rgba(255,255,255,.28); animation:pulseDot 1.8s ease-in-out infinite; }
+@keyframes pulseDot{ 0%,100%{ box-shadow:0 0 0 3px rgba(255,255,255,.28);} 50%{ box-shadow:0 0 0 7px rgba(255,255,255,.08);} }
+.land-note{ font-size:12.5px; color:var(--text-3); font-weight:600; }
+.land-visual{ position:relative; margin:50px auto 0; max-width:540px; text-align:left; }
+.land-visual::before{ content:''; position:absolute; inset:-18px; border-radius:40px; background:var(--grad-brand); opacity:.22; filter:blur(36px); z-index:-1; }
+.mock-card{ border-radius:28px; padding:22px 22px 24px; background:color-mix(in srgb, var(--surface) 92%, transparent); border:1px solid var(--border-strong); box-shadow:var(--shadow-lg); backdrop-filter:blur(10px); }
+.mock-top{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.mock-top .brand-mark{ width:30px; height:30px; animation-duration:9s; }
+.mock-top b{ font-family:'Fraunces',serif; font-size:17px; font-weight:600; }
+.mock-top .cat-tag{ margin-left:auto; }
+.mock-sentence{ font-family:'Fraunces',serif; font-style:italic; font-size:clamp(17px,3.2vw,21px); line-height:1.5; margin-bottom:16px; }
+.mock-wave{ display:flex; align-items:center; justify-content:center; gap:4px; height:34px; margin-bottom:16px; }
+.mock-wave i{ display:block; width:4px; border-radius:3px; background:var(--grad-brand); animation:wave 1.1s ease-in-out infinite; }
+@keyframes wave{ 0%,100%{ height:6px;} 50%{ height:30px;} }
+.mock-card .ring-grid{ margin-bottom:0; gap:8px; }
+.land-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:1080px; margin:56px auto 0; padding:0 24px; }
+.land-stat{ padding:22px 14px; border-radius:20px; background:var(--surface); border:1px solid var(--border); text-align:center; }
+.land-stat b{ display:block; font-family:'Fraunces',serif; font-size:clamp(26px,4vw,38px); font-weight:600; line-height:1.05; background:var(--grad-brand); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:8px; }
+.land-stat span{ font-size:10.5px; letter-spacing:.1em; font-weight:700; color:var(--text-3); font-family:'IBM Plex Mono',monospace; }
+.land-section{ max-width:1080px; margin:0 auto; padding:84px 24px 0; scroll-margin-top:70px; }
+.land-section > h2{ font-size:clamp(28px,4.6vw,44px); text-align:center; margin-bottom:10px; }
+.land-section > .sub{ text-align:center; color:var(--text-2); font-size:15px; margin:0 auto 38px; max-width:560px; }
+.land-section .mode-grid{ margin:0; }
+.land-section .mode-card{ cursor:default; }
+.land-section .mode-card:hover{ transform:none; }
+.bullets{ list-style:none; display:grid; gap:10px; margin:0; padding:0; }
+.bullets li{ display:flex; align-items:center; gap:10px; font-size:13.5px; font-weight:600; color:var(--text-1); }
+.bullets li svg{ width:17px; height:17px; flex:none; color:var(--success); }
+.feat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.feat-card{ padding:24px 20px; border-radius:22px; background:var(--surface); border:1px solid var(--border); transition:transform .2s ease,border-color .2s ease; }
+.feat-card:hover{ transform:translateY(-3px); border-color:var(--border-strong); }
+.feat-card .fi{ width:42px; height:42px; border-radius:13px; display:flex; align-items:center; justify-content:center; margin-bottom:16px; background:color-mix(in srgb, var(--blue) 16%, transparent); color:var(--blue); }
+.feat-card:nth-child(even) .fi{ background:color-mix(in srgb, var(--orange) 16%, transparent); color:var(--orange); }
+.feat-card .fi svg{ width:21px; height:21px; }
+.feat-card h4{ font-family:'Manrope',sans-serif; font-weight:800; font-size:15.5px; margin-bottom:6px; }
+.feat-card p{ font-size:13px; color:var(--text-2); line-height:1.55; }
+.land-section .how-grid{ margin:0; }
+.land-section .cat-card{ cursor:default; }
+.land-section .cat-card:hover{ transform:none; border-color:var(--border); }
+.lang-strip{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; max-width:760px; margin:0 auto; }
+.lang-tile{ display:flex; flex-direction:column; align-items:center; gap:12px; padding:20px 12px; border-radius:20px; background:var(--surface); border:2px solid var(--border); color:var(--text-1); font-weight:800; font-size:14.5px; transition:all .18s ease; }
+.lang-tile .flag{ width:46px; height:31px; border-radius:5px; }
+.lang-tile:hover{ border-color:var(--border-strong); transform:translateY(-2px); }
+.lang-tile.active{ border-color:var(--blue); background:color-mix(in srgb, var(--blue) 10%, var(--surface)); }
+.land-final{ margin-top:90px; }
+.final-card{ position:relative; overflow:hidden; text-align:center; padding:60px 28px; border-radius:34px; background:var(--surface); border:1px solid var(--border-strong); box-shadow:var(--shadow-lg); }
+.final-card::before{ content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 90% at 15% 0%, color-mix(in srgb, var(--blue) 26%, transparent), transparent 70%), radial-gradient(ellipse 60% 90% at 90% 110%, color-mix(in srgb, var(--orange) 24%, transparent), transparent 70%); pointer-events:none; }
+.final-card > *{ position:relative; }
+.final-card h2{ font-size:clamp(28px,5vw,46px); margin-bottom:12px; }
+.final-card p{ color:var(--text-2); font-size:15.5px; margin-bottom:28px; }
+@media (max-width: 860px){
+  .land-stats{ grid-template-columns:1fr 1fr; }
+  .feat-grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width: 600px){
+  .land-hero{ padding:44px 16px 10px; }
+  .land-stats,.land-section{ padding-left:16px; padding-right:16px; }
+  .land-section{ padding-top:64px; }
+  .feat-grid{ grid-template-columns:1fr; }
+  .lang-strip{ grid-template-columns:1fr 1fr; }
+  .land-cta-row .btn{ width:100%; }
+  .final-card{ padding:44px 20px; border-radius:26px; }
+  .lang-code{ display:none; }
+  .lang-btn{ padding:0 9px; gap:6px; }
+  .demo-btn{ padding:9px 14px; }
+  .topbar-actions{ gap:6px; }
+  .mock-card{ padding:18px 16px 20px; }
+}
+@media (max-width: 600px){
+  .hero-badge{ text-align:center; line-height:1.4; }
+}
+
+
+/* ===== Pricing ===== */
+.price-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; align-items:stretch; padding-top:14px; }
+.price-card{ position:relative; display:flex; flex-direction:column; padding:34px 30px 30px; border-radius:26px; background:var(--surface); border:1px solid var(--border-strong); box-shadow:var(--shadow-sm); transition:transform .22s ease, box-shadow .22s ease; }
+.price-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); }
+.price-card.popular{ border-color:var(--blue); box-shadow:0 0 0 1px var(--blue), 0 24px 60px -20px color-mix(in srgb, var(--blue) 45%, transparent); }
+.price-card.best{ border-color:var(--orange); }
+.price-badge{ position:absolute; top:-13px; right:22px; padding:6px 14px; border-radius:100px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:700; letter-spacing:.1em; color:#fff; background:var(--blue); }
+.price-card.best .price-badge{ background:var(--orange); color:#1d0e03; }
+.price-name{ font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--text-3); margin-bottom:18px; }
+.price-amount{ font-family:'Fraunces',serif; font-weight:600; font-size:58px; line-height:1; letter-spacing:-.02em; display:flex; align-items:flex-start; gap:2px; }
+.price-amount sup{ font-size:26px; margin-top:6px; }
+.price-for{ margin-top:12px; color:var(--text-2); font-size:14.5px; }
+.price-per{ margin-top:6px; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; color:var(--blue); }
+.price-card.best .price-per{ color:var(--orange); }
+.price-card hr{ border:none; border-top:1px solid var(--border); margin:24px 0 22px; }
+.price-feats{ list-style:none; display:grid; gap:14px; margin:0 0 28px; padding:0; flex:1; align-content:start; }
+.price-feats li{ display:flex; gap:12px; font-size:14px; line-height:1.4; color:var(--text-1); }
+.price-feats li svg{ width:16px; height:16px; flex:none; margin-top:2px; color:var(--success); }
+.btn-orange{ background:var(--orange); color:#1d0e03; box-shadow:0 10px 28px -10px color-mix(in srgb, var(--orange) 70%, transparent); }
+.btn-orange:hover{ transform:translateY(-1px); filter:brightness(1.06); }
+/* ===== Auth modal ===== */
+.auth-overlay{ position:fixed; inset:0; z-index:120; display:flex; align-items:center; justify-content:center; padding:16px; background:var(--overlay-veil); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); animation:fadeIn .2s ease; overflow-y:auto; }
+@keyframes fadeIn{ from{ opacity:0; } to{ opacity:1; } }
+.auth-card{ position:relative; width:100%; max-width:460px; margin:auto; padding:30px 28px 24px; border-radius:30px; background:var(--surface); border:1px solid var(--border-strong); box-shadow:var(--shadow-lg); animation:authIn .3s cubic-bezier(.16,1,.3,1); }
+@keyframes authIn{ from{ opacity:0; transform:translateY(18px) scale(.98);} to{ opacity:1; transform:none;} }
+.auth-card::before{ content:''; position:absolute; inset:0; border-radius:30px; pointer-events:none; background:radial-gradient(ellipse 70% 40% at 0% 0%, color-mix(in srgb, var(--blue) 18%, transparent), transparent 70%), radial-gradient(ellipse 60% 40% at 100% 100%, color-mix(in srgb, var(--orange) 14%, transparent), transparent 70%); }
+.auth-card > *{ position:relative; }
+.auth-close{ position:absolute !important; top:18px; right:18px; z-index:5; cursor:pointer; }
+.auth-card h3{ font-size:30px; margin-bottom:6px; padding-right:48px; }
+.auth-sub{ color:var(--text-2); font-size:14.5px; margin-bottom:20px; }
+.auth-tabs{ display:grid; grid-template-columns:1fr 1fr; gap:4px; padding:4px; border-radius:16px; background:var(--bg-soft); border:1px solid var(--border); margin-bottom:16px; }
+.auth-tab{ border:none; background:none; padding:12px; border-radius:12px; font-weight:800; font-size:14px; color:var(--text-2); transition:all .18s ease; }
+.auth-tab.active{ background:var(--grad-brand); color:#fff; box-shadow:0 8px 20px -8px color-mix(in srgb, var(--orange) 60%, var(--blue)); }
+.google-btn{ display:flex; align-items:center; justify-content:center; gap:12px; width:100%; padding:15px; border-radius:16px; border:1px solid var(--border-strong); background:#fff; color:#1f2430; font-weight:800; font-size:15px; transition:transform .15s ease, box-shadow .15s ease; }
+.google-btn:hover{ transform:translateY(-1px); box-shadow:0 10px 24px -10px rgba(0,0,0,.4); }
+.google-btn svg{ width:20px; height:20px; }
+.auth-or{ display:flex; align-items:center; gap:14px; margin:18px 0 14px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.16em; color:var(--text-3); font-weight:600; }
+.auth-or::before,.auth-or::after{ content:''; flex:1; height:1px; background:var(--border); }
+.auth-field{ margin-bottom:14px; }
+.auth-field label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.14em; font-weight:600; color:var(--text-3); margin-bottom:7px; }
+.auth-input{ position:relative; }
+.auth-input input{ width:100%; padding:15px 16px; border-radius:14px; border:1px solid var(--border-strong); background:var(--bg-soft); color:var(--text-1); font-size:15px; outline:none; transition:border-color .15s ease, box-shadow .15s ease; }
+.auth-input input::placeholder{ color:var(--text-3); }
+.auth-input input:focus{ border-color:var(--orange); box-shadow:0 0 0 3px color-mix(in srgb, var(--orange) 22%, transparent); }
+.auth-input .pw-toggle{ position:absolute; right:12px; top:50%; transform:translateY(-50%); border:none; background:none; color:var(--text-2); font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:700; letter-spacing:.12em; padding:6px; }
+.auth-input.has-toggle input{ padding-right:76px; }
+.plan-pick{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.plan-opt{ padding:14px 6px; border-radius:14px; border:1.5px solid var(--border-strong); background:var(--bg-soft); color:var(--text-2); text-align:center; transition:all .16s ease; }
+.plan-opt b{ display:block; font-family:'Fraunces',serif; font-size:22px; color:var(--text-1); margin-bottom:3px; }
+.plan-opt span{ font-size:12.5px; }
+.plan-opt:hover{ border-color:var(--text-3); }
+.plan-opt.active{ border-color:var(--orange); background:color-mix(in srgb, var(--orange) 12%, var(--bg-soft)); }
+.auth-error{ display:none; margin:2px 0 14px; padding:12px 14px; border-radius:12px; font-size:13px; font-weight:600; color:var(--danger); background:color-mix(in srgb, var(--danger) 10%, transparent); border:1px solid color-mix(in srgb, var(--danger) 35%, transparent); }
+.auth-error.show{ display:block; }
+.auth-submit{ width:100%; margin-top:6px; padding:16px; font-size:16px; }
+.auth-switch{ text-align:center; margin-top:16px; font-size:13.5px; color:var(--text-2); }
+.auth-switch button{ background:none; border:none; color:var(--orange); font-weight:800; font-size:13.5px; text-decoration:underline; text-underline-offset:3px; padding:0; }
+.auth-note{ text-align:center; margin-top:12px; font-size:11.5px; color:var(--text-3); line-height:1.5; }
+.login-btn{ display:none; padding:9px 16px; font-size:13px; gap:7px; }
+.login-btn svg{ width:16px; height:16px; }
+.view-landing .login-btn{ display:inline-flex; }
+.has-user .demo-btn{ display:none !important; }
+.logout-btn{ display:flex; }
+.view-landing:not(.has-user) .logout-btn{ display:none; }
+.logout-btn:hover{ color:var(--danger); border-color:color-mix(in srgb, var(--danger) 50%, transparent); }
+@media (max-width: 860px){
+  .price-grid{ grid-template-columns:1fr; max-width:460px; margin:0 auto; gap:30px; }
+}
+@media (max-width: 600px){
+  .login-btn{ width:38px; height:38px; padding:0; border-radius:50%; }
+  .login-text{ display:none; }
+  .price-card{ padding:30px 22px 26px; }
+  .auth-card{ padding:26px 20px 20px; border-radius:26px; }
+  .auth-card h3{ font-size:26px; }
+  .topbar-actions{ gap:5px; }
+}
+@media (max-width: 440px){
+  .topbar-inner{ gap:6px; }
+  .brand{ gap:7px; min-width:0; }
+  .brand-mark{ width:30px; height:30px; }
+  .brand-word{ font-size:15px; white-space:nowrap; }
+  .topbar-actions{ gap:4px; }
+  .topbar-actions .icon-btn, .login-btn{ width:34px; height:34px; }
+  .demo-btn{ padding:8px 11px; font-size:11px; letter-spacing:.06em; }
+  .lang-btn{ height:34px; padding:0 8px; gap:4px; }
+  .lang-btn .chev{ display:none; }
+}
+@media (max-width: 345px){
+  .view-landing .brand-word{ display:none; }
+}
 </style>
 </head>
 <body>
 <div id="app">
   <header class="topbar">
     <div class="topbar-inner">
-      <button class="brand" id="brandHome" aria-label="Langslate Flow home">
+      <button class="brand" id="brandHome" aria-label="Langslate Flow home" data-i18n-aria="brandAria">
         <span class="brand-mark"></span>
         <span class="brand-word">Langslate <b>Flow</b></span>
       </button>
       <div class="topbar-actions">
-        <div class="streak-pill" id="streakPill" title="Your practice streak">
+        <button class="btn btn-secondary login-btn" id="loginTop" data-act="loginTop" aria-label="Log in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg><span class="login-text" id="loginTopText">Log in</span></button>
+        <button class="btn btn-primary demo-btn" id="demoTop" data-act="enterDemo" data-i18n="demo">DEMO</button>
+        <div class="streak-pill" id="streakPill" title="Your practice streak" data-i18n-title="streakTitle">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 3-2 4-2 7a3 3 0 006 0c1.5 1.5 2 3.5 2 5a6 6 0 11-12 0c0-4 3-6 4-8 1-1.5 1.5-3 2-4z"/></svg>
-          <span id="streakNum">0</span> <span class="streak-text">day streak</span>
+          <span id="streakNum">0</span> <span class="streak-text" data-i18n="dayStreak">day streak</span>
         </div>
-        <button class="icon-btn" id="themeToggle" aria-label="Toggle light and dark mode"></button>
+        <div class="lang-wrap">
+          <button class="lang-btn" id="langBtn" data-act="toggleLang" aria-haspopup="true" aria-expanded="false" aria-label="Change language" data-i18n-aria="langAria">
+            <span id="langBtnFlag"></span><span class="lang-code" id="langBtnCode">EN</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="lang-menu" id="langMenu" role="menu"></div>
+        </div>
+        <button class="icon-btn" id="themeToggle" aria-label="Toggle light and dark mode" data-i18n-aria="themeAria"></button>
+        <button class="icon-btn logout-btn" id="logoutBtn" data-act="logout" aria-label="Log out" title="Log out" data-i18n-aria="auth_logout" data-i18n-title="auth_logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></button>
       </div>
     </div>
   </header>
@@ -392,13 +607,15 @@ footer.app-footer{ padding:34px 24px 44px; text-align:center; color:var(--text-3
   </main>
 
   <footer class="app-footer">
-    Langslate Flow — practice speaking, privately. All voice analysis runs on your device; nothing is uploaded.
+    <span data-i18n="footerLine">Langslate Flow — practice speaking, privately. All voice analysis runs on your device; nothing is uploaded.</span>
+    <div><button class="link-btn to-landing" data-act="goLanding" data-i18n="toLanding">About Langslate Flow</button></div>
     <div class="footer-credit">
       <img src="data:image/jpeg;base64,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" alt="Brice Gadou" loading="lazy" />
-      <span>Crafted by Brice Gadou, Business English Expert &amp; Vibe Coder</span>
+      <span data-i18n="credit">Crafted by Brice Gadou, Business English Expert &amp; Vibe Coder</span>
     </div>
   </footer>
 </div>
+<div id="authRoot"></div>
 <div id="toast-host"></div>
 
 <script>
@@ -506,7 +723,15 @@ const SOCIAL_SENTENCES = [
   "I can't believe how {weather} it's been this week.",
   "Do you want to talk about {topic} over {food}?",
   "It was so nice bumping into you at {venue_social}.",
-  "I'm so grateful for friends like you."
+  "I'm so grateful for friends like you.",
+  "{name} told me {topic} has been {adjective} lately.",
+  "Would you like to join us for {food} at {venue_social} {time_phrase}?",
+  "I'm planning to visit {city} {time_phrase} — any tips?",
+  "Thanks for inviting me to {event}, {name}, I had a wonderful time.",
+  "Do you mind if we talk about {topic} {time_phrase}?",
+  "I'd love to try the {food} that {name} keeps raving about.",
+  "It looks {weather} outside, so maybe we could walk to {venue_social}.",
+  "I got {number} messages from {name} about {event} today."
 ];
 const SOCIAL_SCENARIOS = [
   {t:"Catching up with {name}", c:"You bump into {name}, an old friend, near {venue_social} in {city}. You haven't spoken since {event}.", p:"Greet {name}, explain briefly what you've been up to, and suggest meeting up properly {time_phrase}.", s:"Oh my gosh, {name}! I can't believe it's you — it's been forever! I've been keeping busy with work, but I'd love to catch up properly. Are you free to grab {food} {time_phrase}?", v:["catch up","been forever","keeping busy","free"]},
@@ -528,7 +753,11 @@ const SOCIAL_SCENARIOS = [
   {t:"Talking about hobbies with {name}", c:"You and {name} are getting to know each other.", p:"Describe a hobby you enjoy and ask about theirs.", s:"In my free time I've always loved {topic} — how about you, what do you enjoy doing?", v:["in my free time","I've always loved","how did you get into"]},
   {t:"Discussing family traditions during {event}", c:"You and {name} are talking about how you each celebrate {event}.", p:"Describe one family tradition and ask about {name}'s.", s:"Growing up we always did something small for {event} — does your family have any traditions like that?", v:["growing up we always","it's a tradition","that's such a nice idea"]},
   {t:"Asking a roommate for help", c:"You want to ask {name}, your roommate, for help with something around the house.", p:"Politely ask {name} for a favor and thank them in advance.", s:"Would you mind giving me a hand with something later? I'd really appreciate it.", v:["would you mind","I'd really appreciate it","thanks so much"]},
-  {t:"Chatting with the barista at {venue_social}", c:"You're a regular at {venue_social} in {city} and the staff know you.", p:"Make friendly small talk while ordering your usual {food}.", s:"Hi again! I'll have the usual, please — how's your day going so far?", v:["the usual","how's your day going","have a good one"]}
+  {t:"Chatting with the barista at {venue_social}", c:"You're a regular at {venue_social} in {city} and the staff know you.", p:"Make friendly small talk while ordering your usual {food}.", s:"Hi again! I'll have the usual, please — how's your day going so far?", v:["the usual","how's your day going","have a good one"]},
+  {t:"Planning a group trip to {city} with {name}", c:"You and {name} are discussing a weekend away in {city} with friends.", p:"Suggest dates, propose an activity, and ask what {name} would like to do.", s:"How about we go to {city} {time_phrase}? We could try {food} and see what else is there — what do you think?", v:["how about","we could","what do you think"]},
+  {t:"Meeting {name}'s friends at {venue_social}", c:"{name} introduces you to a group of friends at {venue_social}.", p:"Greet everyone, share one fact about yourself, and ask a friendly question.", s:"Hi everyone, nice to meet you! I'm a friend of {name} — I really enjoy {topic}. What brings you all here tonight?", v:["nice to meet you","I'm a friend of","what brings you"]},
+  {t:"Declining an invitation to {event}", c:"{name} invites you to {event} but you already have plans.", p:"Decline kindly, explain briefly, and suggest another time.", s:"Thanks so much for inviting me, {name} — I'd love to, but I already have plans. Can we catch up {time_phrase} instead?", v:["thanks so much for inviting me","I'd love to, but","can we catch up"]},
+  {t:"Asking {name} for a recommendation", c:"You are looking for something new to try and {name} always has good ideas.", p:"Ask {name} for a recommendation about {topic} and explain what you like.", s:"You always know the best things — could you recommend something about {topic}? I usually enjoy relaxed, friendly things.", v:["could you recommend","I usually enjoy","you always know"]}
 ];
 
 /* ===== TRAVEL content ===== */
@@ -556,7 +785,15 @@ const TRAVEL_SENTENCES = [
   "I'd like to book a room for {number} nights.",
   "Do I need a visa to travel to {country}?",
   "Our connecting flight through {city} got delayed.",
-  "Could you call {transport} for us, please?"
+  "Could you call {transport} for us, please?",
+  "Could you tell me how to get to {venue_travel} from here?",
+  "I think I left my {object} at {venue_airport}.",
+  "Is {transport} the fastest way to get to {city}?",
+  "I have a reservation at {venue_lodging} for {number} nights.",
+  "My flight to {country} leaves {time_phrase}, so I need to hurry.",
+  "Do you know if the weather in {city} will be {weather} {time_phrase}?",
+  "Could you recommend somewhere to try {food} near {venue_lodging}?",
+  "I'm travelling to {country} and I can't find my {object}."
 ];
 const TRAVEL_SCENARIOS = [
   {t:"Checking in at {venue_airport}", c:"You've arrived at {venue_airport} for your flight to {city}.", p:"Check in, confirm your seat preference, and ask about baggage allowance.", s:"Hi, I'd like to check in for my flight to {city}. Could I get a window seat, and how many bags am I allowed?", v:["check in","window or aisle","how many bags"]},
@@ -578,7 +815,11 @@ const TRAVEL_SCENARIOS = [
   {t:"Confirming a tour booking", c:"You booked a walking tour in {city} and want to confirm details.", p:"Call to confirm the meeting point and time for the tour.", s:"I'm calling to confirm my tour booking — could you remind me of the meeting point and what time I should arrive?", v:["I'm calling to confirm","meeting point","what time should I arrive"]},
   {t:"Asking for restaurant recommendations from a local", c:"You want an authentic {food} experience in {city}.", p:"Ask a local, {name}, for a restaurant recommendation away from tourist spots.", s:"Do you know somewhere off the beaten path for authentic {food}? I'd love to go where the locals go.", v:["off the beaten path","authentic","locals go to"]},
   {t:"Extending a hotel stay", c:"You've decided to stay {number} extra nights at {venue_lodging} in {city}.", p:"Ask the front desk if it's possible to extend your stay.", s:"Would it be possible to extend my stay by {number} nights? Is there any additional cost?", v:["extend my stay","is that possible","any additional cost"]},
-  {t:"Handling a gate change", c:"Your gate for the flight to {city} just changed at {venue_airport}.", p:"Ask airport staff to confirm the new gate and how much time you have.", s:"I heard there was a gate change for the flight to {city} — could you confirm which gate, and how much time I have?", v:["gate change","how much time do I have","which way is it"]}
+  {t:"Handling a gate change", c:"Your gate for the flight to {city} just changed at {venue_airport}.", p:"Ask airport staff to confirm the new gate and how much time you have.", s:"I heard there was a gate change for the flight to {city} — could you confirm which gate, and how much time I have?", v:["gate change","how much time do I have","which way is it"]},
+  {t:"Reporting a lost {object} at {venue_airport}", c:"You realise your {object} is missing while at {venue_airport} in {city}.", p:"Explain what you lost, where you last saw it, and ask for help.", s:"Excuse me, I've lost my {object}. I last saw it near {venue_airport} about an hour ago — could you help me find it?", v:["I've lost","I last saw it","could you help"]},
+  {t:"Asking for directions to {venue_travel}", c:"You are walking in {city} and cannot find {venue_travel}.", p:"Ask a local how to get to {venue_travel} and whether you should take {transport}.", s:"Excuse me, could you tell me how to get to {venue_travel}? Is it far from here, and should I take {transport}?", v:["could you tell me how to get","is it far","should I take"]},
+  {t:"Ordering {food} while travelling in {country}", c:"You are at a small restaurant in {country} and want to try the local {food}.", p:"Order {food}, ask about the ingredients, and mention any preferences.", s:"Hello, I'd like to try the {food}, please. Could you tell me what's in it, and is it spicy?", v:["I'd like to try","what's in it","is it spicy"]},
+  {t:"Changing your booking at {venue_lodging}", c:"Your plans in {city} changed and you need to move your reservation at {venue_lodging}.", p:"Ask to move your reservation to a different date and check whether the price changes.", s:"Hello, I have a reservation here and I need to move it to a different date. Would that be possible, and will the price change?", v:["I need to change","would that be possible","will the price"]}
 ];
 
 /* ===== BUSINESS content ===== */
@@ -606,7 +847,15 @@ const BUSINESS_SENTENCES = [
   "Our team hit the target {deadline}.",
   "I'll draft the agenda before our meeting {time_phrase}.",
   "Let's make sure {dept} is aligned on this rollout.",
-  "I want to thank the whole team for hitting {metric} this quarter."
+  "I want to thank the whole team for hitting {metric} this quarter.",
+  "Our {metric} improved by {percent}, thanks to the {dept} team.",
+  "Could you send me the report on {topic} {deadline}?",
+  "I'd like to schedule a meeting with {name} from {company} {time_phrase}.",
+  "My priority as {job} is to improve our {metric} {deadline}.",
+  "Let's align with {dept} before we present to {company}.",
+  "The {metric} dropped by {percent}, so we need a new plan {deadline}.",
+  "I'm calling on behalf of {company} regarding {topic}.",
+  "Thank you for your time, {name}; I'll follow up {time_phrase}."
 ];
 const BUSINESS_SCENARIOS = [
   {t:"Introducing yourself to a new colleague", c:"It's your first day at {company} and you meet {name} from {dept}.", p:"Introduce yourself, your role, and one thing you specialize in.", s:"Hi, I'm {name} — I just joined as a {job}. I specialize in {metric}, and I'm really looking forward to working with {dept}.", v:["nice to meet you","I specialize in","looking forward to working with you"]},
@@ -628,7 +877,11 @@ const BUSINESS_SCENARIOS = [
   {t:"Running a stand-up update", c:"It's your turn to give a quick update in the {dept} stand-up.", p:"Share what you did yesterday, what you're doing today, and any blockers.", s:"Yesterday I worked on {metric}, today I'll finish the review, and I don't have any blockers right now.", v:["yesterday I","today I'll","blocker"]},
   {t:"Responding to pushback in a meeting", c:"{name} disagrees with your proposal about {metric} in front of {dept}.", p:"Respond respectfully and find common ground.", s:"That's a fair point — where I'd push back a little is on timing, but maybe we can find a middle ground.", v:["that's a fair point","where I'd push back","find a middle ground"]},
   {t:"Closing a sales call", c:"You're on a sales call with {name} from {company} discussing {topic}.", p:"Summarize the value and suggest a next step.", s:"To summarize, this would directly help with {topic} — the next step would be a short trial. Does that sound reasonable?", v:["to summarize","next step would be","does that sound reasonable"]},
-  {t:"Requesting budget approval", c:"You need approval for a {percent} budget increase for {dept}.", p:"Explain the reasoning and expected return.", s:"I'm requesting a {percent} increase for {dept} — the reasoning is clear, and the expected return justifies it.", v:["I'm requesting","the reasoning is","expected return"]}
+  {t:"Requesting budget approval", c:"You need approval for a {percent} budget increase for {dept}.", p:"Explain the reasoning and expected return.", s:"I'm requesting a {percent} increase for {dept} — the reasoning is clear, and the expected return justifies it.", v:["I'm requesting","the reasoning is","expected return"]},
+  {t:"Presenting {metric} results to {company}", c:"You're presenting the latest {metric} results to a client from {company}.", p:"Summarise the key result, explain what drove it, and propose a next step.", s:"Our {metric} improved by {percent} this quarter, mainly thanks to the {dept} team. I'd suggest we build on that {deadline}.", v:["improved by","mainly thanks to","I'd suggest"]},
+  {t:"Following up with {name} after a meeting", c:"You met {name} from {company} earlier and promised to follow up.", p:"Thank {name}, recap one agreed point, and confirm the next step.", s:"Thank you for your time today, {name}. As agreed, I'll send the proposal {deadline} — please let me know if anything changes.", v:["thank you for your time","as agreed","please let me know"]},
+  {t:"Negotiating a timeline with {dept}", c:"The {dept} team needs your work earlier than planned.", p:"Explain what is realistic, suggest a compromise, and stay polite.", s:"I understand the urgency, but delivering everything {deadline} may be tough. Could we agree on a smaller first version instead?", v:["I understand the urgency","could we agree","a compromise"]},
+  {t:"Introducing yourself on your first day at {company}", c:"It's your first day at {company} in {city}, and you meet your new team.", p:"Introduce yourself to the team, share your background, and say what you hope to learn.", s:"Hi everyone, I'm {name} and I'm joining the team — my role is {job}. I'm really excited to be here and hope to learn a lot from you all.", v:["I'm joining","excited to be here","hope to learn"]}
 ];
 
 const CATS = {
@@ -637,15 +890,15 @@ const CATS = {
   business:{id:'business',label:'Business', color:'#34D399', icon:'business', sentences:BUSINESS_SENTENCES, scenarios:BUSINESS_SCENARIOS, tagline:'Meetings, clients & the workplace'}
 };
 
-/* ===== Pool generation: guarantees 1,000+ unique items per category =====
+/* ===== Pool generation: guarantees 2,000 unique items per category (6,000 per mode) =====
    Each template's placeholder slots are combined via a mixed-radix index so
    every generated item is a genuinely distinct, deterministic combination —
    and for scenarios, the SAME sampled values are reused across the title,
    context, prompt and sample answer, so names/places stay consistent. */
-const SENTENCE_TARGET = 1100;
-const SCENARIO_TARGET = 1040;
-const PER_TEMPLATE_CAP_SENTENCE = 220;
-const PER_TEMPLATE_CAP_SCENARIO = 150;
+const SENTENCE_TARGET = 2000;   // per category → 6,000 Shadow Flow sentences in total
+const SCENARIO_TARGET = 2000;   // per category → 6,000 Free Flow scenarios in total
+const PER_TEMPLATE_CAP_SENTENCE = 700;
+const PER_TEMPLATE_CAP_SCENARIO = 200;
 
 function templateSlots(str){
   const found = str.match(/\{(\w+)\}/g) || [];
@@ -738,11 +991,559 @@ function totalSentences(){ return Object.keys(CATS).reduce((n,c)=> n + poolSize(
 function pickRandom(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
 /* ===========================================================================
+   INTERNATIONALISATION — interface in English, Spanish, French & Portuguese.
+   Practice content (the sentences / scenarios Aria teaches) stays in English
+   because English is the language being learned; every button, label, tip,
+   error and landing-page text switches with the selected language.
+   =========================================================================== */
+const LANGS = [
+  { code:'en', name:'English',   short:'EN', locale:'en-US' },
+  { code:'es', name:'Español',   short:'ES', locale:'es-ES' },
+  { code:'fr', name:'Français',  short:'FR', locale:'fr-FR' },
+  { code:'pt', name:'Português', short:'PT', locale:'pt-BR' }
+];
+const LANG_KEY = 'langslate-flow-lang';
+
+/* Crisp inline SVG flags (emoji flags don't render on Windows laptops). */
+const FLAG_SVG = {
+  en: '<svg viewBox="0 0 24 16" aria-hidden="true"><rect width="24" height="16" fill="#012169"/><path d="M0 0L24 16M24 0L0 16" stroke="#fff" stroke-width="3.2"/><path d="M0 0L24 16M24 0L0 16" stroke="#C8102E" stroke-width="1.4"/><path d="M12 0V16M0 8H24" stroke="#fff" stroke-width="5.2"/><path d="M12 0V16M0 8H24" stroke="#C8102E" stroke-width="3"/></svg>',
+  es: '<svg viewBox="0 0 24 16" aria-hidden="true"><rect width="24" height="16" fill="#AA151B"/><rect y="4" width="24" height="8" fill="#F1BF00"/></svg>',
+  fr: '<svg viewBox="0 0 24 16" aria-hidden="true"><rect width="8" height="16" fill="#0055A4"/><rect x="8" width="8" height="16" fill="#fff"/><rect x="16" width="8" height="16" fill="#EF4135"/></svg>',
+  pt: '<svg viewBox="0 0 24 16" aria-hidden="true"><rect width="24" height="16" fill="#009C3B"/><path d="M12 1.8L22 8L12 14.2L2 8Z" fill="#FFDF00"/><circle cx="12" cy="8" r="3.5" fill="#002776"/><path d="M8.7 7.2Q12 6.2 15.3 8.4" stroke="#fff" stroke-width=".7" fill="none"/></svg>'
+};
+function flagHTML(code){ return `<span class="flag">${FLAG_SVG[code] || ''}</span>`; }
+
+const I18N = {
+  en: {
+    brandAria:'Langslate Flow home', themeAria:'Toggle light and dark mode', langAria:'Change language',
+    streakTitle:'Your practice streak', dayStreak:'day streak', demo:'DEMO',
+    footerLine:'Langslate Flow — practice speaking, privately. All voice analysis runs on your device; nothing is uploaded.',
+    credit:'Crafted by Brice Gadou, Business English Expert & Vibe Coder', toLanding:'About Langslate Flow',
+    nounSentences:'sentences', nounScenarios:'scenarios',
+    cat_social:'Social', cat_travel:'Travel', cat_business:'Business',
+
+    /* landing */
+    land_badge:'AI Voice Tutor · runs 100% on your device',
+    land_h1a:'Listen. Shadow.', land_h1b:'Flow.',
+    land_lead:'Practice real spoken English with Aria, your AI voice tutor. Shadow native sentences or hold free-flowing conversations across Social, Travel and Business — and get instant feedback on pronunciation, tone, fluency, grammar & vocabulary.',
+    land_ctaDemo:'Try the DEMO', land_ctaHow:'See how it works',
+    land_note:'No sign-up · No downloads · Works on phone & laptop',
+    land_statSent:'SHADOW FLOW SENTENCES', land_statScen:'FREE FLOW SCENARIOS', land_statLang:'INTERFACE LANGUAGES', land_statPriv:'PRIVATE & ON-DEVICE',
+    land_modesTitle:'Two ways to build fluency', land_modesSub:'Pick the one that fits your day',
+    land_shadowBody:'Aria says a native sentence. You repeat it right after her. Get scored on pronunciation, tone and fluency — word by word.',
+    land_shadowB1:'Listen at 0.75×, 1× or 1.25× speed', land_shadowB2:'See exactly which words you missed', land_shadowB3:'Pronunciation · Tone · Fluency scores',
+    land_flowBody:'Step into a real-life situation and answer in your own words. Aria listens, transcribes and grades what you said.',
+    land_flowB1:'Social, Travel & Business situations', land_flowB2:'Sample answers when you need a hint', land_flowB3:'Fluency · Vocabulary · Grammar · Tone scores',
+    land_tracksTitle:'Three tracks, one voice', land_tracksSub:'Every track has {n} sentences and {n} scenarios',
+    land_howTitle:'How it works', land_howSub:'From first word to fluent in three steps',
+    land_featTitle:'Built to feel effortless',
+    land_f1t:'Instant feedback', land_f1b:'Scores and coaching tips the moment you stop talking.',
+    land_f2t:'Private by design', land_f2b:'Voice analysis runs in your browser. Nothing is uploaded.',
+    land_f3t:'Phone & laptop', land_f3b:'A smooth, premium experience on every screen size.',
+    land_f4t:'Your language', land_f4b:'Switch the interface between English, Spanish, French and Portuguese.',
+    land_finalTitle:'Ready to speak with confidence?', land_finalBody:'Jump into the live demo and hear Aria in under ten seconds.', land_finalCta:'Launch the DEMO',
+
+    /* platform home */
+    home_badge:'AI Voice Tutor · runs 100% on your device',
+    home_h1a:'Listen. Shadow.', home_h1b:'Flow.',
+    home_lead:'Practice real spoken English with Aria, your AI voice tutor. Shadow native sentences or hold free-flowing conversations across Social, Travel and Business scenarios — and get instant feedback on pronunciation, tone, fluency, grammar & vocabulary.',
+    home_statScen:'FREE FLOW SCENARIOS', home_statSent:'SHADOW SENTENCES', home_statTracks:'PRACTICE TRACKS',
+    home_shadowDesc:'Listen to Aria say a sentence, repeat it right after her, and get instant feedback on your pronunciation, tone and fluency.',
+    home_shadowTag:'Listen → repeat → score', home_shadowCta:'Start shadowing',
+    home_flowDesc:'Pick a real-world scenario — or let Aria surprise you — and speak your own answer. Feedback lands the moment you stop talking.',
+    home_flowTag:'Speak freely', home_flowCta:'Start a scenario',
+    home_tracksTitle:'Three tracks, one voice', home_tracksSub:'Pick a focus, or mix all three',
+    nScenarios:'{n} scenarios', nSentences:'{n} sentences',
+    how1e:'01 · CHOOSE', how1t:'Pick your mode & topic', how1b:'Shadow a native sentence, or free-flow a real scenario across Social, Travel or Business English.',
+    how2e:'02 · SPEAK', how2t:'Listen & respond aloud', how2b:'Aria reads it in a premium British voice. Repeat it, or answer in your own words — your mic does the rest.',
+    how3e:'03 · IMPROVE', how3t:'Get instant, private feedback', how3b:'See scores for pronunciation, tone, fluency, grammar & vocabulary the moment you stop talking — all analyzed on your device.',
+
+    /* setup */
+    back_home:'Back to home', setup_availShadow:'{n} sentences available', setup_availFlow:'{n} scenarios available',
+    setup_descShadow:'Choose one or more focus areas, then pick a sentence to shadow — or let Aria pick one for you.',
+    setup_descFlow:'Choose one or more focus areas, then pick a scenario to speak through — or let Aria surprise you.',
+    setup_searchShadow:'Search sentences…', setup_searchFlow:'Search scenarios…', setup_shuffle:'Shuffle',
+    setup_surprise:'Surprise me — start now', setup_noResults:'No results for "{q}". Try a different search term.', setup_more:'Show more',
+    item_shadowSub:'{cat} · Shadow sentence',
+
+    /* practice */
+    back_sentences:'Back to sentences', back_scenarios:'Back to scenarios',
+    p_shadowEyebrow:'SHADOW SENTENCE', p_flowEyebrow:'FREE FLOW SCENARIO', p_hear:'Hear this scenario', p_yourTurn:'Your turn:',
+    p_seeSample:'See sample answer', p_hideSample:'Hide sample answer', p_sample:'Sample:', p_playAria:'Play sentence',
+    p_recordAria:'Record your voice', p_hintShadow:'Play the sentence, then tap to shadow it', p_hintFlow:'Tap to record your answer',
+    p_transcript:'Transcript', p_placeholder:'Tap the mic and start speaking — Aria is listening.', p_listening:'Listening…', p_analyzing:'Analyzing…',
+    p_analyzingSpeech:'Analyzing your speech…', p_recording:'Recording… tap to stop', p_againShadow:'Tap to shadow it again', p_againFlow:'Tap to record another take',
+    p_noSpeech:'No speech detected — try recording again a little closer to the mic.',
+    t_sttUnsupportedTitle:"Speech recognition isn't supported in this browser.",
+    t_sttUnsupportedBody:'Aria needs it to hear and grade your speech. Try the latest Chrome, Edge, or Safari (desktop or Android).',
+    t_sttToast:"Speech recognition isn't supported in this browser.", t_ttsToast:"This browser doesn't support text-to-speech playback.",
+    t_ttsFail:"Couldn't play audio. Check your volume and silent mode, then tap play again.",
+    t_micFail:"Couldn't start the microphone. Please tap the mic again.",
+
+    /* feedback */
+    m_pron:'Pronunciation', m_tone:'Tone', m_fluency:'Fluency', m_vocab:'Vocabulary', m_grammar:'Grammar',
+    band_excellent:'Excellent', band_good:'Good', band_fair:'Fair', band_keep:'Keep Practicing',
+    ov_none:'Not enough audio', ov_excellent:'Excellent', ov_good:'Good progress', ov_fair:'Fair — keep going', ov_keep:'Keep practicing',
+    fb_overallScore:'Overall score', fb_heard:'What Aria heard', fb_yourFeedback:'Your speaking feedback', fb_overall:'OVERALL',
+    fb_tryAgain:'Try again', fb_nextSentence:'Next sentence', fb_nextScenario:'Next scenario', fb_changeSentence:'Change sentence', fb_changeScenario:'Change scenario',
+    st_none:'No speech was detected in this take.', st_main:'{w} {wl} in {s} {sl}.',
+    st_word1:'word', st_wordN:'words', st_sent1:'sentence', st_sentN:'sentences',
+    st_noFiller:'No filler words detected — great!', st_filler1:'1 filler word detected — try a short pause instead.', st_fillerN:'{n} filler words detected — try a short pause instead.',
+
+    /* errors */
+    e_notAllowed:"Microphone access was blocked. Allow microphone access for this page (check the icon in your browser's address bar), then tap the mic again.",
+    e_audioCapture:'No microphone was found. Connect a microphone and try again.',
+    e_network:'Speech recognition needs an internet connection (your browser processes speech in the cloud). Check your connection and try again.',
+    e_aborted:'Recording was interrupted. Tap the mic and try again.', e_default:'Something went wrong with the microphone ({code}). Please try again.',
+    e_deadMic:"We tried listening several times but never picked up any sound from your microphone. Check that it's connected and not muted.",
+    e_noResponse:'The microphone never responded. This usually means microphone access is blocked for this page, or the page is open inside a preview panel rather than a full browser tab — try opening it directly in a Chrome, Edge, or Safari tab.',
+    t_noItems:'No items match your search — try clearing it.', docTitle:'Langslate Flow — AI Voice Tutor',
+
+    tips: {
+      accuracy:{
+        low:["Try breaking the sentence into smaller chunks and shadow each piece before saying it in full.","Slow the playback to 0.75× and listen closely to the words you're missing before recording again."],
+        mid:["You're close — focus on the words underlined in red and repeat just those a few times.","Nice effort. Re-play the sentence once more and try to mirror the exact word order."],
+        high:["Excellent word-for-word accuracy — your ear for the sentence is really sharp.","Spot on! You're matching the target sentence almost perfectly."] },
+      tone:{
+        low:["Your delivery sounds a little flat — try exaggerating the rise and fall in your voice, like you're telling a story.","Add more melody: stress the important word in the sentence a bit more."],
+        mid:["Good energy — pushing your pitch range a little further will make you sound even more natural.","You're varying your tone nicely; keep leaning into the emotion of the sentence."],
+        high:["Your intonation sounds natural and expressive — that's exactly how a native speaker would say it.","Great vocal variety! Your tone keeps the listener engaged."] },
+      fluency:{
+        low:["You paused quite a bit — try saying the whole sentence in one breath, even if it feels fast.","Watch your filler words (um, uh) — a short silent pause sounds more confident."],
+        mid:["Your pace is close to natural — a little more consistency will make it sound even smoother.","Good rhythm overall; try to keep a steady pace from start to finish."],
+        high:["Your pacing sounds smooth and natural — right in the sweet spot of conversational speech.","Great fluency — no awkward pauses, nice and confident."] },
+      grammar:{
+        low:["Try to include a clear subject and verb, like 'I think...' or 'We are...', to complete the thought.","Short fragments are fine to practice, but try answering in a full sentence next time."],
+        mid:["Solid structure — linking two ideas with 'because' or 'so' would make it even stronger.","You're forming clear sentences; try adding one more detail to extend your answer."],
+        high:["Well-formed, natural sentence structure — that reads like fluent, confident English.","Great grammar control, including how you linked your ideas together."] },
+      vocabulary:{
+        low:["Try weaving in a few of the suggested phrases from the scenario to sound more precise.","Reach for a slightly more specific word instead of a general one — it'll sound more natural."],
+        mid:["Nice range of words — using one more scenario-specific phrase would round this out.","Good vocabulary choices; vary your word choice a little more to avoid repetition."],
+        high:["Rich, varied vocabulary — you used exactly the kind of language a fluent speaker would reach for.","Excellent word choice, including natural, scenario-specific phrasing."] }
+    }
+  },
+
+  es: {
+    brandAria:'Inicio de Langslate Flow', themeAria:'Cambiar entre modo claro y oscuro', langAria:'Cambiar idioma',
+    streakTitle:'Tu racha de práctica', dayStreak:'días de racha', demo:'DEMO',
+    footerLine:'Langslate Flow — practica tu pronunciación, en privado. Todo el análisis de voz se hace en tu dispositivo; no se sube nada.',
+    credit:'Creado por Brice Gadou, Experto en Business English y Vibe Coder', toLanding:'Sobre Langslate Flow',
+    nounSentences:'frases', nounScenarios:'escenarios',
+    cat_social:'Social', cat_travel:'Viajes', cat_business:'Negocios',
+
+    land_badge:'Tutor de voz con IA · funciona 100% en tu dispositivo',
+    land_h1a:'Escucha. Repite.', land_h1b:'Fluye.',
+    land_lead:'Practica inglés hablado real con Aria, tu tutora de voz con IA. Repite frases nativas o mantén conversaciones libres en contextos Sociales, de Viajes y de Negocios — y recibe feedback instantáneo sobre pronunciación, tono, fluidez, gramática y vocabulario.',
+    land_ctaDemo:'Probar la DEMO', land_ctaHow:'Ver cómo funciona',
+    land_note:'Sin registro · Sin descargas · Funciona en móvil y portátil',
+    land_statSent:'FRASES DE SHADOW FLOW', land_statScen:'ESCENARIOS DE FREE FLOW', land_statLang:'IDIOMAS DE INTERFAZ', land_statPriv:'PRIVADO Y EN TU DISPOSITIVO',
+    land_modesTitle:'Dos formas de ganar fluidez', land_modesSub:'Elige la que mejor encaje con tu día',
+    land_shadowBody:'Aria dice una frase nativa. Tú la repites justo después. Recibe una puntuación de pronunciación, tono y fluidez — palabra por palabra.',
+    land_shadowB1:'Escucha a velocidad 0.75×, 1× o 1.25×', land_shadowB2:'Descubre exactamente qué palabras fallaste', land_shadowB3:'Puntuaciones de Pronunciación · Tono · Fluidez',
+    land_flowBody:'Entra en una situación real y responde con tus propias palabras. Aria te escucha, transcribe y evalúa lo que dijiste.',
+    land_flowB1:'Situaciones Sociales, de Viajes y de Negocios', land_flowB2:'Respuestas de ejemplo cuando necesitas una pista', land_flowB3:'Puntuaciones de Fluidez · Vocabulario · Gramática · Tono',
+    land_tracksTitle:'Tres categorías, una voz', land_tracksSub:'Cada categoría tiene {n} frases y {n} escenarios',
+    land_howTitle:'Cómo funciona', land_howSub:'De la primera palabra a la fluidez en tres pasos',
+    land_featTitle:'Diseñado para ser sencillo',
+    land_f1t:'Feedback instantáneo', land_f1b:'Puntuaciones y consejos en cuanto dejas de hablar.',
+    land_f2t:'Privado por diseño', land_f2b:'El análisis de voz ocurre en tu navegador. No se sube nada.',
+    land_f3t:'Móvil y portátil', land_f3b:'Una experiencia fluida y premium en cualquier pantalla.',
+    land_f4t:'Tu idioma', land_f4b:'Cambia la interfaz entre inglés, español, francés y portugués.',
+    land_finalTitle:'¿Listo para hablar con confianza?', land_finalBody:'Entra en la demo en vivo y escucha a Aria en menos de diez segundos.', land_finalCta:'Abrir la DEMO',
+
+    home_badge:'Tutor de voz con IA · funciona 100% en tu dispositivo',
+    home_h1a:'Escucha. Repite.', home_h1b:'Fluye.',
+    home_lead:'Practica inglés hablado real con Aria, tu tutora de voz con IA. Repite frases nativas o mantén conversaciones libres en escenarios Sociales, de Viajes y de Negocios — y recibe feedback instantáneo sobre pronunciación, tono, fluidez, gramática y vocabulario.',
+    home_statScen:'ESCENARIOS FREE FLOW', home_statSent:'FRASES SHADOW', home_statTracks:'CATEGORÍAS DE PRÁCTICA',
+    home_shadowDesc:'Escucha a Aria decir una frase, repítela justo después y recibe feedback instantáneo sobre tu pronunciación, tono y fluidez.',
+    home_shadowTag:'Escucha → repite → puntúa', home_shadowCta:'Empezar a repetir',
+    home_flowDesc:'Elige un escenario real — o deja que Aria te sorprenda — y responde con tus propias palabras. El feedback llega en cuanto dejas de hablar.',
+    home_flowTag:'Habla libremente', home_flowCta:'Empezar un escenario',
+    home_tracksTitle:'Tres categorías, una voz', home_tracksSub:'Elige un enfoque o mezcla las tres',
+    nScenarios:'{n} escenarios', nSentences:'{n} frases',
+    how1e:'01 · ELIGE', how1t:'Elige tu modo y tema', how1b:'Repite una frase nativa o improvisa un escenario real de inglés Social, de Viajes o de Negocios.',
+    how2e:'02 · HABLA', how2t:'Escucha y responde en voz alta', how2b:'Aria lo lee con una voz británica premium. Repítelo o responde con tus palabras — tu micrófono hace el resto.',
+    how3e:'03 · MEJORA', how3t:'Recibe feedback instantáneo y privado', how3b:'Consulta tus puntuaciones de pronunciación, tono, fluidez, gramática y vocabulario en cuanto dejas de hablar — todo se analiza en tu dispositivo.',
+
+    back_home:'Volver al inicio', setup_availShadow:'{n} frases disponibles', setup_availFlow:'{n} escenarios disponibles',
+    setup_descShadow:'Elige una o más áreas de enfoque y luego una frase para repetir — o deja que Aria elija por ti.',
+    setup_descFlow:'Elige una o más áreas de enfoque y luego un escenario para practicar hablando — o deja que Aria te sorprenda.',
+    setup_searchShadow:'Buscar frases…', setup_searchFlow:'Buscar escenarios…', setup_shuffle:'Aleatorio',
+    setup_surprise:'Sorpréndeme — empezar ahora', setup_noResults:'Sin resultados para "{q}". Prueba con otro término de búsqueda.', setup_more:'Mostrar más',
+    item_shadowSub:'{cat} · Frase Shadow',
+
+    back_sentences:'Volver a las frases', back_scenarios:'Volver a los escenarios',
+    p_shadowEyebrow:'FRASE SHADOW', p_flowEyebrow:'ESCENARIO FREE FLOW', p_hear:'Escuchar este escenario', p_yourTurn:'Tu turno:',
+    p_seeSample:'Ver respuesta de ejemplo', p_hideSample:'Ocultar respuesta de ejemplo', p_sample:'Ejemplo:', p_playAria:'Reproducir frase',
+    p_recordAria:'Grabar tu voz', p_hintShadow:'Reproduce la frase y toca para repetirla', p_hintFlow:'Toca para grabar tu respuesta',
+    p_transcript:'Transcripción', p_placeholder:'Toca el micrófono y empieza a hablar — Aria te escucha.', p_listening:'Escuchando…', p_analyzing:'Analizando…',
+    p_analyzingSpeech:'Analizando tu voz…', p_recording:'Grabando… toca para parar', p_againShadow:'Toca para repetirla otra vez', p_againFlow:'Toca para grabar otra toma',
+    p_noSpeech:'No se detectó voz — prueba a grabar de nuevo un poco más cerca del micrófono.',
+    t_sttUnsupportedTitle:'El reconocimiento de voz no es compatible con este navegador.',
+    t_sttUnsupportedBody:'Aria lo necesita para escucharte y evaluarte. Prueba con la última versión de Chrome, Edge o Safari (ordenador o Android).',
+    t_sttToast:'El reconocimiento de voz no es compatible con este navegador.', t_ttsToast:'Este navegador no admite la reproducción de texto a voz.',
+    t_ttsFail:'No se pudo reproducir el audio. Revisa el volumen y el modo silencio y vuelve a tocar reproducir.',
+    t_micFail:'No se pudo iniciar el micrófono. Vuelve a tocar el micrófono.',
+
+    m_pron:'Pronunciación', m_tone:'Tono', m_fluency:'Fluidez', m_vocab:'Vocabulario', m_grammar:'Gramática',
+    band_excellent:'Excelente', band_good:'Bien', band_fair:'Regular', band_keep:'Sigue practicando',
+    ov_none:'Audio insuficiente', ov_excellent:'Excelente', ov_good:'Buen progreso', ov_fair:'Regular — sigue así', ov_keep:'Sigue practicando',
+    fb_overallScore:'Puntuación global', fb_heard:'Lo que Aria escuchó', fb_yourFeedback:'Tu feedback de speaking', fb_overall:'GLOBAL',
+    fb_tryAgain:'Reintentar', fb_nextSentence:'Siguiente frase', fb_nextScenario:'Siguiente escenario', fb_changeSentence:'Cambiar frase', fb_changeScenario:'Cambiar escenario',
+    st_none:'No se detectó voz en esta toma.', st_main:'{w} {wl} en {s} {sl}.',
+    st_word1:'palabra', st_wordN:'palabras', st_sent1:'frase', st_sentN:'frases',
+    st_noFiller:'No se detectaron muletillas — ¡genial!', st_filler1:'Se detectó 1 muletilla — prueba con una breve pausa.', st_fillerN:'Se detectaron {n} muletillas — prueba con una breve pausa.',
+
+    e_notAllowed:'Se bloqueó el acceso al micrófono. Permite el micrófono para esta página (mira el icono en la barra de direcciones del navegador) y vuelve a tocar el micrófono.',
+    e_audioCapture:'No se encontró ningún micrófono. Conecta uno e inténtalo de nuevo.',
+    e_network:'El reconocimiento de voz necesita conexión a internet (tu navegador procesa la voz en la nube). Comprueba tu conexión e inténtalo de nuevo.',
+    e_aborted:'La grabación se interrumpió. Toca el micrófono e inténtalo de nuevo.', e_default:'Algo falló con el micrófono ({code}). Inténtalo de nuevo.',
+    e_deadMic:'Intentamos escuchar varias veces pero no captamos ningún sonido de tu micrófono. Comprueba que esté conectado y no silenciado.',
+    e_noResponse:'El micrófono no respondió. Normalmente significa que el acceso al micrófono está bloqueado para esta página, o que la página está abierta en un panel de vista previa en lugar de una pestaña completa — prueba a abrirla directamente en una pestaña de Chrome, Edge o Safari.',
+    t_noItems:'Ningún elemento coincide con tu búsqueda — prueba a borrarla.', docTitle:'Langslate Flow — Tutor de voz con IA',
+
+    tips: {
+      accuracy:{
+        low:["Divide la frase en partes más pequeñas y repite cada una antes de decirla completa.","Baja la velocidad a 0.75× y escucha con atención las palabras que fallas antes de volver a grabar."],
+        mid:["Vas muy bien — céntrate en las palabras subrayadas en rojo y repite solo esas varias veces.","Buen esfuerzo. Vuelve a reproducir la frase e intenta imitar el orden exacto de las palabras."],
+        high:["Excelente precisión palabra por palabra — tu oído para la frase es muy fino.","¡Perfecto! Estás igualando la frase objetivo casi a la perfección."] },
+      tone:{
+        low:["Tu entonación suena un poco plana — exagera la subida y bajada de la voz, como si contaras una historia.","Añade más melodía: acentúa un poco más la palabra importante de la frase."],
+        mid:["Buena energía — ampliar un poco más tu rango de tono te hará sonar aún más natural.","Varías bien el tono; sigue apoyándote en la emoción de la frase."],
+        high:["Tu entonación suena natural y expresiva — así lo diría un nativo.","¡Gran variedad vocal! Tu tono mantiene al oyente interesado."] },
+      fluency:{
+        low:["Hiciste bastantes pausas — intenta decir toda la frase de un tirón, aunque parezca rápido.","Cuidado con las muletillas (um, uh): una pausa silenciosa corta suena más seguro."],
+        mid:["Tu ritmo se acerca al natural — algo más de constancia lo hará aún más fluido.","Buen ritmo en general; intenta mantener un paso constante de principio a fin."],
+        high:["Tu ritmo suena fluido y natural — justo en el punto ideal del habla conversacional.","Gran fluidez — sin pausas incómodas, con seguridad."] },
+      grammar:{
+        low:["Intenta incluir un sujeto y un verbo claros, como 'I think...' o 'We are...', para completar la idea.","Los fragmentos cortos sirven para practicar, pero la próxima vez responde con una frase completa."],
+        mid:["Buena estructura — unir dos ideas con 'because' o 'so' la haría aún más sólida.","Formas frases claras; prueba a añadir un detalle más para ampliar tu respuesta."],
+        high:["Estructura natural y bien formada — suena a inglés fluido y seguro.","Gran control gramatical, incluida la forma de enlazar tus ideas."] },
+      vocabulary:{
+        low:["Intenta incluir algunas de las frases sugeridas del escenario para sonar más preciso.","Usa una palabra algo más específica en lugar de una general — sonará más natural."],
+        mid:["Buen abanico de palabras — usar una expresión más propia del escenario lo redondearía.","Buenas elecciones de vocabulario; varía un poco más para evitar repeticiones."],
+        high:["Vocabulario rico y variado — usaste justo el lenguaje que elegiría un hablante fluido.","Excelente elección de palabras, con expresiones naturales del escenario."] }
+    }
+  },
+
+  fr: {
+    brandAria:"Accueil Langslate Flow", themeAria:'Basculer entre le mode clair et sombre', langAria:'Changer de langue',
+    streakTitle:'Votre série de pratique', dayStreak:'jours de suite', demo:'DEMO',
+    footerLine:"Langslate Flow — pratiquez l'oral en toute confidentialité. Toute l'analyse vocale s'effectue sur votre appareil ; rien n'est envoyé.",
+    credit:'Créé par Brice Gadou, expert en Business English et Vibe Coder', toLanding:'À propos de Langslate Flow',
+    nounSentences:'phrases', nounScenarios:'scénarios',
+    cat_social:'Social', cat_travel:'Voyage', cat_business:'Affaires',
+
+    land_badge:"Tuteur vocal IA · fonctionne à 100 % sur votre appareil",
+    land_h1a:'Écoutez. Répétez.', land_h1b:'Progressez.',
+    land_lead:"Pratiquez l'anglais parlé avec Aria, votre tutrice vocale IA. Répétez des phrases natives ou menez des conversations libres en contexte Social, Voyage et Affaires — et recevez un retour instantané sur la prononciation, le ton, la fluidité, la grammaire et le vocabulaire.",
+    land_ctaDemo:'Essayer la DEMO', land_ctaHow:'Voir comment ça marche',
+    land_note:'Sans inscription · Sans téléchargement · Fonctionne sur mobile et ordinateur',
+    land_statSent:'PHRASES SHADOW FLOW', land_statScen:'SCÉNARIOS FREE FLOW', land_statLang:"LANGUES D'INTERFACE", land_statPriv:'PRIVÉ ET SUR VOTRE APPAREIL',
+    land_modesTitle:'Deux façons de gagner en aisance', land_modesSub:'Choisissez celle qui convient à votre journée',
+    land_shadowBody:"Aria prononce une phrase native. Vous la répétez juste après elle. Obtenez une note de prononciation, de ton et de fluidité — mot par mot.",
+    land_shadowB1:'Écoutez à la vitesse 0,75×, 1× ou 1,25×', land_shadowB2:'Voyez précisément les mots manqués', land_shadowB3:'Scores de Prononciation · Ton · Fluidité',
+    land_flowBody:"Plongez dans une situation réelle et répondez avec vos propres mots. Aria vous écoute, transcrit et évalue votre réponse.",
+    land_flowB1:'Situations Sociales, de Voyage et d\'Affaires', land_flowB2:"Exemples de réponse quand il vous faut un indice", land_flowB3:'Scores de Fluidité · Vocabulaire · Grammaire · Ton',
+    land_tracksTitle:'Trois univers, une seule voix', land_tracksSub:'Chaque univers compte {n} phrases et {n} scénarios',
+    land_howTitle:'Comment ça marche', land_howSub:"Du premier mot à l'aisance en trois étapes",
+    land_featTitle:'Pensé pour être simple',
+    land_f1t:'Retour instantané', land_f1b:"Scores et conseils dès que vous arrêtez de parler.",
+    land_f2t:'Confidentialité par conception', land_f2b:"L'analyse vocale se fait dans votre navigateur. Rien n'est envoyé.",
+    land_f3t:'Mobile et ordinateur', land_f3b:'Une expérience fluide et haut de gamme sur tous les écrans.',
+    land_f4t:'Votre langue', land_f4b:"Passez l'interface en anglais, espagnol, français ou portugais.",
+    land_finalTitle:'Prêt à parler avec confiance ?', land_finalBody:'Lancez la démo en direct et écoutez Aria en moins de dix secondes.', land_finalCta:'Lancer la DEMO',
+
+    home_badge:'Tuteur vocal IA · fonctionne à 100 % sur votre appareil',
+    home_h1a:'Écoutez. Répétez.', home_h1b:'Progressez.',
+    home_lead:"Pratiquez l'anglais parlé avec Aria, votre tutrice vocale IA. Répétez des phrases natives ou menez des conversations libres dans des scénarios Social, Voyage et Affaires — et recevez un retour instantané sur la prononciation, le ton, la fluidité, la grammaire et le vocabulaire.",
+    home_statScen:'SCÉNARIOS FREE FLOW', home_statSent:'PHRASES SHADOW', home_statTracks:'UNIVERS DE PRATIQUE',
+    home_shadowDesc:"Écoutez Aria prononcer une phrase, répétez-la juste après et recevez un retour instantané sur votre prononciation, votre ton et votre fluidité.",
+    home_shadowTag:'Écouter → répéter → score', home_shadowCta:'Commencer à répéter',
+    home_flowDesc:"Choisissez un scénario réel — ou laissez Aria vous surprendre — et répondez avec vos propres mots. Le retour arrive dès que vous cessez de parler.",
+    home_flowTag:'Parlez librement', home_flowCta:'Commencer un scénario',
+    home_tracksTitle:'Trois univers, une seule voix', home_tracksSub:'Choisissez un thème ou mélangez les trois',
+    nScenarios:'{n} scénarios', nSentences:'{n} phrases',
+    how1e:'01 · CHOISIR', how1t:'Choisissez votre mode et votre thème', how1b:"Répétez une phrase native ou improvisez un scénario réel en anglais Social, Voyage ou Affaires.",
+    how2e:'02 · PARLER', how2t:'Écoutez et répondez à voix haute', how2b:"Aria la lit avec une voix britannique haut de gamme. Répétez-la ou répondez avec vos mots — votre micro fait le reste.",
+    how3e:'03 · PROGRESSER', how3t:'Recevez un retour instantané et privé', how3b:"Découvrez vos scores de prononciation, ton, fluidité, grammaire et vocabulaire dès que vous arrêtez de parler — tout est analysé sur votre appareil.",
+
+    back_home:"Retour à l'accueil", setup_availShadow:'{n} phrases disponibles', setup_availFlow:'{n} scénarios disponibles',
+    setup_descShadow:"Choisissez un ou plusieurs thèmes, puis une phrase à répéter — ou laissez Aria en choisir une pour vous.",
+    setup_descFlow:"Choisissez un ou plusieurs thèmes, puis un scénario à jouer à l'oral — ou laissez Aria vous surprendre.",
+    setup_searchShadow:'Rechercher des phrases…', setup_searchFlow:'Rechercher des scénarios…', setup_shuffle:'Aléatoire',
+    setup_surprise:'Surprenez-moi — commencer', setup_noResults:'Aucun résultat pour « {q} ». Essayez un autre terme.', setup_more:'Afficher plus',
+    item_shadowSub:'{cat} · Phrase Shadow',
+
+    back_sentences:'Retour aux phrases', back_scenarios:'Retour aux scénarios',
+    p_shadowEyebrow:'PHRASE SHADOW', p_flowEyebrow:'SCÉNARIO FREE FLOW', p_hear:'Écouter ce scénario', p_yourTurn:'À vous :',
+    p_seeSample:'Voir un exemple de réponse', p_hideSample:"Masquer l'exemple de réponse", p_sample:'Exemple :', p_playAria:'Lire la phrase',
+    p_recordAria:'Enregistrer votre voix', p_hintShadow:'Lisez la phrase, puis touchez pour la répéter', p_hintFlow:'Touchez pour enregistrer votre réponse',
+    p_transcript:'Transcription', p_placeholder:'Touchez le micro et commencez à parler — Aria vous écoute.', p_listening:'Écoute en cours…', p_analyzing:'Analyse…',
+    p_analyzingSpeech:'Analyse de votre voix…', p_recording:"Enregistrement… touchez pour arrêter", p_againShadow:'Touchez pour la répéter à nouveau', p_againFlow:'Touchez pour un nouvel essai',
+    p_noSpeech:'Aucune voix détectée — réessayez en vous rapprochant un peu du micro.',
+    t_sttUnsupportedTitle:"La reconnaissance vocale n'est pas prise en charge par ce navigateur.",
+    t_sttUnsupportedBody:"Aria en a besoin pour vous entendre et vous évaluer. Essayez la dernière version de Chrome, Edge ou Safari (ordinateur ou Android).",
+    t_sttToast:"La reconnaissance vocale n'est pas prise en charge par ce navigateur.", t_ttsToast:"Ce navigateur ne prend pas en charge la lecture vocale.",
+    t_ttsFail:"Impossible de lire l'audio. Vérifiez le volume et le mode silencieux, puis touchez à nouveau lecture.",
+    t_micFail:"Impossible de démarrer le micro. Touchez à nouveau le micro.",
+
+    m_pron:'Prononciation', m_tone:'Ton', m_fluency:'Fluidité', m_vocab:'Vocabulaire', m_grammar:'Grammaire',
+    band_excellent:'Excellent', band_good:'Bien', band_fair:'Moyen', band_keep:'Continuez à pratiquer',
+    ov_none:"Pas assez d'audio", ov_excellent:'Excellent', ov_good:'Bonne progression', ov_fair:'Moyen — continuez', ov_keep:'Continuez à pratiquer',
+    fb_overallScore:'Score global', fb_heard:"Ce qu'Aria a entendu", fb_yourFeedback:'Votre retour sur votre expression orale', fb_overall:'GLOBAL',
+    fb_tryAgain:'Réessayer', fb_nextSentence:'Phrase suivante', fb_nextScenario:'Scénario suivant', fb_changeSentence:'Changer de phrase', fb_changeScenario:'Changer de scénario',
+    st_none:"Aucune voix n'a été détectée pendant cet essai.", st_main:'{w} {wl} en {s} {sl}.',
+    st_word1:'mot', st_wordN:'mots', st_sent1:'phrase', st_sentN:'phrases',
+    st_noFiller:'Aucun mot de remplissage détecté — bravo !', st_filler1:'1 mot de remplissage détecté — essayez une courte pause.', st_fillerN:'{n} mots de remplissage détectés — essayez une courte pause.',
+
+    e_notAllowed:"L'accès au micro a été bloqué. Autorisez le micro pour cette page (voir l'icône dans la barre d'adresse), puis touchez à nouveau le micro.",
+    e_audioCapture:"Aucun micro n'a été trouvé. Branchez un micro et réessayez.",
+    e_network:"La reconnaissance vocale nécessite une connexion internet (votre navigateur traite la voix dans le cloud). Vérifiez votre connexion et réessayez.",
+    e_aborted:"L'enregistrement a été interrompu. Touchez le micro et réessayez.", e_default:"Un problème est survenu avec le micro ({code}). Veuillez réessayer.",
+    e_deadMic:"Nous avons essayé d'écouter plusieurs fois sans capter aucun son de votre micro. Vérifiez qu'il est branché et non coupé.",
+    e_noResponse:"Le micro n'a pas répondu. Cela signifie généralement que l'accès au micro est bloqué pour cette page, ou qu'elle est ouverte dans un volet d'aperçu plutôt que dans un onglet complet — essayez de l'ouvrir directement dans un onglet Chrome, Edge ou Safari.",
+    t_noItems:'Aucun élément ne correspond à votre recherche — essayez de l\'effacer.', docTitle:'Langslate Flow — Tuteur vocal IA',
+
+    tips: {
+      accuracy:{
+        low:["Découpez la phrase en petits morceaux et répétez chaque partie avant de la dire en entier.","Ralentissez la lecture à 0,75× et écoutez bien les mots que vous manquez avant de réenregistrer."],
+        mid:["Vous y êtes presque — concentrez-vous sur les mots soulignés en rouge et répétez-les plusieurs fois.","Bel effort. Réécoutez la phrase et essayez de reproduire exactement l'ordre des mots."],
+        high:["Excellente précision mot pour mot — votre oreille est très fine.","Parfait ! Vous reproduisez presque exactement la phrase cible."] },
+      tone:{
+        low:["Votre intonation est un peu plate — exagérez les montées et descentes de la voix, comme si vous racontiez une histoire.","Ajoutez plus de mélodie : insistez davantage sur le mot important de la phrase."],
+        mid:["Bonne énergie — élargir un peu votre registre vous rendra encore plus naturel.","Vous variez bien le ton ; continuez à vous appuyer sur l'émotion de la phrase."],
+        high:["Votre intonation est naturelle et expressive — c'est exactement ainsi qu'un natif la dirait.","Belle variété vocale ! Votre ton captive l'auditeur."] },
+      fluency:{
+        low:["Vous avez fait pas mal de pauses — essayez de dire toute la phrase d'un seul souffle, même si cela paraît rapide.","Attention aux mots de remplissage (euh, um) — une courte pause silencieuse paraît plus sûre."],
+        mid:["Votre rythme est proche du naturel — un peu plus de régularité le rendra encore plus fluide.","Bon rythme dans l'ensemble ; gardez une allure constante du début à la fin."],
+        high:["Votre débit est fluide et naturel — en plein dans la zone idéale de la conversation.","Belle fluidité — aucune pause gênante, vous êtes à l'aise."] },
+      grammar:{
+        low:["Essayez d'inclure un sujet et un verbe clairs, comme « I think... » ou « We are... », pour compléter l'idée.","Les phrases courtes sont utiles pour s'entraîner, mais répondez par une phrase complète la prochaine fois."],
+        mid:["Bonne structure — relier deux idées avec « because » ou « so » la renforcerait encore.","Vos phrases sont claires ; ajoutez un détail de plus pour développer votre réponse."],
+        high:["Structure naturelle et bien formée — cela sonne comme de l'anglais fluide et assuré.","Excellente maîtrise de la grammaire, y compris dans l'enchaînement de vos idées."] },
+      vocabulary:{
+        low:["Essayez d'intégrer quelques expressions suggérées du scénario pour être plus précis.","Choisissez un mot un peu plus précis plutôt qu'un mot général — ce sera plus naturel."],
+        mid:["Belle palette de mots — une expression de plus propre au scénario compléterait le tout.","Bons choix de vocabulaire ; variez un peu plus pour éviter les répétitions."],
+        high:["Vocabulaire riche et varié — exactement le langage qu'emploierait un locuteur aisé.","Excellent choix de mots, avec des tournures naturelles propres au scénario."] }
+    }
+  },
+
+  pt: {
+    brandAria:'Início do Langslate Flow', themeAria:'Alternar entre modo claro e escuro', langAria:'Mudar idioma',
+    streakTitle:'Sua sequência de prática', dayStreak:'dias seguidos', demo:'DEMO',
+    footerLine:'Langslate Flow — pratique a fala com privacidade. Toda a análise de voz acontece no seu dispositivo; nada é enviado.',
+    credit:'Criado por Brice Gadou, Especialista em Business English e Vibe Coder', toLanding:'Sobre o Langslate Flow',
+    nounSentences:'frases', nounScenarios:'cenários',
+    cat_social:'Social', cat_travel:'Viagens', cat_business:'Negócios',
+
+    land_badge:'Tutora de voz com IA · funciona 100% no seu dispositivo',
+    land_h1a:'Ouça. Repita.', land_h1b:'Flua.',
+    land_lead:'Pratique inglês falado de verdade com a Aria, sua tutora de voz com IA. Repita frases nativas ou converse livremente em contextos Sociais, de Viagens e de Negócios — e receba feedback instantâneo sobre pronúncia, tom, fluência, gramática e vocabulário.',
+    land_ctaDemo:'Experimentar a DEMO', land_ctaHow:'Ver como funciona',
+    land_note:'Sem cadastro · Sem downloads · Funciona no celular e no notebook',
+    land_statSent:'FRASES DO SHADOW FLOW', land_statScen:'CENÁRIOS DO FREE FLOW', land_statLang:'IDIOMAS DA INTERFACE', land_statPriv:'PRIVADO E NO SEU DISPOSITIVO',
+    land_modesTitle:'Duas formas de ganhar fluência', land_modesSub:'Escolha a que combina com o seu dia',
+    land_shadowBody:'A Aria diz uma frase nativa. Você a repete logo em seguida. Receba notas de pronúncia, tom e fluência — palavra por palavra.',
+    land_shadowB1:'Ouça em velocidade 0.75×, 1× ou 1.25×', land_shadowB2:'Veja exatamente quais palavras você errou', land_shadowB3:'Notas de Pronúncia · Tom · Fluência',
+    land_flowBody:'Entre em uma situação real e responda com as suas próprias palavras. A Aria ouve, transcreve e avalia o que você disse.',
+    land_flowB1:'Situações Sociais, de Viagens e de Negócios', land_flowB2:'Respostas de exemplo quando precisar de uma dica', land_flowB3:'Notas de Fluência · Vocabulário · Gramática · Tom',
+    land_tracksTitle:'Três trilhas, uma voz', land_tracksSub:'Cada trilha tem {n} frases e {n} cenários',
+    land_howTitle:'Como funciona', land_howSub:'Da primeira palavra à fluência em três passos',
+    land_featTitle:'Feito para ser simples',
+    land_f1t:'Feedback instantâneo', land_f1b:'Notas e dicas assim que você para de falar.',
+    land_f2t:'Privado por design', land_f2b:'A análise de voz acontece no seu navegador. Nada é enviado.',
+    land_f3t:'Celular e notebook', land_f3b:'Uma experiência fluida e premium em qualquer tela.',
+    land_f4t:'Seu idioma', land_f4b:'Troque a interface entre inglês, espanhol, francês e português.',
+    land_finalTitle:'Pronto para falar com confiança?', land_finalBody:'Abra a demo ao vivo e ouça a Aria em menos de dez segundos.', land_finalCta:'Abrir a DEMO',
+
+    home_badge:'Tutora de voz com IA · funciona 100% no seu dispositivo',
+    home_h1a:'Ouça. Repita.', home_h1b:'Flua.',
+    home_lead:'Pratique inglês falado de verdade com a Aria, sua tutora de voz com IA. Repita frases nativas ou converse livremente em cenários Sociais, de Viagens e de Negócios — e receba feedback instantâneo sobre pronúncia, tom, fluência, gramática e vocabulário.',
+    home_statScen:'CENÁRIOS FREE FLOW', home_statSent:'FRASES SHADOW', home_statTracks:'TRILHAS DE PRÁTICA',
+    home_shadowDesc:'Ouça a Aria dizer uma frase, repita logo depois e receba feedback instantâneo sobre sua pronúncia, tom e fluência.',
+    home_shadowTag:'Ouça → repita → pontue', home_shadowCta:'Começar a repetir',
+    home_flowDesc:'Escolha um cenário real — ou deixe a Aria te surpreender — e responda com as suas palavras. O feedback chega assim que você para de falar.',
+    home_flowTag:'Fale livremente', home_flowCta:'Começar um cenário',
+    home_tracksTitle:'Três trilhas, uma voz', home_tracksSub:'Escolha um foco ou misture as três',
+    nScenarios:'{n} cenários', nSentences:'{n} frases',
+    how1e:'01 · ESCOLHA', how1t:'Escolha seu modo e tema', how1b:'Repita uma frase nativa ou improvise um cenário real de inglês Social, de Viagens ou de Negócios.',
+    how2e:'02 · FALE', how2t:'Ouça e responda em voz alta', how2b:'A Aria lê com uma voz britânica premium. Repita ou responda com as suas palavras — o microfone faz o resto.',
+    how3e:'03 · EVOLUA', how3t:'Receba feedback instantâneo e privado', how3b:'Veja suas notas de pronúncia, tom, fluência, gramática e vocabulário assim que você para de falar — tudo analisado no seu dispositivo.',
+
+    back_home:'Voltar ao início', setup_availShadow:'{n} frases disponíveis', setup_availFlow:'{n} cenários disponíveis',
+    setup_descShadow:'Escolha uma ou mais áreas de foco e depois uma frase para repetir — ou deixe a Aria escolher por você.',
+    setup_descFlow:'Escolha uma ou mais áreas de foco e depois um cenário para praticar falando — ou deixe a Aria te surpreender.',
+    setup_searchShadow:'Buscar frases…', setup_searchFlow:'Buscar cenários…', setup_shuffle:'Aleatório',
+    setup_surprise:'Surpreenda-me — começar agora', setup_noResults:'Nenhum resultado para "{q}". Tente outro termo de busca.', setup_more:'Mostrar mais',
+    item_shadowSub:'{cat} · Frase Shadow',
+
+    back_sentences:'Voltar às frases', back_scenarios:'Voltar aos cenários',
+    p_shadowEyebrow:'FRASE SHADOW', p_flowEyebrow:'CENÁRIO FREE FLOW', p_hear:'Ouvir este cenário', p_yourTurn:'Sua vez:',
+    p_seeSample:'Ver resposta de exemplo', p_hideSample:'Ocultar resposta de exemplo', p_sample:'Exemplo:', p_playAria:'Reproduzir frase',
+    p_recordAria:'Gravar sua voz', p_hintShadow:'Reproduza a frase e toque para repeti-la', p_hintFlow:'Toque para gravar sua resposta',
+    p_transcript:'Transcrição', p_placeholder:'Toque no microfone e comece a falar — a Aria está ouvindo.', p_listening:'Ouvindo…', p_analyzing:'Analisando…',
+    p_analyzingSpeech:'Analisando a sua fala…', p_recording:'Gravando… toque para parar', p_againShadow:'Toque para repetir de novo', p_againFlow:'Toque para gravar outra tentativa',
+    p_noSpeech:'Nenhuma fala detectada — tente gravar de novo um pouco mais perto do microfone.',
+    t_sttUnsupportedTitle:'O reconhecimento de voz não é compatível com este navegador.',
+    t_sttUnsupportedBody:'A Aria precisa dele para ouvir e avaliar a sua fala. Experimente a versão mais recente do Chrome, Edge ou Safari (computador ou Android).',
+    t_sttToast:'O reconhecimento de voz não é compatível com este navegador.', t_ttsToast:'Este navegador não suporta a reprodução de texto em voz.',
+    t_ttsFail:'Não foi possível reproduzir o áudio. Verifique o volume e o modo silencioso e toque em reproduzir novamente.',
+    t_micFail:'Não foi possível iniciar o microfone. Toque no microfone novamente.',
+
+    m_pron:'Pronúncia', m_tone:'Tom', m_fluency:'Fluência', m_vocab:'Vocabulário', m_grammar:'Gramática',
+    band_excellent:'Excelente', band_good:'Bom', band_fair:'Razoável', band_keep:'Continue praticando',
+    ov_none:'Áudio insuficiente', ov_excellent:'Excelente', ov_good:'Bom progresso', ov_fair:'Razoável — continue', ov_keep:'Continue praticando',
+    fb_overallScore:'Nota geral', fb_heard:'O que a Aria ouviu', fb_yourFeedback:'Seu feedback de fala', fb_overall:'GERAL',
+    fb_tryAgain:'Tentar de novo', fb_nextSentence:'Próxima frase', fb_nextScenario:'Próximo cenário', fb_changeSentence:'Trocar frase', fb_changeScenario:'Trocar cenário',
+    st_none:'Nenhuma fala foi detectada nesta tentativa.', st_main:'{w} {wl} em {s} {sl}.',
+    st_word1:'palavra', st_wordN:'palavras', st_sent1:'frase', st_sentN:'frases',
+    st_noFiller:'Nenhuma palavra de preenchimento detectada — ótimo!', st_filler1:'1 palavra de preenchimento detectada — tente uma pausa curta.', st_fillerN:'{n} palavras de preenchimento detectadas — tente uma pausa curta.',
+
+    e_notAllowed:'O acesso ao microfone foi bloqueado. Permita o microfone para esta página (veja o ícone na barra de endereços) e toque no microfone novamente.',
+    e_audioCapture:'Nenhum microfone foi encontrado. Conecte um microfone e tente de novo.',
+    e_network:'O reconhecimento de voz precisa de conexão com a internet (seu navegador processa a voz na nuvem). Verifique a conexão e tente de novo.',
+    e_aborted:'A gravação foi interrompida. Toque no microfone e tente de novo.', e_default:'Algo deu errado com o microfone ({code}). Tente novamente.',
+    e_deadMic:'Tentamos ouvir várias vezes, mas não captamos nenhum som do seu microfone. Verifique se está conectado e não está no mudo.',
+    e_noResponse:'O microfone não respondeu. Isso geralmente significa que o acesso ao microfone está bloqueado para esta página, ou que ela está aberta em um painel de pré-visualização em vez de uma aba completa — tente abri-la diretamente em uma aba do Chrome, Edge ou Safari.',
+    t_noItems:'Nenhum item corresponde à sua busca — tente limpá-la.', docTitle:'Langslate Flow — Tutora de voz com IA',
+
+    tips: {
+      accuracy:{
+        low:["Divida a frase em partes menores e repita cada trecho antes de dizê-la inteira.","Reduza a velocidade para 0.75× e ouça com atenção as palavras que você errou antes de gravar de novo."],
+        mid:["Você está perto — foque nas palavras sublinhadas em vermelho e repita só essas algumas vezes.","Bom esforço. Reproduza a frase mais uma vez e tente imitar a ordem exata das palavras."],
+        high:["Excelente precisão palavra por palavra — seu ouvido para a frase é muito afiado.","Perfeito! Você está igualando a frase-alvo quase por completo."] },
+      tone:{
+        low:["Sua entonação soa um pouco plana — exagere a subida e a descida da voz, como se estivesse contando uma história.","Acrescente mais melodia: dê um pouco mais de ênfase à palavra importante da frase."],
+        mid:["Boa energia — ampliar um pouco mais a sua variação de tom vai soar ainda mais natural.","Você varia bem o tom; continue se apoiando na emoção da frase."],
+        high:["Sua entonação soa natural e expressiva — é exatamente como um nativo diria.","Ótima variedade vocal! Seu tom mantém o ouvinte interessado."] },
+      fluency:{
+        low:["Você fez bastante pausa — tente dizer a frase inteira de uma vez só, mesmo que pareça rápido.","Cuidado com as palavras de preenchimento (um, uh) — uma pausa curta em silêncio soa mais confiante."],
+        mid:["Seu ritmo está perto do natural — um pouco mais de constância vai deixá-lo ainda mais suave.","Bom ritmo no geral; tente manter um passo constante do começo ao fim."],
+        high:["Seu ritmo soa suave e natural — no ponto ideal da fala de conversação.","Ótima fluência — sem pausas desconfortáveis, com confiança."] },
+      grammar:{
+        low:["Tente incluir um sujeito e um verbo claros, como 'I think...' ou 'We are...', para completar a ideia.","Frases curtas servem para treinar, mas na próxima vez responda com uma frase completa."],
+        mid:["Boa estrutura — ligar duas ideias com 'because' ou 'so' deixaria ainda mais forte.","Você forma frases claras; tente acrescentar mais um detalhe para ampliar a resposta."],
+        high:["Estrutura natural e bem formada — soa como um inglês fluente e confiante.","Ótimo controle gramatical, inclusive na forma como ligou as ideias."] },
+      vocabulary:{
+        low:["Tente incluir algumas das expressões sugeridas do cenário para soar mais preciso.","Escolha uma palavra um pouco mais específica em vez de uma geral — vai soar mais natural."],
+        mid:["Boa variedade de palavras — usar mais uma expressão típica do cenário completaria a resposta.","Boas escolhas de vocabulário; varie um pouco mais para evitar repetições."],
+        high:["Vocabulário rico e variado — exatamente a linguagem que um falante fluente usaria.","Excelente escolha de palavras, com expressões naturais do cenário."] }
+    }
+  }
+};
+
+
+/* ----- Pricing + account strings ----- */
+Object.assign(I18N.en, {
+  nav_login:'Log in', nav_openApp:'Open app', nav_pricing:'Pricing',
+  price_title:'Choose Your Path to Fluency.', price_sub:'Every plan includes the full Langslate Flow experience. Choose the commitment that fits.',
+  price_popular:'MOST POPULAR', price_best:'BEST DEAL', price_for:'For {n} months', price_perMonth:'≈ {p} / month',
+  price_f1:'Unlimited Shadow & Flow practice', price_f2:'All Social, Travel & Business scenarios', price_f3:'Instant tone, fluency, grammar & vocabulary feedback',
+  price_f4:"Aria's natural voice responses", price_f5:'100% private, on-device analysis', price_f6:'Progress tracking & streaks',
+  price_cta1:'Start with Starter', price_cta2:'Get Momentum', price_cta3:'Choose Fluent',
+  auth_welcome:'Welcome back', auth_welcomeNew:'Create your account', auth_sub:'Log in to continue your practice.', auth_subNew:'Start practising with Aria in under a minute.',
+  auth_tabLogin:'Log in', auth_tabCreate:'Create account', auth_google:'Continue with Google', auth_or:'OR WITH EMAIL',
+  auth_name:'FULL NAME', auth_namePh:'Your name', auth_email:'EMAIL', auth_emailPh:'you@company.com', auth_pass:'PASSWORD', auth_passPh:'At least 8 characters',
+  auth_show:'SHOW', auth_hide:'HIDE', auth_plan:'YOUR PLAN', auth_months:'{n} months',
+  auth_newHere:'New to Langslate Flow?', auth_createLink:'Create an account', auth_haveAcct:'Already have an account?', auth_loginLink:'Log in', auth_close:'Close',
+  auth_errName:'Please enter your name.', auth_errEmail:'Please enter a valid email address.', auth_errPass:'Your password needs at least 8 characters.',
+  auth_errNoAccount:'No account found for this email. Create one to get started.', auth_errWrong:'Incorrect password. Please try again.',
+  auth_errExists:'An account with this email already exists. Try logging in.',
+  auth_googleDemo:'Signed in with Google (demo)', auth_welcomeToast:'Welcome, {name}!', auth_loggedOut:"You've been logged out.", auth_logout:'Log out',
+  auth_demoNote:'Demo build: accounts are stored only in this browser and no payment is taken.'
+});
+Object.assign(I18N.es, {
+  nav_login:'Iniciar sesión', nav_openApp:'Abrir app', nav_pricing:'Precios',
+  price_title:'Elige tu camino hacia la fluidez.', price_sub:'Todos los planes incluyen la experiencia completa de Langslate Flow. Elige el compromiso que mejor te encaje.',
+  price_popular:'MÁS POPULAR', price_best:'MEJOR OFERTA', price_for:'Durante {n} meses', price_perMonth:'≈ {p} / mes',
+  price_f1:'Práctica ilimitada de Shadow y Flow', price_f2:'Todos los escenarios Sociales, de Viajes y de Negocios', price_f3:'Feedback instantáneo de tono, fluidez, gramática y vocabulario',
+  price_f4:'Respuestas de voz naturales de Aria', price_f5:'Análisis 100% privado en tu dispositivo', price_f6:'Seguimiento de progreso y rachas',
+  price_cta1:'Empezar con Starter', price_cta2:'Elegir Momentum', price_cta3:'Elegir Fluent',
+  auth_welcome:'Te damos la bienvenida', auth_welcomeNew:'Crea tu cuenta', auth_sub:'Inicia sesión para continuar tu práctica.', auth_subNew:'Empieza a practicar con Aria en menos de un minuto.',
+  auth_tabLogin:'Iniciar sesión', auth_tabCreate:'Crear cuenta', auth_google:'Continuar con Google', auth_or:'O CON TU CORREO',
+  auth_name:'NOMBRE COMPLETO', auth_namePh:'Tu nombre', auth_email:'CORREO ELECTRÓNICO', auth_emailPh:'tu@empresa.com', auth_pass:'CONTRASEÑA', auth_passPh:'Al menos 8 caracteres',
+  auth_show:'MOSTRAR', auth_hide:'OCULTAR', auth_plan:'TU PLAN', auth_months:'{n} meses',
+  auth_newHere:'¿Nuevo en Langslate Flow?', auth_createLink:'Crea una cuenta', auth_haveAcct:'¿Ya tienes una cuenta?', auth_loginLink:'Inicia sesión', auth_close:'Cerrar',
+  auth_errName:'Introduce tu nombre.', auth_errEmail:'Introduce un correo electrónico válido.', auth_errPass:'La contraseña debe tener al menos 8 caracteres.',
+  auth_errNoAccount:'No hay ninguna cuenta con este correo. Crea una para empezar.', auth_errWrong:'Contraseña incorrecta. Inténtalo de nuevo.',
+  auth_errExists:'Ya existe una cuenta con este correo. Prueba a iniciar sesión.',
+  auth_googleDemo:'Sesión iniciada con Google (demo)', auth_welcomeToast:'¡Bienvenido/a, {name}!', auth_loggedOut:'Has cerrado sesión.', auth_logout:'Cerrar sesión',
+  auth_demoNote:'Versión demo: las cuentas se guardan solo en este navegador y no se realiza ningún cobro.'
+});
+Object.assign(I18N.fr, {
+  nav_login:'Connexion', nav_openApp:"Ouvrir l'app", nav_pricing:'Tarifs',
+  price_title:"Choisissez votre voie vers l'aisance.", price_sub:"Chaque formule inclut l'expérience Langslate Flow complète. Choisissez l'engagement qui vous convient.",
+  price_popular:'LE PLUS POPULAIRE', price_best:'MEILLEURE OFFRE', price_for:'Pendant {n} mois', price_perMonth:'≈ {p} / mois',
+  price_f1:'Pratique Shadow et Flow illimitée', price_f2:'Tous les scénarios Social, Voyage et Affaires', price_f3:'Retour instantané sur le ton, la fluidité, la grammaire et le vocabulaire',
+  price_f4:"Réponses vocales naturelles d'Aria", price_f5:'Analyse 100 % privée, sur votre appareil', price_f6:'Suivi des progrès et séries',
+  price_cta1:'Commencer avec Starter', price_cta2:'Choisir Momentum', price_cta3:'Choisir Fluent',
+  auth_welcome:'Bon retour', auth_welcomeNew:'Créez votre compte', auth_sub:'Connectez-vous pour poursuivre votre pratique.', auth_subNew:'Commencez à pratiquer avec Aria en moins d\'une minute.',
+  auth_tabLogin:'Connexion', auth_tabCreate:'Créer un compte', auth_google:'Continuer avec Google', auth_or:'OU PAR E-MAIL',
+  auth_name:'NOM COMPLET', auth_namePh:'Votre nom', auth_email:'E-MAIL', auth_emailPh:'vous@entreprise.com', auth_pass:'MOT DE PASSE', auth_passPh:'Au moins 8 caractères',
+  auth_show:'AFFICHER', auth_hide:'MASQUER', auth_plan:'VOTRE FORMULE', auth_months:'{n} mois',
+  auth_newHere:'Nouveau sur Langslate Flow ?', auth_createLink:'Créer un compte', auth_haveAcct:'Vous avez déjà un compte ?', auth_loginLink:'Connexion', auth_close:'Fermer',
+  auth_errName:'Veuillez saisir votre nom.', auth_errEmail:'Veuillez saisir une adresse e-mail valide.', auth_errPass:'Votre mot de passe doit contenir au moins 8 caractères.',
+  auth_errNoAccount:'Aucun compte pour cet e-mail. Créez-en un pour commencer.', auth_errWrong:'Mot de passe incorrect. Veuillez réessayer.',
+  auth_errExists:'Un compte existe déjà avec cet e-mail. Essayez de vous connecter.',
+  auth_googleDemo:'Connecté avec Google (démo)', auth_welcomeToast:'Bienvenue, {name} !', auth_loggedOut:'Vous avez été déconnecté.', auth_logout:'Se déconnecter',
+  auth_demoNote:"Version démo : les comptes sont enregistrés uniquement dans ce navigateur et aucun paiement n'est effectué."
+});
+Object.assign(I18N.pt, {
+  nav_login:'Entrar', nav_openApp:'Abrir app', nav_pricing:'Preços',
+  price_title:'Escolha o seu caminho para a fluência.', price_sub:'Todos os planos incluem a experiência completa do Langslate Flow. Escolha o compromisso que combina com você.',
+  price_popular:'MAIS POPULAR', price_best:'MELHOR OFERTA', price_for:'Por {n} meses', price_perMonth:'≈ {p} / mês',
+  price_f1:'Prática ilimitada de Shadow e Flow', price_f2:'Todos os cenários Sociais, de Viagens e de Negócios', price_f3:'Feedback instantâneo de tom, fluência, gramática e vocabulário',
+  price_f4:'Respostas de voz naturais da Aria', price_f5:'Análise 100% privada, no seu dispositivo', price_f6:'Acompanhamento de progresso e sequências',
+  price_cta1:'Começar com Starter', price_cta2:'Escolher Momentum', price_cta3:'Escolher Fluent',
+  auth_welcome:'Bem-vindo de volta', auth_welcomeNew:'Crie sua conta', auth_sub:'Entre para continuar a sua prática.', auth_subNew:'Comece a praticar com a Aria em menos de um minuto.',
+  auth_tabLogin:'Entrar', auth_tabCreate:'Criar conta', auth_google:'Continuar com o Google', auth_or:'OU COM E-MAIL',
+  auth_name:'NOME COMPLETO', auth_namePh:'Seu nome', auth_email:'E-MAIL', auth_emailPh:'voce@empresa.com', auth_pass:'SENHA', auth_passPh:'Pelo menos 8 caracteres',
+  auth_show:'MOSTRAR', auth_hide:'OCULTAR', auth_plan:'SEU PLANO', auth_months:'{n} meses',
+  auth_newHere:'Novo no Langslate Flow?', auth_createLink:'Crie uma conta', auth_haveAcct:'Já tem uma conta?', auth_loginLink:'Entrar', auth_close:'Fechar',
+  auth_errName:'Informe o seu nome.', auth_errEmail:'Informe um e-mail válido.', auth_errPass:'A senha precisa ter pelo menos 8 caracteres.',
+  auth_errNoAccount:'Nenhuma conta encontrada para este e-mail. Crie uma para começar.', auth_errWrong:'Senha incorreta. Tente novamente.',
+  auth_errExists:'Já existe uma conta com este e-mail. Tente entrar.',
+  auth_googleDemo:'Login com o Google feito (demo)', auth_welcomeToast:'Bem-vindo(a), {name}!', auth_loggedOut:'Você saiu da sua conta.', auth_logout:'Sair',
+  auth_demoNote:'Versão demo: as contas ficam salvas apenas neste navegador e nenhum pagamento é cobrado.'
+});
+
+function detectLang(){
+  try{
+    const saved = localStorage.getItem(LANG_KEY);
+    if(saved && I18N[saved]) return saved;
+  }catch(e){}
+  try{
+    const nav = ((navigator.languages && navigator.languages[0]) || navigator.language || 'en').slice(0,2).toLowerCase();
+    if(I18N[nav]) return nav;
+  }catch(e){}
+  return 'en';
+}
+let CUR_LANG = 'en';
+function t(key, vars){
+  const dict = I18N[CUR_LANG] || I18N.en;
+  let s = dict[key];
+  if(s === undefined) s = I18N.en[key];
+  if(s === undefined) return key;
+  if(vars) s = s.replace(/\{(\w+)\}/g, (m, k) => (vars[k] !== undefined ? vars[k] : m));
+  return s;
+}
+function langLocale(){ const l = LANGS.find(x => x.code === CUR_LANG); return l ? l.locale : 'en-US'; }
+function catLabel(catId){ return t('cat_' + catId); }
+
+function fmtNum(n){
+  const sep = {en:',', es:'.', fr:'\u202f', pt:'.'}[CUR_LANG] || ',';
+  return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+}
+
+/* ===========================================================================
    STATE
    =========================================================================== */
 const state = {
   theme: 'dark',
-  view: 'home',
+  lang: 'en',
+  user: null,
+  view: 'landing',     // 'landing' | 'home' | 'setup' | 'practice'
   mode: null,            // 'shadow' | 'flow'
   selectedCats: new Set(['social']),
   searchQuery: '',
@@ -857,36 +1658,107 @@ function toast(msg){
 const TTS = {
   voice: null,
   loaded: false,
+  _token: 0,          // bumped on every speak()/stop(): stale callbacks from an older utterance are ignored
+  _timers: [],
+  _u: null,           // strong reference to the live utterance (Chrome garbage-collects it mid-speech otherwise and 'end' never fires)
+  _endPad: 3500,      // safety margin (ms) added to the estimated speaking time before we force-finish
+  _lang(v){ return String((v && v.lang) || '').replace('_', '-'); },   // Android reports 'en_GB', desktop reports 'en-GB'
+  _isEnglish(v){ return /^en(-|$)/i.test(this._lang(v)); },
   init(){
+    if(!this.supported) return;
+    const synth = window.speechSynthesis;
     const pick = () => {
-      const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
-      if(!voices.length) return;
+      const voices = synth.getVoices ? synth.getVoices() : [];
+      if(!voices || !voices.length) return false;
+      const en = voices.filter(v => this._isEnglish(v));
+      const gb = en.filter(v => /^en-GB$/i.test(this._lang(v)));
+      // Never fall back to voices[0]: on a phone set to Spanish/French/Portuguese that is a
+      // non-English voice, which reads English text with the wrong accent (or stays silent).
       this.voice =
-        voices.find(v => /en-GB/i.test(v.lang) && /female|UK|Female/i.test(v.name)) ||
-        voices.find(v => /en-GB/i.test(v.lang)) ||
-        voices.find(v => /en-US/i.test(v.lang)) ||
-        voices.find(v => /^en/i.test(v.lang)) ||
-        voices[0];
+        gb.find(v => /female|google uk|hazel|serena|libby|sonia|kate/i.test(v.name || '')) || gb[0] ||
+        en.find(v => /^en-US$/i.test(this._lang(v))) || en[0] || null;
       this.loaded = true;
+      return true;
     };
-    pick();
-    if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged = pick;
+    if(!pick()){
+      // Android Chrome fills the voice list asynchronously and sometimes never fires voiceschanged.
+      let tries = 0;
+      const iv = setInterval(() => { if(pick() || ++tries > 15) clearInterval(iv); }, 400);
+    }
+    try{ synth.addEventListener('voiceschanged', pick); }catch(e){ try{ synth.onvoiceschanged = pick; }catch(e2){} }
   },
-  get supported(){ return 'speechSynthesis' in window; },
+  get supported(){ return typeof window !== 'undefined' && 'speechSynthesis' in window && typeof window.SpeechSynthesisUtterance !== 'undefined'; },
+  _clearTimers(){ this._timers.forEach(clearTimeout); this._timers = []; },
+  /* speak(text, rate, onStart, onEnd(ok)) — onEnd always fires exactly once (ok=false if audio could not play). */
   speak(text, rate, onStart, onEnd){
-    if(!this.supported){ if(onEnd) onEnd(); return; }
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    if(this.voice) u.voice = this.voice;
-    u.lang = (this.voice && this.voice.lang) || 'en-GB';
-    u.rate = rate || 1;
-    u.pitch = 1.02;
-    u.onstart = () => onStart && onStart();
-    u.onend = () => onEnd && onEnd();
-    u.onerror = () => onEnd && onEnd();
-    window.speechSynthesis.speak(u);
+    if(!this.supported){ if(onEnd) onEnd(false); return; }
+    const synth = window.speechSynthesis;
+    const token = ++this._token;
+    this._clearTimers();
+    let finished = false;
+    const finish = (ok) => {
+      if(finished || token !== this._token) return;
+      finished = true;
+      this._clearTimers();
+      this._u = null;
+      if(onEnd) onEnd(ok);
+    };
+    const attempt = (n) => {
+      if(token !== this._token) return;
+      let started = false;
+      const t0 = Date.now();
+      const u = new SpeechSynthesisUtterance(text);
+      if(n === 0 && this.voice){ u.voice = this.voice; u.lang = this._lang(this.voice) || 'en-GB'; }
+      else { u.lang = 'en-US'; }          // 2nd attempt: let the device pick its own default English voice
+      u.rate = rate || 1;
+      u.pitch = 1;
+      u.volume = 1;
+      const fail = () => {
+        if(token !== this._token || finished) return;
+        this._clearTimers();
+        try{ synth.cancel(); }catch(e){}
+        if(n === 0) setTimeout(() => attempt(1), 150); else finish(false);
+      };
+      u.onstart = () => {
+        if(token !== this._token || started) return;
+        started = true;
+        this._clearTimers();
+        if(onStart) onStart();
+        // Some Android engines never deliver 'end' — force-finish after the expected duration.
+        const words = String(text).split(/\s+/).filter(Boolean).length;
+        const est = (words / (2.2 * (rate || 1))) * 1000 + this._endPad;
+        this._timers.push(setTimeout(() => { try{ synth.cancel(); }catch(e){} finish(true); }, est));
+      };
+      u.onend = () => {
+        if(token !== this._token) return;
+        if(!started && n === 0 && Date.now() - t0 < 120){ fail(); return; }   // ended instantly without ever starting = silent failure
+        finish(true);
+      };
+      u.onerror = (ev) => {
+        if(token !== this._token) return;
+        const err = ev && ev.error;
+        if(err === 'interrupted' || err === 'canceled'){ finish(true); return; }
+        fail();
+      };
+      this._u = u;
+      // If the engine never starts (stuck queue / unavailable voice), retry once, then give up visibly.
+      this._timers.push(setTimeout(() => { if(!started) fail(); }, n === 0 ? 2800 : 3500));
+      try{
+        if(synth.paused && synth.resume) synth.resume();
+        synth.speak(u);
+      }catch(e){ fail(); }
+    };
+    let busy = false;
+    try{ busy = !!(synth.speaking || synth.pending || synth.paused); if(busy) synth.cancel(); }catch(e){}
+    // Android Chrome silently drops a speak() issued in the same tick as cancel(): wait for the queue to clear.
+    if(busy) setTimeout(() => attempt(0), 220); else attempt(0);
   },
-  stop(){ if(this.supported) window.speechSynthesis.cancel(); }
+  stop(){
+    this._token++;
+    this._clearTimers();
+    this._u = null;
+    if(this.supported){ try{ window.speechSynthesis.cancel(); }catch(e){} }
+  }
 };
 TTS.init();
 
@@ -1095,7 +1967,7 @@ if(Recorder.sttSupported){
         rtRestartCount++;
         if(rtRestartCount > 10){
           rtRecording = false;
-          finishRecordingWithError("We tried listening several times but never picked up any sound from your microphone. Check that it's connected and not muted.");
+          finishRecordingWithError(t('e_deadMic'));
           return;
         }
       }
@@ -1112,16 +1984,11 @@ if(Recorder.sttSupported){
 function friendlyASRError(code){
   switch(code){
     case 'not-allowed':
-    case 'service-not-allowed':
-      return "Microphone access was blocked. Allow microphone access for this page (check the icon in your browser's address bar), then tap the mic again.";
-    case 'audio-capture':
-      return "No microphone was found. Connect a microphone and try again.";
-    case 'network':
-      return "Speech recognition needs an internet connection (your browser processes speech in the cloud). Check your connection and try again.";
-    case 'aborted':
-      return "Recording was interrupted. Tap the mic and try again.";
-    default:
-      return `Something went wrong with the microphone (${code}). Please try again.`;
+    case 'service-not-allowed': return t('e_notAllowed');
+    case 'audio-capture': return t('e_audioCapture');
+    case 'network': return t('e_network');
+    case 'aborted': return t('e_aborted');
+    default: return t('e_default', { code });
   }
 }
 
@@ -1134,7 +2001,7 @@ function autoFinishOnSilence(session){
   const btn = document.getElementById('recordBtn');
   if(btn){ btn.disabled = true; }
   const hint = document.getElementById('recHint');
-  if(hint) hint.textContent = 'Analyzing your speech…';
+  if(hint) hint.textContent = t('p_analyzingSpeech');
   if(recognitionActive){
     try{ recognition.stop(); }catch(e){ finishRecording(); }
   } else {
@@ -1293,7 +2160,15 @@ function pickTip(metric, score){
   if(!bank || score === null) return null;
   const level = score < 62 ? 'low' : (score < 85 ? 'mid' : 'high');
   const list = bank[level];
-  return { text: list[Math.floor(Math.random()*list.length)], level };
+  const idx = Math.floor(Math.random()*list.length);
+  // `text` is the English copy (kept for compatibility); the UI resolves the
+  // wording from { metric, level, idx } in the CURRENT language at render time.
+  return { text: list[idx], level, idx };
+}
+function tipText(tip){
+  const d = I18N[CUR_LANG] && I18N[CUR_LANG].tips;
+  const arr = d && d[tip.metric] && d[tip.metric][tip.level];
+  return (arr && arr[tip.idx]) || tip.text;
 }
 
 function weightedOverall(parts){
@@ -1378,17 +2253,16 @@ function computeFlowFeedback(scenario, data){
 function escapeHtml(str){
   return String(str == null ? '' : str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-function fmtNum(n){ return n.toLocaleString('en-US'); }
 
 /* Single source of truth for score → band label/color, used by rings,
    linear meters and the overall score label so the whole app speaks the
    same scoring language. */
 function metricBand(score){
   if(score == null) return { text:'—', color:'var(--text-3)' };
-  if(score >= 85) return { text:'Excellent', color:'var(--success)' };
-  if(score >= 70) return { text:'Good', color:'var(--blue)' };
-  if(score >= 50) return { text:'Fair', color:'var(--orange)' };
-  return { text:'Keep Practicing', color:'var(--danger)' };
+  if(score >= 85) return { text:t('band_excellent'), color:'var(--success)' };
+  if(score >= 70) return { text:t('band_good'), color:'var(--blue)' };
+  if(score >= 50) return { text:t('band_fair'), color:'var(--orange)' };
+  return { text:t('band_keep'), color:'var(--danger)' };
 }
 
 function renderRing(id, label, score){
@@ -1425,21 +2299,19 @@ function renderMeter(metric, label, score){
    the Free Flow overall banner. */
 function transcriptStats(transcript){
   const words = normWords(transcript);
-  if(!words.length) return 'No speech was detected in this take.';
+  if(!words.length) return t('st_none');
   const sentenceCount = Math.max(1, (transcript.match(/[.!?]+/g) || []).length);
   const fillers = ['um','uh','umm','uhh','erm','er','like','you know'];
   const fillerCount = words.filter(w => fillers.includes(w)).length;
-  const wordsPart = `${words.length} word${words.length===1?'':'s'} in ${sentenceCount} sentence${sentenceCount===1?'':'s'}.`;
-  const fillerPart = fillerCount === 0
-    ? 'No filler words detected — great!'
-    : `${fillerCount} filler word${fillerCount===1?'':'s'} detected — try a short pause instead.`;
+  const wordsPart = t('st_main', { w:words.length, wl: t(words.length===1?'st_word1':'st_wordN'), s:sentenceCount, sl: t(sentenceCount===1?'st_sent1':'st_sentN') });
+  const fillerPart = fillerCount === 0 ? t('st_noFiller') : (fillerCount === 1 ? t('st_filler1') : t('st_fillerN', { n:fillerCount }));
   return `${wordsPart} ${fillerPart}`;
 }
 function tipIcon(level){ return level==='high' ? ICONS.checkCircle : (level==='low' ? ICONS.alert : ICONS.info); }
 function tipClass(level){ return level==='high' ? 'good' : (level==='low' ? 'warn' : 'info'); }
 function renderTips(tips){
   if(!tips || !tips.length) return '';
-  return `<div class="tip-list">${tips.map(t => `<div class="tip ${tipClass(t.level)}">${tipIcon(t.level)}<div>${escapeHtml(t.text)}</div></div>`).join('')}</div>`;
+  return `<div class="tip-list">${tips.map(tp => `<div class="tip ${tipClass(tp.level)}">${tipIcon(tp.level)}<div>${escapeHtml(tipText(tp))}</div></div>`).join('')}</div>`;
 }
 function wordDiffHTML(diff){
   return diff.map(d => {
@@ -1460,7 +2332,7 @@ function highlightKeywords(transcript, hits){
 function catIcon(catId){ return ICONS[CATS[catId].icon]; }
 function catTag(catId){
   const c = CATS[catId];
-  return `<span class="cat-tag" style="--cat-color:${c.color}">${catIcon(catId)} ${c.label}</span>`;
+  return `<span class="cat-tag" style="--cat-color:${c.color}">${catIcon(catId)} ${catLabel(catId)}</span>`;
 }
 
 /* ===========================================================================
@@ -1471,9 +2343,9 @@ function homeHTML(){
   const totalSent = totalSentences();
   return `
   <section class="hero">
-    <div class="hero-badge"><span class="dot"></span> AI Voice Tutor · runs 100% on your device</div>
-    <h1>Listen. Shadow. <em>Flow.</em></h1>
-    <p class="lead">Practice real spoken English with Aria, your AI voice tutor. Shadow native sentences or hold free-flowing conversations across Social, Travel and Business scenarios — and get instant feedback on tone, fluency, grammar &amp; vocabulary.</p>
+    <div class="hero-badge"><span class="dot"></span> ${escapeHtml(t('home_badge'))}</div>
+    <h1>${escapeHtml(t('home_h1a'))} <em>${escapeHtml(t('home_h1b'))}</em></h1>
+    <p class="lead">${escapeHtml(t('home_lead'))}</p>
 
     <div class="orb-wrap idle-breathe" id="homeOrb">
       <div class="orb-ring"></div>
@@ -1482,9 +2354,9 @@ function homeHTML(){
     </div>
 
     <div class="hero-stats">
-      <div class="hero-stat"><b>${fmtNum(totalScen)}+</b><span>FREE FLOW SCENARIOS</span></div>
-      <div class="hero-stat"><b>${fmtNum(totalSent)}+</b><span>SHADOW SENTENCES</span></div>
-      <div class="hero-stat"><b>3</b><span>PRACTICE TRACKS</span></div>
+      <div class="hero-stat"><b>${fmtNum(totalScen)}</b><span>${escapeHtml(t('home_statScen'))}</span></div>
+      <div class="hero-stat"><b>${fmtNum(totalSent)}</b><span>${escapeHtml(t('home_statSent'))}</span></div>
+      <div class="hero-stat"><b>3</b><span>${escapeHtml(t('home_statTracks'))}</span></div>
     </div>
   </section>
 
@@ -1494,49 +2366,169 @@ function homeHTML(){
         <div class="glow"></div>
         <div class="mode-icon">${ICONS.ear}</div>
         <h3>Shadow Flow</h3>
-        <p>Listen to Aria say a sentence, repeat it right after her, and get instant feedback on your tone and fluency accuracy.</p>
-        <div class="tags"><span>Listen → repeat → score</span><span>${fmtNum(totalSent)}+ sentences</span></div>
-        <div class="mode-cta">Start shadowing ${ICONS.arrowRight}</div>
+        <p>${escapeHtml(t('home_shadowDesc'))}</p>
+        <div class="tags"><span>${escapeHtml(t('home_shadowTag'))}</span><span>${escapeHtml(t('nSentences',{n:fmtNum(totalSent)}))}</span></div>
+        <div class="mode-cta">${escapeHtml(t('home_shadowCta'))} ${ICONS.arrowRight}</div>
       </button>
       <button class="mode-card m-flow" data-act="goSetup" data-mode="flow">
         <div class="glow"></div>
         <div class="mode-icon">${ICONS.sparkle}</div>
         <h3>Free Flow</h3>
-        <p>Pick a real-world scenario — or let Aria surprise you — and speak your own answer. Feedback lands the moment you stop talking.</p>
-        <div class="tags"><span>Speak freely</span><span>${fmtNum(totalScen)}+ scenarios</span></div>
-        <div class="mode-cta">Start a scenario ${ICONS.arrowRight}</div>
+        <p>${escapeHtml(t('home_flowDesc'))}</p>
+        <div class="tags"><span>${escapeHtml(t('home_flowTag'))}</span><span>${escapeHtml(t('nScenarios',{n:fmtNum(totalScen)}))}</span></div>
+        <div class="mode-cta">${escapeHtml(t('home_flowCta'))} ${ICONS.arrowRight}</div>
       </button>
     </div>
 
     <div class="section-head">
-      <h2>Three tracks, one voice</h2>
-      <p>Pick a focus, or mix all three</p>
+      <h2>${escapeHtml(t('home_tracksTitle'))}</h2>
+      <p>${escapeHtml(t('home_tracksSub'))}</p>
     </div>
     <div class="cat-grid">
       ${Object.values(CATS).map(c => `
         <div class="cat-card" style="--cat-color:${c.color}">
           <div class="cat-icon">${ICONS[c.icon]}</div>
-          <h4>${c.label}</h4>
-          <p>${fmtNum(poolSize(c.id,'scenarios'))}+ scenarios</p>
+          <h4>${escapeHtml(catLabel(c.id))}</h4>
+          <p>${escapeHtml(t('nScenarios',{n:fmtNum(poolSize(c.id,'scenarios'))}))}</p>
         </div>`).join('')}
     </div>
 
     <div class="how-grid">
+      ${howCardsHTML()}
+    </div>
+  </section>`;
+}
+function howCardsHTML(){
+  return [1,2,3].map(i => `
       <div class="card card-pad how-card">
-        <div class="eyebrow step-eyebrow">01 · CHOOSE</div>
-        <h4>Pick your mode &amp; topic</h4>
-        <p>Shadow a native sentence, or free-flow a real scenario across Social, Travel or Business English.</p>
+        <div class="eyebrow step-eyebrow">${escapeHtml(t('how'+i+'e'))}</div>
+        <h4>${escapeHtml(t('how'+i+'t'))}</h4>
+        <p>${escapeHtml(t('how'+i+'b'))}</p>
+      </div>`).join('');
+}
+
+
+/* ===========================================================================
+   VIEW: LANDING PAGE (entry point — the DEMO button opens the platform)
+   =========================================================================== */
+const TICK_SVG = '<svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const FEAT_ICONS = {
+  bolt:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>',
+  devices:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="10" rx="2"/><path d="M6 19h6M9 15v4"/><rect x="18" y="8" width="4" height="9" rx="1.2"/></svg>',
+  globe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>'
+};
+function landingHTML(){
+  const nS = totalSentences(), nC = totalScenarios();
+  const perCat = poolSize('social', 'sentences');
+  const ck = ICONS.checkCircle;
+  const bars = [10,22,14,30,18,26,12,28,16,24,11,20].map((hgt,i) => `<i style="animation-delay:${(i*0.09).toFixed(2)}s;height:${hgt}px"></i>`).join('');
+  const hit = (w) => `<span class="word w-hit">${w}</span>`;
+  const miss = (w) => `<span class="word w-miss">${w}</span>`;
+  return `
+  <section class="land-hero">
+    <div class="land-aurora"><i></i><i></i></div>
+    <div class="hero-badge"><span class="dot"></span> ${escapeHtml(t('land_badge'))}</div>
+    <h1>${escapeHtml(t('land_h1a'))} <em>${escapeHtml(t('land_h1b'))}</em></h1>
+    <p class="lead">${escapeHtml(t('land_lead'))}</p>
+    <div class="land-cta-row">
+      <button class="btn btn-primary btn-lg demo-cta" id="heroDemo" data-act="enterDemo"><span class="live-dot"></span> ${escapeHtml(t('land_ctaDemo'))} ${ICONS.arrowRight}</button>
+      <button class="btn btn-secondary btn-lg" data-act="scrollHow">${escapeHtml(t('land_ctaHow'))}</button>
+    </div>
+    <p class="land-note">${escapeHtml(t('land_note'))}</p>
+
+    <div class="land-visual" aria-hidden="true">
+      <div class="mock-card">
+        <div class="mock-top">
+          <span class="brand-mark"></span><b>Aria</b>
+          <span class="cat-tag" style="--cat-color:${CATS.travel.color}">${catIcon('travel')} ${escapeHtml(catLabel('travel'))}</span>
+        </div>
+        <div class="mock-sentence">${hit('Could')} ${hit('you')} ${hit('tell')} ${hit('me')} ${hit('how')} ${hit('to')} ${hit('get')} ${hit('to')} ${miss('the')} ${hit('central')} ${hit('station?')}</div>
+        <div class="mock-wave">${bars}</div>
+        <div class="ring-grid">${renderRing('a', t('m_pron'), 94)}${renderRing('b', t('m_tone'), 88)}${renderRing('c', t('m_fluency'), 91)}</div>
       </div>
-      <div class="card card-pad how-card">
-        <div class="eyebrow step-eyebrow">02 · SPEAK</div>
-        <h4>Listen &amp; respond aloud</h4>
-        <p>Aria reads it in a premium British voice. Repeat it, or answer in your own words — your mic does the rest.</p>
+    </div>
+  </section>
+
+  <div class="land-stats">
+    <div class="land-stat"><b>${fmtNum(nS)}</b><span>${escapeHtml(t('land_statSent'))}</span></div>
+    <div class="land-stat"><b>${fmtNum(nC)}</b><span>${escapeHtml(t('land_statScen'))}</span></div>
+    <div class="land-stat"><b>${LANGS.length}</b><span>${escapeHtml(t('land_statLang'))}</span></div>
+    <div class="land-stat"><b>100%</b><span>${escapeHtml(t('land_statPriv'))}</span></div>
+  </div>
+
+  <section class="land-section">
+    <h2>${escapeHtml(t('land_modesTitle'))}</h2>
+    <p class="sub">${escapeHtml(t('land_modesSub'))}</p>
+    <div class="mode-grid">
+      <div class="mode-card m-shadow">
+        <div class="glow"></div>
+        <div class="mode-icon">${ICONS.ear}</div>
+        <h3>Shadow Flow</h3>
+        <p>${escapeHtml(t('land_shadowBody'))}</p>
+        <ul class="bullets"><li>${ck}${escapeHtml(t('land_shadowB1'))}</li><li>${ck}${escapeHtml(t('land_shadowB2'))}</li><li>${ck}${escapeHtml(t('land_shadowB3'))}</li></ul>
+        <div class="tags" style="margin-top:20px"><span>${escapeHtml(t('nSentences',{n:fmtNum(nS)}))}</span></div>
       </div>
-      <div class="card card-pad how-card">
-        <div class="eyebrow step-eyebrow">03 · IMPROVE</div>
-        <h4>Get instant, private feedback</h4>
-        <p>See scores for tone, fluency, grammar &amp; vocabulary the moment you stop talking — all analyzed on your device.</p>
+      <div class="mode-card m-flow">
+        <div class="glow"></div>
+        <div class="mode-icon">${ICONS.sparkle}</div>
+        <h3>Free Flow</h3>
+        <p>${escapeHtml(t('land_flowBody'))}</p>
+        <ul class="bullets"><li>${ck}${escapeHtml(t('land_flowB1'))}</li><li>${ck}${escapeHtml(t('land_flowB2'))}</li><li>${ck}${escapeHtml(t('land_flowB3'))}</li></ul>
+        <div class="tags" style="margin-top:20px"><span>${escapeHtml(t('nScenarios',{n:fmtNum(nC)}))}</span></div>
       </div>
+    </div>
+  </section>
+
+  <section class="land-section">
+    <h2>${escapeHtml(t('land_tracksTitle'))}</h2>
+    <p class="sub">${escapeHtml(t('land_tracksSub', { n: fmtNum(perCat) }))}</p>
+    <div class="cat-grid">
+      ${Object.values(CATS).map(c => `
+        <div class="cat-card" style="--cat-color:${c.color}">
+          <div class="cat-icon">${ICONS[c.icon]}</div>
+          <h4>${escapeHtml(catLabel(c.id))}</h4>
+          <p>${escapeHtml(t('nSentences',{n:fmtNum(poolSize(c.id,'sentences'))}))} · ${escapeHtml(t('nScenarios',{n:fmtNum(poolSize(c.id,'scenarios'))}))}</p>
+        </div>`).join('')}
+    </div>
+  </section>
+
+  <section class="land-section" id="how">
+    <h2>${escapeHtml(t('land_howTitle'))}</h2>
+    <p class="sub">${escapeHtml(t('land_howSub'))}</p>
+    <div class="how-grid">${howCardsHTML()}</div>
+  </section>
+
+  <section class="land-section">
+    <h2>${escapeHtml(t('land_featTitle'))}</h2>
+    <p class="sub"></p>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="fi">${FEAT_ICONS.bolt}</div><h4>${escapeHtml(t('land_f1t'))}</h4><p>${escapeHtml(t('land_f1b'))}</p></div>
+      <div class="feat-card"><div class="fi">${FEAT_ICONS.lock}</div><h4>${escapeHtml(t('land_f2t'))}</h4><p>${escapeHtml(t('land_f2b'))}</p></div>
+      <div class="feat-card"><div class="fi">${FEAT_ICONS.devices}</div><h4>${escapeHtml(t('land_f3t'))}</h4><p>${escapeHtml(t('land_f3b'))}</p></div>
+      <div class="feat-card"><div class="fi">${FEAT_ICONS.globe}</div><h4>${escapeHtml(t('land_f4t'))}</h4><p>${escapeHtml(t('land_f4b'))}</p></div>
+    </div>
+  </section>
+
+  <section class="land-section" id="pricing">
+    <h2>${escapeHtml(t('price_title'))}</h2>
+    <p class="sub">${escapeHtml(t('price_sub'))}</p>
+    <div class="price-grid">
+      ${PLANS.map((p, i) => pricingCardHTML(p, i)).join('')}
+    </div>
+  </section>
+
+  <section class="land-section">
+    <div class="lang-strip">
+      ${LANGS.map(l => `<button class="lang-tile ${l.code===CUR_LANG?'active':''}" data-act="setLang" data-lang="${l.code}">${flagHTML(l.code)}<span>${l.name}</span></button>`).join('')}
+    </div>
+  </section>
+
+  <section class="land-section land-final">
+    <div class="final-card">
+      <h2>${escapeHtml(t('land_finalTitle'))}</h2>
+      <p>${escapeHtml(t('land_finalBody'))}</p>
+      <button class="btn btn-primary btn-lg demo-cta" id="finalDemo" data-act="enterDemo"><span class="live-dot"></span> ${escapeHtml(t('land_finalCta'))} ${ICONS.arrowRight}</button>
     </div>
   </section>`;
 }
@@ -1567,51 +2559,52 @@ function setupHTML(){
   const mode = state.mode;
   const kind = currentPoolKind();
   const modeLabel = mode === 'shadow' ? 'Shadow Flow' : 'Free Flow';
-  const modeDesc = mode === 'shadow'
-    ? 'Choose one or more focus areas, then pick a sentence to shadow — or let Aria pick one for you.'
-    : 'Choose one or more focus areas, then pick a scenario to speak through — or let Aria surprise you.';
+  const modeDesc = mode === 'shadow' ? t('setup_descShadow') : t('setup_descFlow');
   const items = filteredPool();
   const visible = items.slice(0, state.visibleCount);
 
   return `
   <div class="setup-shell wrap">
-    <button class="back-link" data-act="goHome">${ICONS.chevronLeft} Back to home</button>
+    <button class="back-link" data-act="goHome">${ICONS.chevronLeft} ${escapeHtml(t('back_home'))}</button>
     <div class="section-head">
       <h2>${modeLabel}</h2>
-      <p>${fmtNum(items.length)} ${kind === 'sentences' ? 'sentences' : 'scenarios'} available</p>
+      <p>${escapeHtml(availText(items.length, kind))}</p>
     </div>
-    <p style="color:var(--text-2); font-size:14.5px; max-width:560px; margin-bottom:6px;">${modeDesc}</p>
+    <p style="color:var(--text-2); font-size:14.5px; max-width:560px; margin-bottom:6px;">${escapeHtml(modeDesc)}</p>
 
     <div class="chip-row" style="margin:22px 0;">
       ${Object.values(CATS).map(c => `
         <button class="chip ${state.selectedCats.has(c.id) ? 'active':''}" data-act="toggleCat" data-cat="${c.id}" style="--cat-color:${c.color}">
-          ${ICONS[c.icon]} ${c.label} <span class="count">${fmtNum(poolSize(c.id,kind))}</span>
+          ${ICONS[c.icon]} ${escapeHtml(catLabel(c.id))} <span class="count">${fmtNum(poolSize(c.id,kind))}</span>
         </button>`).join('')}
     </div>
 
     <div class="search-row">
       <div class="search-box">
         ${ICONS.search}
-        <input type="text" id="searchInput" placeholder="Search ${kind}…" value="${escapeHtml(state.searchQuery)}" autocomplete="off">
+        <input type="text" id="searchInput" placeholder="${escapeHtml(t(kind === 'sentences' ? 'setup_searchShadow' : 'setup_searchFlow'))}" value="${escapeHtml(state.searchQuery)}" autocomplete="off">
       </div>
-      <button class="icon-btn" data-act="shuffleFromList" title="Shuffle" style="width:46px;height:46px;border-radius:14px;">${ICONS.shuffle}</button>
+      <button class="icon-btn" data-act="shuffleFromList" title="${escapeHtml(t('setup_shuffle'))}" aria-label="${escapeHtml(t('setup_shuffle'))}" style="width:46px;height:46px;border-radius:14px;">${ICONS.shuffle}</button>
     </div>
 
     <div id="listContainer">${listContainerHTML(items, visible, kind)}</div>
 
     <div class="setup-actions">
-      <button class="btn btn-primary btn-block btn-lg" data-act="startRandom">${ICONS.sparkle} Surprise me — start now</button>
+      <button class="btn btn-primary btn-block btn-lg" data-act="startRandom">${ICONS.sparkle} ${escapeHtml(t('setup_surprise'))}</button>
     </div>
   </div>`;
+}
+function availText(n, kind){
+  return t(kind === 'sentences' ? 'setup_availShadow' : 'setup_availFlow', { n: fmtNum(n) });
 }
 
 function listContainerHTML(items, visible, kind){
   return `
   <div class="scen-list">
     ${visible.length ? visible.map((it, idx) => renderListItem(it, idx, kind)).join('') : `
-      <div class="banner"><span>${ICONS.info}</span><div>No results for "<b>${escapeHtml(state.searchQuery)}</b>". Try a different search term.</div></div>`}
+      <div class="banner"><span>${ICONS.info}</span><div>${escapeHtml(t('setup_noResults', { q: state.searchQuery })).replace(escapeHtml(state.searchQuery), '<b>' + escapeHtml(state.searchQuery) + '</b>')}</div></div>`}
   </div>
-  ${items.length > visible.length ? `<div class="load-more-row"><button class="btn btn-secondary" data-act="loadMore">Show more</button></div>` : ''}`;
+  ${items.length > visible.length ? `<div class="load-more-row"><button class="btn btn-secondary" data-act="loadMore">${escapeHtml(t('setup_more'))}</button></div>` : ''}`;
 }
 function refreshList(){
   const items = filteredPool();
@@ -1620,14 +2613,14 @@ function refreshList(){
   const container = document.getElementById('listContainer');
   if(container) container.innerHTML = listContainerHTML(items, visible, kind);
   const head = document.querySelector('.section-head p');
-  if(head) head.textContent = `${fmtNum(items.length)} ${kind === 'sentences' ? 'sentences' : 'scenarios'} available`;
+  if(head) head.textContent = availText(items.length, kind);
 }
 
 function renderListItem(it, idx, kind){
   if(kind === 'sentences'){
     return `<button class="scen-item" data-act="pickItem" data-id="${it.id}">
       <span class="num mono">${String(idx+1).padStart(2,'0')}</span>
-      <span class="body"><h5>${escapeHtml(it.text)}</h5><p>${CATS[it.catId].label} · Shadow sentence</p></span>
+      <span class="body"><h5>${escapeHtml(it.text)}</h5><p>${escapeHtml(t('item_shadowSub', { cat: catLabel(it.catId) }))}</p></span>
       <span class="arrow">${ICONS.chevronRight}</span>
     </button>`;
   }
@@ -1658,7 +2651,7 @@ function shadowPromptHTML(item){
   const words = item.text.replace(/[""]/g,'"').split(' ');
   return `
   <div class="prompt-card">
-    <div class="prompt-eyebrow eyebrow" style="color:var(--text-3)">SHADOW SENTENCE</div>
+    <div class="prompt-eyebrow eyebrow" style="color:var(--text-3)">${escapeHtml(t('p_shadowEyebrow'))}</div>
     <blockquote id="targetWords">${words.map(w => `<span class="word" data-w="1">${escapeHtml(w)}</span>`).join(' ')}</blockquote>
   </div>
   <div class="player-controls">
@@ -1667,7 +2660,7 @@ function shadowPromptHTML(item){
       <button data-act="setSpeed" data-speed="1" class="${state.speedRate===1?'active':''}">1×</button>
       <button data-act="setSpeed" data-speed="1.25" class="${state.speedRate===1.25?'active':''}">1.25×</button>
     </div>
-    <button class="play-btn" id="playBtn" data-act="playSentence" aria-label="Play sentence">
+    <button class="play-btn" id="playBtn" data-act="playSentence" aria-label="${escapeHtml(t('p_playAria'))}">
       ${ICONS.play}
       <span class="eq"><i></i><i></i><i></i><i></i></span>
     </button>
@@ -1679,31 +2672,31 @@ function flowPromptHTML(item){
   return `
   <div class="prompt-card" style="text-align:left;">
     <div class="prompt-eyebrow eyebrow" style="display:flex;align-items:center;justify-content:space-between;color:var(--text-3)">
-      <span>FREE FLOW SCENARIO</span>
-      <button class="icon-btn" id="hearBtn" data-act="hearScenario" title="Hear this scenario" style="width:34px;height:34px;">${ICONS.volume}</button>
+      <span>${escapeHtml(t('p_flowEyebrow'))}</span>
+      <button class="icon-btn" id="hearBtn" data-act="hearScenario" title="${escapeHtml(t('p_hear'))}" aria-label="${escapeHtml(t('p_hear'))}" style="width:34px;height:34px;">${ICONS.volume}</button>
     </div>
     <blockquote style="text-align:left; font-size:22px;">${escapeHtml(item.title)}</blockquote>
     <p class="context-line">${escapeHtml(item.context)}</p>
-    <p class="context-line" style="margin-top:10px;"><b style="color:var(--text-1)">Your turn:</b> ${escapeHtml(item.prompt)}</p>
+    <p class="context-line" style="margin-top:10px;"><b style="color:var(--text-1)">${escapeHtml(t('p_yourTurn'))}</b> ${escapeHtml(item.prompt)}</p>
     <div class="sample-toggle">
-      <button class="btn btn-ghost" data-act="toggleSample">${ICONS.bookOpen} ${state.sampleShown ? 'Hide sample answer' : 'See sample answer'}</button>
+      <button class="btn btn-ghost" data-act="toggleSample">${ICONS.bookOpen} ${escapeHtml(t(state.sampleShown ? 'p_hideSample' : 'p_seeSample'))}</button>
     </div>
-    <div class="sample-box ${state.sampleShown ? 'show':''}"><b>Sample:</b> "${escapeHtml(item.sample)}"</div>
+    <div class="sample-box ${state.sampleShown ? 'show':''}"><b>${escapeHtml(t('p_sample'))}</b> "${escapeHtml(item.sample)}"</div>
   </div>`;
 }
 
 function recorderZoneHTML(mode){
   if(!Recorder.sttSupported){
-    return `<div class="banner error">${ICONS.alert}<div><b>Speech recognition isn't supported in this browser.</b> Aria needs it to hear and grade your speech. Try the latest Chrome, Edge, or Safari (desktop or Android).</div></div>`;
+    return `<div class="banner error">${ICONS.alert}<div><b>${escapeHtml(t('t_sttUnsupportedTitle'))}</b> ${escapeHtml(t('t_sttUnsupportedBody'))}</div></div>`;
   }
   return `
   <div class="recorder-zone">
     <div class="rec-timer" id="recTimer" style="visibility:hidden;">00:00</div>
-    <button class="record-btn" id="recordBtn" data-act="toggleRecord" aria-label="Record your voice">${ICONS.mic}</button>
-    <div class="rec-hint" id="recHint">${mode==='shadow' ? 'Play the sentence, then tap to shadow it' : 'Tap to record your answer'}</div>
+    <button class="record-btn" id="recordBtn" data-act="toggleRecord" aria-label="${escapeHtml(t('p_recordAria'))}">${ICONS.mic}</button>
+    <div class="rec-hint" id="recHint">${escapeHtml(t(mode==='shadow' ? 'p_hintShadow' : 'p_hintFlow'))}</div>
     <div class="live-box" id="liveBox">
-      <div class="lb-head">${ICONS.mic}<span id="liveBoxLabel">Transcript</span></div>
-      <p id="liveCaption" class="placeholder">Tap the mic and start speaking — Aria is listening.</p>
+      <div class="lb-head">${ICONS.mic}<span id="liveBoxLabel">${escapeHtml(t('p_transcript'))}</span></div>
+      <p id="liveCaption" class="placeholder">${escapeHtml(t('p_placeholder'))}</p>
     </div>
   </div>
   <div id="feedbackSlot"></div>`;
@@ -1715,7 +2708,7 @@ function practiceHTML(){
   if(!item) return `<div class="wrap" style="padding:60px 24px;"><p>Nothing to practice yet.</p></div>`;
   return `
   <div class="practice-shell">
-    <button class="back-link" data-act="goSetup">${ICONS.chevronLeft} Back to ${mode==='shadow'?'sentences':'scenarios'}</button>
+    <button class="back-link" data-act="goSetup">${ICONS.chevronLeft} ${escapeHtml(t(mode==='shadow'?'back_sentences':'back_scenarios'))}</button>
     <div class="practice-meta">
       ${catTag(item.catId)}
       ${progressDotsHTML()}
@@ -1729,32 +2722,33 @@ function practiceHTML(){
    FEEDBACK PANEL
    =========================================================================== */
 function overallLabel(score){
-  if(score == null) return { text:'Not enough audio', color:'var(--text-3)' };
-  if(score >= 85) return { text:'Excellent', color:'var(--success)' };
-  if(score >= 70) return { text:'Good progress', color:'var(--blue)' };
-  if(score >= 50) return { text:'Fair — keep going', color:'var(--orange)' };
-  return { text:'Keep practicing', color:'var(--danger)' };
+  if(score == null) return { text:t('ov_none'), color:'var(--text-3)' };
+  if(score >= 85) return { text:t('ov_excellent'), color:'var(--success)' };
+  if(score >= 70) return { text:t('ov_good'), color:'var(--blue)' };
+  if(score >= 50) return { text:t('ov_fair'), color:'var(--orange)' };
+  return { text:t('ov_keep'), color:'var(--danger)' };
 }
 
 function fbActionsHTML(fb){
+  const sh = fb.mode === 'shadow';
   return `
     <div class="fb-actions">
-      <button class="btn btn-secondary btn-block" data-act="tryAgain">${ICONS.refresh} Try again</button>
-      <button class="btn btn-primary" data-act="nextItem">Next ${fb.mode==='shadow'?'sentence':'scenario'} ${ICONS.arrowRight}</button>
-      <button class="btn btn-ghost" data-act="goSetup">${ICONS.search} Change ${fb.mode==='shadow'?'sentence':'scenario'}</button>
+      <button class="btn btn-secondary btn-block" data-act="tryAgain">${ICONS.refresh} ${escapeHtml(t('fb_tryAgain'))}</button>
+      <button class="btn btn-primary" data-act="nextItem">${escapeHtml(t(sh?'fb_nextSentence':'fb_nextScenario'))} ${ICONS.arrowRight}</button>
+      <button class="btn btn-ghost" data-act="goSetup">${ICONS.search} ${escapeHtml(t(sh?'fb_changeSentence':'fb_changeScenario'))}</button>
     </div>`;
 }
 function shadowFeedbackPanelHTML(fb){
   const lab = overallLabel(fb.overall);
-  const rings = renderRing('accuracy','Pronunciation', fb.metrics.accuracy) + renderRing('tone','Tone', fb.metrics.tone) + renderRing('fluency','Fluency', fb.metrics.fluency);
-  const transcriptBlock = `<div class="transcript-box"><h5>What Aria heard</h5>${fb.transcript ? escapeHtml(fb.transcript) : '<span style="color:var(--text-3)">No speech detected — try recording again a little closer to the mic.</span>'}</div>`;
+  const rings = renderRing('accuracy',t('m_pron'), fb.metrics.accuracy) + renderRing('tone',t('m_tone'), fb.metrics.tone) + renderRing('fluency',t('m_fluency'), fb.metrics.fluency);
+  const transcriptBlock = `<div class="transcript-box"><h5>${escapeHtml(t('fb_heard'))}</h5>${fb.transcript ? escapeHtml(fb.transcript) : '<span style="color:var(--text-3)">' + escapeHtml(t('p_noSpeech')) + '</span>'}</div>`;
 
   return `
   <div class="feedback-panel">
     <div class="fb-head">
       <div class="fb-overall">
         <span class="score mono" style="color:${lab.color}">${fb.overall == null ? '—' : fb.overall}</span>
-        <span class="label"><b style="color:${lab.color}">${lab.text}</b><span>Overall score</span></span>
+        <span class="label"><b style="color:${lab.color}">${lab.text}</b><span>${escapeHtml(t('fb_overallScore'))}</span></span>
       </div>
     </div>
     <div class="ring-grid">${rings}</div>
@@ -1768,20 +2762,20 @@ function flowFeedbackPanelHTML(fb){
   const band = metricBand(fb.overall);
   const quote = fb.transcript
     ? `<p>"${highlightKeywords(fb.transcript, fb.keyPhrases)}"</p>`
-    : `<p class="muted">No speech detected — try recording again a little closer to the mic.</p>`;
-  const meters = renderMeter('fluency','Fluency', fb.metrics.fluency)
-    + renderMeter('vocabulary','Vocabulary', fb.metrics.vocabulary)
-    + renderMeter('grammar','Grammar', fb.metrics.grammar)
-    + renderMeter('tone','Tone', fb.metrics.tone);
-  const tips = (fb.tips || []).map(t => `<div class="ob-tip">→ ${escapeHtml(t.text)}</div>`).join('');
+    : `<p class="muted">${escapeHtml(t('p_noSpeech'))}</p>`;
+  const meters = renderMeter('fluency',t('m_fluency'), fb.metrics.fluency)
+    + renderMeter('vocabulary',t('m_vocab'), fb.metrics.vocabulary)
+    + renderMeter('grammar',t('m_grammar'), fb.metrics.grammar)
+    + renderMeter('tone',t('m_tone'), fb.metrics.tone);
+  const tips = (fb.tips || []).map(tp => `<div class="ob-tip">→ ${escapeHtml(tipText(tp))}</div>`).join('');
 
   return `
   <div class="feedback-panel flow-fb">
-    <div class="fb-eyebrow">${ICONS.mic}<span>Your speaking feedback</span></div>
+    <div class="fb-eyebrow">${ICONS.mic}<span>${escapeHtml(t('fb_yourFeedback'))}</span></div>
     <div class="quote-card">${ICONS.fileText}${quote}</div>
     <div class="meter-grid">${meters}</div>
     <div class="overall-banner" style="border-color:${band.color};background:color-mix(in srgb, ${band.color} 8%, var(--surface));">
-      <div class="ob-title" style="color:${band.color}">OVERALL: ${fb.overall == null ? '—' : fb.overall}/100 — ${band.text.toUpperCase()}</div>
+      <div class="ob-title" style="color:${band.color}">${escapeHtml(t('fb_overall'))}: ${fb.overall == null ? '—' : fb.overall}/100 — ${escapeHtml(band.text.toUpperCase())}</div>
       <div class="ob-stats">${escapeHtml(transcriptStats(fb.transcript))}</div>
       ${tips}
     </div>
@@ -1830,20 +2824,33 @@ function fmtTime(ms){
 }
 
 function playSentence(){
-  if(!TTS.supported){ toast("This browser doesn't support text-to-speech playback."); return; }
+  if(!TTS.supported){ toast(t('t_ttsToast')); return; }
+  if(rtSessionActive) return;   // never play Aria's voice into an open microphone
   const btn = document.getElementById('playBtn');
   if(rtPlaying){ TTS.stop(); rtPlaying = false; if(btn) btn.classList.remove('playing'); return; }
   rtPlaying = true;
   if(btn) btn.classList.add('playing');
-  TTS.speak(state.currentItem.text, state.speedRate, null, () => {
+  TTS.speak(state.currentItem.text, state.speedRate, null, (ok) => {
     rtPlaying = false;
-    if(btn) btn.classList.remove('playing');
+    const b = document.getElementById('playBtn');
+    if(b) b.classList.remove('playing');
+    if(ok === false) toast(t('t_ttsFail'));
   });
 }
 function hearScenario(){
-  if(!TTS.supported){ toast("This browser doesn't support text-to-speech playback."); return; }
+  if(!TTS.supported){ toast(t('t_ttsToast')); return; }
+  if(rtSessionActive) return;
+  const btn = document.getElementById('hearBtn');
+  if(rtPlaying){ TTS.stop(); rtPlaying = false; if(btn) btn.classList.remove('playing'); return; }
   const item = state.currentItem;
-  TTS.speak(`${item.context} Your turn: ${item.prompt}`, 1, null, null);
+  rtPlaying = true;
+  if(btn) btn.classList.add('playing');
+  TTS.speak(`${item.context} Your turn: ${item.prompt}`, 1, null, (ok) => {
+    rtPlaying = false;
+    const b = document.getElementById('hearBtn');
+    if(b) b.classList.remove('playing');
+    if(ok === false) toast(t('t_ttsFail'));
+  });
 }
 function setSpeed(rate){
   state.speedRate = rate;
@@ -1856,7 +2863,7 @@ function toggleSampleUI(){
   const box = document.querySelector('.sample-box');
   const btn = document.querySelector('[data-act="toggleSample"]');
   if(box) box.classList.toggle('show', state.sampleShown);
-  if(btn) btn.innerHTML = `${ICONS.bookOpen} ${state.sampleShown ? 'Hide sample answer' : 'See sample answer'}`;
+  if(btn) btn.innerHTML = `${ICONS.bookOpen} ${escapeHtml(t(state.sampleShown ? 'p_hideSample' : 'p_seeSample'))}`;
 }
 
 function updateLiveCaption(){
@@ -1864,7 +2871,7 @@ function updateLiveCaption(){
   if(!caption) return;
   const text = (finalTranscriptText() + ' ' + rtInterim).trim();
   if(text){ caption.textContent = '"' + text + '"'; caption.classList.remove('placeholder'); }
-  else { caption.textContent = 'Listening…'; caption.classList.add('placeholder'); }
+  else { caption.textContent = t('p_listening'); caption.classList.add('placeholder'); }
 }
 
 /* mode: 'idle' | 'listening' | 'analyzing' */
@@ -1873,9 +2880,9 @@ function setLiveBoxState(mode){
   const label = document.getElementById('liveBoxLabel');
   const caption = document.getElementById('liveCaption');
   if(liveBox) liveBox.classList.toggle('is-live', mode === 'listening');
-  if(label) label.textContent = mode === 'listening' ? 'Listening…' : (mode === 'analyzing' ? 'Analyzing…' : 'Transcript');
-  if(mode === 'idle' && caption && !caption.textContent.includes('No speech')){
-    caption.textContent = 'Tap the mic and start speaking — Aria is listening.';
+  if(label) label.textContent = mode === 'listening' ? t('p_listening') : (mode === 'analyzing' ? t('p_analyzing') : t('p_transcript'));
+  if(mode === 'idle' && caption && caption.textContent !== t('p_noSpeech') && !caption.dataset.keep){
+    caption.textContent = t('p_placeholder');
     caption.classList.add('placeholder');
   }
 }
@@ -1887,7 +2894,7 @@ function toggleRecord(){
   if(!btn) return;
 
   if(!recognition){
-    toast("Speech recognition isn't supported in this browser.");
+    toast(t('t_sttToast'));
     return;
   }
 
@@ -1903,7 +2910,7 @@ function toggleRecord(){
     clearInterval(rtTimerId);
     btn.disabled = true;
     btn.classList.remove('recording');
-    if(hint) hint.textContent = 'Analyzing your speech…';
+    if(hint) hint.textContent = t('p_analyzingSpeech');
     setLiveBoxState('analyzing');
     try{ recognition.stop(); }catch(e){ finishRecording(); }
     return;
@@ -1925,7 +2932,7 @@ function toggleRecord(){
   rtStartedAt = performance.now();
   btn.classList.add('recording');
   btn.innerHTML = ICONS.stop;
-  if(hint) hint.textContent = 'Recording… tap to stop';
+  if(hint) hint.textContent = t('p_recording');
   if(timerEl){
     timerEl.style.visibility = 'visible';
     clearInterval(rtTimerId);
@@ -1946,7 +2953,7 @@ function toggleRecord(){
       startWatchdog = setTimeout(() => {
         if(!recognitionActive && mySession === recSession && rtRecording){
           rtRecording = false;
-          finishRecordingWithError("The microphone never responded. This usually means microphone access is blocked for this page, or the page is open inside a preview panel rather than a full browser tab -- try opening the file directly in a Chrome, Edge, or Safari tab.");
+          finishRecordingWithError(t('e_noResponse'));
         }
       }, 4000);
     }catch(e){
@@ -1955,9 +2962,9 @@ function toggleRecord(){
         rtSessionActive = false;
         btn.classList.remove('recording');
         btn.innerHTML = ICONS.mic;
-        if(hint) hint.textContent = state.mode === 'shadow' ? 'Play the sentence, then tap to shadow it' : 'Tap to record your answer';
+        if(hint) hint.textContent = t(state.mode === 'shadow' ? 'p_hintShadow' : 'p_hintFlow');
         setLiveBoxState('idle');
-        toast("Couldn't start the microphone. Please tap the mic again.");
+        toast(t('t_micFail'));
         return;
       }
       // Most likely an InvalidStateError: a previous session hadn't fully
@@ -1996,9 +3003,9 @@ function finishRecording(){
   const caption = document.getElementById('liveCaption');
   if(caption){
     if(transcript){ caption.textContent = '"' + transcript + '"'; caption.classList.remove('placeholder'); }
-    else { caption.textContent = 'No speech detected — try recording again a little closer to the mic.'; caption.classList.add('placeholder'); }
+    else { caption.textContent = t('p_noSpeech'); caption.classList.add('placeholder'); }
   }
-  if(hint) hint.textContent = state.mode === 'shadow' ? 'Tap to shadow it again' : 'Tap to record another take';
+  if(hint) hint.textContent = t(state.mode === 'shadow' ? 'p_againShadow' : 'p_againFlow');
 
   const data = { transcript, durationMs, avgConfidence: null };
   const fb = state.mode === 'shadow'
@@ -2023,7 +3030,7 @@ function finishRecordingWithError(message){
   setLiveBoxState('idle');
   const slot = document.getElementById('feedbackSlot');
   if(slot){ slot.innerHTML = `<div class="banner error">${ICONS.alert}<div>${escapeHtml(message)}</div></div>`; }
-  if(hint) hint.textContent = state.mode === 'shadow' ? 'Play the sentence, then tap to shadow it' : 'Tap to record your answer';
+  if(hint) hint.textContent = t(state.mode === 'shadow' ? 'p_hintShadow' : 'p_hintFlow');
   rtSessionActive = false;
 }
 
@@ -2041,6 +3048,7 @@ function abortRecordingIfActive(){
 }
 
 function tryAgain(){
+  state.lastFeedback = null;
   const slot = document.getElementById('feedbackSlot');
   if(slot) slot.innerHTML = '';
   if(state.mode === 'shadow') applyShadowWordDiff([]);
@@ -2054,9 +3062,12 @@ const viewRoot = () => document.getElementById('viewRoot');
 
 function render(){
   let html = '';
-  if(state.view === 'home') html = homeHTML();
+  if(state.view === 'landing') html = landingHTML();
+  else if(state.view === 'home') html = homeHTML();
   else if(state.view === 'setup') html = setupHTML();
   else if(state.view === 'practice') html = practiceHTML();
+  const appEl = document.getElementById('app');
+  if(appEl) appEl.classList.toggle('view-landing', state.view === 'landing');
   viewRoot().innerHTML = `<div class="view active">${html}</div>`;
   window.scrollTo(0,0);
   if(state.view === 'setup'){
@@ -2069,6 +3080,281 @@ function render(){
       });
     }
   }
+}
+
+/* ----- language switching ----- */
+function buildLangMenu(){
+  const m = document.getElementById('langMenu');
+  if(!m) return;
+  m.innerHTML = LANGS.map(l => `<button class="lang-opt ${l.code===CUR_LANG?'active':''}" role="menuitem" data-act="setLang" data-lang="${l.code}">${flagHTML(l.code)}<span>${l.name}</span>${TICK_SVG}</button>`).join('');
+}
+function applyStaticI18n(){
+  document.documentElement.setAttribute('lang', CUR_LANG);
+  document.title = t('docTitle');
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.getAttribute('data-i18n')); });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => { el.setAttribute('title', t(el.getAttribute('data-i18n-title'))); });
+  const f = document.getElementById('langBtnFlag');
+  if(f) f.innerHTML = flagHTML(CUR_LANG);
+  const c = document.getElementById('langBtnCode');
+  if(c) c.textContent = (LANGS.find(l => l.code === CUR_LANG) || LANGS[0]).short;
+  buildLangMenu();
+  updateUserUI();
+}
+function closeLangMenu(){
+  const m = document.getElementById('langMenu');
+  const b = document.getElementById('langBtn');
+  if(m) m.classList.remove('open');
+  if(b) b.setAttribute('aria-expanded', 'false');
+}
+function toggleLangMenu(){
+  const m = document.getElementById('langMenu');
+  const b = document.getElementById('langBtn');
+  if(!m) return;
+  const open = !m.classList.contains('open');
+  m.classList.toggle('open', open);
+  if(b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+function setLang(code){
+  if(!I18N[code]) return;
+  closeLangMenu();
+  if(code === CUR_LANG) return;
+  const authKeep = auth.open ? readAuthFields() : null;
+  const y = window.scrollY || 0;
+  abortRecordingIfActive();
+  CUR_LANG = code;
+  state.lang = code;
+  try{ localStorage.setItem(LANG_KEY, code); }catch(e){}
+  applyStaticI18n();
+  render();
+  if(auth.open) renderAuth(authKeep);
+  if(state.view === 'practice' && state.lastFeedback){
+    const fb = state.lastFeedback;
+    const slot = document.getElementById('feedbackSlot');
+    if(slot){
+      slot.innerHTML = feedbackPanelHTML(fb);
+      if(fb.mode === 'shadow') applyShadowWordDiff(fb.diff);
+    }
+  }
+  window.scrollTo(0, y);
+}
+
+
+/* ===========================================================================
+   PRICING + ACCOUNTS (client-side demo: no server, no payments)
+   =========================================================================== */
+const PLANS = [
+  { id:'starter',  name:'Starter',  price:30, months:3 },
+  { id:'momentum', name:'Momentum', price:50, months:6,  popular:true },
+  { id:'fluent',   name:'Fluent',   price:80, months:12, best:true }
+];
+const ACCOUNTS_KEY = 'langslate-flow-accounts';
+const SESSION_KEY = 'langslate-flow-session';
+const CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const GOOGLE_SVG = '<svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.4-4.1 7-10.1 7-17.6z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.5-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.5 0 20.1 0 24s.9 7.5 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>';
+function perMonthText(p){
+  const v = (p.price / p.months).toFixed(2);
+  return '$' + (CUR_LANG === 'en' ? v : v.replace('.', ','));
+}
+function pricingCardHTML(p, i){
+  const feats = [1,2,3,4,5,6].map(n => `<li>${CHECK_SVG}<span>${escapeHtml(t('price_f' + n))}</span></li>`).join('');
+  const badge = p.popular ? `<span class="price-badge">${escapeHtml(t('price_popular'))}</span>` : (p.best ? `<span class="price-badge">${escapeHtml(t('price_best'))}</span>` : '');
+  const btnCls = p.popular ? 'btn-primary' : (p.best ? 'btn-orange' : 'btn-secondary');
+  return `
+      <div class="price-card ${p.popular ? 'popular' : ''} ${p.best ? 'best' : ''}" data-plan="${p.id}">
+        ${badge}
+        <div class="price-name">${p.name}</div>
+        <div class="price-amount"><sup>$</sup>${p.price}</div>
+        <div class="price-for">${escapeHtml(t('price_for', { n: p.months }))}</div>
+        <div class="price-per">${escapeHtml(t('price_perMonth', { p: perMonthText(p) }))}</div>
+        <hr>
+        <ul class="price-feats">${feats}</ul>
+        <button class="btn ${btnCls} btn-block btn-lg" data-act="openAuth" data-mode="create" data-plan="${p.id}">${escapeHtml(t('price_cta' + (i + 1)))}</button>
+      </div>`;
+}
+
+/* ----- storage helpers (every access guarded; falls back to memory) ----- */
+const memStore = {};
+function storeGet(k){ try{ const v = localStorage.getItem(k); if(v !== null) return v; }catch(e){} return memStore[k] === undefined ? null : memStore[k]; }
+function storeSet(k, v){ memStore[k] = v; try{ localStorage.setItem(k, v); }catch(e){} }
+function storeDel(k){ delete memStore[k]; try{ localStorage.removeItem(k); }catch(e){} }
+function loadAccounts(){ try{ return JSON.parse(storeGet(ACCOUNTS_KEY) || '{}') || {}; }catch(e){ return {}; } }
+function saveAccounts(a){ storeSet(ACCOUNTS_KEY, JSON.stringify(a)); }
+function loadSession(){ try{ const s = JSON.parse(storeGet(SESSION_KEY) || 'null'); return s && s.email ? s : null; }catch(e){ return null; } }
+async function hashPassword(pw, salt){
+  const s = salt + ':' + pw;
+  try{
+    if(window.crypto && window.crypto.subtle && window.TextEncoder){
+      const buf = await window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+      return 'sha256:' + Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+  }catch(e){}
+  let x = 5381;
+  for(let i = 0; i < s.length; i++){ x = ((x << 5) + x + s.charCodeAt(i)) | 0; }
+  return 'weak:' + (x >>> 0).toString(16);
+}
+function updateUserUI(){
+  const appEl = document.getElementById('app');
+  if(appEl) appEl.classList.toggle('has-user', !!state.user);
+  const txt = document.getElementById('loginTopText');
+  const btn = document.getElementById('loginTop');
+  const label = t(state.user ? 'nav_openApp' : 'nav_login');
+  if(txt) txt.textContent = label;
+  if(btn) btn.setAttribute('aria-label', label);
+}
+
+/* ----- auth modal ----- */
+const auth = { open:false, mode:'login', plan:'momentum', showPass:false };
+function authHTML(){
+  const isCreate = auth.mode === 'create';
+  return `
+  <div class="auth-overlay" data-act="closeAuth" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="auth-card">
+      <button class="icon-btn auth-close" data-act="closeAuth" aria-label="${escapeHtml(t('auth_close'))}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <h3 id="authTitle">${escapeHtml(t(isCreate ? 'auth_welcomeNew' : 'auth_welcome'))}</h3>
+      <p class="auth-sub">${escapeHtml(t(isCreate ? 'auth_subNew' : 'auth_sub'))}</p>
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab ${!isCreate ? 'active' : ''}" role="tab" data-act="authMode" data-mode="login">${escapeHtml(t('auth_tabLogin'))}</button>
+        <button class="auth-tab ${isCreate ? 'active' : ''}" role="tab" data-act="authMode" data-mode="create">${escapeHtml(t('auth_tabCreate'))}</button>
+      </div>
+      <button class="google-btn" type="button" data-act="authGoogle">${GOOGLE_SVG}<span>${escapeHtml(t('auth_google'))}</span></button>
+      <div class="auth-or">${escapeHtml(t('auth_or'))}</div>
+      <form id="authForm" novalidate>
+        ${isCreate ? `<div class="auth-field"><label for="authName">${escapeHtml(t('auth_name'))}</label><div class="auth-input"><input id="authName" type="text" autocomplete="name" placeholder="${escapeHtml(t('auth_namePh'))}"></div></div>` : ''}
+        <div class="auth-field"><label for="authEmail">${escapeHtml(t('auth_email'))}</label><div class="auth-input"><input id="authEmail" type="email" autocomplete="email" inputmode="email" placeholder="${escapeHtml(t('auth_emailPh'))}"></div></div>
+        <div class="auth-field"><label for="authPass">${escapeHtml(t('auth_pass'))}</label><div class="auth-input has-toggle"><input id="authPass" type="${auth.showPass ? 'text' : 'password'}" autocomplete="${isCreate ? 'new-password' : 'current-password'}" placeholder="${escapeHtml(t('auth_passPh'))}"><button type="button" class="pw-toggle" id="pwToggle" data-act="authTogglePass">${escapeHtml(t(auth.showPass ? 'auth_hide' : 'auth_show'))}</button></div></div>
+        <div class="auth-field"><label>${escapeHtml(t('auth_plan'))}</label>
+          <div class="plan-pick">${PLANS.map(p => `<button type="button" class="plan-opt ${auth.plan === p.id ? 'active' : ''}" data-act="authPlan" data-plan="${p.id}"><b>$${p.price}</b><span>${escapeHtml(t('auth_months', { n: p.months }))}</span></button>`).join('')}</div>
+        </div>
+        <div class="auth-error" id="authError" role="alert"></div>
+        <button class="btn btn-orange auth-submit" type="submit">${escapeHtml(t(isCreate ? 'auth_tabCreate' : 'auth_tabLogin'))}</button>
+      </form>
+      <div class="auth-switch">${escapeHtml(t(isCreate ? 'auth_haveAcct' : 'auth_newHere'))} <button type="button" data-act="authMode" data-mode="${isCreate ? 'login' : 'create'}">${escapeHtml(t(isCreate ? 'auth_loginLink' : 'auth_createLink'))}</button></div>
+      <p class="auth-note">${escapeHtml(t('auth_demoNote'))}</p>
+    </div>
+  </div>`;
+}
+function renderAuth(keep){
+  const root = document.getElementById('authRoot');
+  if(!root) return;
+  if(!auth.open){ root.innerHTML = ''; document.body.style.overflow = ''; return; }
+  root.innerHTML = authHTML();
+  document.body.style.overflow = 'hidden';
+  if(keep){
+    const e = document.getElementById('authEmail'); if(e && keep.email) e.value = keep.email;
+    const p = document.getElementById('authPass'); if(p && keep.pass) p.value = keep.pass;
+    const n = document.getElementById('authName'); if(n && keep.name) n.value = keep.name;
+  }
+}
+function readAuthFields(){
+  const v = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+  return { name:v('authName'), email:v('authEmail'), pass:v('authPass') };
+}
+function openAuth(mode, plan){
+  auth.open = true;
+  auth.mode = mode === 'create' ? 'create' : 'login';
+  if(plan && PLANS.some(p => p.id === plan)) auth.plan = plan;
+  auth.showPass = false;
+  renderAuth();
+  setTimeout(() => { const el = document.getElementById(auth.mode === 'create' ? 'authName' : 'authEmail'); if(el && el.focus) el.focus(); }, 60);
+}
+function closeAuth(){
+  auth.open = false;
+  renderAuth();
+}
+function setAuthMode(mode){
+  if(mode === auth.mode) return;
+  const keep = readAuthFields();
+  auth.mode = mode;
+  renderAuth(keep);
+}
+function setAuthPlan(plan){
+  auth.plan = plan;
+  document.querySelectorAll('.plan-opt').forEach(b => b.classList.toggle('active', b.dataset.plan === plan));
+}
+function toggleAuthPass(){
+  auth.showPass = !auth.showPass;
+  const p = document.getElementById('authPass'); const b = document.getElementById('pwToggle');
+  if(p) p.type = auth.showPass ? 'text' : 'password';
+  if(b) b.textContent = t(auth.showPass ? 'auth_hide' : 'auth_show');
+}
+function showAuthError(msg){
+  const el = document.getElementById('authError');
+  if(!el) return;
+  el.textContent = msg;
+  el.classList.toggle('show', !!msg);
+}
+function startSession(user, toastMsg){
+  state.user = { email:user.email, name:user.name, plan:user.plan };
+  storeSet(SESSION_KEY, JSON.stringify(state.user));
+  closeAuth();
+  updateUserUI();
+  enterDemo();
+  toast(toastMsg || t('auth_welcomeToast', { name: user.name }));
+}
+async function submitAuth(){
+  const f = readAuthFields();
+  const email = f.email.trim().toLowerCase();
+  showAuthError('');
+  if(auth.mode === 'create' && f.name.trim().length < 2){ showAuthError(t('auth_errName')); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ showAuthError(t('auth_errEmail')); return; }
+  if(f.pass.length < 8){ showAuthError(t('auth_errPass')); return; }
+  const accounts = loadAccounts();
+  if(auth.mode === 'create'){
+    if(accounts[email]){ showAuthError(t('auth_errExists')); return; }
+    const salt = Math.random().toString(36).slice(2);
+    accounts[email] = { name:f.name.trim(), salt, hash: await hashPassword(f.pass, salt), plan: auth.plan, created: Date.now() };
+    saveAccounts(accounts);
+    startSession({ email, name:accounts[email].name, plan:auth.plan });
+  } else {
+    const acc = accounts[email];
+    if(!acc){ showAuthError(t('auth_errNoAccount')); return; }
+    if(acc.hash !== await hashPassword(f.pass, acc.salt)){ showAuthError(t('auth_errWrong')); return; }
+    acc.plan = auth.plan;
+    saveAccounts(accounts);
+    startSession({ email, name:acc.name, plan:auth.plan });
+  }
+}
+function authGoogle(){
+  // Demo-only: real Google sign-in needs an OAuth client ID and a backend. This creates a local demo profile.
+  const email = 'google.demo@langslate.local';
+  const accounts = loadAccounts();
+  if(!accounts[email]) accounts[email] = { name:'Google User', salt:'', hash:'', plan:auth.plan, created:Date.now() };
+  saveAccounts(accounts);
+  startSession({ email, name:accounts[email].name, plan:auth.plan }, t('auth_googleDemo'));
+}
+function logout(){
+  abortRecordingIfActive();
+  state.user = null;
+  storeDel(SESSION_KEY);
+  closeAuth();
+  updateUserUI();
+  goLanding();
+  toast(t('auth_loggedOut'));
+}
+
+/* ----- landing <-> platform routing (hash based, so the Back button works) ----- */
+function setHash(hash){ try{ if(location.hash !== hash) location.hash = hash; }catch(e){} }
+function enterDemo(){
+  abortRecordingIfActive();
+  state.view = 'home';
+  setHash('#/app');
+  render();
+}
+function goLanding(){
+  abortRecordingIfActive();
+  state.view = 'landing';
+  setHash('#/');
+  render();
+}
+function routeFromHash(){
+  const wantApp = (location.hash || '').indexOf('#/app') === 0;
+  if(wantApp && state.view === 'landing'){ state.view = 'home'; render(); }
+  else if(!wantApp && state.view !== 'landing'){ abortRecordingIfActive(); state.view = 'landing'; render(); }
+}
+function scrollToHow(){
+  const el = document.getElementById('how');
+  if(el && typeof el.scrollIntoView === 'function') el.scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
 function goHome(){ abortRecordingIfActive(); state.view = 'home'; render(); }
@@ -2104,7 +3390,7 @@ function pickItemById(id){
 }
 function startRandom(){
   const pool = filteredPool();
-  if(!pool.length){ toast('No items match your search — try clearing it.'); return; }
+  if(!pool.length){ toast(t('t_noItems')); return; }
   openItem(pickRandom(pool));
 }
 function shuffleFromList(){ startRandom(); }
@@ -2124,6 +3410,7 @@ function nextItem(){
    EVENT DELEGATION
    =========================================================================== */
 document.addEventListener('click', (e) => {
+  if(!e.target.closest('.lang-wrap')) closeLangMenu();
   const el = e.target.closest('[data-act]');
   if(!el) return;
   const act = el.dataset.act;
@@ -2142,9 +3429,28 @@ document.addEventListener('click', (e) => {
     case 'toggleSample': toggleSampleUI(); break;
     case 'toggleRecord': toggleRecord(); break;
     case 'setSpeed': setSpeed(parseFloat(el.dataset.speed)); break;
+    case 'enterDemo': enterDemo(); break;
+    case 'goLanding': goLanding(); break;
+    case 'scrollHow': scrollToHow(); break;
+    case 'loginTop': if(state.user) enterDemo(); else openAuth('login'); break;
+    case 'openAuth': openAuth(el.dataset.mode, el.dataset.plan); break;
+    case 'closeAuth': if(el.classList.contains('auth-overlay') && e.target !== el) break; closeAuth(); break;
+    case 'authMode': setAuthMode(el.dataset.mode); break;
+    case 'authPlan': setAuthPlan(el.dataset.plan); break;
+    case 'authTogglePass': toggleAuthPass(); break;
+    case 'authGoogle': authGoogle(); break;
+    case 'logout': logout(); break;
+    case 'toggleLang': toggleLangMenu(); break;
+    case 'setLang': setLang(el.dataset.lang); break;
   }
 });
-document.getElementById('brandHome').addEventListener('click', goHome);
+document.getElementById('brandHome').addEventListener('click', () => {
+  if(state.view === 'landing'){ try{ window.scrollTo({ top:0, behavior:'smooth' }); }catch(e){ window.scrollTo(0,0); } }
+  else goHome();
+});
+window.addEventListener('hashchange', routeFromHash);
+document.addEventListener('keydown', (e) => { if(e.key === 'Escape'){ closeLangMenu(); if(auth.open) closeAuth(); } });
+document.addEventListener('submit', (e) => { if(e.target && e.target.id === 'authForm'){ e.preventDefault(); submitAuth(); } });
 document.getElementById('themeToggle').addEventListener('click', () => applyTheme(state.theme === 'dark' ? 'light' : 'dark'));
 document.addEventListener('visibilitychange', () => { if(document.hidden) abortRecordingIfActive(); });
 window.addEventListener('pagehide', () => { if(rtRecording && recognition){ try{ recognition.abort(); }catch(e){} } });
@@ -2153,6 +3459,12 @@ window.addEventListener('pagehide', () => { if(rtRecording && recognition){ try{
    INIT
    =========================================================================== */
 async function init(){
+  CUR_LANG = detectLang();
+  state.lang = CUR_LANG;
+  applyStaticI18n();
+  state.user = loadSession();
+  updateUserUI();
+  state.view = ((location.hash || '').indexOf('#/app') === 0) ? 'home' : 'landing';
   await loadTheme();
   await loadProgress();
   render();

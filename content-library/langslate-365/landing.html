@@ -429,9 +429,168 @@ footer{border-top:1px solid var(--hairline);padding:52px 0 40px}
 .scroll-top-btn svg{width:20px;height:20px}
 @media(max-width:640px){.scroll-top-btn{bottom:20px;right:20px;width:44px;height:44px}}
 
+
+/* ═══════════════════════════════════════════
+   COMPREHENSIVE MOBILE STYLES  (≤ 640px)
+═══════════════════════════════════════════ */
+@media(max-width:640px){
+
+  /* NAV */
+  .nav-inner{padding:0 16px;height:62px}
+  .nav-logo-text{font-size:.95rem}
+  .nav-right .btn-ghost{display:none}          /* hide Log In on tiny screens */
+  .nav-right .btn-outline-demo{
+    padding:7px 14px;font-size:12px;
+    border:1px solid var(--gold);
+  }
+  .nav-right .btn-gold{padding:8px 14px;font-size:12px}
+  .nav-right{gap:8px}
+
+  /* HERO */
+  .hero{padding:56px 0 36px}
+  .hero-grid{gap:36px}
+  .hero h1{font-size:clamp(26px,8vw,38px);line-height:1.15}
+  .hero-desc{font-size:14px;margin-bottom:22px;max-width:100%}
+  .hero-cta-row{flex-direction:column;gap:10px;align-items:stretch}
+  .hero-cta-row .btn-lg{width:100%;padding:14px 20px;font-size:14px;justify-content:center}
+  .hero-note{font-size:13px}
+  .hero-proof{font-size:12px;flex-wrap:wrap;gap:6px}
+
+  /* SEAL CARD */
+  .seal-card{padding:22px;border-radius:16px}
+  .seal-ribbon{font-size:10px;padding:5px 14px}
+  .seal-ring-wrap{width:80px;height:80px}
+  .seal-ring{width:80px;height:80px}
+  .seal-num{font-size:1.6rem}
+  .seal-of{font-size:9px}
+  .seal-title{font-size:1.05rem}
+  .seal-level{font-size:10px}
+  .seal-part{font-size:12px}
+  .seal-foot{flex-direction:column;gap:6px;align-items:flex-start}
+
+  /* TRUST STRIP */
+  .trust-inner{padding:18px 16px;gap:14px 20px}
+  .trust-item{font-size:13px}
+
+  /* SECTION headings */
+  .sec-head{margin-bottom:36px}
+  .sec-head h2{font-size:clamp(22px,6.5vw,32px)}
+
+  /* RITUAL */
+  .ritual-item{padding:18px 0}
+  .ritual-icon{width:44px;height:44px;font-size:20px}
+
+  /* SHOWCASE */
+  .showcase-grid{gap:32px}
+  .showcase-phone{max-width:280px;margin:0 auto}
+
+  /* LEVELS */
+  .levels-grid{gap:14px}
+  .level-card{padding:20px 18px}
+
+  /* PRICING */
+  .pricing-grid{max-width:100%}
+  .pricing-card{padding:28px 20px}
+
+  /* TESTIMONIALS */
+  .test-grid{max-width:100%}
+
+  /* FAQ */
+  .faq-item{padding:18px 0}
+  .faq-q{font-size:14px}
+
+  /* FOOTER */
+  .footer-inner{padding:0 16px;gap:18px}
+
+  /* MODALS — full-screen on mobile */
+  .modal-overlay{align-items:flex-end}
+  .modal{
+    max-width:100%;
+    border-radius:20px 20px 0 0;
+    padding:30px 22px 36px;
+    max-height:92vh;
+    overflow-y:auto;
+  }
+  .modal h2{font-size:1.35rem}
+  .form-group input{font-size:16px}   /* prevents iOS zoom */
+
+  /* TOAST */
+  .toast{width:calc(100% - 32px);border-radius:14px;bottom:16px}
+
+  /* SCROLL-TO-TOP */
+  .scroll-top-btn{bottom:16px;right:14px;width:42px;height:42px}
+  .scroll-top-btn svg{width:18px;height:18px}
+}
+
+/* ═══ 641-780px tablet adjustments ═══ */
+@media(min-width:641px) and (max-width:780px){
+  .hero h1{font-size:clamp(30px,5vw,42px)}
+  .hero-cta-row .btn-lg{padding:14px 24px;font-size:14px}
+  .seal-card{padding:24px}
+}
 </style>
 </head>
 <body>
+
+<!-- LOGIN MODAL -->
+
+<!-- DEMO MODAL -->
+<div class="modal-overlay" id="demoModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('demoModal')">✕</button>
+    <div class="modal-logo"><img class="logo-asset" alt="Langslate 365"><div class="modal-logo-text">Langslate <span>365</span></div></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+      <div style="flex:1;height:1px;background:var(--gold);opacity:.4"></div>
+      <span style="font-size:10px;font-weight:800;letter-spacing:.12em;color:var(--gold-bright);text-transform:uppercase">Members Only</span>
+      <div style="flex:1;height:1px;background:var(--gold);opacity:.4"></div>
+    </div>
+    <h2 style="font-size:1.75rem;margin-bottom:6px">Welcome <em style="font-style:italic">back.</em></h2>
+    <p class="modal-sub" style="margin-bottom:22px">Enter the email you paid with and the access code we sent you.</p>
+    <div class="form-group"><label>Email</label><input type="email" id="demoEmail" placeholder="you@company.com"></div>
+    <div class="form-group"><label>Access Code</label><input type="text" id="demoCode" placeholder="LAN-XXXX-XXXX-XXXX" style="font-family:monospace;letter-spacing:.06em" oninput="this.value=this.value.toUpperCase()"></div>
+    <button class="btn btn-gold" style="width:100%;padding:14px;font-size:15px;margin-top:10px;border-radius:50px" onclick="handleDemoAccess()">Unlock LAN</button>
+    <div style="background:var(--fill-subtle);border:1px dashed var(--hairline-strong);border-radius:10px;padding:12px 16px;margin-top:16px;font-size:13px;color:var(--parchment-70);text-align:center;line-height:1.5">
+      Demo mode: log in with any email and the code <strong style="color:var(--parchment)">LAN-DEMO</strong>&nbsp;&nbsp;<a onclick="useDemoCode()" style="color:var(--gold-bright);font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px">Use the demo code</a>
+    </div>
+    <p style="text-align:center;font-size:13px;margin-top:16px;color:var(--parchment-50)">No code yet? <a onclick="switchModal('demoModal','signupModal')" style="color:var(--gold-bright);font-weight:700;cursor:pointer">Get access</a></p>
+    <p style="text-align:center;font-size:12px;margin-top:10px;color:var(--parchment-30)">Your code arrives by email right after payment. If you can't see it, check your spam folder.</p>
+  </div>
+</div>
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
+    <div class="modal-logo"><img class="logo-asset" alt="Langslate 365"><div class="modal-logo-text">Langslate <span>365</span></div></div>
+    <h2>Welcome back</h2>
+    <p class="modal-sub">Continue your streak. New here? <a onclick="switchModal('loginModal','signupModal')">Get access</a></p>
+    <button class="btn-google" onclick="handleGoogleAuth()">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.57 2.7-3.88 2.7-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l2.99-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.46 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l2.99 2.33C4.66 5.17 6.65 3.58 9 3.58z"/></svg>
+      Continue with Google
+    </button>
+    <div class="modal-divider">or with email</div>
+    <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="you@company.com"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
+    <button class="btn btn-gold" onclick="handleLogin()">Log In</button>
+  </div>
+</div>
+
+<!-- SIGNUP MODAL -->
+<div class="modal-overlay" id="signupModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('signupModal')">✕</button>
+    <div class="modal-logo"><img class="logo-asset" alt="Langslate 365"><div class="modal-logo-text">Langslate <span>365</span></div></div>
+    <h2>Start Day One</h2>
+    <p class="modal-sub">Already a member? <a onclick="switchModal('signupModal','loginModal')">Log in</a></p>
+    <button class="btn-google" onclick="handleGoogleAuth()">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.57 2.7-3.88 2.7-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l2.99-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.46 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l2.99 2.33C4.66 5.17 6.65 3.58 9 3.58z"/></svg>
+      Continue with Google
+    </button>
+    <div class="modal-divider">or with email</div>
+    <div class="form-group"><label>Name</label><input type="text" id="signupName" placeholder="Your name"></div>
+    <div class="form-group"><label>Email</label><input type="email" id="signupEmail" placeholder="you@company.com"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="signupPassword" placeholder="At least 8 characters"></div>
+    <button class="btn btn-gold" onclick="handleSignup()">Create Account</button>
+  </div>
+</div>
 
 <!-- TOAST -->
 <div class="toast" id="toast">
@@ -459,7 +618,13 @@ footer{border-top:1px solid var(--hairline);padding:52px 0 40px}
     <div style="display:flex;align-items:center;gap:12px">
     <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="Toggle light / dark mode">🌙</button>
     <div class="nav-right" id="navAuth">
-      <button class="btn btn-gold" onclick="enterCourse()">Open the App →</button>
+      <button class="btn btn-ghost" onclick="openModal('loginModal')">Log In</button>
+      <button class="btn btn-outline-demo" onclick="openModal('demoModal')" style="background:transparent;border:1px solid var(--gold);color:var(--gold-bright);padding:9px 20px;border-radius:50px;font-size:14px;font-weight:700;transition:.2s;letter-spacing:.02em" onmouseover="this.style.background='rgba(249,115,22,.10)'" onmouseout="this.style.background='transparent'">Try Demo</button>
+      <button class="btn btn-gold" onclick="openModal('signupModal')">Get Access</button>
+    </div>
+    <div class="nav-right user-chip" id="navUser" style="display:none">
+      <div class="user-avatar" id="userAvatar">?</div>
+      <button class="btn btn-ghost" onclick="handleLogout()">Log Out</button>
     </div>
     </div>
   </div>
@@ -474,7 +639,7 @@ footer{border-top:1px solid var(--hairline);padding:52px 0 40px}
       <h1>5 Minutes a Day,<br><em>1 Year</em> of Mastery</h1>
       <p class="hero-desc">365 unique daily lessons. Six progressive levels, from your first workplace email to the boardroom. Every session pairs targeted <strong>vocabulary</strong>, a real <strong>workplace dialogue</strong>, a live <strong>AI-scored speaking task</strong>, an original <strong>reading</strong>, and a <strong>comprehension quiz</strong> — complete in five minutes flat.</p>
       <div class="hero-cta-row">
-        <button class="btn btn-gold btn-lg" onclick="enterCourse()">Begin Day One — Free →</button>
+        <button class="btn btn-gold btn-lg" onclick="openModal('signupModal')">Begin Day One →</button>
         <button class="btn btn-ghost btn-lg" onclick="scrollToSection('showcase')">See the AI Coach</button>
       </div>
       <p class="hero-note">Don't be lazy, it's just 5 Minutes.</p>
@@ -587,7 +752,7 @@ footer{border-top:1px solid var(--hairline);padding:52px 0 40px}
         <li>Four-dimension scoring — Tone, Fluency, Grammar, Vocabulary</li>
         <li>Zero external API calls — everything runs on your device</li>
       </ul>
-      <button class="btn btn-gold" onclick="enterCourse()">Try It Free →</button>
+      <button class="btn btn-gold" onclick="openModal('signupModal')">Try It Now →</button>
     </div>
     <div class="speak-mock">
       <div class="speak-mock-head">🎤 Speaking Practice</div>
@@ -806,7 +971,7 @@ footer{border-top:1px solid var(--hairline);padding:52px 0 40px}
   <div class="wrap">
     <h2>Day 1 starts the moment<br>you say yes.</h2>
     <p class="cta-tagline">Don't be lazy, it's just 5 Minutes.</p>
-    <button class="btn btn-gold btn-lg" onclick="enterCourse()">Begin Day One — Free →</button>
+    <button class="btn btn-gold btn-lg" onclick="openModal('signupModal')">Begin Day One →</button>
     <div class="cta-badges">
       <span class="cta-badge"><span class="cta-badge-dot"></span>Works on any device</span>
     </div>
@@ -826,7 +991,7 @@ footer{border-top:1px solid var(--hairline);padding:52px 0 40px}
       <a onclick="scrollToSection('levels')">Levels</a>
       <a onclick="scrollToSection('pricing')">Pricing</a>
       <a onclick="scrollToSection('faq')">FAQ</a>
-      <a onclick="enterCourse()">Open the App</a>
+      <a onclick="openModal('loginModal')">Log In</a>
     </div>
     <p class="footer-copy">© 2026 Langslate 365. All rights reserved.</p>
   </div>
@@ -854,6 +1019,9 @@ function toggleTheme(){
   applyTheme(saved === 'light' ? 'light' : 'dark');
 })();
 
+// ── STATE ──────────────────────────────────────────────
+let currentUser = null;
+
 // ── LOGO CLICK: reload the page and land on the Hero ────
 if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; }
 function goHome(){
@@ -878,13 +1046,29 @@ function updateScrollTopBtn(){
 window.addEventListener('scroll', updateScrollTopBtn, {passive:true});
 updateScrollTopBtn();
 
-// ── ENTER COURSE: users are already authenticated in Langslate,
-// so every CTA here goes straight into the course. ────
-function enterCourse(){
-  const target = '/apps/365/course';
-  if(window.top && window.top !== window){ window.top.location.href = target; }
-  else{ window.location.href = target; }
+// ── MODALS ─────────────────────────────────────────────
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+function switchModal(from, to){
+  closeModal(from);
+  setTimeout(()=>openModal(to), 200);
+}
+document.querySelectorAll('.modal-overlay').forEach(overlay=>{
+  overlay.addEventListener('click', e=>{
+    if(e.target === overlay) closeModal(overlay.id);
+  });
+});
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape'){
+    document.querySelectorAll('.modal-overlay.open').forEach(m=>closeModal(m.id));
+  }
+});
 
 // ── TOAST ──────────────────────────────────────────────
 function showToast(msg, icon='✅'){
@@ -896,10 +1080,67 @@ function showToast(msg, icon='✅'){
   t._timer = setTimeout(()=>t.classList.remove('show'), 3500);
 }
 
+// ── AUTH HELPERS ───────────────────────────────────────
+function updateNavAuth(){
+  const authEl = document.getElementById('navAuth');
+  const userEl = document.getElementById('navUser');
+  if(currentUser){
+    authEl.style.display = 'none';
+    userEl.style.display = 'flex';
+    document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+  } else {
+    authEl.style.display = 'flex';
+    userEl.style.display = 'none';
+  }
+}
+
+function handleLogin(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPassword').value;
+  if(!email || !pass){ showToast('Please fill in all fields.','⚠️'); return; }
+  if(!email.includes('@')){ showToast('Please enter a valid email.','⚠️'); return; }
+  currentUser = { name: email.split('@')[0], email };
+  closeModal('loginModal');
+  updateNavAuth();
+  showToast(`Welcome back, ${currentUser.name}!`,'👋');
+}
+
+function handleSignup(){
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const pass = document.getElementById('signupPassword').value;
+  if(!name || !email || !pass){ showToast('Please fill in all fields.','⚠️'); return; }
+  if(!email.includes('@')){ showToast('Please enter a valid email.','⚠️'); return; }
+  if(pass.length < 8){ showToast('Password must be at least 8 characters.','⚠️'); return; }
+  currentUser = { name, email };
+  closeModal('signupModal');
+  updateNavAuth();
+  showToast(`Account created! Day 1 unlocked, ${name} 🎉`,'🎓');
+}
+
+function handleGoogleAuth(){
+  const fakeName = 'Student';
+  currentUser = { name: fakeName, email: 'student@gmail.com' };
+  document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open'));
+  document.body.style.overflow = '';
+  updateNavAuth();
+  showToast(`Signed in with Google. Welcome, ${fakeName}!`,'🎉');
+}
+
+function handleLogout(){
+  currentUser = null;
+  updateNavAuth();
+  showToast('You have been logged out.','👋');
+}
+
 // ── PLAN SELECT ────────────────────────────────────────
 function handlePlanSelect(plan, price){
+  if(!currentUser){
+    openModal('signupModal');
+    showToast(`Sign up first to select the ${plan} plan.`,'💡');
+    return;
+  }
   showToast(`${plan} plan selected (${price}). Redirecting to checkout...`,'🚀');
-  enterCourse();
 }
 
 // ── FAQ ────────────────────────────────────────────────
@@ -909,6 +1150,27 @@ function toggleFaq(el){
   document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
   if(!isOpen) item.classList.add('open');
 }
+
+function useDemoCode(){
+  document.getElementById('demoEmail').value = 'demo@langslate365.com';
+  document.getElementById('demoCode').value = 'LAN-DEMO';
+}
+
+function handleDemoAccess(){
+  const email = document.getElementById('demoEmail').value.trim();
+  const code  = document.getElementById('demoCode').value.trim().toUpperCase();
+  if(!email){ showToast('Please enter your email.','⚠️'); return; }
+  if(!email.includes('@')){ showToast('Please enter a valid email.','⚠️'); return; }
+  if(!code){ showToast('Please enter your access code.','⚠️'); return; }
+  // Demo mode: accept BEE-DEMO or any valid-looking code (BEE-XXXX-XXXX-XXXX pattern)
+  const isDemoCode = code === 'LAN-DEMO';
+  const isValidCode = isDemoCode || /^LAN-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code);
+  if(!isValidCode){ showToast('Invalid access code format. Use LAN-DEMO for demo access.','⚠️'); return; }
+  closeModal('demoModal');
+  showToast(isDemoCode ? 'Demo mode activated! Launching platform…' : 'Access granted! Launching platform…','🚀');
+  setTimeout(()=>{ window.location.href = '/auth?next=%2Fapps%2F365%2Fcourse'; }, 1200);
+}
+
 </script>
 </body>
 </html>
